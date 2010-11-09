@@ -1,0 +1,30 @@
+<html>
+<head>
+<base href="$g_url$"/><meta http-equiv="Content-Type" content="text/html;charset=utf-8"/> 
+<title>CWINUX 监控: $system.name$系统首页</title>
+
+<script type="text/javascript" src="/js/jquery-1.3.2.js"></script>
+<script type="text/javascript" src="/js/jquery.tipsy.js"></script>
+<link rel="stylesheet" href="/js/tipsy.css" type="text/css" />
+<script type="text/javascript">
+$$(document).ready(function(){
+$$('.tips').tipsy();
+}
+);
+</script>
+
+</head>
+<body>
+   <TMPL_IF NAME="g_retcode" FUNC="=" VALUE="0" ARGUMENT="int">
+   <table  width="100%" border="0" cellspacing="1"  cellpadding="0" bgcolor="#B7D47C" style="margin:10px;font:14px/25px Arial, Helvetica, sans-serif">
+      <tr> <th colspan="5"><a href="$g_url$">监控系统</a> =&gt; <a href="$g_url$?cmd=system&system=$system.name$">$system.name$</a></th></tr>
+      <tr bgcolor="#FFFFFF"><th width="10%">服务的名字</th><th width="10%">告警email发送规则</th> <th width="10%">分布主机数量</th> <td width="10%"> 监控指标数量 </th> </tr>
+      <TMPL_LOOP NAME="service">
+           <tr bgcolor="#FFFFFF"><td><a href="$g_url$?cmd=service&system=$system.name$&service=$name$">$name$</a></td><td><span class="tips" title="$emails$">$mail_rule$</span></td><td>$host_num$</td> <td>$act_num$</td></tr>
+      </TMPL_LOOP>
+   </table>
+   <TMPL_ELSE>
+        <H1>Failure to query<H1>
+   </TMPL_IF>
+</body>
+</html>

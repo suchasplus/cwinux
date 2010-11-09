@@ -1,0 +1,44 @@
+<?xml version='1.0'?>
+<sm_center>
+    <common>
+        <workdir value="/usr/home/wenbo/cwinux/project/monitor/trunk/cwx_center"/>
+	<mgr    ip="172.16.228.83" port="9800"/>
+	<query  ip="172.16.228.83" port="9801"/>
+	<alarm>
+	      <accept ip="172.16.228.83" port="9802"/>
+              <report  ip="172.16.228.83" port="9803"  mode="avg"/>
+	</alarm>
+	<work_thread num="4" />
+        <timeout>
+         	<query>3</query>
+         	<alarm>10</alarm>
+         </timeout>
+        <web    url = "http://60.28.228.83:8080/monitor"/>
+	<data    path="/usr/home/wenbo/cwinux/project/monitor/trunk/cwx_center/dat"/>
+    </common>
+    <templates >
+        <template  name="systems"   file="template/systems.tmlt"   type="text/html"/>
+        <template  name="system"   file="template/system.tmlt"   type="text/html"/>
+        <template  name="service"   file="template/service.tmlt"   type="text/html"/>
+    </templates>
+    <rules>
+        <alarm>
+            <rule  name="default" check_internal="2"  clear_times="2" warning_times="2"  minor_times="4"  major_times="10" critical_times="20" fatal_times="40" />
+        </alarm>
+        <mail>
+            <mail name="default" warning="cwinux@gmail.com" minor="cwinux@gmail.com"  major="cwinux@gmail.com" critical="cwinux@gmail.com" fatal="cwinux@gmail.com"/>
+        </mail>
+    </rules>
+    <systems>
+    	<system  name="disk" config_file="conf/disk.xml"/>
+        <system  name="monitor" config_file="conf/monitor.xml"/>
+        <system  name="echo" config_file="conf/echo.xml"/>
+        <system  name="dispatch" config_file="conf/dispatch.xml"/>
+        <system  name="filter" config_file="conf/filter.xml"/>
+    </systems>
+    <hosts>
+        <host ip="172.16.228.83" name="tanggu-store"  port="9901"  alarm="default" email="default" />
+        <host ip="172.16.83.164" name="yangqiao-store"  port="9901"  alarm="default" email="default" />
+    </hosts>
+ 
+</sm_center>

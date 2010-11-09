@@ -1,0 +1,9 @@
+<?xml version='1.0'?>
+<svr_def>
+  <workdir path="/usr/home/wenbo/cwinux/example/echo/echo_client"/>
+  <mgr    ip="172.16.42.54" port="9000" />
+  <listen ip="172.16.42.54" port="9003"/>
+  <unix path="/usr/home/wenbo/cwinux/example/echo/echo_svr/echo.unix"/>
+  <conn  num="3" type="tcp" lasting="0"/>
+  <data  size="65535"/>
+</svr_def>

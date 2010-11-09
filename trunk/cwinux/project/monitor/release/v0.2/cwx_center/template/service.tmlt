@@ -1,0 +1,41 @@
+<html>
+<head>
+
+<script type="text/javascript" src="/js/jquery-1.3.2.js"></script>
+<script type="text/javascript" src="/js/jquery.tipsy.js"></script>
+<link rel="stylesheet" href="/js/tipsy.css" type="text/css" /> 
+<script type="text/javascript">
+$$(document).ready(function(){
+$$('.tips').tipsy();
+}
+);
+</script>
+<base href="$g_url$"/><meta http-equiv="Content-Type" content="text/html;charset=utf-8"/> 
+<title>CWINUX 监控系统:$system.name$:$service.name$主页</title>
+</head>
+<body>
+   <TMPL_IF NAME="g_retcode" FUNC="=" VALUE="0" ARGUMENT="int">
+
+    <table  width="100%" border="0" cellspacing="1"  cellpadding="0" bgcolor="#B7D47C" style="margin:10px;font:14px/25px Arial, Helvetica, sans-serif">
+	<tr> <th colspan="7"><a href="$g_url$">监控系统首页</a> =&gt; <a href="$g_url$?cmd=system&system=$system.name$" target="_blank">$system.name$系统首页</a>  =&gt; <a href="$g_url$?cmd=service&system=$system.name$&service=$service.name$" target="_self">$service.name$服务首页</a>@actions</th></tr>
+	<tr bgcolor="#FFFFFF">
+		<TMPL_LOOP NAME="action_name">
+		<th><a href="$g_url$?cmd=service&system=$system.name$&service=$service.name$&action=$name$" target="_self">$name$</a></th>
+		</TMPL_LOOP>
+        </tr>
+    </table>
+   <br/> <br/>
+   <table  width="100%" border="0" cellspacing="1"  cellpadding="0" bgcolor="#B7D47C" style="margin:10px;font:14px/25px Arial, Helvetica, sans-serif">
+      <tr> <th colspan=7><a href="$g_url$">监控系统首页</a> =&gt; <a href="$g_url$?cmd=system&system=$system.name$" targe
+t="_blank">$system.name$系统首页</a>  =&gt; <a href="$g_url$?cmd=service&system=$system.name$&service=$service.name$" target="_self">
+$service.name$服务首页</a> =&gt; <a href="$g_url$?cmd=service&system=$system.name$&service=$service.name$&action=$g_action$" target="_self">$g_action$指标</a>@result</th></tr>
+      <tr bgcolor="#FFFFFF"><th width="12%">主机名(ip)</th><th width="6%">告警规则</th> <th width="6%">告警email规则</th> <th width="6%">指标状态</th> <td width="6%">告警级别</th> <td width="14%">错误信息</td> <td width="50%">指标详情</td></tr>
+      <TMPL_LOOP NAME="action">
+           <tr bgcolor="#FFFFFF"><td>$host.name$($host.ip$)</td><td>$host.alarm_rule$</td><td>$host.alarm_mail$</td><td>$status$</td> <td>$level$</td> <td>$error$</td> <td>$record$</td></tr>
+      </TMPL_LOOP>
+   </table>
+   <TMPL_ELSE>
+        <H1>Failure to query<H1>
+   </TMPL_IF>
+</body>
+</html>

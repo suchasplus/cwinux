@@ -1,0 +1,33 @@
+<?xml version='1.0'?>
+<filter_svr>
+    <workdir path="/usr/home/wenbo/cwinux/project/filter/trunk/cwf_filter"/>
+    <charset encode="utf-8"  case_sensive="true"/>
+    <listen>
+        <tcp ip="172.16.83.164" port="9402" />
+        <unix file="/usr/home/wenbo/cwinux/project/filter/trunk/cwf_filter/cwf_filter.sock" />
+    </listen>
+    <mgr ip="172.16.83.164" port="9401"/>
+    <thread  num="10"/>
+    <filters>
+      <filter id="1"  name="title" stop_word_file="filter/stopword.dat" >
+    	<filter_level level="1"  file="filter/title/level1.dat"/>
+    	<filter_level level="2"  file="filter/title/level2.dat"/>
+    	<filter_level level="3"  file="filter/title/level3.dat"/>
+    	<filter_level level="4"  file="filter/title/level4.dat"/>
+    	<filter_level level="5"  file="filter/title/level5.dat"/>
+    	<filter_level level="6"  file="filter/title/level6.dat"/>
+    	<filter_level level="7"  file="filter/title/level7.dat"/>
+    	<filter_level level="8"  file="filter/title/level8.dat"/>
+      </filter>
+      <filter id="2"  name="content" stop_word_file="filter/stopword.dat" >
+        <filter_level level="1"  file="filter/content/level1.dat"/>
+        <filter_level level="2"  file="filter/content/level2.dat"/>
+        <filter_level level="3"  file="filter/content/level3.dat"/>
+        <filter_level level="4"  file="filter/content/level4.dat"/>
+        <filter_level level="5"  file="filter/content/level5.dat"/>
+        <filter_level level="6"  file="filter/content/level6.dat"/>
+        <filter_level level="7"  file="filter/content/level7.dat"/>
+        <filter_level level="8"  file="filter/content/level8.dat"/>
+      </filter>
+    </filters>
+</filter_svr>

@@ -1,0 +1,20 @@
+<html>
+     <head>
+        <base href="$g_url$"/>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/> 
+        <title>CWINUX 监控首页</title>
+     </head>
+     <body>
+         <TMPL_IF NAME="g_retcode" FUNC="=" VALUE="0" ARGUMENT="int">
+            <table  width="100%" border="0" cellspacing="1"  cellpadding="0" bgcolor="#B7D47C" style="margin:10px;font:14px/25px Arial, Helvetica, sans-serif">
+                <tr> <th colspan="3"><a href="$g_url$">监控系统</a></th></tr>
+                <tr bgcolor="#FFFFFF"><th width="10%">系统名称</th><th width="10%">系统服务数量</th> <th width="80%"> 系统描述</th> </tr>
+                <TMPL_LOOP NAME="system">
+                    <tr bgcolor="#FFFFFF"><td><a href="$g_url$?cmd=system&system=$name$" target="_blank">$name$</a></td><td>$service_num$</td><td>$desc$</td></tr>
+                </TMPL_LOOP>
+             </table>
+         <TMPL_ELSE>
+             <H1>Failure to query<H1>
+         </TMPL_IF>
+     </body>
+</html>

@@ -1,0 +1,25 @@
+<?xml version='1.0'?>
+<system name="echo"  desc="echo check">
+    <rules>
+        <alarm>
+            <rule  name="default" check_internal="2"  clear_times="2" warning_times="2"  minor_times="4"  major_times="10" critical_times="20" fatal_times="40" />
+        </alarm>
+        <mail>
+            <mail name="default" warning="cwinux@gmail.com" minor="cwinux@gmail.com"  major="cwinux@gmail.com" critical="cwinux@gmail.com" fatal="cwinux@gmail.com"/>
+        </mail>
+    </rules>
+    <services  >
+    	<service name="echo" mail="default">
+	     <actions>
+		<action name="check"/>
+		<action name="help"/>
+		<action name="log_level"/>
+	     	<action name="detail" />
+	     </actions>
+	     <hosts>
+	     	 <host ip="172.16.228.83"/>
+	     	 <host ip="172.16.83.164"/>
+	     </hosts>
+   	</service>
+    </services>
+</system>

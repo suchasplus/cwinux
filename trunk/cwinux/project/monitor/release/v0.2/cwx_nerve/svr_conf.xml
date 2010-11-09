@@ -1,0 +1,72 @@
+<?xml version='1.0'?>
+<sm_nerve>
+    <common>
+        <workdir value="/usr/home/wenbo/cwinux/project/monitor/trunk/cwx_nerve" />
+	<mgr    ip="172.16.83.164" port="9900"/>
+        <query ip="172.16.83.164" port="9901" />
+        <alarm ip="172.16.228.83" port="9802" />
+        <timeout second="5"/>
+        <host    name="cwinux_1"/>
+	<data    path="/usr/home/wenbo/cwinux/project/monitor/trunk/cwx_nerve/dat"/>
+    </common>
+    <alarm_rules>
+        <rule  name="default" check_internal="5"  clear_times="2" warning_times="2"  minor_times="10"  major_times="20" critical_times="40" fatal_times="60" />
+        <rule  name="alm1" check_internal="50"  clear_times="2" warning_times="2"  minor_times="10"  major_times="20" critical_times="40" fatal_times="60" />
+        <rule  name="alm2" check_internal="5"  clear_times="2" warning_times="2"  minor_times="10"  major_times="20" critical_times="40" fatal_times="60" />
+    </alarm_rules>
+    <services>
+        <service system ="disk" name="disk"   type="cgi"  rule="alm1">
+	    <action name="disk"   rule="alm1"  poll="yes" alarm_type="disk" cmd="./disk.sh /dev/sda1 30 /dev/sda3 30" />
+	</service>
+  	<service system ="monitor" name="nerve"  type="server" rule="alm1" ip="172.16.83.164" port="9900">
+	    <action name="help"   rule="alm1"  poll="no" alarm_type="invalid"  msg_type="1" >
+	    </action>
+	    <action name="log_level"   rule="alm1"  poll="no" alarm_type="invalid"  msg_type="9" >
+            </action>
+	    <action name="check"   rule="alm1"  poll="yes" alarm_type="invalid"  msg_type="13" >
+	    </action>
+	    <action name="detail"   rule="alm1"  poll="yes" alarm_type="invalid"  msg_type="15" >
+	    </action>
+        </service>
+        <service system ="echo" name="echo"  type="server" rule="alm1" ip="172.16.83.164" port="9001">
+            <action name="help"   rule="alm1"  poll="no" alarm_type="invalid"  msg_type="1" >
+            </action>
+            <action name="log_level"   rule="alm1"  poll="no" alarm_type="invalid"  msg_type="9" >
+            </action>
+            <action name="check"   rule="alm1"  poll="yes" alarm_type="invalid"  msg_type="13" >
+            </action>
+            <action name="detail"   rule="alm1"  poll="yes" alarm_type="invalid"  msg_type="15" >
+            </action>
+        </service>
+        <service system ="mbus_test_bit32" name="slave"  type="server" rule="alm1" ip="172.16.83.164" port="9101">
+            <action name="help"   rule="alm1"  poll="no" alarm_type="invalid"  msg_type="1" >
+            </action>
+            <action name="log_level"   rule="alm1"  poll="no" alarm_type="invalid"  msg_type="9" >
+            </action>
+            <action name="check"   rule="alm1"  poll="yes" alarm_type="invalid"  msg_type="13" >
+            </action>
+            <action name="detail"   rule="alm1"  poll="yes" alarm_type="invalid"  msg_type="15" >
+            </action>
+        </service>
+        <service system ="mq_test_bit32" name="slave"  type="server" rule="alm1" ip="172.16.83.164" port="9201">
+            <action name="help"   rule="alm1"  poll="no" alarm_type="invalid"  msg_type="1" >
+            </action>
+            <action name="log_level"   rule="alm1"  poll="no" alarm_type="invalid"  msg_type="9" >
+            </action>
+            <action name="check"   rule="alm1"  poll="yes" alarm_type="invalid"  msg_type="13" >
+            </action>
+            <action name="detail"   rule="alm1"  poll="yes" alarm_type="invalid"  msg_type="15" >
+            </action>
+        </service>
+        <service system ="filter" name="filter"  type="server" rule="alm1" ip="172.16.83.164" port="9401">
+            <action name="help"   rule="alm1"  poll="no" alarm_type="invalid"  msg_type="1" >
+            </action>
+            <action name="log_level"   rule="alm1"  poll="no" alarm_type="invalid"  msg_type="9" >
+            </action>
+            <action name="check"   rule="alm1"  poll="yes" alarm_type="invalid"  msg_type="13" >
+            </action>
+            <action name="detail"   rule="alm1"  poll="yes" alarm_type="invalid"  msg_type="15" >
+            </action>
+        </service>
+     </services>	
+</sm_nerve>

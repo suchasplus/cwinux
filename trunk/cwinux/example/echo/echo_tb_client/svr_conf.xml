@@ -1,0 +1,25 @@
+<?xml version='1.0'?>
+<svr_def>
+  <workdir path="/usr/home/wenbo/cwinux/example/echo/echo_client"/>
+  <mgr    ip="172.16.42.54" port="9010" />
+  <data  size="65535"/>
+  <conn  num="3"/>
+  <thread num="4"/>
+  <timeout mili_second="2000" />
+  <task  num="10" />
+  <conn_wait_send_msg num="10"/>
+  <echos>
+      <echo>
+          <host ip="172.16.42.54" port="9003" unix="/usr/home/wenbo/cwinux/example/echo/echo_svr/echo.unix" />
+          <host ip="172.16.42.55" port="9003" unix="/usr/home/wenbo/cwinux/example/echo/echo_svr/echo.unix" />
+          <host ip="172.16.42.56" port="9003" unix="/usr/home/wenbo/cwinux/example/echo/echo_svr/echo.unix" />
+          <host ip="172.16.42.57" port="9003" unix="/usr/home/wenbo/cwinux/example/echo/echo_svr/echo.unix" />
+      </echo>
+      <echo group="2" host_conn_num="3">
+          <host ip="172.16.42.54" port="9004" unix="/usr/home/wenbo/cwinux/example/echo/echo_svr/echo.unix" />
+          <host ip="172.16.42.55" port="9004" unix="/usr/home/wenbo/cwinux/example/echo/echo_svr/echo.unix" />
+          <host ip="172.16.42.56" port="9004" unix="/usr/home/wenbo/cwinux/example/echo/echo_svr/echo.unix" />
+          <host ip="172.16.42.57" port="9004" unix="/usr/home/wenbo/cwinux/example/echo/echo_svr/echo.unix" />
+      </echo>
+  </echos>
+</svr_def>

@@ -1,0 +1,8 @@
+<?xml version='1.0'?>
+<svr_def>
+  <workdir path="/usr/home/wenbo/cwinux/example/echo/echo_svr"/>
+  <mgr    ip="172.16.83.164" port="9001" />
+  <listen ip="172.16.83.164" port="9003"/>
+  <unix   path="/usr/home/wenbo/cwinux/example/echo/echo_svr/echo.unix"/>
+  <thread  num="1"/>
+</svr_def>
