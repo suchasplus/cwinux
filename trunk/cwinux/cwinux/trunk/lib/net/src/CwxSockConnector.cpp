@@ -100,11 +100,14 @@ int CwxSockConnector::complete (CwxSockStream &stream,
               CwxAddr *remoteAddr ,
               CwxTimeouter* timeout)
 {
-    if (CwxSocket::handleReady(stream.getHandle(), timeout, false, true, false, true) < 1)
+    if (timeout && timeout->isTimer())
     {
-        CwxErrGuard guard();
-        stream.close();
-        return -1;
+        if (CwxSocket::handleReady(stream.getHandle(), timeout, false, true, false, true) < 1)
+        {
+            CwxErrGuard guard();
+            stream.close();
+            return -1;
+        }
     }
 
     int sock_err = 0;

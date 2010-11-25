@@ -15,11 +15,14 @@ ssize_t CwxSocket::read_n (CWX_HANDLE handle,
     ssize_t ret = 0;
     while(recv_byte < len)
     {
-        ret = handleReady(handle, timeout, true, false, false);
-        if (ret <= 0)
+        if (timeout && timeout->isTimer())
         {
-            ret = -1;
-            break;
+            ret = handleReady(handle, timeout, true, false, false);
+            if (ret <= 0)
+            {
+                ret = -1;
+                break;
+            }
         }
         ret = ::read(handle, ((char*)buf) + recv_byte, len - recv_byte);
         if ( (-1 == ret) && (EINTR == errno) ) continue;
@@ -42,11 +45,14 @@ ssize_t CwxSocket::recv_n (CWX_HANDLE handle,
     ssize_t ret = 0;
     while(recv_byte < len)
     {
-        ret = handleReady(handle, timeout, true, false, false);
-        if (ret <= 0)
+        if (timeout && timeout->isTimer())
         {
-            ret = -1;
-            break;
+            ret = handleReady(handle, timeout, true, false, false);
+            if (ret <= 0)
+            {
+                ret = -1;
+                break;
+            }
         }
         ret = ::recv(handle, ((char*)buf) + recv_byte, len - recv_byte, flags);
         if ( (-1 == ret) && (EINTR == errno) ) continue;
@@ -68,11 +74,14 @@ ssize_t CwxSocket::recv_n (CWX_HANDLE handle,
     ssize_t ret = 0;
     while(recv_byte < len)
     {
-        ret = handleReady(handle, timeout, true, false, false);
-        if (ret <= 0)
+        if (timeout && timeout->isTimer())
         {
-            ret = -1;
-            break;
+            ret = handleReady(handle, timeout, true, false, false);
+            if (ret <= 0)
+            {
+                ret = -1;
+                break;
+            }
         }
         ret = ::read(handle, ((char*)buf) + recv_byte, len - recv_byte);
         if ( (-1 == ret) && (EINTR == errno) ) continue;
@@ -152,11 +161,14 @@ ssize_t CwxSocket::write_n (CWX_HANDLE handle,
     ssize_t ret = 0;
     while(send_byte < len)
     {
-        ret = handleReady(handle, timeout, false, true, false);
-        if (ret <= 0)
+        if (timeout && timeout->isTimer())
         {
-            ret = -1;
-            break;
+            ret = handleReady(handle, timeout, false, true, false);
+            if (ret <= 0)
+            {
+                ret = -1;
+                break;
+            }
         }
         ret = ::write(handle, ((char*)buf) + send_byte, len - send_byte);
         if ( (-1 == ret) && (EINTR == errno) ) continue;
@@ -179,11 +191,14 @@ ssize_t CwxSocket::send_n (CWX_HANDLE handle,
     ssize_t ret = 0;
     while(send_byte < len)
     {
-        ret = handleReady(handle, timeout, false, true, false);
-        if (ret <= 0)
+        if (timeout && timeout->isTimer())
         {
-            ret = -1;
-            break;
+            ret = handleReady(handle, timeout, false, true, false);
+            if (ret <= 0)
+            {
+                ret = -1;
+                break;
+            }
         }
         ret = ::send(handle, ((char*)buf) + send_byte, len - send_byte, flags);
         if ( (-1 == ret) && (EINTR == errno) ) continue;
@@ -206,11 +221,14 @@ ssize_t CwxSocket::send_n (CWX_HANDLE handle,
     ssize_t ret = 0;
     while(send_byte < len)
     {
-        ret = handleReady(handle, timeout, false, true, false);
-        if (ret <= 0)
+        if (timeout && timeout->isTimer())
         {
-            ret = -1;
-            break;
+            ret = handleReady(handle, timeout, false, true, false);
+            if (ret <= 0)
+            {
+                ret = -1;
+                break;
+            }
         }
         ret = ::write(handle, ((char*)buf) + send_byte, len - send_byte);
         if ( (-1 == ret) && (EINTR == errno) ) continue;

@@ -28,7 +28,7 @@ int CwxUnixAcceptor::accept (CwxUnixStream &stream,
 {
     int noblocking = 1;
     int ret = 0;
-    if (timeout)
+    if (timeout && timeout->isTimer())
     {
         ret = CwxSocket::handleReady(getHandle(), timeout, true, false, false, bRestart);
         if (ret<1) return -1;
