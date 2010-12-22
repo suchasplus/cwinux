@@ -25,7 +25,8 @@ http://it.sohu.com/20100903/n274684530.shtml
 #include "CwxTypePoolEx.h"
 
 CWINUX_BEGIN_NAMESPACE
-
+template<typename CHARSET, typename DATA>
+class CwxTrieTree;
 /**
 @class CwxTrieNode
 @brief Trie 树节点的模板类。末节点上的设置的数据类型通过模板参数DATA定义。
@@ -95,6 +96,8 @@ public:
     bool isKeyEnd() const { return CWX_CHECK_BIT(m_ucSign, SIGN_KEY_END_BIT);}
     ///清除KEY标记SIGN_KEY_END_BIT
     void clrKeyEnd() { CWX_CLR_BIT(m_ucSign, SIGN_KEY_END_BIT);}
+private:
+    template <class A1,class A2>  friend class CwxTrieTree;
 private:
     CwxTrieNode<DATA>*      m_child[16];///<节点的孩子结点
     CwxTrieNode<DATA>*      m_parent;///<节点的父节点

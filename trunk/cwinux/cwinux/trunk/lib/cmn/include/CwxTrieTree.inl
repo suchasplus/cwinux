@@ -173,6 +173,7 @@ inline bool CwxTrieTree<CHARSET, DATA>::eraseNode(CwxTrieNode<DATA>* pNode)
     pNode->clrKeyEnd();
     //检查是否有孩子节点
     CWX_UINT8 i=0;
+    CWX_UINT8 ucChildNum = 0;
     for (i=0; i<16; i++)
     {
         if (pNode->m_child[i]) return true;
@@ -181,24 +182,26 @@ inline bool CwxTrieTree<CHARSET, DATA>::eraseNode(CwxTrieNode<DATA>* pNode)
     CwxTrieNode<DATA>* pParent = pNode->m_parent;
     while(pParent)
     {
+        ucChildNum = 0;
         for(i=0; i<16; i++)
         {
-            if (pParent[i] == pNode)
+            if (pParent->m_child[i])
             {
-                pParent[i] = NULL;
-                break;
+                if (pParent->m_child[i] == pNode)
+                {
+                    pParent->m_child[i] = NULL;
+                }
+                else
+                {
+                    ucChildNum++;
+                }
             }
         }
-        CWX_ASSERT(i < 16);
         m_pool.free(pNode);
         pNode = pParent;
         pParent = pNode->m_parent;
-        if (pNode->isKeyEnd()) break;///other keyword
-        for (i=0; i<16; i++)
-        {
-            if (pNode->m_child[i]) break;
-        }
-        if (16 == i) break;
+        if (pNode->isKeyEnd()) return true;///other keyword
+        if (ucChildNum) return true;///has other child
     }
     return true;
 }
