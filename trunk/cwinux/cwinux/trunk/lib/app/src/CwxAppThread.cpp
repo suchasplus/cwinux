@@ -1,6 +1,5 @@
 #include "CwxAppThread.h"
 #include "CwxAppLogger.h"
-#include "CwxAppFramework.h"
 
 CWINUX_BEGIN_NAMESPACE
 
@@ -163,7 +162,7 @@ int CwxAppThread::unlock()
 
 
 
-int CwxAppThread::spawn(CWX_THR_FUNC func,
+int CwxAppThread::spawn(CWX_THR_OS_FUNC func,
                    void *args,
                    long flags,
                    pthread_t *thr_id,
