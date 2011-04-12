@@ -1,5 +1,5 @@
-#ifndef __CWX_APP_COMMANDER_H__
-#define __CWX_APP_COMMANDER_H__
+#ifndef __CWX_COMMANDER_H__
+#define __CWX_COMMANDER_H__
 /*
 版权声明：
     本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html），
@@ -7,7 +7,7 @@
 */
 
 /**
-@file CwxAppCommander.h
+@file CwxCommander.h
 @brief 架构Command模式对象的定义，Command基于事件的Event-type，进行事件的分发
 @author cwinux@gmail.com
 @version 0.1
@@ -28,7 +28,7 @@
 
 CWINUX_BEGIN_NAMESPACE
 
-class CWX_API CwxAppCommander;
+class CWX_API CwxCommander;
 /**
 @class CwxAppCmdOp
 @brief 基于SVR-ID的事件的处理HANDLE的接口定义。
@@ -145,10 +145,10 @@ public:
 };
 
 /**
-@class CwxAppCommander
+@class CwxCommander
 @brief Command类，基于事件的SVR-ID，实现事件与其处理Handle的映射。
 */
-class  CWX_API CwxAppCommander
+class  CWX_API CwxCommander
 {
     ///消息映射函数类型定义
     typedef int (*fnEventApi)(CwxAppCmdOp* pEventOp, CwxMsgBlock*& msg, CwxTss* pThrEnv);
@@ -156,21 +156,21 @@ class  CWX_API CwxAppCommander
     typedef hash_map<CWX_UINT32, CwxAppCmdOp*, CwxNumHash<CWX_UINT32> > CwxEventCommandHash;
 public:
     ///构造函数
-    CwxAppCommander()
+    CwxCommander()
         :m_msgHash(1024)
     {
         m_arrEvent[CwxEventInfo::DUMMY] = NULL;
-        m_arrEvent[CwxEventInfo::CONN_CREATED] = &CwxAppCommander::onConnCreated;
-        m_arrEvent[CwxEventInfo::CONN_CLOSED] = &CwxAppCommander::onConnClosed;
-        m_arrEvent[CwxEventInfo::RECV_MSG] = &CwxAppCommander::onRecvMsg;
-        m_arrEvent[CwxEventInfo::END_SEND_MSG] = &CwxAppCommander::onEndSendMsg;
-        m_arrEvent[CwxEventInfo::FAIL_SEND_MSG] = &CwxAppCommander::onFailSendMsg;
-        m_arrEvent[CwxEventInfo::TIMEOUT_CHECK] = &CwxAppCommander::onTimeoutCheck;
-        m_arrEvent[CwxEventInfo::EVENT_4_HANDLE] = &CwxAppCommander::onEvent4Handle;
-        m_arrEvent[CwxEventInfo::SYS_EVENT_NUM] = &CwxAppCommander::onUserEvent;
+        m_arrEvent[CwxEventInfo::CONN_CREATED] = &CwxCommander::onConnCreated;
+        m_arrEvent[CwxEventInfo::CONN_CLOSED] = &CwxCommander::onConnClosed;
+        m_arrEvent[CwxEventInfo::RECV_MSG] = &CwxCommander::onRecvMsg;
+        m_arrEvent[CwxEventInfo::END_SEND_MSG] = &CwxCommander::onEndSendMsg;
+        m_arrEvent[CwxEventInfo::FAIL_SEND_MSG] = &CwxCommander::onFailSendMsg;
+        m_arrEvent[CwxEventInfo::TIMEOUT_CHECK] = &CwxCommander::onTimeoutCheck;
+        m_arrEvent[CwxEventInfo::EVENT_4_HANDLE] = &CwxCommander::onEvent4Handle;
+        m_arrEvent[CwxEventInfo::SYS_EVENT_NUM] = &CwxCommander::onUserEvent;
     }
     ///析构函数
-    ~CwxAppCommander()
+    ~CwxCommander()
     {
         m_msgHash.clear();
     }
@@ -265,7 +265,7 @@ private:
 
 CWINUX_END_NAMESPACE
 
-#include "CwxAppCommander.inl"
+#include "CwxCommander.inl"
 #include "CwxPost.h"
 #endif
 

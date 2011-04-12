@@ -22,16 +22,12 @@
 #include "CwxMutexLock.h"
 #include "CwxMsgQueue.h"
 #include "CwxMsgBlock.h"
-#include "CwxAppMacro.h"
-#include "CwxAppConfig.h"
-#include "CwxAppLogger.h"
 #include "CwxTss.h"
 
 CWINUX_BEGIN_NAMESPACE
 
-class CwxAppFramework;
-
-typedef void* (*CWX_THR_FUNC)(void *);
+typedef void* (*CWX_OS_THR_FUNC)(void *); ///os thread的function
+typedef void* (*CWX_TSS_THR_FUNC)(CwxTss* tss, CwxMsgQueue* queue, void*); ///架构的函数
 
 #define THREAD_BOUND               0x00000001
 #define THREAD_NEW_LWP             0x00000002
@@ -51,19 +47,16 @@ typedef void* (*CWX_THR_FUNC)(void *);
 
 class CWX_API CwxThread
 {
-public:
-    ///定义线程常量
-    enum{
-        DEATH_CHECK_MSG_WATER_MASK = 5, ///<线程的状态监测的排队消息门限
-        DEATH_CHECK_UPDATE_WATER_MASK = 30 ///<线程失效的无状态更新的时间门限
-    };
 public :
     ///构造函数
-    CwxThread(CwxAppFramework* pApp,///<app对象
+    CwxThread(
         CWX_UINT16 unGroupId,///<线程的group id
-        CWX_UINT16 unThreadId=0,///<线程在线程group中的序号
-        CWX_UINT32 uiDeathCheckMsgWaterMask=DEATH_CHECK_MSG_WATER_MASK,///<线程的状态监测的排队消息门限
-        CWX_UINT32 uiDeathCheckUpdateWaterMask=DEATH_CHECK_UPDATE_WATER_MASK///<线程失效的无状态更新的时间门限
+        CWX_UINT16 unThreadId,///<线程在线程group中的序号
+        CwxThreadPoolMgr* mgr, ///<线程的管理对象
+        CwxCommander* commander,///<队列消息消费的缺省commander，若指定func可以不指定
+        CWX_TSS_THR_FUNC func=NULL, ///<用户的线程main函数
+        void*            arg=NULL, ///<func的void*参数
+        CwxMsgQueue* queue = NULL///<线程池的队列，若不指定，则系统默认创建
         );
     ///析构函数
     virtual ~CwxThread();
@@ -78,27 +71,11 @@ public:
     ///停止线程
     virtual void stop();
     /**
-    @brief 通知线程创建，若要创建自己的Thread-Env，则重载此API
-    @param [in] unGroup 线程的线程组。
-    @param [in] unThreadId 线程在线程组中的序号。
-    @param [out] pThrEnv 创建的Thread的Thread Env。
-    @return -1：失败； 0：成功
-    */
-    virtual int onThreadCreated(CWX_UINT16 unGroup, CWX_UINT16 unThreadId, CwxTss*& pThrEnv);
-    /**
-    @brief 通知线程退出
-    @param [out] pThrEnv Thread的Thread Env。
-    @return void
-    */
-    virtual void onThreadClosed(CwxTss*& pThrEnv);
-    /**
     @brief 线程的body，若需要改变线程的运行行为，则重载此API
     @param [out] pThrEnv Thread的Thread Env。
     @return void
     */
-    virtual void threadMain(CwxTss* pThrEnv);
-    ///check thread 是否死锁。若需要改变检查的规则，则重载此API
-    virtual bool isDeath();
+    virtual void threadMain();
     ///check thread 是否停止。若需要改变检查的规则，则重载此API
     virtual bool isStop();
     ///获取线程的TSS，及Thread env
@@ -138,7 +115,7 @@ public:
     @param [in] stacksize 线程的堆栈的大小。
     @return -1：失败，错误原因在errno；0成功。
     */
-    static int spawn(CWX_THR_FUNC func,
+    static int spawn(CWX_OS_THR_FUNC func,
         void *args=NULL,
         long flags=THREAD_NEW_LWP | THREAD_JOINABLE,
         pthread_t *thr_id=NULL,
@@ -160,13 +137,14 @@ public:
 private:
     static void* threadFunc(void *);
 private:
-    CwxAppFramework*        m_pApp;///<架构的APP
-    CwxTss*             m_pTssEnv;///<线程的tss
+    CwxTss*                m_pTssEnv;///<线程的tss
     CWX_UINT16             m_unGroupId;///<线程的线程组id
     CWX_UINT16             m_unThreadId;///<线程在线程组中的序号
-    CWX_UINT32             m_uiTheadDeathMsgWaterMask;///<线程death检查的队列消息排队阀值
-    CWX_UINT32             m_uiThreadDeathUpdateWaterMask;///<线程death检查的线程无状态更新的时间阀值
-    CwxMsgQueue*         m_msgQueue;
+    CwxMsgQueue*           m_msgQueue; ///<队列
+    CwxCommander*          m_commander; ///<commander
+    CWX_TSS_THR_FUNC       m_func; ///<用户指定的thread main function
+    CwxThreadPoolMgr*      m_mgr; ///<线程的管理对象
+    void*                  m_arg; ///<线程的参数
     pthread_t              m_tid;
 };
 

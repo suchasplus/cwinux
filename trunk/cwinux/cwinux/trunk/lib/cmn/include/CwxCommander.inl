@@ -2,7 +2,7 @@
 CWINUX_BEGIN_NAMESPACE
 
 //0:success, -1: not unique
-inline int CwxAppCommander::regHandle(CWX_UINT32 uiSvrID, CwxAppCmdOp* pHandle)
+inline int CwxCommander::regHandle(CWX_UINT32 uiSvrID, CwxAppCmdOp* pHandle)
 {
     CWX_ASSERT(pHandle != NULL);
     if (this->getEventOp(uiSvrID)) return -1;
@@ -12,7 +12,7 @@ inline int CwxAppCommander::regHandle(CWX_UINT32 uiSvrID, CwxAppCmdOp* pHandle)
 }
 //true: has object to accept the msg,
 //false: no object to accept the msg
-inline bool CwxAppCommander::dispatch(CwxMsgBlock*& msg, CwxTss* pThrEnv, int& iRet)
+inline bool CwxCommander::dispatch(CwxMsgBlock*& msg, CwxTss* pThrEnv, int& iRet)
 {
     CwxAppCmdOp* pHandle = getEventOp(msg->event().getSvrId());
     if (!pHandle) return false;
@@ -35,7 +35,7 @@ inline bool CwxAppCommander::dispatch(CwxMsgBlock*& msg, CwxTss* pThrEnv, int& i
 }
 
 
-inline CwxAppCmdOp* CwxAppCommander::getEventOp(CWX_UINT32 uiSvrID)
+inline CwxAppCmdOp* CwxCommander::getEventOp(CWX_UINT32 uiSvrID)
 {
     CwxEventCommandHash::iterator iter = this->m_msgHash.find(uiSvrID);
     if (iter != this->m_msgHash.end())
