@@ -38,7 +38,6 @@ cwxappinclude_HEADERS=\
 	../include/CwxAppHandler4IoEvent.h\
 	../include/CwxAppHandler4UnixConn.inl\
 	../include/CwxAppProcessMgr.h\
-	../include/CwxAppCommander.h\
 	../include/CwxAppHandler4IoMsg.h\
 	../include/CwxAppHandlerCache.h\
 	../include/CwxAppReactor.h\
