@@ -8,21 +8,11 @@ CwxThreadPool::CwxThreadPool(CWX_UINT16 unGroupId,///<线程池的thread-group
                  CwxThreadPoolMgr* mgr, ///<线程的管理对象
                  CwxCommander* commander,///<队列消息消费的缺省commander，若指定func可以不指定
                  CWX_TSS_THR_FUNC func, ///<用户的线程main函数
-                 void*            arg, ///<func的void*参数
-                 CwxMsgQueue* queue///<线程池的队列，若不指定，则系统默认创建
+                 void*            arg ///<func的void*参数
                  ):CwxTpi(unGroupId, unThreadNum)
 {
     m_arrTssEnv = NULL;
-    if (!queue)
-    {
-        m_msgQueue = new CwxMsgQueue(1024*1024*200, 1024*1024*200);
-        m_bOwnQueue = true;
-    }
-    else
-    {
-        m_msgQueue = queue;
-        m_bOwnQueue = false;
-    }
+    m_msgQueue = new CwxMsgQueue(1024*1024*200, 1024*1024*200);
     m_commander = commander;
     m_func = func;
     m_arg = arg;
@@ -125,7 +115,7 @@ void CwxThreadPool::_stop()
             m_threadArr[i]->stop();
         }
     }
-    if (m_bOwnQueue) m_msgQueue->flush();
+    m_msgQueue->flush();
     m_mgr->remove(getGroupId());
 }
 

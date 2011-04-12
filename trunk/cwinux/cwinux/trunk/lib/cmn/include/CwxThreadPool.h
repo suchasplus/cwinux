@@ -41,8 +41,7 @@ public :
         CwxThreadPoolMgr* mgr, ///<线程的管理对象
         CwxCommander* commander,///<队列消息消费的缺省commander，若指定func可以不指定
         CWX_TSS_THR_FUNC func=NULL, ///<用户的线程main函数
-        void*            arg=NULL, ///<func的void*参数
-        CwxMsgQueue* queue = NULL///<线程池的队列，若不指定，则系统默认创建
+        void*            arg=NULL
         );
     ///析构函数
     ~CwxThreadPool();
@@ -86,7 +85,6 @@ protected:
     CwxMutexLock            m_lock;
     CwxTss**                m_arrTssEnv;///<线程的tss
     CwxMsgQueue*           m_msgQueue; ///<队列
-    bool                   m_bOwnQueue; ///<是否拥有队列
     CwxCommander*          m_commander; ///<commander
     CWX_TSS_THR_FUNC       m_func; ///<用户指定的thread main function
     CwxThreadPoolMgr*      m_mgr; ///<线程的管理对象
