@@ -22,8 +22,8 @@
 #include "CwxMsgBlock.h"
 #include "CwxAppMacro.h"
 #include "CwxAppConfig.h"
-#include "CwxAppTpi.h"
-#include "CwxAppThread.h"
+#include "CwxTpi.h"
+#include "CwxThread.h"
 #include "CwxTss.h"
 
 
@@ -35,7 +35,7 @@ class CwxAppFramework;
 @brief 可以控制线程池每个线程的线程池。
        此线程池本身就是一个生产、消费者队列。
 */
-class CWX_API CwxAppThreadPoolEx:public CwxAppTpi
+class CWX_API CwxAppThreadPoolEx:public CwxTpi
 {
 public:
     enum{
@@ -82,7 +82,7 @@ public:
     @param [in] uiUpdateWaterMask 线程死锁的监测的线程状态没更新时间的阀值。
     @return NULL：失败； 否则，为创建的线程对象
     */
-    virtual CwxAppThread* onCreateThread(CwxAppFramework* pApp, CWX_UINT16 unGroup, CWX_UINT16 unThreadId, CWX_UINT32 uiMsgWaterMask, CWX_UINT32 uiUpdateWaterMask);
+    virtual CwxThread* onCreateThread(CwxAppFramework* pApp, CWX_UINT16 unGroup, CWX_UINT16 unThreadId, CWX_UINT32 uiMsgWaterMask, CWX_UINT32 uiUpdateWaterMask);
 public:
     ///获取线程的消息队列排队消息数
     inline size_t getQueuedMsgNum();
@@ -97,7 +97,7 @@ public:
     inline int append(CwxMsgBlock* pMsg, CWX_UINT32 uiThread);
 private:
     CwxAppFramework*        m_pApp;///<架构的APP
-    CwxAppThread**          m_arrThreadPool;///<线程的数组
+    CwxThread**          m_arrThreadPool;///<线程的数组
     CWX_UINT32              m_uiTheadDeathMsgWaterMask;///<线程death检查的队列消息排队阀值
     CWX_UINT32              m_uiThreadDeathUpdateWaterMask;///<线程death检查的线程无状态更新的时间阀值
 };

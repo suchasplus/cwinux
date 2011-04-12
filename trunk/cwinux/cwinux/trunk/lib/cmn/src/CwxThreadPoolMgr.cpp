@@ -1,11 +1,11 @@
-#include "CwxAppThreadPoolMgr.h"
+#include "CwxThreadPoolMgr.h"
 
 CWINUX_BEGIN_NAMESPACE
-CwxAppThreadPoolMgr::CwxAppThreadPoolMgr()
+CwxThreadPoolMgr::CwxThreadPoolMgr()
 {
 }
 
-CwxAppThreadPoolMgr::~CwxAppThreadPoolMgr()
+CwxThreadPoolMgr::~CwxThreadPoolMgr()
 {
     m_threadPoolMap.clear();
     map<CWX_UINT16, map<CWX_UINT16, CwxTss*> >::iterator iter =m_threadPoolTss.begin();
@@ -22,7 +22,7 @@ CwxAppThreadPoolMgr::~CwxAppThreadPoolMgr()
     m_threadPoolTss.clear();
 }
 
-bool CwxAppThreadPoolMgr::add(CWX_UINT16 unGroupId, CwxAppTpi* pThreadPool)
+bool CwxThreadPoolMgr::add(CWX_UINT16 unGroupId, CwxTpi* pThreadPool)
 {
     CwxMutexGuard<CwxMutexLock> lock(&m_lock);
     if (m_threadPoolMap.find(unGroupId) != m_threadPoolMap.end()) return false;
@@ -30,42 +30,30 @@ bool CwxAppThreadPoolMgr::add(CWX_UINT16 unGroupId, CwxAppTpi* pThreadPool)
     return true;
 }
 
-bool CwxAppThreadPoolMgr::remove(CWX_UINT16 unGroupId)
+bool CwxThreadPoolMgr::remove(CWX_UINT16 unGroupId)
 {
     CwxMutexGuard<CwxMutexLock> lock(&m_lock);
     return m_threadPoolMap.erase(unGroupId)>0?true:false;
 }
 
-bool CwxAppThreadPoolMgr::isValid()
-{
-    CwxMutexGuard<CwxMutexLock> lock(&m_lock);
-    map<CWX_UINT16, CwxAppTpi*>::iterator iter=m_threadPoolMap.begin();
-    while(iter != m_threadPoolMap.end())
-    {
-        if (iter->second->isDeath()) return false;
-        iter++;
-    }
-    return true;
-}
-
-bool CwxAppThreadPoolMgr::isExist(CWX_UINT16 unGroupId)
+bool CwxThreadPoolMgr::isExist(CWX_UINT16 unGroupId)
 {
     CwxMutexGuard<CwxMutexLock> lock(&m_lock);
     return m_threadPoolMap.find(unGroupId) != m_threadPoolMap.end();
 }
 
 
-CWX_UINT16 CwxAppThreadPoolMgr::getNum()
+CWX_UINT16 CwxThreadPoolMgr::getNum()
 {
     CwxMutexGuard<CwxMutexLock> lock(&m_lock);
     return m_threadPoolMap.size();
 }
 
-bool CwxAppThreadPoolMgr::addTss(CwxTss* pTss)
+bool CwxThreadPoolMgr::addTss(CwxTss* pTss)
 {
     CwxMutexGuard<CwxMutexLock> lock(&m_lock);
-    CWX_UINT16 unGroup = pTss->getThreadInfo()->getThreadGroup();
-    CWX_UINT16 unThreadNo = pTss->getThreadInfo()->getThreadNo();
+    CWX_UINT16 unGroup = pTss->getThreadInfo().getThreadGroup();
+    CWX_UINT16 unThreadNo = pTss->getThreadInfo().getThreadNo();
     map<CWX_UINT16, map<CWX_UINT16, CwxTss*> >::iterator iter = m_threadPoolTss.find(unGroup);
     if (iter == m_threadPoolTss.end())
     {
@@ -80,7 +68,7 @@ bool CwxAppThreadPoolMgr::addTss(CwxTss* pTss)
     return true;
 }
 
-void CwxAppThreadPoolMgr::getTss(vector<vector<CwxTss*> >& arrTss)
+void CwxThreadPoolMgr::getTss(vector<vector<CwxTss*> >& arrTss)
 {
     CwxMutexGuard<CwxMutexLock> lock(&m_lock);
     vector<CwxTss*> poolTss;
@@ -101,7 +89,7 @@ void CwxAppThreadPoolMgr::getTss(vector<vector<CwxTss*> >& arrTss)
 }
 
 
-void CwxAppThreadPoolMgr::getTss(CWX_UINT16 unGroup, vector<CwxTss*>& arrTss)
+void CwxThreadPoolMgr::getTss(CWX_UINT16 unGroup, vector<CwxTss*>& arrTss)
 {
     CwxMutexGuard<CwxMutexLock> lock(&m_lock);
     arrTss.clear();
@@ -117,7 +105,7 @@ void CwxAppThreadPoolMgr::getTss(CWX_UINT16 unGroup, vector<CwxTss*>& arrTss)
     }
 }
 
-CwxTss* CwxAppThreadPoolMgr::getTss(CWX_UINT16 unGroup, CWX_UINT16 unThreadId)
+CwxTss* CwxThreadPoolMgr::getTss(CWX_UINT16 unGroup, CWX_UINT16 unThreadId)
 {
     CwxMutexGuard<CwxMutexLock> lock(&m_lock);
     map<CWX_UINT16, map<CWX_UINT16, CwxTss*> >::iterator iter = m_threadPoolTss.find(unGroup);

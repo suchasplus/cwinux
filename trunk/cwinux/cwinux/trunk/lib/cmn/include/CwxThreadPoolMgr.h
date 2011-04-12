@@ -1,5 +1,5 @@
-#ifndef __CWX_APP_THREAD_POOL_MGR_H__
-#define __CWX_APP_THREAD_POOL_MGR_H__
+#ifndef __CWX_THREAD_POOL_MGR_H__
+#define __CWX_THREAD_POOL_MGR_H__
 /*
 版权声明：
     本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html），
@@ -7,7 +7,7 @@
 */
 
 /**
-@file CwxAppThreadPoolMgr.h
+@file CwxThreadPoolMgr.h
 @brief 线程池及其线程的TSS的管理对象的实现
 @author cwinux@gmail.com
 @version 0.1
@@ -21,23 +21,21 @@
 #include "CwxType.h"
 #include "CwxLockGuard.h"
 #include "CwxMutexLock.h"
-#include "CwxAppMacro.h"
 #include "CwxTss.h"
-#include "CwxAppTpi.h"
-#include "CwxTss.h"
+#include "CwxTpi.h"
 
 CWINUX_BEGIN_NAMESPACE
 /**
-@class CwxAppThreadPoolMgr
+@class CwxThreadPoolMgr
 @brief 线程池及其线程的TSS的管理对象
 */
-class CWX_API CwxAppThreadPoolMgr
+class CWX_API CwxThreadPoolMgr
 {
 public:
     ///构造函数
-    CwxAppThreadPoolMgr();
+    CwxThreadPoolMgr();
     ///析构函数
-    ~CwxAppThreadPoolMgr();
+    ~CwxThreadPoolMgr();
 public:
     /**
     @brief 往管理器添加一个线程池
@@ -45,18 +43,13 @@ public:
     @param [in] pThreadPool 线程池对象
     @return false：unGroupId指定的线程池已经存在； true：成功
     */
-    bool add(CWX_UINT16 unGroupId, CwxAppTpi* pThreadPool);
+    bool add(CWX_UINT16 unGroupId, CwxTpi* pThreadPool);
     /**
     @brief 从管理器中删除一个线程池
     @param [in] unGroupId 删除线程池的线程组ID
     @return false：不存在； true：成功删除
     */
     bool remove(CWX_UINT16 unGroupId);
-    /**
-    @brief 检查管理的线程池的线程状态是否正常
-    @return false：不正常； true：正常
-    */
-    bool isValid();
     /**
     @brief 检查指定的unGroupId的线程组在管理器中是否存在
     @return false：不存在； true：成功删除
@@ -92,7 +85,7 @@ public:
     CwxTss* getTss(CWX_UINT16 unGroup, CWX_UINT16 unThreadId);
 private:
     CwxMutexLock        m_lock;///<thread lock for sync.
-    map<CWX_UINT16, CwxAppTpi*>  m_threadPoolMap; ///<线程池的MAP
+    map<CWX_UINT16, CwxTpi*>  m_threadPoolMap; ///<线程池的MAP
     map<CWX_UINT16, map<CWX_UINT16, CwxTss*> >  m_threadPoolTss;///线程Tss的map
 };
 

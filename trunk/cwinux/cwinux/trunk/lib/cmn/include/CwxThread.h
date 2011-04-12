@@ -1,5 +1,5 @@
-#ifndef __CWX_APP_THREAD_H__
-#define __CWX_APP_THREAD_H__
+#ifndef __CWX_THREAD_H__
+#define __CWX_THREAD_H__
 /*
 版权声明：
     本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html），
@@ -7,7 +7,7 @@
 */
 
 /**
-@file CwxAppThread.h
+@file CwxThread.h
 @brief 线程对象定义
 @author cwinux@gmail.com
 @version 0.1
@@ -49,7 +49,7 @@ typedef void* (*CWX_THR_FUNC)(void *);
 #define THREAD_SCHED_IO            0x01000000
 #define CWX_DEFAULT_THREAD_PRIORITY (-0x7fffffffL - 1L)
 
-class CWX_API CwxAppThread
+class CWX_API CwxThread
 {
 public:
     ///定义线程常量
@@ -59,14 +59,14 @@ public:
     };
 public :
     ///构造函数
-    CwxAppThread(CwxAppFramework* pApp,///<app对象
+    CwxThread(CwxAppFramework* pApp,///<app对象
         CWX_UINT16 unGroupId,///<线程的group id
         CWX_UINT16 unThreadId=0,///<线程在线程group中的序号
         CWX_UINT32 uiDeathCheckMsgWaterMask=DEATH_CHECK_MSG_WATER_MASK,///<线程的状态监测的排队消息门限
         CWX_UINT32 uiDeathCheckUpdateWaterMask=DEATH_CHECK_UPDATE_WATER_MASK///<线程失效的无状态更新的时间门限
         );
     ///析构函数
-    virtual ~CwxAppThread();
+    virtual ~CwxThread();
 public:
     /**
     @brief 启动线程
@@ -172,6 +172,6 @@ private:
 
 CWINUX_END_NAMESPACE
 
-#include "CwxAppThread.inl"
+#include "CwxThread.inl"
 #include "CwxPost.h"
 #endif

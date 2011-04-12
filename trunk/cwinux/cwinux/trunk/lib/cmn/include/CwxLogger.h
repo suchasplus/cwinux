@@ -213,23 +213,23 @@ private:
 CWINUX_END_NAMESPACE
 ///输出一个错误消息
 #define CWX_ERROR(msg) do {\
-    CWX_APP_TSS_FILE_NO = __LINE__;\
-    CWX_APP_TSS_FILE_NAME = __FILE__;\
+    CWX_TSS_FILE_NO = __LINE__;\
+    CWX_TSS_FILE_NAME = __FILE__;\
     CwxAppLogger::instance()->error msg;} while(0)
 ///输出一个警告信息
 #define CWX_WARNING(msg) do {\
-    CWX_APP_TSS_FILE_NO = __LINE__;\
-    CWX_APP_TSS_FILE_NAME = __FILE__;\
+    CWX_TSS_FILE_NO = __LINE__;\
+    CWX_TSS_FILE_NAME = __FILE__;\
     CwxAppLogger::instance()->warning msg;} while(0)
 ///输出一个调试信息
 #define CWX_DEBUG(msg) do {\
-    CWX_APP_TSS_FILE_NO = __LINE__;\
-    CWX_APP_TSS_FILE_NAME = __FILE__;\
+    CWX_TSS_FILE_NO = __LINE__;\
+    CWX_TSS_FILE_NAME = __FILE__;\
     CwxAppLogger::instance()->debug msg;} while(0)
 ///输出一个info信息
 #define CWX_INFO(msg) do {\
-    CWX_APP_TSS_FILE_NO = 0;\
-    CWX_APP_TSS_FILE_NAME = NULL;\
+    CWX_TSS_FILE_NO = 0;\
+    CWX_TSS_FILE_NAME = NULL;\
     CwxAppLogger::instance()->info msg;} while(0)
 #include "CwxPost.h"
 #endif

@@ -1,5 +1,5 @@
-#ifndef __CWX_APP_TPI_H__
-#define __CWX_APP_TPI_H__
+#ifndef __CWX_TPI_H__
+#define __CWX_TPI_H__
 /*
 版权声明：
     本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html），
@@ -7,7 +7,7 @@
 */
 
 /**
-@file CwxAppTpi.h
+@file CwxTpi.h
 @brief 线程池接口定义
 @author cwinux@gmail.com
 @version 0.1
@@ -19,27 +19,25 @@
 #include "CwxPre.h"
 #include "CwxGlobalMacro.h"
 #include "CwxType.h"
-#include "CwxAppMacro.h"
 #include "CwxTss.h"
 
 CWINUX_BEGIN_NAMESPACE
 
-class CwxAppFramework;
 /**
-@class CwxAppTpi
+@class CwxTpi
 @brief 线程池的接口对象。
 */
 
-class CWX_API CwxAppTpi
+class CWX_API CwxTpi
 {
 public :
     ///构造函数
-    CwxAppTpi(CWX_UINT16 unGroup, CWX_UINT16 unThreadNum)
+    CwxTpi(CWX_UINT16 unGroup, CWX_UINT16 unThreadNum)
         :m_unGroup(unGroup), m_unThreadNum(unThreadNum)
     {
     }
     ///析构函数
-    virtual ~CwxAppTpi()
+    virtual ~CwxTpi()
     {
 
     }

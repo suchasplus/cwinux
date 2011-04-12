@@ -1,11 +1,11 @@
-#include "CwxAppThread.h"
+#include "CwxThread.h"
 #include "CwxAppLogger.h"
 #include "CwxAppFramework.h"
 
 CWINUX_BEGIN_NAMESPACE
 
 ///构造函数
-CwxAppThread::CwxAppThread(CwxAppFramework* pApp,///<app对象
+CwxThread::CwxThread(CwxAppFramework* pApp,///<app对象
              CWX_UINT16 unGroupId,///<线程的group id
              CWX_UINT16 unThreadId,///<线程在线程group中的序号
              CWX_UINT32 uiDeathCheckMsgWaterMask,///<线程的状态监测的排队消息门限
@@ -21,7 +21,7 @@ CwxAppThread::CwxAppThread(CwxAppFramework* pApp,///<app对象
     m_msgQueue = new CwxMsgQueue(1024*1024*200, 1024*1024*200);
 }
 
-CwxAppThread::~CwxAppThread()
+CwxThread::~CwxThread()
 {
     delete m_msgQueue;
     m_msgQueue = NULL;
@@ -29,10 +29,10 @@ CwxAppThread::~CwxAppThread()
 
 
 
-int CwxAppThread::start(CwxTss* pThrEnv, size_t stack_size)
+int CwxThread::start(CwxTss* pThrEnv, size_t stack_size)
 {
     m_pTssEnv = pThrEnv;
-    return CwxAppThread::spawn(
+    return CwxThread::spawn(
         threadFunc,
         this,
         THREAD_NEW_LWP | THREAD_JOINABLE | THREAD_INHERIT_SCHED,
@@ -43,7 +43,7 @@ int CwxAppThread::start(CwxTss* pThrEnv, size_t stack_size)
         );
 }
 
-void CwxAppThread::stop()
+void CwxThread::stop()
 {
     m_msgQueue->deactivate();
     join(m_tid, NULL);
@@ -51,14 +51,14 @@ void CwxAppThread::stop()
 }
 
 
-int CwxAppThread::onThreadCreated(CWX_UINT16 unGroup, CWX_UINT16 unThreadId, CwxTss*& pThrEnv)
+int CwxThread::onThreadCreated(CWX_UINT16 unGroup, CWX_UINT16 unThreadId, CwxTss*& pThrEnv)
 {
     if (!pThrEnv)
     {
         pThrEnv = new CwxTss(new CwxTssInfo());
     }
-    pThrEnv->getThreadInfo()->setThreadGroup(unGroup);
-    pThrEnv->getThreadInfo()->setThreadNo(unThreadId);
+    pThrEnv->getThreadInfo().setThreadGroup(unGroup);
+    pThrEnv->getThreadInfo().setThreadNo(unThreadId);
     if (!m_pApp->getThreadPoolMgr()->addTss(pThrEnv))
     {
         delete pThrEnv;
@@ -67,23 +67,23 @@ int CwxAppThread::onThreadCreated(CWX_UINT16 unGroup, CWX_UINT16 unThreadId, Cwx
     return 0;
 }
 
-void CwxAppThread::onThreadClosed(CwxTss*& )
+void CwxThread::onThreadClosed(CwxTss*& )
 {
     //CwxTss::unRegTss();
 }
 
-void CwxAppThread::threadMain(CwxTss* pThrEnv)
+void CwxThread::threadMain(CwxTss* pThrEnv)
 {
     time_t ttTime = time(NULL);
     if (0 != onThreadCreated(m_unGroupId, m_unThreadId, pThrEnv)) return;
     m_pTssEnv = pThrEnv;
-    m_pTssEnv->getThreadInfo()->setStopped(false);
+    m_pTssEnv->getThreadInfo().setStopped(false);
     CwxTss::regTss(m_pTssEnv);
-    m_pTssEnv->getThreadInfo()->setThreadId(self());
-    m_pTssEnv->getThreadInfo()->setStartTime(ttTime);
-    m_pTssEnv->getThreadInfo()->setUpdateTime(ttTime);
-    m_pTssEnv->getThreadInfo()->setRecvMsgNum(0);
-    m_pTssEnv->getThreadInfo()->setQueuedMsgNum(0);
+    m_pTssEnv->getThreadInfo().setThreadId(self());
+    m_pTssEnv->getThreadInfo().setStartTime(ttTime);
+    m_pTssEnv->getThreadInfo().setUpdateTime(ttTime);
+    m_pTssEnv->getThreadInfo().setRecvMsgNum(0);
+    m_pTssEnv->getThreadInfo().setQueuedMsgNum(0);
     do
     {
         int iRet;
@@ -91,14 +91,14 @@ void CwxAppThread::threadMain(CwxTss* pThrEnv)
         CwxMsgBlock* block;
         CWX_UINT32 uiEventType = 0;
         CWX_UINT32 uiSvrId = 0;
-        pThrEnv->getThreadInfo()->setBlocked(true);
+        pThrEnv->getThreadInfo().setBlocked(true);
         while( (iRet = this->pop(block)) != -1)
         {//block until has query message
-            pThrEnv->getThreadInfo()->setBlocked(false);
+            pThrEnv->getThreadInfo().setBlocked(false);
             ttTime = time(NULL);
-            pThrEnv->getThreadInfo()->setUpdateTime(ttTime);
-            pThrEnv->getThreadInfo()->setQueuedMsgNum(iRet);
-            pThrEnv->getThreadInfo()->incRecvMsgNum();
+            pThrEnv->getThreadInfo().setUpdateTime(ttTime);
+            pThrEnv->getThreadInfo().setQueuedMsgNum(iRet);
+            pThrEnv->getThreadInfo().incRecvMsgNum();
             iRet = 0;
             uiEventType = block->event().getEvent();
             uiSvrId = block->event().getSvrId();
@@ -118,20 +118,20 @@ void CwxAppThread::threadMain(CwxTss* pThrEnv)
                 }
             }
             if (block) CwxMsgBlockAlloc::free(block);
-            pThrEnv->getThreadInfo()->setBlocked(true);
+            pThrEnv->getThreadInfo().setBlocked(true);
         }
 
     }while(0);
     onThreadClosed(m_pTssEnv);
-    m_pTssEnv->getThreadInfo()->setStopped(true);
+    m_pTssEnv->getThreadInfo().setStopped(true);
 }
 
-bool CwxAppThread::isDeath() 
+bool CwxThread::isDeath() 
 {
     time_t ttNow = time(NULL);
     if (getQueuedMsgNum() > m_uiTheadDeathMsgWaterMask)
     {
-        if ( m_pTssEnv && (ttNow - m_pTssEnv->getThreadInfo()->getUpdateTime() >
+        if ( m_pTssEnv && (ttNow - m_pTssEnv->getThreadInfo().getUpdateTime() >
             (int)m_uiThreadDeathUpdateWaterMask))
         {
             return true;
@@ -140,30 +140,30 @@ bool CwxAppThread::isDeath()
     return false;
 }
 
-bool CwxAppThread::isStop() 
+bool CwxThread::isStop() 
 {
     return m_msgQueue->getState() == CwxMsgQueue::DEACTIVATED;
 }
 
-CwxTss* CwxAppThread::getTss()
+CwxTss* CwxThread::getTss()
 {
     return m_pTssEnv;
 }
 
 ///锁住线程。返回值0：成功；-1：失败
-int CwxAppThread::lock()
+int CwxThread::lock()
 {
     return m_msgQueue->lock().acquire();
 }
 ///解锁这个线程。返回值0：成功；-1：失败
-int CwxAppThread::unlock()
+int CwxThread::unlock()
 {
     return m_msgQueue->lock().release();
 }
 
 
 
-int CwxAppThread::spawn(CWX_THR_FUNC func,
+int CwxThread::spawn(CWX_THR_FUNC func,
                    void *args,
                    long flags,
                    pthread_t *thr_id,
@@ -358,9 +358,9 @@ int CwxAppThread::spawn(CWX_THR_FUNC func,
     return 0;
 }
 
-void* CwxAppThread::threadFunc(void * thread)
+void* CwxThread::threadFunc(void * thread)
 {
-    CwxAppThread* pThread = (CwxAppThread*)thread;
+    CwxThread* pThread = (CwxThread*)thread;
     pThread->threadMain(pThread->m_pTssEnv);
     return thread;
 }

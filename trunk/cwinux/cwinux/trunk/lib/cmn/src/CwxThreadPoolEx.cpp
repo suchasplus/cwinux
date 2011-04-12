@@ -8,13 +8,13 @@ CwxAppThreadPoolEx::CwxAppThreadPoolEx(CwxAppFramework* pApp,///<app对象
                    CWX_UINT16 unThreadNum,///<线程池中线程的数量
                    CWX_UINT32 uiDeathCheckMsgWaterMask,///<线程的状态监测的排队消息门限
                    CWX_UINT32 uiDeathCheckUpdateWaterMask///<线程失效的无状态更新的时间门限
-                   ): CwxAppTpi(unGroupId, unThreadNum)
+                   ): CwxTpi(unGroupId, unThreadNum)
 {
     m_pApp = pApp;
     m_uiTheadDeathMsgWaterMask = uiDeathCheckMsgWaterMask;
     m_uiThreadDeathUpdateWaterMask = uiDeathCheckUpdateWaterMask;
-    m_arrThreadPool = new CwxAppThread*[unThreadNum];
-    memset(m_arrThreadPool, 0x00, sizeof(CwxAppThread*) * unThreadNum);
+    m_arrThreadPool = new CwxThread*[unThreadNum];
+    memset(m_arrThreadPool, 0x00, sizeof(CwxThread*) * unThreadNum);
 }
 
 ///析构函数
@@ -126,9 +126,9 @@ int CwxAppThreadPoolEx::unlock()
     return 0;
 }
 
-CwxAppThread* CwxAppThreadPoolEx::onCreateThread(CwxAppFramework* pApp, CWX_UINT16 unGroup, CWX_UINT16 unThreadId, CWX_UINT32 uiMsgWaterMask, CWX_UINT32 uiUpdateWaterMask)
+CwxThread* CwxAppThreadPoolEx::onCreateThread(CwxAppFramework* pApp, CWX_UINT16 unGroup, CWX_UINT16 unThreadId, CWX_UINT32 uiMsgWaterMask, CWX_UINT32 uiUpdateWaterMask)
 {
-    return new CwxAppThread(pApp, unGroup, unThreadId, uiMsgWaterMask, uiUpdateWaterMask);
+    return new CwxThread(pApp, unGroup, unThreadId, uiMsgWaterMask, uiUpdateWaterMask);
 }
 
 

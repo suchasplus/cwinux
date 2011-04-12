@@ -24,8 +24,8 @@
 #include "CwxAppMacro.h"
 #include "CwxAppConfig.h"
 #include "CwxTss.h"
-#include "CwxAppTpi.h"
-#include "CwxAppThread.h"
+#include "CwxTpi.h"
+#include "CwxThread.h"
 
 CWINUX_BEGIN_NAMESPACE
 
@@ -35,7 +35,7 @@ class CwxAppFramework;
 @brief 普通的线程池，线程池中的所有线程作为一个整体出现，无法单独调控。
        此线程池本身就是一个生产、消费者队列。
 */
-class CWX_API CwxAppThreadPool:public CwxAppTpi
+class CWX_API CwxAppThreadPool:public CwxTpi
 {
 public:
     enum{

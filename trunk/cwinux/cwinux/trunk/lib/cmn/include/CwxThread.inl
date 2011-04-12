@@ -2,7 +2,7 @@
 CWINUX_BEGIN_NAMESPACE
 
 ///获取线程的消息队列排队消息数
-inline size_t CwxAppThread::getQueuedMsgNum()
+inline size_t CwxThread::getQueuedMsgNum()
 {
     return m_msgQueue->getMsgCount();
 }
@@ -11,7 +11,7 @@ inline size_t CwxAppThread::getQueuedMsgNum()
 @param [in] pMsg append的消息
 @return -1：失败；>=0队列中排队的消息数量
 */
-inline int  CwxAppThread::append(CwxMsgBlock* pMsg)
+inline int  CwxThread::append(CwxMsgBlock* pMsg)
 {
     return this->m_msgQueue->enqueue_tail(pMsg);
 }
@@ -20,25 +20,25 @@ inline int  CwxAppThread::append(CwxMsgBlock* pMsg)
 @param [out] pMsg pop的消息。
 @return -1：失败；>=0队列中排队的消息数量
 */
-inline int CwxAppThread::pop(CwxMsgBlock*& pMsg)
+inline int CwxThread::pop(CwxMsgBlock*& pMsg)
 {
     return this->m_msgQueue->dequeue(pMsg);
 }
 
 
 ///获取线程的group id
-inline CWX_UINT16 CwxAppThread::getThreadId() const
+inline CWX_UINT16 CwxThread::getThreadId() const
 {
     return m_unThreadId;
 }
 ///获取现在在线程组中的序号
-inline CWX_UINT16 CwxAppThread::getGroupId() const 
+inline CWX_UINT16 CwxThread::getGroupId() const 
 { 
     return m_unGroupId;
 }
 
 
-inline int CwxAppThread::join(pthread_t thread, void **value_ptr)
+inline int CwxThread::join(pthread_t thread, void **value_ptr)
 {
     int result = ::pthread_join(thread, value_ptr);
     if (0 != result)
@@ -50,7 +50,7 @@ inline int CwxAppThread::join(pthread_t thread, void **value_ptr)
     return result;
 }
 
-inline int CwxAppThread::kill(pthread_t thread, int sig)
+inline int CwxThread::kill(pthread_t thread, int sig)
 {
     int result = ::pthread_kill(thread, sig);
     if (0 != result)
@@ -62,23 +62,23 @@ inline int CwxAppThread::kill(pthread_t thread, int sig)
     return result;
 }
 
-inline pthread_t CwxAppThread::self()
+inline pthread_t CwxThread::self()
 {
     return pthread_self();
 }
 
-inline void CwxAppThread::exit(void *value_ptr)
+inline void CwxThread::exit(void *value_ptr)
 {
     return pthread_exit(value_ptr);
 }
 
-inline bool CwxAppThread::equal(pthread_t t1, pthread_t t2)
+inline bool CwxThread::equal(pthread_t t1, pthread_t t2)
 {
     return pthread_equal(t1, t2) != 0;
 }
 
 
-inline int CwxAppThread::cancel(pthread_t thread)
+inline int CwxThread::cancel(pthread_t thread)
 {
     int result = ::pthread_cancel(thread);
     if (0 != result)

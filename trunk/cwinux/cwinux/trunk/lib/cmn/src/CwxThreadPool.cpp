@@ -9,7 +9,7 @@ CwxAppThreadPool::CwxAppThreadPool(CwxAppFramework* pApp,///<app对象
                  CWX_UINT16 unThreadNum,///<线程池中线程的数量
                  CWX_UINT32 uiDeathCheckMsgWaterMask,///<线程的状态监测的排队消息门限
                  CWX_UINT32 uiDeathCheckUpdateWaterMask///<线程失效的无状态更新的时间门限
-                 ):CwxAppTpi(unGroupId, unThreadNum)
+                 ):CwxTpi(unGroupId, unThreadNum)
 {
     m_pApp = pApp;
     m_arrTssEnv = NULL;
@@ -49,7 +49,7 @@ int CwxAppThreadPool::start(CwxTss** pThrEnv, size_t stack_size)
     memset(m_tidArr, 0x00, sizeof(pthread_t) * getThreadNum());
     for (CWX_UINT16 i=0; i<getThreadNum(); i++)
     {
-        if (0 != CwxAppThread::spawn(
+        if (0 != CwxThread::spawn(
             threadFunc,
             this,
             THREAD_NEW_LWP | THREAD_JOINABLE | THREAD_INHERIT_SCHED,
@@ -79,7 +79,7 @@ bool CwxAppThreadPool::isDeath()
     {
         for (CWX_UINT16 i=0; i<getThreadNum(); i++)
         {
-            if ( m_arrTssEnv[i] && (ttNow - m_arrTssEnv[i]->getThreadInfo()->getUpdateTime() > (int)m_uiThreadDeathUpdateWaterMask))
+            if ( m_arrTssEnv[i] && (ttNow - m_arrTssEnv[i]->getThreadInfo().getUpdateTime() > (int)m_uiThreadDeathUpdateWaterMask))
             {
                 return true;
             }
@@ -117,8 +117,8 @@ int CwxAppThreadPool::onThreadCreated(CWX_UINT16 unGroup, CWX_UINT16 unThreadId,
     {
         pThrEnv = new CwxTss(new CwxTssInfo());
     }
-    pThrEnv->getThreadInfo()->setThreadGroup(unGroup);
-    pThrEnv->getThreadInfo()->setThreadNo(unThreadId);
+    pThrEnv->getThreadInfo().setThreadGroup(unGroup);
+    pThrEnv->getThreadInfo().setThreadNo(unThreadId);
     if (!m_pApp->getThreadPoolMgr()->addTss(pThrEnv))
     {
         delete pThrEnv;
@@ -148,27 +148,27 @@ void CwxAppThreadPool::threadMain(CwxTss* pThrEnv)
     time_t ttTime = time(NULL);
     if (0 != onThreadCreated(getGroupId(), unThreadId, pThrEnv)) return ;
     m_arrTssEnv[unThreadId] = pThrEnv;
-    pThrEnv->getThreadInfo()->setStopped(false);
+    pThrEnv->getThreadInfo().setStopped(false);
     CwxTss::regTss(pThrEnv);
-    pThrEnv->getThreadInfo()->setThreadId(CwxAppThread::self());
-    pThrEnv->getThreadInfo()->setStartTime(ttTime);
-    pThrEnv->getThreadInfo()->setUpdateTime(ttTime);
-    pThrEnv->getThreadInfo()->setQueuedMsgNum(0);
-    pThrEnv->getThreadInfo()->setRecvMsgNum(0);
+    pThrEnv->getThreadInfo().setThreadId(CwxThread::self());
+    pThrEnv->getThreadInfo().setStartTime(ttTime);
+    pThrEnv->getThreadInfo().setUpdateTime(ttTime);
+    pThrEnv->getThreadInfo().setQueuedMsgNum(0);
+    pThrEnv->getThreadInfo().setRecvMsgNum(0);
     {
         int iRet;
         time_t ttTime = time(NULL);
         CwxMsgBlock* block = NULL;
         CWX_UINT32 uiEventType = 0;
         CWX_UINT32 uiSvrId = 0;
-        pThrEnv->getThreadInfo()->setBlocked(true);
+        pThrEnv->getThreadInfo().setBlocked(true);
         while((iRet = this->pop(block)) != -1)
         {//block until has query message
-            pThrEnv->getThreadInfo()->setBlocked(false);
+            pThrEnv->getThreadInfo().setBlocked(false);
             ttTime = time(NULL);
-            pThrEnv->getThreadInfo()->setUpdateTime(ttTime);
-            pThrEnv->getThreadInfo()->setQueuedMsgNum(iRet);
-            pThrEnv->getThreadInfo()->incRecvMsgNum();
+            pThrEnv->getThreadInfo().setUpdateTime(ttTime);
+            pThrEnv->getThreadInfo().setQueuedMsgNum(iRet);
+            pThrEnv->getThreadInfo().incRecvMsgNum();
             iRet = 0;
             uiEventType = block->event().getEvent();
             uiSvrId = block->event().getSvrId();
@@ -188,12 +188,12 @@ void CwxAppThreadPool::threadMain(CwxTss* pThrEnv)
                 }
             }
             if (block) CwxMsgBlockAlloc::free(block);
-            pThrEnv->getThreadInfo()->setBlocked(true);
+            pThrEnv->getThreadInfo().setBlocked(true);
         }
     }
 
     onThreadClosed(pThrEnv);
-    pThrEnv->getThreadInfo()->setStopped(true);
+    pThrEnv->getThreadInfo().setStopped(true);
 
 }
 
@@ -203,7 +203,7 @@ void CwxAppThreadPool::_stop()
     for(CWX_UINT16 i=0; i<getThreadNum(); i++)
     {
         if (0 == (int)m_tidArr[0]) break;
-        CwxAppThread::join(m_tidArr[i], NULL);
+        CwxThread::join(m_tidArr[i], NULL);
     }
     m_msgQueue->flush();
     m_pApp->getThreadPoolMgr()->remove(getGroupId());
@@ -217,7 +217,7 @@ void* CwxAppThreadPool::threadFunc(void *thread)
         CwxMutexGuard<CwxMutexLock> lock(&pThread->m_lock);
         for (CWX_UINT16 i=0; i<pThread->getThreadNum(); i++)
         {
-            if(CwxAppThread::equal(CwxAppThread::self(), pThread->m_tidArr[i]))
+            if(CwxThread::equal(CwxThread::self(), pThread->m_tidArr[i]))
             {
                 index = i;
                 break;

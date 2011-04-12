@@ -152,6 +152,8 @@ private:
     CWX_UINT64      m_llRecvMsgNum;///<线程处理的消息的数量
 };
 
+class CwxAppLogger;
+
 /**
 @class CwxTss
 @brief 线程的TSS对象，用户存放在整个线程声明周期内一直有效的对象。。
@@ -164,8 +166,7 @@ public:
     };
 public:
     ///构造函数
-    CwxTss(CwxTssInfo* pThreadInfo)
-        :m_pThreadInfo(pThreadInfo)
+    CwxTss()
     {
         m_fileNo = 0;
         m_fileName = NULL;
@@ -173,16 +174,13 @@ public:
     ///析构函数
     virtual ~CwxTss()
     {
-        if (m_pThreadInfo) delete m_pThreadInfo;
     }
 public:
     ///获取Tss的thread info信息
-    CwxTssInfo* getThreadInfo()
+    CwxTssInfo& getThreadInfo()
     {
         return m_pThreadInfo;
     }
-    ///对线程的运行信息，形成package对象；返回值：false；失败；true：成功
-    virtual bool packThreadInfo(CwxPackageWriter& threadInfoPack, char* szErr2K);
 public:
     ///初始化对象的静态数据
     static int initTss();
@@ -210,10 +208,10 @@ private:
     static pthread_key_t     m_tssKey;///<线程的tss对象
 };
 
-#define  CWX_APP_TSS(type) (type*)CwxTss::instance()
-#define  CWX_APP_TSS_2K_BUF  CwxTss::instance()->m_szBuf2K
-#define  CWX_APP_TSS_FILE_NO  CwxTss::instance()->m_fileNo
-#define  CWX_APP_TSS_FILE_NAME  CwxTss::instance()->m_fileName
+#define  CWX_TSS(type) (type*)CwxTss::instance()
+#define  CWX_TSS_2K_BUF  CwxTss::instance()->m_szBuf2K
+#define  CWX_TSS_FILE_NO  CwxTss::instance()->m_fileNo
+#define  CWX_TSS_FILE_NAME  CwxTss::instance()->m_fileName
 
 
 CWINUX_END_NAMESPACE
