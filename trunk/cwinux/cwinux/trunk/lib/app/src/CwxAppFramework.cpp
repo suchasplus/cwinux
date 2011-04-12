@@ -689,14 +689,6 @@ void CwxAppFramework::onTime(CwxTimeValue const& current)
         {
             kill(::getppid(), SIGHUP);
         }
-        if (m_pThreadPoolMgr)
-        {
-            if (!m_pThreadPoolMgr->isValid())
-            {
-                CWX_ERROR(("Thread pool's thread is not valid, exit..."));
-//                if (!isDebug()) _exit(0);
-            }
-        }
     }
 }
 
