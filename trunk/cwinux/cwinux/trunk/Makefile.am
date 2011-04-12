@@ -1,5 +1,5 @@
 
-SUBDIRS = lib/cmn/src lib/parse/src lib/store/src lib/net/src lib/poco/src lib/util/src lib/app/src  tool/blog_reader tool/mgr_client
+SUBDIRS = lib/cmn/src lib/parse/src lib/store/src lib/net/src lib/poco/src lib/util/src lib/app/src  tool/blog_reader 
 
 doc:
 	cd lib/cmn/src&&make doc&&cd ../../../

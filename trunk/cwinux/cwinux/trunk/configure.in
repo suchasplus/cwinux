@@ -74,4 +74,4 @@ AC_OUTPUT(lib/poco/src/Makefile)
 AC_OUTPUT(lib/util/src/Makefile)
 AC_OUTPUT(lib/app/src/Makefile)
 AC_OUTPUT(tool/blog_reader/Makefile)
-AC_OUTPUT(tool/mgr_client/Makefile)
+
