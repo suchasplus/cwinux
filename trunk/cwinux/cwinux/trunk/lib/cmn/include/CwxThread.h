@@ -22,6 +22,9 @@
 #include "CwxMutexLock.h"
 #include "CwxMsgQueue.h"
 #include "CwxMsgBlock.h"
+#include "CwxThreadPoolMgr.h"
+#include "CwxCommander.h"
+#include "CwxLogger.h"
 #include "CwxTss.h"
 
 CWINUX_BEGIN_NAMESPACE
