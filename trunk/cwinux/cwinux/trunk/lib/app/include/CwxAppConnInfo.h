@@ -2,7 +2,8 @@
 #define __CWX_APP_CONN_INFO_H__
 /*
 版权声明：
-    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html）
+    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html），
+    联系方式：email:cwinux@gmail.com；微博:http://t.sina.com.cn/cwinux
 */
 
 /**
@@ -25,9 +26,6 @@
 
 CWINUX_BEGIN_NAMESPACE
 class CwxAppHandler4Msg;
-class CwxAppPai;
-class CwxAppHostInfo;
-class CwxAppSvrInfo;
 /**
 @class CwxAppConnInfo
 @brief 连接对象，保存连接的状态、类型及数据收发等信息。
@@ -134,10 +132,6 @@ public:
     void*  getUserData() const;
     ///设置连接的用户数据
     void setUserData(void* userData);
-    ///获取连接的协议适配对象
-    CwxAppPai* getPai();
-    ///设置连接的协议适配对象
-    void setPai(CwxAppPai* pAdapter);
     ///获取连接等待发送的最大消息的数量，0表示没有限制
     CWX_UINT32 getMaxWaitingMsgNum() const;
     ///设置连接最大的等待发送的消息数量，默认0表示没有限制
@@ -176,13 +170,16 @@ public:
     void setReconnDelay(CWX_UINT32 uiDelay);
     ///获取连接对应的handler
     CwxAppHandler4Msg* getHandler();
+    ///设置发送socket buf
+    void setSockSndBuf(CWX_UINT32 uiSndBuf);
+    ///获取发送socket buf
+    CWX_UINT32 getSockSndBuf() const;
+    ///设置接受socket buf
+    void setSockRecvBuf(CWX_UINT32 uiRecvBuf);
+    ///获取接受socket buf
+    CWX_UINT32 getSockRecvBuf() const;
     ///设置连接对应的handler
     void setHandler(CwxAppHandler4Msg*  pHandler);
-    ///获取parent
-    CwxAppHostInfo* getParent();
-    ///设置parent
-    void setParent(CwxAppHostInfo* parent);
-
 public:
     ///将连接对象的状态信息复位
     void reset();
@@ -205,7 +202,6 @@ private:
     time_t             m_ttLastSendMsgTime;///<last send msg time
     time_t             m_ttKeepAliveSendTime;///<keep-alive send time
     bool               m_bKeepAliveReply; ///<sign for waiting keep-alive reply
-    CwxAppPai*         m_pPai; ///<协议适配对象
     void*              m_pUserData; ///<user dat for connection
     CWX_UINT32         m_uiContinueRecvNum; ///<conintue recv msg num
     CWX_UINT32         m_uiContinueSendNum; ///<连续发送的最大数量
@@ -214,108 +210,11 @@ private:
     bool               m_bInvokeCreate; ///<是否在open的时候，调用CwxAppFramework::onCreate，默认调用
     bool               m_bReconn; ///<是否是重连
     CWX_UINT32         m_uiReconnDelay; ///<重连延时的毫秒数
+    CWX_UINT32         m_uiSockSndBuf; ///<socket的发送buf大小。
+    CWX_UINT32         m_uiSockRecvBuf; ///<socket的接受buf大小。
     CwxAppHandler4Msg*  m_pHandler; ///<连接对应的Handler
-    CwxAppHostInfo*    m_parent; ///<连接的parent
 };
 
-
-/**
-@class CwxAppHostInfo
-@brief Framework的主机对象
-*/
-class CWX_API CwxAppHostInfo{
-public:
-    /**
-    @brief 构造函数
-    @param [in] uiSvrId 主机的svr id
-    @param [in] uiHostId 主机的host id
-    @param [in] parent 主机的SVR 对象
-    */
-    CwxAppHostInfo(CWX_UINT32 uiSvrId,
-        CWX_UINT32 uiHostId,
-        CwxAppSvrInfo* parent);
-public:
-    ///Get Svr id
-    inline CWX_UINT32 getSvrId() const;
-    ///Get host id
-    inline CWX_UINT32 getHostId() const;
-    ///Get conn nun
-    inline CWX_UINT32 getConnNum() const;
-    ///获取是否能够发送消息
-    inline bool isEnableSendMsg() const;
-    ///Get WaitMsgNum() 
-    inline CWX_UINT32 getWaitingMsgNum() const;
-    ///Get SndMsgNum
-    inline CWX_UINT64 getSndMsgNum() const;
-    ///Get RecvMsgNum
-    inline CWX_UINT64 getRecvMsgNum() const;
-    ///get RecentSndMsgNum
-    inline CWX_UINT32 getRecentSndMsgNum() const;
-    ///get RecentRecvMsgNum
-    inline CWX_UINT32 getRecentRecvMsgNum() const;
-    ///get RecentClosedCount
-    inline CWX_UINT32 getRecentClosedCount() const;
-    ///select connection for send msg
-    inline CwxAppConnInfo* selectConn();
-    ///Get parent
-    inline CwxAppSvrInfo * getParent();
-    ///Get host's valid connection
-    inline vector<CwxAppConnInfo*>* GetHostConn();
-public:
-    ///添加一个有效的主机连接
-    inline void addConn(CwxAppConnInfo* conn);
-    ///移除一个主机连接
-    inline void removeConn(CwxAppConnInfo* conn);
-    ///通知主机发送了一个消息
-    inline void sendOneMsg();
-    ///通知主机接收到一个要发送的消息
-    inline void recvOneMsg();
-    ///通知主机多了一个排队发送的消息
-    inline void waitingOneMsg();
-    ///计算主机的负载
-    inline void calcHostLoad();
-private:
-    vector<CwxAppConnInfo*>   m_hostConn;///<host's connection
-    CWX_UINT32                m_uiSvrId; ///<service id;
-    CWX_UINT32                m_uiHostId; ///<host id
-    CWX_UINT64                m_ullSndMsgNum; ///<send msg number
-    CWX_UINT64                m_ullRecvMsgNum; ///<recv msg number
-    CWX_UINT32                m_uiWaitingMsgNum; ///<msg num for waiting sending
-    CWX_UINT32                m_uiRecentSndMsgNum;//recent one minute's sent msg num
-    CWX_UINT32                m_uiRecentRecvMsgNum;//recent one minute's recv msg num
-    CWX_UINT32                m_uiRecentClosedCount;//recent one minute's closed connection
-    CWX_UINT32                m_uiRand;///<连接选择的随机数
-    CwxAppSvrInfo*            m_parent; //parent
-};
-
-/**
-@class CwxAppSvrInfo
-@brief Framework的SVR对象
-*/
-class CWX_API CwxAppSvrInfo
-{
-public:
-    ///构造函数
-    CwxAppSvrInfo(CWX_UINT32 uiSvrId);
-public:
-    ///Get svr id
-    inline CWX_UINT32 getSvrId() const;
-    ///Get HostNum
-    inline CWX_UINT32 getHostNum() const;
-    ///选择一台主机，进行消息的发送
-    inline CwxAppHostInfo* selectHost();
-    ///获取svr下的主机列表
-    inline vector<CwxAppHostInfo*>& getHosts();
-public:
-    ///增加一台新主机
-    inline void addHost(CwxAppHostInfo* host);
-    ///重新计算svr下不同主机的负载
-    inline void calcHostLoad();
-private:
-    vector<CwxAppHostInfo*>     m_svrHost;///<SVR下的主机信息
-    CWX_UINT32                 m_uiSvrId; ///<svr id
-    CWX_UINT32                 m_uiRand;///<主机选择的随机基数
-};
 
 CWINUX_END_NAMESPACE
 #include "CwxAppConnInfo.inl"

@@ -96,14 +96,14 @@ int CwxAppHandler4TcpConn::close(CWX_HANDLE )
     //reconnection or close
     if (CwxAppConnInfo::ESTABLISHED == ucLocState)
     {
-        if (m_conn.getParent()) this->m_conn.getParent()->removeConn(&m_conn);
         //re-dispatch all msg
         while(this->getNextMsg() == 1)
         {
             if (this->m_curSndingMsg && m_curSndingMsg->send_ctrl().isFailNotice())
             {
-                getApp()->dipatchFailureSendMsg(m_curSndingMsg);
+                this->getApp()->onFailSendMsg(m_curSndingMsg);
             }
+            if (m_curSndingMsg) CwxMsgBlockAlloc::free(m_curSndingMsg);
             this->m_curSndingMsg = NULL;
         }
         iCloseReturn = this->getApp()->connClosed(*this);

@@ -1,5 +1,4 @@
 #include "CwxAppConnInfo.h"
-#include "CwxAppPai.h"
 CWINUX_BEGIN_NAMESPACE
 CwxAppConnInfo::CwxAppConnInfo()
 {
@@ -26,41 +25,19 @@ CwxAppConnInfo::CwxAppConnInfo()
     m_uiContinueSendNum = 0;
     m_uiMaxWaitingMsgNum = 0;
     m_uiWaitingMsgNum = 0;
-    m_pPai = NULL;
     m_bInvokeCreate = true;
     m_bReconn = false;
     m_uiReconnDelay = 0;
+    m_uiSockSndBuf = 0;
+    m_uiSockRecvBuf =0;
+
     m_pHandler = NULL;
-    m_parent = NULL;
 }
 
 CwxAppConnInfo::~CwxAppConnInfo()
 {
-    if (m_pPai) delete m_pPai;
 }
 
-
-CwxAppHostInfo::CwxAppHostInfo(CWX_UINT32 uiSvrId,
-                               CWX_UINT32 uiHostId,
-                               CwxAppSvrInfo* parent)
-                               :m_uiSvrId(uiSvrId), m_uiHostId(uiHostId), m_parent(parent)
-{
-    m_ullSndMsgNum = 0 ;
-    m_ullRecvMsgNum = 0;
-    m_uiWaitingMsgNum = 0;
-    m_uiRecentSndMsgNum = 0;
-    m_uiRecentRecvMsgNum = 0;
-    m_uiRecentClosedCount = 0;
-    m_uiRand = 0;
-}
-
-
-///¹¹Ôìº¯Êý
-CwxAppSvrInfo::CwxAppSvrInfo(CWX_UINT32 uiSvrId)
-:m_uiSvrId(uiSvrId)
-{
-    m_uiRand = 0;
-}
 
 
 

@@ -65,7 +65,6 @@ inline bool CwxAppHandler4Msg::putMsg(CwxMsgBlock* msg)
         this->m_conn.setWaitingMsgNum(1);
         this->wakeUp();
     }
-    if (m_conn.getParent()) m_conn.getParent()->waitingOneMsg();
     return true;
 }
 

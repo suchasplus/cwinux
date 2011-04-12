@@ -59,14 +59,13 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 libcwxapp_la_LIBADD =
 am_libcwxapp_la_OBJECTS = libcwxapp_la-CwxAppCommander.lo \
 	libcwxapp_la-CwxAppHandler4Signal.lo \
-	libcwxapp_la-CwxAppMgrServer.lo \
 	libcwxapp_la-CwxAppThreadPool.lo libcwxapp_la-CwxAppConfig.lo \
 	libcwxapp_la-CwxAppHandler4Stdio.lo \
 	libcwxapp_la-CwxAppNoticePipe.lo \
 	libcwxapp_la-CwxAppThreadPoolEx.lo \
 	libcwxapp_la-CwxAppConnInfo.lo \
 	libcwxapp_la-CwxAppHandler4TcpConn.lo \
-	libcwxapp_la-CwxAppPai.lo libcwxapp_la-CwxAppThreadPoolMgr.lo \
+	libcwxapp_la-CwxAppThreadPoolMgr.lo \
 	libcwxapp_la-CwxAppFramework.lo \
 	libcwxapp_la-CwxAppHandler4Time.lo \
 	libcwxapp_la-CwxAppProcessMgr.lo libcwxapp_la-CwxAppTss.lo \
@@ -84,7 +83,6 @@ am_libcwxapp_la_OBJECTS = libcwxapp_la-CwxAppCommander.lo \
 	libcwxapp_la-CwxAppHandler4Msg.lo libcwxapp_la-CwxAppLogger.lo \
 	libcwxapp_la-CwxAppTcpConnector.lo \
 	libcwxapp_la-CwxAppHandler4Notice.lo \
-	libcwxapp_la-CwxAppMgrInterface.lo \
 	libcwxapp_la-CwxAppThread.lo
 libcwxapp_la_OBJECTS = $(am_libcwxapp_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir)
@@ -210,7 +208,6 @@ libcwxapp_la_CPPFLAGS = -W -Wall
 libcwxapp_la_SOURCES = \
 	CwxAppCommander.cpp\
 	CwxAppHandler4Signal.cpp\
-	CwxAppMgrServer.cpp\
 	CwxAppThreadPool.cpp\
 	CwxAppConfig.cpp\
 	CwxAppHandler4Stdio.cpp\
@@ -218,7 +215,6 @@ libcwxapp_la_SOURCES = \
 	CwxAppThreadPoolEx.cpp\
 	CwxAppConnInfo.cpp\
 	CwxAppHandler4TcpConn.cpp\
-	CwxAppPai.cpp\
 	CwxAppThreadPoolMgr.cpp\
 	CwxAppFramework.cpp\
 	CwxAppHandler4Time.cpp\
@@ -239,7 +235,6 @@ libcwxapp_la_SOURCES = \
 	CwxAppLogger.cpp\
 	CwxAppTcpConnector.cpp\
 	CwxAppHandler4Notice.cpp\
-	CwxAppMgrInterface.cpp\
 	CwxAppThread.cpp
 
 libcwxapp_la_LDFLAGS = 
@@ -277,12 +272,10 @@ cwxappinclude_HEADERS = \
 	../include/CwxAppUnixAcceptor.h\
 	../include/CwxAppForkMgr.h\
 	../include/CwxAppHandler4Stdio.h\
-	../include/CwxAppMgrInterface.h\
 	../include/CwxAppTcpConnector.h\
 	../include/CwxAppUnixConnector.h\
 	../include/CwxAppFramework.h\
 	../include/CwxAppHandler4TcpConn.h\
-	../include/CwxAppMgrServer.h\
 	../include/CwxAppThread.h\
 	../include/CwxAppFramework.inl\
 	../include/CwxAppHandler4TcpConn.inl\
@@ -294,7 +287,6 @@ cwxappinclude_HEADERS = \
 	../include/CwxAppThreadPoolEx.h\
 	../include/CwxAppHandler4Base.inl\
 	../include/CwxAppHandler4UnixConn.h\
-	../include/CwxAppPai.h\
 	../include/CwxAppThreadPoolEx.inl
 
 INCLUDES = -I@libevent_dir@/include -I$(srcdir)/../include -I$(srcdir)/../../cmn/include -I$(srcdir)/../../net/include
@@ -384,10 +376,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxapp_la-CwxAppHandlerCache.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxapp_la-CwxAppListenMgr.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxapp_la-CwxAppLogger.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxapp_la-CwxAppMgrInterface.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxapp_la-CwxAppMgrServer.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxapp_la-CwxAppNoticePipe.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxapp_la-CwxAppPai.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxapp_la-CwxAppProcessMgr.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxapp_la-CwxAppReactor.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxapp_la-CwxAppTaskBoard.Plo@am__quote@
@@ -435,13 +424,6 @@ libcwxapp_la-CwxAppHandler4Signal.lo: CwxAppHandler4Signal.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxAppHandler4Signal.cpp' object='libcwxapp_la-CwxAppHandler4Signal.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxapp_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxapp_la-CwxAppHandler4Signal.lo `test -f 'CwxAppHandler4Signal.cpp' || echo '$(srcdir)/'`CwxAppHandler4Signal.cpp
-
-libcwxapp_la-CwxAppMgrServer.lo: CwxAppMgrServer.cpp
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxapp_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwxapp_la-CwxAppMgrServer.lo -MD -MP -MF "$(DEPDIR)/libcwxapp_la-CwxAppMgrServer.Tpo" -c -o libcwxapp_la-CwxAppMgrServer.lo `test -f 'CwxAppMgrServer.cpp' || echo '$(srcdir)/'`CwxAppMgrServer.cpp; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/libcwxapp_la-CwxAppMgrServer.Tpo" "$(DEPDIR)/libcwxapp_la-CwxAppMgrServer.Plo"; else rm -f "$(DEPDIR)/libcwxapp_la-CwxAppMgrServer.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxAppMgrServer.cpp' object='libcwxapp_la-CwxAppMgrServer.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxapp_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxapp_la-CwxAppMgrServer.lo `test -f 'CwxAppMgrServer.cpp' || echo '$(srcdir)/'`CwxAppMgrServer.cpp
 
 libcwxapp_la-CwxAppThreadPool.lo: CwxAppThreadPool.cpp
 @am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxapp_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwxapp_la-CwxAppThreadPool.lo -MD -MP -MF "$(DEPDIR)/libcwxapp_la-CwxAppThreadPool.Tpo" -c -o libcwxapp_la-CwxAppThreadPool.lo `test -f 'CwxAppThreadPool.cpp' || echo '$(srcdir)/'`CwxAppThreadPool.cpp; \
@@ -491,13 +473,6 @@ libcwxapp_la-CwxAppHandler4TcpConn.lo: CwxAppHandler4TcpConn.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxAppHandler4TcpConn.cpp' object='libcwxapp_la-CwxAppHandler4TcpConn.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxapp_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxapp_la-CwxAppHandler4TcpConn.lo `test -f 'CwxAppHandler4TcpConn.cpp' || echo '$(srcdir)/'`CwxAppHandler4TcpConn.cpp
-
-libcwxapp_la-CwxAppPai.lo: CwxAppPai.cpp
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxapp_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwxapp_la-CwxAppPai.lo -MD -MP -MF "$(DEPDIR)/libcwxapp_la-CwxAppPai.Tpo" -c -o libcwxapp_la-CwxAppPai.lo `test -f 'CwxAppPai.cpp' || echo '$(srcdir)/'`CwxAppPai.cpp; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/libcwxapp_la-CwxAppPai.Tpo" "$(DEPDIR)/libcwxapp_la-CwxAppPai.Plo"; else rm -f "$(DEPDIR)/libcwxapp_la-CwxAppPai.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxAppPai.cpp' object='libcwxapp_la-CwxAppPai.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxapp_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxapp_la-CwxAppPai.lo `test -f 'CwxAppPai.cpp' || echo '$(srcdir)/'`CwxAppPai.cpp
 
 libcwxapp_la-CwxAppThreadPoolMgr.lo: CwxAppThreadPoolMgr.cpp
 @am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxapp_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwxapp_la-CwxAppThreadPoolMgr.lo -MD -MP -MF "$(DEPDIR)/libcwxapp_la-CwxAppThreadPoolMgr.Tpo" -c -o libcwxapp_la-CwxAppThreadPoolMgr.lo `test -f 'CwxAppThreadPoolMgr.cpp' || echo '$(srcdir)/'`CwxAppThreadPoolMgr.cpp; \
@@ -638,13 +613,6 @@ libcwxapp_la-CwxAppHandler4Notice.lo: CwxAppHandler4Notice.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxAppHandler4Notice.cpp' object='libcwxapp_la-CwxAppHandler4Notice.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxapp_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxapp_la-CwxAppHandler4Notice.lo `test -f 'CwxAppHandler4Notice.cpp' || echo '$(srcdir)/'`CwxAppHandler4Notice.cpp
-
-libcwxapp_la-CwxAppMgrInterface.lo: CwxAppMgrInterface.cpp
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxapp_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwxapp_la-CwxAppMgrInterface.lo -MD -MP -MF "$(DEPDIR)/libcwxapp_la-CwxAppMgrInterface.Tpo" -c -o libcwxapp_la-CwxAppMgrInterface.lo `test -f 'CwxAppMgrInterface.cpp' || echo '$(srcdir)/'`CwxAppMgrInterface.cpp; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/libcwxapp_la-CwxAppMgrInterface.Tpo" "$(DEPDIR)/libcwxapp_la-CwxAppMgrInterface.Plo"; else rm -f "$(DEPDIR)/libcwxapp_la-CwxAppMgrInterface.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxAppMgrInterface.cpp' object='libcwxapp_la-CwxAppMgrInterface.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxapp_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxapp_la-CwxAppMgrInterface.lo `test -f 'CwxAppMgrInterface.cpp' || echo '$(srcdir)/'`CwxAppMgrInterface.cpp
 
 libcwxapp_la-CwxAppThread.lo: CwxAppThread.cpp
 @am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxapp_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwxapp_la-CwxAppThread.lo -MD -MP -MF "$(DEPDIR)/libcwxapp_la-CwxAppThread.Tpo" -c -o libcwxapp_la-CwxAppThread.lo `test -f 'CwxAppThread.cpp' || echo '$(srcdir)/'`CwxAppThread.cpp; \

@@ -9,7 +9,6 @@ libcwxapp_la_CPPFLAGS = -W -Wall
 libcwxapp_la_SOURCES = \
 	CwxAppCommander.cpp\
 	CwxAppHandler4Signal.cpp\
-	CwxAppMgrServer.cpp\
 	CwxAppThreadPool.cpp\
 	CwxAppConfig.cpp\
 	CwxAppHandler4Stdio.cpp\
@@ -17,7 +16,6 @@ libcwxapp_la_SOURCES = \
 	CwxAppThreadPoolEx.cpp\
 	CwxAppConnInfo.cpp\
 	CwxAppHandler4TcpConn.cpp\
-	CwxAppPai.cpp\
 	CwxAppThreadPoolMgr.cpp\
 	CwxAppFramework.cpp\
 	CwxAppHandler4Time.cpp\
@@ -38,7 +36,6 @@ libcwxapp_la_SOURCES = \
 	CwxAppLogger.cpp\
 	CwxAppTcpConnector.cpp\
 	CwxAppHandler4Notice.cpp\
-	CwxAppMgrInterface.cpp\
 	CwxAppThread.cpp
 
 libcwxapp_la_LDFLAGS = 
@@ -77,12 +74,10 @@ cwxappinclude_HEADERS=\
 	../include/CwxAppUnixAcceptor.h\
 	../include/CwxAppForkMgr.h\
 	../include/CwxAppHandler4Stdio.h\
-	../include/CwxAppMgrInterface.h\
 	../include/CwxAppTcpConnector.h\
 	../include/CwxAppUnixConnector.h\
 	../include/CwxAppFramework.h\
 	../include/CwxAppHandler4TcpConn.h\
-	../include/CwxAppMgrServer.h\
 	../include/CwxAppThread.h\
 	../include/CwxAppFramework.inl\
 	../include/CwxAppHandler4TcpConn.inl\
@@ -94,7 +89,6 @@ cwxappinclude_HEADERS=\
 	../include/CwxAppThreadPoolEx.h\
 	../include/CwxAppHandler4Base.inl\
 	../include/CwxAppHandler4UnixConn.h\
-	../include/CwxAppPai.h\
 	../include/CwxAppThreadPoolEx.inl
 
 	

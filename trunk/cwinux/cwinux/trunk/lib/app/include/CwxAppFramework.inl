@@ -235,23 +235,10 @@ inline int CwxAppFramework::openConn(CwxAppHandler4Msg& conn, bool& bStopListen)
 {
     bool bSuspendConn = false;
     bStopListen = false;
-    if (conn.getConnInfo().getPai())
-    {
-        delete conn.getConnInfo().getPai();
-        conn.getConnInfo().setPai(NULL);
-    }
     int iRet = 0;
-    if (conn.getConnInfo().getSvrId() == SVR_TYPE_SYS)
-    {
-        CWX_ASSERT(m_pMgrServer);
-        bSuspendConn = false;
-        bStopListen = false;
-        iRet = 0;
-    }
-    else
-    {
-        if (!isStopped() && conn.getConnInfo().isInvokeCreate()) iRet = this->onConnCreated(conn, bSuspendConn, bStopListen);
-    }
+
+    if (!isStopped() && conn.getConnInfo().isInvokeCreate()) iRet = this->onConnCreated(conn, bSuspendConn, bStopListen);
+
     if (0 > iRet) return -1;
 
     if (this->reactor()->registerHandler(conn.getHandle(),
@@ -266,23 +253,11 @@ inline int CwxAppFramework::openConn(CwxAppHandler4Msg& conn, bool& bStopListen)
     {
         this->reactor()->suspendHandler(&conn, CwxAppHandler4Base::READ_MASK);
     }
-    if (conn.getConnInfo().isKeepalive() ||
-       (conn.getConnInfo().isRawData() &&
-       conn.getConnInfo().getPai() &&
-       conn.getConnInfo().getPai()->isKeepAlive()))
+    if (conn.getConnInfo().isKeepalive())
     {
         conn.getConnInfo().setKeepAliveReply(true);
         conn.getConnInfo().setLastRecvMsgTime(time(NULL));
         (*m_pKeepAliveMap)[conn.getConnInfo().getConnId()] = &conn;
-    }
-    if (conn.getConnInfo().getHostId())
-    {
-        HostMapKey hostKey(conn.getConnInfo().getSvrId(), conn.getConnInfo().getHostId());
-        CwxAppHostInfo* pHostInfo = m_pHostMap->find(hostKey)->second;
-        pHostInfo->addConn(&conn.getConnInfo());
-        conn.getConnInfo().setParent(pHostInfo);
-    }else{
-        conn.getConnInfo().setParent(NULL);
     }
 
     return 0;
@@ -301,16 +276,6 @@ inline int CwxAppFramework::recvMessage(CwxMsgHead& header,
     if (!conn.getConnInfo().isRawData() && header.isSysMsg())
     {
         return recvSysMessage(msg, conn, header);
-    }
-    else if (SVR_TYPE_SYS == conn.getConnInfo().getSvrId())
-    {
-        m_pMgrServer->onRecvMsg(msg, conn, header, m_pTss);
-        if (msg) CwxMsgBlockAlloc::free(msg);
-        return 0;
-    }
-    else if (conn.getConnInfo().isRawData() && conn.getConnInfo().getPai())
-    {
-        return conn.getConnInfo().getPai()->noticeRecvMsg(msg, conn, header, bSuspendConn);
     }
     return this->onRecvMsg(msg, conn, header, bSuspendConn);
 }
@@ -364,150 +329,9 @@ inline int CwxAppFramework::connClosed(CwxAppHandler4Msg& conn)
     {
         m_pKeepAliveMap->erase(conn.getConnInfo().getConnId());
     }
-    if (SVR_TYPE_SYS == conn.getConnInfo().getSvrId())
-    {
-        CWX_ASSERT(m_pMgrServer);
-        return 0;
-    }
     int iRet = this->onConnClosed(conn);
-    if (conn.getConnInfo().getPai())
-    {
-        delete conn.getConnInfo().getPai();
-        conn.getConnInfo().setPai(NULL);
-    }
     return iRet;
 }
-
-///根据SVR-ID,HOST-ID获取主机信息，NULL表示不存在。
-inline CwxAppHostInfo* CwxAppFramework::getHostById(CWX_UINT32 uiSvrId, CWX_UINT32 uiHostId)
-{
-    HostMapKey key(uiSvrId, uiHostId);
-    IdHostHash::iterator iter = m_pHostMap->find(key);
-    return m_pHostMap->end()==iter?NULL:iter->second;
-}
-///根据SVR-ID获取SVR信息，NULL表示不存在
-inline CwxAppSvrInfo* CwxAppFramework::getSvrById(CWX_UINT32 uiSvrId)
-{
-    IdSvrHash::iterator iter = m_pSvrMap->find(uiSvrId);
-    return m_pSvrMap->end()==iter?NULL:iter->second;
-}
-///往系统中注册服务类型为uiSvrId, 主机ID为uiHostId的主机
-inline void CwxAppFramework::addSvrHostInfo(CWX_UINT32 uiSvrId, CWX_UINT32 uiHostId)
-{
-    CwxAppSvrInfo* pSvrInfo = NULL;
-    IdSvrHash::iterator iter_svr = m_pSvrMap->find(uiSvrId);
-    if ( iter_svr == m_pSvrMap->end())
-    {
-        pSvrInfo = new CwxAppSvrInfo(uiSvrId);
-        (*m_pSvrMap)[uiSvrId] = pSvrInfo;
-    }
-    else
-    {
-        pSvrInfo = iter_svr->second;
-    }
-    if (uiHostId)
-    {
-        CwxAppHostInfo* pHostInfo = NULL;
-        HostMapKey hostKey(uiSvrId, uiHostId);
-        IdHostHash::iterator iter_host = m_pHostMap->find(hostKey);
-        if (iter_host == m_pHostMap->end())
-        {
-            pHostInfo = new CwxAppHostInfo(uiSvrId, uiHostId, pSvrInfo);
-            (*m_pHostMap)[hostKey] = pHostInfo;
-            pSvrInfo->addHost(pHostInfo);
-        }
-    }
-}
-
-///往msg中设置的主机发送消息，返回false表示发送失败
-inline bool CwxAppFramework::innerSendMsgByHost(CwxMsgBlock*& msg)
-{
-    CwxAppHostInfo* pHost = getHostById(msg->send_ctrl().getSvrId(), msg->send_ctrl().getHostId());
-    if (!pHost || !pHost->isEnableSendMsg())
-    {
-        if (msg->send_ctrl().isFailNotice())
-        {
-            failSendMsg(msg);
-        }
-        return false;
-    }
-    if (!innerNoticeSendMsgByHost(msg, pHost))
-    {
-        if (msg->send_ctrl().isFailNotice())
-        {
-            failSendMsg(msg);
-        }
-        return false;
-    }
-    return true;
-
-}
-///往msg中设置的服务下的某个主机发送消息，返回false表示发送失败
-inline bool CwxAppFramework::innerSendMsgBySvr(CwxMsgBlock*& msg)
-{
-    CwxAppSvrInfo* pSvr = getSvrById(msg->send_ctrl().getSvrId());
-    CwxAppHostInfo* pHost = NULL;
-    if (msg->send_ctrl().getDefHostId())
-    {
-        pHost = getHostById(msg->send_ctrl().getSvrId(), msg->send_ctrl().getDefHostId());
-        if (pHost && !pHost->isEnableSendMsg()) pHost = NULL;
-    }
-    if (!pHost) pHost = pSvr?pSvr->selectHost():NULL;
-    if (!pSvr || !pHost || !pHost->isEnableSendMsg())
-    {
-        if (msg->send_ctrl().isFailNotice())
-        {
-            failSendMsg(msg);
-        }
-        return false;
-    }
-    innerNoticeSendMsgByHost(msg , pHost);
-    return true;
-}
-///notice send msg
-inline bool CwxAppFramework::innerNoticeSendMsgByHost(CwxMsgBlock* msg, CwxAppHostInfo* pHost)
-{
-    CwxAppConnInfo* pConn = pHost->selectConn();
-    if(pConn) return pConn->getHandler()->putMsg(msg);
-    return false;
-}
-
-///通知一条消息发送失败，与onFailSendMsg()对应。
-inline void CwxAppFramework::failSendMsg(CwxMsgBlock*& msg)
-{
-    if (SVR_TYPE_SYS != msg->send_ctrl().getSvrId()){
-        onFailSendMsg(msg);
-    }else{
-        CWX_ASSERT(m_pMgrServer);
-    }
-}
-
-///消息发送失败的再发送处理。
-inline void CwxAppFramework::dipatchFailureSendMsg(CwxMsgBlock* msg)
-{
-    if (!msg->send_ctrl().isFixConnId() && msg->send_ctrl().isFailRetry())
-    {
-        if (msg->send_ctrl().isFixHostId()){
-            if (!innerSendMsgByHost(msg))
-            {
-                if(msg) CwxMsgBlockAlloc::free(msg);
-            }
-        }else if (msg->send_ctrl().isFixSvrId()){
-            if (!innerSendMsgBySvr(msg))
-            {
-                if(msg) CwxMsgBlockAlloc::free(msg);
-            }
-        }
-        return;
-    }
-    if (msg->send_ctrl().isFailNotice()){
-        failSendMsg(msg);
-    }
-    if (msg) CwxMsgBlockAlloc::free(msg);
-}
-
-
-
 
 
 CWINUX_END_NAMESPACE

@@ -200,16 +200,6 @@ inline void CwxAppConnInfo::setUserData(void* userData)
 {
     m_pUserData = userData;
 }
-///获取连接的协议适配对象
-inline CwxAppPai* CwxAppConnInfo::getPai()
-{
-    return m_pPai;
-}
-///设置连接的协议适配对象
-inline void CwxAppConnInfo::setPai(CwxAppPai* pAdapter)
-{
-    m_pPai = pAdapter;
-}
 
 ///获取连接等待发送的最大消息的数量，0表示没有限制
 inline CWX_UINT32 CwxAppConnInfo::getMaxWaitingMsgNum() const
@@ -323,6 +313,27 @@ inline void CwxAppConnInfo::setHandler(CwxAppHandler4Msg*  pHandler)
     m_pHandler = pHandler;
 }
 
+///设置发送socket buf
+inline void CwxAppConnInfo::setSockSndBuf(CWX_UINT32 uiSndBuf)
+{
+    m_uiSockSndBuf = uiSndBuf;
+}
+///获取发送socket buf
+inline CWX_UINT32 CwxAppConnInfo::getSockSndBuf() const
+{
+    return m_uiSockSndBuf;
+}
+///设置接受socket buf
+inline void CwxAppConnInfo::setSockRecvBuf(CWX_UINT32 uiRecvBuf)
+{
+    m_uiSockRecvBuf = uiRecvBuf;
+}
+///获取接受socket buf
+inline CWX_UINT32 CwxAppConnInfo::getSockRecvBuf() const
+{
+    return m_uiSockRecvBuf;
+}
+
 
 inline void CwxAppConnInfo::reset()
 {
@@ -335,210 +346,6 @@ inline void CwxAppConnInfo::reset()
     m_bReconn = false;
     m_uiReconnDelay = 0;
 }
-
-///获取parent
-inline CwxAppHostInfo* CwxAppConnInfo::getParent()
-{
-    return m_parent;
-}
-///设置parent
-inline void CwxAppConnInfo::setParent(CwxAppHostInfo* parent)
-{
-    m_parent = parent;
-}
-
-
-
-
-///Get Svr id
-inline CWX_UINT32 CwxAppHostInfo::getSvrId() const
-{
-    return m_uiSvrId;
-}
-///Get host id
-inline CWX_UINT32 CwxAppHostInfo::getHostId() const
-{
-    return m_uiHostId;
-}
-///Get conn nun
-inline CWX_UINT32 CwxAppHostInfo::getConnNum() const
-{
-    return m_hostConn.size();
-}
-///获取是否能够发送消息
-inline bool CwxAppHostInfo::isEnableSendMsg() const
-{
-    CWX_UINT32 uiSize = m_hostConn.size();
-    for (CWX_UINT32 i=0; i<uiSize; i++)
-    {
-        if (!m_hostConn[i]->isWaitingMsgQueueFull()) return true;
-        CWX_DEBUG(("Connection is full, svr_id=%u, host_id=%u, conn_id=%u, msg_num=%u", 
-            m_hostConn[i]->getSvrId(),
-            m_hostConn[i]->getHostId(),
-            m_hostConn[i]->getConnId(),
-            m_hostConn[i]->getWaitingMsgNum()));
-
-    }
-    return false;
-}
-
-///Get WaitMsgNum() 
-inline CWX_UINT32 CwxAppHostInfo::getWaitingMsgNum() const
-{
-    return m_uiWaitingMsgNum;
-}
-///Get SndMsgNum
-inline CWX_UINT64 CwxAppHostInfo::getSndMsgNum() const
-{
-    return m_ullSndMsgNum;
-}
-///Get RecvMsgNum
-inline CWX_UINT64 CwxAppHostInfo::getRecvMsgNum() const
-{
-    return m_ullRecvMsgNum;
-}
-///get RecentSndMsgNum
-inline CWX_UINT32 CwxAppHostInfo::getRecentSndMsgNum() const
-{
-    return m_uiRecentSndMsgNum;
-}
-///get RecentRecvMsgNum
-inline CWX_UINT32 CwxAppHostInfo::getRecentRecvMsgNum() const
-{
-    return m_uiRecentRecvMsgNum;
-}
-///get RecentClosedCount
-inline CWX_UINT32 CwxAppHostInfo::getRecentClosedCount() const
-{
-    return m_uiRecentClosedCount;
-}
-///select connection for send msg
-inline CwxAppConnInfo* CwxAppHostInfo::selectConn()
-{
-    CWX_UINT32 uiSize = m_hostConn.size();
-    if (uiSize)
-    {
-        m_uiRand ++;
-        CWX_UINT32 uiStart = m_uiRand % uiSize;
-        CWX_UINT32 uiPos = uiStart;
-        do
-        {
-            if (!m_hostConn[uiPos]->isWaitingMsgQueueFull()) return m_hostConn[uiPos];
-            CWX_DEBUG(("Connection is full, svr_id=%u, host_id=%u, conn_id=%u, msg_num=%u", 
-                m_hostConn[uiPos]->getSvrId(),
-                m_hostConn[uiPos]->getHostId(),
-                m_hostConn[uiPos]->getConnId(),
-                m_hostConn[uiPos]->getWaitingMsgNum()));
-            uiPos++;
-            if (uiPos == uiSize) uiPos = 0;
-        }while(uiPos != uiStart);
-    }
-    return NULL;
-}
-///Get parent
-inline CwxAppSvrInfo * CwxAppHostInfo::getParent()
-{
-    return   m_parent;
-}
-///Get host's valid connection
-inline vector<CwxAppConnInfo*>* CwxAppHostInfo::GetHostConn()
-{
-    return &m_hostConn;
-}
-
-///添加一个有效的主机连接
-inline void CwxAppHostInfo::addConn(CwxAppConnInfo* conn)
-{
-    m_hostConn.push_back(conn);
-}
-///移除一个主机连接
-inline void CwxAppHostInfo::removeConn(CwxAppConnInfo* conn)
-{
-    m_hostConn.erase(find(m_hostConn.begin(), m_hostConn.end(), conn));
-}
-///通知主机发送了一个消息
-inline void CwxAppHostInfo::sendOneMsg()
-{
-    m_ullSndMsgNum++;
-    m_uiRecentSndMsgNum++;
-    if (m_uiWaitingMsgNum) m_uiWaitingMsgNum--;
-}
-///通知主机接收到一个要发送的消息
-inline void CwxAppHostInfo::recvOneMsg()
-{
-    m_ullRecvMsgNum++;
-    m_uiRecentRecvMsgNum++;
-}
-///通知主机多了一个排队发送的消息
-inline void CwxAppHostInfo::waitingOneMsg()
-{
-    m_uiWaitingMsgNum++;
-}
-///计算主机的负载
-inline void CwxAppHostInfo::calcHostLoad()
-{
-    CWX_UINT32 i=0;
-    m_uiWaitingMsgNum = 0;
-    for (i=0; i<m_hostConn.size(); i++){
-        m_uiWaitingMsgNum += m_hostConn[i]->getWaitingMsgNum();
-    }
-    m_uiRecentSndMsgNum /= 6;
-    m_uiRecentRecvMsgNum /=6;
-    if (m_uiRecentRecvMsgNum > m_uiRecentSndMsgNum)
-    {
-        m_uiRecentRecvMsgNum = m_uiRecentSndMsgNum;
-    }
-    m_uiRecentClosedCount /= 6;
-}
-
-
-///Get svr id
-inline CWX_UINT32 CwxAppSvrInfo::getSvrId() const
-{
-    return m_uiSvrId;
-}
-///Get HostNum
-inline CWX_UINT32 CwxAppSvrInfo::getHostNum() const
-{
-    return m_svrHost.size();
-}
-///选择一台主机，进行消息的发送
-inline CwxAppHostInfo* CwxAppSvrInfo::selectHost()
-{
-    CWX_UINT32 uiSize = m_svrHost.size();
-    if (uiSize)
-    {
-        CWX_UINT32 start = m_uiRand%uiSize;
-        CWX_UINT32 pos = start;
-        m_uiRand++;
-        do 
-        {
-            if (m_svrHost[pos]->isEnableSendMsg()) return m_svrHost[pos];
-            pos++;
-            if (pos>=uiSize) pos=0;
-        } while(pos != start);
-    }
-    return NULL;
-}
-///获取svr下的主机列表
-inline vector<CwxAppHostInfo*>& CwxAppSvrInfo::getHosts()
-{
-    return m_svrHost;
-}
-
-///增加一台新主机
-inline void CwxAppSvrInfo::addHost(CwxAppHostInfo* host)
-{
-    m_svrHost.push_back(host);
-}
-///重新计算svr下不同主机的负载
-inline void CwxAppSvrInfo::calcHostLoad()
-{
-    for (CWX_UINT32 i=0; i<m_svrHost.size(); i++)
-        m_svrHost[i]->calcHostLoad();
-}
-
-
 
 CWINUX_END_NAMESPACE
 

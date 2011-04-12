@@ -13,7 +13,9 @@ CwxAppTcpAcceptor::CwxAppTcpAcceptor(CwxAppFramework* pApp,///<
                   bool      bRawData, ///<connect's msg having header
                   CWX_UINT32 uiRawRecvLen, ///<read buf for without header's package
                   bool      bKeepAlive, ///<keep alive
-                  CWX_UINT16 unMode
+                  CWX_UINT16 unMode,
+                  CWX_UINT32 uiSockSndBuf,
+                  CWX_UINT32 uiSockRecvBuf
                   )
                   :CwxAppHandler4Base(pApp, reactor)
 {
@@ -25,6 +27,8 @@ CwxAppTcpAcceptor::CwxAppTcpAcceptor(CwxAppFramework* pApp,///<
     m_uiRawRecvLen = uiRawRecvLen;
     m_bKeepAlive = bKeepAlive;
     m_unMode = unMode;
+    m_uiSockSndBuf = uiSockSndBuf;
+    m_uiSockRecvBuf = uiSockRecvBuf;
     m_bCloseAll = false;
 }
 
@@ -39,7 +43,13 @@ CwxAppTcpAcceptor::~CwxAppTcpAcceptor()
 
 int CwxAppTcpAcceptor::accept(CwxINetAddr const& addr)
 {
-    if (0 != m_acceptor.listen(addr, true, CWX_APP_DEF_BACKLOG_NUM, addr.getAddrType()))
+    if (0 != m_acceptor.listen(addr,
+        true,
+        CWX_APP_DEF_BACKLOG_NUM,
+        addr.getAddrType(),
+        0,
+        m_uiSockSndBuf,
+        m_uiSockRecvBuf))
     {
         CWX_ERROR(("Failure to listen addr:%s, port:%u, errno=%d",
             m_strAddr.c_str(),
@@ -103,6 +113,28 @@ int CwxAppTcpAcceptor::handle_event(int , CWX_HANDLE)
                 return 0;
             }
             handler->setHandle(m_stream.getHandle());
+            handler->getConnInfo().setSockSndBuf(m_uiSockSndBuf);
+            handler->getConnInfo().setSockRecvBuf(m_uiSockRecvBuf);
+            if (0 != m_uiSockSndBuf)
+            {
+                int bufLen = (m_uiSockSndBuf + 1023)/1024;
+                bufLen *=1024;
+                while (setsockopt(m_stream.getHandle(), SOL_SOCKET, SO_SNDBUF, (void*)&bufLen, sizeof( bufLen)) < 0)
+                {
+                    bufLen -= 1024;
+                    if (bufLen <= 1024) break;
+                }
+            }
+            if (0 != m_uiSockRecvBuf)
+            {
+                int bufLen = (m_uiSockRecvBuf + 1023)/1024;
+                bufLen *=1024;
+                while(setsockopt(m_stream.getHandle(), SOL_SOCKET, SO_RCVBUF, (void *)&bufLen, sizeof(bufLen)) < 0)
+                {
+                    bufLen -= 1024;
+                    if (bufLen <= 1024) break;
+                }
+            }
             ret = handler->open(this);
             if (-1 == ret) handler->close();
             if (handler->isStopListen()){

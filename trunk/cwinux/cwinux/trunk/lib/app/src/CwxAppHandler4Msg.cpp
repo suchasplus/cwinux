@@ -154,7 +154,6 @@ int CwxAppHandler4Msg::handle_output ()
                     if (-1 == this->getApp()->onStartSendMsg(m_curSndingMsg, *this))
                     {
                         this->m_conn.setWaitingMsgNum(this->m_conn.getWaitingMsgNum()-1);
-                        if (m_conn.getParent()) m_conn.getParent()->sendOneMsg();
                         CwxMsgBlockAlloc::free(this->m_curSndingMsg);
                         this->m_curSndingMsg = NULL;
                         continue; //next msg;
@@ -179,7 +178,6 @@ int CwxAppHandler4Msg::handle_output ()
             this->m_uiSendByte = 0;
             this->m_conn.setWaitingMsgNum(m_conn.getWaitingMsgNum()-1);
             this->m_conn.setLastSendMsgTime(time(NULL));
-            if (m_conn.getParent()) m_conn.getParent()->sendOneMsg();
             if (CWX_CHECK_ATTR(this->m_curSndingMsg->send_ctrl().getMsgAttr(), CwxMsgSendCtrl::FINISH_NOTICE)){
                 CWX_UINT32 uiResume = this->getApp()->onEndSendMsg(m_curSndingMsg, *this);
                 if ((CwxMsgSendCtrl::RESUME_CONN == uiResume) && !isReadMask())
@@ -222,9 +220,9 @@ int CwxAppHandler4Msg::handle_output ()
         {//failure
             if (m_curSndingMsg->send_ctrl().isFailNotice())
             {
-                this->getApp()->dipatchFailureSendMsg(m_curSndingMsg);
-
+                this->getApp()->onFailSendMsg(m_curSndingMsg);
             }
+            if (m_curSndingMsg) CwxMsgBlockAlloc::free(m_curSndingMsg);
             this->m_curSndingMsg = NULL;
             break;
         }
@@ -345,7 +343,6 @@ int CwxAppHandler4Msg::handle_input ()
             //notice recieving a msg.
             if (!this->m_recvMsgData) this->m_recvMsgData = CwxMsgBlockAlloc::malloc(0);
             bSuspend = false;
-            if (m_conn.getParent()) m_conn.getParent()->recvOneMsg();
             result = this->getApp()->recvMessage(m_header, this->m_recvMsgData, *this, bSuspend);
             if (bSuspend)
             {

@@ -2,7 +2,8 @@
 #define __CWX_APP_FRAMEWORK_H__
 /*
 版权声明：
-    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html）
+    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html），
+    联系方式：email:cwinux@gmail.com；微博:http://t.sina.com.cn/cwinux
 */
 
 /**
@@ -41,8 +42,6 @@
 #include "CwxAppTaskBoard.h"
 #include "CwxAppThreadPoolMgr.h"
 #include "CwxAppListenMgr.h"
-#include "CwxAppMgrServer.h"
-#include "CwxAppPai.h"
 #include "CwxAppForkMgr.h"
 #include "CwxAppReactor.h"
 
@@ -75,10 +74,6 @@ private:
         CWX_UINT32 m_uiSvrId;
         CWX_UINT32 m_uiHostId;
     };
-    ///主机的hash定义
-    typedef hash_map<HostMapKey, CwxAppHostInfo*, CwxHash<HostMapKey> > IdHostHash;
-    ///服务类型的hash定义
-    typedef hash_map<CWX_UINT32, CwxAppSvrInfo*, CwxNumHash<CWX_UINT32> >  IdSvrHash;
     ///IO handle的hash定义
     typedef hash_set<CWX_HANDLE, char, CwxNumHash<CWX_UINT32> > HandleHash;
 
@@ -106,7 +101,6 @@ public:
     };
     ///服务类型与线程组定义
     enum{
-        SVR_TYPE_SYS = 1,///<系统服务类型
         SVR_TYPE_USER_START  = 2,///用户服务类型的最小值
         THREAD_GROUP_SYS = 1,///<系统线程组ID，也就是通信的线程组ID
         THREAD_GROUP_USER_START = 2///<用户线程组ID的最小值
@@ -135,18 +129,6 @@ public:
     */
     int noticeStdinListen();
     /**
-    @brief 往架构注册系统管理的TCP监听端口
-    @param [in] szAddr 监听的IP地址, *表示监听所有的本地地址
-    @param [in] unPort 监听的端口号
-    @param [in] bKeepAlive 建立的连接，是否要发送keep alive消息，以检查连接是否有效。
-    @param [in] pMgrServer 系统管理消息的处理对象，若为NULL，则创建默认的管理对象。
-    @return >0：此监听的Listen ID；-1：失败。
-    */
-    int noticeMgrListen(char const *szAddr,
-        CWX_UINT16 unPort,
-        bool bKeepAlive=true,
-        CwxAppMgrServer* pMgrServer=NULL);
-    /**
     @brief 往架构注册一个监听的TCP 地址+PORT，并设置各种属性
     @param [in] uiSvrId 由此监听所建立的连接的SVR ID。
     @param [in] szAddr 监听的IP地址, *表示监听所有的本地地址
@@ -158,6 +140,8 @@ public:
     @param [in] unMode Framework对连接的管理方式，<br>
             CWX_APP_MSG_MODE表示有架构负责消息的收发；<br>
             CWX_APP_EVENT_MODE表示架构只负责连接上读写事件的通知。
+    @param [in] uiSockSndBuf socket的发送buf大小。0表示缺省值。
+    @param [in] uiSockRecvBuf socket的接受buf大小。0表示缺省值。
     @return >0：此监听的Listen ID；-1：失败。
     */
     int noticeTcpListen(CWX_UINT32 uiSvrId,
@@ -166,7 +150,9 @@ public:
         bool bRawData = false,
         CWX_UINT32 uiRecvRawLen=CWX_APP_DEF_RAW_BUF_LEN,
         bool bKeepAlive=false,
-        CWX_UINT16 unMode=CWX_APP_MSG_MODE);
+        CWX_UINT16 unMode=CWX_APP_MSG_MODE,
+        CWX_UINT32 uiSockSndBuf = 0,
+        CWX_UINT32 uiSockRecvBuf = 0);
     /**
     @brief 往架构注册一个local ipc监听，并设置各种属性
     @param [in] uiSvrId 由此监听所建立的连接的SVR ID。
@@ -197,6 +183,8 @@ public:
     @param [in] bKeepAlive 对建立的连接，是否执行KeepAlive.
     @param [in] unMinRetryInternal 连接失败时的最小连接间隔.
     @param [in] unMaxRetryInternal 连接失败时的最大连接间隔.
+    @param [in] uiSockSndBuf socket的发送buf大小。0表示缺省值。
+    @param [in] uiSockRecvBuf socket的接受buf大小。0表示缺省值。
     @return  >0：此连接的CONN_ID；-1：注册失败。
     */
     int noticeTcpConnect(CWX_UINT32 uiSvrId,
@@ -207,7 +195,9 @@ public:
         CWX_UINT32 uiRecvRawLen=CWX_APP_DEF_RAW_BUF_LEN,
         bool bKeepAlive = true,
         CWX_UINT16 unMinRetryInternal = 1,
-        CWX_UINT16 unMaxRetryInternal = 60);
+        CWX_UINT16 unMaxRetryInternal = 60,
+        CWX_UINT32 uiSockSndBuf = 0,
+        CWX_UINT32 uiSockRecvBuf = 0);
     /**
     @brief 往架构注册一个主动的Local IPC连接
     @param [in] uiSvrId 设定连接的SVR ID。
@@ -246,8 +236,7 @@ public:
         bool bRawData = false,
         CWX_UINT32 uiRecvRawLen=CWX_APP_DEF_RAW_BUF_LEN,
         bool bKeepAlive = false,
-        void* userData = NULL,
-        CwxAppPai*  pPai = NULL
+        void* userData = NULL
         );
     /**
     @brief 往架构注册一个IO handle的事件监听
@@ -328,18 +317,6 @@ public:
     @return 0：成功； -1：失败。
     */
     int sendMsgByConn(CwxMsgBlock* msg);
-    /**
-    @brief 往CWX_APP_MSG_MODE模式的主机发送消息，架构可以进行主机连接间的负载均衡。
-    @param [in] msg 要发送的消息，不能为空，此数据包有架构负责释放。
-    @return 0：成功； -1：失败。
-    */
-    int sendMsgByHost(CwxMsgBlock* msg);
-    /**
-    @brief 往CWX_APP_MSG_MODE模式的连接的服务发送消息，架构可以进行连接间的负载均衡。
-    @param [in] msg 要发送的消息，不能为空，此数据包有架构负责释放。
-    @return 0：成功； -1：失败。
-    */
-    int sendMsgBySvr(CwxMsgBlock* msg);
 
 public:
     /**
@@ -387,13 +364,13 @@ public:
     @param [in] conn 失败连接的信息。
     @return <0 停止连接；0：默认方式； >0：下次连接重试的时间间隔，单位为ms。
     */
-    virtual int onFailConnect(CwxAppHandler4Msg const& conn);
+    virtual int onFailConnect(CwxAppHandler4Msg& conn);
     /**
     @brief 通知CWX_APP_MSG_MODE模式的连接关闭。
     @param [in] conn 关闭的连接。
     @return 对于主动连接，-1：表示不连接，0：默认方式， >0：下次重连的时间间隔，单位为ms；被动连接忽略。
     */
-    virtual int onConnClosed(CwxAppHandler4Msg const& conn);
+    virtual int onConnClosed(CwxAppHandler4Msg & conn);
 
     /**
     @brief 通知从CWX_APP_MSG_MODE模式的连接收到一个消息
@@ -404,7 +381,7 @@ public:
     @return -1：消息无效，关闭连接。 0：不连续接受消息； >0：连续从此连接上接受消息。
     */
     virtual int onRecvMsg(CwxMsgBlock* msg,
-        CwxAppHandler4Msg const& conn,
+        CwxAppHandler4Msg& conn,
         CwxMsgHead const& header,
         bool& bSuspendConn);
 
@@ -416,7 +393,7 @@ public:
     @return -1：取消消息的发送。 0：发送消息。
     */
     virtual int onStartSendMsg(CwxMsgBlock* msg,
-        CwxAppHandler4Msg const& conn);
+        CwxAppHandler4Msg& conn);
     /**
     @brief 通知CWX_APP_MSG_MODE模式的连接完成一个消息的发送。<br>
     只有在sendMsg()的时候指定FINISH_NOTICE的时候才调用.
@@ -428,7 +405,7 @@ public:
             CwxMsgSendCtrl::SUSPEND_CONN：让连接从数据接收状态变为suspend状态
     */
     virtual CWX_UINT32 onEndSendMsg(CwxMsgBlock*& msg,
-        CwxAppHandler4Msg const& conn);
+        CwxAppHandler4Msg& conn);
 
     /**
     @brief 通知CWX_APP_MSG_MODE模式的连接上，一个消息发送失败。<br>
@@ -575,7 +552,6 @@ public:
     CwxAppUnixConnector* getUnixConnector();
     ///return the reactor.
     CwxAppReactor* reactor();
-
 public:
     /*
     一下接口是由底层的msg handler调用的，子类或其他对象不能够使用。
@@ -593,8 +569,6 @@ public:
     int connClosed(CwxAppHandler4Msg& conn);
     ///accept notice event
     void noticeEvent();
-    ///消息发送失败的再发送处理。
-    void dipatchFailureSendMsg(CwxMsgBlock* msg);
 protected:
     ///配置架构的运行设置，返回值：0:success, -1:failure.
     virtual int initRunEnv();
@@ -602,30 +576,12 @@ protected:
     ///此API必须是可重入的，也就是说，可以反复调用
     ///若app中有线程池，则线程池的stop必须在此API中。
     virtual void destroy();
-private:
-    ///根据SVR-ID,HOST-ID获取主机信息，NULL表示不存在。
-    CwxAppHostInfo* getHostById(CWX_UINT32 uiSvrId, CWX_UINT32 uiHostId);
-    ///根据SVR-ID获取SVR信息，NULL表示不存在
-    CwxAppSvrInfo* getSvrById(CWX_UINT32 uiSvrId);
-    ///往系统中注册服务类型为uiSvrId, 主机ID为uiHostId的主机
-    void addSvrHostInfo(CWX_UINT32 uiSvrId, CWX_UINT32 uiHostId);
-    ///往msg中设置的主机发送消息，返回false表示发送失败
-    bool innerSendMsgByHost(CwxMsgBlock*& msg);
-    ///往msg中设置的服务下的某个主机发送消息，返回false表示发送失败
-    bool innerSendMsgBySvr(CwxMsgBlock*& msg);
-    ///notice send msg，返回值：false，主机无法发送；true：已经发送
-    bool innerNoticeSendMsgByHost(CwxMsgBlock* msg, CwxAppHostInfo* pHost);
-    ///通知一条消息发送失败，与onFailSendMsg()对应。
-    void failSendMsg(CwxMsgBlock*& msg);
 
 private:
     ///注册架构事件接收的事件处理方法
     void  regNoticeFunc();
     ///notice send msg by conn
     static void innerNoticeSendMsgByConn(CwxAppFramework* pApp,
-        CwxAppNotice* pNotice);
-    ///notice send msg by host
-    static void innerNoticeSendMsgByHost(CwxAppFramework* pApp,
         CwxAppNotice* pNotice);
     ///notice send msg by svr
     static void innerNoticeSendMsgBySvr(CwxAppFramework* pApp,
@@ -686,14 +642,11 @@ private:
     CwxAppCommander              m_commander;///<commander对象
     CwxAppTaskBoard              m_taskBoard;///<taskboard对象
     CwxAppListenMgr*             m_pListenMgr;///<监听管理器对象
-    CwxAppMgrServer*            m_pMgrServer;///<服务管理server地想
     CwxAppTss*                  m_pTss;///<通信线程的TSS
     CwxAppHandlerCache*          m_pHandleCache;///<释放连接句柄cache
     CwxAppTcpConnector*         m_pTcpConnector; ///<TCP的connector
     CwxAppUnixConnector*        m_pUnixConnector; ///<unix的connector
     //not lock for communite thread only access
-    IdHostHash*                m_pHostMap;///<host的HASH对象
-    IdSvrHash*                 m_pSvrMap;///<service的HASH对象
     IdConnMap*                 m_pKeepAliveMap;///<需要进行KEEP-ALIVE的连接MAP
     fnNoticeApi                m_arrNoticeApi[CwxAppNotice::ALL_NOTICE_NUM + 1];///<notcie的消息映射
     CwxAppThreadPoolMgr*        m_pThreadPoolMgr;///<线程池管理对象

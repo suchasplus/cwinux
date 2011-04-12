@@ -3,7 +3,8 @@
 
 /*
 版权声明：
-    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html）
+    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html），
+    联系方式：email:cwinux@gmail.com；微博:http://t.sina.com.cn/cwinux
 */
 
 /**
@@ -41,7 +42,9 @@ public:
     int connect (CwxAppHandler4TcpConn* pHandler, ///<conn handler
         char const* szAddr, ///<connect addr
         CWX_UINT16 unPort, ///<connect port
-        int iFamily=AF_UNSPEC ///<family
+        int iFamily=AF_UNSPEC, ///<family
+        CWX_UINT32 uiSockSndBuf=0, ///<socket snd buf
+        CWX_UINT32 uiSockRecvBuf=0 ///<socket recv buf
         );
 private:
     CwxAppFramework* m_pApp;

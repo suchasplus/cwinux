@@ -3,7 +3,8 @@
 
 /*
 版权声明：
-    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html）
+    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html），
+    联系方式：email:cwinux@gmail.com；微博:http://t.sina.com.cn/cwinux
 */
 
 /**
@@ -31,6 +32,7 @@
 
 CWINUX_BEGIN_NAMESPACE
 
+class CwxAppFramework;
 /**
 @class CwxAppReactor
 @brief 架构的reactor对象，实现事件的循环

@@ -2,7 +2,8 @@
 #define __CWX_APP_NOTICE_PIPE_H__
 /*
 版权声明：
-    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html）
+    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html），
+    联系方式：email:cwinux@gmail.com；微博:http://t.sina.com.cn/cwinux
 */
 
 /**
@@ -35,17 +36,15 @@ public:
     enum{
         DUMMY = 0,///<dummy类型
         SEND_MSG_BY_CONN = 1,///<往连接发送消息
-        SEND_MSG_BY_HOST = 2, ///<往主机发送消息
-        SEND_MSG_BY_SVR = 3, ///<往服务类型发送消息
-        TCP_CONNECT = 4,///<建立TCP连接
-        UNIX_CONNECT = 5,///<建立UNIX DOMAIN连接
-        ADD_IO_HANDLE = 6,///<IO HANDLE数据接收
-        TCP_LISTEN = 7,///<TCP listen
-        UNIX_LISTEN = 8,///<unix-domain listen
-        CLOSE_LISTEN = 9,///<关闭监听
-        CLOSE_CONNECT = 10,///<关闭连接
-        RECONNECTION = 11,///<重新连接
-        ALL_NOTICE_NUM = 13///<Notice类型的数量
+        TCP_CONNECT = 2,///<建立TCP连接
+        UNIX_CONNECT = 3,///<建立UNIX DOMAIN连接
+        ADD_IO_HANDLE = 4,///<IO HANDLE数据接收
+        TCP_LISTEN = 5,///<TCP listen
+        UNIX_LISTEN = 6,///<unix-domain listen
+        CLOSE_LISTEN = 7,///<关闭监听
+        CLOSE_CONNECT = 8,///<关闭连接
+        RECONNECTION = 9,///<重新连接
+        ALL_NOTICE_NUM = 11///<Notice类型的数量
     };
 public:
     ///构造函数

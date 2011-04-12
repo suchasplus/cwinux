@@ -2,7 +2,8 @@
 #define __CWX_APP_TCP_ACCEPTOR_H__
 /*
 版权声明：
-    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html）
+    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html），
+    联系方式：email:cwinux@gmail.com；微博:http://t.sina.com.cn/cwinux
 */
 
 /**
@@ -51,8 +52,9 @@ public:
         bool      bRawData = false, ///<connect's msg having header
         CWX_UINT32 uiRawRecvLen = CWX_APP_DEF_RAW_BUF_LEN, ///<read buf for without header's package
         bool      bKeepAlive = true, ///<keep alive
-        CWX_UINT16 unMode = CWX_APP_MSG_MODE
-        );
+        CWX_UINT16 unMode = CWX_APP_MSG_MODE,
+        CWX_UINT32 uiSockSndBuf = 0,
+        CWX_UINT32 uiSockRecvBuf = 0);
 
     ///析构函数
     ~CwxAppTcpAcceptor();
@@ -105,6 +107,16 @@ public:
     {
         return m_unMode;
     }
+    ///获取socket snd buf
+    CWX_UINT32 getSockSndBuf() const
+    {
+        return m_uiSockSndBuf;
+    }
+    ///获取socket recv buf
+    CWX_UINT32 getSockRecvBuf() const
+    {
+        return m_uiSockRecvBuf;
+    }
     ///get close all sign
     bool isCloseAll() const
     {
@@ -127,6 +139,8 @@ private:
     bool          m_bKeepAlive;///<建立的连接是否需要执行keep-alive check
     CWX_UINT16     m_unMode;///<架构负责建立连接数据接收，还是只检测连接的事件
     bool           m_bCloseAll;///<listen关闭的时候，是否关闭其所建立的连接
+    CWX_UINT32     m_uiSockSndBuf; ///<socket的发送buf大小。
+    CWX_UINT32     m_uiSockRecvBuf; ///<socket的接受buf大小。
     CwxSockAcceptor m_acceptor; ///<监听器
     CwxSockStream   m_stream;
 };

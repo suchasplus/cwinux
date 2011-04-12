@@ -29,13 +29,10 @@ CwxAppFramework::CwxAppFramework(CWX_UINT16 unAppMode,
     m_bEnableHook = false;
     m_uiProcId = 0;
     m_pListenMgr = NULL;
-    m_pMgrServer = NULL;
     m_pTss = NULL;
     m_pHandleCache = NULL;
     m_pTcpConnector = NULL; ///<TCP的connector
     m_pUnixConnector = NULL; ///<unix的connector
-    m_pHostMap = NULL;///<host的HASH对象
-    m_pSvrMap = NULL;///<service的HASH对象
     m_pKeepAliveMap = NULL;
     m_pThreadPoolMgr = NULL;
     m_bDebug = false;
@@ -173,74 +170,6 @@ int CwxAppFramework::noticeStdinListen()
 	return 0;
 }
 
-int CwxAppFramework::noticeMgrListen(char const* szAddr,
-                                     CWX_UINT16 unPort,
-                                     bool bKeepAlive,
-                                     CwxAppMgrServer* pMgrServer)
-{
-    CWX_UINT32 uiListenId = 0;
-    CwxINetAddr inetAddr;
-    CwxAppTcpAcceptor* acceptor=NULL;
-    uiListenId = m_pListenMgr->getNextListenId();
-    acceptor = new CwxAppTcpAcceptor(this,
-        m_pReactor,
-        szAddr,
-        unPort,
-        SVR_TYPE_SYS,
-        uiListenId,
-        false,
-        CWX_APP_DEF_RAW_BUF_LEN,
-        bKeepAlive);
-
-    if (strcmp(szAddr, "*") == 0)
-    {
-        inetAddr.set(unPort);
-    }
-    else
-    {
-        inetAddr.set(unPort, szAddr);
-    }
-    //register the acceptor
-    if (acceptor->accept(inetAddr) != 0)
-    {
-        CWX_ERROR(("Can't open mgr listen for ip=%s, port=%u, errno=%d",
-            szAddr,
-            unPort,
-            errno));
-        acceptor->close();
-        return -1;
-    }
-    if (0 != acceptor->open())
-    {
-        CWX_ERROR(("Failure to register mgr listen for ip=%s, port=%u",
-            szAddr,
-            unPort));
-        acceptor->close();
-        return -1;
-    }
-    //create and init the notice object.
-    CwxAppNotice* notice = new CwxAppNotice();
-    notice->m_unNoticeType = CwxAppNotice::TCP_LISTEN;
-    notice->m_noticeArg = acceptor;
-    if (0 != m_pReactor->notice(notice))
-    {
-        acceptor->close();
-        delete notice;
-        CWX_ERROR(("Failure to notice mgr listen by PIPE"));
-        return -1;
-    }
-    if (pMgrServer)
-    {
-        if (m_pMgrServer) delete m_pMgrServer;
-        m_pMgrServer = pMgrServer;
-    }
-    else
-    {
-        if (!m_pMgrServer) m_pMgrServer = new CwxAppMgrServer(this);
-    }
-    return (int)uiListenId;
-}
-
 
 int CwxAppFramework::noticeTcpListen(CWX_UINT32 uiSvrId,
                                   char const* szAddr,
@@ -248,7 +177,9 @@ int CwxAppFramework::noticeTcpListen(CWX_UINT32 uiSvrId,
                                   bool bRawData,
                                   CWX_UINT32 uiRecvRawLen,
                                   bool bKeepAlive,
-                                  CWX_UINT16 unMode)
+                                  CWX_UINT16 unMode,
+                                  CWX_UINT32 uiSockSndBuf,
+                                  CWX_UINT32 uiSockRecvBuf)
 {
     if (uiSvrId < SVR_TYPE_USER_START)
     {
@@ -269,7 +200,9 @@ int CwxAppFramework::noticeTcpListen(CWX_UINT32 uiSvrId,
         bRawData,
         uiRecvRawLen,
         bRawData?false:bKeepAlive,
-        unMode);
+        unMode,
+        uiSockSndBuf,
+        uiSockRecvBuf);
     if (strcmp(szAddr, "*") == 0)
     {
         inetAddr.set(unPort);
@@ -375,7 +308,9 @@ int CwxAppFramework::noticeTcpConnect(CWX_UINT32 uiSvrId,
                   CWX_UINT32 uiRecvRawLen,
                   bool bKeepAlive,
                   CWX_UINT16 unMinRetryInternal,
-                  CWX_UINT16 unMaxRetryInternal)
+                  CWX_UINT16 unMaxRetryInternal,
+                  CWX_UINT32 uiSockSndBuf,
+                  CWX_UINT32 uiSockRecvBuf)
 {
     if (uiSvrId < SVR_TYPE_USER_START)
     {
@@ -396,6 +331,8 @@ int CwxAppFramework::noticeTcpConnect(CWX_UINT32 uiSvrId,
     handle->getConnInfo().setMinRetryInternal(unMinRetryInternal);
     handle->getConnInfo().setMaxRetryInternal(unMaxRetryInternal);
     handle->getConnInfo().setConnId(uiConnId);
+    handle->getConnInfo().setSockSndBuf(uiSockSndBuf);
+    handle->getConnInfo().setSockRecvBuf(uiSockRecvBuf);
     handle->getConnInfo().setActiveConn(true);
 
     CwxAppNotice* notice = new CwxAppNotice();
@@ -458,8 +395,7 @@ int CwxAppFramework::noticeHandle4Msg(CWX_UINT32 uiSvrId,
                 bool bRawData,
                 CWX_UINT32 uiRawDataLen,
                 bool bKeepAlive,
-                void* userData,
-                CwxAppPai*  pPai
+                void* userData
                 )
 {
     if (uiSvrId < SVR_TYPE_USER_START)
@@ -481,14 +417,12 @@ int CwxAppFramework::noticeHandle4Msg(CWX_UINT32 uiSvrId,
     handle->setHandle(ioHandle);
     handle->getConnInfo().setInvokeCreate(false);
     handle->getConnInfo().setUserData(userData);
-    handle->getConnInfo().setPai(pPai);
     CwxAppNotice* notice = new CwxAppNotice();
     notice->m_unNoticeType = CwxAppNotice::ADD_IO_HANDLE;
     notice->m_noticeArg = handle;
     if (0 != m_pReactor->notice(notice))
     {
         handle->setHandle(CWX_INVALID_HANDLE);
-        handle->getConnInfo().setPai(NULL);
         handle->close();
         delete notice;
         CWX_ERROR(("Failure to notice io handle"));
@@ -660,61 +594,7 @@ int CwxAppFramework::sendMsgByConn(CwxMsgBlock* msg)
     return 0;
 }
 
-int CwxAppFramework::sendMsgByHost(CwxMsgBlock* msg)
-{
-    if (!msg || !msg->length())
-    {
-        CWX_ERROR(("sendMsgByHost's msg is null, host_id:%u", msg?msg->send_ctrl().getHostId():0));
-        return -1;
-    }
-    if (!msg->send_ctrl().getHostId())
-    {
-        CWX_ERROR(("sendMsgByHost's host-id can't be zero"));
-        return -1;
-    }
-    if (!msg->send_ctrl().getSvrId())
-    {
-        CWX_ERROR(("sendMsgByHost's svr-id can't be zero"));
-        return -1;
-    }
-    msg->send_ctrl().setConnId(0);
-    CwxAppNotice* notice = new CwxAppNotice();
-    notice->m_unNoticeType = CwxAppNotice::SEND_MSG_BY_HOST;
-    notice->m_noticeArg = (void*)msg;
-    if (0 != m_pReactor->notice(notice))
-    {
-        delete notice;
-        CWX_ERROR(("Failure to notice send msg event by host"));
-        return -1;
-    }
-    return 0;
-}
 
-int CwxAppFramework::sendMsgBySvr(CwxMsgBlock* msg)
-{
-    if (!msg || !msg->length())
-    {
-        CWX_ERROR(("sendMsgBySvr's msg is null, svr_id:%u", msg?msg->send_ctrl().getSvrId():0));
-        return -1;
-    }
-    if (!msg->send_ctrl().getSvrId())
-    {
-        CWX_ERROR(("sendMsgBySvr's svr-id can't be zero"));
-        return -1;
-    }
-    msg->send_ctrl().setHostId(0);
-    msg->send_ctrl().setConnId(0);
-    CwxAppNotice* notice = new CwxAppNotice();
-    notice->m_unNoticeType = CwxAppNotice::SEND_MSG_BY_SVR;
-    notice->m_noticeArg = (void*)msg;
-    if (0 != m_pReactor->notice(notice))
-    {
-        delete notice;
-        CWX_ERROR(("Failure to notice send msg event by svr"));
-        return -1;
-    }
-    return 0;
-}
 
 CwxAppTss* CwxAppFramework::onTssEnv()
 {
@@ -732,14 +612,6 @@ void CwxAppFramework::onTime(CwxTimeValue const& current)
         {
             CwxAppLogger::instance()->nextLog(false);
         }
-        //check all connection
-        IdSvrHash::iterator iter= m_pSvrMap->begin();
-        while(iter != this->m_pSvrMap->end())
-        {
-            iter->second->calcHostLoad();
-            iter++;
-        }
-
         lastLogTime = time(NULL);
     }
 
@@ -755,16 +627,37 @@ void CwxAppFramework::onTime(CwxTimeValue const& current)
         while(iter != m_pKeepAliveMap->end())
         {
             conn = iter->second;
-            if (conn->getConnInfo().isRawData())
-            {
-                CWX_ASSERT(conn->getConnInfo().getPai());
-                if (conn->getConnInfo().getPai() && 
-                    (conn->getConnInfo().getPai()->checkKeepAlive()<0))
+            if (conn->getConnInfo().isKeepAliveReply())
+            {//check send new keep-alive
+                if ((ttNow - conn->getConnInfo().getLastRecvMsgTime() > getKeepAliveSecond()) &&
+                    (ttNow - conn->getConnInfo().getLastSendMsgTime() > getKeepAliveSecond()) &&
+                    conn->isReadMask())
+                {//send keep-alive
+                    msg = header.packKeepalive(false);
+                    conn->getConnInfo().setKeepAliveReply(false);
+                    conn->getConnInfo().setKeepAliveSendTime(ttNow);
+                    if (msg)
+                    {
+                        msg->send_ctrl().setSvrId(conn->getConnInfo().getSvrId());
+                        msg->send_ctrl().setHostId(conn->getConnInfo().getHostId());
+                        msg->send_ctrl().setConnId(conn->getConnInfo().getConnId());
+                        msg->send_ctrl().setUserData(NULL);
+                        msg->send_ctrl().setMsgAttr(CwxMsgSendCtrl::NONE);
+                        this->sendMsgByConn(msg);
+                        CWX_DEBUG(("Send keep alive to host, conn=%d",
+                            conn->getConnInfo().getConnId()));
+                    }
+                }
+            }
+            else
+            {//check keep-alive reply
+                if (ttNow - conn->getConnInfo().getKeepAliveSendTime() > DEF_KEEPALIVE_REPLY_SECOND)
                 {
-                    CWX_ERROR(("svr_id:%u, host_id:%u, conn_id:%u 's connection's keep-alive is timeout.",
+                    CWX_ERROR(("svr_id:%u, host_id:%u, conn_id:%u 's connection don't reply the keep-alive for %u second, close it.",
                         conn->getConnInfo().getSvrId(),
                         conn->getConnInfo().getHostId(),
-                        conn->getConnInfo().getConnId()));
+                        conn->getConnInfo().getConnId(),
+                        DEF_KEEPALIVE_REPLY_SECOND));
                     if (conn->getConnInfo().isActiveConn())
                     {
                         this->noticeReconnect(conn->getConnInfo().getConnId());
@@ -772,50 +665,6 @@ void CwxAppFramework::onTime(CwxTimeValue const& current)
                     else
                     {
                         this->noticeCloseConn(conn->getConnInfo().getConnId());
-                    }
-                }
-            }
-            else
-            {
-                if (conn->getConnInfo().isKeepAliveReply())
-                {//check send new keep-alive
-                    if ((ttNow - conn->getConnInfo().getLastRecvMsgTime() > getKeepAliveSecond()) &&
-                        (ttNow - conn->getConnInfo().getLastSendMsgTime() > getKeepAliveSecond()) &&
-                        conn->isReadMask())
-                    {//send keep-alive
-                        msg = header.packKeepalive(false);
-                        conn->getConnInfo().setKeepAliveReply(false);
-                        conn->getConnInfo().setKeepAliveSendTime(ttNow);
-                        if (msg)
-                        {
-                            msg->send_ctrl().setSvrId(conn->getConnInfo().getSvrId());
-                            msg->send_ctrl().setHostId(conn->getConnInfo().getHostId());
-                            msg->send_ctrl().setConnId(conn->getConnInfo().getConnId());
-                            msg->send_ctrl().setUserData(NULL);
-                            msg->send_ctrl().setMsgAttr(CwxMsgSendCtrl::NONE);
-                            this->sendMsgByConn(msg);
-                            CWX_DEBUG(("Send keep alive to host, conn=%d",
-                                conn->getConnInfo().getConnId()));
-                        }
-                    }
-                }
-                else
-                {//check keep-alive reply
-                    if (ttNow - conn->getConnInfo().getKeepAliveSendTime() > DEF_KEEPALIVE_REPLY_SECOND)
-                    {
-                        CWX_ERROR(("svr_id:%u, host_id:%u, conn_id:%u 's connection don't reply the keep-alive for %u second, close it.",
-                            conn->getConnInfo().getSvrId(),
-                            conn->getConnInfo().getHostId(),
-                            conn->getConnInfo().getConnId(),
-                            DEF_KEEPALIVE_REPLY_SECOND));
-                        if (conn->getConnInfo().isActiveConn())
-                        {
-                            this->noticeReconnect(conn->getConnInfo().getConnId());
-                        }
-                        else
-                        {
-                            this->noticeCloseConn(conn->getConnInfo().getConnId());
-                        }
                     }
                 }
             }
@@ -845,7 +694,7 @@ void CwxAppFramework::onTime(CwxTimeValue const& current)
             if (!m_pThreadPoolMgr->isValid())
             {
                 CWX_ERROR(("Thread pool's thread is not valid, exit..."));
-                if (!isDebug()) _exit(0);
+//                if (!isDebug()) _exit(0);
             }
         }
     }
@@ -881,7 +730,7 @@ int CwxAppFramework::onConnCreated(CwxAppHandler4Msg& conn,
     return 1;
 }
 
-int CwxAppFramework::onFailConnect(CwxAppHandler4Msg const& conn)
+int CwxAppFramework::onFailConnect(CwxAppHandler4Msg& conn)
 {
     CWX_DEBUG(("Failure to connect, svr_id=%u, host_id=%u, conn_id=%u",
         conn.getConnInfo().getSvrId(),
@@ -890,7 +739,7 @@ int CwxAppFramework::onFailConnect(CwxAppHandler4Msg const& conn)
     return 0;
 }
 
-int CwxAppFramework::onConnClosed(CwxAppHandler4Msg const& conn)
+int CwxAppFramework::onConnClosed(CwxAppHandler4Msg& conn)
 {
     CWX_DEBUG(("connect closed, svr_id=%u, host_id=%u, conn_id=%u",
         conn.getConnInfo().getSvrId(),
@@ -900,7 +749,7 @@ int CwxAppFramework::onConnClosed(CwxAppHandler4Msg const& conn)
 
 }
 int CwxAppFramework::onRecvMsg(CwxMsgBlock* msg,
-                               CwxAppHandler4Msg const& conn,
+                               CwxAppHandler4Msg& conn,
                                CwxMsgHead const& header,
                                bool& bSuspendConn)
 {
@@ -915,7 +764,7 @@ int CwxAppFramework::onRecvMsg(CwxMsgBlock* msg,
     
 }
 int CwxAppFramework::onStartSendMsg(CwxMsgBlock* msg,
-                                    CwxAppHandler4Msg const& conn)
+                                    CwxAppHandler4Msg& conn)
 {
     CWX_UNUSED_ARG(msg);
     CWX_DEBUG(("begin send msg, svr_id=%u, host_id=%u, conn_id=%u",
@@ -926,7 +775,7 @@ int CwxAppFramework::onStartSendMsg(CwxMsgBlock* msg,
 }
 
 CWX_UINT32 CwxAppFramework::onEndSendMsg(CwxMsgBlock*& msg,
-                                         CwxAppHandler4Msg const& conn)
+                                         CwxAppHandler4Msg& conn)
 {
     CWX_UNUSED_ARG(msg);
     CWX_DEBUG(("finish send msg, svr_id=%u, host_id=%u, conn_id=%u",
@@ -1067,11 +916,6 @@ int CwxAppFramework::initRunEnv()
 
     //change work directory
     ::chdir (this->m_strWorkDir.c_str());
-    ///创建host map
-    m_pHostMap = new IdHostHash(4096);
-    ///创建service map
-    m_pSvrMap = new IdSvrHash(64);
-
     //create keep alive map
     m_pKeepAliveMap = new IdConnMap();
     //create the listen map
@@ -1171,8 +1015,6 @@ int CwxAppFramework::initRunEnv()
 void CwxAppFramework::regNoticeFunc(){
     m_arrNoticeApi[CwxAppNotice::DUMMY] = NULL;
     m_arrNoticeApi[CwxAppNotice::SEND_MSG_BY_CONN] = &CwxAppFramework::innerNoticeSendMsgByConn;
-    m_arrNoticeApi[CwxAppNotice::SEND_MSG_BY_HOST] = &CwxAppFramework::innerNoticeSendMsgByHost;
-    m_arrNoticeApi[CwxAppNotice::SEND_MSG_BY_SVR] = &CwxAppFramework::innerNoticeSendMsgBySvr;
     m_arrNoticeApi[CwxAppNotice::TCP_CONNECT] = &CwxAppFramework::innerNoticeTcpConnect;
     m_arrNoticeApi[CwxAppNotice::UNIX_CONNECT] = &CwxAppFramework::innerNoticeUnixConnect;
     m_arrNoticeApi[CwxAppNotice::ADD_IO_HANDLE] = &CwxAppFramework::innerNoticeAddIoHandle;
@@ -1269,12 +1111,6 @@ void CwxAppFramework::destroy()
     //it's released by reactor
     m_pStdIoHandler = NULL;
 
-    if (m_pMgrServer)
-    {
-        delete m_pMgrServer;
-        m_pMgrServer = NULL;
-    }
-
     //delete m_pHandleCache
     if (m_pHandleCache)
     {
@@ -1282,26 +1118,6 @@ void CwxAppFramework::destroy()
         m_pHandleCache = NULL;
     }
    
-    if (m_pHostMap){
-        IdHostHash::iterator iter = m_pHostMap->begin();
-        while(iter != m_pHostMap->end()){
-            delete iter->second;
-            iter ++;
-        }
-        delete m_pHostMap;
-        m_pHostMap = NULL;
-    }
-
-    if (m_pSvrMap){
-        IdSvrHash::iterator iter = m_pSvrMap->begin();
-        while(iter != m_pSvrMap->end()){
-            delete iter->second;
-            iter++;
-        }
-        delete m_pSvrMap;
-        m_pSvrMap = NULL;
-    }
-
     if (m_pKeepAliveMap)
     {
         delete m_pKeepAliveMap;
@@ -1383,27 +1199,6 @@ void CwxAppFramework::innerNoticeSendMsgByConn(CwxAppFramework* pApp,
     }
 }
 
-///notice send msg by host
-void CwxAppFramework::innerNoticeSendMsgByHost(CwxAppFramework* pApp,
-                                     CwxAppNotice* pNotice)
-{
-    CwxMsgBlock* msg = (CwxMsgBlock*)pNotice->m_noticeArg;
-    if (!pApp->innerSendMsgByHost(msg))
-    {
-        if(msg) CwxMsgBlockAlloc::free(msg);
-    }
-}
-///notice send msg by svr
-void CwxAppFramework::innerNoticeSendMsgBySvr(CwxAppFramework* pApp,
-                                    CwxAppNotice* pNotice)
-{
-    CwxMsgBlock* msg = (CwxMsgBlock*)pNotice->m_noticeArg;
-    if (!pApp->innerSendMsgBySvr(msg))
-    {
-       if(msg) CwxMsgBlockAlloc::free(msg);
-    }
-
-}
 
 
 ///notice tcp connect
@@ -1411,12 +1206,12 @@ void CwxAppFramework::innerNoticeTcpConnect(CwxAppFramework* pApp,
                                             CwxAppNotice* pNotice)
 {
     CwxAppHandler4TcpConn* handle = (CwxAppHandler4TcpConn*)pNotice->m_noticeArg;
-    pApp->addSvrHostInfo(handle->getConnInfo().getSvrId(),
-        handle->getConnInfo().getHostId());
     if (-1 == pApp->m_pTcpConnector->connect(handle,
         handle->getConnectAddr().c_str(),
         handle->getConnectPort(),
-        AF_UNSPEC))
+        AF_UNSPEC,
+        handle->getConnInfo().getSockSndBuf(),
+        handle->getConnInfo().getSockRecvBuf()))
     {
         handle->close();
     }
@@ -1426,8 +1221,6 @@ void CwxAppFramework::innerNoticeTcpConnect(CwxAppFramework* pApp,
 void CwxAppFramework::innerNoticeUnixConnect(CwxAppFramework* pApp, CwxAppNotice* pNotice)
 {
     CwxAppHandler4UnixConn* handle = (CwxAppHandler4UnixConn*)pNotice->m_noticeArg;
-    pApp->addSvrHostInfo(handle->getConnInfo().getSvrId(),
-        handle->getConnInfo().getHostId());
     if (-1 == pApp->m_pUnixConnector->connect(handle,
         handle->getConnectPathFile().c_str()))
     {
@@ -1436,12 +1229,10 @@ void CwxAppFramework::innerNoticeUnixConnect(CwxAppFramework* pApp, CwxAppNotice
 }
 
 ///notice add Io listen
-void CwxAppFramework::innerNoticeAddIoHandle(CwxAppFramework* pApp,
+void CwxAppFramework::innerNoticeAddIoHandle(CwxAppFramework* ,
                                              CwxAppNotice* pNotice)
 {
     CwxAppHandler4IoMsg* handle = (CwxAppHandler4IoMsg*)pNotice->m_noticeArg;
-    pApp->addSvrHostInfo(handle->getConnInfo().getSvrId(),
-        handle->getConnInfo().getHostId());
     if (0 != handle->open())
     {
         CWX_ERROR(("Failure to open io msg handler ,conn_id[%u]", handle->getConnInfo().getConnId()));
