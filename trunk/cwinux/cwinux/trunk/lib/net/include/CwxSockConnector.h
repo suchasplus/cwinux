@@ -2,7 +2,8 @@
 #define __CWX_SOCK_CONNECTOR_H__
 /*
 版权声明：
-    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html）
+    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html），
+    联系方式：email:cwinux@gmail.com；微博:http://t.sina.com.cn/cwinux
 */
 /**
 @file CwxSockConnector.h
@@ -49,7 +50,10 @@ public:
         CwxAddr const& localAddr=CwxAddr::sap_any,
         CwxTimeouter* timeout=0,
         int protocol = 0,
-        bool reuse_addr = false);
+        bool reuse_addr = false,
+        CWX_UINT32 uiSockSndBuf=0, ///<socket snd buf
+        CWX_UINT32 uiSockRecvBuf=0 ///<socket recv buf
+    );
     /**
     @brief 设置连接完成后的连接标志。
     @param [out] stream 主动连接。

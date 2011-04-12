@@ -11,9 +11,11 @@ CwxSockAcceptor::CwxSockAcceptor(CwxAddr const& addr,
                 bool reuse,
                 int backlog,
                 int domain,
-                int protocol)
+                int protocol,
+                CWX_UINT32 uiSockSndBuf,
+                CWX_UINT32 uiSockRecvBuf)
 {
-    this->listen(addr, reuse, backlog, domain, protocol);
+    this->listen(addr, reuse, backlog, domain, protocol, uiSockSndBuf, uiSockRecvBuf);
 }
 
 ///Îö¹¹º¯Êý.
@@ -26,7 +28,9 @@ int CwxSockAcceptor::listen(CwxAddr const& addr,
                                    bool reuse,
                                    int backlog,
                                    int domain,
-                                   int protocol )
+                                   int protocol,
+                                   CWX_UINT32 uiSockSndBuf,
+                                   CWX_UINT32 uiSockRecvBuf)
 {
     int error = 0;
 
@@ -36,6 +40,26 @@ int CwxSockAcceptor::listen(CwxAddr const& addr,
         reuse) == -1)
     {
         return -1;
+    }
+    if (0 != uiSockSndBuf)
+    {
+        int bufLen = (uiSockSndBuf + 1023)/1024;
+        bufLen *=1024;
+        while (setsockopt(getHandle(), SOL_SOCKET, SO_SNDBUF, (void*)&bufLen, sizeof( bufLen)) < 0)
+        {
+            bufLen -= 1024;
+            if (bufLen <= 1024) break;
+        }
+    }
+    if (0 != uiSockRecvBuf)
+    {
+        int bufLen = (uiSockSndBuf + 1023)/1024;
+        bufLen *=1024;
+        while(setsockopt(getHandle(), SOL_SOCKET, SO_RCVBUF, (void *)&bufLen, sizeof(bufLen)) < 0)
+        {
+            bufLen -= 1024;
+            if (bufLen <= 1024) break;
+        }
     }
 
 #if (CWX_HAS_IPV6)

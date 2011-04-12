@@ -2,7 +2,8 @@
 #define __CWX_SOCK_ACCEPTOR_H__
 /*
 版权声明：
-    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html）
+    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html），
+    联系方式：email:cwinux@gmail.com；微博:http://t.sina.com.cn/cwinux
 */
 /**
 @file CwxSockAcceptor.h
@@ -39,7 +40,9 @@ public:
         bool reuse= 0,
         int backlog = DEF_BACK_LOG,
         int domain = PF_INET,
-        int protocol = 0);
+        int protocol = 0,
+        CWX_UINT32 uiSockSndBuf = 0,
+        CWX_UINT32 uiSockRecvBuf = 0);
     ///析构函数.
     ~CwxSockAcceptor(void);
 public:
@@ -50,13 +53,17 @@ public:
     @param [in] backlog listen最大排队的数量。
     @param [in] domain 协议族，就是socket()中的domain，PF_UNSPEC表示采用addr中的协议族。
     @param [in] protocol 连接的协议，就是socket()的protocol参数，由于一个协议家族的socket 类型，其protocol也是唯一的，为0就可以了。
+    @param [in] uiSockSndBuf socket的发送buf大小。0表示缺省值。
+    @param [in] uiSockRecvBuf socket的接受buf大小。0表示缺省值。
     @return -1：错误，errno记录错误的原因；0：成功。
     */
     int listen(CwxAddr const& addr,
         bool reuse= 0,
         int backlog = DEF_BACK_LOG,
         int domain = PF_INET,
-        int protocol = 0);
+        int protocol = 0,
+        CWX_UINT32 uiSockSndBuf = 0,
+        CWX_UINT32 uiSockRecvBuf = 0);
     /**
     @brief 接收一个被动TCP连接。
     @param [in] stream 返回接收到的被动连接。

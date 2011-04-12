@@ -16,7 +16,9 @@ int CwxSockConnector::connect (CwxSockStream& stream,
                                CwxAddr const& localAddr,
                                CwxTimeouter* timeout,
                                int protocol,
-                               bool reuse_addr)
+                               bool reuse_addr,
+                               CWX_UINT32 uiSockSndBuf,
+                               CWX_UINT32 uiSockRecvBuf)
 {
     if ((stream.getHandle() == CWX_INVALID_HANDLE) &&
         (stream.open(remoteAddr.getType(),
@@ -48,7 +50,26 @@ int CwxSockConnector::connect (CwxSockStream& stream,
         stream.close ();
         return -1;
     }
-
+    if (0 != uiSockSndBuf)
+    {
+        int bufLen = (uiSockSndBuf + 1023)/1024;
+        bufLen *=1024;
+        while (setsockopt(stream.getHandle (), SOL_SOCKET, SO_SNDBUF, (void*)&bufLen, sizeof( bufLen)) < 0)
+        {
+            bufLen -= 1024;
+            if (bufLen <= 1024) break;
+        }
+    }
+    if (0 != uiSockRecvBuf)
+    {
+        int bufLen = (uiSockSndBuf + 1023)/1024;
+        bufLen *=1024;
+        while(setsockopt(stream.getHandle (), SOL_SOCKET, SO_RCVBUF, (void *)&bufLen, sizeof(bufLen)) < 0)
+        {
+            bufLen -= 1024;
+            if (bufLen <= 1024) break;
+        }
+    }
     int result = ::connect (stream.getHandle (),
         reinterpret_cast<sockaddr *> (remoteAddr.getAddr ()),
         remoteAddr.getSize ());
