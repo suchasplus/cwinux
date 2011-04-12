@@ -199,15 +199,15 @@ private:
         m_pThreadInfo = NULL;
     }
 public:
-    char                    m_szBuf2K[TSS_2K_BUF + 1];///错误消息描述
-    int                     m_fileNo;
+    char                     m_szBuf2K[TSS_2K_BUF + 1];///错误消息描述
+    int                      m_fileNo;
     char const*              m_fileName;
 private:
     friend class CwxAppLogger;
-    char                    m_szErrMsg[TSS_2K_BUF + 1];///错误消息描述
-    CwxTssInfo*           m_pThreadInfo;///<当前TSS的线程info
+    char                     m_szErrMsg[TSS_2K_BUF + 1];///错误消息描述
+    CwxTssInfo*              m_pThreadInfo;///<当前TSS的线程info
     static bool              m_bInit;///<对象是否已经执行了init操作
-    static pthread_key_t      m_tssKey;///<线程的tss对象
+    static pthread_key_t     m_tssKey;///<线程的tss对象
 };
 
 #define  CWX_APP_TSS(type) (type*)CwxTss::instance()
