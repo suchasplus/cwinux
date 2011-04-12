@@ -179,7 +179,7 @@ public:
     ///获取Tss的thread info信息
     CwxTssInfo& getThreadInfo()
     {
-        return m_pThreadInfo;
+        return m_threadInfo;
     }
 public:
     ///初始化对象的静态数据
@@ -190,12 +190,6 @@ public:
     static int unRegTss();
     ///但实例化模式，获取此类的实例
     static CwxTss* instance();
-private:
-    ///默认构造函数
-    CwxTss()
-    {
-        m_pThreadInfo = NULL;
-    }
 public:
     char                     m_szBuf2K[TSS_2K_BUF + 1];///错误消息描述
     int                      m_fileNo;
@@ -203,7 +197,7 @@ public:
 private:
     friend class CwxLogger;
     char                     m_szErrMsg[TSS_2K_BUF + 1];///错误消息描述
-    CwxTssInfo*              m_pThreadInfo;///<当前TSS的线程info
+    CwxTssInfo               m_threadInfo;///<当前TSS的线程info
     static bool              m_bInit;///<对象是否已经执行了init操作
     static pthread_key_t     m_tssKey;///<线程的tss对象
 };
