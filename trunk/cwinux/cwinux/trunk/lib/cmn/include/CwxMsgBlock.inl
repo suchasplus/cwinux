@@ -14,26 +14,6 @@ inline bool CwxMsgSendCtrl::isFailNotice() const
 {
     return (m_uiMsgAttr&FAIL_NOTICE)!=0;
 }
-///检查是否消息失败的时候重试
-inline bool CwxMsgSendCtrl::isFailRetry() const
-{
-    return (m_uiMsgAttr&FAIL_RETRY)!=0;
-}
-///检查是否消息往固定连接发送
-inline bool CwxMsgSendCtrl::isFixConnId() const
-{
-    return m_uiConnId != 0;
-}
-///检查是否消息往固定HOST发送
-inline bool CwxMsgSendCtrl::isFixHostId() const
-{
-    return m_uiHostId&&!m_uiConnId;
-}
-///检查是否消息往固定svr发送
-inline bool CwxMsgSendCtrl::isFixSvrId() const
-{
-    return m_uiSvrId&&!m_uiHostId&&!m_uiConnId;
-}
 
 inline void CwxMsgSendCtrl::setConnCtrl(CWX_UINT32 uiSvrId,
                                            CWX_UINT32 uiHostId,
@@ -49,30 +29,6 @@ inline void CwxMsgSendCtrl::setConnCtrl(CWX_UINT32 uiSvrId,
     m_userData = userData;
     m_uiConnResumeState = uiConnState;
 }
-
-///设置基于host的发送控制
-inline void CwxMsgSendCtrl::setHostCtrl(CWX_UINT32 uiSvrId,
-                        CWX_UINT32 uiHostId,
-                        CWX_UINT32 uiMsgAttr,
-                        void* userData)
-{
-    m_uiSvrId = uiSvrId;
-    m_uiHostId = uiHostId;
-    m_uiMsgAttr = uiMsgAttr;
-    m_userData = userData;
-}
-///设置基于SVR的发送控制
-inline void CwxMsgSendCtrl::setSvrCtrl(CWX_UINT32 uiSvrId,
-                        CWX_UINT32 uiMsgAttr,
-                        void* userData,
-                        CWX_UINT32 uiDefHostId)
-{
-    m_uiSvrId = uiSvrId;
-    m_uiMsgAttr = uiMsgAttr;
-    m_userData = userData;
-    m_uiDefHostId = uiDefHostId;
-}
-
 
 ///获取SVR ID
 inline CWX_UINT32 CwxMsgSendCtrl::getSvrId() const

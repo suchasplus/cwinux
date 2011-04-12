@@ -183,6 +183,7 @@ inline CwxTimeouter::CwxTimeouter(CwxTimeValue const* timeout):timeout_(timeout)
     if (timeout_)
     {
         end_.now();
+        end_ += *timeout_;
         left_ = *timeout;
     }
 }
@@ -196,7 +197,7 @@ inline bool CwxTimeouter::timeout()
     if (timeout_)
     {
         left_.now();
-        left_ -= end_;
+        left_ = end_ - left_;
         return left_.sec() < 0;
     }
     return false;

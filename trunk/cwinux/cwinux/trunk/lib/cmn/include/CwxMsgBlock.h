@@ -2,7 +2,8 @@
 #define __CWX_MSG_BLOCK_H__
 /*
 版权声明：
-    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html）
+    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html），
+    联系方式：email:cwinux@gmail.com；微博:http://t.sina.com.cn/cwinux
 */
 
 /**
@@ -46,12 +47,10 @@ public:
         FAIL_NOTICE = (1<<0),///<发送失败通知标志
         BEGIN_NOTICE = (1<<1),///<开始发送通知标记
         FINISH_NOTICE = (1<<2),///<发送结束通知标记
-        FAIL_RETRY = (1<<3),///<发送失败重试标记
-        CLOSE_NOTICE = (1<<4), ///<发送完毕后，关闭连接
-        RECONN_NOTICE= (1<<5), ///<重新连接，对于被动连接则忽略
+        CLOSE_NOTICE = (1<<3), ///<发送完毕后，关闭连接
+        RECONN_NOTICE= (1<<4), ///<重新连接，对于被动连接则忽略
         FAIL_FINISH_NOTICE = FAIL_NOTICE|FINISH_NOTICE,///<消息发送完成与失败的时候通知
-        FAIL_FINISH_RETRY = FAIL_FINISH_NOTICE|FAIL_RETRY,///<消息发送失败重试、完成与失败的时候通知
-        ALL_NOTICE = FAIL_FINISH_NOTICE|BEGIN_NOTICE|FAIL_RETRY,///<设置全部标记，除了关闭、重连连接
+        ALL_NOTICE = FAIL_FINISH_NOTICE|BEGIN_NOTICE,///<设置全部标记，除了关闭、重连连接
         NONE = 0///<没有任何的标记
     };
 public:
@@ -61,14 +60,6 @@ public:
     inline bool isFinishNotice() const;
     ///检查是否消息失败通知
     inline bool isFailNotice() const;
-    ///检查是否消息失败的时候重试
-    inline bool isFailRetry() const;
-    ///检查是否消息往固定连接发送
-    inline bool isFixConnId() const;
-    ///检查是否消息往固定HOST发送
-    inline bool isFixHostId() const;
-    ///检查是否消息往固定svr发送
-    inline bool isFixSvrId() const;
 public:
     ///设置基于连接的发送控制
     inline void setConnCtrl(CWX_UINT32 uiSvrId,
@@ -77,17 +68,6 @@ public:
         CWX_UINT32 uiMsgAttr=FAIL_FINISH_NOTICE,
         void* userData=NULL,
         CWX_UINT32 uiConnState=UNDO_CONN);
-    ///设置基于host的发送控制
-    inline void setHostCtrl(CWX_UINT32 uiSvrId,
-        CWX_UINT32 uiHostId,
-        CWX_UINT32 uiMsgAttr=FAIL_FINISH_RETRY,
-        void* userData=NULL);
-    ///设置基于SVR的发送控制
-    inline void setSvrCtrl(CWX_UINT32 uiSvrId,
-        CWX_UINT32 uiMsgAttr=FAIL_FINISH_RETRY,
-        void* userData=NULL,
-        CWX_UINT32 uiDefHostId=0
-        );
     ///获取SVR ID
     inline CWX_UINT32 getSvrId() const;
     ///设置SVR ID
