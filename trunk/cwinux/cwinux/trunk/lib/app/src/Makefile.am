@@ -7,36 +7,28 @@ lib_LTLIBRARIES = libcwxapp.la
 libcwxapp_la_CPPFLAGS = -W -Wall
 
 libcwxapp_la_SOURCES = \
-	CwxAppCommander.cpp\
-	CwxAppHandler4Signal.cpp\
-	CwxAppThreadPool.cpp\
 	CwxAppConfig.cpp\
+	CwxAppHandler4Msg.cpp\
+	CwxAppHandler4UnixConn.cpp\
+	CwxAppTcpAcceptor.cpp\
+	CwxAppConnInfo.cpp\
+	CwxAppHandler4Notice.cpp\
+	CwxAppHandlerCache.cpp\
+	CwxAppTcpConnector.cpp\
+	CwxAppFramework.cpp\
+	CwxAppHandler4Signal.cpp\
+	CwxAppListenMgr.cpp\
+	CwxAppUnixAcceptor.cpp\
+	CwxAppHandler4Base.cpp\
 	CwxAppHandler4Stdio.cpp\
 	CwxAppNoticePipe.cpp\
-	CwxAppThreadPoolEx.cpp\
-	CwxAppConnInfo.cpp\
-	CwxAppHandler4TcpConn.cpp\
-	CwxAppThreadPoolMgr.cpp\
-	CwxAppFramework.cpp\
-	CwxAppHandler4Time.cpp\
-	CwxAppProcessMgr.cpp\
-	CwxAppTss.cpp\
-	CwxAppHandler4Base.cpp\
-	CwxAppHandler4UnixConn.cpp\
-	CwxAppReactor.cpp\
-	CwxAppUnixAcceptor.cpp\
-	CwxAppHandler4IoEvent.cpp\
-	CwxAppHandlerCache.cpp\
-	CwxAppTaskBoard.cpp\
 	CwxAppUnixConnector.cpp\
+	CwxAppHandler4IoEvent.cpp\
+	CwxAppHandler4TcpConn.cpp\
+	CwxAppProcessMgr.cpp\
 	CwxAppHandler4IoMsg.cpp\
-	CwxAppListenMgr.cpp\
-	CwxAppTcpAcceptor.cpp\
-	CwxAppHandler4Msg.cpp\
-	CwxAppLogger.cpp\
-	CwxAppTcpConnector.cpp\
-	CwxAppHandler4Notice.cpp\
-	CwxAppThread.cpp
+	CwxAppHandler4Time.cpp\
+	CwxAppReactor.cpp
 
 libcwxapp_la_LDFLAGS = 
 
@@ -46,13 +38,10 @@ cwxappinclude_HEADERS=\
 	../include/CwxAppHandler4IoEvent.h\
 	../include/CwxAppHandler4UnixConn.inl\
 	../include/CwxAppProcessMgr.h\
-	../include/CwxAppThreadPool.h\
 	../include/CwxAppCommander.h\
 	../include/CwxAppHandler4IoMsg.h\
 	../include/CwxAppHandlerCache.h\
 	../include/CwxAppReactor.h\
-	../include/CwxAppThreadPool.inl\
-	../include/CwxAppCommander.inl\
 	../include/CwxAppHandler4Msg.h\
 	../include/CwxAppHandlerCache.inl\
 	../include/CwxAppReactor.inl\
@@ -60,13 +49,8 @@ cwxappinclude_HEADERS=\
 	../include/CwxAppConfig.h\
 	../include/CwxAppHandler4Msg.inl\
 	../include/CwxAppListenMgr.h\
-	../include/CwxAppTaskBoard.h\
-	../include/CwxAppTpi.h\
 	../include/CwxAppConnInfo.h\
 	../include/CwxAppHandler4Notice.h\
-	../include/CwxAppLogger.h\
-	../include/CwxAppTaskBoard.inl\
-	../include/CwxAppTss.h\
 	../include/CwxAppConnInfo.inl\
 	../include/CwxAppHandler4Signal.h\
 	../include/CwxAppMacro.h\
@@ -78,15 +62,12 @@ cwxappinclude_HEADERS=\
 	../include/CwxAppUnixConnector.h\
 	../include/CwxAppFramework.h\
 	../include/CwxAppHandler4TcpConn.h\
-	../include/CwxAppThread.h\
 	../include/CwxAppFramework.inl\
 	../include/CwxAppHandler4TcpConn.inl\
 	../include/CwxAppNoticePipe.h\
-	../include/CwxAppThread.inl\
 	../include/CwxAppHandler4Base.h\
 	../include/CwxAppHandler4Time.h\
 	../include/CwxAppNoticePipe.inl\
-	../include/CwxAppThreadPoolEx.h\
 	../include/CwxAppHandler4Base.inl\
 	../include/CwxAppHandler4UnixConn.h\
 	../include/CwxAppThreadPoolEx.inl
