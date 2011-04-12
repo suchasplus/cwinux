@@ -7,30 +7,38 @@ lib_LTLIBRARIES = libcwxcmn.la
 libcwxcmn_la_CPPFLAGS = -W -Wall
 
 libcwxcmn_la_SOURCES = \
-    CwxCharPool.cpp\
-    CwxCommon.cpp\
-    CwxDate.cpp\
-    CwxEncodeXml.cpp\
-    CwxEscapeUtil.cpp\
-    CwxFile.cpp\
-    CwxGbkUnicodeMap.cpp\
-    CwxGbkUnicodeMapDat.cpp\
-    CwxGetOpt.cpp\
-    CwxMemLineReader.cpp\
-    CwxMsgBlock.cpp\
-    CwxMsgHead.cpp\
-    CwxMsgQueue.cpp\
-    CwxMutexIdLocker.cpp\
-    CwxMutexLock.cpp\
-    CwxPackage.cpp\
-    CwxPackageReader.cpp\
-    CwxPackageWriter.cpp\
-    CwxRwIdLocker.cpp\
-    CwxRwLock.cpp\
-    CwxSingleton.cpp\
-    CwxSingletonMgr.cpp\
-    CwxTimeValue.cpp\
-    CwxURI.cpp
+	CwxCharPool.cpp\
+	CwxFile.cpp\
+	CwxMsgBlock.cpp\
+	CwxPackageReader.cpp\
+	CwxTaskBoard.cpp\
+	CwxTss.cpp\
+	CwxCommander.cpp\
+	CwxGbkUnicodeMap.cpp\
+	CwxMsgHead.cpp\
+	CwxPackageWriter.cpp\
+	CwxThread.cpp\
+	CwxURI.cpp\
+	CwxCommon.cpp\
+	CwxGbkUnicodeMapDat.cpp\
+	CwxMsgQueue.cpp\
+	CwxRwIdLocker.cpp\
+	CwxThreadPool.cpp\
+	CwxDate.cpp\
+	CwxGetOpt.cpp\
+	CwxMutexIdLocker.cpp\
+	CwxRwLock.cpp\
+	CwxThreadPoolEx.cpp\
+	CwxEncodeXml.cpp\
+	CwxLogger.cpp\
+	CwxMutexLock.cpp\
+	CwxSingleton.cpp\
+	CwxThreadPoolMgr.cpp\
+	CwxEscapeUtil.cpp\
+	CwxMemLineReader.cpp\
+	CwxPackage.cpp\
+	CwxSingletonMgr.cpp\
+	CwxTimeValue.cpp
 
 libcwxcmn_la_LDFLAGS = 
 
@@ -111,7 +119,21 @@ cwxcmninclude_HEADERS=\
     ../include/CwxURI.inl\
     ../include/CwxZlib.h\
     ../include/CwxDTail.h\
-    ../include/CwxSTail.h
+    ../include/CwxSTail.h\
+    ../include/CwxCommander.h\
+    ../include/CwxCommander.inl\
+    ../include/CwxMinHeap.h\
+    ../include/CwxTaskBoard.h\
+    ../include/CwxTaskBoard.inl\
+    ../include/CwxThread.h\
+    ../include/CwxThread.inl\
+    ../include/CwxThreadPoolEx.h\
+    ../include/CwxThreadPoolEx.inl\
+    ../include/CwxThreadPool.h\
+    ../include/CwxThreadPool.inl\
+    ../include/CwxThreadPoolMgr.h\
+    ../include/CwxTpi.h\
+    ../include/CwxTss.h 
 
 	
 INCLUDES=-I$(srcdir)/../include
