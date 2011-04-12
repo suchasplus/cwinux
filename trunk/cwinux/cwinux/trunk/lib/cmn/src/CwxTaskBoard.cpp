@@ -1,38 +1,38 @@
 #include "CwxDate.h"
-#include "CwxAppTaskBoard.h"
+#include "CwxTaskBoard.h"
 
 CWINUX_BEGIN_NAMESPACE
 ///析构函数
-CwxAppTaskBoardConnInfo::~CwxAppTaskBoardConnInfo()
+CwxTaskBoardConnInfo::~CwxTaskBoardConnInfo()
 {
     if (m_msg) CwxMsgBlockAlloc::free(m_msg);
 }
 
 
 ///析构函数
-CwxAppTaskBoardTask::~CwxAppTaskBoardTask()
+CwxTaskBoardTask::~CwxTaskBoardTask()
 {
     clearBase();
 }
 
 
-int CwxAppTaskBoard::init()
+int CwxTaskBoard::init()
 {
     this->reset();
     m_pTaskMap = new CWX_APP_TASK_MAP((int)(m_uiMaxTaskNum * 1.5));
     return 0;
 }
 
-bool CwxAppTaskBoard::isExist(CWX_UINT32 uiTaskId)
+bool CwxTaskBoard::isExist(CWX_UINT32 uiTaskId)
 {
     CwxMutexGuard<CwxMutexLock> lock(&m_lock);
     return _isExist(uiTaskId);
 }
 
 ///-1:task doesn't exist, 0:task is managed by task-board, 1:task is finised
-int CwxAppTaskBoard::remove(CWX_UINT32 uiTaskId, CwxAppTaskBoardTask*& pFinishTask)
+int CwxTaskBoard::remove(CWX_UINT32 uiTaskId, CwxTaskBoardTask*& pFinishTask)
 {
-    CwxAppTaskBoardTask* pTask = NULL;
+    CwxTaskBoardTask* pTask = NULL;
     pFinishTask = NULL;
     {
         CwxMutexGuard<CwxMutexLock> lock(&m_lock);
@@ -48,7 +48,7 @@ int CwxAppTaskBoard::remove(CWX_UINT32 uiTaskId, CwxAppTaskBoardTask*& pFinishTa
 }
 
 ///-1:task exist, 0:task is managed by task-board, 1:task is finised
-int CwxAppTaskBoard::noticeActiveTask(CwxAppTaskBoardTask* pTask, CwxTss* pThrEnv)
+int CwxTaskBoard::noticeActiveTask(CwxTaskBoardTask* pTask, CwxTss* pThrEnv)
 {
     {
         CwxMutexGuard<CwxMutexLock> lock(&m_lock);
@@ -57,12 +57,12 @@ int CwxAppTaskBoard::noticeActiveTask(CwxAppTaskBoardTask* pTask, CwxTss* pThrEn
     if (-1 == pTask->noticeActive(pThrEnv))
     {
         CwxMutexGuard<CwxMutexLock> lock(&m_lock);
-        pTask->setTaskState(CwxAppTaskBoardTask::TASK_STATE_FINISH);
+        pTask->setTaskState(CwxTaskBoardTask::TASK_STATE_FINISH);
         this->_remove(pTask->getTaskId());
         return 1;
     }
     CWX_UINT8 ucTaskState = dispatchEvent(pTask, pThrEnv);
-    if (CwxAppTaskBoardTask::TASK_STATE_FINISH == ucTaskState)
+    if (CwxTaskBoardTask::TASK_STATE_FINISH == ucTaskState)
     {
         return 1;
     }
@@ -70,13 +70,13 @@ int CwxAppTaskBoard::noticeActiveTask(CwxAppTaskBoardTask* pTask, CwxTss* pThrEn
 }
 
 
-void CwxAppTaskBoard::noticeCheckTimeout(CwxTss* pThrEnv, list<CwxAppTaskBoardTask*>& finishTasks)
+void CwxTaskBoard::noticeCheckTimeout(CwxTss* pThrEnv, list<CwxTaskBoardTask*>& finishTasks)
 {
     CWX_UINT64 ullTime = CwxDate::getTimestamp();
     finishTasks.clear();
     {
         CwxMutexGuard<CwxMutexLock> lock(&m_lock);
-        CwxAppTaskBoardTask* pLoopTask = m_pTaskTail;
+        CwxTaskBoardTask* pLoopTask = m_pTaskTail;
         while(pLoopTask)
         {
             if (pLoopTask->checkTimeout(ullTime) && !pLoopTask->isLocked())
@@ -87,23 +87,23 @@ void CwxAppTaskBoard::noticeCheckTimeout(CwxTss* pThrEnv, list<CwxAppTaskBoardTa
             pLoopTask = pLoopTask->m_prev;
         }
     }
-    list<CwxAppTaskBoardTask*>::iterator iter = finishTasks.begin();
+    list<CwxTaskBoardTask*>::iterator iter = finishTasks.begin();
     CWX_UINT8 ucTaskState = 0;
     while(iter != finishTasks.end())
     {
         ucTaskState = dispatchEvent(*iter, pThrEnv);
-        CWX_ASSERT(CwxAppTaskBoardTask::TASK_STATE_FINISH == ucTaskState);
+        CWX_ASSERT(CwxTaskBoardTask::TASK_STATE_FINISH == ucTaskState);
         iter++;
     }
 }
 
 ///-1:task doesn't exist, 0:task is managed by task-board, 1:task is finised
-int CwxAppTaskBoard::noticeRecvMsg(CWX_UINT32 uiTaskId,
+int CwxTaskBoard::noticeRecvMsg(CWX_UINT32 uiTaskId,
                                    CwxMsgBlock*& msg,
                                    CwxTss* pThrEnv,
-                                   CwxAppTaskBoardTask*& pFinishTask)
+                                   CwxTaskBoardTask*& pFinishTask)
 {
-    CwxAppTaskBoardTask* pTask = NULL;
+    CwxTaskBoardTask* pTask = NULL;
     pFinishTask = NULL;
     {
         CwxMutexGuard<CwxMutexLock> lock(&m_lock);
@@ -115,7 +115,7 @@ int CwxAppTaskBoard::noticeRecvMsg(CWX_UINT32 uiTaskId,
         pTask->m_bLooked = true;
     }
     CWX_UINT8 ucTaskState = dispatchEvent(pTask, pThrEnv);
-    if (CwxAppTaskBoardTask::TASK_STATE_FINISH == ucTaskState)
+    if (CwxTaskBoardTask::TASK_STATE_FINISH == ucTaskState)
     {
         pFinishTask = pTask;
         return 1;
@@ -124,12 +124,12 @@ int CwxAppTaskBoard::noticeRecvMsg(CWX_UINT32 uiTaskId,
 }
 
 ///-1:task doesn't exist, 0:task is managed by task-board, 1:task is finised
-int CwxAppTaskBoard::noticeFailSendMsg(CWX_UINT32 uiTaskId,
+int CwxTaskBoard::noticeFailSendMsg(CWX_UINT32 uiTaskId,
                                     CwxMsgBlock*& msg,
                                     CwxTss* pThrEnv,
-                                    CwxAppTaskBoardTask*& pFinishTask)
+                                    CwxTaskBoardTask*& pFinishTask)
 {
-    CwxAppTaskBoardTask* pTask = NULL;
+    CwxTaskBoardTask* pTask = NULL;
     pFinishTask = NULL;
     {
         CwxMutexGuard<CwxMutexLock> lock(&m_lock);
@@ -141,7 +141,7 @@ int CwxAppTaskBoard::noticeFailSendMsg(CWX_UINT32 uiTaskId,
         pTask->m_bLooked = true;
     }
     CWX_UINT8 ucTaskState = dispatchEvent(pTask, pThrEnv);
-    if (CwxAppTaskBoardTask::TASK_STATE_FINISH == ucTaskState)
+    if (CwxTaskBoardTask::TASK_STATE_FINISH == ucTaskState)
     {
         pFinishTask = pTask;
         return 1;
@@ -150,9 +150,9 @@ int CwxAppTaskBoard::noticeFailSendMsg(CWX_UINT32 uiTaskId,
 }
 
 ///-1:task doesn't exist, 0:task is managed by task-board, 1:task is finised
-int CwxAppTaskBoard::noticeEndSendMsg(CWX_UINT32 uiTaskId, CwxMsgBlock*& msg, CwxTss* pThrEnv, CwxAppTaskBoardTask*& pFinishTask)
+int CwxTaskBoard::noticeEndSendMsg(CWX_UINT32 uiTaskId, CwxMsgBlock*& msg, CwxTss* pThrEnv, CwxTaskBoardTask*& pFinishTask)
 {
-    CwxAppTaskBoardTask* pTask = NULL;
+    CwxTaskBoardTask* pTask = NULL;
     pFinishTask = NULL;
     {
         CwxMutexGuard<CwxMutexLock> lock(&m_lock);
@@ -164,7 +164,7 @@ int CwxAppTaskBoard::noticeEndSendMsg(CWX_UINT32 uiTaskId, CwxMsgBlock*& msg, Cw
         pTask->m_bLooked = true;
     }
     CWX_UINT8 ucTaskState = dispatchEvent(pTask, pThrEnv);
-    if (CwxAppTaskBoardTask::TASK_STATE_FINISH == ucTaskState)
+    if (CwxTaskBoardTask::TASK_STATE_FINISH == ucTaskState)
     {
         pFinishTask = pTask;
         return 1;
@@ -172,15 +172,15 @@ int CwxAppTaskBoard::noticeEndSendMsg(CWX_UINT32 uiTaskId, CwxMsgBlock*& msg, Cw
     return 0;
 }
 
-void CwxAppTaskBoard::noticeConnClosed(CwxMsgBlock*& msg, CwxTss* pThrEnv, list<CwxAppTaskBoardTask*>& finishTasks)
+void CwxTaskBoard::noticeConnClosed(CwxMsgBlock*& msg, CwxTss* pThrEnv, list<CwxTaskBoardTask*>& finishTasks)
 {
-    CwxAppTaskBoardTask* pTask = NULL;
-    list<CwxAppTaskBoardTask*> locFinishTasks;
+    CwxTaskBoardTask* pTask = NULL;
+    list<CwxTaskBoardTask*> locFinishTasks;
     finishTasks.clear();
     {
         CwxMutexGuard<CwxMutexLock> lock(&m_lock);
-        CwxAppTaskBoardConnTasks connTasks(msg->event().getConnId(), 0);
-        map<CwxAppTaskBoardConnTasks, CwxAppTaskBoardTask*>::iterator iter=m_connTaskMap.lower_bound(connTasks);
+        CwxTaskBoardConnTasks connTasks(msg->event().getConnId(), 0);
+        map<CwxTaskBoardConnTasks, CwxTaskBoardTask*>::iterator iter=m_connTaskMap.lower_bound(connTasks);
         while(iter != m_connTaskMap.end())
         {
             if (iter->first.m_uiConnId != msg->event().getConnId()) break;
@@ -196,12 +196,12 @@ void CwxAppTaskBoard::noticeConnClosed(CwxMsgBlock*& msg, CwxTss* pThrEnv, list<
     }
     CwxMsgBlockAlloc::free(msg);
     msg = NULL;
-    list<CwxAppTaskBoardTask*>::iterator iter = locFinishTasks.begin();
+    list<CwxTaskBoardTask*>::iterator iter = locFinishTasks.begin();
     CWX_UINT8 ucTaskState = 0;
     while(iter != locFinishTasks.end())
     {
         ucTaskState = dispatchEvent(*iter, pThrEnv);
-        if(CwxAppTaskBoardTask::TASK_STATE_FINISH == ucTaskState)
+        if(CwxTaskBoardTask::TASK_STATE_FINISH == ucTaskState)
         {
             finishTasks.push_back(*iter);
         }
@@ -211,10 +211,10 @@ void CwxAppTaskBoard::noticeConnClosed(CwxMsgBlock*& msg, CwxTss* pThrEnv, list<
 
 
 ///remove task;
-CwxAppTaskBoardTask* CwxAppTaskBoard::_remove(CWX_UINT32 uiTaskId)
+CwxTaskBoardTask* CwxTaskBoard::_remove(CWX_UINT32 uiTaskId)
 {
     CWX_APP_TASK_MAP::iterator iter;
-    CwxAppTaskBoardTask* pTask;
+    CwxTaskBoardTask* pTask;
     iter = this->m_pTaskMap->find(uiTaskId);
     if (iter == this->m_pTaskMap->end()) return NULL;
     pTask = iter->second;
@@ -242,15 +242,15 @@ CwxAppTaskBoardTask* CwxAppTaskBoard::_remove(CWX_UINT32 uiTaskId)
         pTask->m_next->m_prev = pTask->m_prev;
     }
 
-    CwxAppTaskBoardTaskConns taskConns(pTask->getTaskId(), 0);
-    set<CwxAppTaskBoardTaskConns>::iterator taskConnBeginIter = m_taskConnSet.lower_bound(taskConns);
-    set<CwxAppTaskBoardTaskConns>::iterator taskConnEndIter = taskConnBeginIter;
+    CwxTaskBoardTaskConns taskConns(pTask->getTaskId(), 0);
+    set<CwxTaskBoardTaskConns>::iterator taskConnBeginIter = m_taskConnSet.lower_bound(taskConns);
+    set<CwxTaskBoardTaskConns>::iterator taskConnEndIter = taskConnBeginIter;
     //remove from conn tasks
     while(taskConnEndIter != m_taskConnSet.end())
     {
         if (taskConnEndIter->m_uiTaskId == pTask->getTaskId())
         {
-            m_connTaskMap.erase(CwxAppTaskBoardConnTasks(taskConnEndIter->m_uiConnId, taskConnEndIter->m_uiTaskId));
+            m_connTaskMap.erase(CwxTaskBoardConnTasks(taskConnEndIter->m_uiConnId, taskConnEndIter->m_uiTaskId));
             taskConnEndIter++;
             continue;
         }
@@ -265,16 +265,16 @@ CwxAppTaskBoardTask* CwxAppTaskBoard::_remove(CWX_UINT32 uiTaskId)
 }
 
 
-CWX_UINT8 CwxAppTaskBoard::dispatchEvent(CwxAppTaskBoardTask* pTask, CwxTss* pThrEnv)
+CWX_UINT8 CwxTaskBoard::dispatchEvent(CwxTaskBoardTask* pTask, CwxTss* pThrEnv)
 {
     bool                  bTimeout;
     bool                  bAppendMsg;
     CWX_UINT32             uiConnId;
     list<CwxMsgBlock*>     failSendMsgList;
     list<CwxMsgBlock*>     recvMsgList;
-    list<CwxAppTaskBoardConnInfo*> endclosedConns;
+    list<CwxTaskBoardConnInfo*> endclosedConns;
     list<CwxMsgBlock*>::iterator iter_event;
-    list<CwxAppTaskBoardConnInfo*>::iterator iter_conn;
+    list<CwxTaskBoardConnInfo*>::iterator iter_conn;
     CwxMsgBlock* msg = NULL;
     map<CWX_UINT32/*conn_id*/, CWX_UINT8/*state:0:used; 1:finish, 2:closed*/> connStateMap;
     map<CWX_UINT32/*conn_id*/, CWX_UINT8/*state:0:used; 1:finish, 2:closed*/>::iterator iter_connState;
@@ -385,7 +385,7 @@ CWX_UINT8 CwxAppTaskBoard::dispatchEvent(CwxAppTaskBoardTask* pTask, CwxTss* pTh
         {
             CwxMutexGuard<CwxMutexLock> lock(&m_lock);
             _remove(pTask->getTaskId());
-            return CwxAppTaskBoardTask::TASK_STATE_FINISH;
+            return CwxTaskBoardTask::TASK_STATE_FINISH;
         }
     }
 }

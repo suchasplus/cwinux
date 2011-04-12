@@ -39,7 +39,7 @@
 #include "CwxTss.h"
 #include "CwxAppThreadPool.h"
 #include "CwxCommander.h"
-#include "CwxAppTaskBoard.h"
+#include "CwxTaskBoard.h"
 #include "CwxThreadPoolMgr.h"
 #include "CwxAppListenMgr.h"
 #include "CwxAppForkMgr.h"
@@ -539,7 +539,7 @@ public:
     ///获取架构的commander
     CwxCommander& getCommander();
     ///获取架构的taskboard对象
-    CwxAppTaskBoard& getTaskBoard();
+    CwxTaskBoard& getTaskBoard();
     ///获取架构的线程池管理器对象
     CwxThreadPoolMgr* getThreadPoolMgr();
     ///获取通信线程的tss信息
@@ -640,7 +640,7 @@ private:
     bool                        m_bEnableHook;///<是否开发架构的HOOK
     CWX_UINT16                  m_uiProcId; ///<多进程模式的进程序号
     CwxCommander              m_commander;///<commander对象
-    CwxAppTaskBoard              m_taskBoard;///<taskboard对象
+    CwxTaskBoard              m_taskBoard;///<taskboard对象
     CwxAppListenMgr*             m_pListenMgr;///<监听管理器对象
     CwxTss*                  m_pTss;///<通信线程的TSS
     CwxAppHandlerCache*          m_pHandleCache;///<释放连接句柄cache

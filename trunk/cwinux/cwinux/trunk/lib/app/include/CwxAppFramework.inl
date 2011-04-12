@@ -195,7 +195,7 @@ inline CwxCommander& CwxAppFramework::getCommander()
     return m_commander;
 }
 
-inline CwxAppTaskBoard& CwxAppFramework::getTaskBoard()
+inline CwxTaskBoard& CwxAppFramework::getTaskBoard()
 {
     return  m_taskBoard;
 }

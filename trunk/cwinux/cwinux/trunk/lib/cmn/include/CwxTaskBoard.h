@@ -1,5 +1,5 @@
-#ifndef __CWX_APP_TASK_BOARD_H__
-#define __CWX_APP_TASK_BOARD_H__
+#ifndef __CWX_TASK_BOARD_H__
+#define __CWX_TASK_BOARD_H__
 /*
 版权声明：
     本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html），
@@ -7,7 +7,7 @@
 */
 
 /**
-@file CwxAppTaskBoard.h
+@file CwxTaskBoard.h
 @brief 异步任务消息管理对象定义
 @author cwinux@gmail.com
 @version 0.1
@@ -22,26 +22,24 @@
 #include "CwxTypePoolEx.h"
 #include "CwxMsgBlock.h"
 #include "CwxTss.h"
-#include "CwxAppConfig.h"
-#include "CwxAppMacro.h"
 
 CWINUX_BEGIN_NAMESPACE
 
-class CwxAppTaskBoard;
+class CwxTaskBoard;
 /**
-@class CwxAppTaskBoardConnInfo
+@class CwxTaskBoardConnInfo
 @brief Task的连接关闭及消息发送完毕事件的封装对象，实现以上两个消息的缓存。
 */
-class CWX_API CwxAppTaskBoardConnInfo
+class CWX_API CwxTaskBoardConnInfo
 {
 public:
     ///构造函数
-    CwxAppTaskBoardConnInfo(CWX_UINT32 uiSvrId,
+    CwxTaskBoardConnInfo(CWX_UINT32 uiSvrId,
         CWX_UINT32 uiHostId,
         CWX_UINT32 uiConnId,
         CwxMsgBlock* msg);
     ///析构函数
-    ~CwxAppTaskBoardConnInfo();
+    ~CwxTaskBoardConnInfo();
 public:
     ///获取封装事件的svr-id
     inline CWX_UINT32 getSvrId() const;
@@ -62,10 +60,10 @@ private:
 };
 
 /**
-@class CwxAppTaskBoardTask
+@class CwxTaskBoardTask
 @brief 异步任务的Task对象的基类，实现Task的数据及事件的处理,控制Task的状态转移
 */
-class CWX_API CwxAppTaskBoardTask
+class CWX_API CwxTaskBoardTask
 {
 public:
     ///任务的状态，其他的状态用户自己定义
@@ -76,9 +74,9 @@ public:
     };
 public:
     ///构造函数
-    CwxAppTaskBoardTask(CwxAppTaskBoard* pTaskBoard);
+    CwxTaskBoardTask(CwxTaskBoard* pTaskBoard);
     ///析构函数
-    virtual ~CwxAppTaskBoardTask();
+    virtual ~CwxTaskBoardTask();
 public:
     /**
     @brief 通知Task已经超时
@@ -146,7 +144,7 @@ public:
     }
 public:
     ///获取Task的Taskboard
-    inline CwxAppTaskBoard* getTaskBoard()
+    inline CwxTaskBoard* getTaskBoard()
     {
         return m_pTaskBoard;
     }
@@ -179,7 +177,7 @@ private:
     inline void fetchWaitingMsg(bool& bTimeout,
         list<CwxMsgBlock*>& failSendMsgs,
         list<CwxMsgBlock*>& recvMsgs,
-        list<CwxAppTaskBoardConnInfo*>& endclosedConnList);
+        list<CwxTaskBoardConnInfo*>& endclosedConnList);
     ///缓存一个发送的数据包通过连接发送完毕的事件
     inline void addEndSendMsgEvent(CwxMsgBlock* msg);
     ///缓存一个数据包发送失败的事件
@@ -190,96 +188,96 @@ private:
     inline void addClosedConnEvent(CWX_UINT32 uiSvrId,
         CWX_UINT32 uiHostId,
         CWX_UINT32 uiConnId);
-    friend class CwxAppTaskBoard;
+    friend class CwxTaskBoard;
 private:
     CWX_UINT32            m_uiTaskId; ///<Task的ID
     CWX_UINT64            m_ullTimeoutStamp;///<Task超时的时间点
     CWX_UINT8             m_ucTaskState;///<Task的状态
-    CwxAppTaskBoardTask*   m_next;///<Task的下一个Task
-    CwxAppTaskBoardTask*   m_prev;///<Task的前一个Task
+    CwxTaskBoardTask*   m_next;///<Task的下一个Task
+    CwxTaskBoardTask*   m_prev;///<Task的前一个Task
     bool                  m_bLooked;///<Task是否处于锁状态，禁止操作
     bool                  m_bWaitingRemove;///<Task是否处于从Taskboard移除状态
     bool                  m_bTimeout;///<Task是否已经超时
     list<CwxMsgBlock*>      m_failSendMsgList;///<消息通过连接发送、发送失败的事件缓存队列
     list<CwxMsgBlock*>      m_recvMsgList;///<接收到的数据的缓存队列
-    list<CwxAppTaskBoardConnInfo*> m_sendCloseConnList;///<连接关闭的缓存队列
-    CwxAppTaskBoard*       m_pTaskBoard;
+    list<CwxTaskBoardConnInfo*> m_sendCloseConnList;///<连接关闭的缓存队列
+    CwxTaskBoard*       m_pTaskBoard;
 };
 
 
 /**
-@class CwxAppTaskBoardConnTasks
+@class CwxTaskBoardConnTasks
 @brief 一条连接与Task关系的对象，用于实现管理一条连接与那些Task相关。
        当连接关闭的时候，会影响这些Task
 */
-class CwxAppTaskBoardConnTasks
+class CwxTaskBoardConnTasks
 {
 public:
     ///构造函数
-    CwxAppTaskBoardConnTasks(CWX_UINT32 uiConnId, CWX_UINT32 uiTaskId);
+    CwxTaskBoardConnTasks(CWX_UINT32 uiConnId, CWX_UINT32 uiTaskId);
     ///析构函数
-    ~CwxAppTaskBoardConnTasks();
+    ~CwxTaskBoardConnTasks();
     ///拷贝构造
-    CwxAppTaskBoardConnTasks(CwxAppTaskBoardConnTasks const& item);
+    CwxTaskBoardConnTasks(CwxTaskBoardConnTasks const& item);
     ///赋值操作
-    CwxAppTaskBoardConnTasks& operator=(CwxAppTaskBoardConnTasks const& item);
+    CwxTaskBoardConnTasks& operator=(CwxTaskBoardConnTasks const& item);
     ///对象的小于比较操作符
-    inline bool operator<(CwxAppTaskBoardConnTasks const& item) const;
+    inline bool operator<(CwxTaskBoardConnTasks const& item) const;
     ///对象的等于操作符
-    inline bool operator==(CwxAppTaskBoardConnTasks const& item) const;
+    inline bool operator==(CwxTaskBoardConnTasks const& item) const;
 private:
-    friend class CwxAppTaskBoard;
+    friend class CwxTaskBoard;
 private:
     CWX_UINT32      m_uiConnId;///<连接ID
     CWX_UINT32      m_uiTaskId;///<与连接相关的Task ID
 };
 
 /**
-@class CwxAppTaskBoardTaskConns
+@class CwxTaskBoardTaskConns
 @brief 一个Task与连接关系的对象，用于实现管理一个Task与哪些连接相关。
 当一个Task完成的时候，会清理那些连接上的Task
 */
-class CwxAppTaskBoardTaskConns
+class CwxTaskBoardTaskConns
 {
 public:
     ///构造函数
-    CwxAppTaskBoardTaskConns(CWX_UINT32 uiTaskId, CWX_UINT32 uiConnId);
+    CwxTaskBoardTaskConns(CWX_UINT32 uiTaskId, CWX_UINT32 uiConnId);
     ///析构函数
-    ~CwxAppTaskBoardTaskConns();
+    ~CwxTaskBoardTaskConns();
     ///拷贝构造
-    CwxAppTaskBoardTaskConns(CwxAppTaskBoardTaskConns const& item);
+    CwxTaskBoardTaskConns(CwxTaskBoardTaskConns const& item);
     ///赋值操作
-    CwxAppTaskBoardTaskConns& operator=(CwxAppTaskBoardTaskConns const& item);
+    CwxTaskBoardTaskConns& operator=(CwxTaskBoardTaskConns const& item);
     ///小于操作符
-    inline bool operator<(CwxAppTaskBoardTaskConns const& item) const;
+    inline bool operator<(CwxTaskBoardTaskConns const& item) const;
     ///等于操作符
-    inline bool operator==(CwxAppTaskBoardTaskConns const& item) const;
+    inline bool operator==(CwxTaskBoardTaskConns const& item) const;
 private:
-    friend class CwxAppTaskBoard;
+    friend class CwxTaskBoard;
 private:
     CWX_UINT32      m_uiTaskId; ///<Task id
     CWX_UINT32      m_uiConnId; ///<与Task相关的连接ID
 };
 
 /**
-@class CwxAppTaskBoard
+@class CwxTaskBoard
 @brief Task的管理对象，实现Task任务与其等待的消息的关联。帮助Task完成状态转义。
        Task是通过noticeActiveTask()接口加入到Taskboard中的。当Task完成时，
        会自动脱离Taskboard。
 */
-class CWX_API CwxAppTaskBoard
+class CWX_API CwxTaskBoard
 {
 public:
     ///Task的hash-map类型定义
-    typedef hash_map<CWX_UINT32/*taskid*/, CwxAppTaskBoardTask*, CwxNumHash<CWX_UINT32> > CWX_APP_TASK_MAP;
+    typedef hash_map<CWX_UINT32/*taskid*/, CwxTaskBoardTask*, CwxNumHash<CWX_UINT32> > CWX_APP_TASK_MAP;
 public:
     /**
     @brief 构造函数。
     @param [in] uiMaxTaskNum Taskboard管理的最大Task数，此用户控制Task hash的大小
     */
-    CwxAppTaskBoard(CWX_UINT32 uiMaxTaskNum=1024);
+    CwxTaskBoard(CWX_UINT32 uiMaxTaskNum=1024);
     ///析构函数
-    ~CwxAppTaskBoard();
+    ~CwxTaskBoard();
 
 public:
     /**
@@ -301,7 +299,7 @@ public:
             0：Task由于正被别的线程操作，处于lock状态，只设置了移除标志，无法移除，pFinishTask返回NULL。
             1：成功移除，移除的Task通过pFinishTask返回。
     */
-    int remove(CWX_UINT32 uiTaskId, CwxAppTaskBoardTask*& pFinishTask);
+    int remove(CWX_UINT32 uiTaskId, CwxTaskBoardTask*& pFinishTask);
     /**
     @brief 往Taskboard中添加一个Task并将Task激活。
     @param [in] pTask 要添加并激活的Task对象。
@@ -310,14 +308,14 @@ public:
     0：Task已经由Taskboard接管处理，调用线程不能再对Task进行任何处理。
     1：Task已经完成，不再有Taskboard管理，处于调用线程的控制之下。
     */
-    int noticeActiveTask(CwxAppTaskBoardTask* pTask, CwxTss* pThrEnv);
+    int noticeActiveTask(CwxTaskBoardTask* pTask, CwxTss* pThrEnv);
     /**
     @brief 检查Taskboard中的超时Task。
     @param [in] pThrEnv 调用线程的Thread-Env。
     @param [out] finishTasks 已经超时的Task的列表。
     @return void。
     */
-    void noticeCheckTimeout(CwxTss* pThrEnv, list<CwxAppTaskBoardTask*>& finishTasks);
+    void noticeCheckTimeout(CwxTss* pThrEnv, list<CwxTaskBoardTask*>& finishTasks);
     /**
     @brief 通知Taskboard，uiTaskId的任务收到一个通信数据包，此可能将是此Task完成。
     @param [in] uiTaskId 收到消息的Task的Task Id。
@@ -331,7 +329,7 @@ public:
     int noticeRecvMsg(CWX_UINT32 uiTaskId,
         CwxMsgBlock*& msg,
         CwxTss* pThrEnv,
-        CwxAppTaskBoardTask*& pFinishTask);
+        CwxTaskBoardTask*& pFinishTask);
     /**
     @brief 通知Taskboard，uiTaskId的Task的一个消息发送失败。此可能将是此Task完成。
     @param [in] uiTaskId 发送消息失败的Task的Task Id。
@@ -345,7 +343,7 @@ public:
     int noticeFailSendMsg(CWX_UINT32 uiTaskId,
         CwxMsgBlock*& msg,
         CwxTss* pThrEnv,
-        CwxAppTaskBoardTask*& pFinishTask);
+        CwxTaskBoardTask*& pFinishTask);
     /**
     @brief 通知Taskboard，uiTaskId的Task的一个消息有一条连接发送完毕。
     @param [in] uiTaskId Task的Task Id。
@@ -359,7 +357,7 @@ public:
     int noticeEndSendMsg(CWX_UINT32 uiTaskId,
         CwxMsgBlock*& msg,
         CwxTss* pThrEnv, 
-        CwxAppTaskBoardTask*& pFinishTask);
+        CwxTaskBoardTask*& pFinishTask);
     /**
     @brief 通知Taskboard，一条连接关闭。
     @param [in] msg 关闭连接相关的信息。
@@ -369,7 +367,7 @@ public:
     */
     void noticeConnClosed(CwxMsgBlock*& msg,
         CwxTss* pThrEnv, 
-        list<CwxAppTaskBoardTask*>& finishTasks);
+        list<CwxTaskBoardTask*>& finishTasks);
     ///获取Taskboard管理的任务数量
     inline CWX_UINT32 getTaskNum() const ;
     ///获取taskboard中conn-tasks的map中元素数目，为了调试
@@ -382,31 +380,31 @@ private:
     ///不带锁的判断一个任务是否存在
     inline bool _isExist(CWX_UINT32 uiTaskId);
     ///不带锁往Taskboard添加一个Task
-    bool _addTask(CwxAppTaskBoardTask* pTask);
+    bool _addTask(CwxTaskBoardTask* pTask);
     ///不带锁根据TaskId获取对应的Task
-    inline CwxAppTaskBoardTask* _getTask(CWX_UINT32 uiTaskId);
+    inline CwxTaskBoardTask* _getTask(CWX_UINT32 uiTaskId);
     ///不带锁从Taskboard删除一个task;
-    CwxAppTaskBoardTask* _remove(CWX_UINT32 uiTaskId);
+    CwxTaskBoardTask* _remove(CWX_UINT32 uiTaskId);
     ///分发Task上缓存的消息
-    CWX_UINT8 dispatchEvent(CwxAppTaskBoardTask* pTask, CwxTss* pThrEnv);
+    CWX_UINT8 dispatchEvent(CwxTaskBoardTask* pTask, CwxTss* pThrEnv);
     ///不带锁，添加连接的一个Task
-    inline void _addConnTask(CWX_UINT32 uiConnId, CwxAppTaskBoardTask* pTask);
+    inline void _addConnTask(CWX_UINT32 uiConnId, CwxTaskBoardTask* pTask);
     ///不带锁，删除连接的一个Task
     inline void _removeConnTask(CWX_UINT32 uiConnId, CWX_UINT32 uiTaskId);
     ///不带锁，删除一条连接上的所有Task
     inline void _removeConnTask(CWX_UINT32 uiConnId);
 private:
-    CwxAppTaskBoardTask*      m_pTaskHead;///<管理的Task的链表的头
-    CwxAppTaskBoardTask*      m_pTaskTail;///<管理的Task的链表的尾
+    CwxTaskBoardTask*      m_pTaskHead;///<管理的Task的链表的头
+    CwxTaskBoardTask*      m_pTaskTail;///<管理的Task的链表的尾
     CWX_APP_TASK_MAP*         m_pTaskMap;///<Task的Map索引
-    map<CwxAppTaskBoardConnTasks, CwxAppTaskBoardTask*> m_connTaskMap;///<连接与Task的对应Map
-    set<CwxAppTaskBoardTaskConns> m_taskConnSet;///<Task与Conn的对应Map
+    map<CwxTaskBoardConnTasks, CwxTaskBoardTask*> m_connTaskMap;///<连接与Task的对应Map
+    set<CwxTaskBoardTaskConns> m_taskConnSet;///<Task与Conn的对应Map
 	CwxMutexLock        m_lock;///<Taskboard的同步锁
     CWX_UINT32         m_uiMaxTaskNum;///<管理Task的最大数量
 };
 
 CWINUX_END_NAMESPACE
-#include "CwxAppTaskBoard.inl"
+#include "CwxTaskBoard.inl"
 
 #include "CwxPost.h"
 
