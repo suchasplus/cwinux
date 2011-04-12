@@ -237,7 +237,6 @@ cwxappinclude_HEADERS = \
 	../include/CwxAppHandler4Msg.h\
 	../include/CwxAppHandlerCache.inl\
 	../include/CwxAppReactor.inl\
-	../include/CwxAppThreadPoolMgr.h\
 	../include/CwxAppConfig.h\
 	../include/CwxAppHandler4Msg.inl\
 	../include/CwxAppListenMgr.h\
@@ -261,8 +260,7 @@ cwxappinclude_HEADERS = \
 	../include/CwxAppHandler4Time.h\
 	../include/CwxAppNoticePipe.inl\
 	../include/CwxAppHandler4Base.inl\
-	../include/CwxAppHandler4UnixConn.h\
-	../include/CwxAppThreadPoolEx.inl
+	../include/CwxAppHandler4UnixConn.h
 
 INCLUDES = -I@libevent_dir@/include -I$(srcdir)/../include -I$(srcdir)/../../cmn/include -I$(srcdir)/../../net/include
 all: all-am
