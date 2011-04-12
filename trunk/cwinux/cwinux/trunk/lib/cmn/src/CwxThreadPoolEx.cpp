@@ -1,52 +1,58 @@
-#include "CwxAppThreadPoolEx.h"
-#include "CwxAppFramework.h"
+#include "CwxThreadPoolEx.h"
 
 CWINUX_BEGIN_NAMESPACE
 ///构造函数
-CwxAppThreadPoolEx::CwxAppThreadPoolEx(CwxAppFramework* pApp,///<app对象
-                   CWX_UINT16 unGroupId,///<线程池的thread-group
-                   CWX_UINT16 unThreadNum,///<线程池中线程的数量
-                   CWX_UINT32 uiDeathCheckMsgWaterMask,///<线程的状态监测的排队消息门限
-                   CWX_UINT32 uiDeathCheckUpdateWaterMask///<线程失效的无状态更新的时间门限
+CwxThreadPoolEx::CwxThreadPoolEx(CWX_UINT16 unGroupId,///<线程池的thread-group
+                 CWX_UINT16 unThreadNum,///<线程池中线程的数量
+                 CwxThreadPoolMgr* mgr, ///<线程的管理对象
+                 CwxCommander* commander,///<队列消息消费的缺省commander，若指定func可以不指定
+                 CWX_TSS_THR_FUNC func, ///<用户的线程main函数
+                 void*            arg ///<func的void*参数
                    ): CwxTpi(unGroupId, unThreadNum)
 {
-    m_pApp = pApp;
-    m_uiTheadDeathMsgWaterMask = uiDeathCheckMsgWaterMask;
-    m_uiThreadDeathUpdateWaterMask = uiDeathCheckUpdateWaterMask;
-    m_arrThreadPool = new CwxThread*[unThreadNum];
-    memset(m_arrThreadPool, 0x00, sizeof(CwxThread*) * unThreadNum);
+    m_commander = commander;
+    m_func = func;
+    m_arg = arg;
+    m_mgr = mgr;
+    m_threadArr =  NULL;
 }
 
 ///析构函数
-CwxAppThreadPoolEx::~CwxAppThreadPoolEx()
+CwxThreadPoolEx::~CwxThreadPoolEx()
 {
-    if (m_arrThreadPool)
+    stop();
+    if (m_threadArr)
     {
         for (CWX_UINT16 i=0; i<getThreadNum(); i++)
         {
-            if (m_arrThreadPool[i]) delete m_arrThreadPool[i];
+            if (m_threadArr[i]) delete m_threadArr[i];
         }
-        delete [] m_arrThreadPool;
+        delete [] m_threadArr;
     }
 }
 
-int CwxAppThreadPoolEx::start(CwxTss** pThrEnv, size_t stack_size)
+int CwxThreadPoolEx::start(CwxTss** pThrEnv, size_t stack_size)
 {
     CWX_UINT16 i = 0;
-    if (m_pApp->getThreadPoolMgr()->isExist(getGroupId()))
+    if (m_mgr->isExist(getGroupId()))
     {
         CWX_ERROR(("Thread group[%u] exist.", getGroupId()));
         return -1;
     }
-    m_pApp->getThreadPoolMgr()->add(getGroupId(), this);
+    m_mgr->add(getGroupId(), this);
     for (i=0; i<getThreadNum(); i++)
     {
-        if (m_arrThreadPool[i]) delete m_arrThreadPool[i];
+        if (m_threadArr[i]) delete m_threadArr[i];
     }
     for (i=0; i<getThreadNum(); i++)
     {
-        m_arrThreadPool[i] = onCreateThread(m_pApp, getGroupId(), i, m_uiTheadDeathMsgWaterMask, m_uiThreadDeathUpdateWaterMask);
-        if (0 != m_arrThreadPool[i]->start(pThrEnv?pThrEnv[i]:NULL, stack_size))
+        m_threadArr[i] =  new CwxThread(getGroupId(),
+            i,
+            m_mgr,
+            m_commander,
+            m_func,
+            m_arg);
+        if (0 != m_threadArr[i]->start(pThrEnv?pThrEnv[i]:NULL, stack_size))
         {
             return -1;
         }
@@ -55,57 +61,46 @@ int CwxAppThreadPoolEx::start(CwxTss** pThrEnv, size_t stack_size)
     return 0;
 }
 
-void CwxAppThreadPoolEx::stop()
+void CwxThreadPoolEx::stop()
 {
     for (CWX_UINT16 i=0; i<getThreadNum(); i++)
     {
-        if (m_arrThreadPool && m_arrThreadPool[i]) m_arrThreadPool[i]->stop();
+        if (m_threadArr && m_threadArr[i]) m_threadArr[i]->stop();
     }
 }
 
-bool CwxAppThreadPoolEx::isDeath()
+bool CwxThreadPoolEx::isStop()
 {
     for (CWX_UINT16 i=0; i<getThreadNum(); i++)
     {
-        if (m_arrThreadPool && m_arrThreadPool[i]) 
+        if (m_threadArr && m_threadArr[i]) 
         {
-            if (m_arrThreadPool[i]->isDeath()) return true;
-        }
-    }
-    return false;
-}
-bool CwxAppThreadPoolEx::isStop()
-{
-    for (CWX_UINT16 i=0; i<getThreadNum(); i++)
-    {
-        if (m_arrThreadPool && m_arrThreadPool[i]) 
-        {
-            if (m_arrThreadPool[i]->isStop()) return true;
+            if (m_threadArr[i]->isStop()) return true;
         }
     }
     return false;
 }
 
-CwxTss* CwxAppThreadPoolEx::getTss(CWX_UINT16 unThreadIndex)
+CwxTss* CwxThreadPoolEx::getTss(CWX_UINT16 unThreadIndex)
 {
-    if (m_arrThreadPool && (unThreadIndex<getThreadNum()) && m_arrThreadPool[unThreadIndex])
+    if (m_threadArr && (unThreadIndex<getThreadNum()) && m_threadArr[unThreadIndex])
     {
-        return m_arrThreadPool[unThreadIndex]->getTss();
+        return m_threadArr[unThreadIndex]->getTss();
     }
     return NULL;
 }
 ///锁住整个线程池。返回值0：成功；-1：失败
-int CwxAppThreadPoolEx::lock()
+int CwxThreadPoolEx::lock()
 {
     for (CWX_UINT16 i=0; i<getThreadNum(); i++)
     {
-        if (m_arrThreadPool && m_arrThreadPool[i]) 
+        if (m_threadArr && m_threadArr[i]) 
         {
-            if (0 != m_arrThreadPool[i]->lock())
+            if (0 != m_threadArr[i]->lock())
             {
                 for (CWX_UINT16 j=0; j<i; j++)
                 {
-                    if (m_arrThreadPool[j]) m_arrThreadPool[j]->unlock();
+                    if (m_threadArr[j]) m_threadArr[j]->unlock();
                 }
                 return -1;
             }
@@ -114,22 +109,16 @@ int CwxAppThreadPoolEx::lock()
     return 0;
 }
 ///解锁这个线程池。返回值0：成功；-1：失败
-int CwxAppThreadPoolEx::unlock()
+int CwxThreadPoolEx::unlock()
 {
     for (CWX_UINT16 i=0; i<getThreadNum(); i++)
     {
-        if (m_arrThreadPool && m_arrThreadPool[i]) 
+        if (m_threadArr && m_threadArr[i]) 
         {
-            m_arrThreadPool[i]->unlock();
+            m_threadArr[i]->unlock();
         }
     }
     return 0;
 }
-
-CwxThread* CwxAppThreadPoolEx::onCreateThread(CwxAppFramework* pApp, CWX_UINT16 unGroup, CWX_UINT16 unThreadId, CWX_UINT32 uiMsgWaterMask, CWX_UINT32 uiUpdateWaterMask)
-{
-    return new CwxThread(pApp, unGroup, unThreadId, uiMsgWaterMask, uiUpdateWaterMask);
-}
-
 
 CWINUX_END_NAMESPACE
