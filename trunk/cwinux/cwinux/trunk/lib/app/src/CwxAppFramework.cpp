@@ -138,15 +138,15 @@ int CwxAppFramework::init(int argc, char** argv)
         CWX_ERROR(("Failure to init tss"));
         return -1;
     }
-    m_pThreadPoolMgr = new CwxAppThreadPoolMgr();
+    m_pThreadPoolMgr = new CwxThreadPoolMgr();
     //get app name
     CwxFile::getLastDirName(argv[0], m_strAppName);
     m_pTss = this->onTssEnv();
     CWX_ASSERT(m_pTss);
-    m_pTss->getThreadInfo()->setStartTime(time(NULL));
-    m_pTss->getThreadInfo()->setUpdateTime(time(NULL));
-    m_pTss->getThreadInfo()->setThreadGroup(THREAD_GROUP_SYS);
-    m_pTss->getThreadInfo()->setThreadNo(0);
+    m_pTss->getThreadInfo().setStartTime(time(NULL));
+    m_pTss->getThreadInfo().setUpdateTime(time(NULL));
+    m_pTss->getThreadInfo().setThreadGroup(THREAD_GROUP_SYS);
+    m_pTss->getThreadInfo().setThreadNo(0);
     CwxTss::regTss(m_pTss);
     m_pThreadPoolMgr->addTss(m_pTss);
  	return 0;
@@ -676,7 +676,7 @@ void CwxAppFramework::onTime(CwxTimeValue const& current)
     if (time(NULL) - ttLastStateCheck > 1)
     {        
         ttLastStateCheck = time(NULL);
-        CwxTss::instance()->getThreadInfo()->setUpdateTime(ttLastStateCheck);
+        CwxTss::instance()->getThreadInfo().setUpdateTime(ttLastStateCheck);
         if (APP_MODE_ALONE != m_unAppMode)
         {
             if (1 == ::getppid())

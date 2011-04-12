@@ -6,7 +6,7 @@ CWINUX_BEGIN_NAMESPACE
 CwxAppReactor::CwxAppReactor()
 :m_connMap(CWX_APP_MAX_IO_NUM * 2)
 {
-    m_owner = CwxAppThread::self();
+    m_owner = CwxThread::self();
     m_bStop = true;
     m_eventBase = NULL;
     ///初始化IO handler的数组
@@ -30,7 +30,7 @@ CwxAppReactor::~CwxAppReactor()
 ///fork的re-init方法，返回值，0：成功；-1：失败
 int CwxAppReactor::forkReinit()
 {
-    m_owner = CwxAppThread::self();
+    m_owner = CwxThread::self();
     int ret = event_reinit(m_eventBase);
     if (-1 == ret)
     {
@@ -49,7 +49,7 @@ int CwxAppReactor::open()
         return -1;
     }
     ///设置reactor的owner
-    m_owner = CwxAppThread::self();
+    m_owner = CwxThread::self();
     ///清理reactor
     this->close();
     ///创建notice pipe对象
@@ -88,7 +88,7 @@ int CwxAppReactor::open()
 ///关闭reactor，return -1：失败；0：成功
 int CwxAppReactor::close()
 {
-    if (!CwxAppThread::equal(m_owner, CwxAppThread::self()))
+    if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
         CWX_ERROR(("CwxAppReactor::close must be invoked by owner thread"));
         return -1;
@@ -143,7 +143,7 @@ int CwxAppReactor::run(CwxAppHandler4Base* noticeHandler,
         return -1;
     }
     ///设置reactor的owner
-    m_owner = CwxAppThread::self();
+    m_owner = CwxThread::self();
     ///注册notice handler
     noticeHandler->setHandle(m_pNoticePipe->getPipeReader());
     if (0 != this->registerHandler(m_pNoticePipe->getPipeReader(),
@@ -203,7 +203,7 @@ int CwxAppReactor::run(CwxAppHandler4Base* noticeHandler,
 */
 int CwxAppReactor::stop()
 {
-    if (!CwxAppThread::equal(m_owner, CwxAppThread::self()))
+    if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
         m_rwLock.acquire_read();
         this->notice(NULL);

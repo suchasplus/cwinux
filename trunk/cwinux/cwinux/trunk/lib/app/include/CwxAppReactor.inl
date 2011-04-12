@@ -7,7 +7,7 @@ inline int CwxAppReactor::registerHandler (CWX_HANDLE io_handle,
                                     int mask,
                                     CWX_UINT32 uiConnId)
 {
-    if (!CwxAppThread::equal(m_owner, CwxAppThread::self()))
+    if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
         int ret = 0;
         m_rwLock.acquire_read();
@@ -24,7 +24,7 @@ inline int CwxAppReactor::registerHandler (CWX_HANDLE io_handle,
 ///删除io事件处理handle
 inline int CwxAppReactor::removeHandler (CwxAppHandler4Base *event_handler, bool bRemoveConnId)
 {
-    if (!CwxAppThread::equal(m_owner, CwxAppThread::self()))
+    if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
         int ret = 0;
         m_rwLock.acquire_read();
@@ -42,7 +42,7 @@ inline int CwxAppReactor::removeHandler (CwxAppHandler4Base *event_handler, bool
 ///注册IO事件处理handle
 inline int CwxAppReactor::suspendHandler (CwxAppHandler4Base *event_handler, int suspend_mask)
 {
-    if (!CwxAppThread::equal(m_owner, CwxAppThread::self()))
+    if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
         int ret = 0;
         m_rwLock.acquire_read();
@@ -59,7 +59,7 @@ inline int CwxAppReactor::suspendHandler (CwxAppHandler4Base *event_handler, int
 ///删除io事件处理handle
 inline int CwxAppReactor::resumeHandler (CwxAppHandler4Base *event_handler, int resume_mask)
 {
-    if (!CwxAppThread::equal(m_owner, CwxAppThread::self()))
+    if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
         int ret = 0;
         m_rwLock.acquire_read();
@@ -77,7 +77,7 @@ inline int CwxAppReactor::resumeHandler (CwxAppHandler4Base *event_handler, int 
 
 inline CwxAppHandler4Base* CwxAppReactor::removeHandler (CWX_HANDLE handle, bool bRemoveConnId)
 {
-    if (!CwxAppThread::equal(m_owner, CwxAppThread::self()))
+    if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
         CwxAppHandler4Base* ret = NULL;
         m_rwLock.acquire_read();
@@ -95,7 +95,7 @@ inline CwxAppHandler4Base* CwxAppReactor::removeHandler (CWX_HANDLE handle, bool
 inline int CwxAppReactor::suspendHandler (CWX_HANDLE handle,
                     int suspend_mask)
 {
-    if (!CwxAppThread::equal(m_owner, CwxAppThread::self()))
+    if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
         int ret = 0;
         m_rwLock.acquire_read();
@@ -113,7 +113,7 @@ inline int CwxAppReactor::suspendHandler (CWX_HANDLE handle,
 inline int CwxAppReactor::resumeHandler (CWX_HANDLE handle,
                    int resume_mask)
 {
-    if (!CwxAppThread::equal(m_owner, CwxAppThread::self()))
+    if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
         int ret = 0;
         m_rwLock.acquire_read();
@@ -131,7 +131,7 @@ inline int CwxAppReactor::resumeHandler (CWX_HANDLE handle,
 
 inline CwxAppHandler4Base* CwxAppReactor::removeHandlerByConnId (CWX_UINT32 uiConnId, bool bRemoveConnId)
 {
-    if (!CwxAppThread::equal(m_owner, CwxAppThread::self()))
+    if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
         CwxAppHandler4Base* ret = NULL;
         m_rwLock.acquire_read();
@@ -149,7 +149,7 @@ inline CwxAppHandler4Base* CwxAppReactor::removeHandlerByConnId (CWX_UINT32 uiCo
 inline int CwxAppReactor::suspendHandlerByConnId (CWX_UINT32 uiConnId,
                             int suspend_mask)
 {
-    if (!CwxAppThread::equal(m_owner, CwxAppThread::self()))
+    if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
         int ret = 0;
         m_rwLock.acquire_read();
@@ -167,7 +167,7 @@ inline int CwxAppReactor::suspendHandlerByConnId (CWX_UINT32 uiConnId,
 inline int CwxAppReactor::resumeHandlerByConnId (CWX_UINT32 uiConnId,
                            int resume_mask)
 {
-    if (!CwxAppThread::equal(m_owner, CwxAppThread::self()))
+    if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
         int ret = 0;
         m_rwLock.acquire_read();
@@ -218,7 +218,7 @@ inline int CwxAppReactor::registerSignal(int signum,
                                   CwxAppHandler4Base *event_handler
                                   )
 {
-    if (!CwxAppThread::equal(m_owner, CwxAppThread::self()))
+    if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
         int ret = 0;
         m_rwLock.acquire_read();
@@ -236,7 +236,7 @@ inline int CwxAppReactor::registerSignal(int signum,
 ///删除signal事件处理handle
 inline int CwxAppReactor::removeSignal(CwxAppHandler4Base *event_handler)
 {
-    if (!CwxAppThread::equal(m_owner, CwxAppThread::self()))
+    if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
         int ret = 0;
         m_rwLock.acquire_read();
@@ -253,7 +253,7 @@ inline int CwxAppReactor::removeSignal(CwxAppHandler4Base *event_handler)
 
 inline CwxAppHandler4Base* CwxAppReactor::removeSignal(int sig)
 {
-    if (!CwxAppThread::equal(m_owner, CwxAppThread::self()))
+    if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
         CwxAppHandler4Base* handler = NULL;
         m_rwLock.acquire_read();
@@ -272,7 +272,7 @@ inline CwxAppHandler4Base* CwxAppReactor::removeSignal(int sig)
 inline int CwxAppReactor::scheduleTimer (CwxAppHandler4Base *event_handler,
                                    CwxTimeValue const&interval)
 {
-    if (!CwxAppThread::equal(m_owner, CwxAppThread::self()))
+    if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
         int ret = 0;
         m_rwLock.acquire_read();
@@ -290,7 +290,7 @@ inline int CwxAppReactor::scheduleTimer (CwxAppHandler4Base *event_handler,
 ///取消定时处理handle
 inline int CwxAppReactor::cancelTimer (CwxAppHandler4Base *event_handler)
 {
-    if (!CwxAppThread::equal(m_owner, CwxAppThread::self()))
+    if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
         int ret = 0;
         m_rwLock.acquire_read();
@@ -354,8 +354,8 @@ inline bool CwxAppReactor::isRegIoHandle(CWX_HANDLE handle)
 ///根据conn id获取对应的handler
 inline CwxAppHandler4Base* CwxAppReactor::getHandlerByConnId(CWX_UINT32 uiConnId)
 {
-    CWX_ASSERT(CwxAppThread::equal(m_owner, CwxAppThread::self()));
-    if (!CwxAppThread::equal(m_owner, CwxAppThread::self()))
+    CWX_ASSERT(CwxThread::equal(m_owner, CwxThread::self()));
+    if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
         CWX_ERROR(("Only owner thread can invoke CwxAppReactor::getHandlerByConnId()"));
         return NULL;

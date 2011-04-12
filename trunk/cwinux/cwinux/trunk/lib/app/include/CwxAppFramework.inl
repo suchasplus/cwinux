@@ -200,7 +200,7 @@ inline CwxAppTaskBoard& CwxAppFramework::getTaskBoard()
     return  m_taskBoard;
 }
 
-inline CwxAppThreadPoolMgr* CwxAppFramework::getThreadPoolMgr()
+inline CwxThreadPoolMgr* CwxAppFramework::getThreadPoolMgr()
 {
     return m_pThreadPoolMgr;
 }
@@ -270,7 +270,7 @@ inline int CwxAppFramework::recvMessage(CwxMsgHead& header,
                                         bool& bSuspendConn)
 {
     if (isStopped()) return 0;
-    getAppTss()->getThreadInfo()->incRecvMsgNum();
+    getAppTss()->getThreadInfo().incRecvMsgNum();
     bSuspendConn = false;
     conn.getConnInfo().setLastRecvMsgTime(time(NULL));
     if (!conn.getConnInfo().isRawData() && header.isSysMsg())

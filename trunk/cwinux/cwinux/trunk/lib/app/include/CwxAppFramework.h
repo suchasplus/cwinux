@@ -40,7 +40,7 @@
 #include "CwxAppThreadPool.h"
 #include "CwxAppCommander.h"
 #include "CwxAppTaskBoard.h"
-#include "CwxAppThreadPoolMgr.h"
+#include "CwxThreadPoolMgr.h"
 #include "CwxAppListenMgr.h"
 #include "CwxAppForkMgr.h"
 #include "CwxAppReactor.h"
@@ -541,7 +541,7 @@ public:
     ///获取架构的taskboard对象
     CwxAppTaskBoard& getTaskBoard();
     ///获取架构的线程池管理器对象
-    CwxAppThreadPoolMgr* getThreadPoolMgr();
+    CwxThreadPoolMgr* getThreadPoolMgr();
     ///获取通信线程的tss信息
     CwxTss*  getAppTss();
     ///获取handle cache
@@ -649,7 +649,7 @@ private:
     //not lock for communite thread only access
     IdConnMap*                 m_pKeepAliveMap;///<需要进行KEEP-ALIVE的连接MAP
     fnNoticeApi                m_arrNoticeApi[CwxAppNotice::ALL_NOTICE_NUM + 1];///<notcie的消息映射
-    CwxAppThreadPoolMgr*        m_pThreadPoolMgr;///<线程池管理对象
+    CwxThreadPoolMgr*        m_pThreadPoolMgr;///<线程池管理对象
     //调试控制
     bool                      m_bDebug; ///<是否在调试中
     //following is fork's info

@@ -26,7 +26,7 @@
 #include "CwxAppMacro.h"
 #include "CwxAppHandler4Base.h"
 #include "CwxAppNoticePipe.h"
-#include "CwxAppThread.h"
+#include "CwxThread.h"
 #include "CwxAppLogger.h"
 #include <event.h>
 
