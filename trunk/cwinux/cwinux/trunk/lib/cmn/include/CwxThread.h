@@ -136,11 +136,12 @@ public:
     static int cancel(pthread_t thread);
 private:
     static void* threadFunc(void *);
-private:
+protected:
     CwxTss*                m_pTssEnv;///<线程的tss
     CWX_UINT16             m_unGroupId;///<线程的线程组id
     CWX_UINT16             m_unThreadId;///<线程在线程组中的序号
     CwxMsgQueue*           m_msgQueue; ///<队列
+    bool                   m_bOwnQueue; ///<是否拥有队列
     CwxCommander*          m_commander; ///<commander
     CWX_TSS_THR_FUNC       m_func; ///<用户指定的thread main function
     CwxThreadPoolMgr*      m_mgr; ///<线程的管理对象

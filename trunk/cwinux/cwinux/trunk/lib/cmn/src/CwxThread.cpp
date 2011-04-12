@@ -1,6 +1,5 @@
 #include "CwxThread.h"
 #include "CwxLogger.h"
-#include "CwxAppFramework.h"
 
 CWINUX_BEGIN_NAMESPACE
 
@@ -18,9 +17,15 @@ CwxThread::CwxThread(CWX_UINT16 unGroupId,///<线程的group id
     m_unThreadId = unThreadId;
     m_unGroupId = unGroupId;
     if (!queue)
+    {
         m_msgQueue = new CwxMsgQueue(1024*1024*200, 1024*1024*200);
+        m_bOwnQueue = true;
+    }
     else
+    {
         m_msgQueue = queue;
+        m_bOwnQueue = false;
+    }
     m_commander = commander;
     m_func = func;
     m_arg = arg;
@@ -29,16 +34,21 @@ CwxThread::CwxThread(CWX_UINT16 unGroupId,///<线程的group id
 
 CwxThread::~CwxThread()
 {
-    delete m_msgQueue;
+    if (m_bOwnQueue && m_msgQueue) delete m_msgQueue;
     m_msgQueue = NULL;
 }
 
 
 
-int CwxThread::start(CwxTss* pThrEnv=NULL, size_t stack_size)
+int CwxThread::start(CwxTss* pThrEnv, size_t stack_size)
 {
+    if (m_mgr->getTss(m_unGroupId, m_unThreadId))
+    {
+        CWX_ERROR(("Thread[group:%u, id=%u] exists, exit.", m_unGroupId, m_unThreadId));
+        return -1;
+    }
     m_pTssEnv = pThrEnv;
-    return CwxThread::spawn(
+    if (-1 ==  CwxThread::spawn(
         threadFunc,
         this,
         THREAD_NEW_LWP | THREAD_JOINABLE | THREAD_INHERIT_SCHED,
@@ -46,14 +56,23 @@ int CwxThread::start(CwxTss* pThrEnv=NULL, size_t stack_size)
         CWX_DEFAULT_THREAD_PRIORITY,
         NULL,
         stack_size        
-        );
+        ))
+    {
+        CWX_ERROR(("Failure to spawn thread[group:%u, id=%u], errno=%d", m_unGroupId, m_unThreadId, errno));
+        return -1;
+    }
+    return 0;
 }
 
 void CwxThread::stop()
 {
-    m_msgQueue->deactivate();
+    if (m_msgQueue->isActivate())
+    {
+        m_msgQueue->deactivate();
+    }
     join(m_tid, NULL);
-    m_msgQueue->flush();
+    if (m_bOwnQueue)
+        m_msgQueue->flush();
 }
 
 
@@ -63,11 +82,6 @@ void CwxThread::threadMain()
     time_t ttTime = time(NULL);
 
     {//注册tss
-        if (m_mgr->getTss(m_unGroupId, m_unThreadId))
-        {
-            CWX_ERROR(("Thread[group:%u, id=%u] exists, exit.", m_unGroupId, m_unThreadId));
-            return;
-        }
         if (!m_pTssEnv)
         {
             m_pTssEnv = new CwxTss;

@@ -51,8 +51,6 @@ public:
     virtual int start(CwxTss** pThrEnv=NULL, size_t stack_size= 0) = 0;
     ///停止线程池
     virtual void stop() = 0;
-    ///check thread 是否死锁。若需要改变检查的规则，则重载此API
-    virtual bool isDeath() = 0;
     ///check thread 是否停止。若需要改变检查的规则，则重载此API
     virtual bool isStop() = 0;
     ///获取线程的TSS，及Thread env

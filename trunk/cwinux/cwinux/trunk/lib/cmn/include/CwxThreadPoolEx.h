@@ -95,7 +95,7 @@ public:
     @return -1：失败；>=0为对应线程的队列中排队的消息数量
     */
     inline int append(CwxMsgBlock* pMsg, CWX_UINT32 uiThread);
-private:
+protected:
     CwxAppFramework*        m_pApp;///<架构的APP
     CwxThread**          m_arrThreadPool;///<线程的数组
     CWX_UINT32              m_uiTheadDeathMsgWaterMask;///<线程death检查的队列消息排队阀值
