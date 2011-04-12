@@ -27,6 +27,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include "CwxCommon.h"
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxLogger
