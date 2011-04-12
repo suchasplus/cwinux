@@ -2,7 +2,8 @@
 #define __CWX_BIN_LOG_MGR_H__
 /*
 版权声明：
-    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html）
+    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html），
+    联系方式：email:cwinux@gmail.com；微博:http://t.sina.com.cn/cwinux
 */
 
 /**
@@ -581,6 +582,12 @@ public:
     @return -1：游标无效；否则为记录的数量。
     */
     CWX_INT64 leftLogNum(CwxBinLogCursor const* pCursor);
+    /**
+    @brief 获取包含指定时间日志的log文件的起始sid
+    @param [in] ttTimestamp  日志时间
+    @return 返回sid。
+    */
+    CWX_UINT64 getFileStartSid(CWX_UINT32 ttTimestamp);
 
 public:
     ///获取管理器是否有效

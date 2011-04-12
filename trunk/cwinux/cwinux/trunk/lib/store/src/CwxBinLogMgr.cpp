@@ -885,7 +885,17 @@ int CwxBinLogMgr::append(CWX_UINT64 ullSid,
             delete m_arrBinlog[0];
             m_arrBinlog.erase(m_arrBinlog.begin());
         }
-        if (m_arrBinlog.size()) m_arrBinlog[0]->m_prevBinLogFile = NULL;
+        if (m_arrBinlog.size())
+        {
+            m_arrBinlog[0]->m_prevBinLogFile = NULL;
+            m_ullMinSid = m_arrBinlog[0]->getMinSid();
+            m_ttMinTimestamp = m_arrBinlog[0]->getMinTimestamp();
+        }
+        else
+        {
+            m_ullMinSid = 0;
+            m_ttMinTimestamp = 0;
+        }
         ///重新输出管理的binlog文件信息
         _outputManageBinLog();
     }
@@ -942,16 +952,6 @@ int CwxBinLogMgr::append(CWX_UINT64 ullSid,
         pBinLogFile->m_prevBinLogFile = m_pCurBinlog;
         m_pCurBinlog->m_nextBinLogFile = pBinLogFile;
         m_pCurBinlog = pBinLogFile;
-        //检查是否有超出管理范围的binlog文件
-        while(m_arrBinlog.size())
-        {
-            if (_isManageBinLogFile(m_arrBinlog[0])) break;
-            delete m_arrBinlog[0];
-            m_arrBinlog.erase(m_arrBinlog.begin());
-        }
-        if (m_arrBinlog.size()) m_arrBinlog[0]->m_prevBinLogFile = NULL;
-        ///重新输出管理的binlog文件信息
-        _outputManageBinLog();
     }
     ///将记录重新添加到新binlog文件中
     iRet = m_pCurBinlog->append(ullSid,
@@ -1328,6 +1328,19 @@ CWX_INT64 CwxBinLogMgr::leftLogNum(CwxBinLogCursor const* pCursor)
         pFile = pFile->m_nextBinLogFile;
     }
     return num;
+}
+
+CWX_UINT64 CwxBinLogMgr::getFileStartSid(CWX_UINT32 ttTimestamp)
+{
+    CWX_UINT64 ullSid;
+    CwxReadLockGuard<CwxRwLock> lock(&m_rwLock);
+    for (CWX_UINT32 i=0; i<m_arrBinlog.size(); i++)
+    {
+        if (m_arrBinlog[i]->getMaxTimestamp() > ttTimestamp)
+            return m_arrBinlog[i]->getMinSid();
+    }
+    if (m_pCurBinlog) return m_pCurBinlog->getMinSid();
+    return 0;
 }
 
 //void
