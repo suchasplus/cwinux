@@ -27,7 +27,7 @@
 #include "CwxAppHandler4Base.h"
 #include "CwxAppNoticePipe.h"
 #include "CwxThread.h"
-#include "CwxAppLogger.h"
+#include "CwxLogger.h"
 #include <event.h>
 
 CWINUX_BEGIN_NAMESPACE

@@ -152,7 +152,7 @@ private:
     CWX_UINT64      m_llRecvMsgNum;///<线程处理的消息的数量
 };
 
-class CwxAppLogger;
+class CwxLogger;
 
 /**
 @class CwxTss
@@ -201,7 +201,7 @@ public:
     int                      m_fileNo;
     char const*              m_fileName;
 private:
-    friend class CwxAppLogger;
+    friend class CwxLogger;
     char                     m_szErrMsg[TSS_2K_BUF + 1];///错误消息描述
     CwxTssInfo*              m_pThreadInfo;///<当前TSS的线程info
     static bool              m_bInit;///<对象是否已经执行了init操作

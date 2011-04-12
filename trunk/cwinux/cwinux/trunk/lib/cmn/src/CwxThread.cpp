@@ -1,5 +1,5 @@
 #include "CwxThread.h"
-#include "CwxAppLogger.h"
+#include "CwxLogger.h"
 #include "CwxAppFramework.h"
 
 CWINUX_BEGIN_NAMESPACE

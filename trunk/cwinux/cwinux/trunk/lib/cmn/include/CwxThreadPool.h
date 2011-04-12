@@ -1,5 +1,5 @@
-#ifndef __CWX_APP_THREAD_POOL_H__
-#define __CWX_APP_THREAD_POOL_H__
+#ifndef __CWX_THREAD_POOL_H__
+#define __CWX_THREAD_POOL_H__
 /*
 版权声明：
     本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html），
@@ -7,7 +7,7 @@
 */
 
 /**
-@file CwxAppThreadPool.h
+@file CwxThreadPool.h
 @brief 无法控制单个线程的普通线程池对象实现
 @author cwinux@gmail.com
 @version 0.1
@@ -31,11 +31,11 @@ CWINUX_BEGIN_NAMESPACE
 
 class CwxAppFramework;
 /**
-@class CwxAppThreadPool
+@class CwxThreadPool
 @brief 普通的线程池，线程池中的所有线程作为一个整体出现，无法单独调控。
        此线程池本身就是一个生产、消费者队列。
 */
-class CWX_API CwxAppThreadPool:public CwxTpi
+class CWX_API CwxThreadPool:public CwxTpi
 {
 public:
     enum{
@@ -44,14 +44,14 @@ public:
     };
 public :
     ///构造函数
-    CwxAppThreadPool(CwxAppFramework* pApp,///<app对象
+    CwxThreadPool(CwxAppFramework* pApp,///<app对象
         CWX_UINT16 unGroupId,///<线程池的thread-group
         CWX_UINT16 unThreadNum,///<线程池中线程的数量
         CWX_UINT32 uiDeathCheckMsgWaterMask=DEATH_CHECK_MSG_WATER_MASK,///<线程的状态监测的排队消息门限
         CWX_UINT32 uiDeathCheckUpdateWaterMask=DEATH_CHECK_UPDATE_WATER_MASK///<线程失效的无状态更新的时间门限
         );
     ///析构函数
-    ~CwxAppThreadPool();
+    ~CwxThreadPool();
 public:
     /**
     @brief 启动线程池
@@ -126,7 +126,7 @@ private:
 
 CWINUX_END_NAMESPACE
 
-#include "CwxAppThreadPool.inl"
+#include "CwxThreadPool.inl"
 #include "CwxPost.h"
 #endif
 

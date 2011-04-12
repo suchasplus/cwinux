@@ -1,10 +1,10 @@
-#include "CwxAppThreadPool.h"
-#include "CwxAppLogger.h"
+#include "CwxThreadPool.h"
+#include "CwxLogger.h"
 #include "CwxAppFramework.h"
 
 CWINUX_BEGIN_NAMESPACE
 ///构造函数
-CwxAppThreadPool::CwxAppThreadPool(CwxAppFramework* pApp,///<app对象
+CwxThreadPool::CwxThreadPool(CwxAppFramework* pApp,///<app对象
                  CWX_UINT16 unGroupId,///<线程池的thread-group
                  CWX_UINT16 unThreadNum,///<线程池中线程的数量
                  CWX_UINT32 uiDeathCheckMsgWaterMask,///<线程的状态监测的排队消息门限
@@ -21,14 +21,14 @@ CwxAppThreadPool::CwxAppThreadPool(CwxAppFramework* pApp,///<app对象
 }
 
 ///析构函数
-CwxAppThreadPool::~CwxAppThreadPool()
+CwxThreadPool::~CwxThreadPool()
 {
     if (m_arrTssEnv) delete []m_arrTssEnv;
     if (m_tidArr) delete [] m_tidArr;
     if (m_msgQueue) delete m_msgQueue;
 }
 
-int CwxAppThreadPool::start(CwxTss** pThrEnv, size_t stack_size)
+int CwxThreadPool::start(CwxTss** pThrEnv, size_t stack_size)
 {
     CwxMutexGuard<CwxMutexLock> lock(&m_lock);
     if (m_pApp->getThreadPoolMgr()->isExist(getGroupId()))
@@ -66,13 +66,13 @@ int CwxAppThreadPool::start(CwxTss** pThrEnv, size_t stack_size)
     return 0;
 }
 
-void CwxAppThreadPool::stop()
+void CwxThreadPool::stop()
 {
     CwxMutexGuard<CwxMutexLock> lock(&m_lock);
     _stop();
 }
 
-bool CwxAppThreadPool::isDeath() 
+bool CwxThreadPool::isDeath() 
 {
     time_t ttNow = time(NULL);
     if (getQueuedMsgNum() > m_uiTheadDeathMsgWaterMask)
@@ -88,30 +88,30 @@ bool CwxAppThreadPool::isDeath()
     return false;
 }
 
-bool CwxAppThreadPool::isStop() 
+bool CwxThreadPool::isStop() 
 {
     return m_msgQueue->getState() == CwxMsgQueue::DEACTIVATED;
 }
 
-CwxTss* CwxAppThreadPool::getTss(CWX_UINT16 unThreadIndex)
+CwxTss* CwxThreadPool::getTss(CWX_UINT16 unThreadIndex)
 {
     if (unThreadIndex >= getThreadNum()) return NULL;
     return m_arrTssEnv[unThreadIndex];
 }
 
 ///锁住整个线程池。返回值0：成功；-1：失败
-int CwxAppThreadPool::lock()
+int CwxThreadPool::lock()
 {
     return m_msgQueue->lock().acquire();
 }
 ///解锁这个线程池。返回值0：成功；-1：失败
-int CwxAppThreadPool::unlock()
+int CwxThreadPool::unlock()
 {
     return m_msgQueue->lock().release();
 }
 
 
-int CwxAppThreadPool::onThreadCreated(CWX_UINT16 unGroup, CWX_UINT16 unThreadId, CwxTss*& pThrEnv)
+int CwxThreadPool::onThreadCreated(CWX_UINT16 unGroup, CWX_UINT16 unThreadId, CwxTss*& pThrEnv)
 {
     if (!pThrEnv)
     {
@@ -127,12 +127,12 @@ int CwxAppThreadPool::onThreadCreated(CWX_UINT16 unGroup, CWX_UINT16 unThreadId,
     return 0;
 }
 
-void CwxAppThreadPool::onThreadClosed(CwxTss*& )
+void CwxThreadPool::onThreadClosed(CwxTss*& )
 {
     //CwxTss::unRegTss();
 }
 
-void CwxAppThreadPool::threadMain(CwxTss* pThrEnv)
+void CwxThreadPool::threadMain(CwxTss* pThrEnv)
 {
     CWX_UINT16 unThreadId = 0;
     CWX_UINT16 i;
@@ -197,7 +197,7 @@ void CwxAppThreadPool::threadMain(CwxTss* pThrEnv)
 
 }
 
-void CwxAppThreadPool::_stop()
+void CwxThreadPool::_stop()
 {
     m_msgQueue->deactivate();
     for(CWX_UINT16 i=0; i<getThreadNum(); i++)
@@ -209,9 +209,9 @@ void CwxAppThreadPool::_stop()
     m_pApp->getThreadPoolMgr()->remove(getGroupId());
 }
 
-void* CwxAppThreadPool::threadFunc(void *thread)
+void* CwxThreadPool::threadFunc(void *thread)
 {
-    CwxAppThreadPool* pThread = (CwxAppThreadPool*)thread;
+    CwxThreadPool* pThread = (CwxThreadPool*)thread;
     int index = -1;
     {
         CwxMutexGuard<CwxMutexLock> lock(&pThread->m_lock);

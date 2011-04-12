@@ -1,5 +1,5 @@
-#ifndef __CWX_APP_LOGGER_H__
-#define __CWX_APP_LOGGER_H__
+#ifndef __CWX_LOGGER_H__
+#define __CWX_LOGGER_H__
 /*
 版权声明：
     本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html），
@@ -7,7 +7,7 @@
 */
 
 /**
-@file CwxAppLogger.h
+@file CwxLogger.h
 @brief 架构的运行日志对象
 @author cwinux@gmail.com
 @version 0.1
@@ -20,8 +20,6 @@
 #include "CwxType.h"
 #include "CwxStl.h"
 #include <stdio.h>
-#include "CwxAppMacro.h"
-#include "CwxAppConfig.h"
 #include "CwxTss.h"
 #include "CwxLockGuard.h"
 #include "CwxMutexLock.h"
@@ -31,13 +29,13 @@
 #include <unistd.h>
 CWINUX_BEGIN_NAMESPACE
 /**
-@class CwxAppLogger
+@class CwxLogger
 @brief 架构日志对象的定义，其具有如下的特点：
 1、其日志分为info、debug、warning、error四个级别。可以设置输出全部或某几个级别的日志。
 2、可以设计运行日志的大小，当超过此大小后，会切换下一个日志文件
 3、可以设置日志文件的数量，实现日志文件的循环使用
 */
-class CWX_API CwxAppLogger
+class CWX_API CwxLogger
 {
 public:
     ///日志类型定义
@@ -55,13 +53,13 @@ public:
        MIN_LOG_FILE_NUM = 4///<最少的日志文件数量
     };
     ///析构函数
-    ~CwxAppLogger()
+    ~CwxLogger()
     {
         closeLog();
     }
 public:
     ///单实例获取
-    static CwxAppLogger* instance();
+    static CwxLogger* instance();
     ///关闭日志
     static void close();
     /**
@@ -171,7 +169,7 @@ public:
     }
 private:
     ///构造函数，只有instance()才能创建日志对象，保证了单实例。
-    CwxAppLogger()
+    CwxLogger()
     {
         this->m_uiLevel = 0xFFFFFFFF;
         this->m_unLogFileNum = 0;
@@ -207,7 +205,7 @@ private:
     FILE *             m_curLogFd;///<当前日志文件的fd
     FILE *             m_prevLogFd;///<起一个日志文件的fd
     bool               m_bInit;///<日志对象是否初始化成功
-    static CwxAppLogger* m_pInstance;///<日志对象的单实例对象。
+    static CwxLogger* m_pInstance;///<日志对象的单实例对象。
 };
 
 CWINUX_END_NAMESPACE
@@ -215,21 +213,21 @@ CWINUX_END_NAMESPACE
 #define CWX_ERROR(msg) do {\
     CWX_TSS_FILE_NO = __LINE__;\
     CWX_TSS_FILE_NAME = __FILE__;\
-    CwxAppLogger::instance()->error msg;} while(0)
+    CwxLogger::instance()->error msg;} while(0)
 ///输出一个警告信息
 #define CWX_WARNING(msg) do {\
     CWX_TSS_FILE_NO = __LINE__;\
     CWX_TSS_FILE_NAME = __FILE__;\
-    CwxAppLogger::instance()->warning msg;} while(0)
+    CwxLogger::instance()->warning msg;} while(0)
 ///输出一个调试信息
 #define CWX_DEBUG(msg) do {\
     CWX_TSS_FILE_NO = __LINE__;\
     CWX_TSS_FILE_NAME = __FILE__;\
-    CwxAppLogger::instance()->debug msg;} while(0)
+    CwxLogger::instance()->debug msg;} while(0)
 ///输出一个info信息
 #define CWX_INFO(msg) do {\
     CWX_TSS_FILE_NO = 0;\
     CWX_TSS_FILE_NAME = NULL;\
-    CwxAppLogger::instance()->info msg;} while(0)
+    CwxLogger::instance()->info msg;} while(0)
 #include "CwxPost.h"
 #endif

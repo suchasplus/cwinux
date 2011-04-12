@@ -22,7 +22,7 @@
 #include "CwxMsgHead.h"
 #include "CwxAppConfig.h"
 #include "CwxAppMacro.h"
-#include "CwxAppLogger.h"
+#include "CwxLogger.h"
 #include "CwxAppHandler4Msg.h"
 
 CWINUX_BEGIN_NAMESPACE

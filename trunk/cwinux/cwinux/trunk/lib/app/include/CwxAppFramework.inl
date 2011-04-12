@@ -109,17 +109,17 @@ inline void CwxAppFramework::setLogFileSize(CWX_UINT32 uiSize)
 
 inline CWX_UINT32 CwxAppFramework::getLogLevel() const
 {
-    return CwxAppLogger::instance()->getLevel();
+    return CwxLogger::instance()->getLevel();
 }
 
 inline void CwxAppFramework::setLogLevel(CWX_UINT32 uiLevel)
 {
-    CwxAppLogger::instance()->setLevel(uiLevel);
+    CwxLogger::instance()->setLevel(uiLevel);
 }
 
 inline CWX_UINT16 CwxAppFramework::getLogFileNum() const
 {
-    return CwxAppLogger::instance()->getLogFileNum();
+    return CwxLogger::instance()->getLogFileNum();
 }
 
 inline void CwxAppFramework::setLogFileNum(CWX_UINT16 unLogFileNum)
@@ -129,7 +129,7 @@ inline void CwxAppFramework::setLogFileNum(CWX_UINT16 unLogFileNum)
 
 inline void CwxAppFramework::toLogFileNo(CWX_UINT16 unLogFileNo)
 {
-    CwxAppLogger::instance()->nextLog(false, unLogFileNo);
+    CwxLogger::instance()->nextLog(false, unLogFileNo);
 }
 
 inline CWX_UINT16 CwxAppFramework::getKeepAliveSecond() const

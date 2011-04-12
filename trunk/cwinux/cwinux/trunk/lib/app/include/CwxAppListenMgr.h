@@ -22,7 +22,7 @@
 #include "CwxMutexLock.h"
 #include "CwxAppConfig.h"
 #include "CwxAppMacro.h"
-#include "CwxAppLogger.h"
+#include "CwxLogger.h"
 #include "CwxAppUnixAcceptor.h"
 #include "CwxAppTcpAcceptor.h"
 

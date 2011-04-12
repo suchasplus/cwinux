@@ -20,7 +20,7 @@
 #include "CwxAppConfig.h"
 #include "CwxLockGuard.h"
 #include "CwxMutexLock.h"
-#include "CwxAppLogger.h"
+#include "CwxLogger.h"
 #include <unistd.h>
 #include <sys/socket.h>
 CWINUX_BEGIN_NAMESPACE

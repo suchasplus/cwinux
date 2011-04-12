@@ -1,22 +1,22 @@
-#include "CwxAppLogger.h"
+#include "CwxLogger.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
 CWINUX_BEGIN_NAMESPACE
 
-CwxAppLogger*  CwxAppLogger::m_pInstance = NULL;
+CwxLogger*  CwxLogger::m_pInstance = NULL;
 
-CwxAppLogger* CwxAppLogger::instance()
+CwxLogger* CwxLogger::instance()
 {
     if (!m_pInstance)
     {
-        if (!m_pInstance) m_pInstance = new CwxAppLogger();
+        if (!m_pInstance) m_pInstance = new CwxLogger();
     }
     return m_pInstance;
 }
 
-void CwxAppLogger::close()
+void CwxLogger::close()
 {
     if (m_pInstance)
     {
@@ -25,7 +25,7 @@ void CwxAppLogger::close()
     }
 }
 
-int CwxAppLogger::init(char const* szBaseName, CWX_UINT16 unFileNum, CWX_UINT32 uiMaxFileSize, bool bAppend)
+int CwxLogger::init(char const* szBaseName, CWX_UINT16 unFileNum, CWX_UINT32 uiMaxFileSize, bool bAppend)
 {
     int ret = 0;
     this->m_strBaseName = szBaseName;
@@ -48,14 +48,14 @@ int CwxAppLogger::init(char const* szBaseName, CWX_UINT16 unFileNum, CWX_UINT32 
     return ret;
 }
 
-int CwxAppLogger::nextLog(bool bAppend, CWX_UINT16 unFileNo)
+int CwxLogger::nextLog(bool bAppend, CWX_UINT16 unFileNo)
 {
     CwxMutexGuard<CwxMutexLock> lock(&this->m_mutex);
     return _nextLog(bAppend, unFileNo);
 }
 
 ///»ñÈ¡msg header
-int CwxAppLogger::_log_header(char const* szFile, int line, char* szBuf, CWX_UINT32 uiBufLen)
+int CwxLogger::_log_header(char const* szFile, int line, char* szBuf, CWX_UINT32 uiBufLen)
 {
     struct tm tmNow;
     time_t tt=time(NULL);
@@ -85,7 +85,7 @@ int CwxAppLogger::_log_header(char const* szFile, int line, char* szBuf, CWX_UIN
         (CWX_UINT32)pthread_self());
 }
 
-void CwxAppLogger::log(char const* szMsg)
+void CwxLogger::log(char const* szMsg)
 {
     FILE* fd = this->m_curLogFd;
     if (NULL ==fd) fd= stderr;
@@ -93,7 +93,7 @@ void CwxAppLogger::log(char const* szMsg)
     fflush(fd);
 }
 
-void CwxAppLogger::info(char const* format, ...)
+void CwxLogger::info(char const* format, ...)
 {
     if (isEnableLog(LEVEL_INFO))
     {
@@ -107,7 +107,7 @@ void CwxAppLogger::info(char const* format, ...)
         log(szBuf);
     }
 }
-void CwxAppLogger::debug(char const* format, ...)
+void CwxLogger::debug(char const* format, ...)
 {
     if (isEnableLog(LEVEL_DEBUG))
     {
@@ -124,7 +124,7 @@ void CwxAppLogger::debug(char const* format, ...)
     }
 }
 
-void CwxAppLogger::warning(char const* format, ...)
+void CwxLogger::warning(char const* format, ...)
 {
     if (isEnableLog(LEVEL_WARNING)){
         CWX_UINT32 const LEN=CwxTss::TSS_2K_BUF;
@@ -140,7 +140,7 @@ void CwxAppLogger::warning(char const* format, ...)
     }
 }
 
-void CwxAppLogger::error(char const* format, ...)
+void CwxLogger::error(char const* format, ...)
 {
     if (isEnableLog(LEVEL_ERROR)){
         CWX_UINT32 const LEN=CwxTss::TSS_2K_BUF;
@@ -156,7 +156,7 @@ void CwxAppLogger::error(char const* format, ...)
     }
 }
 
-int CwxAppLogger::_nextLog(bool append, CWX_UINT16 unFileNo)
+int CwxLogger::_nextLog(bool append, CWX_UINT16 unFileNo)
 {
     if (0 != unFileNo)
     {
@@ -188,7 +188,7 @@ int CwxAppLogger::_nextLog(bool append, CWX_UINT16 unFileNo)
     return 0;
 }
 
-int CwxAppLogger::closeLog()
+int CwxLogger::closeLog()
 {
     if (this->m_curLogFd) 
     {
@@ -205,7 +205,7 @@ int CwxAppLogger::closeLog()
     return 0;
 }
 
-void CwxAppLogger::_nextLogFile()
+void CwxLogger::_nextLogFile()
 {
     if (this->m_unCurLogFileNum < this->m_unLogFileNum)
         this->m_unCurLogFileNum ++;
@@ -214,14 +214,14 @@ void CwxAppLogger::_nextLogFile()
     _logFileName(this->m_unCurLogFileNum, this->m_strCurLogFileName);
 }
 
-void CwxAppLogger::_logFileName(int seq, std::string& strLog)
+void CwxLogger::_logFileName(int seq, std::string& strLog)
 {
     char szSeq[8];
     sprintf(szSeq, "_%2.2d.log", seq);
     strLog = this->m_strBaseName + szSeq;
 }
 
-int CwxAppLogger::_getStartLogNo()
+int CwxLogger::_getStartLogNo()
 {
     int iSeq = -1;
     time_t ttLastTime = 0;

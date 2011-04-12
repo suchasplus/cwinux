@@ -23,7 +23,7 @@
 #include "CwxSocket.h"
 #include "CwxAppConfig.h"
 #include "CwxAppMacro.h"
-#include "CwxAppLogger.h"
+#include "CwxLogger.h"
 #include "CwxAppHandler4Base.h"
 #include "CwxAppConnInfo.h"
 #include "CwxAppReactor.h"

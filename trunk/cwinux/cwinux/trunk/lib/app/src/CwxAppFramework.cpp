@@ -608,9 +608,9 @@ void CwxAppFramework::onTime(CwxTimeValue const& current)
     static time_t lastLogTime=0;
     if (time(NULL) - lastLogTime > getLogCheckSecond())
     {//check log
-        if (CwxAppLogger::instance()->getLogFileSize() > (int)this->getLogFileSize())
+        if (CwxLogger::instance()->getLogFileSize() > (int)this->getLogFileSize())
         {
-            CwxAppLogger::instance()->nextLog(false);
+            CwxLogger::instance()->nextLog(false);
         }
         lastLogTime = time(NULL);
     }
@@ -905,7 +905,7 @@ int CwxAppFramework::initRunEnv()
 
     //start log
     string logFile = this->m_strWorkDir +"/log/" + this->m_strAppName;
-    if (0 != CwxAppLogger::instance()->init(logFile.c_str(),
+    if (0 != CwxLogger::instance()->init(logFile.c_str(),
         m_unLogFileNum,
         m_uiLogSize,
         true))
