@@ -12,7 +12,7 @@ inline int CwxAppCommander::regHandle(CWX_UINT32 uiSvrID, CwxAppCmdOp* pHandle)
 }
 //true: has object to accept the msg,
 //false: no object to accept the msg
-inline bool CwxAppCommander::dispatch(CwxMsgBlock*& msg, CwxAppTss* pThrEnv, int& iRet)
+inline bool CwxAppCommander::dispatch(CwxMsgBlock*& msg, CwxTss* pThrEnv, int& iRet)
 {
     CwxAppCmdOp* pHandle = getEventOp(msg->event().getSvrId());
     if (!pHandle) return false;

@@ -29,7 +29,7 @@ CwxAppThread::~CwxAppThread()
 
 
 
-int CwxAppThread::start(CwxAppTss* pThrEnv, size_t stack_size)
+int CwxAppThread::start(CwxTss* pThrEnv, size_t stack_size)
 {
     m_pTssEnv = pThrEnv;
     return CwxAppThread::spawn(
@@ -51,11 +51,11 @@ void CwxAppThread::stop()
 }
 
 
-int CwxAppThread::onThreadCreated(CWX_UINT16 unGroup, CWX_UINT16 unThreadId, CwxAppTss*& pThrEnv)
+int CwxAppThread::onThreadCreated(CWX_UINT16 unGroup, CWX_UINT16 unThreadId, CwxTss*& pThrEnv)
 {
     if (!pThrEnv)
     {
-        pThrEnv = new CwxAppTss(new CwxAppTssInfo());
+        pThrEnv = new CwxTss(new CwxTssInfo());
     }
     pThrEnv->getThreadInfo()->setThreadGroup(unGroup);
     pThrEnv->getThreadInfo()->setThreadNo(unThreadId);
@@ -67,18 +67,18 @@ int CwxAppThread::onThreadCreated(CWX_UINT16 unGroup, CWX_UINT16 unThreadId, Cwx
     return 0;
 }
 
-void CwxAppThread::onThreadClosed(CwxAppTss*& )
+void CwxAppThread::onThreadClosed(CwxTss*& )
 {
-    //CwxAppTss::unRegTss();
+    //CwxTss::unRegTss();
 }
 
-void CwxAppThread::threadMain(CwxAppTss* pThrEnv)
+void CwxAppThread::threadMain(CwxTss* pThrEnv)
 {
     time_t ttTime = time(NULL);
     if (0 != onThreadCreated(m_unGroupId, m_unThreadId, pThrEnv)) return;
     m_pTssEnv = pThrEnv;
     m_pTssEnv->getThreadInfo()->setStopped(false);
-    CwxAppTss::regTss(m_pTssEnv);
+    CwxTss::regTss(m_pTssEnv);
     m_pTssEnv->getThreadInfo()->setThreadId(self());
     m_pTssEnv->getThreadInfo()->setStartTime(ttTime);
     m_pTssEnv->getThreadInfo()->setUpdateTime(ttTime);
@@ -145,7 +145,7 @@ bool CwxAppThread::isStop()
     return m_msgQueue->getState() == CwxMsgQueue::DEACTIVATED;
 }
 
-CwxAppTss* CwxAppThread::getTss()
+CwxTss* CwxAppThread::getTss()
 {
     return m_pTssEnv;
 }

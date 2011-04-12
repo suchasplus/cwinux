@@ -22,9 +22,9 @@
 #include "CwxLockGuard.h"
 #include "CwxMutexLock.h"
 #include "CwxAppMacro.h"
-#include "CwxAppTss.h"
+#include "CwxTss.h"
 #include "CwxAppTpi.h"
-#include "CwxAppTss.h"
+#include "CwxTss.h"
 
 CWINUX_BEGIN_NAMESPACE
 /**
@@ -69,31 +69,31 @@ public:
     @param [in] pTss 线程的TSS
     @return false：与此TSS的GroupId与ThreadId相同的Tss已经存在； true：成功
     */
-    bool addTss(CwxAppTss* pTss);
+    bool addTss(CwxTss* pTss);
     /**
     @brief 返回所管理的所有线程的TSS
     @param [in] arrTss 所有线程的TSS。arrTss[i]为一个线程组的线程的TSS。第一级数组的元素按GroupId升序，第二级按ThreadId升序。
     @return void
     */
-    void getTss(vector<vector<CwxAppTss*> >& arrTss);
+    void getTss(vector<vector<CwxTss*> >& arrTss);
     /**
     @brief 返回指定Thread GroupId的TSS
     @param [in] unGroup 线程的GroupId
     @param [in] arrTss 此线程组的线程的TSS，数组按照线程的ThreadId升序。
     @return void
     */
-    void getTss(CWX_UINT16 unGroup, vector<CwxAppTss*>& arrTss);
+    void getTss(CWX_UINT16 unGroup, vector<CwxTss*>& arrTss);
     /**
     @brief 返回一个线程的Tss
     @param [in] unGroup 线程的GroupId
     @param [in] unThreadId 线程的ThreadId。
     @return NULL：不存在；否则为线程的TSS
     */
-    CwxAppTss* getTss(CWX_UINT16 unGroup, CWX_UINT16 unThreadId);
+    CwxTss* getTss(CWX_UINT16 unGroup, CWX_UINT16 unThreadId);
 private:
     CwxMutexLock        m_lock;///<thread lock for sync.
     map<CWX_UINT16, CwxAppTpi*>  m_threadPoolMap; ///<线程池的MAP
-    map<CWX_UINT16, map<CWX_UINT16, CwxAppTss*> >  m_threadPoolTss;///线程Tss的map
+    map<CWX_UINT16, map<CWX_UINT16, CwxTss*> >  m_threadPoolTss;///线程Tss的map
 };
 
 CWINUX_END_NAMESPACE

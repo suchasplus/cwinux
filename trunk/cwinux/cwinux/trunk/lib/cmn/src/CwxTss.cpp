@@ -1,13 +1,13 @@
-#include "CwxAppTss.h"
+#include "CwxTss.h"
 #include "CwxDate.h"
 CWINUX_BEGIN_NAMESPACE
 
 
-pthread_key_t CwxAppTss::m_tssKey;
-bool CwxAppTss::m_bInit = false;
+pthread_key_t CwxTss::m_tssKey;
+bool CwxTss::m_bInit = false;
 
 
-bool CwxAppTss::packThreadInfo(CwxPackageWriter& threadInfoPack, char* szErr2K)
+bool CwxTss::packThreadInfo(CwxPackageWriter& threadInfoPack, char* szErr2K)
 {
     bool bRet = false;
     string strTmp;
@@ -34,7 +34,7 @@ bool CwxAppTss::packThreadInfo(CwxPackageWriter& threadInfoPack, char* szErr2K)
     return bRet;
 }
 
-int CwxAppTss::initTss()
+int CwxTss::initTss()
 {
     if (!m_bInit){
         m_bInit = true;
@@ -44,25 +44,25 @@ int CwxAppTss::initTss()
 
 }
 
-int CwxAppTss::regTss(CwxAppTss* pThrEnv)
+int CwxTss::regTss(CwxTss* pThrEnv)
 {
     if (!m_bInit)
     {
         if (0 != initTss()) return -1;
     }
     void* pObj = pthread_getspecific(m_tssKey);
-    if (pObj) delete ((CwxAppTss*)pObj);
+    if (pObj) delete ((CwxTss*)pObj);
     return pthread_setspecific(m_tssKey, pThrEnv);
 }
 
-int CwxAppTss::unRegTss()
+int CwxTss::unRegTss()
 {
     if (m_bInit)  pthread_key_delete(m_tssKey);
     return 0;
 }
 
 
-CwxAppTss* CwxAppTss::instance()
+CwxTss* CwxTss::instance()
 {
     if (!m_bInit)
     {
@@ -72,10 +72,10 @@ CwxAppTss* CwxAppTss::instance()
     pObj = pthread_getspecific(m_tssKey);
     if (!pObj)
     {
-        pObj = new CwxAppTss();
-        regTss((CwxAppTss*)pObj);
+        pObj = new CwxTss();
+        regTss((CwxTss*)pObj);
     }
-    return (CwxAppTss*)pObj;
+    return (CwxTss*)pObj;
 }
 
 

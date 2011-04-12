@@ -25,7 +25,7 @@
 #include "CwxAppMacro.h"
 #include "CwxAppConfig.h"
 #include "CwxAppLogger.h"
-#include "CwxAppTss.h"
+#include "CwxTss.h"
 
 CWINUX_BEGIN_NAMESPACE
 
@@ -74,7 +74,7 @@ public:
     @param [in] stack_size 线程堆栈的大小，若为0，则采用系统默认大小。
     @return -1：失败； 0：成功
     */
-    virtual int start(CwxAppTss* pThrEnv=NULL, size_t stack_size = 0);
+    virtual int start(CwxTss* pThrEnv=NULL, size_t stack_size = 0);
     ///停止线程
     virtual void stop();
     /**
@@ -84,25 +84,25 @@ public:
     @param [out] pThrEnv 创建的Thread的Thread Env。
     @return -1：失败； 0：成功
     */
-    virtual int onThreadCreated(CWX_UINT16 unGroup, CWX_UINT16 unThreadId, CwxAppTss*& pThrEnv);
+    virtual int onThreadCreated(CWX_UINT16 unGroup, CWX_UINT16 unThreadId, CwxTss*& pThrEnv);
     /**
     @brief 通知线程退出
     @param [out] pThrEnv Thread的Thread Env。
     @return void
     */
-    virtual void onThreadClosed(CwxAppTss*& pThrEnv);
+    virtual void onThreadClosed(CwxTss*& pThrEnv);
     /**
     @brief 线程的body，若需要改变线程的运行行为，则重载此API
     @param [out] pThrEnv Thread的Thread Env。
     @return void
     */
-    virtual void threadMain(CwxAppTss* pThrEnv);
+    virtual void threadMain(CwxTss* pThrEnv);
     ///check thread 是否死锁。若需要改变检查的规则，则重载此API
     virtual bool isDeath();
     ///check thread 是否停止。若需要改变检查的规则，则重载此API
     virtual bool isStop();
     ///获取线程的TSS，及Thread env
-    virtual CwxAppTss* getTss();
+    virtual CwxTss* getTss();
     ///锁住线程。返回值0：成功；-1：失败
     virtual int lock();
     ///解锁线程。返回值0：成功；-1：失败
@@ -161,7 +161,7 @@ private:
     static void* threadFunc(void *);
 private:
     CwxAppFramework*        m_pApp;///<架构的APP
-    CwxAppTss*             m_pTssEnv;///<线程的tss
+    CwxTss*             m_pTssEnv;///<线程的tss
     CWX_UINT16             m_unGroupId;///<线程的线程组id
     CWX_UINT16             m_unThreadId;///<线程在线程组中的序号
     CWX_UINT32             m_uiTheadDeathMsgWaterMask;///<线程death检查的队列消息排队阀值

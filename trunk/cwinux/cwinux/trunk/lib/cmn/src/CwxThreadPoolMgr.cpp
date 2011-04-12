@@ -8,10 +8,10 @@ CwxAppThreadPoolMgr::CwxAppThreadPoolMgr()
 CwxAppThreadPoolMgr::~CwxAppThreadPoolMgr()
 {
     m_threadPoolMap.clear();
-    map<CWX_UINT16, map<CWX_UINT16, CwxAppTss*> >::iterator iter =m_threadPoolTss.begin();
+    map<CWX_UINT16, map<CWX_UINT16, CwxTss*> >::iterator iter =m_threadPoolTss.begin();
     while(iter != m_threadPoolTss.end())
     {
-        map<CWX_UINT16, CwxAppTss*>::iterator iter_tss = iter->second.begin();
+        map<CWX_UINT16, CwxTss*>::iterator iter_tss = iter->second.begin();
         while(iter_tss != iter->second.end())
         {
             delete iter_tss->second;
@@ -61,15 +61,15 @@ CWX_UINT16 CwxAppThreadPoolMgr::getNum()
     return m_threadPoolMap.size();
 }
 
-bool CwxAppThreadPoolMgr::addTss(CwxAppTss* pTss)
+bool CwxAppThreadPoolMgr::addTss(CwxTss* pTss)
 {
     CwxMutexGuard<CwxMutexLock> lock(&m_lock);
     CWX_UINT16 unGroup = pTss->getThreadInfo()->getThreadGroup();
     CWX_UINT16 unThreadNo = pTss->getThreadInfo()->getThreadNo();
-    map<CWX_UINT16, map<CWX_UINT16, CwxAppTss*> >::iterator iter = m_threadPoolTss.find(unGroup);
+    map<CWX_UINT16, map<CWX_UINT16, CwxTss*> >::iterator iter = m_threadPoolTss.find(unGroup);
     if (iter == m_threadPoolTss.end())
     {
-        m_threadPoolTss[unGroup] = map<CWX_UINT16, CwxAppTss*>();
+        m_threadPoolTss[unGroup] = map<CWX_UINT16, CwxTss*>();
         iter = m_threadPoolTss.find(unGroup);
     }
     if (iter->second.find(unThreadNo) != iter->second.end())
@@ -80,16 +80,16 @@ bool CwxAppThreadPoolMgr::addTss(CwxAppTss* pTss)
     return true;
 }
 
-void CwxAppThreadPoolMgr::getTss(vector<vector<CwxAppTss*> >& arrTss)
+void CwxAppThreadPoolMgr::getTss(vector<vector<CwxTss*> >& arrTss)
 {
     CwxMutexGuard<CwxMutexLock> lock(&m_lock);
-    vector<CwxAppTss*> poolTss;
+    vector<CwxTss*> poolTss;
     arrTss.clear();
-    map<CWX_UINT16, map<CWX_UINT16, CwxAppTss*> >::iterator iter = m_threadPoolTss.begin();
+    map<CWX_UINT16, map<CWX_UINT16, CwxTss*> >::iterator iter = m_threadPoolTss.begin();
     while (iter != m_threadPoolTss.end())
     {
         poolTss.clear();
-        map<CWX_UINT16, CwxAppTss*>::iterator iter_tss = iter->second.begin();
+        map<CWX_UINT16, CwxTss*>::iterator iter_tss = iter->second.begin();
         while(iter_tss != iter->second.end())
         {
             poolTss.push_back(iter_tss->second);
@@ -101,14 +101,14 @@ void CwxAppThreadPoolMgr::getTss(vector<vector<CwxAppTss*> >& arrTss)
 }
 
 
-void CwxAppThreadPoolMgr::getTss(CWX_UINT16 unGroup, vector<CwxAppTss*>& arrTss)
+void CwxAppThreadPoolMgr::getTss(CWX_UINT16 unGroup, vector<CwxTss*>& arrTss)
 {
     CwxMutexGuard<CwxMutexLock> lock(&m_lock);
     arrTss.clear();
-    map<CWX_UINT16, map<CWX_UINT16, CwxAppTss*> >::iterator iter = m_threadPoolTss.find(unGroup);
+    map<CWX_UINT16, map<CWX_UINT16, CwxTss*> >::iterator iter = m_threadPoolTss.find(unGroup);
     if (iter != m_threadPoolTss.end())
     {
-        map<CWX_UINT16, CwxAppTss*>::iterator iter_tss = iter->second.begin();
+        map<CWX_UINT16, CwxTss*>::iterator iter_tss = iter->second.begin();
         while(iter_tss != iter->second.end())
         {
             arrTss.push_back(iter_tss->second);
@@ -117,13 +117,13 @@ void CwxAppThreadPoolMgr::getTss(CWX_UINT16 unGroup, vector<CwxAppTss*>& arrTss)
     }
 }
 
-CwxAppTss* CwxAppThreadPoolMgr::getTss(CWX_UINT16 unGroup, CWX_UINT16 unThreadId)
+CwxTss* CwxAppThreadPoolMgr::getTss(CWX_UINT16 unGroup, CWX_UINT16 unThreadId)
 {
     CwxMutexGuard<CwxMutexLock> lock(&m_lock);
-    map<CWX_UINT16, map<CWX_UINT16, CwxAppTss*> >::iterator iter = m_threadPoolTss.find(unGroup);
+    map<CWX_UINT16, map<CWX_UINT16, CwxTss*> >::iterator iter = m_threadPoolTss.find(unGroup);
     if (iter != m_threadPoolTss.end())
     {
-        map<CWX_UINT16, CwxAppTss*>::iterator iter_tss = iter->second.find(unThreadId);
+        map<CWX_UINT16, CwxTss*>::iterator iter_tss = iter->second.find(unThreadId);
         if (iter_tss != iter->second.end()) return iter_tss->second;
     }
     return NULL;

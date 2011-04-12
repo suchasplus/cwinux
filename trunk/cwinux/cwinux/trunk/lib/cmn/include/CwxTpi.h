@@ -20,7 +20,7 @@
 #include "CwxGlobalMacro.h"
 #include "CwxType.h"
 #include "CwxAppMacro.h"
-#include "CwxAppTss.h"
+#include "CwxTss.h"
 
 CWINUX_BEGIN_NAMESPACE
 
@@ -50,7 +50,7 @@ public:
     @param [in] stack_size 线程堆栈的大小，若为0，则采用系统默认大小。
     @return -1：失败； 0：成功
     */
-    virtual int start(CwxAppTss** pThrEnv=NULL, size_t stack_size= 0) = 0;
+    virtual int start(CwxTss** pThrEnv=NULL, size_t stack_size= 0) = 0;
     ///停止线程池
     virtual void stop() = 0;
     ///check thread 是否死锁。若需要改变检查的规则，则重载此API
@@ -58,7 +58,7 @@ public:
     ///check thread 是否停止。若需要改变检查的规则，则重载此API
     virtual bool isStop() = 0;
     ///获取线程的TSS，及Thread env
-    virtual CwxAppTss* getTss(CWX_UINT16 unThreadIndex)=0;
+    virtual CwxTss* getTss(CWX_UINT16 unThreadIndex)=0;
     ///锁住整个线程池。返回值0：成功；-1：失败
     virtual int lock()=0;
     ///解锁这个线程池。返回值0：成功；-1：失败

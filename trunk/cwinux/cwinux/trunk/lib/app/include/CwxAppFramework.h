@@ -36,7 +36,7 @@
 #include "CwxAppHandler4Stdio.h"
 #include "CwxAppHandlerCache.h"
 #include "CwxAppConnInfo.h"
-#include "CwxAppTss.h"
+#include "CwxTss.h"
 #include "CwxAppThreadPool.h"
 #include "CwxAppCommander.h"
 #include "CwxAppTaskBoard.h"
@@ -323,7 +323,7 @@ public:
     @brief 创建通信线程的thread self store。
     @return 通信线程的tss对象指针
     */
-    virtual CwxAppTss* onTssEnv();
+    virtual CwxTss* onTssEnv();
     /**
     @brief 时钟通知，只要设置了时钟间隔，则会定时调用此API。
     @param [in] current 当前的时间。
@@ -543,7 +543,7 @@ public:
     ///获取架构的线程池管理器对象
     CwxAppThreadPoolMgr* getThreadPoolMgr();
     ///获取通信线程的tss信息
-    CwxAppTss*  getAppTss();
+    CwxTss*  getAppTss();
     ///获取handle cache
     CwxAppHandlerCache*  getHandlerCache();
     ///获取TCP connector
@@ -642,7 +642,7 @@ private:
     CwxAppCommander              m_commander;///<commander对象
     CwxAppTaskBoard              m_taskBoard;///<taskboard对象
     CwxAppListenMgr*             m_pListenMgr;///<监听管理器对象
-    CwxAppTss*                  m_pTss;///<通信线程的TSS
+    CwxTss*                  m_pTss;///<通信线程的TSS
     CwxAppHandlerCache*          m_pHandleCache;///<释放连接句柄cache
     CwxAppTcpConnector*         m_pTcpConnector; ///<TCP的connector
     CwxAppUnixConnector*        m_pUnixConnector; ///<unix的connector

@@ -23,7 +23,7 @@
 #include "CwxMsgBlock.h"
 #include "CwxAppMacro.h"
 #include "CwxAppConfig.h"
-#include "CwxAppTss.h"
+#include "CwxTss.h"
 #include "CwxAppTpi.h"
 #include "CwxAppThread.h"
 
@@ -59,7 +59,7 @@ public:
     @param [in] stack_size 线程堆栈的大小，若为0，则采用系统默认大小。
     @return -1：失败； 0：成功
     */
-    virtual int start(CwxAppTss** pThrEnv=NULL, size_t stack_size= 0);
+    virtual int start(CwxTss** pThrEnv=NULL, size_t stack_size= 0);
     ///停止线程池
     virtual void stop();
     ///check thread 是否死锁。若需要改变检查的规则，则重载此API
@@ -67,7 +67,7 @@ public:
     ///check thread 是否停止。若需要改变检查的规则，则重载此API
     virtual bool isStop();
     ///获取线程的TSS，及Thread env
-    virtual CwxAppTss* getTss(CWX_UINT16 unThreadIndex);
+    virtual CwxTss* getTss(CWX_UINT16 unThreadIndex);
     ///锁住整个线程池。返回值0：成功；-1：失败
     virtual int lock();
     ///解锁这个线程池。返回值0：成功；-1：失败
@@ -80,19 +80,19 @@ public:
     @param [out] pThrEnv 创建的Thread的Thread Env。
     @return -1：失败； 0：成功
     */
-    virtual int onThreadCreated(CWX_UINT16 unGroup, CWX_UINT16 unThreadId, CwxAppTss*& pThrEnv);
+    virtual int onThreadCreated(CWX_UINT16 unGroup, CWX_UINT16 unThreadId, CwxTss*& pThrEnv);
     /**
     @brief 通知线程退出
     @param [out] pThrEnv Thread的Thread Env。
     @return void
     */
-    virtual void onThreadClosed(CwxAppTss*& pThrEnv);
+    virtual void onThreadClosed(CwxTss*& pThrEnv);
     /**
     @brief 线程的body，若需要改变线程的运行行为，则重载此API
     @param [out] pThrEnv Thread的Thread Env。
     @return void
     */
-    virtual void threadMain(CwxAppTss* pThrEnv);
+    virtual void threadMain(CwxTss* pThrEnv);
 public:
     ///获取线程的消息队列排队消息数
     inline size_t getQueuedMsgNum();
@@ -117,7 +117,7 @@ private:
 private:
     CwxAppFramework*        m_pApp;///<架构的APP
     CwxMutexLock            m_lock;
-    CwxAppTss**             m_arrTssEnv;///<线程的tss
+    CwxTss**             m_arrTssEnv;///<线程的tss
     CWX_UINT32              m_uiTheadDeathMsgWaterMask;///<线程death检查的队列消息排队阀值
     CWX_UINT32              m_uiThreadDeathUpdateWaterMask;///<线程death检查的线程无状态更新的时间阀值
     CwxMsgQueue*         m_msgQueue; ///<消息队列

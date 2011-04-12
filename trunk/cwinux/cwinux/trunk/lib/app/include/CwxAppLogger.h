@@ -22,7 +22,7 @@
 #include <stdio.h>
 #include "CwxAppMacro.h"
 #include "CwxAppConfig.h"
-#include "CwxAppTss.h"
+#include "CwxTss.h"
 #include "CwxLockGuard.h"
 #include "CwxMutexLock.h"
 #include "CwxFile.h"

@@ -30,7 +30,7 @@ CwxAppThreadPoolEx::~CwxAppThreadPoolEx()
     }
 }
 
-int CwxAppThreadPoolEx::start(CwxAppTss** pThrEnv, size_t stack_size)
+int CwxAppThreadPoolEx::start(CwxTss** pThrEnv, size_t stack_size)
 {
     CWX_UINT16 i = 0;
     if (m_pApp->getThreadPoolMgr()->isExist(getGroupId()))
@@ -86,7 +86,7 @@ bool CwxAppThreadPoolEx::isStop()
     return false;
 }
 
-CwxAppTss* CwxAppThreadPoolEx::getTss(CWX_UINT16 unThreadIndex)
+CwxTss* CwxAppThreadPoolEx::getTss(CWX_UINT16 unThreadIndex)
 {
     if (m_arrThreadPool && (unThreadIndex<getThreadNum()) && m_arrThreadPool[unThreadIndex])
     {

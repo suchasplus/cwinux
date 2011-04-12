@@ -1,5 +1,5 @@
-#ifndef __CWX_APP_TSS_H__
-#define __CWX_APP_TSS_H__
+#ifndef __CWX_TSS_H__
+#define __CWX_TSS_H__
 
 /*
 版权声明：
@@ -9,7 +9,7 @@
 
 
 /**
-@file CwxAppTss.h
+@file CwxTss.h
 @brief 线程TSS定义
 @author cwinux@gmail.com
 @version 0.1
@@ -20,22 +20,19 @@
 #include "CwxPre.h"
 #include "CwxGlobalMacro.h"
 #include "CwxType.h"
-#include "CwxPackageWriter.h"
-#include "CwxAppMacro.h"
-#include "CwxAppConfig.h"
 #include <pthread.h>
 
 
 CWINUX_BEGIN_NAMESPACE
 /**
-@class CwxAppTssInfo
+@class CwxTssInfo
 @brief 线程的基本信息，若需要更多的信息，则需要重载这个对象，此对象只应包含基本数据成员。
 */
-class CWX_API CwxAppTssInfo
+class CWX_API CwxTssInfo
 {
 public:
     ///构造函数
-    CwxAppTssInfo()
+    CwxTssInfo()
     {
         m_unThreadGroup = 0;
         m_unThreadNo = 0;
@@ -155,13 +152,11 @@ private:
     CWX_UINT64      m_llRecvMsgNum;///<线程处理的消息的数量
 };
 
-class CwxAppLogger;
-
 /**
-@class CwxAppTss
+@class CwxTss
 @brief 线程的TSS对象，用户存放在整个线程声明周期内一直有效的对象。。
 */
-class CWX_API CwxAppTss
+class CWX_API CwxTss
 {
 public:
     enum{
@@ -169,20 +164,20 @@ public:
     };
 public:
     ///构造函数
-    CwxAppTss(CwxAppTssInfo* pThreadInfo)
+    CwxTss(CwxTssInfo* pThreadInfo)
         :m_pThreadInfo(pThreadInfo)
     {
         m_fileNo = 0;
         m_fileName = NULL;
     }
     ///析构函数
-    virtual ~CwxAppTss()
+    virtual ~CwxTss()
     {
         if (m_pThreadInfo) delete m_pThreadInfo;
     }
 public:
     ///获取Tss的thread info信息
-    CwxAppTssInfo* getThreadInfo()
+    CwxTssInfo* getThreadInfo()
     {
         return m_pThreadInfo;
     }
@@ -192,14 +187,14 @@ public:
     ///初始化对象的静态数据
     static int initTss();
     ///将pThrEnv注册为调用此API的tss
-    static int regTss(CwxAppTss* pThrEnv);
+    static int regTss(CwxTss* pThrEnv);
     ///unreg线程的tss
     static int unRegTss();
     ///但实例化模式，获取此类的实例
-    static CwxAppTss* instance();
+    static CwxTss* instance();
 private:
     ///默认构造函数
-    CwxAppTss()
+    CwxTss()
     {
         m_pThreadInfo = NULL;
     }
@@ -210,15 +205,15 @@ public:
 private:
     friend class CwxAppLogger;
     char                    m_szErrMsg[TSS_2K_BUF + 1];///错误消息描述
-    CwxAppTssInfo*           m_pThreadInfo;///<当前TSS的线程info
+    CwxTssInfo*           m_pThreadInfo;///<当前TSS的线程info
     static bool              m_bInit;///<对象是否已经执行了init操作
     static pthread_key_t      m_tssKey;///<线程的tss对象
 };
 
-#define  CWX_APP_TSS(type) (type*)CwxAppTss::instance()
-#define  CWX_APP_TSS_2K_BUF  CwxAppTss::instance()->m_szBuf2K
-#define  CWX_APP_TSS_FILE_NO  CwxAppTss::instance()->m_fileNo
-#define  CWX_APP_TSS_FILE_NAME  CwxAppTss::instance()->m_fileName
+#define  CWX_APP_TSS(type) (type*)CwxTss::instance()
+#define  CWX_APP_TSS_2K_BUF  CwxTss::instance()->m_szBuf2K
+#define  CWX_APP_TSS_FILE_NO  CwxTss::instance()->m_fileNo
+#define  CWX_APP_TSS_FILE_NAME  CwxTss::instance()->m_fileName
 
 
 CWINUX_END_NAMESPACE

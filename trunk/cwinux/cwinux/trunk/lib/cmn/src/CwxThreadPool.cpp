@@ -28,7 +28,7 @@ CwxAppThreadPool::~CwxAppThreadPool()
     if (m_msgQueue) delete m_msgQueue;
 }
 
-int CwxAppThreadPool::start(CwxAppTss** pThrEnv, size_t stack_size)
+int CwxAppThreadPool::start(CwxTss** pThrEnv, size_t stack_size)
 {
     CwxMutexGuard<CwxMutexLock> lock(&m_lock);
     if (m_pApp->getThreadPoolMgr()->isExist(getGroupId()))
@@ -43,8 +43,8 @@ int CwxAppThreadPool::start(CwxAppTss** pThrEnv, size_t stack_size)
     }
     else
     {
-        m_arrTssEnv = new CwxAppTss*[getThreadNum()];
-        memset(m_arrTssEnv, 0x00, sizeof(CwxAppTss*) * getThreadNum());
+        m_arrTssEnv = new CwxTss*[getThreadNum()];
+        memset(m_arrTssEnv, 0x00, sizeof(CwxTss*) * getThreadNum());
     }
     memset(m_tidArr, 0x00, sizeof(pthread_t) * getThreadNum());
     for (CWX_UINT16 i=0; i<getThreadNum(); i++)
@@ -93,7 +93,7 @@ bool CwxAppThreadPool::isStop()
     return m_msgQueue->getState() == CwxMsgQueue::DEACTIVATED;
 }
 
-CwxAppTss* CwxAppThreadPool::getTss(CWX_UINT16 unThreadIndex)
+CwxTss* CwxAppThreadPool::getTss(CWX_UINT16 unThreadIndex)
 {
     if (unThreadIndex >= getThreadNum()) return NULL;
     return m_arrTssEnv[unThreadIndex];
@@ -111,11 +111,11 @@ int CwxAppThreadPool::unlock()
 }
 
 
-int CwxAppThreadPool::onThreadCreated(CWX_UINT16 unGroup, CWX_UINT16 unThreadId, CwxAppTss*& pThrEnv)
+int CwxAppThreadPool::onThreadCreated(CWX_UINT16 unGroup, CWX_UINT16 unThreadId, CwxTss*& pThrEnv)
 {
     if (!pThrEnv)
     {
-        pThrEnv = new CwxAppTss(new CwxAppTssInfo());
+        pThrEnv = new CwxTss(new CwxTssInfo());
     }
     pThrEnv->getThreadInfo()->setThreadGroup(unGroup);
     pThrEnv->getThreadInfo()->setThreadNo(unThreadId);
@@ -127,12 +127,12 @@ int CwxAppThreadPool::onThreadCreated(CWX_UINT16 unGroup, CWX_UINT16 unThreadId,
     return 0;
 }
 
-void CwxAppThreadPool::onThreadClosed(CwxAppTss*& )
+void CwxAppThreadPool::onThreadClosed(CwxTss*& )
 {
-    //CwxAppTss::unRegTss();
+    //CwxTss::unRegTss();
 }
 
-void CwxAppThreadPool::threadMain(CwxAppTss* pThrEnv)
+void CwxAppThreadPool::threadMain(CwxTss* pThrEnv)
 {
     CWX_UINT16 unThreadId = 0;
     CWX_UINT16 i;
@@ -149,7 +149,7 @@ void CwxAppThreadPool::threadMain(CwxAppTss* pThrEnv)
     if (0 != onThreadCreated(getGroupId(), unThreadId, pThrEnv)) return ;
     m_arrTssEnv[unThreadId] = pThrEnv;
     pThrEnv->getThreadInfo()->setStopped(false);
-    CwxAppTss::regTss(pThrEnv);
+    CwxTss::regTss(pThrEnv);
     pThrEnv->getThreadInfo()->setThreadId(CwxAppThread::self());
     pThrEnv->getThreadInfo()->setStartTime(ttTime);
     pThrEnv->getThreadInfo()->setUpdateTime(ttTime);

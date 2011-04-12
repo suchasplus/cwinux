@@ -205,7 +205,7 @@ inline CwxAppThreadPoolMgr* CwxAppFramework::getThreadPoolMgr()
     return m_pThreadPoolMgr;
 }
 
-inline CwxAppTss* CwxAppFramework::getAppTss()
+inline CwxTss* CwxAppFramework::getAppTss()
 {
     return m_pTss;
 }

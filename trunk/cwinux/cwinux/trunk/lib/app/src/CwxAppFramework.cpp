@@ -598,7 +598,7 @@ int CwxAppFramework::sendMsgByConn(CwxMsgBlock* msg)
 
 CwxTss* CwxAppFramework::onTssEnv()
 {
-    return new CwxTss(new CwxAppTssInfo());
+    return new CwxTss(new CwxTssInfo());
 }
 
 void CwxAppFramework::onTime(CwxTimeValue const& current)

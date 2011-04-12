@@ -24,7 +24,7 @@
 
 #include "CwxAppMacro.h"
 #include "CwxAppConfig.h"
-#include "CwxAppTss.h"
+#include "CwxTss.h"
 
 CWINUX_BEGIN_NAMESPACE
 
@@ -52,7 +52,7 @@ public:
     @param [in] pThrEnv 线程的TSS对象。
     @return -1：处理失败，0：不处理此事件，1：处理此事件。
     */
-    virtual int onConnCreated(CwxMsgBlock*& msg, CwxAppTss* pThrEnv)
+    virtual int onConnCreated(CwxMsgBlock*& msg, CwxTss* pThrEnv)
     {
         CWX_UNUSED_ARG(msg);
         CWX_UNUSED_ARG(pThrEnv);
@@ -64,7 +64,7 @@ public:
     @param [in] pThrEnv 线程的TSS对象。
     @return -1：处理失败，0：不处理此事件，1：处理此事件。
     */
-    virtual int onConnClosed(CwxMsgBlock*& msg, CwxAppTss* pThrEnv)
+    virtual int onConnClosed(CwxMsgBlock*& msg, CwxTss* pThrEnv)
     {
         CWX_UNUSED_ARG(msg);
         CWX_UNUSED_ARG(pThrEnv);
@@ -76,7 +76,7 @@ public:
     @param [in] pThrEnv 线程的TSS对象。
     @return -1：处理失败，0：不处理此事件，1：处理此事件。
     */
-    virtual int onRecvMsg(CwxMsgBlock*& msg, CwxAppTss* pThrEnv)
+    virtual int onRecvMsg(CwxMsgBlock*& msg, CwxTss* pThrEnv)
     {
         CWX_UNUSED_ARG(msg);
         CWX_UNUSED_ARG(pThrEnv);
@@ -88,7 +88,7 @@ public:
     @param [in] pThrEnv 线程的TSS对象。
     @return -1：处理失败，0：不处理此事件，1：处理此事件。
     */
-    virtual int onEndSendMsg(CwxMsgBlock*& msg, CwxAppTss* pThrEnv)
+    virtual int onEndSendMsg(CwxMsgBlock*& msg, CwxTss* pThrEnv)
     {
         CWX_UNUSED_ARG(msg);
         CWX_UNUSED_ARG(pThrEnv);
@@ -100,7 +100,7 @@ public:
     @param [in] pThrEnv 线程的TSS对象。
     @return -1：处理失败，0：不处理此事件，1：处理此事件。
     */
-    virtual int onFailSendMsg(CwxMsgBlock*& msg, CwxAppTss* pThrEnv)
+    virtual int onFailSendMsg(CwxMsgBlock*& msg, CwxTss* pThrEnv)
     {
         CWX_UNUSED_ARG(msg);
         CWX_UNUSED_ARG(pThrEnv);
@@ -112,7 +112,7 @@ public:
     @param [in] pThrEnv 线程的TSS对象。
     @return -1：处理失败，0：不处理此事件，1：处理此事件。
     */
-    virtual int onTimeoutCheck(CwxMsgBlock*& msg, CwxAppTss* pThrEnv)
+    virtual int onTimeoutCheck(CwxMsgBlock*& msg, CwxTss* pThrEnv)
     {
         CWX_UNUSED_ARG(msg);
         CWX_UNUSED_ARG(pThrEnv);
@@ -124,7 +124,7 @@ public:
     @param [in] pThrEnv 线程的TSS对象。
     @return -1：处理失败，0：不处理此事件，1：处理此事件。
     */
-    virtual int onEvent4Handle(CwxMsgBlock*& msg, CwxAppTss* pThrEnv)
+    virtual int onEvent4Handle(CwxMsgBlock*& msg, CwxTss* pThrEnv)
     {
         CWX_UNUSED_ARG(msg);
         CWX_UNUSED_ARG(pThrEnv);
@@ -136,7 +136,7 @@ public:
     @param [in] pThrEnv 线程的TSS对象。
     @return -1：处理失败，0：不处理此事件，1：处理此事件。
     */
-    virtual int onUserEvent(CwxMsgBlock*& msg, CwxAppTss* pThrEnv)
+    virtual int onUserEvent(CwxMsgBlock*& msg, CwxTss* pThrEnv)
     {
         CWX_UNUSED_ARG(msg);
         CWX_UNUSED_ARG(pThrEnv);
@@ -151,7 +151,7 @@ public:
 class  CWX_API CwxAppCommander
 {
     ///消息映射函数类型定义
-    typedef int (*fnEventApi)(CwxAppCmdOp* pEventOp, CwxMsgBlock*& msg, CwxAppTss* pThrEnv);
+    typedef int (*fnEventApi)(CwxAppCmdOp* pEventOp, CwxMsgBlock*& msg, CwxTss* pThrEnv);
     ///SVR-ID与其处理Handle的映射Hash
     typedef hash_map<CWX_UINT32, CwxAppCmdOp*, CwxNumHash<CWX_UINT32> > CwxEventCommandHash;
 public:
@@ -184,7 +184,7 @@ public:
     @param [in] iRet Handle对消息的处理结果，-1：处理失败，0：指定的Handle不处理此事件，1：处理成功。
     @return true：将消息分发给了指定的处理Handle；false：没有handle处理此消息
     */
-    bool dispatch(CwxMsgBlock*& msg, CwxAppTss* pThrEnv, int& iRet);
+    bool dispatch(CwxMsgBlock*& msg, CwxTss* pThrEnv, int& iRet);
     ///清空Command注册的SVR-ID
     void reset()
     {
@@ -198,7 +198,7 @@ private:
     @param [in] pThrEnv 线程的TSS对象。
     @return -1：Handle处理失败，0：Handle不处理此事件，1：Handle成功处理此事件。
     */
-    static int onConnCreated(CwxAppCmdOp* pEventOp, CwxMsgBlock*& msg, CwxAppTss* pThrEnv);
+    static int onConnCreated(CwxAppCmdOp* pEventOp, CwxMsgBlock*& msg, CwxTss* pThrEnv);
     /**
     @brief 将连接关闭事件分发给事件处理Handle。
     @param [in] pEventOp 事件的处理Handle。
@@ -206,7 +206,7 @@ private:
     @param [in] pThrEnv 线程的TSS对象。
     @return -1：Handle处理失败，0：Handle不处理此事件，1：Handle成功处理此事件。
     */
-    static int onConnClosed(CwxAppCmdOp* pEventOp, CwxMsgBlock*& msg, CwxAppTss* pThrEnv);
+    static int onConnClosed(CwxAppCmdOp* pEventOp, CwxMsgBlock*& msg, CwxTss* pThrEnv);
     /**
     @brief 将收到通信数据包事件分发给事件处理Handle。
     @param [in] pEventOp 事件的处理Handle。
@@ -214,7 +214,7 @@ private:
     @param [in] pThrEnv 线程的TSS对象。
     @return -1：Handle处理失败，0：Handle不处理此事件，1：Handle成功处理此事件。
     */
-    static int onRecvMsg(CwxAppCmdOp* pEventOp, CwxMsgBlock*& msg, CwxAppTss* pThrEnv);
+    static int onRecvMsg(CwxAppCmdOp* pEventOp, CwxMsgBlock*& msg, CwxTss* pThrEnv);
     /**
     @brief 将通信数据包发送完毕事件分发给事件处理Handle。
     @param [in] pEventOp 事件的处理Handle。
@@ -222,7 +222,7 @@ private:
     @param [in] pThrEnv 线程的TSS对象。
     @return -1：Handle处理失败，0：Handle不处理此事件，1：Handle成功处理此事件。
     */
-    static int onEndSendMsg(CwxAppCmdOp* pEventOp, CwxMsgBlock*& msg, CwxAppTss* pThrEnv);
+    static int onEndSendMsg(CwxAppCmdOp* pEventOp, CwxMsgBlock*& msg, CwxTss* pThrEnv);
     /**
     @brief 将通信数据包发送失败事件分发给事件处理Handle。
     @param [in] pEventOp 事件的处理Handle。
@@ -230,7 +230,7 @@ private:
     @param [in] pThrEnv 线程的TSS对象。
     @return -1：Handle处理失败，0：Handle不处理此事件，1：Handle成功处理此事件。
     */
-    static int onFailSendMsg(CwxAppCmdOp* pEventOp, CwxMsgBlock*& msg, CwxAppTss* pThrEnv);
+    static int onFailSendMsg(CwxAppCmdOp* pEventOp, CwxMsgBlock*& msg, CwxTss* pThrEnv);
     /**
     @brief 将超时检查事件分发给事件处理Handle。
     @param [in] pEventOp 事件的处理Handle。
@@ -238,7 +238,7 @@ private:
     @param [in] pThrEnv 线程的TSS对象。
     @return -1：Handle处理失败，0：Handle不处理此事件，1：Handle成功处理此事件。
     */
-    static int onTimeoutCheck(CwxAppCmdOp* pEventOp, CwxMsgBlock*& msg, CwxAppTss* pThrEnv);
+    static int onTimeoutCheck(CwxAppCmdOp* pEventOp, CwxMsgBlock*& msg, CwxTss* pThrEnv);
     /**
     @brief 将IO Handle Ready事件分发给事件处理Handle。
     @param [in] pEventOp 事件的处理Handle。
@@ -246,7 +246,7 @@ private:
     @param [in] pThrEnv 线程的TSS对象。
     @return -1：Handle处理失败，0：Handle不处理此事件，1：Handle成功处理此事件。
     */
-    static int onEvent4Handle(CwxAppCmdOp* pEventOp, CwxMsgBlock*& msg, CwxAppTss* pThrEnv);
+    static int onEvent4Handle(CwxAppCmdOp* pEventOp, CwxMsgBlock*& msg, CwxTss* pThrEnv);
     /**
     @brief 将用户事件分发给事件处理Handle。
     @param [in] pEventOp 事件的处理Handle。
@@ -254,7 +254,7 @@ private:
     @param [in] pThrEnv 线程的TSS对象。
     @return -1：Handle处理失败，0：Handle不处理此事件，1：Handle成功处理此事件。
     */
-    static int onUserEvent(CwxAppCmdOp* pEventOp, CwxMsgBlock*& msg, CwxAppTss* pThrEnv);
+    static int onUserEvent(CwxAppCmdOp* pEventOp, CwxMsgBlock*& msg, CwxTss* pThrEnv);
 private:
     ///获取SVR-ID的处理Handle
     CwxAppCmdOp* getEventOp(CWX_UINT32 uiSvrID);

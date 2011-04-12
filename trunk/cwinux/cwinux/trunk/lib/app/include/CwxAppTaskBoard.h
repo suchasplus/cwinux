@@ -21,7 +21,7 @@
 #include "CwxLockGuard.h"
 #include "CwxTypePoolEx.h"
 #include "CwxMsgBlock.h"
-#include "CwxAppTss.h"
+#include "CwxTss.h"
 #include "CwxAppConfig.h"
 #include "CwxAppMacro.h"
 
@@ -85,7 +85,7 @@ public:
     @param [in] pThrEnv 调用线程的Thread-env
     @return void
     */
-    virtual void noticeTimeout(CwxAppTss* pThrEnv) = 0;
+    virtual void noticeTimeout(CwxTss* pThrEnv) = 0;
     /**
     @brief 通知Task的收到一个数据包。
     @param [in] msg 收到的消息
@@ -94,7 +94,7 @@ public:
     @return void
     */
     virtual void noticeRecvMsg(CwxMsgBlock*& msg,
-        CwxAppTss* pThrEnv,
+        CwxTss* pThrEnv,
         bool& bConnAppendMsg) = 0;
     /**
     @brief 通知Task往外发送的一个数据包发送失败。
@@ -102,7 +102,7 @@ public:
     @param [in] pThrEnv 调用线程的Thread-env
     @return void
     */
-    virtual void noticeFailSendMsg(CwxMsgBlock*& msg, CwxAppTss* pThrEnv) = 0;
+    virtual void noticeFailSendMsg(CwxMsgBlock*& msg, CwxTss* pThrEnv) = 0;
     /**
     @brief 通知Task通过某条连接，发送了一个数据包。
     @param [in] msg 发送的数据包的信息
@@ -111,7 +111,7 @@ public:
     @return void
     */
     virtual void noticeEndSendMsg(CwxMsgBlock*& msg,
-        CwxAppTss* pThrEnv,
+        CwxTss* pThrEnv,
         bool& bConnAppendMsg) = 0;
     /**
     @brief 通知Task等待回复消息的一条连接关闭。
@@ -124,7 +124,7 @@ public:
     virtual void noticeConnClosed(CWX_UINT32 uiSvrId,
         CWX_UINT32 uiHostId,
         CWX_UINT32 uiConnId,
-        CwxAppTss* pThrEnv) = 0;
+        CwxTss* pThrEnv) = 0;
     /**
     @brief 激活Task。在Task启动前，Task有Task的创建线程所拥有。
            在启动前，Task可以接受自己的异步消息，但不能处理。
@@ -132,7 +132,7 @@ public:
     @param [in] pThrEnv 调用线程的Thread-env
     @return 0:成功；-1：失败，在失败的时候，Task从Taskboard中移除并设置为完成状态。
     */
-    virtual int noticeActive(CwxAppTss* pThrEnv)=0;
+    virtual int noticeActive(CwxTss* pThrEnv)=0;
     /**
     @brief 执行Task。在调用此API前，Task在Taskboard中不存在，也就是说对别的线程不可见。
            Task要么是刚创建状态，要么是完成了前一个阶段的处理，处于完成状态。
@@ -140,7 +140,7 @@ public:
     @param [in] pThrEnv 调用线程的Thread-env
     @return void
     */
-    virtual void execute(CwxAppTss* pThrEnv)
+    virtual void execute(CwxTss* pThrEnv)
     {
         pThrEnv = NULL;
     }
@@ -310,14 +310,14 @@ public:
     0：Task已经由Taskboard接管处理，调用线程不能再对Task进行任何处理。
     1：Task已经完成，不再有Taskboard管理，处于调用线程的控制之下。
     */
-    int noticeActiveTask(CwxAppTaskBoardTask* pTask, CwxAppTss* pThrEnv);
+    int noticeActiveTask(CwxAppTaskBoardTask* pTask, CwxTss* pThrEnv);
     /**
     @brief 检查Taskboard中的超时Task。
     @param [in] pThrEnv 调用线程的Thread-Env。
     @param [out] finishTasks 已经超时的Task的列表。
     @return void。
     */
-    void noticeCheckTimeout(CwxAppTss* pThrEnv, list<CwxAppTaskBoardTask*>& finishTasks);
+    void noticeCheckTimeout(CwxTss* pThrEnv, list<CwxAppTaskBoardTask*>& finishTasks);
     /**
     @brief 通知Taskboard，uiTaskId的任务收到一个通信数据包，此可能将是此Task完成。
     @param [in] uiTaskId 收到消息的Task的Task Id。
@@ -330,7 +330,7 @@ public:
     */
     int noticeRecvMsg(CWX_UINT32 uiTaskId,
         CwxMsgBlock*& msg,
-        CwxAppTss* pThrEnv,
+        CwxTss* pThrEnv,
         CwxAppTaskBoardTask*& pFinishTask);
     /**
     @brief 通知Taskboard，uiTaskId的Task的一个消息发送失败。此可能将是此Task完成。
@@ -344,7 +344,7 @@ public:
     */
     int noticeFailSendMsg(CWX_UINT32 uiTaskId,
         CwxMsgBlock*& msg,
-        CwxAppTss* pThrEnv,
+        CwxTss* pThrEnv,
         CwxAppTaskBoardTask*& pFinishTask);
     /**
     @brief 通知Taskboard，uiTaskId的Task的一个消息有一条连接发送完毕。
@@ -358,7 +358,7 @@ public:
     */
     int noticeEndSendMsg(CWX_UINT32 uiTaskId,
         CwxMsgBlock*& msg,
-        CwxAppTss* pThrEnv, 
+        CwxTss* pThrEnv, 
         CwxAppTaskBoardTask*& pFinishTask);
     /**
     @brief 通知Taskboard，一条连接关闭。
@@ -368,7 +368,7 @@ public:
     @return void
     */
     void noticeConnClosed(CwxMsgBlock*& msg,
-        CwxAppTss* pThrEnv, 
+        CwxTss* pThrEnv, 
         list<CwxAppTaskBoardTask*>& finishTasks);
     ///获取Taskboard管理的任务数量
     inline CWX_UINT32 getTaskNum() const ;
@@ -388,7 +388,7 @@ private:
     ///不带锁从Taskboard删除一个task;
     CwxAppTaskBoardTask* _remove(CWX_UINT32 uiTaskId);
     ///分发Task上缓存的消息
-    CWX_UINT8 dispatchEvent(CwxAppTaskBoardTask* pTask, CwxAppTss* pThrEnv);
+    CWX_UINT8 dispatchEvent(CwxAppTaskBoardTask* pTask, CwxTss* pThrEnv);
     ///不带锁，添加连接的一个Task
     inline void _addConnTask(CWX_UINT32 uiConnId, CwxAppTaskBoardTask* pTask);
     ///不带锁，删除连接的一个Task
