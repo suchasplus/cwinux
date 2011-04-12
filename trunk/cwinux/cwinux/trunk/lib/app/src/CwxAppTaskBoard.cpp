@@ -48,7 +48,7 @@ int CwxAppTaskBoard::remove(CWX_UINT32 uiTaskId, CwxAppTaskBoardTask*& pFinishTa
 }
 
 ///-1:task exist, 0:task is managed by task-board, 1:task is finised
-int CwxAppTaskBoard::noticeActiveTask(CwxAppTaskBoardTask* pTask, CwxAppTss* pThrEnv)
+int CwxAppTaskBoard::noticeActiveTask(CwxAppTaskBoardTask* pTask, CwxTss* pThrEnv)
 {
     {
         CwxMutexGuard<CwxMutexLock> lock(&m_lock);
@@ -70,7 +70,7 @@ int CwxAppTaskBoard::noticeActiveTask(CwxAppTaskBoardTask* pTask, CwxAppTss* pTh
 }
 
 
-void CwxAppTaskBoard::noticeCheckTimeout(CwxAppTss* pThrEnv, list<CwxAppTaskBoardTask*>& finishTasks)
+void CwxAppTaskBoard::noticeCheckTimeout(CwxTss* pThrEnv, list<CwxAppTaskBoardTask*>& finishTasks)
 {
     CWX_UINT64 ullTime = CwxDate::getTimestamp();
     finishTasks.clear();
@@ -100,7 +100,7 @@ void CwxAppTaskBoard::noticeCheckTimeout(CwxAppTss* pThrEnv, list<CwxAppTaskBoar
 ///-1:task doesn't exist, 0:task is managed by task-board, 1:task is finised
 int CwxAppTaskBoard::noticeRecvMsg(CWX_UINT32 uiTaskId,
                                    CwxMsgBlock*& msg,
-                                   CwxAppTss* pThrEnv,
+                                   CwxTss* pThrEnv,
                                    CwxAppTaskBoardTask*& pFinishTask)
 {
     CwxAppTaskBoardTask* pTask = NULL;
@@ -126,7 +126,7 @@ int CwxAppTaskBoard::noticeRecvMsg(CWX_UINT32 uiTaskId,
 ///-1:task doesn't exist, 0:task is managed by task-board, 1:task is finised
 int CwxAppTaskBoard::noticeFailSendMsg(CWX_UINT32 uiTaskId,
                                     CwxMsgBlock*& msg,
-                                    CwxAppTss* pThrEnv,
+                                    CwxTss* pThrEnv,
                                     CwxAppTaskBoardTask*& pFinishTask)
 {
     CwxAppTaskBoardTask* pTask = NULL;
@@ -150,7 +150,7 @@ int CwxAppTaskBoard::noticeFailSendMsg(CWX_UINT32 uiTaskId,
 }
 
 ///-1:task doesn't exist, 0:task is managed by task-board, 1:task is finised
-int CwxAppTaskBoard::noticeEndSendMsg(CWX_UINT32 uiTaskId, CwxMsgBlock*& msg, CwxAppTss* pThrEnv, CwxAppTaskBoardTask*& pFinishTask)
+int CwxAppTaskBoard::noticeEndSendMsg(CWX_UINT32 uiTaskId, CwxMsgBlock*& msg, CwxTss* pThrEnv, CwxAppTaskBoardTask*& pFinishTask)
 {
     CwxAppTaskBoardTask* pTask = NULL;
     pFinishTask = NULL;
@@ -172,7 +172,7 @@ int CwxAppTaskBoard::noticeEndSendMsg(CWX_UINT32 uiTaskId, CwxMsgBlock*& msg, Cw
     return 0;
 }
 
-void CwxAppTaskBoard::noticeConnClosed(CwxMsgBlock*& msg, CwxAppTss* pThrEnv, list<CwxAppTaskBoardTask*>& finishTasks)
+void CwxAppTaskBoard::noticeConnClosed(CwxMsgBlock*& msg, CwxTss* pThrEnv, list<CwxAppTaskBoardTask*>& finishTasks)
 {
     CwxAppTaskBoardTask* pTask = NULL;
     list<CwxAppTaskBoardTask*> locFinishTasks;
@@ -265,7 +265,7 @@ CwxAppTaskBoardTask* CwxAppTaskBoard::_remove(CWX_UINT32 uiTaskId)
 }
 
 
-CWX_UINT8 CwxAppTaskBoard::dispatchEvent(CwxAppTaskBoardTask* pTask, CwxAppTss* pThrEnv)
+CWX_UINT8 CwxAppTaskBoard::dispatchEvent(CwxAppTaskBoardTask* pTask, CwxTss* pThrEnv)
 {
     bool                  bTimeout;
     bool                  bAppendMsg;

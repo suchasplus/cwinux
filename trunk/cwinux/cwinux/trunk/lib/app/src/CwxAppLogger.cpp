@@ -97,8 +97,8 @@ void CwxAppLogger::info(char const* format, ...)
 {
     if (isEnableLog(LEVEL_INFO))
     {
-        CWX_UINT32 const LEN=CwxAppTss::TSS_2K_BUF;
-        char* szBuf = CwxAppTss::instance()->m_szErrMsg;
+        CWX_UINT32 const LEN=CwxTss::TSS_2K_BUF;
+        char* szBuf = CwxTss::instance()->m_szErrMsg;
         int ret = _log_header(NULL, 0, szBuf, LEN);
         va_list args;
         va_start(args, format);
@@ -111,8 +111,8 @@ void CwxAppLogger::debug(char const* format, ...)
 {
     if (isEnableLog(LEVEL_DEBUG))
     {
-        CWX_UINT32 const LEN=CwxAppTss::TSS_2K_BUF;
-        char* szBuf = CwxAppTss::instance()->m_szErrMsg;
+        CWX_UINT32 const LEN=CwxTss::TSS_2K_BUF;
+        char* szBuf = CwxTss::instance()->m_szErrMsg;
         char const* szFile = CWX_APP_TSS_FILE_NAME;
         int line = CWX_APP_TSS_FILE_NO;
         int ret = _log_header(szFile, line, szBuf, LEN);
@@ -127,8 +127,8 @@ void CwxAppLogger::debug(char const* format, ...)
 void CwxAppLogger::warning(char const* format, ...)
 {
     if (isEnableLog(LEVEL_WARNING)){
-        CWX_UINT32 const LEN=CwxAppTss::TSS_2K_BUF;
-        char* szBuf = CwxAppTss::instance()->m_szErrMsg;
+        CWX_UINT32 const LEN=CwxTss::TSS_2K_BUF;
+        char* szBuf = CwxTss::instance()->m_szErrMsg;
         char const* szFile = CWX_APP_TSS_FILE_NAME;
         int line = CWX_APP_TSS_FILE_NO;
         int ret = _log_header(szFile, line, szBuf, LEN);
@@ -143,8 +143,8 @@ void CwxAppLogger::warning(char const* format, ...)
 void CwxAppLogger::error(char const* format, ...)
 {
     if (isEnableLog(LEVEL_ERROR)){
-        CWX_UINT32 const LEN=CwxAppTss::TSS_2K_BUF;
-        char* szBuf = CwxAppTss::instance()->m_szErrMsg;
+        CWX_UINT32 const LEN=CwxTss::TSS_2K_BUF;
+        char* szBuf = CwxTss::instance()->m_szErrMsg;
         char const* szFile = CWX_APP_TSS_FILE_NAME;
         int line = CWX_APP_TSS_FILE_NO;
         int ret = _log_header(szFile, line, szBuf, LEN);
