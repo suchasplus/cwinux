@@ -190,7 +190,7 @@ inline void CwxAppFramework::setProcId(CWX_UINT16 uiProcId)
     m_uiProcId = uiProcId;
 }
 
-inline CwxAppCommander& CwxAppFramework::getCommander()
+inline CwxCommander& CwxAppFramework::getCommander()
 {
     return m_commander;
 }
