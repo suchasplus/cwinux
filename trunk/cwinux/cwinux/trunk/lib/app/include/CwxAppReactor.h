@@ -28,7 +28,7 @@
 #include "CwxAppNoticePipe.h"
 #include "CwxThread.h"
 #include "CwxLogger.h"
-#include "CwxMinHeap.h"
+#include "CwxAppEpoll.h"
 
 CWINUX_BEGIN_NAMESPACE
 
@@ -336,40 +336,19 @@ private:
     void addRegConnMap(CWX_UINT32 uiConnId, CwxAppHandler4Base* handler);
     CwxAppHandler4Base* removeRegConnMap(CWX_UINT32 uiConnId);
     static void callback(int fd, short event, void *arg);
-private:
-    class HandlerConnItem
-    {
-    public:
-        CWX_UINT32         m_uiConnId;
-        CwxAppHandler4Base* m_pHandler;
-    };
-    class EpollEngine
-    {
-    public:
-        EpollEngine()
-        {
-            m_epfd = CWX_INVALID_HANDLE;
-        }
-    public:
-        CwxMinHeap<CwxAppHandler4Base>  m_timeHeap; ///<时间堆
-        int                             m_epfd;     ///<epoll的fd
-        struct epoll_event              m_events[CWX_APP_MAX_IO_NUM]; ///<epoll的event 数组
-    };
 
 private:
     CwxMutexLock            m_lock; ///<全局锁
     CwxRwLock               m_rwLock; ///<读写锁
     pthread_t               m_owner; ///<reactor的owner 线程
     bool                    m_bStop; ///<reactor是否已经停止
-    HandlerConnItem         m_ioHandler[CWX_APP_MAX_IO_NUM]; ///<io handler的数组
-    CwxAppHandler4Base*     m_arrSignals[CWX_APP_MAX_SIGNAL_ID + 1]; ///<signal handler的数组
-    set<CwxAppHandler4Base*> m_timeouts; ///<定时器的handler
+    CWX_UINT32              m_connId[CWX_APP_MAX_IO_NUM]; ///<handler id到conn-id的映射
     CWX_UINT32             m_uiCurConnId; ///<上次分配的连接ID
-    hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*连接对象*/> m_connMap; ///<基于Conn id的连接Map
     CwxMutexLock           m_connMapMutex;///<m_connMap的锁，本身m_lock就可以保护，但为了提高getNextConnId()，其受双锁保护
+    hash_map<CWX_UINT32/*conn id*/, int/*连接对象*/> m_connMap; ///<基于Conn id的连接Map
     CwxAppNoticePipe*       m_pNoticePipe;
     ///引擎的资源
-    EpollEngine*            m_engine; ///<epoll的engine
+    CwxAppEpoll*            m_engine; ///<epoll的engine
 
 
 };

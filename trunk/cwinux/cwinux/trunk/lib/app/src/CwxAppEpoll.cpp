@@ -33,7 +33,27 @@ CwxAppEpoll::~CwxAppEpoll()
     {
         ::close(m_signalFd[1]);
     }
-    if (m_sigHandler) delete m_sigHandler;
+    //É¾³ý¸÷¸öhandler
+    int i=0;
+    for (i=0; i<CWX_APP_MAX_IO_NUM; i++)
+    {
+        if (m_eHandler[i].m_handler)
+        {
+            removeHandler(i);
+            delete m_eHandler[i].m_handler;
+        }
+    }
+    //É¾³ýsignal handler
+    for (i=0; i<CWX_APP_MAX_SIGNAL_ID; i++)
+    {
+        if (m_sigHandler[i]) delete m_sigHandler[i];
+    }
+    //É¾³ýtimeout handler
+    CwxAppHandler4Base* handler;
+    while((handler=m_timeHeap.pop()))
+    {
+        delete handler;
+    }
 }
 
 ///³õÊ¼»¯epoll
