@@ -176,30 +176,25 @@ int CwxAppReactor::stop()
     return _stop();
 }
 
-void CwxAppReactor::callback(CwxAppHandler4Base* handler, int mask, void *arg)
+void CwxAppReactor::callback(CwxAppHandler4Base* handler, int mask, bool bPersist, void *arg)
 {
-    CwxAppHandler4Base* handler = (CwxAppHandler4Base*)arg;
-    CwxAppReactor* reactor=handler->reactor();
-    if (!handler->isPersistMask())
+    CwxAppReactor* reactor = (CwxAppReactor*)arg;
+    if (!bPersist)
     {
         switch(handler->getRegType())
         {
         case REG_TYPE_IO:
-            reactor->m_ioHandler[handler->getHandle()].m_pHandler = NULL;
-            reactor->m_ioHandler[handler->getHandle()].m_uiConnId = CWX_APP_INVALID_CONN_ID;
+            reactor->m_connId[handler->getHandle()] = CWX_APP_INVALID_CONN_ID;
             break;
         case REG_TYPE_TIMEOUT:
-            reactor->m_timeouts.erase(handler);
             break;
         case REG_TYPE_SIG:
-            reactor->m_arrSignals[handler->getHandle()] = NULL;
             break;
         default:
             CWX_ASSERT(0);
         }
-        handler->setReg(false);
     }
-    int ret = handler->handle_event(event, fd);
+    int ret = handler->handle_event(mask, handler->getHandle());
     if (-1 == ret)
     {
         handler->close(fd);

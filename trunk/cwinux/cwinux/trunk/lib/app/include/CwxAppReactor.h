@@ -335,7 +335,7 @@ private:
     bool enableRegConnMap(CWX_UINT32 uiConnId, CwxAppHandler4Base* handler);
     void addRegConnMap(CWX_UINT32 uiConnId, CwxAppHandler4Base* handler);
     CwxAppHandler4Base* removeRegConnMap(CWX_UINT32 uiConnId);
-    static void callback(int fd, short event, void *arg);
+    static void callback(CwxAppHandler4Base* handler, int mask, bool bPersist, void *arg);
 
 private:
     CwxMutexLock            m_lock; ///<È«¾ÖËø

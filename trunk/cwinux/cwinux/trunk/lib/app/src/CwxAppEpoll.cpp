@@ -448,6 +448,15 @@ int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg)
                     CWX_ERROR(("Failure to cancel hander's timer, fd[%d]", event->data.fd));
                 }
             }
+            if (!CWX_CHECK_ATTR(m_eHandler[event->data.fd].m_mask, CwxAppHandler4Base::PERSIST_MASK))
+            {
+                if (removeHandler(event->data.fd) != handler)
+                {
+                    CWX_ASSERT(0);
+                    CWX_ERROR(("handler[%d] is not right", event->data.fd));
+                    return -1;
+                }
+            }
             callback(handler,
                 mask,
                 CWX_CHECK_ATTR(m_eHandler[event->data.fd].m_mask, CwxAppHandler4Base::PERSIST_MASK),
