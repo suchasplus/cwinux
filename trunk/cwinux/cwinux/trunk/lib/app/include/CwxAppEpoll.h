@@ -28,6 +28,7 @@
 
 CWINUX_BEGIN_NAMESPACE
 
+
 /**
 @class CwxAppEpoll
 @brief 架构的epoll事件引擎
@@ -168,6 +169,24 @@ private:
         int         m_mask;
         CwxAppHandler4Base* m_handler;
     };
+    class SignalHanlder:public CwxAppHandler4Base
+    {
+    public:
+        SignalHanlder():CwxAppHandler4Base(NULL, NULL)
+        {
+        }
+        ~SignalHanlder(){}
+    public:
+        virtual int open (void * arg= 0){ return 0};
+        virtual int handle_event(int event, CWX_HANDLE handle)
+        {
+            char sigBuf[64];
+            recv(handle, sigBuf, sizeof(sigBuf), 0);
+            return 0;
+        }
+        virtual int close(CWX_HANDLE handle=CWX_INVALID_HANDLE){return 0;}
+    };
+
 private:
     int                             m_epfd;     ///<epoll的fd
     struct epoll_event              m_events[CWX_APP_MAX_IO_NUM]; ///<epoll的event 数组
@@ -177,6 +196,7 @@ private:
     CwxAppHandler4Base*             m_sHandler[CWX_APP_MAX_SIGNAL_ID + 1];///<signal handler的数组
     volatile sig_atomic_t           m_bSignal; ///<是否有信号
     CwxMinHeap<CwxAppHandler4Base>  m_timeHeap; ///<时间堆
+    SignalHanlder*                  m_sigHandler; ///<读取signal事件的handle
 };
 
 

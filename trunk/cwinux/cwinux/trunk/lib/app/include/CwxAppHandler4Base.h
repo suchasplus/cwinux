@@ -40,7 +40,7 @@ public:
         PERSIST_MASK = 0x10,
         PREAD_MASK = READ_MASK|PERSIST_MASK,
         RW_MASK = READ_MASK|WRITE_MASK,
-        IO_MASK = RW_MASK|PERSIST_MASK,
+        IO_MASK = RW_MASK|TIMEOUT_MASK|PERSIST_MASK,
         ALL_EVENTS_MASK =  TIMEOUT_MASK|
                           READ_MASK|
                           WRITE_MASK|
