@@ -76,10 +76,6 @@ public:
     void reactor (CwxAppReactor *reactor);
     ///获取handle的reactor.
     CwxAppReactor *reactor(void);
-    ///是否注册
-    bool isReg() const;
-    ///获取reg mask
-    int  getRegMask() const;
     ///获取Io handle
     CWX_HANDLE getHandle(void) const;
     ///设置IO handle
@@ -94,16 +90,6 @@ public:
     CWX_UINT64 getTimeout() const;
     ///获取heap中的index
     int index() const;
-    ///获取是否为persist事件
-    bool isPersistMask() const;
-    ///是否设置了read mask
-    bool isReadMask() const;
-    ///是否设置了write mask
-    bool isWriteMask() const;
-    ///是否设置了timeout mask
-    bool isTimeoutMask() const;
-    ///是否设置了signal mask
-    bool isSignalMask() const;
     ///超时比较函数
     bool operator<(CwxAppHandler4Base const& base) const;
 protected:
@@ -112,10 +98,6 @@ protected:
     friend class CwxAppReactor;
     friend class CwxAppEpoll;
     friend class CwxAppFramework;
-    ///设置reg mask
-    void setRegMask(int mask);
-    ///设置注册状态
-    void setReg(bool bReg);
     ///设置注册类型
     void setRegType(int type);
     ///设置heap中的index
@@ -125,8 +107,6 @@ protected:
 private:
     CwxAppFramework*       m_pApp;
     CwxAppReactor *        m_reactor; ///<reactor对象的指针
-    bool                   m_bReg; ///<handler是否已经注册
-    int                    m_regMask; ///<handler注册的掩码
     int                    m_regType; ///<handler的reactor注册类型
     CWX_HANDLE             m_handler; ///<事件的io handle
     int                    m_type; ///<event handle type;

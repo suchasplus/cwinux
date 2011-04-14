@@ -20,26 +20,6 @@ inline CwxAppReactor *CwxAppHandler4Base::reactor(void)
 {
     return m_reactor;
 }
-inline bool CwxAppHandler4Base::isReg() const
-{
-    return m_bReg;
-}
-///设置注册状态
-inline void CwxAppHandler4Base::setReg(bool bReg)
-{
-    m_bReg = bReg;
-}
-
-///获取reg mask
-inline int CwxAppHandler4Base::getRegMask() const
-{
-    return m_regMask;
-}
-///设置reg mask
-inline void CwxAppHandler4Base::setRegMask(int mask)
-{
-    m_regMask = mask;
-}
 
 ///获取Io handle
 inline CWX_HANDLE CwxAppHandler4Base::getHandle(void) const
@@ -94,32 +74,6 @@ void CwxAppHandler4Base::index(int index)
     m_index = index;
 }
 
-///获取是否为persist事件
-inline bool CwxAppHandler4Base::isPersistMask() const
-{
-    return (m_regMask&PERSIST_MASK) !=0;
-}
-
-///是否设置了read mask
-inline bool CwxAppHandler4Base::isReadMask() const
-{
-    return (m_regMask&READ_MASK) !=0;
-}
-///是否设置了write mask
-inline bool CwxAppHandler4Base::isWriteMask() const
-{
-    return (m_regMask&WRITE_MASK) !=0;
-}
-///是否设置了timeout mask
-inline bool CwxAppHandler4Base::isTimeoutMask() const
-{
-    return (m_regMask&TIMEOUT_MASK) !=0;
-}
-///是否设置了signal mask
-inline bool CwxAppHandler4Base::isSignalMask() const
-{
-    return (m_regMask&SIGNAL_MASK) !=0;
-}
 
 ///超时比较函数
 inline bool CwxAppHandler4Base::operator<(CwxAppHandler4Base const& base) const
