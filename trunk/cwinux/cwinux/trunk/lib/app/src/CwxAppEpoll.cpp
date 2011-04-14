@@ -2,17 +2,20 @@
 #include <sys/epoll.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <signal.h>
+
+int CwxAppEpoll::m_signalFd[2]={CWX_INVALID_HANDLE,CWX_INVALID_HANDLE}; ///<信号的读写handle
+sig_atomic_t CwxAppEpoll::m_arrSignals[CWX_APP_MAX_SIGNAL_ID + 1]={0};///<signal的数组
+volatile sig_atomic_t  CwxAppEpoll::m_bSignal=0; ///<是否有信号
+
 
 CWINUX_BEGIN_NAMESPACE
 CwxAppEpoll::CwxAppEpoll()
 {
     m_epfd = CWX_INVALID_HANDLE;
     memset(m_events, 0x00, sizeof(m_events));
-    m_signalFd[0] = CWX_INVALID_HANDLE;
-    m_signalFd[1] = CWX_INVALID_HANDLE;
     memset(m_arrSignals, 0x00, sizeof(m_arrSignals));
     memset(m_sHandler, 0x00, sizeof(m_sHandler));
-    m_bSignal = 0;
     m_sigHandler = new SignalHanlder();
 }
 
@@ -97,6 +100,7 @@ int CwxAppEpoll::registerHandler(CWX_HANDLE handle,
         CWX_ERROR(("Invalid io handle id[%d], range[0,%d]", handle, CWX_APP_MAX_IO_NUM));
         return -1;
     }
+    ///若handle相等，是fork后的重新添加
     if (m_eHandler[handle].m_handler)
     {
         CWX_ERROR(("handler is registered, handle[%d]", (int)handle));
@@ -137,7 +141,7 @@ CwxAppHandler4Base* CwxAppEpoll::removeHandler (CWX_HANDLE handle)
 {
     if ((handle < 0) || (handle >= CWX_APP_MAX_IO_NUM))
     {
-        CWX_ERROR(("Invalid io handle id[%d], range[0,%d]", io_handle, CWX_APP_MAX_IO_NUM));
+        CWX_ERROR(("Invalid io handle id[%d], range[0,%d]", handle, CWX_APP_MAX_IO_NUM));
         return NULL;
     }
     CwxAppHandler4Base* event_handler = m_eHandler[handle];
@@ -158,14 +162,14 @@ int CwxAppEpoll::suspendHandler (CWX_HANDLE handle,
 {
     if ((handle < 0) || (handle >= CWX_APP_MAX_IO_NUM))
     {
-        CWX_ERROR(("Invalid io handle id[%d], range[0,%d]", io_handle, CWX_APP_MAX_IO_NUM));
-        return NULL;
+        CWX_ERROR(("Invalid io handle id[%d], range[0,%d]", handle, CWX_APP_MAX_IO_NUM));
+        return -1;
     }
     CwxAppHandler4Base* event_handler = m_eHandler[handle];
     if (!event_handler)
     {
         CWX_ERROR(("Handler[%d] doesn't exist.", handle));
-        return 0;
+        return -1;
     }
     suspend_mask &=(CwxAppHandler4Base::RW_MASK&m_eHandler[handle].m_mask);
     if(!suspend_mask) return 0;
@@ -183,14 +187,14 @@ int CwxAppEpoll::resumeHandler (CWX_HANDLE handle,
 {
     if ((handle < 0) || (handle >= CWX_APP_MAX_IO_NUM))
     {
-        CWX_ERROR(("Invalid io handle id[%d], range[0,%d]", io_handle, CWX_APP_MAX_IO_NUM));
-        return NULL;
+        CWX_ERROR(("Invalid io handle id[%d], range[0,%d]", handle, CWX_APP_MAX_IO_NUM));
+        return -1;
     }
     CwxAppHandler4Base* event_handler = m_eHandler[handle];
     if (!event_handler)
     {
         CWX_ERROR(("Handler[%d] doesn't exist.", handle));
-        return 0;
+        return -1;
     }
     resume_mask &=CwxAppHandler4Base::RW_MASK;
     resume_mask &=~m_eHandler[handle].m_mask;
@@ -208,34 +212,174 @@ int CwxAppEpoll::resumeHandler (CWX_HANDLE handle,
 int CwxAppEpoll::registerSignal(int signum,
                    CwxAppHandler4Base *event_handler)
 {
+    if ((signum < 0) || (signum >= CWX_APP_MAX_SIGNAL_ID))
+    {
+        CWX_ERROR(("Invalid signal id[%d], range[0,%d]", signum, CWX_APP_MAX_SIGNAL_ID));
+        return -1;
+    }
+    if (m_sHandler[signum])
+    {
+        CWX_ERROR(("Signal[%d]  exist.", signum));
+        return -1;
+    }
+    struct sigaction sa;
+    //set stop hander
+    sa.sa_handler = 0;
+    sa.sa_sigaction = CwxAppEpoll::sigAction;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags =SA_SIGINFO;
+    if (-1 == sigaction(signum, &sa, NULL))
+    {
+        CWX_ERROR(("Failure register signal[%d] handler.", signum);
+        return -1;
+    }
+    event_handler->setHandle(signum);
+    m_sHandler[signum] = event_handler;
+    return 0;
 
 }
 
 int CwxAppEpoll::removeSignal(CwxAppHandler4Base *event_handler)
 {
-
+    
+    return removeSignal(event_handler->getHandle());
 }
 
-CwxAppHandler4Base* CwxAppEpoll::removeSignal(int sig)
+CwxAppHandler4Base* CwxAppEpoll::removeSignal(int signum)
 {
-
+    if ((signum < 0) || (signum >= CWX_APP_MAX_SIGNAL_ID))
+    {
+        CWX_ERROR(("Invalid signal id[%d], range[0,%d]", signum, CWX_APP_MAX_SIGNAL_ID));
+        return -1;
+    }
+    if (!m_sHandler[signum])
+    {
+        CWX_ERROR(("Signal[%d] doesn't exist.", signum));
+        return -1;
+    }
+    struct sigaction sa;
+    //set stop hander
+    sa.sa_handler = 0;
+    sa.sa_sigaction = SIG_DFL;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags =SA_SIGINFO;
+    if (-1 == sigaction(signum, &sa, NULL))
+    {
+        CWX_ERROR(("Failure remove signal[%d] handler.", signum);
+        return -1;
+    }
+    m_sHandler[signum] = NULL;
+    return 0;
 }
 
 
 int CwxAppEpoll::scheduleTimer (CwxAppHandler4Base *event_handler,
                    CwxTimeValue const &interval)
 {
-
+    CWX_UINT64 ullTime = CwxDate::getTimestamp();
+    if (event_handler->index()>=0)
+    {
+        m_timeHeap.erase(event_handler);
+        event_handler->setTimeout(0);
+    }
+    ullTime += interval.to_usec();
+    event_handler->setTimeout(ullTime);
+    m_timeHeap.push(event_handler);
+    return 0;
 }
 
 int CwxAppEpoll::cancelTimer (CwxAppHandler4Base *event_handler)
 {
-
+    if (-1 == event_handler->index())
+    {
+        CWX_ERROR(("No timer for handler."));
+        return -1;
+    }
+    m_timeHeap.erase(event_handler);
+    event_handler->setTimeout(0);
+    return 0;
 }
 
 int CwxAppEpoll::forkReinit()
 {
-
+    int i = 0;
+    int old_sigFd = m_signalFd[0];
+    m_epfd = epoll_create(CWX_EPOLL_INIT_HANDLE); 
+    if (m_epfd == -1)
+    {
+        CWX_ERROR(("Failure to invoke epoll_create, errno=%d", errno));
+        return -1;
+    }
+    if (0 != CwxIpcSap::setCloexec(m_epfd, true))
+    {
+        CWX_ERROR(("Failure to set handle's cloexec sign, errno=%d", errno));
+        return -1;
+    }
+    //创建signal的handle
+    if (0 != pipe(m_signalFd))
+    {
+        CWX_ERROR(("Failure to invokde socketpair to create signal fd, errno=%d", errno));
+        return -1;
+    }
+    if (0 != CwxIpcSap::setCloexec(m_signalFd[0], true))
+    {
+        CWX_ERROR(("Failure to set signal handle[0]'s cloexec sign, errno=%d", errno));
+        return -1;
+    }
+    if (0 != CwxIpcSap::setCloexec(m_signalFd[1], true))
+    {
+        CWX_ERROR(("Failure to set signal handle[1]'s cloexec sign, errno=%d", errno));
+        return -1;
+    }
+    if (0 != CwxIpcSap::setNonblock(m_signalFd[0], true))
+    {
+        CWX_ERROR(("Failure to set signal handle[0]'s noblock sign, errno=%d", errno));
+        return -1;
+    }
+    if (0 != CwxIpcSap::setNonblock(m_signalFd[1], true))
+    {
+        CWX_ERROR(("Failure to set signal handle[1]'s noblock sign, errno=%d", errno));
+        return -1;
+    }
+    //回复handle
+    {
+        EventHandle eHandler[CWX_APP_MAX_IO_NUM];
+        memcpy(eHandler, m_eHandler, sizeof(m_eHandler));
+        for (i=0; i<CWX_APP_MAX_IO_NUM; i++)
+        {
+            m_eHandler[i].m_mask = 0;
+            m_eHandler[i].m_handler = NULL;
+        }
+        eHandler[old_sigFd].m_mask = 0;
+        eHandler[old_sigFd].m_handler = 0;
+        for (i=0; i<CWX_APP_MAX_IO_NUM; i++)
+        {
+            if (eHandler[i].m_handler)
+            {
+                if (eHandler[i].m_mask&CwxAppHandler4Base::RW_MASK) ///如果存在READ、WRITE的掩码，则注册
+                {
+                    if (0 != addEvent(eHandler[i].m_handler, eHandler[i].m_mask))
+                    {
+                        return -1;
+                    }
+                }
+                m_eHandler[i].m_handler = eHandler[i].m_handler;
+                m_eHandler[i].m_mask = eHandler[i].m_mask;
+            }
+        }
+        if (0 != registerHandler(m_signalFd[0], m_signalFd[0], CwxAppHandler4Base::PREAD_MASK))
+        {
+            CWX_ERROR(("Failure to register handle to engine"));
+            return -1;
+        }
+    }
+    //回复信号,signal的屏蔽状态会从父进程传递
+    for (i=0; i<CWX_APP_MAX_SIGNAL_ID; i++)
+    {
+        m_arrSignals[i] = 0;
+    }
+    m_bSignal = false;
+    return 0;
 }
 
 
@@ -291,6 +435,13 @@ int CwxAppEpoll::poll()
     }
     return numevents;
 
+}
+
+void CwxAppEpoll::sigAction(int sig, siginfo_t *info, void *)
+{
+    if (!m_arrSignals[sig]) m_arrSignals[sig] = 1;
+    m_bSignal = true;
+    write(m_signalFd[1], "1", 1);
 }
 
 

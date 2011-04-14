@@ -58,6 +58,7 @@ public:
     @param [in] event_handler io handle对应的event handler。
     @param [in] mask 注册的事件掩码，为READ_MASK、WRITE_MASK、PERSIST_MASK、TIMEOUT_MASK组合
     @param [in] uiMillSecond 多少毫秒超时。0表示没有超时设置。
+    @param [in] bForkAdd 是否是fork后重新添加。
     @return -1：失败；0：成功；
     */
     int registerHandler(CWX_HANDLE handle,
@@ -131,6 +132,8 @@ private:
     int addEvent(int fd, int mask);
     ///删除存在的mask，mask为READ_MASK、WRITE_MASK的组合。
     int delEvent(int fd, int mask);
+    ///信号handle
+    void sigAction(int , siginfo_t *info, void *)
 private:
     class EventHandle
     {
@@ -162,15 +165,15 @@ private:
         }
         virtual int close(CWX_HANDLE handle=CWX_INVALID_HANDLE){return 0;}
     };
-
+    
 private:
     int                             m_epfd;     ///<epoll的fd
     struct epoll_event              m_events[CWX_APP_MAX_IO_NUM]; ///<epoll的event 数组
     EventHandle                     m_eHandler[CWX_APP_MAX_IO_NUM]; ///<epoll的event handler
-    int                             m_signalFd[2]; ///<信号的读写handle
-    sig_atomic_t                    m_arrSignals[CWX_APP_MAX_SIGNAL_ID + 1];///<signal的数组
+    static int                      m_signalFd[2]; ///<信号的读写handle
+    static sig_atomic_t             m_arrSignals[CWX_APP_MAX_SIGNAL_ID + 1];///<signal的数组
+    static volatile sig_atomic_t    m_bSignal; ///<是否有信号
     CwxAppHandler4Base*             m_sHandler[CWX_APP_MAX_SIGNAL_ID + 1];///<signal handler的数组
-    volatile sig_atomic_t           m_bSignal; ///<是否有信号
     CwxMinHeap<CwxAppHandler4Base>  m_timeHeap; ///<时间堆
     SignalHanlder*                  m_sigHandler; ///<读取signal事件的handle
 };
