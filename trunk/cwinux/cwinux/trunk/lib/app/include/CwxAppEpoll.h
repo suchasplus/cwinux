@@ -54,40 +54,16 @@ public:
     int init();
     /**
     @brief 注册IO事件处理handle。
-    @param [in] io_handle 监测的IO handle
+    @param [in] handle 监测的IO handle
     @param [in] event_handler io handle对应的event handler。
     @param [in] mask 注册的事件掩码，为READ_MASK、WRITE_MASK、PERSIST_MASK、TIMEOUT_MASK组合
+    @param [in] uiMillSecond 多少毫秒超时。0表示没有超时设置。
     @return -1：失败；0：成功；
     */
-    int registerHandler(CWX_HANDLE io_handle,
+    int registerHandler(CWX_HANDLE handle,
         CwxAppHandler4Base *event_handler,
-        int mask);
-    /**
-    @brief 删除io事件处理handle。
-    @param [in] event_handler 移除的event-handler
-    @return -1：失败；
-    0：成功；
-    */
-    int removeHandler (CwxAppHandler4Base *event_handler);
-    /**
-    @brief suspend io事件处理handle。
-    @param [in] event_handler suspend的event-handler
-    @param [in] suspend_mask suspend的事件,为READ_MASK、WRITE_MASK组合
-    @return -1：失败；
-    0：成功；
-    */
-    int suspendHandler (CwxAppHandler4Base *event_handler,
-        int suspend_mask);
-    /**
-    @brief resume io事件处理handle。
-    @param [in] event_handler resume的event-handler
-    @param [in] resume_mask resume的事件,为READ_MASK、WRITE_MASK组合
-    @return -1：失败；
-    0：成功；
-    */
-    int resumeHandler (CwxAppHandler4Base *event_handler,
-        int resume_mask);
-
+        int mask,
+        CWX_UINT32 uiMillSecond = 0);
     /**
     @brief 删除io事件处理handle。
     @param [in] handle 移除的 io handle

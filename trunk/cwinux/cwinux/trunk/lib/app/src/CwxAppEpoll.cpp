@@ -87,89 +87,121 @@ int CwxAppEpoll::init()
     return 0;
 }
 
-int CwxAppEpoll::registerHandler(CWX_HANDLE io_handle,
+int CwxAppEpoll::registerHandler(CWX_HANDLE handle,
                     CwxAppHandler4Base *event_handler,
-                    int mask)
+                    int mask,
+                    CWX_UINT32 uiMillSecond)
 {
-    int ret = 0;
-    if (event_handler->isReg())
+    if ((handle < 0) || (handle >= CWX_APP_MAX_IO_NUM))
     {
-        CWX_ERROR(("handler is registered, handle[%d]", (int)io_handle));
+        CWX_ERROR(("Invalid io handle id[%d], range[0,%d]", handle, CWX_APP_MAX_IO_NUM));
         return -1;
     }
-    if ((io_handle < 0) || (io_handle >= CWX_APP_MAX_IO_NUM))
+    if (m_eHandler[handle].m_handler)
     {
-        CWX_ERROR(("Invalid io handle id[%d], range[0,%d]", io_handle, CWX_APP_MAX_IO_NUM));
+        CWX_ERROR(("handler is registered, handle[%d]", (int)handle));
         return -1;
     }
-    if (m_eHandler[io_handle].isReg())
-    {
-        CWX_ERROR(("handler is registered, handle[%d]", (int)io_handle));
-        return -1;
-    }
-    CWX_ASSERT(!m_eHandler[io_handle].m_handler);
-    event_handler->setRegType(REG_TYPE_IO);
+
     mask &=CwxAppHandler4Base::IO_MASK; ///只支持READ、WRITE、PERSIST、TIMEOUT四种掩码
-    event_handler->m_regMask = mask;
-    event_handler->setHandle(io_handle);
+    if (uiMillSecond) mask |= CwxAppHandler4Base::TIMEOUT_MASK;
+
+    if (uiMillSecond)
+    {
+        CWX_ASSERT(-1 == event_handler->index());
+        event_handler->m_ullTimeout = CwxDate::getTimestamp();
+        event_handler->m_ullTimeout += uiMillSecond * 1000;
+        if (!m_timeHeap.push(event_handler))
+        {
+            CWX_ASSERT(("Failure to add handler to time-heap, io[%d]", handle));
+            return -1;
+        }
+    }
+
     if (mask&CwxAppHandler4Base::RW_MASK) ///如果存在READ、WRITE的掩码，则注册
     {
-        if (0 != addEvent(io_handle, mask)) return -1;
+        if (0 != addEvent(handle, mask))
+        {
+            if (uiMillSecond) 
+                m_timeHeap.erase(event_handler); ///删除timeout
+            return -1;
+        }
     }
-    m_eHandler[io_handle].m_handler = event_handler;
-    m_eHandler[io_handle].m_mask = mask;
-
-    if (0 == ret)
-    {
-        event_handler->m_bReg = (mask&CwxAppHandler4Base::RW_MASK)?true:false;
-        m_ioHandler[io_handle].m_pHandler = event_handler;
-        m_ioHandler[io_handle].m_uiConnId = uiConnId;
-        if (uiConnId != CWX_APP_INVALID_CONN_ID)
-            addRegConnMap(uiConnId, event_handler);
-    }
-    else
-    {
-        event_handler->m_bReg = false;
-        CWX_ERROR(("Failure to add event handler to event-base, handle[%d], conn_id[%u], errno=%d",
-            (int)io_handle, 
-            uiConnId,
-            errno));
-    }
-    return ret==0?0:-1;
-
+    m_eHandler[handle].m_handler = event_handler;
+    m_eHandler[handle].m_mask = mask;
+    return 0;
 }
 
-int CwxAppEpoll::removeHandler (CwxAppHandler4Base *event_handler)
-{
-
-}
-
-int CwxAppEpoll::suspendHandler (CwxAppHandler4Base *event_handler,
-                    int suspend_mask)
-{
-
-}
-
-int CwxAppEpoll::resumeHandler (CwxAppHandler4Base *event_handler,
-                   int resume_mask)
-{
-
-}
 
 CwxAppHandler4Base* CwxAppEpoll::removeHandler (CWX_HANDLE handle)
 {
-
+    if ((handle < 0) || (handle >= CWX_APP_MAX_IO_NUM))
+    {
+        CWX_ERROR(("Invalid io handle id[%d], range[0,%d]", io_handle, CWX_APP_MAX_IO_NUM));
+        return NULL;
+    }
+    CwxAppHandler4Base* event_handler = m_eHandler[handle];
+    if (!event_handler) return NULL;
+    if (event_handler->index() >=0)
+    {//timeout
+        m_timeHeap.erase(event_handler);
+        event_handler->setTimeout(0);
+    }
+    delEvent(handle, m_eHandler[handle].m_mask);
+    m_eHandler[handle].m_mask = 0;
+    m_eHandler[handle].m_handler = NULL;
+    return event_handler;
 }
 
 int CwxAppEpoll::suspendHandler (CWX_HANDLE handle,
                     int suspend_mask)
 {
-
+    if ((handle < 0) || (handle >= CWX_APP_MAX_IO_NUM))
+    {
+        CWX_ERROR(("Invalid io handle id[%d], range[0,%d]", io_handle, CWX_APP_MAX_IO_NUM));
+        return NULL;
+    }
+    CwxAppHandler4Base* event_handler = m_eHandler[handle];
+    if (!event_handler)
+    {
+        CWX_ERROR(("Handler[%d] doesn't exist.", handle));
+        return 0;
+    }
+    suspend_mask &=(CwxAppHandler4Base::RW_MASK&m_eHandler[handle].m_mask);
+    if(!suspend_mask) return 0;
+    if (0 != delEvent(handle, suspend_mask))
+    {
+        CWX_ERROR(("Failure to suspend handler[%d]", handle));
+        return -1;
+    }
+    m_eHandler[handle] &=~suspend_mask;
+    return 0;
 }
 
 int CwxAppEpoll::resumeHandler (CWX_HANDLE handle,
                    int resume_mask)
 {
+    if ((handle < 0) || (handle >= CWX_APP_MAX_IO_NUM))
+    {
+        CWX_ERROR(("Invalid io handle id[%d], range[0,%d]", io_handle, CWX_APP_MAX_IO_NUM));
+        return NULL;
+    }
+    CwxAppHandler4Base* event_handler = m_eHandler[handle];
+    if (!event_handler)
+    {
+        CWX_ERROR(("Handler[%d] doesn't exist.", handle));
+        return 0;
+    }
+    resume_mask &=CwxAppHandler4Base::RW_MASK;
+    resume_mask &=~m_eHandler[handle].m_mask;
+    if(!resume_mask) return 0;
+    if (0 != addEvent(handle, resume_mask))
+    {
+        CWX_ERROR(("Failure to resume handler[%d]", handle));
+        return -1;
+    }
+    m_eHandler[handle] |=resume_mask;
+    return 0;
 
 }
 

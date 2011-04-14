@@ -95,6 +95,7 @@ public:
     */
     bool push(TYPE* const& e)
     {
+        if (-1 != e->index()) return false;
         if(!resize(m_uiCount+1))
             return false;
         shift_up(m_uiCount++, e);
