@@ -23,23 +23,21 @@
 #include "CwxMsgBlock.h"
 #include "CwxAppMacro.h"
 #include "CwxAppConfig.h"
-#include <event.h>
 
 CWINUX_BEGIN_NAMESPACE
 
-class CwxAppFramework;
 class CwxAppReactor;
-
-
+class CwxAppEpoll;
+class CwxAppFramework;
 class CWX_API CwxAppHandler4Base{
 public:
     ///定义事件类型
     enum{
-        TIMEOUT_MASK = EV_TIMEOUT,
-        READ_MASK = EV_READ,
-        WRITE_MASK = EV_WRITE,
-        SIGNAL_MASK = EV_SIGNAL,
-        PERSIST_MASK = EV_PERSIST,
+        TIMEOUT_MASK = 0x01,
+        READ_MASK = 0x02,
+        WRITE_MASK = 0x04,
+        SIGNAL_MASK = 0x08,
+        PERSIST_MASK = 0x10,
         PREAD_MASK = READ_MASK|PERSIST_MASK,
         RW_MASK = READ_MASK|WRITE_MASK,
         IO_MASK = RW_MASK|PERSIST_MASK,
@@ -72,9 +70,8 @@ public :
 public:
     ///设置app
     void setApp(CwxAppFramework* app);
-    ///获取app
+    ///获取app 
     CwxAppFramework* getApp();
-    ///获取app
     ///设置handle的reactor
     void reactor (CwxAppReactor *reactor);
     ///获取handle的reactor.
@@ -93,6 +90,10 @@ public:
     int getType() const;
     ///获取注册类型
     int getRegType() const;
+    ///获取超时时间
+    CWX_UINT64 getTimeout() const;
+    ///获取heap中的index
+    int index() const;
     ///获取是否为persist事件
     bool isPersistMask() const;
     ///是否设置了read mask
@@ -103,25 +104,34 @@ public:
     bool isTimeoutMask() const;
     ///是否设置了signal mask
     bool isSignalMask() const;
+    ///超时比较函数
+    bool operator<(CwxAppHandler4Base const& base) const;
 protected:
     /// Force CwxAppHandler4Base to be an abstract base class.
-    CwxAppHandler4Base (CwxAppFramework* pApp, CwxAppReactor *reactor);
+    CwxAppHandler4Base (CwxAppFramework* app, CwxAppReactor *reactor);
     friend class CwxAppReactor;
+    friend class CwxAppEpoll;
+    friend class CwxAppFramework;
     ///设置reg mask
     void setRegMask(int mask);
     ///设置注册状态
     void setReg(bool bReg);
     ///设置注册类型
     void setRegType(int type);
+    ///设置heap中的index
+    void index(int index);
+    ///设置超时时间
+    void setTimeout(CWX_UINT64 ullTimeout);
 private:
-    CwxAppFramework*       m_pApp; ///<app对象的指针
+    CwxAppFramework*       m_pApp;
     CwxAppReactor *        m_reactor; ///<reactor对象的指针
-    bool                  m_bReg; ///<handler是否已经注册
-    int                   m_regMask; ///<handler注册的掩码
-    int                   m_regType; ///<handler的reactor注册类型
+    bool                   m_bReg; ///<handler是否已经注册
+    int                    m_regMask; ///<handler注册的掩码
+    int                    m_regType; ///<handler的reactor注册类型
     CWX_HANDLE             m_handler; ///<事件的io handle
-    int                   m_type; ///<event handle type;
-    struct event           m_event; ///<handler的event对象
+    int                    m_type; ///<event handle type;
+    CWX_UINT64             m_ullTimeout; ///<超时的时刻
+    int                    m_index;
 };
 
 CWINUX_END_NAMESPACE

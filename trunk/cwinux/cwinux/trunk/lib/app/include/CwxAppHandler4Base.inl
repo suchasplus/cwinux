@@ -73,6 +73,26 @@ inline void CwxAppHandler4Base::setRegType(int type)
 {
     m_regType = type;
 }
+///获取超时时间
+inline CWX_UINT64 CwxAppHandler4Base::getTimeout() const
+{
+    return m_ullTimeout;
+}
+///设置超时时间
+inline void CwxAppHandler4Base::setTimeout(CWX_UINT64 ullTimeout)
+{
+    m_ullTimeout = ullTimeout;
+}
+///获取heap中的index
+int CwxAppHandler4Base::index() const
+{
+    return m_index;
+}
+///设置heap中的index
+void CwxAppHandler4Base::index(int index)
+{
+    m_index = index;
+}
 
 ///获取是否为persist事件
 inline bool CwxAppHandler4Base::isPersistMask() const
@@ -101,6 +121,11 @@ inline bool CwxAppHandler4Base::isSignalMask() const
     return (m_regMask&SIGNAL_MASK) !=0;
 }
 
+///超时比较函数
+inline bool CwxAppHandler4Base::operator<(CwxAppHandler4Base const& base) const
+{
+    return m_ullTimeout<base.m_ullTimeout;
+}
 
 
 CWINUX_END_NAMESPACE
