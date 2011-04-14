@@ -403,7 +403,7 @@ int CwxAppEpoll::forkReinit()
 }
 
 
-int CwxAppEpoll::poll()
+int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg)
 {
     int i = 0;
     int num = 0;
@@ -440,31 +440,18 @@ int CwxAppEpoll::poll()
             if (event->events & EPOLLIN) mask |= CwxAppHandler4Base::READ_MASK;
             if (event->events & EPOLLOUT) mask |= CwxAppHandler4Base::WRITE_MASK;
             handler = m_eHandler[event->data.fd].m_handler;
-            //如果不是持久，则移除handle
-            if (!CWX_CHECK_ATTR(m_eHandler[event->data.fd].m_mask, CwxAppHandler4Base::PERSIST_MASK))
-            {
-                if (!removeHandler(event->data.fd))
+            //检测timeout
+            if (m_eHandler[event->data.fd].m_handler->index()>=0)
+            {//从heap中删除
+                if (0 != cancelTimer(m_eHandler[event->data.fd].m_handler))
                 {
-                    CWX_ERROR(("Failure to remove no-persist handler, fd[%d]", event->data.fd));
+                    CWX_ERROR(("Failure to cancel hander's timer, fd[%d]", event->data.fd));
                 }
             }
-            else
-            {
-                //检测timeout
-                if (m_eHandler[event->data.fd].m_handler->index()>=0)
-                {//从heap中删除
-                    if (0 != cancelTimer(m_eHandler[event->data.fd].m_handler))
-                    {
-                        CWX_ERROR(("Failure to cancel hander's timer, fd[%d]", event->data.fd));
-                    }
-                }
-
-            }
-            ret = handler->handle_event(mask, event->data.fd);
-            if (-1 == ret)
-            {
-                handler->close(event->data.fd);
-            }
+            callback(handler,
+                mask,
+                CWX_CHECK_ATTR(m_eHandler[event->data.fd].m_mask, CwxAppHandler4Base::PERSIST_MASK),
+                arg);
         }
     }
     //检测signal
@@ -476,7 +463,10 @@ int CwxAppEpoll::poll()
             if (m_arrSignals[i])
             {
                 m_arrSignals[i] = 0;
-                m_sHandler[i]->handle_event(CwxAppHandler4Base::SIGNAL_MASK, i);
+                callback(handler,
+                    CwxAppHandler4Base::SIGNAL_MASK,
+                    true,
+                    arg);
             }
         }
     }
@@ -498,8 +488,10 @@ int CwxAppEpoll::poll()
                 handler = m_timeHeap.pop();
 
             }
-            //删除超时
-            handler->handle_event(CwxAppHandler4Base::TIMEOUT_MASK, handler->getHandle());
+            callback(handler,
+                CwxAppHandler4Base::TIMEOUT_MASK,
+                false,
+                arg);
         }
     }
     return 0;

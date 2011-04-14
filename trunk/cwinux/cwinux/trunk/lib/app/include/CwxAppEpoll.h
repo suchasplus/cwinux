@@ -33,6 +33,7 @@ CWINUX_BEGIN_NAMESPACE
 @class CwxAppEpoll
 @brief 架构的epoll事件引擎
 */
+typedef void (REACTOR_CALLBACK*)(CwxAppHandler4Base* handler, int mask, bool bPersist, void *arg);
 
 class CWX_API CwxAppEpoll
 {
@@ -124,7 +125,7 @@ public:
     @brief 检测事件。
     @return -1：失败；0：成功
     */
-    int poll();
+    int poll(REACTOR_CALLBACK callback, void* arg);
 private:
     ///获取下一个的epoll的超时时间
     void timeout(CWX_UINT64& ullTime);

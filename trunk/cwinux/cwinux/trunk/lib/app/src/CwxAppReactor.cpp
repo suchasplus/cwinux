@@ -8,17 +8,12 @@ CwxAppReactor::CwxAppReactor()
 {
     m_owner = CwxThread::self();
     m_bStop = true;
-    m_eventBase = NULL;
     ///初始化IO handler的数组
-    for (int i=0; i<CWX_APP_MAX_IO_NUM; i++)
-    {
-        m_ioHandler[i].m_pHandler = NULL;
-        m_ioHandler[i].m_uiConnId = CWX_APP_INVALID_CONN_ID;
-    }
-    ///初始化signal的数组
-    memset(m_arrSignals, 0x00, sizeof(m_arrSignals));
+    memset(m_connId, 0x00, sizeof(m_connId));
     ///创建notice pipe对象
     m_pNoticePipe = NULL;
+    //事件驱动
+    m_engine= NULL;
 }
 
 
@@ -30,14 +25,19 @@ CwxAppReactor::~CwxAppReactor()
 ///fork的re-init方法，返回值，0：成功；-1：失败
 int CwxAppReactor::forkReinit()
 {
-    m_owner = CwxThread::self();
-    int ret = event_reinit(m_eventBase);
-    if (-1 == ret)
+    if (m_engine)
     {
-        CWX_ERROR(("Failure to invoke libevent::event_reinit"));
-        return -1;
+        m_owner = CwxThread::self();
+        int ret = m_engine->forkReinit();
+        if (-1 == ret)
+        {
+            CWX_ERROR(("Failure to invoke libevent::event_reinit"));
+            return -1;
+        }
+        return 0;
     }
-    return 0;
+    CWX_ERROR(("Epoll engine doesn't init"));
+    return -1;
 }
 
 ///打开reactor，return -1：失败；0：成功
@@ -54,28 +54,14 @@ int CwxAppReactor::open()
     this->close();
     ///创建notice pipe对象
     m_pNoticePipe = new CwxAppNoticePipe();
-    ///创建event-base
-    if (m_eventBase)
-    {///释放libevent base
-        event_base_free(m_eventBase);
-        m_eventBase = NULL;
-    }
-
-    ///创建event base
-/*    if (m_type == REACTOR_EPOLL)
+    ///创建engine
+    if (m_engine)
     {
-        m_eventBase = event_base_new_type("epoll");
+        delete m_engine;
+        m_engine = NULL;
     }
-    else
-    {
-        m_eventBase = event_base_new_type("select");
-    }*/
-    m_eventBase = event_base_new();
-    if (!m_eventBase)
-    {
-        CWX_ERROR(("Failure to create event base"));
-        return -1;        
-    }
+    m_engine = new CwxAppEpoll();
+    if (0 != m_engine->init()) return -1;
     if (m_pNoticePipe->init() != 0)
     {
         CWX_ERROR(("Failure to invoke CwxAppNoticePipe::init()"));
@@ -94,11 +80,7 @@ int CwxAppReactor::close()
         return -1;
     }
     m_bStop = true;
-    if (m_eventBase)
-    {
-        event_base_free(m_eventBase);
-        m_eventBase = NULL;
-    }
+    memset(m_connId, 0x00, sizeof(m_connId));
     if (m_pNoticePipe)
     {
         delete m_pNoticePipe;
@@ -107,24 +89,8 @@ int CwxAppReactor::close()
     int i =0;
     m_uiCurConnId = 0;
     m_connMap.clear();
-    for (i=0; i<CWX_APP_MAX_IO_NUM; i++)
-    {
-        if (m_ioHandler[i].m_pHandler) delete m_ioHandler[i].m_pHandler;
-        m_ioHandler[i].m_pHandler = NULL;
-        m_ioHandler[i].m_uiConnId = CWX_APP_INVALID_CONN_ID;
-    }
-    for (i=0; i<CWX_APP_MAX_SIGNAL_ID + 1; i++)
-    {
-        if (m_arrSignals[i]) delete m_arrSignals[i];
-        m_arrSignals[i] = NULL;
-    }
-    set<CwxAppHandler4Base*>::iterator iter = m_timeouts.begin();
-    while(iter != m_timeouts.end())
-    {
-        delete *iter;
-        iter++;
-    }
-    m_timeouts.clear();
+    if (m_engine) delete m_engine;
+    m_engine = NULL;
     return 0;
 }
 
@@ -137,7 +103,7 @@ int CwxAppReactor::run(CwxAppHandler4Base* noticeHandler,
                        void* arg)
 {
     int ret = 0;
-    if (!m_bStop || !m_eventBase)
+    if (!m_bStop || !m_engine)
     {
         CWX_ERROR(("CwxAppReactor::open() must be invoke before CwxAppReactor::run()"));
         return -1;
@@ -160,7 +126,7 @@ int CwxAppReactor::run(CwxAppHandler4Base* noticeHandler,
         {
             ///带锁执行event-loop
             CwxMutexGuard<CwxMutexLock> lock(&m_lock);
-            ret = event_base_loop(m_eventBase, EVLOOP_ONCE);
+            ret = m_engine->poll();
         }
         if (m_bStop)
         {
@@ -171,14 +137,8 @@ int CwxAppReactor::run(CwxAppHandler4Base* noticeHandler,
         {
             if ((-1 == ret) && (EINTR != errno))
             {
-                CWX_ERROR(("Failure to running event_base_loop with -1, errno=%d", errno));
+                CWX_ERROR(("Failure to running epoll with -1, errno=%d", errno));
                 break;
-            }
-            else if (1 == ret)
-            {
-                CWX_ASSERT(0); ///由于有notice handler，因此一定有event
-                sleep(1);
-                ret = 0;
             }
         }
         ///调用hook
@@ -216,8 +176,7 @@ int CwxAppReactor::stop()
     return _stop();
 }
 
-
-void CwxAppReactor::callback(int fd, short event, void *arg)
+void CwxAppReactor::callback(CwxAppHandler4Base* handler, int mask, void *arg)
 {
     CwxAppHandler4Base* handler = (CwxAppHandler4Base*)arg;
     CwxAppReactor* reactor=handler->reactor();
