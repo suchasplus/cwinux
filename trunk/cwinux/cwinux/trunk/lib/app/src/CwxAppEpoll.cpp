@@ -8,7 +8,7 @@ int CwxAppEpoll::m_signalFd[2]={CWX_INVALID_HANDLE,CWX_INVALID_HANDLE}; ///<信号
 sig_atomic_t CwxAppEpoll::m_arrSignals[CWX_APP_MAX_SIGNAL_ID + 1]={0};///<signal的数组
 volatile sig_atomic_t  CwxAppEpoll::m_bSignal=0; ///<是否有信号
 
-CwxAppEpoll::CwxAppEpoll()
+CwxAppEpoll::CwxAppEpoll():m_timeHeap(4096)
 {
     m_epfd = CWX_INVALID_HANDLE;
     memset(m_events, 0x00, sizeof(m_events));
