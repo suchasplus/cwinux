@@ -25,6 +25,10 @@
 #include "CwxThread.h"
 #include "CwxLogger.h"
 #include "CwxMinHeap.h"
+#include <sys/epoll.h>
+#include <sys/socket.h>
+#include <unistd.h>
+#include <signal.h>
 
 CWINUX_BEGIN_NAMESPACE
 

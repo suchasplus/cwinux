@@ -1,8 +1,4 @@
 #include "CwxAppEpoll.h"
-#include <sys/epoll.h>
-#include <sys/socket.h>
-#include <unistd.h>
-#include <signal.h>
 
 int CwxAppEpoll::m_signalFd[2]={CWX_INVALID_HANDLE,CWX_INVALID_HANDLE}; ///<信号的读写handle
 sig_atomic_t CwxAppEpoll::m_arrSignals[CWX_APP_MAX_SIGNAL_ID + 1]={0};///<signal的数组
