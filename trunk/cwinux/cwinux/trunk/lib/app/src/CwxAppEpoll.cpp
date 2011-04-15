@@ -280,10 +280,9 @@ CwxAppHandler4Base* CwxAppEpoll::removeSignal(int signum)
     CwxAppHandler4Base* handler = m_sHandler[signum];
     struct sigaction sa;
     //set stop hander
-    sa.sa_handler = 0;
-    sa.sa_sigaction = SIG_DFL;
+    sa.sa_handler = SIG_DFL;
     sigemptyset(&sa.sa_mask);
-    sa.sa_flags =SA_SIGINFO;
+    sa.sa_flags =0x0;
     sigaction(signum, &sa, NULL);
     m_sHandler[signum] = NULL;
     return handler;
