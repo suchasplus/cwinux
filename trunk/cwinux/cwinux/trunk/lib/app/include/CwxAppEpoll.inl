@@ -41,7 +41,7 @@ inline int CwxAppEpoll::delEvent(int fd, int mask)
     {
         int ret = 0;
         struct epoll_event event;
-        int mask = m_eHandler[fd].m_mask & (~mask);
+        mask = m_eHandler[fd].m_mask & (~mask);
         event.events = 0;
         if (mask & CwxAppHandler4Base::READ_MASK) event.events |= EPOLLIN;
         if (mask & CwxAppHandler4Base::WRITE_MASK) event.events |= EPOLLOUT;
