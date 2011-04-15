@@ -1,11 +1,13 @@
 #include "CwxAppEpoll.h"
 
+
+
+CWINUX_BEGIN_NAMESPACE
+
 int CwxAppEpoll::m_signalFd[2]={CWX_INVALID_HANDLE,CWX_INVALID_HANDLE}; ///<信号的读写handle
 sig_atomic_t CwxAppEpoll::m_arrSignals[CWX_APP_MAX_SIGNAL_ID + 1]={0};///<signal的数组
 volatile sig_atomic_t  CwxAppEpoll::m_bSignal=0; ///<是否有信号
 
-
-CWINUX_BEGIN_NAMESPACE
 CwxAppEpoll::CwxAppEpoll()
 {
     m_epfd = CWX_INVALID_HANDLE;
