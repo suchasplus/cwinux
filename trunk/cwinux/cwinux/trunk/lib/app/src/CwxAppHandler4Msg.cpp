@@ -335,7 +335,8 @@ int CwxAppHandler4Msg::handle_input ()
                 //move write pointer
                 this->m_recvMsgData->wr_ptr(recv_size);
                 this->m_uiRecvDataLen += recv_size;
-                if (recv_size < need_size){
+                if (recv_size < need_size)
+                {
                     m_conn.setContinueRecvNum(0);
                     return 0;
                 }

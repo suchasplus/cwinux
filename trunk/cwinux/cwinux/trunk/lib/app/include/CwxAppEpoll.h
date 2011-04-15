@@ -34,7 +34,7 @@ class CwxAppReactor;
 @class CwxAppEpoll
 @brief 架构的epoll事件引擎
 */
-typedef void (REACTOR_CALLBACK*)(CwxAppHandler4Base* handler, int mask, bool bPersist, void *arg);
+typedef void (*REACTOR_CALLBACK)(CwxAppHandler4Base* handler, int mask, bool bPersist, void *arg);
 
 class CWX_API CwxAppEpoll
 {

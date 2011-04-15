@@ -31,7 +31,7 @@
 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-/************************************************************************/
+************************************************************************/
 /**
 @file CwxMinHeap.h
 @brief Min heap的实现，可以动态的增删元素。
@@ -64,14 +64,14 @@ public:
     @param [in] num heap中最多的元素数量
     @param [in] cmp 比较函数
     */
-    CwxHeap(CWX_UINT32 num, CMP const& cmp=less<TYPE>()):m_cmp(cmp)
+    CwxMinHeap(CWX_UINT32 num, CMP const& cmp=less<TYPE>()):m_cmp(cmp)
     {
         m_uiAll = 0;
         m_uiCount = 0;
         m_pElement = NULL;
     }
     ///析构函数
-    ~CwxHeap()
+    ~CwxMinHeap()
     {
         if (m_pElement) delete [] m_pElement;
     }
