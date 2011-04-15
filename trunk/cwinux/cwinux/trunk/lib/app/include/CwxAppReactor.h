@@ -85,13 +85,15 @@ public:
     @param [in] event_handler io handle对应的event handler。
     @param [in] mask 注册的事件掩码，为READ_MASK、WRITE_MASK、PERSIST_MASK组合
     @param [in] uiConnId 连接ID，若连接ID不为CWX_APP_INVALID_CONN_ID，则会基于连接ID进行管理。
+    @param [in] uiMillSecond 超时毫秒数，0表示不进行超时检测。
     @return -1：失败；
             0：成功；
     */
     int registerHandler (CWX_HANDLE io_handle,
         CwxAppHandler4Base *event_handler,
         int mask,
-        CWX_UINT32 uiConnId=CWX_APP_INVALID_CONN_ID);
+        CWX_UINT32 uiConnId=CWX_APP_INVALID_CONN_ID,
+        CWX_UINT32 uiMillSecond = 0);
     /**
     @brief 删除io事件处理handle。多线程安全，任意线程都可以调用。
     @param [in] event_handler 移除的event-handler
@@ -169,9 +171,8 @@ public:
     */
     int resumeHandlerByConnId (CWX_UINT32 uiConnId,
         int resume_mask);
-
     ///从Conn map删除指定的Handler，此时，连接必须没有注册。多线程安全，任意线程都可以调用。
-    CwxAppHandler4Base* removeFromConnMap(CWX_UINT32 uiConnId);
+    void removeFromConnMap(CWX_UINT32 uiConnId);
 
     /**
     @brief 注册signal事件处理handle，信号具有PERSIST属性。多线程安全，任意线程都可以调用。
@@ -252,7 +253,8 @@ private:
     int _registerHandler (CWX_HANDLE io_handle,
         CwxAppHandler4Base *event_handler,
         int mask,
-        CWX_UINT32 uiConnId=CWX_APP_INVALID_CONN_ID);
+        CWX_UINT32 uiConnId=CWX_APP_INVALID_CONN_ID,
+        CWX_UINT32 uiMillSecond = 0);
     ///删除io事件处理handle
     int _removeHandler (CwxAppHandler4Base *event_handler, bool bRemoveConnId=true);
     ///注册IO事件处理handle
@@ -332,9 +334,9 @@ private:
     CwxAppHandler4Base* _getSigHandler(int sig);
 
     ///检查handler对应的conn-id是否能加入conn-map中
-    bool enableRegConnMap(CWX_UINT32 uiConnId, CwxAppHandler4Base* handler);
-    void addRegConnMap(CWX_UINT32 uiConnId, CwxAppHandler4Base* handler);
-    CwxAppHandler4Base* removeRegConnMap(CWX_UINT32 uiConnId);
+    bool enableRegConnMap(CWX_UINT32 uiConnId, int handle);
+    void addRegConnMap(CWX_UINT32 uiConnId, int handle);
+    void removeRegConnMap(CWX_UINT32 uiConnId);
     static void callback(CwxAppHandler4Base* handler, int mask, bool bPersist, void *arg);
 
 private:

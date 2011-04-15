@@ -31,7 +31,7 @@
 ///无效链接ID定义
 #define CWX_APP_INVALID_CONN_ID 0 ///<无效的连接ID
 #define CWX_APP_MIN_CONN_ID     1 ///<最小的连接ID
-#define CWX_APP_MAX_CONN_ID     0x3FFFFFFF ///<最大的连接ID
+#define CWX_APP_MAX_CONN_ID     0x7FFFFFFF ///<最大的连接ID
 
 ///定义Handle 类型
 #define CWX_APP_HANDLE_UNKNOW  0

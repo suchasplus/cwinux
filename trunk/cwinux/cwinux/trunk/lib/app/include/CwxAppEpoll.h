@@ -28,6 +28,7 @@
 
 CWINUX_BEGIN_NAMESPACE
 
+class CwxAppReactor;
 
 /**
 @class CwxAppEpoll
@@ -166,7 +167,8 @@ private:
         }
         virtual int close(CWX_HANDLE handle=CWX_INVALID_HANDLE){return 0;}
     };
-    
+private:
+    friend class CwxAppReactor;
 private:
     int                             m_epfd;     ///<epoll的fd
     struct epoll_event              m_events[CWX_APP_MAX_IO_NUM]; ///<epoll的event 数组
