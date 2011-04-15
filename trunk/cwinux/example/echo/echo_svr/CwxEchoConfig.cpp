@@ -43,18 +43,6 @@ int CwxEchoConfig::loadConfig(string const & strConfFile){
         return -1;
     }
     m_listen.setPort(strtoul(pValue, NULL, 0));
-    //load mgr listen
-    if ((pValue=parser.getElementAttr("svr_def:mgr", "ip")) && pValue[0])
-    {
-        m_mgrListen.setHostName(pValue);
-        if ((NULL == (pValue=parser.getElementAttr("svr_def:mgr", "port"))) || !pValue[0])
-        {
-            snprintf(m_szError, 2047, "Must set [svr_def:mgr:port].");
-            return -1;
-        }
-        m_mgrListen.setPort(strtoul(pValue, NULL, 0));
-    }
-
     return 0;
 }
 
@@ -64,14 +52,6 @@ void CwxEchoConfig::outputConfig(string & strConfig){
 	strConfig += "*****************BEGIN CONFIG *******************";
     strConfig += "\nworkdir= " ;
     strConfig += m_strWorkDir;
-    if (m_mgrListen.getHostName().length())
-    {
-        strConfig += "\nmgr listen ip=";
-        strConfig += m_mgrListen.getHostName();
-        strConfig += "  port=";
-        sprintf(szBuf, "%u", m_mgrListen.getPort());;
-        strConfig += szBuf;
-    }
     strConfig += "\nthread_num=";
     sprintf(szBuf, "%u", m_unThreadNum);
     strConfig += szBuf;

@@ -60,19 +60,6 @@ int CwxEchoApp::initRunEnv(){
     m_eventHandler = new CwxEchoEventHandler(this);         
     this->getCommander().regHandle(SVR_TYPE_ECHO, m_eventHandler);
 
-    ///打开管理端口
-    if (m_config.m_mgrListen.getHostName().length())
-    {
-        if (-1 == noticeMgrListen(m_config.m_mgrListen.getHostName().c_str(),
-            m_config.m_mgrListen.getPort()))
-        {
-            CWX_ERROR(("Failure to register mgr listen, addr=%s, port=%u",
-                m_config.m_mgrListen.getHostName().c_str(),
-                m_config.m_mgrListen.getPort()));
-            return -1;
-        }
-    }
-
     ///监听TCP连接，其建立的连接的svr-id都为SVR_TYPE_ECHO，接收的消息的svr-id都为SVR_TYPE_ECHO。
     ///全部由m_eventHandler对象来处理
     if (0 > this->noticeTcpListen(SVR_TYPE_ECHO, 

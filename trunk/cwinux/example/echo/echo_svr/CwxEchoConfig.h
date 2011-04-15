@@ -33,7 +33,6 @@ public:
     string              m_strUnixPathFile;///<unix domain的监听 path file
     CWX_UINT16           m_unThreadNum;///<echo服务的echo线程数量
     CwxHostInfo       m_listen;///<tcp的监听ip/port
-    CwxHostInfo          m_mgrListen; ///<管理的监听端口
     char                m_szError[2048];///<错误消息的buf
 };
 

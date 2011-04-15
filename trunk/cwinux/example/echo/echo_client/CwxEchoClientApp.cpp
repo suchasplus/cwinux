@@ -58,19 +58,6 @@ int CwxEchoClientApp::initRunEnv(){
     m_config.outputConfig(strConfOut);
     CWX_INFO((strConfOut.c_str()));
 
-    ///打开管理端口
-    if (m_config.m_mgrListen.getHostName().length())
-    {
-        if (-1 == noticeMgrListen(m_config.m_mgrListen.getHostName().c_str(),
-            m_config.m_mgrListen.getPort()))
-        {
-            CWX_ERROR(("Failure to register mgr listen, addr=%s, port=%u",
-                m_config.m_mgrListen.getHostName().c_str(),
-                m_config.m_mgrListen.getPort()));
-            return -1;
-        }
-    }
-
 
     CWX_UINT16 i=0;
     //建立配置文件中设置的、与echo服务的连接

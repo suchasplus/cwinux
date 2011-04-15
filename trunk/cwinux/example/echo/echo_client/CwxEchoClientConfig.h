@@ -38,7 +38,6 @@ public:
     CWX_UINT32           m_uiDataSize;///<echo的数据包的大小
     bool                m_bLasting;///<是否为持久连接，类似HTTP的keep-alive
     CwxHostInfo          m_listen;///<tcp连接的对方listen地址
-    CwxHostInfo          m_mgrListen; ///<管理的监听端口
     char                m_szError[2048];///<错误消息buf
 };
 
