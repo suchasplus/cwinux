@@ -261,7 +261,8 @@ int CwxAppEpoll::registerSignal(int signum,
 int CwxAppEpoll::removeSignal(CwxAppHandler4Base *event_handler)
 {
     
-    return removeSignal(event_handler->getHandle());
+    removeSignal(event_handler->getHandle());
+    return 0;
 }
 
 CwxAppHandler4Base* CwxAppEpoll::removeSignal(int signum)
@@ -269,26 +270,23 @@ CwxAppHandler4Base* CwxAppEpoll::removeSignal(int signum)
     if ((signum < 0) || (signum >= CWX_APP_MAX_SIGNAL_ID))
     {
         CWX_ERROR(("Invalid signal id[%d], range[0,%d]", signum, CWX_APP_MAX_SIGNAL_ID));
-        return -1;
+        return NULL;
     }
     if (!m_sHandler[signum])
     {
         CWX_ERROR(("Signal[%d] doesn't exist.", signum));
-        return -1;
+        return NULL;
     }
+    CwxAppHandler4Base* handler = m_sHandler[signum];
     struct sigaction sa;
     //set stop hander
     sa.sa_handler = 0;
     sa.sa_sigaction = SIG_DFL;
     sigemptyset(&sa.sa_mask);
     sa.sa_flags =SA_SIGINFO;
-    if (-1 == sigaction(signum, &sa, NULL))
-    {
-        CWX_ERROR(("Failure remove signal[%d] handler.", signum);
-        return -1;
-    }
+    sigaction(signum, &sa, NULL);
     m_sHandler[signum] = NULL;
-    return 0;
+    return handler;
 }
 
 
