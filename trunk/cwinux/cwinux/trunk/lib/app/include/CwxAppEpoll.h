@@ -137,7 +137,7 @@ private:
     ///删除存在的mask，mask为READ_MASK、WRITE_MASK的组合。
     int delEvent(int fd, int mask);
     ///信号handle
-    void sigAction(int , siginfo_t *info, void *)
+    void sigAction(int , siginfo_t *info, void *);
 private:
     class EventHandle
     {
