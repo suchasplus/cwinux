@@ -90,6 +90,8 @@ public:
     CWX_UINT64 getTimeout() const;
     ///获取heap中的index
     int index() const;
+    ///设置heap中的index
+    void index(int index);
     ///超时比较函数
     bool operator<(CwxAppHandler4Base const& base) const;
 protected:
@@ -100,8 +102,6 @@ protected:
     friend class CwxAppFramework;
     ///设置注册类型
     void setRegType(int type);
-    ///设置heap中的index
-    void index(int index);
     ///设置超时时间
     void setTimeout(CWX_UINT64 ullTimeout);
 private:

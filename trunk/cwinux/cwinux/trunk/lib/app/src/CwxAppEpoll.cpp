@@ -374,7 +374,7 @@ int CwxAppEpoll::forkReinit()
             {
                 if (eHandler[i].m_mask&CwxAppHandler4Base::RW_MASK) ///如果存在READ、WRITE的掩码，则注册
                 {
-                    if (0 != addEvent(eHandler[i].m_handler, eHandler[i].m_mask))
+                    if (0 != addEvent(eHandler[i].m_handler->getHandle(), eHandler[i].m_mask))
                     {
                         return -1;
                     }
@@ -383,7 +383,7 @@ int CwxAppEpoll::forkReinit()
                 m_eHandler[i].m_mask = eHandler[i].m_mask;
             }
         }
-        if (0 != registerHandler(m_signalFd[0], m_signalFd[0], CwxAppHandler4Base::PREAD_MASK))
+        if (0 != registerHandler(m_signalFd[0], m_sigHandler, CwxAppHandler4Base::PREAD_MASK))
         {
             CWX_ERROR(("Failure to register handle to engine"));
             return -1;
@@ -403,7 +403,6 @@ int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg)
 {
     int i = 0;
     int num = 0;
-    int ret = 0;
     CWX_UINT64 ullNow = CwxDate::getTimestamp();
     CWX_UINT64 ullTimeout = 0;
     int tv=0;
@@ -427,13 +426,13 @@ int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg)
         {
             int mask = 0;
             if (m_bStop) return 0;
-            event = m_events[i];
+            event = &m_events[i];
             if (m_signalFd[0] == event->data.fd)
             {
                 CWX_ASSERT(event->events == EPOLLIN);
                 continue;
             }
-            CWX_ASSERT(m_eHandler[event->data.fd]);
+            CWX_ASSERT(m_eHandler[event->data.fd].m_handler);
             if (event->events & EPOLLIN) mask |= CwxAppHandler4Base::READ_MASK;
             if (event->events & EPOLLOUT) mask |= CwxAppHandler4Base::WRITE_MASK;
             handler = m_eHandler[event->data.fd].m_handler;
@@ -505,7 +504,7 @@ int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg)
     return 0;
 }
 
-void CwxAppEpoll::sigAction(int sig, siginfo_t *info, void *)
+void CwxAppEpoll::sigAction(int sig, siginfo_t *, void *)
 {
     if (!m_arrSignals[sig]) m_arrSignals[sig] = 1;
     m_bSignal = 1;
