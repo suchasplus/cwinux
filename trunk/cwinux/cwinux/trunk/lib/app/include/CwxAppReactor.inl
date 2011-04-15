@@ -397,7 +397,7 @@ inline void CwxAppReactor::getCurTime(CwxTimeValue& current)
 ///io handle是否设置指定的mask
 inline bool CwxAppReactor::isMask(CWX_HANDLE handle, int mask)
 {
-    return CWX_CHECK_ATTR(m_engine->m_eHandler[handle].m_mask, mask));
+    return CWX_CHECK_ATTR(m_engine->m_eHandler[handle].m_mask, mask);
 }
 
 
@@ -525,7 +525,7 @@ inline CwxAppHandler4Base* CwxAppReactor::_removeHandler (CWX_HANDLE handle, boo
         return NULL;
     }
     if (bRemoveConnId && 
-        (m_connId[handle)] != CWX_APP_INVALID_CONN_ID))
+        (m_connId[handle] != CWX_APP_INVALID_CONN_ID))
     {
         removeRegConnMap(m_connId[handle]);
     }
@@ -611,7 +611,6 @@ inline int CwxAppReactor::_registerSignal(int signum,
                                   CwxAppHandler4Base *event_handler
                                   )
 {
-    CWX_ASSERT(!event_handler->m_bReg);
     if (_isRegSigHandle(signum))
     {
         CWX_ERROR(("Sig[%d] has been registered", signum));
@@ -706,7 +705,7 @@ inline bool CwxAppReactor::_isRegIoHandle(CWX_HANDLE handle)
 inline bool CwxAppReactor::_isRegIoHandle(CwxAppHandler4Base* handler)
 {
     if (handler->getHandle() >= CWX_APP_MAX_IO_NUM) return true;
-    return m_engine->m_eHandler[handler->getHandle()]->m_handler == handler;
+    return m_engine->m_eHandler[handler->getHandle()].m_handler == handler;
 }
 
 
