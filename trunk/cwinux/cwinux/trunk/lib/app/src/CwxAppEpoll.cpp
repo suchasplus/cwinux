@@ -45,7 +45,7 @@ CwxAppEpoll::~CwxAppEpoll()
     //É¾³ýsignal handler
     for (i=0; i<CWX_APP_MAX_SIGNAL_ID; i++)
     {
-        if (m_sigHandler[i]) delete m_sigHandler[i];
+        if (m_sHandler[i]) delete m_sHandler[i];
     }
     //É¾³ýtimeout handler
     CwxAppHandler4Base* handler;
@@ -136,7 +136,7 @@ int CwxAppEpoll::registerHandler(CWX_HANDLE handle,
         event_handler->m_ullTimeout += uiMillSecond * 1000;
         if (!m_timeHeap.push(event_handler))
         {
-            CWX_ASSERT(("Failure to add handler to time-heap, io[%d]", handle));
+            CWX_ERROR(("Failure to add handler to time-heap, io[%d]", handle));
             return -1;
         }
     }
@@ -163,7 +163,7 @@ CwxAppHandler4Base* CwxAppEpoll::removeHandler (CWX_HANDLE handle)
         CWX_ERROR(("Invalid io handle id[%d], range[0,%d]", handle, CWX_APP_MAX_IO_NUM));
         return NULL;
     }
-    CwxAppHandler4Base* event_handler = m_eHandler[handle];
+    CwxAppHandler4Base* event_handler = m_eHandler[handle].m_handler;
     if (!event_handler) return NULL;
     if (event_handler->index() >=0)
     {//timeout
@@ -184,7 +184,7 @@ int CwxAppEpoll::suspendHandler (CWX_HANDLE handle,
         CWX_ERROR(("Invalid io handle id[%d], range[0,%d]", handle, CWX_APP_MAX_IO_NUM));
         return -1;
     }
-    CwxAppHandler4Base* event_handler = m_eHandler[handle];
+    CwxAppHandler4Base* event_handler = m_eHandler[handle].m_handler;
     if (!event_handler)
     {
         CWX_ERROR(("Handler[%d] doesn't exist.", handle));
@@ -197,7 +197,7 @@ int CwxAppEpoll::suspendHandler (CWX_HANDLE handle,
         CWX_ERROR(("Failure to suspend handler[%d]", handle));
         return -1;
     }
-    m_eHandler[handle] &=~suspend_mask;
+    m_eHandler[handle].m_mask &=~suspend_mask;
     return 0;
 }
 
@@ -209,7 +209,7 @@ int CwxAppEpoll::resumeHandler (CWX_HANDLE handle,
         CWX_ERROR(("Invalid io handle id[%d], range[0,%d]", handle, CWX_APP_MAX_IO_NUM));
         return -1;
     }
-    CwxAppHandler4Base* event_handler = m_eHandler[handle];
+    CwxAppHandler4Base* event_handler = m_eHandler[handle].m_handler;
     if (!event_handler)
     {
         CWX_ERROR(("Handler[%d] doesn't exist.", handle));
@@ -223,7 +223,7 @@ int CwxAppEpoll::resumeHandler (CWX_HANDLE handle,
         CWX_ERROR(("Failure to resume handler[%d]", handle));
         return -1;
     }
-    m_eHandler[handle] |=resume_mask;
+    m_eHandler[handle].m_mask |=resume_mask;
     return 0;
 
 }
@@ -249,7 +249,7 @@ int CwxAppEpoll::registerSignal(int signum,
     sa.sa_flags =SA_SIGINFO;
     if (-1 == sigaction(signum, &sa, NULL))
     {
-        CWX_ERROR(("Failure register signal[%d] handler.", signum);
+        CWX_ERROR(("Failure register signal[%d] handler.", signum));
         return -1;
     }
     event_handler->setHandle(signum);
