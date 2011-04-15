@@ -1040,6 +1040,8 @@ Optional Packages:
                           both]
   --with-tags[=TAGS]
                           include additional configurations [automatic]
+  --with-xml-expat=DIR        expat for xml directory
+  --with-cwinux=DIR        cwinux directory
 
 Some influential environment variables:
   CC          C compiler command
@@ -3660,7 +3662,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 3663 "configure"' > conftest.$ac_ext
+  echo '#line 3665 "configure"' > conftest.$ac_ext
   if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -5259,7 +5261,7 @@ fi
 
 
 # Provide some information about the compiler.
-echo "$as_me:5262:" \
+echo "$as_me:5264:" \
      "checking for Fortran 77 compiler version" >&5
 ac_compiler=`set X $ac_compile; echo $2`
 { (eval echo "$as_me:$LINENO: \"$ac_compiler --version </dev/null >&5\"") >&5
@@ -6322,11 +6324,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:6325: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:6327: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:6329: \$? = $ac_status" >&5
+   echo "$as_me:6331: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -6590,11 +6592,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:6593: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:6595: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:6597: \$? = $ac_status" >&5
+   echo "$as_me:6599: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -6694,11 +6696,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:6697: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:6699: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:6701: \$? = $ac_status" >&5
+   echo "$as_me:6703: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -8163,7 +8165,7 @@ linux*)
   libsuff=
   case "$host_cpu" in
   x86_64*|s390x*|powerpc64*)
-    echo '#line 8166 "configure"' > conftest.$ac_ext
+    echo '#line 8168 "configure"' > conftest.$ac_ext
     if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -9060,7 +9062,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 9063 "configure"
+#line 9065 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -9160,7 +9162,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 9163 "configure"
+#line 9165 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -11503,11 +11505,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:11506: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:11508: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:11510: \$? = $ac_status" >&5
+   echo "$as_me:11512: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -11607,11 +11609,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:11610: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:11612: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:11614: \$? = $ac_status" >&5
+   echo "$as_me:11616: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -12143,7 +12145,7 @@ linux*)
   libsuff=
   case "$host_cpu" in
   x86_64*|s390x*|powerpc64*)
-    echo '#line 12146 "configure"' > conftest.$ac_ext
+    echo '#line 12148 "configure"' > conftest.$ac_ext
     if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -13201,11 +13203,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:13204: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:13206: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:13208: \$? = $ac_status" >&5
+   echo "$as_me:13210: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -13305,11 +13307,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:13308: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:13310: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:13312: \$? = $ac_status" >&5
+   echo "$as_me:13314: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -14754,7 +14756,7 @@ linux*)
   libsuff=
   case "$host_cpu" in
   x86_64*|s390x*|powerpc64*)
-    echo '#line 14757 "configure"' > conftest.$ac_ext
+    echo '#line 14759 "configure"' > conftest.$ac_ext
     if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -15532,11 +15534,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:15535: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:15537: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:15539: \$? = $ac_status" >&5
+   echo "$as_me:15541: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -15800,11 +15802,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:15803: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:15805: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:15807: \$? = $ac_status" >&5
+   echo "$as_me:15809: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -15904,11 +15906,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:15907: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:15909: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:15911: \$? = $ac_status" >&5
+   echo "$as_me:15913: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -17373,7 +17375,7 @@ linux*)
   libsuff=
   case "$host_cpu" in
   x86_64*|s390x*|powerpc64*)
-    echo '#line 17376 "configure"' > conftest.$ac_ext
+    echo '#line 17378 "configure"' > conftest.$ac_ext
     if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -18600,6 +18602,62 @@ LIBTOOL='$(SHELL) $(top_builddir)/libtool'
 
 
 
+
+
+
+
+
+# Check whether --with-xml_expat or --without-xml_expat was given.
+if test "${with_xml_expat+set}" = set; then
+  withval="$with_xml_expat"
+
+else
+  with_xml_expat="no"
+
+fi;
+
+# Check whether --with-cwinux or --without-cwinux was given.
+if test "${with_cwinux+set}" = set; then
+  withval="$with_cwinux"
+
+else
+  with_cwinux="no"
+
+fi;
+
+    if test "$with_xml_expat" = "no"; then
+        { { echo "$as_me:$LINENO: error: You need to specify the expat for xml directory using --with-xml-expat" >&5
+echo "$as_me: error: You need to specify the expat for xml directory using --with-xml-expat" >&2;}
+   { (exit 1); exit 1; }; }
+    else
+        # make sure that a well known include file exists
+        if test -e $with_xml_expat/include/expat.h; then
+            xml_expat_dir=$with_xml_expat
+            echo "$as_me:$LINENO: result: xml-expat found!" >&5
+echo "${ECHO_T}xml-expat found!" >&6
+        else
+            { { echo "$as_me:$LINENO: error: $with_xml_expat not found.  Check the value you specified with --with-xml-expat" >&5
+echo "$as_me: error: $with_xml_expat not found.  Check the value you specified with --with-xml-expat" >&2;}
+   { (exit 1); exit 1; }; }
+        fi
+    fi
+
+    if test "$with_cwinux" = "no"; then
+        { { echo "$as_me:$LINENO: error: You need to specify the cwinux directory using --with-cwinux" >&5
+echo "$as_me: error: You need to specify the cwinux directory using --with-cwinux" >&2;}
+   { (exit 1); exit 1; }; }
+    else
+        # make sure that a well known include file exists
+        if test -e $with_cwinux/include/app/CwxAppFramework.h; then
+            cwinux_dir=$with_cwinux
+            echo "$as_me:$LINENO: result: cwinux found!" >&5
+echo "${ECHO_T}cwinux found!" >&6
+        else
+            { { echo "$as_me:$LINENO: error: $with_cwinux not found.  Check the value you specified with --with-cwinux" >&5
+echo "$as_me: error: $with_cwinux not found.  Check the value you specified with --with-cwinux" >&2;}
+   { (exit 1); exit 1; }; }
+        fi
+    fi
 
 
 
