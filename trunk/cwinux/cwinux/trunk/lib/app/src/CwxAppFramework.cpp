@@ -630,8 +630,7 @@ void CwxAppFramework::onTime(CwxTimeValue const& current)
             if (conn->getConnInfo().isKeepAliveReply())
             {//check send new keep-alive
                 if ((ttNow - conn->getConnInfo().getLastRecvMsgTime() > getKeepAliveSecond()) &&
-                    (ttNow - conn->getConnInfo().getLastSendMsgTime() > getKeepAliveSecond()) &&
-                    reactor()->isMask(conn->getHandle(),CwxAppHandler4Base::READ_MASK))
+                    (ttNow - conn->getConnInfo().getLastSendMsgTime() > getKeepAliveSecond()))
                 {//send keep-alive
                     msg = header.packKeepalive(false);
                     conn->getConnInfo().setKeepAliveReply(false);
@@ -1161,8 +1160,7 @@ void CwxAppFramework::innerNoticeSendMsgByConn(CwxAppFramework* pApp,
     if (!msg->send_ctrl().isUndoConn())
     {
         int ret = 0;
-        if (msg->send_ctrl().isResumeConn() &&
-            !reactor()->isMask(pConn->getHandle(),CwxAppHandler4Base::READ_MASK))
+        if (msg->send_ctrl().isResumeConn())
         {
             ret = pConn->reactor()->resumeHandler(pConn, CwxAppHandler4Base::READ_MASK);
             if (0 != ret)
@@ -1171,8 +1169,7 @@ void CwxAppFramework::innerNoticeSendMsgByConn(CwxAppFramework* pApp,
                 pConn->close();
             }
         }
-        else if (msg->send_ctrl().isSuspendConn() &&
-            reactor()->isMask(pConn->getHandle(),CwxAppHandler4Base::READ_MASK))
+        else if (msg->send_ctrl().isSuspendConn())
         {
             ret = pConn->reactor()->suspendHandler(pConn, CwxAppHandler4Base::READ_MASK);
             if (0 != ret)
