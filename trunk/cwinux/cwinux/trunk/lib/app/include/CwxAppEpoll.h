@@ -164,14 +164,14 @@ private:
         }
         ~SignalHanlder(){}
     public:
-        virtual int open (void * arg= 0){ return 0};
+        virtual int open (void *){ return 0};
         virtual int handle_event(int event, CWX_HANDLE handle)
         {
             char sigBuf[64];
             recv(handle, sigBuf, sizeof(sigBuf), 0);
             return 0;
         }
-        virtual int close(CWX_HANDLE handle=CWX_INVALID_HANDLE){return 0;}
+        virtual int close(CWX_HANDLE ){return 0;}
     };
 private:
     friend class CwxAppReactor;
@@ -190,7 +190,7 @@ private:
 
 
 CWINUX_END_NAMESPACE
-#include "CwxAppReactor.inl"
+#include "CwxAppEpoll.inl"
 #include "CwxPost.h"
 
 #endif
