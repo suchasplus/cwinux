@@ -57,7 +57,6 @@ int CwxAppUnixAcceptor::accept(CwxUnixAddr const& addr)
 ///handle open
 int CwxAppUnixAcceptor::open (void * )
 {
-    CWX_ASSERT(!isReg());
     if (0 != reactor()->registerHandler(getHandle(),
         this,
         CwxAppHandler4Base::PREAD_MASK))

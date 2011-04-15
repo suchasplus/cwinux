@@ -72,7 +72,6 @@ int CwxAppTcpAcceptor::accept(CwxINetAddr const& addr)
 ///handle open
 int CwxAppTcpAcceptor::open (void * )
 {
-    CWX_ASSERT(!isReg());
     if (0 != reactor()->registerHandler(getHandle(),
         this,
         CwxAppHandler4Base::PREAD_MASK))
