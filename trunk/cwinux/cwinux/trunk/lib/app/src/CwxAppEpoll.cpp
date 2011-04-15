@@ -20,18 +20,6 @@ CwxAppEpoll::CwxAppEpoll():m_timeHeap(4096)
 
 CwxAppEpoll::~CwxAppEpoll()
 {
-    if (m_epfd != CWX_INVALID_HANDLE)
-    {
-        ::close(m_epfd);
-    }
-    if (m_signalFd[0] != CWX_INVALID_HANDLE)
-    {
-        ::close(m_signalFd[0]);
-    }
-    if (m_signalFd[1] != CWX_INVALID_HANDLE)
-    {
-        ::close(m_signalFd[1]);
-    }
     //删除各个handler
     int i=0;
     for (i=0; i<CWX_APP_MAX_IO_NUM; i++)
@@ -53,6 +41,19 @@ CwxAppEpoll::~CwxAppEpoll()
     {
         delete handler;
     }
+    if (m_epfd != CWX_INVALID_HANDLE)
+    {
+        ::close(m_epfd);
+    }
+    if (m_signalFd[0] != CWX_INVALID_HANDLE)
+    {
+        ::close(m_signalFd[0]);
+    }
+    if (m_signalFd[1] != CWX_INVALID_HANDLE)
+    {
+        ::close(m_signalFd[1]);
+    }
+
 }
 
 ///初始化epoll
