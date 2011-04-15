@@ -474,7 +474,7 @@ int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg)
             if (m_arrSignals[i])
             {
                 m_arrSignals[i] = 0;
-                callback(handler,
+                callback(m_sHandler[i],
                     CwxAppHandler4Base::SIGNAL_MASK,
                     true,
                     arg);
