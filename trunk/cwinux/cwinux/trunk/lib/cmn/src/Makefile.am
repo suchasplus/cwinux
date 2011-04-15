@@ -133,7 +133,8 @@ cwxcmninclude_HEADERS=\
     ../include/CwxThreadPool.inl\
     ../include/CwxThreadPoolMgr.h\
     ../include/CwxTpi.h\
-    ../include/CwxTss.h 
+    ../include/CwxTss.h\
+    ../include/CwxLogger.h
 
 	
 INCLUDES=-I$(srcdir)/../include
