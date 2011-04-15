@@ -45,8 +45,7 @@ public:
     enum{
         REG_TYPE_UNKNOWN=0,
         REG_TYPE_IO = 1,
-        REG_TYPE_SIG = 2,
-        REG_TYPE_TIMEOUT = 3
+        REG_TYPE_SIG = 2
     };
     typedef int (*REACTOR_EVENT_HOOK)(void *);
     ///构造函数
@@ -172,7 +171,7 @@ public:
     int resumeHandlerByConnId (CWX_UINT32 uiConnId,
         int resume_mask);
     ///从Conn map删除指定的Handler，此时，连接必须没有注册。多线程安全，任意线程都可以调用。
-    void removeFromConnMap(CWX_UINT32 uiConnId);
+    CwxAppHandler4Base* removeFromConnMap(CWX_UINT32 uiConnId);
 
     /**
     @brief 注册signal事件处理handle，信号具有PERSIST属性。多线程安全，任意线程都可以调用。
@@ -334,9 +333,9 @@ private:
     CwxAppHandler4Base* _getSigHandler(int sig);
 
     ///检查handler对应的conn-id是否能加入conn-map中
-    bool enableRegConnMap(CWX_UINT32 uiConnId, int handle);
-    void addRegConnMap(CWX_UINT32 uiConnId, int handle);
-    void removeRegConnMap(CWX_UINT32 uiConnId);
+    bool enableRegConnMap(CWX_UINT32 uiConnId, CwxAppHandler4Base* handler);
+    void addRegConnMap(CWX_UINT32 uiConnId, CwxAppHandler4Base* handler);
+    CwxAppHandler4Base* removeRegConnMap(CWX_UINT32 uiConnId);
     static void callback(CwxAppHandler4Base* handler, int mask, bool bPersist, void *arg);
 
 private:
@@ -347,7 +346,7 @@ private:
     CWX_UINT32              m_connId[CWX_APP_MAX_IO_NUM]; ///<handler id到conn-id的映射
     CWX_UINT32             m_uiCurConnId; ///<上次分配的连接ID
     CwxMutexLock           m_connMapMutex;///<m_connMap的锁，本身m_lock就可以保护，但为了提高getNextConnId()，其受双锁保护
-    hash_map<CWX_UINT32/*conn id*/, int/*连接对象*/> m_connMap; ///<基于Conn id的连接Map
+    hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*连接对象*/> m_connMap; ///<基于Conn id的连接Map
     CwxAppNoticePipe*       m_pNoticePipe;
     ///引擎的资源
     CwxAppEpoll*            m_engine; ///<epoll的engine

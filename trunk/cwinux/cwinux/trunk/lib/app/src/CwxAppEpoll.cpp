@@ -17,6 +17,7 @@ CwxAppEpoll::CwxAppEpoll()
     memset(m_arrSignals, 0x00, sizeof(m_arrSignals));
     memset(m_sHandler, 0x00, sizeof(m_sHandler));
     m_sigHandler = new SignalHanlder();
+    m_bStop = false;
 }
 
 CwxAppEpoll::~CwxAppEpoll()
@@ -423,13 +424,14 @@ int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg)
         tv = (int)(ullTimeout - ullNow);
         if (tv < 1) tv = 1;
     }
-
+    m_bStop = false;
     num = epoll_wait(m_epfd, m_events, CWX_APP_MAX_IO_NUM, tv);
     if (num > 0)
     {
         for (i = 0; i < num; i++)
         {
             int mask = 0;
+            if (m_bStop) return 0;
             event = m_events[i];
             if (m_signalFd[0] == event->data.fd)
             {
@@ -466,6 +468,7 @@ int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg)
     //¼ì²âsignal
     if (m_bSignal)
     {
+        if (m_bStop) return 0;
         m_bSignal = 0;
         for (i=0; i<CWX_APP_MAX_SIGNAL_ID; i++)
         {
@@ -484,6 +487,7 @@ int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg)
     {
         while (m_timeHeap.top()->getTimeout() < ullNow)
         {
+            if (m_bStop) return 0;
             if (m_timeHeap.top()->getHandle() != CWX_INVALID_HANDLE)
             {
                 handler = removeHandler(m_timeHeap.top()->getHandle());

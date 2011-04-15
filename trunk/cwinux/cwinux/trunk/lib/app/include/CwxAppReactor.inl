@@ -185,16 +185,16 @@ inline int CwxAppReactor::resumeHandlerByConnId (CWX_UINT32 uiConnId,
 }
 
 ///从Conn map删除指定的Handler，此时，连接必须没有注册。
-inline void CwxAppReactor::removeFromConnMap(CWX_UINT32 uiConnId)
+inline CwxAppHandler4Base* CwxAppReactor::removeFromConnMap(CWX_UINT32 uiConnId)
 {
     CwxMutexGuard<CwxMutexLock> lock(&m_connMapMutex);
-    hash_map<CWX_UINT32/*conn id*/, int/*连接*/>::iterator iter = m_connMap.find(uiConnId);
+    hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*连接*/>::iterator iter = m_connMap.find(uiConnId);
     if (iter == m_connMap.end())
     {
         CWX_DEBUG(("ConnId[%u]'s handler doesn't exist in conn-map", uiConnId));
-        return ;
+        return NULL ;
     }
-    CwxAppHandler4Base* handler = (*m_engine).m_eHandler[iter->second].m_handler;
+    CwxAppHandler4Base* handler = iter->second;
     if (handler)
     {
         CWX_ERROR(("ConnId[%u]'s handler[%d] is in register state, can't remove from conn-map",
@@ -203,6 +203,7 @@ inline void CwxAppReactor::removeFromConnMap(CWX_UINT32 uiConnId)
         return NULL;
     }
     m_connMap.erase(iter);
+    return handler;
 }
 
 ///注册signal事件处理handle
@@ -356,7 +357,7 @@ inline CwxAppHandler4Base* CwxAppReactor::getHandlerByConnId(CWX_UINT32 uiConnId
         CwxMutexGuard<CwxMutexLock> lock(&m_connMapMutex);
         hash_map<CWX_UINT32, int>::iterator iter = m_connMap.find(uiConnId);
         if (iter != m_connMap.end()) return NULL;
-        return (*m_engine).m_eHandler[iter->second].m_handler;
+        return m_engine->m_eHandler[iter->second].m_handler;
     }
 }
 
@@ -408,7 +409,7 @@ inline int CwxAppReactor::_registerHandler (CWX_HANDLE io_handle,
         return -1;
     }
     if ((CWX_APP_INVALID_CONN_ID != uiConnId) 
-        && !enableRegConnMap(uiConnId, event_handler->getHandle()))
+        && !enableRegConnMap(uiConnId, event_handler))
     {
         CWX_ERROR(("Conn handler with conn_id[%u] exists.", uiConnId));
         return -1;
@@ -425,7 +426,7 @@ inline int CwxAppReactor::_registerHandler (CWX_HANDLE io_handle,
     {
         if (uiConnId != CWX_APP_INVALID_CONN_ID)
         {
-            addRegConnMap(uiConnId, io_handle);
+            addRegConnMap(uiConnId, event_handler);
             m_connId[io_handle] = uiConnId;
         }
     }
@@ -442,40 +443,12 @@ inline int CwxAppReactor::_registerHandler (CWX_HANDLE io_handle,
 ///删除io事件处理handle
 inline int CwxAppReactor::_removeHandler (CwxAppHandler4Base *event_handler, bool bRemoveConnId)
 {
-    if (!_isRegIoHandle(event_handler))
-    {
-        CWX_ERROR(("event handle[%d] doesn't exist", (int)event_handler->getHandle()));
-        return -1;
-    }
-
-    if (event_handler->getRegType() != REG_TYPE_IO)
-    {
-        CWX_ERROR(("event handle[%d] isn't io handle, it's [%d]",
-            (int)event_handler->getHandle(),
-            event_handler->getType()));
-        return -1;
-    }
-    int ret = (event_handler == m_engine->removeHandler(event_handler->getHandle()))?0:-1;
-
-    if (bRemoveConnId && 
-        (m_connId[event_handler->getHandle()] != CWX_APP_INVALID_CONN_ID))
-    {
-        removeRegConnMap(m_connId[event_handler->getHandle()]);
-    }
-    if (0 != ret)
-    {
-        CWX_ERROR(("Failure to remove handler from event-base, handle[%d], errno=%d clear it.",
-            (int)event_handler->getHandle(),
-            errno));
-    }
-    m_connId[event_handler->getHandle()] = CWX_APP_INVALID_CONN_ID;
-    return 0;
+    return _removeHandler(event_handler->getHandle(), bRemoveConnId)?0:-1;
 }
 
 ///注册IO事件处理handle
 inline int CwxAppReactor::_suspendHandler (CwxAppHandler4Base *event_handler, int suspend_mask)
 {
-    int new_mask = 0;
     int ret=0;
     if (!_isRegIoHandle(event_handler))
     {
@@ -489,32 +462,10 @@ inline int CwxAppReactor::_suspendHandler (CwxAppHandler4Base *event_handler, in
             event_handler->getType()));
         return -1;
     }
-
-    suspend_mask &= CwxAppHandler4Base::RW_MASK;
-    new_mask = event_handler->m_regMask&(~suspend_mask);
-    if (new_mask == event_handler->m_regMask) return 0;
-    if (event_handler->isReg())
-        ret = event_del(&event_handler->m_event);
+    ret = m_engine->suspendHandler(event_handler->getHandle(), suspend_mask);
     if (0 != ret)
     {
-        CWX_ERROR(("Failure to remove handle[%d] from event base, errno=%d",
-            (int)event_handler->getHandle(),
-            errno));
-        return -1;
-    }
-    event_handler->m_bReg = false;
-    event_handler->m_regMask = new_mask;
-    if (new_mask)
-    {
-        event_set(&event_handler->m_event, event_handler->getHandle(), new_mask, callback, event_handler);
-        event_base_set(m_eventBase, &event_handler->m_event);
-        ret = event_add(&event_handler->m_event, NULL);
-        if (0 == ret)
-        {
-            event_handler->m_bReg = true;
-            return 0;
-        }
-        CWX_ERROR(("Failure to add handle[%d] to event base, errno=%d",
+        CWX_ERROR(("Failure to suspend handle[%d], errno=%d",
             (int)event_handler->getHandle(),
             errno));
         return -1;
@@ -525,7 +476,6 @@ inline int CwxAppReactor::_suspendHandler (CwxAppHandler4Base *event_handler, in
 ///删除io事件处理handle
 inline int CwxAppReactor::_resumeHandler (CwxAppHandler4Base *event_handler, int resume_mask)
 {
-    int new_mask=0;
     int ret = 0;
     if (!_isRegIoHandle(event_handler))
     {
@@ -539,34 +489,11 @@ inline int CwxAppReactor::_resumeHandler (CwxAppHandler4Base *event_handler, int
             event_handler->getType()));
         return -1;
     }
-
-    resume_mask &= CwxAppHandler4Base::RW_MASK;
-    new_mask = event_handler->m_regMask|resume_mask;
-    if (new_mask == event_handler->m_regMask) return 0;
-    event_handler->m_regMask = new_mask;
-    if (event_handler->m_bReg)
+    
+    ret = m_engine->resumeHandler(event_handler->getHandle(), resume_mask);
+    if (0 != ret)
     {
-        ret = event_del(&event_handler->m_event);
-        event_handler->m_bReg = false;
-        if (0 != ret)
-        {
-            CWX_ERROR(("Failure to remove handle[%d] from event base, errno=%d",
-                (int)event_handler->getHandle(),
-                errno));
-            return -1;
-        }
-    }
-    event_handler->m_bReg = false;
-    if (new_mask){
-        event_set(&event_handler->m_event, event_handler->getHandle(), new_mask, callback, event_handler);
-        event_base_set(m_eventBase, &event_handler->m_event);
-        ret = event_add(&event_handler->m_event, NULL);
-        if (0 == ret)
-        {
-            event_handler->m_bReg = true;
-            return 0;
-        }
-        CWX_ERROR(("Failure to remove handle[%d] from event base, errno=%d",
+        CWX_ERROR(("Failure to resume handle[%d] from event base, errno=%d",
             (int)event_handler->getHandle(),
             errno));
         return -1;
@@ -585,13 +512,19 @@ inline CwxAppHandler4Base* CwxAppReactor::_removeHandler (CWX_HANDLE handle, boo
             CWX_APP_MAX_IO_NUM));
         return NULL;
     }
-    CwxAppHandler4Base* handler=m_ioHandler[handle].m_pHandler;
+    CwxAppHandler4Base* handler= m_engine->removeHandler(handle);
     if (!handler)
     {
         CWX_DEBUG(("Handle[%d] doesn't exist", (int)handle));
         return NULL;
     }
-    _removeHandler(handler, bRemoveConnId);
+    if (bRemoveConnId && 
+        (m_connId[handle)] != CWX_APP_INVALID_CONN_ID))
+    {
+        removeRegConnMap(m_connId[handle]);
+    }
+    m_connId[handle] = CWX_APP_INVALID_CONN_ID;
+
     return handler;
 }
 
@@ -606,13 +539,7 @@ inline int CwxAppReactor::_suspendHandler (CWX_HANDLE handle,
             CWX_APP_MAX_IO_NUM));
         return -1;
     }
-    CwxAppHandler4Base* handler=m_ioHandler[handle].m_pHandler;
-    if (!handler)
-    {
-        CWX_DEBUG(("Handle[%d] doesn't exist", (int)handle));
-        return -1;
-    }
-    return  _suspendHandler(handler, suspend_mask);
+    return m_engine->suspendHandler(handle, suspend_mask);
 }
 
 ///resume io事件处理handle。
@@ -626,13 +553,7 @@ inline int CwxAppReactor::_resumeHandler (CWX_HANDLE handle,
             CWX_APP_MAX_IO_NUM));
         return -1;
     }
-    CwxAppHandler4Base* handler=m_ioHandler[handle].m_pHandler;
-    if (!handler)
-    {
-        CWX_DEBUG(("Handle[%d] doesn't exist", (int)handle));
-        return -1;
-    }
-    return _resumeHandler(handler, resume_mask);
+    return m_engine->resumeHandler(handle, resume_mask);
 }
 
 ///删除io事件处理handle。
@@ -649,6 +570,7 @@ inline CwxAppHandler4Base* CwxAppReactor::_removeHandlerByConnId (CWX_UINT32 uiC
     _removeHandler(handler, bRemoveConnId);
     return handler;
 }
+
 ///suspend io事件处理handle。
 inline int CwxAppReactor::_suspendHandlerByConnId (CWX_UINT32 uiConnId,
                              int suspend_mask)
@@ -662,6 +584,7 @@ inline int CwxAppReactor::_suspendHandlerByConnId (CWX_UINT32 uiConnId,
     CwxAppHandler4Base* handler = iter->second;
     return _suspendHandler(handler, suspend_mask);
 }
+
 /// resume io事件处理handle。
 inline int CwxAppReactor::_resumeHandlerByConnId (CWX_UINT32 uiConnId,
                             int resume_mask)
@@ -683,45 +606,28 @@ inline int CwxAppReactor::_registerSignal(int signum,
                                   )
 {
     CWX_ASSERT(!event_handler->m_bReg);
-    if (event_handler->m_bReg)
-    {
-        CWX_ERROR(("Sig[%d] has been registered", signum));
-        return -1;
-    }
     if (_isRegSigHandle(signum))
     {
         CWX_ERROR(("Sig[%d] has been registered", signum));
         return -1;
     }
     event_handler->setRegType(REG_TYPE_SIG);
-
-    int mask = CwxAppHandler4Base::SIGNAL_MASK;
-    CWX_SET_ATTR(mask, CwxAppHandler4Base::PERSIST_MASK);
-    event_handler->m_regMask = mask;
     event_handler->setHandle(signum);
-    event_set(&event_handler->m_event, signum, mask, callback, event_handler);
-    event_base_set(m_eventBase, &event_handler->m_event);
-    int ret = event_add(&event_handler->m_event, NULL);
-    if (0 == ret)
+    int ret = m_engine->registerSignal(signum, event_handler);
+    if (0 != ret)
     {
-        event_handler->m_bReg = true;
-        m_arrSignals[signum] = event_handler;
-        return 0;
+        CWX_ERROR(("Failure to register Sig[%d] handler to event base, errno=%d",
+            signum,
+            errno));
+        return -1;
     }
-    CWX_ERROR(("Failure to register Sig[%d] handler to event base, errno=%d",
-        signum,
-        errno));
-    return -1;
+    return 0;
 }
+
 ///删除signal事件处理handle
 inline int CwxAppReactor::_removeSignal(CwxAppHandler4Base *event_handler)
 {
     int signum = event_handler->getHandle();
-    if (!event_handler->m_bReg)
-    {
-        CWX_DEBUG(("Sig[%d] doesn't registered", signum));
-        return 0;
-    }
     if (!_isRegSigHandle(signum))
     {
         CWX_DEBUG(("Sig[%d] doesn't registered", signum));
@@ -734,11 +640,7 @@ inline int CwxAppReactor::_removeSignal(CwxAppHandler4Base *event_handler)
             event_handler->getType()));
         return -1;
     }
-
-    int ret = event_del(&event_handler->m_event);
-    event_handler->m_bReg = false;
-    m_arrSignals[signum] = NULL;
-    if (-1 == ret)
+    if (!m_engine->removeSignal(event_handler->getHandle()))
     {
         CWX_ERROR(("Failure to remvoe signal[%d] handle from event-base, errno=%d", 
             event_handler->getHandle(),
@@ -757,22 +659,7 @@ inline CwxAppHandler4Base* CwxAppReactor::_removeSignal(int sig)
             CWX_APP_MAX_SIGNAL_ID));
         return NULL;
     }
-    CwxAppHandler4Base* handler = m_arrSignals[sig];
-    if (!handler)
-    {
-        CWX_DEBUG(("Sig[%d] doesn't register", sig));
-        return NULL;
-    }
-    int ret = event_del(&handler->m_event);
-    handler->m_bReg = false;
-    m_arrSignals[sig] = NULL;
-    if (0 != ret)
-    {
-        CWX_ERROR(("Failure to remvoe signal[%d] handle from event-base, errno=%d", 
-            sig,
-            errno));
-    }
-    return handler;
+    return removeSignal(sig);
 }
 
 
@@ -780,62 +667,21 @@ inline CwxAppHandler4Base* CwxAppReactor::_removeSignal(int sig)
 inline int CwxAppReactor::_scheduleTimer (CwxAppHandler4Base *event_handler,
                                    CwxTimeValue const&interval)
 {
-    struct timeval tv;
-    CWX_ASSERT(!event_handler->m_bReg);
-    if (event_handler->m_bReg)
+    int ret = m_engine->scheduleTimer(event_handler, interval);
+    if (0 != ret)
     {
-        CWX_ERROR(("timer handler has been registered"));
+        CWX_ERROR(("Failure to register timer handler to event base, errno=%d",
+            errno));
         return -1;
     }
-    if (m_timeouts.find(event_handler) != m_timeouts.end())
-    {
-        CWX_ERROR(("timer handler has been registered"));
-        return -1;
-    }
-    event_handler->setRegType(REG_TYPE_TIMEOUT);
-
-    event_handler->setHandle(-1);
-    event_handler->m_regMask = CwxAppHandler4Base::TIMEOUT_MASK;
-    evtimer_set(&event_handler->m_event, callback, event_handler);
-    event_base_set(m_eventBase, &event_handler->m_event);
-    tv.tv_sec = interval.sec();
-    tv.tv_usec = interval.usec();
-    int ret = event_add(&event_handler->m_event, &tv);
-    if (0 == ret)
-    {
-        event_handler->m_bReg = true;
-        m_timeouts.insert(event_handler);
-        return 0;
-    }
-    CWX_ERROR(("Failure to register timer handler to event base, errno=%d",
-        errno));
-    return -1;
+    return 0;
 
 }
 ///取消定时处理handle
 inline int CwxAppReactor::_cancelTimer (CwxAppHandler4Base *event_handler)
 {
-    if (!event_handler->m_bReg)
-    {
-        CWX_DEBUG(("timer handler doesn't registered"));
-        return 0;
-    }
-    if (m_timeouts.find(event_handler) == m_timeouts.end())
-    {
-        CWX_DEBUG(("timer handler doesn't registered"));
-        return 0;
-    }
-    if (event_handler->getRegType() != REG_TYPE_TIMEOUT)
-    {
-        CWX_ERROR(("Handler with handle[%d] is not timer handler, it's type[%d]",
-            (int)event_handler->getHandle(),
-            event_handler->getType()));
-        return -1;
-    }
 
-    int ret = event_del(&event_handler->m_event);
-    event_handler->m_bReg = false;
-    m_timeouts.erase(event_handler);
+    int ret = m_engine->cancelTimer(event_handler);
     if (-1 == ret)
     {
         CWX_ERROR(("Failure to remvoe timer handle from event-base, errno=%d", 
@@ -848,13 +694,13 @@ inline int CwxAppReactor::_cancelTimer (CwxAppHandler4Base *event_handler)
 inline bool CwxAppReactor::_isRegIoHandle(CWX_HANDLE handle)
 {
     if (handle >= CWX_APP_MAX_IO_NUM) return true;
-    return (*m_engine).m_eHandler[handle].m_handler != NULL;
+    return m_engine->m_eHandler[handle].m_handler != NULL;
 }
 
 inline bool CwxAppReactor::_isRegIoHandle(CwxAppHandler4Base* handler)
 {
     if (handler->getHandle() >= CWX_APP_MAX_IO_NUM) return true;
-    return (*m_engine).m_eHandler[handler->getHandle()]->m_handler == handler;
+    return m_engine->m_eHandler[handler->getHandle()]->m_handler == handler;
 }
 
 
@@ -864,7 +710,6 @@ inline bool CwxAppReactor::_isRegIoHandle(CwxAppHandler4Base* handler)
 */
 inline int CwxAppReactor::_stop()
 {
-    event_base_loopbreak(m_eventBase);
     m_bStop = true;
     return 0;
 }
@@ -878,7 +723,7 @@ inline int CwxAppReactor::_stop()
 inline CwxAppHandler4Base* CwxAppReactor::_getIoHandler(CWX_HANDLE handle)
 {
     if (handle >= CWX_APP_MAX_IO_NUM) return NULL;
-    return m_ioHandler[handle].m_pHandler;
+    return m_engine->m_eHandler[handle].m_handler;
 }
 /**
 @brief 检查指定sig的handle是否已经注册。
@@ -887,7 +732,7 @@ inline CwxAppHandler4Base* CwxAppReactor::_getIoHandler(CWX_HANDLE handle)
 inline bool CwxAppReactor::_isRegSigHandle(int sig)
 {
     if (sig > CWX_APP_MAX_SIGNAL_ID) return false;
-    return m_arrSignals[sig] != NULL;
+    return m_engine->m_sHandler[sig] != NULL;
 }
 /**
 @brief 检查指定IO的handle是否已经注册。
@@ -896,7 +741,7 @@ inline bool CwxAppReactor::_isRegSigHandle(int sig)
 inline bool CwxAppReactor::_isRegSigHandle(CwxAppHandler4Base* handler)
 {
     if (handler->getHandle() > CWX_APP_MAX_SIGNAL_ID) return false;
-    return m_arrSignals[handler->getHandle()] == handler;
+    return m_engine->m_sHandler[handler->getHandle()] == handler;
 }
 /**
 @brief 获取指定sig对应的event handler。
@@ -905,21 +750,21 @@ inline bool CwxAppReactor::_isRegSigHandle(CwxAppHandler4Base* handler)
 inline CwxAppHandler4Base* CwxAppReactor::_getSigHandler(int sig)
 {
     if (sig > CWX_APP_MAX_SIGNAL_ID) return NULL;
-    return m_arrSignals[sig];
+    return m_engine->m_sHandler[sig];
 
 }
 
 
-inline bool CwxAppReactor::enableRegConnMap(CWX_UINT32 uiConnId, int handle)
+inline bool CwxAppReactor::enableRegConnMap(CWX_UINT32 uiConnId, CwxAppHandler4Base* handler)
 {
     CWX_ASSERT(uiConnId != CWX_APP_INVALID_CONN_ID);
     {
         CwxMutexGuard<CwxMutexLock> lock(&m_connMapMutex);
-        hash_map<CWX_UINT32/*conn id*/, int/*连接*/>::iterator iter = m_connMap.find(uiConnId);
-        return ((iter==m_connMap.end())||(iter->second == handle))?true:false;
+        hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*连接*/>::iterator iter = m_connMap.find(uiConnId);
+        return ((iter==m_connMap.end())||(iter->second == handler))?true:false;
     }
 }
-inline void CwxAppReactor::addRegConnMap(CWX_UINT32 uiConnId, int handle)
+inline void CwxAppReactor::addRegConnMap(CWX_UINT32 uiConnId, CwxAppHandler4Base* handler)
 {
     CWX_ASSERT(uiConnId != CWX_APP_INVALID_CONN_ID);
     {
@@ -928,10 +773,17 @@ inline void CwxAppReactor::addRegConnMap(CWX_UINT32 uiConnId, int handle)
     }
 }
 
-inline void CwxAppReactor::removeRegConnMap(CWX_UINT32 uiConnId)
+inline CwxAppHandler4Base* CwxAppReactor::removeRegConnMap(CWX_UINT32 uiConnId)
 {
     CwxMutexGuard<CwxMutexLock> lock(&m_connMapMutex);
-    m_connMap.erase(uiConnId);
+    CwxAppHandler4Base* handler = NULL;
+    hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*连接对象*/>::iterator iter = m_connMap.find(uiConnId);
+    if (iter != m_connMap.end())
+    {
+        handler = iter->second;
+        m_connMap.erase(iter);
+    }
+    return handler;
 }
 
 

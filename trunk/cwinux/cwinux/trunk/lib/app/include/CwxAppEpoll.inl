@@ -63,5 +63,10 @@ inline int CwxAppEpoll::delEvent(int fd, int mask)
     return 0;
 }
 
+inline void CwxAppEpoll::stop()
+{
+    m_bStop = true;
+}
+
 
 CWINUX_END_NAMESPACE

@@ -127,6 +127,8 @@ public:
     @return -1：失败；0：成功
     */
     int poll(REACTOR_CALLBACK callback, void* arg);
+    ///停止运行
+    void stop();
 private:
     ///获取下一个的epoll的超时时间
     void timeout(CWX_UINT64& ullTime);
@@ -179,6 +181,7 @@ private:
     CwxAppHandler4Base*             m_sHandler[CWX_APP_MAX_SIGNAL_ID + 1];///<signal handler的数组
     CwxMinHeap<CwxAppHandler4Base>  m_timeHeap; ///<时间堆
     SignalHanlder*                  m_sigHandler; ///<读取signal事件的handle
+    bool                            m_bStop; ///<是否停止
 };
 
 
