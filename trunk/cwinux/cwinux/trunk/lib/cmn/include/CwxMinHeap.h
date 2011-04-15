@@ -66,7 +66,7 @@ public:
     */
     CwxMinHeap(CWX_UINT32 num, CMP const& cmp=less<TYPE>()):m_cmp(cmp)
     {
-        m_uiAll = 0;
+        m_uiAll = num;
         m_uiCount = 0;
         m_pElement = NULL;
     }
@@ -83,9 +83,8 @@ public:
     int init()
     {
         if (m_pElement) delete [] m_pElement;
-        m_uiAll = 0;
         m_uiCount = 0;
-        m_pElement = NULL;
+        m_pElement = new TYPE*[m_uiAll];
         return 0;
     }
     /**

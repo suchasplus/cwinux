@@ -100,6 +100,11 @@ int CwxAppEpoll::init()
         CWX_ERROR(("Failure to set signal handle[1]'s noblock sign, errno=%d", errno));
         return -1;
     }
+    if (0 != m_timeHeap.init())
+    {
+        CWX_ERROR(("Failure to init time heap"));
+        return -1;
+    }
     //×¢²áÐÅºÅfdµÄ¶Á
     if (0 != registerHandler(m_signalFd[0], m_sigHandler, CwxAppHandler4Base::PREAD_MASK))
     {
