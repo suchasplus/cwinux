@@ -28,7 +28,8 @@ libcwxapp_la_SOURCES = \
 	CwxAppProcessMgr.cpp\
 	CwxAppHandler4IoMsg.cpp\
 	CwxAppHandler4Time.cpp\
-	CwxAppReactor.cpp
+	CwxAppReactor.cpp\
+        CwxAppEpoll.cpp
 
 libcwxapp_la_LDFLAGS = 
 
@@ -48,6 +49,8 @@ cwxappinclude_HEADERS=\
 	../include/CwxAppHandler4Msg.inl\
 	../include/CwxAppListenMgr.h\
 	../include/CwxAppConnInfo.h\
+        ../include/CwxAppEpoll.h\
+        ../include/CwxAppEpoll.inl\
 	../include/CwxAppHandler4Notice.h\
 	../include/CwxAppConnInfo.inl\
 	../include/CwxAppHandler4Signal.h\
