@@ -86,7 +86,6 @@ int CwxAppReactor::close()
         delete m_pNoticePipe;
         m_pNoticePipe = NULL;
     }
-    int i =0;
     m_uiCurConnId = 0;
     m_connMap.clear();
     if (m_engine) delete m_engine;
@@ -126,7 +125,7 @@ int CwxAppReactor::run(CwxAppHandler4Base* noticeHandler,
         {
             ///´øËøÖ´ÐÐevent-loop
             CwxMutexGuard<CwxMutexLock> lock(&m_lock);
-            ret = m_engine->poll();
+            ret = m_engine->poll(CwxAppReactor::callback, this);
         }
         if (m_bStop)
         {
@@ -195,7 +194,7 @@ void CwxAppReactor::callback(CwxAppHandler4Base* handler, int mask, bool bPersis
     int ret = handler->handle_event(mask, handler->getHandle());
     if (-1 == ret)
     {
-        handler->close(fd);
+        handler->close(handler->getHandle());
     }
 }
 
