@@ -421,7 +421,7 @@ int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg)
         tv = -1;
     }else
     {
-        tv = (int)(ullTimeout - ullNow);
+        tv = (int)(ullTimeout - ullNow)/1000;
         if (tv < 1) tv = 1;
     }
     m_bStop = false;
