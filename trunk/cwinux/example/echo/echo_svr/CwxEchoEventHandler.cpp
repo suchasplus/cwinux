@@ -2,7 +2,7 @@
 #include "CwxEchoApp.h"
 
 ///echo请求的处理函数
-int CwxEchoEventHandler::onRecvMsg(CwxMsgBlock*& msg, CwxAppTss* )
+int CwxEchoEventHandler::onRecvMsg(CwxMsgBlock*& msg, CwxTss* )
 {
     ///设置echo回复的消息类型，为请求的消息类型+1
     msg->event().getMsgHeader().setMsgType(msg->event().getMsgHeader().getMsgType() + 1);

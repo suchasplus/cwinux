@@ -4,13 +4,13 @@
 版权声明：
     本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html）
 */
-#include "CwxAppCommander.h"
+#include "CwxCommander.h"
 
 CWINUX_USING_NAMESPACE
 
 class CwxEchoApp;
 ///echo请求的处理handle，为command的handle
-class CwxEchoEventHandler : public CwxAppCmdOp 
+class CwxEchoEventHandler : public CwxCmdOp 
 {
 public:
     ///构造函数
@@ -26,7 +26,7 @@ public:
 public:
     ///收到echo请求的处理函数
     virtual int onRecvMsg(CwxMsgBlock*& msg,///<echo数据包及相关的请求连接信息
-                            CwxAppTss* pThrEnv///<处理线程的thread-specific-store
+                            CwxTss* pThrEnv///<处理线程的thread-specific-store
                             );
 private:
     CwxEchoApp*     m_pApp;  ///<app对象
