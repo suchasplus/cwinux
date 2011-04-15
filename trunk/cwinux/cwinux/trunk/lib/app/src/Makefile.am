@@ -73,7 +73,7 @@ cwxappinclude_HEADERS=\
 	../include/CwxAppHandler4UnixConn.h
 
 	
-INCLUDES=-I@libevent_dir@/include -I$(srcdir)/../include -I$(srcdir)/../../cmn/include -I$(srcdir)/../../net/include
+INCLUDES=-I$(srcdir)/../include -I$(srcdir)/../../cmn/include -I$(srcdir)/../../net/include
 
 doc:
 	doxygen ../doc/app.dxyg

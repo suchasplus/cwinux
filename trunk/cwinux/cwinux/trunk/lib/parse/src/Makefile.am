@@ -7,11 +7,9 @@ lib_LTLIBRARIES = libcwxparse.la
 libcwxparse_la_CPPFLAGS = -W -Wall
 
 libcwxparse_la_SOURCES = \
-	CwxHtmlTmplCmp.cpp\
 	CwxJsonParser.cpp\
 	CwxXmlFileConfigParser.cpp\
 	CwxXmlPackageConv.cpp\
-	CwxHtmlTmpl.cpp\
 	CwxXmlConfigParser.cpp\
 	CwxXmlFileParser.cpp\
 	CwxXmlParser.cpp
@@ -20,14 +18,10 @@ libcwxparse_la_LDFLAGS =
 
 cwxparseincludedir=$(prefix)/include/parse
 cwxparseinclude_HEADERS=\
-	../include/CwxHtmlTmplCmp.h\
-	../include/CwxHtmlTmpl.h\
 	../include/CwxJsonParser.h\
 	../include/CwxParseMacro.h\
 	../include/CwxXmlFileConfigParser.h\
 	../include/CwxXmlPackageConv.h\
-	../include/CwxHtmlTmplEscape.h\
-	../include/CwxHtmlTmplLoop.h\
 	../include/CwxXmlTreeNode.h\
 	../include/CwxXmlConfigParser.h\
 	../include/CwxXmlFileParser.h\

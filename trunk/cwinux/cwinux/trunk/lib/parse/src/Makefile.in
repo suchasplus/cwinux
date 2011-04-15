@@ -57,11 +57,9 @@ am__installdirs = "$(DESTDIR)$(libdir)" \
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libcwxparse_la_LIBADD =
-am_libcwxparse_la_OBJECTS = libcwxparse_la-CwxHtmlTmplCmp.lo \
-	libcwxparse_la-CwxJsonParser.lo \
+am_libcwxparse_la_OBJECTS = libcwxparse_la-CwxJsonParser.lo \
 	libcwxparse_la-CwxXmlFileConfigParser.lo \
 	libcwxparse_la-CwxXmlPackageConv.lo \
-	libcwxparse_la-CwxHtmlTmpl.lo \
 	libcwxparse_la-CwxXmlConfigParser.lo \
 	libcwxparse_la-CwxXmlFileParser.lo \
 	libcwxparse_la-CwxXmlParser.lo
@@ -170,7 +168,6 @@ includedir =
 infodir = @infodir@
 install_sh = @install_sh@
 libdir = @libdir@
-libevent_dir = @libevent_dir@
 libexecdir = @libexecdir@
 localstatedir = @localstatedir@
 mandir = @mandir@
@@ -187,11 +184,9 @@ pkgconfigdir =
 lib_LTLIBRARIES = libcwxparse.la
 libcwxparse_la_CPPFLAGS = -W -Wall
 libcwxparse_la_SOURCES = \
-	CwxHtmlTmplCmp.cpp\
 	CwxJsonParser.cpp\
 	CwxXmlFileConfigParser.cpp\
 	CwxXmlPackageConv.cpp\
-	CwxHtmlTmpl.cpp\
 	CwxXmlConfigParser.cpp\
 	CwxXmlFileParser.cpp\
 	CwxXmlParser.cpp
@@ -199,14 +194,10 @@ libcwxparse_la_SOURCES = \
 libcwxparse_la_LDFLAGS = 
 cwxparseincludedir = $(prefix)/include/parse
 cwxparseinclude_HEADERS = \
-	../include/CwxHtmlTmplCmp.h\
-	../include/CwxHtmlTmpl.h\
 	../include/CwxJsonParser.h\
 	../include/CwxParseMacro.h\
 	../include/CwxXmlFileConfigParser.h\
 	../include/CwxXmlPackageConv.h\
-	../include/CwxHtmlTmplEscape.h\
-	../include/CwxHtmlTmplLoop.h\
 	../include/CwxXmlTreeNode.h\
 	../include/CwxXmlConfigParser.h\
 	../include/CwxXmlFileParser.h\
@@ -282,8 +273,6 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxparse_la-CwxHtmlTmpl.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxparse_la-CwxHtmlTmplCmp.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxparse_la-CwxJsonParser.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxparse_la-CwxXmlConfigParser.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxparse_la-CwxXmlFileConfigParser.Plo@am__quote@
@@ -312,13 +301,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LTCXXCOMPILE) -c -o $@ $<
 
-libcwxparse_la-CwxHtmlTmplCmp.lo: CwxHtmlTmplCmp.cpp
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxparse_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwxparse_la-CwxHtmlTmplCmp.lo -MD -MP -MF "$(DEPDIR)/libcwxparse_la-CwxHtmlTmplCmp.Tpo" -c -o libcwxparse_la-CwxHtmlTmplCmp.lo `test -f 'CwxHtmlTmplCmp.cpp' || echo '$(srcdir)/'`CwxHtmlTmplCmp.cpp; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/libcwxparse_la-CwxHtmlTmplCmp.Tpo" "$(DEPDIR)/libcwxparse_la-CwxHtmlTmplCmp.Plo"; else rm -f "$(DEPDIR)/libcwxparse_la-CwxHtmlTmplCmp.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxHtmlTmplCmp.cpp' object='libcwxparse_la-CwxHtmlTmplCmp.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxparse_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxparse_la-CwxHtmlTmplCmp.lo `test -f 'CwxHtmlTmplCmp.cpp' || echo '$(srcdir)/'`CwxHtmlTmplCmp.cpp
-
 libcwxparse_la-CwxJsonParser.lo: CwxJsonParser.cpp
 @am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxparse_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwxparse_la-CwxJsonParser.lo -MD -MP -MF "$(DEPDIR)/libcwxparse_la-CwxJsonParser.Tpo" -c -o libcwxparse_la-CwxJsonParser.lo `test -f 'CwxJsonParser.cpp' || echo '$(srcdir)/'`CwxJsonParser.cpp; \
 @am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/libcwxparse_la-CwxJsonParser.Tpo" "$(DEPDIR)/libcwxparse_la-CwxJsonParser.Plo"; else rm -f "$(DEPDIR)/libcwxparse_la-CwxJsonParser.Tpo"; exit 1; fi
@@ -339,13 +321,6 @@ libcwxparse_la-CwxXmlPackageConv.lo: CwxXmlPackageConv.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxXmlPackageConv.cpp' object='libcwxparse_la-CwxXmlPackageConv.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxparse_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxparse_la-CwxXmlPackageConv.lo `test -f 'CwxXmlPackageConv.cpp' || echo '$(srcdir)/'`CwxXmlPackageConv.cpp
-
-libcwxparse_la-CwxHtmlTmpl.lo: CwxHtmlTmpl.cpp
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxparse_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwxparse_la-CwxHtmlTmpl.lo -MD -MP -MF "$(DEPDIR)/libcwxparse_la-CwxHtmlTmpl.Tpo" -c -o libcwxparse_la-CwxHtmlTmpl.lo `test -f 'CwxHtmlTmpl.cpp' || echo '$(srcdir)/'`CwxHtmlTmpl.cpp; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/libcwxparse_la-CwxHtmlTmpl.Tpo" "$(DEPDIR)/libcwxparse_la-CwxHtmlTmpl.Plo"; else rm -f "$(DEPDIR)/libcwxparse_la-CwxHtmlTmpl.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxHtmlTmpl.cpp' object='libcwxparse_la-CwxHtmlTmpl.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxparse_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxparse_la-CwxHtmlTmpl.lo `test -f 'CwxHtmlTmpl.cpp' || echo '$(srcdir)/'`CwxHtmlTmpl.cpp
 
 libcwxparse_la-CwxXmlConfigParser.lo: CwxXmlConfigParser.cpp
 @am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxparse_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwxparse_la-CwxXmlConfigParser.lo -MD -MP -MF "$(DEPDIR)/libcwxparse_la-CwxXmlConfigParser.Tpo" -c -o libcwxparse_la-CwxXmlConfigParser.lo `test -f 'CwxXmlConfigParser.cpp' || echo '$(srcdir)/'`CwxXmlConfigParser.cpp; \

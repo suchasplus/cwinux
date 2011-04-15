@@ -78,7 +78,7 @@ am_libcwxapp_la_OBJECTS = libcwxapp_la-CwxAppConfig.lo \
 	libcwxapp_la-CwxAppProcessMgr.lo \
 	libcwxapp_la-CwxAppHandler4IoMsg.lo \
 	libcwxapp_la-CwxAppHandler4Time.lo \
-	libcwxapp_la-CwxAppReactor.lo
+	libcwxapp_la-CwxAppReactor.lo libcwxapp_la-CwxAppEpoll.lo
 libcwxapp_la_OBJECTS = $(am_libcwxapp_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -184,7 +184,6 @@ includedir =
 infodir = @infodir@
 install_sh = @install_sh@
 libdir = @libdir@
-libevent_dir = @libevent_dir@
 libexecdir = @libexecdir@
 localstatedir = @localstatedir@
 mandir = @mandir@
@@ -222,7 +221,8 @@ libcwxapp_la_SOURCES = \
 	CwxAppProcessMgr.cpp\
 	CwxAppHandler4IoMsg.cpp\
 	CwxAppHandler4Time.cpp\
-	CwxAppReactor.cpp
+	CwxAppReactor.cpp\
+        CwxAppEpoll.cpp
 
 libcwxapp_la_LDFLAGS = 
 cwxappincludedir = $(prefix)/include/app
@@ -241,6 +241,8 @@ cwxappinclude_HEADERS = \
 	../include/CwxAppHandler4Msg.inl\
 	../include/CwxAppListenMgr.h\
 	../include/CwxAppConnInfo.h\
+        ../include/CwxAppEpoll.h\
+        ../include/CwxAppEpoll.inl\
 	../include/CwxAppHandler4Notice.h\
 	../include/CwxAppConnInfo.inl\
 	../include/CwxAppHandler4Signal.h\
@@ -262,7 +264,7 @@ cwxappinclude_HEADERS = \
 	../include/CwxAppHandler4Base.inl\
 	../include/CwxAppHandler4UnixConn.h
 
-INCLUDES = -I@libevent_dir@/include -I$(srcdir)/../include -I$(srcdir)/../../cmn/include -I$(srcdir)/../../net/include
+INCLUDES = -I$(srcdir)/../include -I$(srcdir)/../../cmn/include -I$(srcdir)/../../net/include
 all: all-am
 
 .SUFFIXES:
@@ -334,6 +336,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxapp_la-CwxAppConfig.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxapp_la-CwxAppConnInfo.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxapp_la-CwxAppEpoll.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxapp_la-CwxAppFramework.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxapp_la-CwxAppHandler4Base.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxapp_la-CwxAppHandler4IoEvent.Plo@am__quote@
@@ -529,6 +532,13 @@ libcwxapp_la-CwxAppReactor.lo: CwxAppReactor.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxAppReactor.cpp' object='libcwxapp_la-CwxAppReactor.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxapp_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxapp_la-CwxAppReactor.lo `test -f 'CwxAppReactor.cpp' || echo '$(srcdir)/'`CwxAppReactor.cpp
+
+libcwxapp_la-CwxAppEpoll.lo: CwxAppEpoll.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxapp_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwxapp_la-CwxAppEpoll.lo -MD -MP -MF "$(DEPDIR)/libcwxapp_la-CwxAppEpoll.Tpo" -c -o libcwxapp_la-CwxAppEpoll.lo `test -f 'CwxAppEpoll.cpp' || echo '$(srcdir)/'`CwxAppEpoll.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/libcwxapp_la-CwxAppEpoll.Tpo" "$(DEPDIR)/libcwxapp_la-CwxAppEpoll.Plo"; else rm -f "$(DEPDIR)/libcwxapp_la-CwxAppEpoll.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxAppEpoll.cpp' object='libcwxapp_la-CwxAppEpoll.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxapp_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxapp_la-CwxAppEpoll.lo `test -f 'CwxAppEpoll.cpp' || echo '$(srcdir)/'`CwxAppEpoll.cpp
 
 mostlyclean-libtool:
 	-rm -f *.lo
