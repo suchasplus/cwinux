@@ -20,7 +20,7 @@ CwxThreadPoolEx::CwxThreadPoolEx(CWX_UINT16 unGroupId,///<线程池的thread-group
 ///析构函数
 CwxThreadPoolEx::~CwxThreadPoolEx()
 {
-    stop();
+//    stop();
     if (m_threadArr)
     {
         for (CWX_UINT16 i=0; i<getThreadNum(); i++)

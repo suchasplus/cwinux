@@ -24,7 +24,7 @@ CwxThreadPool::CwxThreadPool(CWX_UINT16 unGroupId,///<Ïß³Ì³ØµÄthread-group
 CwxThreadPool::~CwxThreadPool()
 {
     if (m_arrTssEnv) delete []m_arrTssEnv;
-    _stop();
+//    _stop();
     if (m_threadArr)
     {
         for (CWX_UINT16 i=0; i<getThreadNum(); i++)
@@ -106,13 +106,15 @@ int CwxThreadPool::unlock()
 
 void CwxThreadPool::_stop()
 {
-    if (m_msgQueue->isActivate()) 
-        m_msgQueue->deactivate();
-    for(CWX_UINT16 i=0; i<getThreadNum(); i++)
+    if (m_msgQueue->isActivate())
     {
-        if (m_threadArr[0])
+        m_msgQueue->deactivate();
+        for(CWX_UINT16 i=0; i<getThreadNum(); i++)
         {
-            m_threadArr[i]->stop();
+            if (m_threadArr[0])
+            {
+                m_threadArr[i]->stop();
+            }
         }
     }
     m_msgQueue->flush();
