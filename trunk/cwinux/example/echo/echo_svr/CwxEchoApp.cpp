@@ -81,8 +81,7 @@ int CwxEchoApp::initRunEnv(){
         return -1;
     }
     ///创建线程池对象，此线程池中线程的group-id为2，线程池的线程数量为m_config.m_unThreadNum。
-    m_threadPool = new CwxThreadPool(this,
-        2,
+    m_threadPool = new CwxThreadPool(2,
         m_config.m_unThreadNum,
         getThreadPoolMgr(),
         &getCommander());
