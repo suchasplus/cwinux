@@ -185,10 +185,8 @@ void CwxAppReactor::callback(CwxAppHandler4Base* handler, int mask, bool bPersis
         case REG_TYPE_IO:
             reactor->m_connId[handler->getHandle()] = CWX_APP_INVALID_CONN_ID;
             break;
-        case REG_TYPE_SIG:
-            break;
         default:
-            CWX_ASSERT(0);
+            break;
         }
     }
     int ret = handler->handle_event(mask, handler->getHandle());
