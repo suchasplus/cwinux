@@ -43,11 +43,11 @@ int CwxAppHandler4UnixConn::close(CWX_HANDLE )
         CWX_ERROR(("Failure to connect to unix-file:%s, errno=%d",
             m_strConnectPathFile.c_str(),
             getConnErrNo()));
-        if(isReg()) reactor()->removeHandler(this);
+        reactor()->removeHandler(this);
         break;
     case CwxAppConnInfo::TIMEOUT:
         szState = "TIMEOUT"; ///可能注册了timeout
-        if(isReg()) reactor()->cancelTimer(this);
+        reactor()->cancelTimer(this);
         break;
     case CwxAppConnInfo::ESTABLISHING:
         szState = "ESTABLISHING";///可能注册了消息收发

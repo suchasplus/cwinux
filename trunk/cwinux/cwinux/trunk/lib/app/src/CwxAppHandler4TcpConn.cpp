@@ -56,11 +56,11 @@ int CwxAppHandler4TcpConn::close(CWX_HANDLE )
                 m_strConnectAddr.c_str(),
                 m_unConnectPort,
                 getConnErrNo()));
-            if(isReg()) reactor()->removeHandler(this);
+            reactor()->removeHandler(this);
             break;
         case CwxAppConnInfo::TIMEOUT:
             szState = "TIMEOUT"; ///可能注册了timeout
-            if(isReg()) reactor()->cancelTimer(this);
+            reactor()->cancelTimer(this);
             break;
         case CwxAppConnInfo::ESTABLISHING:
             szState = "ESTABLISHING";///可能注册了消息收发
