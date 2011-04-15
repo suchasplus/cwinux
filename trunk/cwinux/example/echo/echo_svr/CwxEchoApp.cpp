@@ -94,7 +94,11 @@ int CwxEchoApp::initRunEnv(){
         return -1;
     }
     ///创建线程池对象，此线程池中线程的group-id为2，线程池的线程数量为m_config.m_unThreadNum。
-    m_threadPool = new CwxAppThreadPool(this, 2, m_config.m_unThreadNum);
+    m_threadPool = new CwxThreadPool(this,
+        2,
+        m_config.m_unThreadNum,
+        getThreadPoolMgr(),
+        &getCommander());
     ///启动线程，线程池中线程的线程栈大小为1M。
     if ( 0 != m_threadPool->start(NULL)){
         CWX_ERROR(("Failure to start thread pool"));
@@ -126,7 +130,7 @@ void CwxEchoApp::onSignal(int signum){
 }
 
 ///echo请求的请求消息
-int CwxEchoApp::onRecvMsg(CwxMsgBlock* msg, CwxAppHandler4Msg const& conn, CwxMsgHead const& header, bool& bSuspendConn){
+int CwxEchoApp::onRecvMsg(CwxMsgBlock* msg, CwxAppHandler4Msg& conn, CwxMsgHead const& header, bool& bSuspendConn){
 
     msg->event().setSvrId(conn.getConnInfo().getSvrId());
     msg->event().setHostId(conn.getConnInfo().getHostId());

@@ -33,7 +33,7 @@ public:
     virtual void onSignal(int signum);
     ///收到echo消息的响应函数
     virtual int onRecvMsg(CwxMsgBlock* msg,///<收到的echo请求数据包
-                        CwxAppHandler4Msg const& conn,///<收到echo请求的连接对象
+                        CwxAppHandler4Msg& conn,///<收到echo请求的连接对象
                         CwxMsgHead const& header, ///<收到echo请求的消息头
                         bool& bSuspendConn///<true：停止此连接继续接受稍息，false：此连接可以继续接受消息
                         );
@@ -43,7 +43,7 @@ protected:
     virtual void destroy();
 private:
     CwxEchoEventHandler*         m_eventHandler;///<echo请求处理的commander handle
-    CwxAppThreadPool*            m_threadPool;///<线程池对象
+    CwxThreadPool*               m_threadPool;///<线程池对象
     CwxEchoConfig               m_config;///<配置文件对象
 };
 #endif
