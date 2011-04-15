@@ -664,7 +664,7 @@ inline CwxAppHandler4Base* CwxAppReactor::_removeSignal(int sig)
             CWX_APP_MAX_SIGNAL_ID));
         return NULL;
     }
-    return removeSignal(sig);
+    return m_engine->removeSignal(sig);
 }
 
 
