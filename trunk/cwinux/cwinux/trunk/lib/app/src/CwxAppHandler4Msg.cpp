@@ -180,7 +180,8 @@ int CwxAppHandler4Msg::handle_output ()
             this->m_conn.setLastSendMsgTime(time(NULL));
             if (CWX_CHECK_ATTR(this->m_curSndingMsg->send_ctrl().getMsgAttr(), CwxMsgSendCtrl::FINISH_NOTICE)){
                 CWX_UINT32 uiResume = this->getApp()->onEndSendMsg(m_curSndingMsg, *this);
-                if ((CwxMsgSendCtrl::RESUME_CONN == uiResume) && !isReadMask())
+                if ((CwxMsgSendCtrl::RESUME_CONN == uiResume) &&
+                    !reactor()->isMask(getHandle(),CwxAppHandler4Base::READ_MASK))
                 {
                     if (0 != reactor()->resumeHandler(this, CwxAppHandler4Base::READ_MASK))
                     {
@@ -188,7 +189,8 @@ int CwxAppHandler4Msg::handle_output ()
                         return -1;
                     }
                 }
-                else if ((CwxMsgSendCtrl::SUSPEND_CONN == uiResume) && isReadMask())
+                else if ((CwxMsgSendCtrl::SUSPEND_CONN == uiResume) &&
+                    reactor()->isMask(getHandle(),CwxAppHandler4Base::READ_MASK))
                 {
                     if (0 != reactor()->suspendHandler(this, CwxAppHandler4Base::READ_MASK))
                     {
@@ -250,7 +252,7 @@ int CwxAppHandler4Msg::handle_input ()
     int result = 0;
     while(1)
     {
-        if (!isReadMask()) break;
+        if (!reactor()->isMask(getHandle(),CwxAppHandler4Base::READ_MASK)) break;
         if (this->m_conn.isRawData())
         {//recv raw data
             need_size = this->m_conn.getRawRecvLen();

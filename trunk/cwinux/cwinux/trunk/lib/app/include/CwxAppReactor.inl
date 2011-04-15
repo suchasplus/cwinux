@@ -394,6 +394,12 @@ inline void CwxAppReactor::getCurTime(CwxTimeValue& current)
     current.now();
 }
 
+///io handle是否设置指定的mask
+inline bool CwxAppReactor::isMask(CWX_HANDLE handle, int mask)
+{
+    return CWX_CHECK_ATTR(m_engine->m_eHandler[handle].m_mask, mask));
+}
+
 
 ///注册IO事件处理handle
 inline int CwxAppReactor::_registerHandler (CWX_HANDLE io_handle,
