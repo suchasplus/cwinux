@@ -64,12 +64,12 @@ inline void CwxAppHandler4Base::setTimeout(CWX_UINT64 ullTimeout)
     m_ullTimeout = ullTimeout;
 }
 ///获取heap中的index
-int CwxAppHandler4Base::index() const
+inline int CwxAppHandler4Base::index() const
 {
     return m_index;
 }
 ///设置heap中的index
-void CwxAppHandler4Base::index(int index)
+inline void CwxAppHandler4Base::index(int index)
 {
     m_index = index;
 }
