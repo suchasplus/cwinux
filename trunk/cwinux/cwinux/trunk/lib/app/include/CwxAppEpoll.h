@@ -25,7 +25,7 @@
 #include "CwxThread.h"
 #include "CwxLogger.h"
 #include "CwxMinHeap.h"
-#include "CwxIpcSap.h>
+#include "CwxIpcSap.h"
 #include <sys/epoll.h>
 #include <sys/socket.h>
 #include <unistd.h>
