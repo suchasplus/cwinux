@@ -197,7 +197,7 @@ inline CwxAppHandler4Base* CwxAppReactor::removeFromConnMap(CWX_UINT32 uiConnId)
     CwxAppHandler4Base* handler = iter->second;
     if (handler->getHandle() != CWX_INVALID_HANDLE)
     {
-        if (m_engine->m_eHandler[handler->getHandle()]->m_handler)
+        if (m_engine->m_eHandler[handler->getHandle()].m_handler)
         {
             CWX_ERROR(("ConnId[%u]'s handler[%d] is in register state, can't remove from conn-map",
                 uiConnId,
