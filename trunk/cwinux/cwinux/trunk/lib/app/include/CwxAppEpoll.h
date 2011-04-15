@@ -164,8 +164,8 @@ private:
         }
         ~SignalHanlder(){}
     public:
-        virtual int open (void *){ return 0};
-        virtual int handle_event(int event, CWX_HANDLE handle)
+        virtual int open (void *){ return 0;}
+        virtual int handle_event(int , CWX_HANDLE handle)
         {
             char sigBuf[64];
             recv(handle, sigBuf, sizeof(sigBuf), 0);

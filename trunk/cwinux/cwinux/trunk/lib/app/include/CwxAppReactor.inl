@@ -355,9 +355,9 @@ inline CwxAppHandler4Base* CwxAppReactor::getHandlerByConnId(CWX_UINT32 uiConnId
     }
     {
         CwxMutexGuard<CwxMutexLock> lock(&m_connMapMutex);
-        hash_map<CWX_UINT32, int>::iterator iter = m_connMap.find(uiConnId);
+        hash_map<CWX_UINT32, CwxAppHandler4Base*>::iterator iter = m_connMap.find(uiConnId);
         if (iter != m_connMap.end()) return NULL;
-        return m_engine->m_eHandler[iter->second].m_handler;
+        return iter->second;
     }
 }
 

@@ -3,7 +3,7 @@ CWINUX_BEGIN_NAMESPACE
 
 inline void CwxAppEpoll::timeout(CWX_UINT64& ullTime)
 {
-    CwxAppHandler4Base* handler = m_timeHeap.top();
+    CwxAppHandler4Base const* handler = m_timeHeap.top();
     if (!handler)
     {
         ullTime = 0;
@@ -37,11 +37,11 @@ inline int CwxAppEpoll::addEvent(int fd, int mask)
 ///删除存在的mask，mask为READ_MASK、WRITE_MASK的组合。
 inline int CwxAppEpoll::delEvent(int fd, int mask)
 {
-    if (mask & m_eHandler[fd].mask)
+    if (mask & m_eHandler[fd].m_mask)
     {
         int ret = 0;
         struct epoll_event event;
-        int mask = m_eHandler[fd].mask & (~mask);
+        int mask = m_eHandler[fd].m_mask & (~mask);
         event.events = 0;
         if (mask & CwxAppHandler4Base::READ_MASK) event.events |= EPOLLIN;
         if (mask & CwxAppHandler4Base::WRITE_MASK) event.events |= EPOLLOUT;
