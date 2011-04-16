@@ -110,6 +110,7 @@ int CwxAppReactor::run(REACTOR_EVENT_HOOK hook,
                        void* arg,
                        bool  bOnce)
 {
+
     int ret = 0;
     if (!m_bStop || !m_engine)
     {
