@@ -1,6 +1,6 @@
 #include "CwxMqApp.h"
 #include "CwxDate.h"
-
+#include "linux/tcp.h"
 ///构造函数
 CwxMqApp::CwxMqApp()
 {
@@ -39,7 +39,7 @@ int CwxMqApp::init(int argc, char** argv)
         return -1;
     }
     ///设置运行日志的输出level
-    setLogLevel(CwxAppLogger::LEVEL_ERROR|CwxAppLogger::LEVEL_INFO|CwxAppLogger::LEVEL_WARNING);
+    setLogLevel(CwxAppLogger::LEVEL_DEBUG|CwxAppLogger::LEVEL_ERROR|CwxAppLogger::LEVEL_INFO|CwxAppLogger::LEVEL_WARNING);
     return 0;
 }
 
@@ -82,25 +82,12 @@ int CwxMqApp::initRunEnv()
     this->setAppRunValid(false);
     ///设置服务信息
     this->setAppRunFailReason("Starting..............");
+    ///设置启动时间
+    CwxDate::getDateY4MDHMS2(time(NULL), m_strStartTime);
 
     //启动binlog管理器
     if (0 != startBinLogMgr()) return -1;
     CwxMqPoco::init(NULL);
-
-    //打开监听端口
-    if (m_config.getCommon().m_mgrListen.getHostName().length())
-    {
-        if (-1 == this->noticeMgrListen(m_config.getCommon().m_mgrListen.getHostName().c_str(),
-            m_config.getCommon().m_mgrListen.getPort(),
-            true,
-            new CwxMqMgrServer(this)))
-        {
-            CWX_ERROR(("Failure to open mgr listen, ip=%s, port=%u",
-                m_config.getCommon().m_mgrListen.getHostName().c_str(),
-                m_config.getCommon().m_mgrListen.getPort()));
-            return -1;
-        }
-    }
     
     if (m_config.getCommon().m_bMaster)
     {
@@ -180,93 +167,97 @@ void CwxMqApp::onSignal(int signum)
 ///连接建立
 int CwxMqApp::onConnCreated(CwxAppHandler4Msg& conn, bool& , bool& )
 {
-    CwxMsgBlock* pBlock = CwxMsgBlockAlloc::malloc(0);
-    pBlock->event().setSvrId(conn.getConnInfo().getSvrId());
-    pBlock->event().setHostId(conn.getConnInfo().getHostId());
-    pBlock->event().setConnId(conn.getConnInfo().getConnId());
-    ///设置事件类型
-    pBlock->event().setEvent(CwxEventInfo::CONN_CREATED);
-    ///将事件添加到消息队列
-    m_pWriteThreadPool->append(pBlock);
-    ///消息包连续发送数量
-    if (SVR_TYPE_ASYNC == conn.getConnInfo().getSvrId())
+    if (SVR_TYPE_MONITOR != conn.getConnInfo().getSvrId())
     {
-        int bufLen = 64 * 1024;
-        while(setsockopt(conn.getHandle(), SOL_SOCKET, SO_RCVBUF, (void *)&bufLen, sizeof(bufLen)) < 0)
+        CwxMsgBlock* pBlock = CwxMsgBlockAlloc::malloc(0);
+        pBlock->event().setSvrId(conn.getConnInfo().getSvrId());
+        pBlock->event().setHostId(conn.getConnInfo().getHostId());
+        pBlock->event().setConnId(conn.getConnInfo().getConnId());
+        ///设置事件类型
+        pBlock->event().setEvent(CwxEventInfo::CONN_CREATED);
+        ///将事件添加到消息队列
+        m_pWriteThreadPool->append(pBlock);
+        ///消息包连续发送数量
+        if (SVR_TYPE_ASYNC == conn.getConnInfo().getSvrId())
         {
-            bufLen -= 1024;
-            if (bufLen < 0) break;
+            conn.getConnInfo().setContinueSendNum(m_config.getCommon().m_uiDispatchWindowSize);
         }
-        bufLen = 1024 * 1024;
-        while (setsockopt(conn.getHandle(), SOL_SOCKET, SO_SNDBUF, (void*)&bufLen, sizeof( bufLen)) < 0)
+        else if (SVR_TYPE_MASTER == conn.getConnInfo().getSvrId())
         {
-            bufLen -= 1024;
-            if (bufLen < 0) break;
+            conn.getConnInfo().setContinueSendNum(m_config.getCommon().m_uiFromMasterWindowSize);
         }
-        conn.getConnInfo().setContinueSendNum(m_config.getCommon().m_uiDispatchWindowSize);
     }
-    else if (SVR_TYPE_MASTER == conn.getConnInfo().getSvrId())
-    {
-        int bufLen = 1024 * 1024;
-        while (setsockopt(conn.getHandle(), SOL_SOCKET, SO_RCVBUF, (void *)&bufLen, sizeof(bufLen)) < 0)
-        {
-            bufLen -= 1024;
-            if (bufLen < 0) break;
-        }
-        bufLen = 64 * 1024;
-        while (setsockopt(conn.getHandle(), SOL_SOCKET, SO_SNDBUF, (void*)&bufLen, sizeof( bufLen)) < 0)
-        {
-            bufLen -= 1024;
-            if (bufLen < 0) break;
-        }
-        conn.getConnInfo().setContinueSendNum(m_config.getCommon().m_uiFromMasterWindowSize);
+    else
+    {///如果是监控的连接建立，则建立一个string的buf，用于缓存不完整的命令
+        string* buf = new string();
+        conn.getConnInfo().setUserData(buf);
     }
     return 0;
 }
 ///连接关闭
-int CwxMqApp::onConnClosed(CwxAppHandler4Msg const& conn)
+int CwxMqApp::onConnClosed(CwxAppHandler4Msg& conn)
 {
-    CwxMsgBlock* pBlock = CwxMsgBlockAlloc::malloc(0);
-    pBlock->event().setSvrId(conn.getConnInfo().getSvrId());
-    pBlock->event().setHostId(conn.getConnInfo().getHostId());
-    pBlock->event().setConnId(conn.getConnInfo().getConnId());
-    ///设置事件类型
-    pBlock->event().setEvent(CwxEventInfo::CONN_CLOSED);
-    m_pWriteThreadPool->append(pBlock);
+    if (SVR_TYPE_MONITOR != conn.getConnInfo().getSvrId())
+    {
+        CwxMsgBlock* pBlock = CwxMsgBlockAlloc::malloc(0);
+        pBlock->event().setSvrId(conn.getConnInfo().getSvrId());
+        pBlock->event().setHostId(conn.getConnInfo().getHostId());
+        pBlock->event().setConnId(conn.getConnInfo().getConnId());
+        ///设置事件类型
+        pBlock->event().setEvent(CwxEventInfo::CONN_CLOSED);
+        m_pWriteThreadPool->append(pBlock);
+    }
+    else
+    {///若是监控的连接关闭，则必须释放先前所创建的string对象。
+        if (conn.getConnInfo().getUserData())
+        {
+            delete (string*)conn.getConnInfo().getUserData();
+            conn.getConnInfo().setUserData(NULL);
+        }
+    }
     return 0;
 }
 
 ///收到消息
 int CwxMqApp::onRecvMsg(CwxMsgBlock* msg,
-                        CwxAppHandler4Msg const& conn,
+                        CwxAppHandler4Msg& conn,
                         CwxMsgHead const& header,
                         bool& )
 {
-    msg->event().setSvrId(conn.getConnInfo().getSvrId());
-    msg->event().setHostId(conn.getConnInfo().getHostId());
-    msg->event().setConnId(conn.getConnInfo().getConnId());
-    ///保存消息头
-    msg->event().setMsgHeader(header);
-    ///设置事件类型
-    msg->event().setEvent(CwxEventInfo::RECV_MSG);
-    ///将消息放到线程池队列中，有内部的线程调用其处理handle来处理
-    m_pWriteThreadPool->append(msg);
-    if (SVR_TYPE_ASYNC == conn.getConnInfo().getSvrId())
+    if (SVR_TYPE_MONITOR != conn.getConnInfo().getSvrId())
     {
-//        if (conn.getConnInfo().getContinueRecvNum()) CWX_INFO(("Async continue %u", conn.getConnInfo().getContinueRecvNum()));
-        return conn.getConnInfo().getContinueRecvNum() < m_config.getCommon().m_uiDispatchWindowSize?1:0;
+        msg->event().setSvrId(conn.getConnInfo().getSvrId());
+        msg->event().setHostId(conn.getConnInfo().getHostId());
+        msg->event().setConnId(conn.getConnInfo().getConnId());
+        ///保存消息头
+        msg->event().setMsgHeader(header);
+        ///设置事件类型
+        msg->event().setEvent(CwxEventInfo::RECV_MSG);
+        ///将消息放到线程池队列中，有内部的线程调用其处理handle来处理
+        m_pWriteThreadPool->append(msg);
+        if (SVR_TYPE_ASYNC == conn.getConnInfo().getSvrId())
+        {
+            //        if (conn.getConnInfo().getContinueRecvNum()) CWX_INFO(("Async continue %u", conn.getConnInfo().getContinueRecvNum()));
+            return conn.getConnInfo().getContinueRecvNum() < m_config.getCommon().m_uiDispatchWindowSize?1:0;
+        }
+        else if (SVR_TYPE_MASTER == conn.getConnInfo().getSvrId())
+        {
+            //        if (conn.getConnInfo().getContinueRecvNum()) CWX_INFO(("Master continue %u", conn.getConnInfo().getContinueRecvNum()));
+            return conn.getConnInfo().getContinueRecvNum() < m_config.getCommon().m_uiFromMasterWindowSize?1:0;
+        }
     }
-    else if (SVR_TYPE_MASTER == conn.getConnInfo().getSvrId())
+    else
     {
-//        if (conn.getConnInfo().getContinueRecvNum()) CWX_INFO(("Master continue %u", conn.getConnInfo().getContinueRecvNum()));
-        return conn.getConnInfo().getContinueRecvNum() < m_config.getCommon().m_uiFromMasterWindowSize?1:0;
+        ///监控消息
+        return monitorStats(msg, conn);
     }
+
     return 0;
 }
 
 ///消息发送完毕
 CWX_UINT32 CwxMqApp::onEndSendMsg(CwxMsgBlock*& msg,
-                                  CwxAppHandler4Msg const& conn)
+                                  CwxAppHandler4Msg& conn)
 {
     if ((SVR_TYPE_ASYNC == conn.getConnInfo().getSvrId()) ||
         (SVR_TYPE_FETCH == conn.getConnInfo().getSvrId()))
@@ -423,6 +414,18 @@ int CwxMqApp::startBinLogMgr()
 
 int CwxMqApp::startNetwork()
 {
+    ///打开监听的服务器端口号
+    if (0 > this->noticeTcpListen(SVR_TYPE_MONITOR,
+        m_config.getCommon().m_monitor.getHostName().c_str(),
+        m_config.getCommon().m_monitor.getPort(),
+        true,
+        1024))
+    {
+        CWX_ERROR(("Can't register the monitor tcp accept listen: addr=%s, port=%d",
+            m_config.getCommon().m_monitor.getHostName().c_str(),
+            m_config.getCommon().m_monitor.getPort()));
+        return -1;
+    }
     ///打开连接
     if (m_config.getCommon().m_bMaster)
     {
@@ -463,7 +466,11 @@ int CwxMqApp::startNetwork()
                 m_config.getMaster().m_async.getPort(),
                 false,
                 0,
-                m_config.getMaster().m_async.isKeepAlive()))
+                m_config.getMaster().m_async.isKeepAlive(),
+                CWX_APP_MSG_MODE,
+                256*1024,
+                64*1024
+                ))
             {
                 CWX_ERROR(("Can't register the async-dispatch tcp accept listen: addr=%s, port=%d",
                     m_config.getMaster().m_async.getHostName().c_str(),
@@ -512,7 +519,9 @@ int CwxMqApp::startNetwork()
                 0,
                 m_config.getSlave().m_master.isKeepAlive(),
                 1,
-                2))
+                2,
+                64*1024,
+                256*1024))
             {
                 CWX_ERROR(("Can't register the master tcp connect: addr=%s, port=%d",
                     m_config.getSlave().m_master.getHostName().c_str(),
@@ -610,3 +619,163 @@ void CwxMqApp::dispathWaitingBinlog(CwxMqTss* pTss)
     m_pAsyncHandler->dispatch(pTss);
     m_pFetchHandler->dispatch(pTss);
 }
+
+int CwxMqApp::monitorStats(CwxMsgBlock* msg, CwxAppHandler4Msg& conn)
+{
+    string* strCmd = (string*)conn.getConnInfo().getUserData();
+    strCmd->append(msg->rd_ptr(), msg->length());
+    CwxMsgBlockAlloc::free(msg);
+    string::size_type end = 0;
+    do
+    {
+        CwxCommon::trim(*strCmd);
+        end = strCmd->find('\n');
+        if (string::npos == end)
+        {
+            if (strCmd->length() > 10)
+            {//无效的命令
+                strCmd->erase(); ///清空接受到的命令
+                ///回复信息
+                msg = CwxMsgBlockAlloc::malloc(1024);
+                strcpy(msg->wr_ptr(), "ERROR\r\n");
+                msg->wr_ptr(strlen(msg->wr_ptr()));
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        else
+        {
+            if (memcmp(strCmd->c_str(), "stats", 5) == 0)
+            {
+                strCmd->erase(); ///清空接受到的命令
+                CWX_UINT32 uiLen = packMonitorInfo();
+                msg = CwxMsgBlockAlloc::malloc(uiLen);
+                memcpy(msg->wr_ptr(), m_szBuf, uiLen);
+                msg->wr_ptr(uiLen);
+            }
+            else if(memcmp(strCmd->c_str(), "quit", 4) == 0)
+            {
+                return -1;
+            }  
+            else
+            {//无效的命令
+                strCmd->erase(); ///清空接受到的命令
+                ///回复信息
+                msg = CwxMsgBlockAlloc::malloc(1024);
+                strcpy(msg->wr_ptr(), "ERROR\r\n");
+                msg->wr_ptr(strlen(msg->wr_ptr()));
+            }
+        }
+    }
+    while(0);
+
+    msg->send_ctrl().setConnId(conn.getConnInfo().getConnId());
+    msg->send_ctrl().setSvrId(CwxMqApp::SVR_TYPE_MONITOR);
+    msg->send_ctrl().setHostId(0);
+    msg->send_ctrl().setMsgAttr(CwxMsgSendCtrl::NONE);
+    if (-1 == sendMsgByConn(msg))
+    {
+        CWX_ERROR(("Failure to send monitor reply"));
+        CwxMsgBlockAlloc::free(msg);
+        return -1;
+    }
+    return 0;
+}
+
+#define MQ_MONITOR_APPEND()\
+    uiLen = strlen(szLine);\
+    if (uiPos + uiLen > MAX_MONITOR_REPLY_SIZE - 20) break;\
+    memcpy(m_szBuf + uiPos, szLine, uiLen);\
+    uiPos += uiLen; \
+
+CWX_UINT32 CwxMqApp::packMonitorInfo()
+{
+    string strValue;
+    char szTmp[128];
+    char szLine[4096];
+    CWX_UINT32 uiLen = 0;
+    CWX_UINT32 uiPos = 0;
+    do
+    {
+        //输出进程pid
+        CwxCommon::snprintf(szLine, 4096, "STAT pid %d\r\n", getpid());
+        MQ_MONITOR_APPEND();
+        //输出父进程pid
+        CwxCommon::snprintf(szLine, 4096, "STAT ppid %d\r\n", getppid());
+        MQ_MONITOR_APPEND();
+        //版本号
+        CwxCommon::snprintf(szLine, 4096, "STAT version %s\r\n", this->getAppVersion().c_str());
+        MQ_MONITOR_APPEND();
+        //修改时间
+        CwxCommon::snprintf(szLine, 4096, "STAT modify %s\r\n", this->getLastModifyDatetime().c_str());
+        MQ_MONITOR_APPEND();
+        //编译时间
+        CwxCommon::snprintf(szLine, 4096, "STAT compile %s\r\n", this->getLastCompileDatetime().c_str());
+        MQ_MONITOR_APPEND();
+        //启动时间
+        CwxCommon::snprintf(szLine, 4096, "STAT start %s\r\n", m_strStartTime.c_str());
+        MQ_MONITOR_APPEND();
+        //master
+        CwxCommon::snprintf(szLine, 4096, "STAT server_type %s\r\n", getConfig().getCommon().m_bMaster?"master":"slave");
+        MQ_MONITOR_APPEND();
+        //state
+        CwxCommon::snprintf(szLine, 4096, "STAT state %s\r\n", isAppRunValid()?"valid":"invalid");
+        MQ_MONITOR_APPEND();
+        //error
+        CwxCommon::snprintf(szLine, 4096, "STAT err '%s'\r\n", isAppRunValid()?"":getAppRunFailReason().c_str());
+        MQ_MONITOR_APPEND();
+        //binlog
+        CwxCommon::snprintf(szLine, 4096, "STAT binlog_state %s\r\n",
+            m_pBinLogMgr->isInvalid()?"invalid":"valid");
+        MQ_MONITOR_APPEND();
+        CwxCommon::snprintf(szLine, 4096, "STAT binlog_error %s\r\n",
+            m_pBinLogMgr->isInvalid()? m_pBinLogMgr->getInvalidMsg():"");
+        MQ_MONITOR_APPEND();
+        CwxCommon::snprintf(szLine, 4096, "STAT min_sid %s\r\n",
+            CwxCommon::toString(m_pBinLogMgr->getMinSid(), szTmp));
+        MQ_MONITOR_APPEND();
+        CwxDate::getDateY4MDHMS2(m_pBinLogMgr->getMinTimestamp(), strValue);
+        CwxCommon::snprintf(szLine, 4096, "STAT min_sid_time %s\r\n",
+            strValue.c_str());
+        MQ_MONITOR_APPEND();
+        CwxCommon::snprintf(szLine, 4096, "STAT min_binlog_file %s\r\n",
+            m_pBinLogMgr->getMinFile(strValue).c_str());
+        MQ_MONITOR_APPEND();
+        CwxCommon::snprintf(szLine, 4096, "STAT max_sid %s\r\n",
+            CwxCommon::toString(m_pBinLogMgr->getMaxSid(), szTmp));
+        MQ_MONITOR_APPEND();
+        CwxDate::getDateY4MDHMS2(m_pBinLogMgr->getMaxTimestamp(), strValue);
+        CwxCommon::snprintf(szLine, 4096, "STAT max_sid_time %s\r\n",
+            strValue.c_str());
+        MQ_MONITOR_APPEND();
+        CwxCommon::snprintf(szLine, 4096, "STAT max_binlog_file %s\r\n",
+            m_pBinLogMgr->getMaxFile(strValue).c_str());
+        MQ_MONITOR_APPEND();
+        CWX_UINT64 ullMqSid = 0;
+        CWX_UINT64 ullMqNum = 0;
+        CwxMqQueue* pQueue = 0;
+        char szSid1[64];
+        char szSid2[64];
+        map<string, CwxMqConfigQueue>::const_iterator iter = getConfig().getMq().m_queues.begin();
+        while(iter != getConfig().getMq().m_queues.end())
+        {
+            pQueue = getQueueMgr()->getQueue(iter->first);
+            ullMqSid = pQueue->getCurSid(); 
+            ullMqNum = pQueue->getMqNum();
+            CwxCommon::toString(ullMqSid, szSid1, 10);
+            CwxCommon::toString(ullMqNum, szSid2, 10);
+            CwxCommon::snprintf(szLine, 4096, "STAT mq name(%s):sid(%s):mq_num(%s)\r\n",
+                iter->first.c_str(), szSid1, szSid2);
+            MQ_MONITOR_APPEND();
+            iter++;
+        }
+    }
+    while(0);
+    strcpy(m_szBuf + uiPos, "END\r\n");
+    return strlen(m_szBuf);
+
+}
+

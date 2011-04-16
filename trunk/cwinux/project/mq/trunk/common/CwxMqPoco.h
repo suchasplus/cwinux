@@ -2,7 +2,8 @@
 #define __CWX_MQ_POCO_H__
 /*
 版权声明：
-    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html）
+    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html），
+    联系方式：email:cwinux@gmail.com；微博:http://t.sina.com.cn/cwinux
 */
 /**
 @file CwxMqPoco.h
@@ -131,14 +132,14 @@ public:
         MSG_TYPE_SYNC_DATA_REPLY = 8, ///<数据的回复
         ///MQ Fetch服务类型的消息类型定义
         MSG_TYPE_FETCH_DATA = 9, ///<数据获取消息类型
-        MSG_TYPE_FETCH_DATA_REPLY = 10 ///<回复数据获取消息类型
+        MSG_TYPE_FETCH_DATA_REPLY = 10, ///<回复数据获取消息类型
     };
     enum
     {
         SYNC_GROUP_TYPE=0XFFFFFFFF,
         SYNC_SECOND_INTERNAL=60,
         SYNC_RECORD_INTERNAL=10000,
-        MAX_CONTINUE_SEEK_NUM = 256
+        MAX_CONTINUE_SEEK_NUM = 2048
     };
 public:
     ///初始化协议。返回值，CWX_MQ_SUCCESS：成功；其他都是失败

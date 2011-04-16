@@ -104,16 +104,19 @@ int CwxMqAsyncHandler::onRecvMsg(CwxMsgBlock*& msg, CwxAppTss* pThrEnv)
         }
         conn->m_recvWindow.erase(iter_sid);
         ///发送下一条binlog
-        iState = sendBinLog(m_pApp, conn, pTss);
-        if (-1 == iState)
+        //if (0 == conn->m_window.getUsedSize())
         {
-            CWX_ERROR((pTss->m_szBuf2K));
-            //关闭连接
-            m_pApp->noticeCloseConn(msg->event().getConnId());
-        }
-        else if (0 == iState)
-        {///产生continue的消息
-            noticeContinue(pTss, conn);
+            iState = sendBinLog(m_pApp, conn, pTss);
+            if (-1 == iState)
+            {
+                CWX_ERROR((pTss->m_szBuf2K));
+                //关闭连接
+                m_pApp->noticeCloseConn(msg->event().getConnId());
+            }
+            else if (0 == iState)
+            {///产生continue的消息
+                noticeContinue(pTss, conn);
+            }
         }
         ///返回
         return 1;
@@ -351,6 +354,7 @@ int CwxMqAsyncHandler::sendBinLog(CwxMqApp* pApp,
     char* pBuf = NULL;
     CWX_ASSERT(conn->m_window.isSyncing());
     CWX_ASSERT(conn->m_window.getHandle());
+    //if (conn->m_window.getUsedSize()) return 1; ///<还有消息在发送队列
     if (!conn->m_window.isEnableSend()) return 1; ///<若发送窗口已满，则不发送，为完成状态
     if (conn->m_recvWindow.size() > pApp->getConfig().getCommon().m_uiDispatchWindowSize) return 1;
     CwxBinLogCursor* pCursor = (CwxBinLogCursor*)conn->m_window.getHandle();
@@ -468,6 +472,7 @@ int CwxMqAsyncHandler::sendBinLog(CwxMqApp* pApp,
                     }
                     ///通知窗口发送了一个binlog
                     conn->m_window.sendOneMsg(pCursor->getHeader().getSid());
+                    return 1; ///发送了一条消息
                 }
             }
             else
@@ -482,7 +487,7 @@ int CwxMqAsyncHandler::sendBinLog(CwxMqApp* pApp,
         }
         uiSkipNum ++;
         if (!CwxMqPoco::isContinueSeek(uiSkipNum)) return 0;
-        if (conn->m_window.isEnableSend())
+/*        if (conn->m_window.isEnableSend())
         {///若发送窗口没有满,则准备发送下一个
             iRet = pApp->getBinLogMgr()->next(pCursor);
             if (0 == iRet) return 1; ///完成状态
@@ -495,7 +500,7 @@ int CwxMqAsyncHandler::sendBinLog(CwxMqApp* pApp,
         else
         {///<若窗口已满，则退出发送
             return 0; ///未完成状态
-        }
+        }*/
     }
     ///永远也不会到达
     return 0; ///未完成状态

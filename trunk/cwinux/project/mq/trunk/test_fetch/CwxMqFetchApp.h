@@ -2,7 +2,8 @@
 #define __CWX_MQ_FETCH_APP_H__
 /*
 版权声明：
-    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html）
+    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html），
+    联系方式：email:cwinux@gmail.com；微博:http://t.sina.com.cn/cwinux
 */
 #include "CwxAppFramework.h"
 #include "CwxAppHandler4Msg.h"
@@ -34,7 +35,7 @@ public:
     //echo连接建立函数
     virtual int onConnCreated(CwxAppHandler4Msg& conn, bool& bSuspendConn, bool& bSuspendListen);
     //echo返回的响应函数
-    virtual int onRecvMsg(CwxMsgBlock* msg, CwxAppHandler4Msg const& conn, CwxMsgHead const& header, bool& bSuspendConn);
+    virtual int onRecvMsg(CwxMsgBlock* msg, CwxAppHandler4Msg& conn, CwxMsgHead const& header, bool& bSuspendConn);
     //tss
     virtual CwxAppTss* onTssEnv();
 protected:

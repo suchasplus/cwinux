@@ -66,18 +66,6 @@ int CwxMproxyApp::initRunEnv()
     m_pMqHandle = new CwxMproxyMqHandler(this);
     getCommander().regHandle(SVR_TYPE_MQ, m_pMqHandle);
 
-    ///打开管理端口
-    if (m_config.m_mgrListen.getHostName().length())
-    {
-        if (-1 == noticeMgrListen(m_config.m_mgrListen.getHostName().c_str(),
-            m_config.m_mgrListen.getPort()))
-        {
-            CWX_ERROR(("Failure to register mgr listen, addr=%s, port=%u",
-                m_config.m_mgrListen.getHostName().c_str(),
-                m_config.m_mgrListen.getPort()));
-            return -1;
-        }
-    }
     //打开代理消息的监听端口
     if (m_config.m_recv.getHostName().length())
     {

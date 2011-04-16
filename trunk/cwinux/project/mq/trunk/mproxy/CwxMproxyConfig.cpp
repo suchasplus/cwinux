@@ -19,21 +19,6 @@ int CwxMproxyConfig::loadConfig(string const & strConfFile)
     }
     m_strWorkDir = pValue;
 	if ('/' != m_strWorkDir[m_strWorkDir.length()-1]) m_strWorkDir +="/";
-    //load mgr listen
-    if ((pValue=parser.getElementAttr("mproxy:mgr", "ip")) && pValue[0])
-    {
-        m_mgrListen.setHostName(pValue);
-        if ((NULL == (pValue=parser.getElementAttr("mproxy:mgr", "port"))) || !pValue[0])
-        {
-            snprintf(m_szErrMsg, 2047, "Must set [mproxy:mgr:port].");
-            return -1;
-        }
-        m_mgrListen.setPort(strtoul(pValue, NULL, 0));
-    }
-    else
-    {
-        m_mgrListen.reset();
-    }
     // thread num
     if ((NULL == (pValue=parser.getElementAttr("mproxy:thread", "num"))) || !pValue[0])
     {
@@ -169,7 +154,6 @@ void CwxMproxyConfig::outputConfig()
 {
 	CWX_INFO(("*****************BEGIN CONFIG *******************"));
     CWX_INFO(("workdir=%s", m_strWorkDir.c_str()));
-    CWX_INFO(("manage accept: ip=%s  port=%u", m_mgrListen.getHostName().c_str(), m_mgrListen.getPort()));
     CWX_INFO(("thread num = %u", m_unThreadNum));
     CWX_INFO(("timeout mili-second = %u", m_uiTimeout));
     CWX_INFO(("recv keep-alive=%s ip=%s  port=%u  user=%s  passwd=%s unix=%s",

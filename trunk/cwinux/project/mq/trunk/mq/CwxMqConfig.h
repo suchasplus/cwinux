@@ -2,7 +2,8 @@
 #define __CWX_MQ_CONFIG_H__
 /*
 版权声明：
-    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html）
+    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html），
+    联系方式：email:cwinux@gmail.com；微博:http://t.sina.com.cn/cwinux
 */
 
 #include "CwxMqMacro.h"
@@ -37,9 +38,9 @@ public:
 public:
     string              m_strWorkDir;///<工作目录
     bool                m_bMaster; ///<是否是master dispatch
-    CwxHostInfo         m_mgrListen;///<管理的tcp的监听ip/port
     CWX_UINT32          m_uiDispatchWindowSize; ///<发送的窗口大小
     CWX_UINT32          m_uiFromMasterWindowSize; ///<从master接收的窗口大小
+    CwxHostInfo         m_monitor; ///<监控监听
 };
 
 ///配置文件的binlog参数对象

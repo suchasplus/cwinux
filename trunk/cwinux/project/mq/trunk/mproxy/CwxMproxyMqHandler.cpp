@@ -51,7 +51,7 @@ int CwxMproxyMqHandler::sendMq(CwxMproxyApp* app, CWX_UINT32 uiTaskId, CwxMsgBlo
     msg->send_ctrl().setConnId(0);
     msg->send_ctrl().setHostId(0);
     msg->send_ctrl().setSvrId(CwxMproxyApp::SVR_TYPE_MQ);
-    msg->send_ctrl().setMsgAttr(CwxMsgSendCtrl::FAIL_FINISH_RETRY);
+    msg->send_ctrl().setMsgAttr(CwxMsgSendCtrl);
     if (0 != app->sendMsgBySvr(msg))
     {
         CWX_ERROR(("Failure to send msg to mq"));

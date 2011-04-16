@@ -13,7 +13,7 @@ cwx_mq_SOURCES = \
         ../common/CwxMqPoco.cpp\
         ../common/CwxMqSysFile.cpp\
 	../common/CwxMqDef.cpp  ../common/CwxMqQueueMgr.cpp\
-	CwxMqApp.cpp CwxMqConfig.cpp  CwxMqFetchHandler.cpp   CwxMqMgrServer.cpp\
+	CwxMqApp.cpp CwxMqConfig.cpp  CwxMqFetchHandler.cpp\
 	CwxMqAsyncHandler.cpp  cwx_mq.cpp       CwxMqMasterHandler.cpp  CwxMqRecvHandler.cpp
 cwx_mq_LDADD=
 cwx_mq_LDFLAGS =-L@xml_expat_dir@/lib -L@cwinux_dir@/lib -L@libevent_dir@/lib

@@ -1,7 +1,6 @@
 <?xml version='1.0'?>
 <mproxy>
     <workdir path="/usr/home/wenbo/cwinux/project/mq/trunk/mproxy"/>
-    <mgr    ip="172.16.42.63" port="9010" />
     <thread  num="4"/>
     <timeout mili_second="5000"/>
     <recv>

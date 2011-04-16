@@ -281,3 +281,5 @@ int CwxMqRecvHandler::checkSyncLog(bool bNew, char* szErr2K)
     }
     return 0;
 }
+
+

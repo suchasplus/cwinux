@@ -2,7 +2,8 @@
 #define __CWX_MQ_PROXY_CONFIG_H__
 /*
 版权声明：
-    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html）
+    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html），
+    联系方式：email:cwinux@gmail.com；微博:http://t.sina.com.cn/cwinux
 */
 
 
@@ -44,7 +45,6 @@ private:
 
 public:
     string               m_strWorkDir;///<工作目录
-    CwxHostInfo          m_mgrListen; ///<管理的监听端口
     CWX_UINT16           m_unThreadNum; ///<线程的数量
     CWX_UINT32           m_uiTimeout; ///<查询超时时间，单位为ms
     CwxHostInfo          m_recv;      ///<代理消息接受的监听地址

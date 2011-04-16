@@ -41,23 +41,6 @@ int CwxMqConfig::loadConfig(string const & strConfFile)
         CwxCommon::snprintf(m_szErrMsg, 2047, "[mq:common:server:type] must be [master] or [slave].");
         return -1;
     }
-    //load mq:common:mgr:ip
-    pValue=parser.getElementAttr("mq:common:mgr", "ip");
-    if (pValue && pValue[0])
-    {
-        m_common.m_mgrListen.setHostName(pValue);
-        //load mq:common:mgr:ip
-        if ((NULL == (pValue=parser.getElementAttr("mq:common:mgr", "port"))) || !pValue[0])
-        {
-            CwxCommon::snprintf(m_szErrMsg, 2047, "Must set [mq:common:mgr:port].");
-            return -1;
-        }
-        m_common.m_mgrListen.setPort(strtoul(pValue, NULL, 0));
-    }
-    else
-    {
-        m_common.m_mgrListen.reset();
-    }
     //load mq:common:window:dispatch
     if ((NULL == (pValue=parser.getElementAttr("mq:common:window", "dispatch"))) || !pValue[0])
     {
@@ -88,6 +71,8 @@ int CwxMqConfig::loadConfig(string const & strConfFile)
     {
         m_common.m_uiFromMasterWindowSize = CwxMqConfigCmn::MAX_ASYNC_WINDOW_SIZE;
     }
+    //load mq:common:monitor
+    if (!fetchHost(parser, "mq:common:monitor", m_common.m_monitor)) return -1;
 
     //load mq:binlog:file:path
     if ((NULL == (pValue=parser.getElementAttr("mq:binlog:file", "path"))) || !pValue[0])
@@ -368,7 +353,6 @@ void CwxMqConfig::outputConfig() const
     CWX_INFO(("*****************common*******************"));
     CWX_INFO(("workdir=%s", m_common.m_strWorkDir.c_str()));
     CWX_INFO(("server type=%s", m_common.m_bMaster?"master":"slave"));
-    CWX_INFO(("mgr ip=%s port=%u", m_common.m_mgrListen.getHostName().c_str(), m_common.m_mgrListen.getPort()));
     CWX_INFO(("window size dispatch=%u  from-master=%u", m_common.m_uiDispatchWindowSize, m_common.m_uiFromMasterWindowSize));
     CWX_INFO(("*****************binlog*******************"));
     CWX_INFO(("file path=%s prefix=%s max-file-size(Mbyte)=%u", m_binlog.m_strBinlogPath.c_str(), m_binlog.m_strBinlogPrex.c_str(), m_binlog.m_uiBinLogMSize));

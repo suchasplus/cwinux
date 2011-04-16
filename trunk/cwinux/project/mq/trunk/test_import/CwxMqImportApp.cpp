@@ -133,7 +133,7 @@ int CwxMqImportApp::onConnCreated(CwxAppHandler4Msg& conn, bool& , bool& )
 }
 
 ///echo回复的消息响应函数
-int CwxMqImportApp::onRecvMsg(CwxMsgBlock* msg, CwxAppHandler4Msg const& conn, CwxMsgHead const& header, bool& bSuspendConn)
+int CwxMqImportApp::onRecvMsg(CwxMsgBlock* msg, CwxAppHandler4Msg& conn, CwxMsgHead const& header, bool& bSuspendConn)
 {
 
     msg->event().setSvrId(conn.getConnInfo().getSvrId());
