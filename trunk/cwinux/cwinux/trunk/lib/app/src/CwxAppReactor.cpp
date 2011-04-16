@@ -151,7 +151,7 @@ int CwxAppReactor::run(REACTOR_EVENT_HOOK hook,
         m_rwLock.acquire_write();
         m_rwLock.release();
     }
-    while(!m_bStop && !bOnce)
+    while(!m_bStop && !bOnce);
     return ret;
 }
 
