@@ -48,15 +48,16 @@ public:
     };
     typedef int (*REACTOR_EVENT_HOOK)(void *);
     ///构造函数
-    CwxAppReactor();
+    CwxAppReactor(bool bEnableSig=false);
     ///析构函数
     ~CwxAppReactor();
 public:
     /**
     @brief 打开reactor，调用线程为reactor的owner。
+    @param [in] noticeHandler notice handler
     @return -1：失败；0：正常退出
     */
-    int open();
+    int open(CwxAppHandler4Base* noticeHandler);
     /**
     @brief 关闭reactor，必须为owner thread。会释放所有的handler
     @return -1：失败；0：正常退出
@@ -64,14 +65,14 @@ public:
     int close();
     /**
     @brief 架构事件的循环处理API，实现消息的分发，调用线程为reactor的owner。
-    @param [in] noticeHandler notice handler
     @param [in] hook hook函数
     @param [in] arg hook函数的参数。
+    @param [in] bOnce 是否只运行一次。
     @return -1：失败；0：正常退出
     */
-    int run(CwxAppHandler4Base* noticeHandler,
-        REACTOR_EVENT_HOOK hook=NULL,
-        void* arg=NULL);
+    int run(REACTOR_EVENT_HOOK hook=NULL,
+        void* arg=NULL,
+        bool  bOnce=false);
     /**
     @brief 停止架构事件的循环处理，多线程安全，任意线程都可以调用。
     @return -1：失败；0：正常退出
@@ -340,6 +341,7 @@ private:
     static void callback(CwxAppHandler4Base* handler, int mask, bool bPersist, void *arg);
 
 private:
+    bool                    m_bEnableSig;///<是否注册signal
     CwxMutexLock            m_lock; ///<全局锁
     CwxRwLock               m_rwLock; ///<读写锁
     pthread_t               m_owner; ///<reactor的owner 线程

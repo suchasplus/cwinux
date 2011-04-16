@@ -828,7 +828,7 @@ int CwxAppFramework::run()
     {
         m_bStopped = false;
         pid_t  pid=getpid();
-        this->reactor()->run(m_pNoticeHandler, CwxAppFramework::hook, this);
+        this->reactor()->run(CwxAppFramework::hook, this, false);
         if (pid != ::getpid())
         {//it's child
            return 0;
@@ -917,8 +917,10 @@ int CwxAppFramework::initRunEnv()
     m_pHandleCache = new CwxAppHandlerCache();
     //register the notice function
     regNoticeFunc();
+    //create the notice handle
+    m_pNoticeHandler = new CwxAppHandler4Notice(this, m_pReactor);
     m_pReactor = new CwxAppReactor();
-    if (0 != m_pReactor->open())
+    if (0 != m_pReactor->open(m_pNoticeHandler))
     {
         CWX_ERROR(("Failure to invoke CwxAppReactor::open()"));
         return -1;
@@ -936,8 +938,6 @@ int CwxAppFramework::initRunEnv()
         return -1;
     }
 
-    //create the notice handle
-    m_pNoticeHandler = new CwxAppHandler4Notice(this, m_pReactor);
 
     //init signal
     if (!m_pReactor->isRegSigHandle(SIGINT))

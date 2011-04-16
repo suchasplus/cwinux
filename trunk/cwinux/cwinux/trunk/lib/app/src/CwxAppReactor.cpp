@@ -2,9 +2,10 @@
 
 CWINUX_BEGIN_NAMESPACE
 
-CwxAppReactor::CwxAppReactor()
+CwxAppReactor::CwxAppReactor(bool bEnableSig)
 :m_connMap(CWX_APP_MAX_IO_NUM * 2)
 {
+    m_bEnableSig = bEnableSig;
     m_owner = CwxThread::self();
     m_bStop = true;
     ///初始化IO handler的数组
@@ -40,7 +41,7 @@ int CwxAppReactor::forkReinit()
 }
 
 ///打开reactor，return -1：失败；0：成功
-int CwxAppReactor::open()
+int CwxAppReactor::open(CwxAppHandler4Base* noticeHandler)
 {
     if (!m_bStop)
     {
@@ -59,11 +60,20 @@ int CwxAppReactor::open()
         delete m_engine;
         m_engine = NULL;
     }
-    m_engine = new CwxAppEpoll();
+    m_engine = new CwxAppEpoll(m_bEnableSig);
     if (0 != m_engine->init()) return -1;
     if (m_pNoticePipe->init() != 0)
     {
         CWX_ERROR(("Failure to invoke CwxAppNoticePipe::init()"));
+        return -1;
+    }
+    ///注册notice handler
+    noticeHandler->setHandle(m_pNoticePipe->getPipeReader());
+    if (0 != this->registerHandler(m_pNoticePipe->getPipeReader(),
+        noticeHandler,
+        CwxAppHandler4Base::PREAD_MASK))
+    {
+        CWX_ERROR(("Failure to register CwxAppHandler4Notice notice handler"));
         return -1;
     }
     CWX_DEBUG(("Success to open CwxAppReactor"));
@@ -96,9 +106,9 @@ int CwxAppReactor::close()
 @brief 架构事件的循环处理API，实现消息的分发。
 @return -1：失败；0：正常退出
 */
-int CwxAppReactor::run(CwxAppHandler4Base* noticeHandler,
-                       REACTOR_EVENT_HOOK hook,
-                       void* arg)
+int CwxAppReactor::run(REACTOR_EVENT_HOOK hook,
+                       void* arg,
+                       bool  bOnce)
 {
     int ret = 0;
     if (!m_bStop || !m_engine)
@@ -106,20 +116,8 @@ int CwxAppReactor::run(CwxAppHandler4Base* noticeHandler,
         CWX_ERROR(("CwxAppReactor::open() must be invoke before CwxAppReactor::run()"));
         return -1;
     }
-    ///设置reactor的owner
-    m_owner = CwxThread::self();
-    ///注册notice handler
-    noticeHandler->setHandle(m_pNoticePipe->getPipeReader());
-    if (0 != this->registerHandler(m_pNoticePipe->getPipeReader(),
-        noticeHandler,
-        CwxAppHandler4Base::PREAD_MASK))
-    {
-        CWX_ERROR(("Failure to register CwxAppHandler4Notice notice handler"));
-        return -1;
-    }
-    m_bStop = false;
 
-    while(!m_bStop)
+    do
     {
         {
             ///带锁执行event-loop
@@ -151,7 +149,7 @@ int CwxAppReactor::run(CwxAppHandler4Base* noticeHandler,
         ///等待其他的线程执行各种操作。
         m_rwLock.acquire_write();
         m_rwLock.release();
-    }
+    }while(!m_bStop && !bOnce)
     return ret;
 }
 
