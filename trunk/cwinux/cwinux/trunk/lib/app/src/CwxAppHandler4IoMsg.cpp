@@ -5,9 +5,8 @@ CWINUX_BEGIN_NAMESPACE
 
 
 CwxAppHandler4IoMsg::CwxAppHandler4IoMsg(CwxAppFramework* pApp, CwxAppReactor *reactor)
-:CwxAppHandler4Msg(reactor)
+:CwxAppHandler4Msg(pApp, reactor)
 {
-    m_pApp = pApp;
     m_next = NULL;
 }
 
