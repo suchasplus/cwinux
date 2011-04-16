@@ -5,8 +5,9 @@ CWINUX_BEGIN_NAMESPACE
 ///¹¹Ôìº¯Êý
 CwxAppHandler4StdIo::CwxAppHandler4StdIo(CwxAppFramework* pApp,
                                          CwxAppReactor* reactor)
-:CwxAppHandler4Base(pApp, reactor)
+:CwxAppHandler4Base(reactor)
 {
+    m_pApp = pApp;
 }
 CwxAppHandler4StdIo::~CwxAppHandler4StdIo()
 {

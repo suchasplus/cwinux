@@ -32,7 +32,6 @@
 
 CWINUX_BEGIN_NAMESPACE
 
-class CwxAppFramework;
 
 /**
 @class CwxAppReactor

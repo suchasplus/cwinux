@@ -51,7 +51,7 @@ public:
     };
 public:
     ///构造函数
-    CwxAppEpoll();
+    CwxAppEpoll(bool bEnableSignal=true);
     ///析构函数
     ~CwxAppEpoll();
 public:
@@ -130,9 +130,12 @@ public:
     int forkReinit();
     /**
     @brief 检测事件。
+    @param [in] callback 事件的回调函数
+    @param [in] arg 回调函数的参数
+    @param [in] bOnce 是否只执行一次
     @return -1：失败；0：成功
     */
-    int poll(REACTOR_CALLBACK callback, void* arg);
+    int poll(REACTOR_CALLBACK callback, void* arg, bool bOnce=false);
     ///停止运行
     void stop();
 private:
@@ -161,7 +164,7 @@ private:
     class SignalHanlder:public CwxAppHandler4Base
     {
     public:
-        SignalHanlder():CwxAppHandler4Base(NULL, NULL)
+        SignalHanlder():CwxAppHandler4Base(NULL)
         {
         }
         ~SignalHanlder(){}
@@ -184,6 +187,7 @@ private:
     static int                      m_signalFd[2]; ///<信号的读写handle
     static sig_atomic_t             m_arrSignals[CWX_APP_MAX_SIGNAL_ID + 1];///<signal的数组
     static volatile sig_atomic_t    m_bSignal; ///<是否有信号
+    bool                            m_bEnableSignal; ///<是否支持signal
     CwxAppHandler4Base*             m_sHandler[CWX_APP_MAX_SIGNAL_ID + 1];///<signal handler的数组
     CwxMinHeap<CwxAppHandler4Base>  m_timeHeap; ///<时间堆
     SignalHanlder*                  m_sigHandler; ///<读取signal事件的handle

@@ -53,9 +53,16 @@ public:
     virtual int handle_event(int event, CWX_HANDLE handle=CWX_INVALID_HANDLE);
     ///handle close
     virtual int close(CWX_HANDLE handle=CWX_INVALID_HANDLE);
+public:
+    ///ªÒ»°app
+    CwxAppFramework* getApp()
+    {
+        return m_pApp;
+    }
 private:
     CwxTimeValue    m_internal;
     CwxTimeValue    m_cur;
+    CwxAppFramework* m_pApp;
 };
 
 CWINUX_END_NAMESPACE

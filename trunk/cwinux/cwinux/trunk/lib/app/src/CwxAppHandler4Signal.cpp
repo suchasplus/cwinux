@@ -6,8 +6,9 @@ CWINUX_BEGIN_NAMESPACE
 CwxAppHandler4Signal::CwxAppHandler4Signal(CwxAppFramework* pApp,
                                            CwxAppReactor* reactor,
                                            int sig)
-:CwxAppHandler4Base(pApp, reactor)
+:CwxAppHandler4Base(reactor)
 {
+    m_pApp = pApp;
     setHandle(sig);
 }
 CwxAppHandler4Signal::~CwxAppHandler4Signal()

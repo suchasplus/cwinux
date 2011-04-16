@@ -56,8 +56,15 @@ public:
     virtual int handle_event(int event, CWX_HANDLE handle=CWX_INVALID_HANDLE);
     ///handle close
     virtual int close(CWX_HANDLE handle=CWX_INVALID_HANDLE);
+public:
+    ///获取app
+    CwxAppFramework* getApp()
+    {
+        return m_pApp;
+    }
 private:
     char              m_szLine[MAX_LINE_LENGTH + 1];///<STDIN的数据接收BUF
+    CwxAppFramework* m_pApp;
 };
 
 CWINUX_END_NAMESPACE

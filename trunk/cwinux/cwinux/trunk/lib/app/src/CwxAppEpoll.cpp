@@ -8,13 +8,21 @@ int CwxAppEpoll::m_signalFd[2]={CWX_INVALID_HANDLE,CWX_INVALID_HANDLE}; ///<信号
 sig_atomic_t CwxAppEpoll::m_arrSignals[CWX_APP_MAX_SIGNAL_ID + 1]={0};///<signal的数组
 volatile sig_atomic_t  CwxAppEpoll::m_bSignal=0; ///<是否有信号
 
-CwxAppEpoll::CwxAppEpoll():m_timeHeap(4096)
+CwxAppEpoll::CwxAppEpoll(bool bEnableSignal):m_timeHeap(4096)
 {
     m_epfd = CWX_INVALID_HANDLE;
+    m_bEnableSignal = bEnableSignal;
     memset(m_events, 0x00, sizeof(m_events));
-    memset(m_arrSignals, 0x00, sizeof(m_arrSignals));
-    memset(m_sHandler, 0x00, sizeof(m_sHandler));
-    m_sigHandler = new SignalHanlder();
+    if (bEnableSignal)
+    {
+        memset(m_arrSignals, 0x00, sizeof(m_arrSignals));
+        memset(m_sHandler, 0x00, sizeof(m_sHandler));
+        m_sigHandler = new SignalHanlder();
+    }
+    else
+    {
+        m_sigHandler = NULL;
+    }
     m_bStop = false;
 }
 
@@ -30,10 +38,13 @@ CwxAppEpoll::~CwxAppEpoll()
             delete m_eHandler[i].m_handler;
         }
     }
-    //删除signal handler
-    for (i=0; i<CWX_APP_MAX_SIGNAL_ID; i++)
+    if (m_bEnableSignal)
     {
-        if (m_sHandler[i]) delete m_sHandler[i];
+        //删除signal handler
+        for (i=0; i<CWX_APP_MAX_SIGNAL_ID; i++)
+        {
+            if (m_sHandler[i]) delete m_sHandler[i];
+        }
     }
     //删除timeout handler
     CwxAppHandler4Base* handler;
@@ -45,15 +56,17 @@ CwxAppEpoll::~CwxAppEpoll()
     {
         ::close(m_epfd);
     }
-    if (m_signalFd[0] != CWX_INVALID_HANDLE)
+    if (m_bEnableSignal)
     {
-        ::close(m_signalFd[0]);
+        if (m_signalFd[0] != CWX_INVALID_HANDLE)
+        {
+            ::close(m_signalFd[0]);
+        }
+        if (m_signalFd[1] != CWX_INVALID_HANDLE)
+        {
+            ::close(m_signalFd[1]);
+        }
     }
-    if (m_signalFd[1] != CWX_INVALID_HANDLE)
-    {
-        ::close(m_signalFd[1]);
-    }
-
 }
 
 ///初始化epoll
@@ -75,42 +88,46 @@ int CwxAppEpoll::init()
         CWX_ERROR(("Failure to set handle's cloexec sign, errno=%d", errno));
         return -1;
     }
-    //创建signal的handle
-    if (0 != pipe(m_signalFd))
-    {
-        CWX_ERROR(("Failure to invokde socketpair to create signal fd, errno=%d", errno));
-        return -1;
-    }
-    if (0 != CwxIpcSap::setCloexec(m_signalFd[0], true))
-    {
-        CWX_ERROR(("Failure to set signal handle[0]'s cloexec sign, errno=%d", errno));
-        return -1;
-    }
-    if (0 != CwxIpcSap::setCloexec(m_signalFd[1], true))
-    {
-        CWX_ERROR(("Failure to set signal handle[1]'s cloexec sign, errno=%d", errno));
-        return -1;
-    }
-    if (0 != CwxIpcSap::setNonblock(m_signalFd[0], true))
-    {
-        CWX_ERROR(("Failure to set signal handle[0]'s noblock sign, errno=%d", errno));
-        return -1;
-    }
-    if (0 != CwxIpcSap::setNonblock(m_signalFd[1], true))
-    {
-        CWX_ERROR(("Failure to set signal handle[1]'s noblock sign, errno=%d", errno));
-        return -1;
-    }
     if (0 != m_timeHeap.init())
     {
         CWX_ERROR(("Failure to init time heap"));
         return -1;
     }
-    //注册信号fd的读
-    if (0 != registerHandler(m_signalFd[0], m_sigHandler, CwxAppHandler4Base::PREAD_MASK))
+
+    if (m_bEnableSignal)
     {
-        CWX_ERROR(("Failure to register signal handle to engine"));
-        return -1;
+        //创建signal的handle
+        if (0 != pipe(m_signalFd))
+        {
+            CWX_ERROR(("Failure to invokde socketpair to create signal fd, errno=%d", errno));
+            return -1;
+        }
+        if (0 != CwxIpcSap::setCloexec(m_signalFd[0], true))
+        {
+            CWX_ERROR(("Failure to set signal handle[0]'s cloexec sign, errno=%d", errno));
+            return -1;
+        }
+        if (0 != CwxIpcSap::setCloexec(m_signalFd[1], true))
+        {
+            CWX_ERROR(("Failure to set signal handle[1]'s cloexec sign, errno=%d", errno));
+            return -1;
+        }
+        if (0 != CwxIpcSap::setNonblock(m_signalFd[0], true))
+        {
+            CWX_ERROR(("Failure to set signal handle[0]'s noblock sign, errno=%d", errno));
+            return -1;
+        }
+        if (0 != CwxIpcSap::setNonblock(m_signalFd[1], true))
+        {
+            CWX_ERROR(("Failure to set signal handle[1]'s noblock sign, errno=%d", errno));
+            return -1;
+        }
+        //注册信号fd的读
+        if (0 != registerHandler(m_signalFd[0], m_sigHandler, CwxAppHandler4Base::PREAD_MASK))
+        {
+            CWX_ERROR(("Failure to register signal handle to engine"));
+            return -1;
+        }
     }
     return 0;
 }
@@ -237,6 +254,12 @@ int CwxAppEpoll::resumeHandler (CWX_HANDLE handle,
 int CwxAppEpoll::registerSignal(int signum,
                    CwxAppHandler4Base *event_handler)
 {
+    if (!m_bEnableSignal)
+    {
+        CWX_ASSERT(0);
+        CWX_ERROR(("Epoll engine not support signal"));
+        return -1;
+    }
     if ((signum < 0) || (signum >= CWX_APP_MAX_SIGNAL_ID))
     {
         CWX_ERROR(("Invalid signal id[%d], range[0,%d]", signum, CWX_APP_MAX_SIGNAL_ID));
@@ -266,13 +289,24 @@ int CwxAppEpoll::registerSignal(int signum,
 
 int CwxAppEpoll::removeSignal(CwxAppHandler4Base *event_handler)
 {
-    
+    if (!m_bEnableSignal)
+    {
+        CWX_ASSERT(0);
+        CWX_ERROR(("Epoll engine not support signal"));
+        return -1;
+    }
     removeSignal(event_handler->getHandle());
     return 0;
 }
 
 CwxAppHandler4Base* CwxAppEpoll::removeSignal(int signum)
 {
+    if (!m_bEnableSignal)
+    {
+        CWX_ASSERT(0);
+        CWX_ERROR(("Epoll engine not support signal"));
+        return -1;
+    }
     if ((signum < 0) || (signum >= CWX_APP_MAX_SIGNAL_ID))
     {
         CWX_ERROR(("Invalid signal id[%d], range[0,%d]", signum, CWX_APP_MAX_SIGNAL_ID));
@@ -337,33 +371,36 @@ int CwxAppEpoll::forkReinit()
         CWX_ERROR(("Failure to set handle's cloexec sign, errno=%d", errno));
         return -1;
     }
-    //创建signal的handle
-    if (0 != pipe(m_signalFd))
+    if (m_bEnableSignal)
     {
-        CWX_ERROR(("Failure to invokde socketpair to create signal fd, errno=%d", errno));
-        return -1;
+        //创建signal的handle
+        if (0 != pipe(m_signalFd))
+        {
+            CWX_ERROR(("Failure to invokde socketpair to create signal fd, errno=%d", errno));
+            return -1;
+        }
+        if (0 != CwxIpcSap::setCloexec(m_signalFd[0], true))
+        {
+            CWX_ERROR(("Failure to set signal handle[0]'s cloexec sign, errno=%d", errno));
+            return -1;
+        }
+        if (0 != CwxIpcSap::setCloexec(m_signalFd[1], true))
+        {
+            CWX_ERROR(("Failure to set signal handle[1]'s cloexec sign, errno=%d", errno));
+            return -1;
+        }
+        if (0 != CwxIpcSap::setNonblock(m_signalFd[0], true))
+        {
+            CWX_ERROR(("Failure to set signal handle[0]'s noblock sign, errno=%d", errno));
+            return -1;
+        }
+        if (0 != CwxIpcSap::setNonblock(m_signalFd[1], true))
+        {
+            CWX_ERROR(("Failure to set signal handle[1]'s noblock sign, errno=%d", errno));
+            return -1;
+        }
     }
-    if (0 != CwxIpcSap::setCloexec(m_signalFd[0], true))
-    {
-        CWX_ERROR(("Failure to set signal handle[0]'s cloexec sign, errno=%d", errno));
-        return -1;
-    }
-    if (0 != CwxIpcSap::setCloexec(m_signalFd[1], true))
-    {
-        CWX_ERROR(("Failure to set signal handle[1]'s cloexec sign, errno=%d", errno));
-        return -1;
-    }
-    if (0 != CwxIpcSap::setNonblock(m_signalFd[0], true))
-    {
-        CWX_ERROR(("Failure to set signal handle[0]'s noblock sign, errno=%d", errno));
-        return -1;
-    }
-    if (0 != CwxIpcSap::setNonblock(m_signalFd[1], true))
-    {
-        CWX_ERROR(("Failure to set signal handle[1]'s noblock sign, errno=%d", errno));
-        return -1;
-    }
-    //回复handle
+    //恢复handle
     {
         EventHandle eHandler[CWX_APP_MAX_IO_NUM];
         memcpy(eHandler, m_eHandler, sizeof(m_eHandler));
@@ -372,8 +409,10 @@ int CwxAppEpoll::forkReinit()
             m_eHandler[i].m_mask = 0;
             m_eHandler[i].m_handler = NULL;
         }
+        //清除signal的handler
         eHandler[old_sigFd].m_mask = 0;
         eHandler[old_sigFd].m_handler = 0;
+        //添加handler
         for (i=0; i<CWX_APP_MAX_IO_NUM; i++)
         {
             if (eHandler[i].m_handler)
@@ -389,23 +428,30 @@ int CwxAppEpoll::forkReinit()
                 m_eHandler[i].m_mask = eHandler[i].m_mask;
             }
         }
-        if (0 != registerHandler(m_signalFd[0], m_sigHandler, CwxAppHandler4Base::PREAD_MASK))
+        if (m_bEnableSignal)
         {
-            CWX_ERROR(("Failure to register handle to engine"));
-            return -1;
+            if (0 != registerHandler(m_signalFd[0], m_sigHandler, CwxAppHandler4Base::PREAD_MASK))
+            {
+                CWX_ERROR(("Failure to register handle to engine"));
+                return -1;
+            }
         }
     }
-    //回复信号,signal的屏蔽状态会从父进程传递
-    for (i=0; i<CWX_APP_MAX_SIGNAL_ID; i++)
+    if (m_bEnableSignal)
     {
-        m_arrSignals[i] = 0;
+        //回复信号,signal的屏蔽状态会从父进程传递
+        for (i=0; i<CWX_APP_MAX_SIGNAL_ID; i++)
+        {
+            m_arrSignals[i] = 0;
+        }
+        m_bSignal = false;
     }
-    m_bSignal = false;
+
     return 0;
 }
 
 
-int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg)
+int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg, bool bOnce)
 {
     int i = 0;
     int num = 0;

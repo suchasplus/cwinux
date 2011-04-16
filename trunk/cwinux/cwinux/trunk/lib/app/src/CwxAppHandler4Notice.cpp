@@ -6,8 +6,9 @@ CWINUX_BEGIN_NAMESPACE
 
 ///构造函数
 CwxAppHandler4Notice::CwxAppHandler4Notice(CwxAppFramework* app, CwxAppReactor *reactor)
-:CwxAppHandler4Base(app, reactor)
+:CwxAppHandler4Base(reactor)
 {
+    m_pApp = app;
 }
 ///析构函数
 CwxAppHandler4Notice::~CwxAppHandler4Notice()

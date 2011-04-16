@@ -28,7 +28,6 @@ CWINUX_BEGIN_NAMESPACE
 
 class CwxAppReactor;
 class CwxAppEpoll;
-class CwxAppFramework;
 class CWX_API CwxAppHandler4Base{
 public:
     ///定义事件类型
@@ -68,10 +67,6 @@ public :
     ///handle close
     virtual int close(CWX_HANDLE handle=CWX_INVALID_HANDLE)=0;
 public:
-    ///设置app
-    void setApp(CwxAppFramework* app);
-    ///获取app 
-    CwxAppFramework* getApp();
     ///设置handle的reactor
     void reactor (CwxAppReactor *reactor);
     ///获取handle的reactor.
@@ -86,6 +81,10 @@ public:
     int getType() const;
     ///获取注册类型
     int getRegType() const;
+    ///设置注册类型
+    void setRegType(int type);
+    ///设置超时时间
+    void setTimeout(CWX_UINT64 ullTimeout);
     ///获取超时时间
     CWX_UINT64 getTimeout() const;
     ///获取heap中的index
@@ -96,16 +95,10 @@ public:
     bool operator<(CwxAppHandler4Base const& base) const;
 protected:
     /// Force CwxAppHandler4Base to be an abstract base class.
-    CwxAppHandler4Base (CwxAppFramework* app, CwxAppReactor *reactor);
+    CwxAppHandler4Base (CwxAppReactor *reactor);
     friend class CwxAppReactor;
     friend class CwxAppEpoll;
-    friend class CwxAppFramework;
-    ///设置注册类型
-    void setRegType(int type);
-    ///设置超时时间
-    void setTimeout(CWX_UINT64 ullTimeout);
 private:
-    CwxAppFramework*       m_pApp;
     CwxAppReactor *        m_reactor; ///<reactor对象的指针
     int                    m_regType; ///<handler的reactor注册类型
     CWX_HANDLE             m_handler; ///<事件的io handle

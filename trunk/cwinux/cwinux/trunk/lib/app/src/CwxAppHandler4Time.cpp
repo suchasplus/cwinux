@@ -6,8 +6,9 @@ CWINUX_BEGIN_NAMESPACE
 CwxAppHandler4Time::CwxAppHandler4Time(CwxAppFramework* pApp,
                                        CwxAppReactor* reactor,
                                        CwxTimeValue const& internal)
-:CwxAppHandler4Base(pApp, reactor),m_internal(internal)
+:CwxAppHandler4Base(reactor),m_internal(internal)
 {
+    m_pApp = pApp;
 }
 
 CwxAppHandler4Time::~CwxAppHandler4Time()

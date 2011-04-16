@@ -5,8 +5,9 @@ CWINUX_BEGIN_NAMESPACE
 
 ///¹¹Ôìº¯Êý
 CwxAppHandler4IoEvent::CwxAppHandler4IoEvent(CwxAppFramework* app, CwxAppReactor *reactor)
-:CwxAppHandler4Base(app, reactor)
+:CwxAppHandler4Base(reactor)
 {
+    m_pApp = app;
     m_uiSvrId = 0;
     m_uiHostId = 0;
     m_ioEventMask = 0;

@@ -98,9 +98,16 @@ public:
     {
         m_userData = userData;
     }
+    ///获取app
+    CwxAppFramework* getApp()
+    {
+        return m_pApp;
+    }
+
 public:
     CwxAppHandler4IoEvent* m_next;
 private:
+    CwxAppFramework* m_pApp;
     CWX_UINT32   m_uiSvrId;///<Handle的svr id
     CWX_UINT32   m_uiHostId;///<Handle的host id
     CWX_UINT16   m_ioEventMask;///<Handle的事件监测掩码

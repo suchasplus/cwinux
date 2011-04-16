@@ -113,10 +113,16 @@ public:
     bool isEmpty() const;
     ///获取连接时的错误代码
     int getConnErrNo() const;
+    ///获取app
+    CwxAppFramework* getApp()
+    {
+        return m_pApp;
+    }
 private:
     ///以非阻塞的方式，发送消息。返回值,-1: failure; 0: not send all;1:send a msg
     inline int nonBlockSend();
 protected:
+    CwxAppFramework* m_pApp;
     CwxMsgHead          m_header;
     CwxAppConnInfo         m_conn;///<connection information
     CWX_UINT32             m_uiSendByte; ///the sent bytes number for current message.

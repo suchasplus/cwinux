@@ -1,14 +1,5 @@
 CWINUX_BEGIN_NAMESPACE
 
-inline void CwxAppHandler4Base::setApp(CwxAppFramework* app)
-{
-    m_pApp = app;
-}
-///获取app
-inline CwxAppFramework* CwxAppHandler4Base::getApp()
-{
-    return m_pApp;
-}
 ///获取app
 ///设置handle的reactor
 inline void CwxAppHandler4Base::reactor (CwxAppReactor *reactor)

@@ -52,7 +52,14 @@ public:
     virtual int handle_event(int event, CWX_HANDLE handle=CWX_INVALID_HANDLE);
     ///handle close
     virtual int close(CWX_HANDLE handle=CWX_INVALID_HANDLE);
+public:
+    ///ªÒ»°app
+    CwxAppFramework* getApp()
+    {
+        return m_pApp;
+    }
 private:
+    CwxAppFramework* m_pApp;
 };
 
 CWINUX_END_NAMESPACE
