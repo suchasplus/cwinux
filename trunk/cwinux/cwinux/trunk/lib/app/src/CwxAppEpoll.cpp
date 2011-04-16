@@ -305,7 +305,7 @@ CwxAppHandler4Base* CwxAppEpoll::removeSignal(int signum)
     {
         CWX_ASSERT(0);
         CWX_ERROR(("Epoll engine not support signal"));
-        return -1;
+        return NULL;
     }
     if ((signum < 0) || (signum >= CWX_APP_MAX_SIGNAL_ID))
     {
