@@ -135,7 +135,7 @@ public:
     @param [in] bOnce 是否只执行一次
     @return -1：失败；0：成功
     */
-    int poll(REACTOR_CALLBACK callback, void* arg, bool bOnce=false);
+    int poll(REACTOR_CALLBACK callback, void* arg);
     ///停止运行
     void stop();
 private:

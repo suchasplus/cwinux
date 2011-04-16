@@ -451,7 +451,7 @@ int CwxAppEpoll::forkReinit()
 }
 
 
-int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg, bool bOnce)
+int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg)
 {
     int i = 0;
     int num = 0;
