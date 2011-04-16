@@ -48,7 +48,7 @@ public:
     };
     typedef int (*REACTOR_EVENT_HOOK)(void *);
     ///构造函数
-    CwxAppReactor(bool bEnableSig=false);
+    CwxAppReactor(bool bEnableSig=true);
     ///析构函数
     ~CwxAppReactor();
 public:

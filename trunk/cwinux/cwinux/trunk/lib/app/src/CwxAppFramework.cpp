@@ -919,7 +919,7 @@ int CwxAppFramework::initRunEnv()
     regNoticeFunc();
     //create the notice handle
     m_pNoticeHandler = new CwxAppHandler4Notice(this, m_pReactor);
-    m_pReactor = new CwxAppReactor();
+    m_pReactor = new CwxAppReactor(true);
     if (0 != m_pReactor->open(m_pNoticeHandler))
     {
         CWX_ERROR(("Failure to invoke CwxAppReactor::open()"));
