@@ -48,6 +48,7 @@ int CwxAppReactor::open(CwxAppHandler4Base* noticeHandler)
         CWX_ERROR(("Can't re-open the openning reactor"));
         return -1;
     }
+    m_bStop = false;
     ///设置reactor的owner
     m_owner = CwxThread::self();
     ///清理reactor

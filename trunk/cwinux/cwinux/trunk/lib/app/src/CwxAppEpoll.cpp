@@ -34,7 +34,7 @@ CwxAppEpoll::~CwxAppEpoll()
     {
         if (m_eHandler[i].m_handler)
         {
-            removeHandler(i);
+//            removeHandler(i);
             delete m_eHandler[i].m_handler;
         }
     }
