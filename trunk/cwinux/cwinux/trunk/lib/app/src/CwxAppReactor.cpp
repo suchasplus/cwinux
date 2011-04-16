@@ -149,7 +149,8 @@ int CwxAppReactor::run(REACTOR_EVENT_HOOK hook,
         ///等待其他的线程执行各种操作。
         m_rwLock.acquire_write();
         m_rwLock.release();
-    }while(!m_bStop && !bOnce)
+    }
+    while(!m_bStop && !bOnce)
     return ret;
 }
 
