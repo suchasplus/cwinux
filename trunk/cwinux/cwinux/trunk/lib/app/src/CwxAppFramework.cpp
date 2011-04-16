@@ -5,7 +5,8 @@
 CWINUX_BEGIN_NAMESPACE
 
 CwxAppFramework::CwxAppFramework(CWX_UINT16 unAppMode,
-                  CWX_UINT32 uiMaxTaskNum)
+                  CWX_UINT32 uiMaxTaskNum,
+                  CWX_UINT32 uiRawBufSize)
                   :m_unAppMode(unAppMode),
                   m_taskBoard(uiMaxTaskNum)
 {
@@ -14,6 +15,10 @@ CwxAppFramework::CwxAppFramework(CWX_UINT16 unAppMode,
     m_strVersion = "unknown";
     m_strLastModifyDatetime = "unknown";
     m_strLastCompileDatetime = "unknown";
+    m_szRawBuf = NULL;
+    m_uiRawBufSize = uiRawBufSize;
+    if (m_uiRawBufSize < 4096) m_uiRawBufSize = 4096;
+    if (m_uiRawBufSize > 64 * 1024 * 1024) m_uiRawBufSize = 64 * 1024 * 1024;
     m_pStdIoHandler = NULL;
     m_pTimeHandler = NULL;
     m_pNoticeHandler = NULL;
@@ -175,7 +180,6 @@ int CwxAppFramework::noticeTcpListen(CWX_UINT32 uiSvrId,
                                   char const* szAddr,
                                   CWX_UINT16 unPort,
                                   bool bRawData,
-                                  CWX_UINT32 uiRecvRawLen,
                                   bool bKeepAlive,
                                   CWX_UINT16 unMode,
                                   CWX_UINT32 uiSockSndBuf,
@@ -198,7 +202,6 @@ int CwxAppFramework::noticeTcpListen(CWX_UINT32 uiSvrId,
         uiSvrId,
         uiListenId,
         bRawData,
-        uiRecvRawLen,
         bRawData?false:bKeepAlive,
         unMode,
         uiSockSndBuf,
@@ -245,7 +248,6 @@ int CwxAppFramework::noticeTcpListen(CWX_UINT32 uiSvrId,
 int CwxAppFramework::noticeLsockListen(CWX_UINT32 uiSvrId,
                    char const* szPathFile,
                    bool bRawData ,
-                   CWX_UINT32 uiRecvRawLen,
                    bool bKeepAlive,
                    CWX_UINT16 unMode)
 {
@@ -265,7 +267,6 @@ int CwxAppFramework::noticeLsockListen(CWX_UINT32 uiSvrId,
         uiSvrId,
         uiListenId,
         bRawData,
-        uiRecvRawLen,
         bRawData?false:bKeepAlive,
         unMode);
     unixAddr.set(szPathFile);
@@ -305,7 +306,6 @@ int CwxAppFramework::noticeTcpConnect(CWX_UINT32 uiSvrId,
                   char const* szAddr,
                   CWX_UINT16 unPort,
                   bool bRawData,
-                  CWX_UINT32 uiRecvRawLen,
                   bool bKeepAlive,
                   CWX_UINT16 unMinRetryInternal,
                   CWX_UINT16 unMaxRetryInternal,
@@ -326,7 +326,6 @@ int CwxAppFramework::noticeTcpConnect(CWX_UINT32 uiSvrId,
     handle->setConnectAddr(szAddr);
     handle->setConnectPort(unPort);
     handle->getConnInfo().setRawData(bRawData);
-    handle->getConnInfo().setRawRecvLen(uiRecvRawLen);
     handle->getConnInfo().setKeepalive(bRawData?false:bKeepAlive);
     handle->getConnInfo().setMinRetryInternal(unMinRetryInternal);
     handle->getConnInfo().setMaxRetryInternal(unMaxRetryInternal);
@@ -352,7 +351,6 @@ int CwxAppFramework::noticeLsockConnect(CWX_UINT32 uiSvrId,
                     CWX_UINT32 uiHostId,
                     char const* szPathFile,
                     bool bRawData,
-                    CWX_UINT32 uiRecvRawLen,
                     bool bKeepAlive,
                     CWX_UINT16 unMinRetryInternal,
                     CWX_UINT16 unMaxRetryInternal)
@@ -369,7 +367,6 @@ int CwxAppFramework::noticeLsockConnect(CWX_UINT32 uiSvrId,
     handle->getConnInfo().setHostId(uiHostId);
     handle->setConnectPathFile(szPathFile);
     handle->getConnInfo().setRawData(bRawData);
-    handle->getConnInfo().setRawRecvLen(uiRecvRawLen);
     handle->getConnInfo().setKeepalive(bRawData?false:bKeepAlive);
     handle->getConnInfo().setMinRetryInternal(unMinRetryInternal);
     handle->getConnInfo().setMaxRetryInternal(unMaxRetryInternal);
@@ -393,7 +390,6 @@ int CwxAppFramework::noticeHandle4Msg(CWX_UINT32 uiSvrId,
                 CWX_UINT32 uiHostId,
                 CWX_HANDLE ioHandle,
                 bool bRawData,
-                CWX_UINT32 uiRawDataLen,
                 bool bKeepAlive,
                 void* userData
                 )
@@ -411,7 +407,6 @@ int CwxAppFramework::noticeHandle4Msg(CWX_UINT32 uiSvrId,
     handle->getConnInfo().setSvrId(uiSvrId);
     handle->getConnInfo().setHostId(uiHostId);
     handle->getConnInfo().setRawData(bRawData);
-    handle->getConnInfo().setRawRecvLen(uiRawDataLen);
     handle->getConnInfo().setKeepalive(bRawData?false:bKeepAlive);
     handle->getConnInfo().setConnId(uiConnId);
     handle->setHandle(ioHandle);
@@ -884,6 +879,13 @@ void CwxAppFramework::unblockSignal(int signal)
 
 int CwxAppFramework::initRunEnv()
 {
+    if (m_szRawBuf) delete [] m_szRawBuf;
+    m_szRawBuf = new char[m_uiRawBufSize];
+    if (!m_szRawBuf)
+    {
+        CWX_ERROR(("Failure to malloc raw recv buf, size:%d", m_uiRawBufSize));
+        return -1;
+    }
     if (!this->m_strWorkDir.length()){
         CWX_ERROR(("Must set work directory."));
         return -1;
@@ -1120,6 +1122,10 @@ void CwxAppFramework::destroy()
         delete m_pThreadPoolMgr;
         m_pThreadPoolMgr = NULL;
     }
+    if (m_szRawBuf) delete [] m_szRawBuf;
+    m_szRawBuf = NULL;
+    m_uiRawBufSize = 0;
+
     m_pTss = NULL;
     m_bStopped = false;
     m_bEnableHook = false;

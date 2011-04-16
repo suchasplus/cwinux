@@ -42,7 +42,7 @@
 #define CWX_APP_MAX_TASK_NUM  4096 ///<Taskboard中最大的Task数量
 #define CWX_APP_DEF_LOG_FILE_SIZE  1024 * 1024 * 20 ///<缺省的日志文件大小
 #define CWX_APP_DEF_LOG_FILE_NUM   7 ///<缺省的日志文件数量
-#define CWX_APP_DEF_RAW_BUF_LEN   1024 ///<缺省Raw stream's recv buf size
+#define CWX_APP_DEF_RAW_BUF_LEN   8192 ///<缺省Raw stream's recv buf size
 
 #define CWX_APP_DEF_BACKLOG_NUM   8192
 

@@ -111,7 +111,8 @@ public:
     @param [in] uiMaxTaskNum Taskboard中管理的TASK的最大值
     */
     CwxAppFramework(CWX_UINT16 unAppMode=CwxAppFramework::APP_MODE_TWIN,
-        CWX_UINT32 uiMaxTaskNum=CWX_APP_MAX_TASK_NUM);
+        CWX_UINT32 uiMaxTaskNum=CWX_APP_MAX_TASK_NUM,
+        CWX_UINT32 uiRawBufSize = CWX_APP_DEF_RAW_BUF_LEN);
     ///析构函数
     virtual ~CwxAppFramework();
     /**
@@ -135,7 +136,6 @@ public:
     @param [in] unPort 监听的端口号
     @param [in] bRawData 此监听地址所建立的连接的上接受的数据，是否具有包头<br>
     true：具有包头；false：没有包头
-    @param [in] uiRecvRawLen 在消息没有包头的情况下，每次接受数据的最大buf，缺省1024字节。
     @param [in] bKeepAlive 建立的连接，是否要发送keep alive消息，以检查连接是否有效。
     @param [in] unMode Framework对连接的管理方式，<br>
             CWX_APP_MSG_MODE表示有架构负责消息的收发；<br>
@@ -148,7 +148,6 @@ public:
         char const* szAddr,
         CWX_UINT16 unPort,
         bool bRawData = false,
-        CWX_UINT32 uiRecvRawLen=CWX_APP_DEF_RAW_BUF_LEN,
         bool bKeepAlive=false,
         CWX_UINT16 unMode=CWX_APP_MSG_MODE,
         CWX_UINT32 uiSockSndBuf = 0,
@@ -159,7 +158,6 @@ public:
     @param [in] szPathFile local ipc对应的文件
     @param [in] bRawData 此监听地址所建立的连接的上接受的数据，是否具有包头<br>
     true：具有包头；false：没有包头
-    @param [in] uiRecvRawLen 在消息没有包头的情况下，每次接受数据的最大buf，缺省1024字节。
     @param [in] bKeepAlive 对建立的连接，是否执行KeepAlive.
     @param [in] unMode Framework对连接的管理方式，<br>
             CWX_APP_MSG_MODE表示有架构负责消息的收发；<br>
@@ -169,7 +167,6 @@ public:
     int noticeLsockListen(CWX_UINT32 uiSvrId,
         char const* szPathFile,
         bool bRawData = false,
-        CWX_UINT32 uiRecvRawLen=CWX_APP_DEF_RAW_BUF_LEN,
         bool bKeepAlive = false,
         CWX_UINT16 unMode=CWX_APP_MSG_MODE);
     /**
@@ -179,7 +176,6 @@ public:
     @param [in] szAddr 连接的IP地址。
     @param [in] unPort 连接的端口号。
     @param [in] bRawData 此连接上接受的数据，是否具有包头.true：具有包头；false：没有包头
-    @param [in] uiRecvRawLen 在消息没有包头的情况下，每次接受数据的最大buf，缺省1024字节。
     @param [in] bKeepAlive 对建立的连接，是否执行KeepAlive.
     @param [in] unMinRetryInternal 连接失败时的最小连接间隔.
     @param [in] unMaxRetryInternal 连接失败时的最大连接间隔.
@@ -192,7 +188,6 @@ public:
         char const* szAddr,
         CWX_UINT16 unPort,
         bool bRawData = false,
-        CWX_UINT32 uiRecvRawLen=CWX_APP_DEF_RAW_BUF_LEN,
         bool bKeepAlive = true,
         CWX_UINT16 unMinRetryInternal = 1,
         CWX_UINT16 unMaxRetryInternal = 60,
@@ -204,7 +199,6 @@ public:
     @param [in] uiHostId 设定连接的Host ID。
     @param [in] szPathFile local IPC连接对应的本地文件。
     @param [in] bRawData 此连接上接受的数据，是否具有包头. true：具有包头；false：没有包头
-    @param [in] uiRecvRawLen 在消息没有包头的情况下，每次接受数据的最大buf，缺省1024字节。
     @param [in] bKeepAlive 对建立的连接，是否执行KeepAlive.
     @param [in] unMinRetryInternal 连接失败时的最小连接间隔.
     @param [in] unMaxRetryInternal 连接失败时的最大连接间隔.
@@ -214,7 +208,6 @@ public:
         CWX_UINT32 uiHostId,
         char const* szPathFile,
         bool bRawData = false,
-        CWX_UINT32 uiRecvRawLen=CWX_APP_DEF_RAW_BUF_LEN,
         bool bKeepAlive = true,
         CWX_UINT16 unMinRetryInternal = 1,
         CWX_UINT16 unMaxRetryInternal = 60);
@@ -224,7 +217,6 @@ public:
     @param [in] uiHostId 设定连接的Host ID。
     @param [in] handle IO handle。
     @param [in] bRawData 此连接上接受的数据，是否具有包头. true：具有包头；false：没有包头.
-    @param [in] uiRecvRawLen 在消息没有包头的情况下，每次接受数据的最大buf，缺省1024字节。
     @param [in] bKeepAlive 对建立的连接，是否执行KeepAlive.
     @param [in] userData 与此链接相关的用户数据
     @param [in] pPai 通信数据适配器对象
@@ -234,7 +226,6 @@ public:
         CWX_UINT32 uiHostId,
         CWX_HANDLE handle,
         bool bRawData = false,
-        CWX_UINT32 uiRecvRawLen=CWX_APP_DEF_RAW_BUF_LEN,
         bool bKeepAlive = false,
         void* userData = NULL
         );
@@ -524,6 +515,10 @@ public:
     CWX_UINT16 getLogCheckSecond() const ;
     ///设置Log的check间隔
     void setLogCheckSecond(CWX_UINT16 unSecond) ;
+    ///获取raw buf的大小
+    CWX_UINT32 getRawRecvBufSize() const;
+    ///获取raw buf的空间
+    char* getRawRecvBuf();
     ///获取是否在debug模式
     bool isDebug() const;
     ///设置debug模式
@@ -621,6 +616,8 @@ private:
     string                     m_strVersion;///<程序的版本号
     string                     m_strLastModifyDatetime;///<程序的最后修改时间
     string                     m_strLastCompileDatetime;///<程序的编译时间
+    CWX_UINT32                 m_uiRawBufSize;
+    char*                      m_szRawBuf;
     CwxAppHandler4StdIo*        m_pStdIoHandler;///<接收标准输入的Handle
     CwxAppHandler4Time*         m_pTimeHandler; ///<时钟事件的handler
     CwxAppHandler4Notice*       m_pNoticeHandler; ///<处理通知事件的Handle

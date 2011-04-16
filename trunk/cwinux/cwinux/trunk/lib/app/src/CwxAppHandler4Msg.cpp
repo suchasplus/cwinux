@@ -252,9 +252,8 @@ int CwxAppHandler4Msg::handle_input ()
     {
         if (this->m_conn.isRawData())
         {//recv raw data
-            need_size = this->m_conn.getRawRecvLen();
-            this->m_recvMsgData = CwxMsgBlockAlloc::malloc(need_size);
-            recv_size = CwxSocket::recv(getHandle(), this->m_recvMsgData->wr_ptr(), need_size);
+            need_size = this->getApp()->getRawRecvBufSize();
+            recv_size = CwxSocket::recv(getHandle(), this->getApp()->getRawRecvBuf(), need_size);
             if (recv_size <=0 )
             { //error or signal
                 if ((0 == recv_size) || (errno != EWOULDBLOCK))
@@ -267,6 +266,9 @@ int CwxAppHandler4Msg::handle_input ()
                     return 0;
                 }
             }
+            CWX_ASSERT(!m_recvMsgData);
+            this->m_recvMsgData = CwxMsgBlockAlloc::malloc(recv_size);
+            memcpy(m_recvMsgData->wr_ptr(), this->getApp()->getRawRecvBuf(), recv_size);
             //move write pointer
             this->m_recvMsgData->wr_ptr(recv_size);
             bSuspend = false;

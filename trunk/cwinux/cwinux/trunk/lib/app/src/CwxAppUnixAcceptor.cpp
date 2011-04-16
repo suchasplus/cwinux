@@ -9,7 +9,6 @@ CwxAppUnixAcceptor::CwxAppUnixAcceptor(CwxAppFramework* pApp,
                    CWX_UINT32 uiSvrId, ///<connect's svr-id
                    CWX_UINT32 uiListenId, ///<acceptor's listen id
                    bool      bRawData, ///<connect's msg having header
-                   CWX_UINT32 uiRawRecvLen, ///<read buf for without header's package
                    bool      bKeepAlive, ///<keep alive
                    CWX_UINT16 unMode
                    )
@@ -19,7 +18,6 @@ CwxAppUnixAcceptor::CwxAppUnixAcceptor(CwxAppFramework* pApp,
     m_uiSvrId = uiSvrId;
     m_uiListenId = uiListenId;
     m_bRawData = bRawData;
-    m_uiRawRecvLen = uiRawRecvLen;
     m_bKeepAlive = bKeepAlive;
     m_unMode = unMode;
     m_bCloseAll = false;
@@ -163,7 +161,6 @@ CwxAppHandler4UnixConn* CwxAppUnixAcceptor::makeHander()
     ch->getConnInfo().setActiveConn(false);
     ch->getConnInfo().setKeepalive(this->m_bKeepAlive);
     ch->getConnInfo().setRawData(this->m_bRawData);
-    ch->getConnInfo().setRawRecvLen(this->m_uiRawRecvLen);
     ch->setConnectPathFile(m_strPathFile.c_str());
     return ch;
 }

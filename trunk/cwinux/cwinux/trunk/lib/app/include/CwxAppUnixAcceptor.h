@@ -50,7 +50,6 @@ public:
         CWX_UINT32 uiSvrId, ///<connect's svr-id
         CWX_UINT32 uiListenId, ///<acceptor's listen id
         bool      bRawData = false, ///<connect's msg having header
-        CWX_UINT32 uiRawRecvLen = CWX_APP_DEF_RAW_BUF_LEN, ///<read buf for without header's package
         bool      bKeepAlive = true, ///<keep alive
         CWX_UINT16 unMode = CWX_APP_MSG_MODE
         );
@@ -85,11 +84,6 @@ public:
     {
         return m_bRawData;
     }
-    ///read buf for without header's package
-    CWX_UINT32 getRawRecvLen() const
-    {
-        return m_uiRawRecvLen;
-    }
     ///get conn mode
     CWX_UINT16 getConnMode() const
     {
@@ -112,7 +106,6 @@ private:
     CWX_UINT32	    m_uiSvrId;///<建立连接的svr-id
     CWX_UINT32     m_uiListenId;///<unix-domain 连接监听的监听ID
     bool           m_bRawData;///<建立的连接是否按无格式数据流的方式接受
-    CWX_UINT32     m_uiRawRecvLen;///<若是无格式数据流，则为接受buffer大小
     bool           m_bKeepAlive;///<建立的连接是否需要执行keep-alive check
     CWX_UINT16     m_unMode;///<架构负责建立连接数据接收，还是只检测连接的事件
     bool           m_bCloseAll;///<listen关闭的时候，是否关闭其所建立的连接

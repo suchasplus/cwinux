@@ -130,15 +130,6 @@ inline void CwxAppConnInfo::setRawData(bool bRaw)
     m_bRawData = bRaw;
 }
 
-///获取无包头连接的数据接收BUF
-inline CWX_UINT32  CwxAppConnInfo::getRawRecvLen() const
-{
-    return m_uiRawRecvLen;
-}
-inline void CwxAppConnInfo::setRawRecvLen(CWX_UINT32 uiLen)
-{
-    m_uiRawRecvLen = uiLen;
-}
 
 ///获取连接是否需要主动监测KEEP-ALIVE
 inline bool CwxAppConnInfo::isKeepalive() const 

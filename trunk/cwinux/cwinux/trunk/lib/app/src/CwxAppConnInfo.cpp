@@ -14,7 +14,6 @@ CwxAppConnInfo::CwxAppConnInfo()
     m_bActiveConn = false;
     m_bActiveClose = false;
     m_bRawData = false;
-    m_uiRawRecvLen = 2048;
     m_bKeepAlive = true;
     m_ttLastRecvMsgTime = 0;
     m_ttLastSendMsgTime = 0;

@@ -104,10 +104,6 @@ public:
     bool isRawData() const ;
     ///设置连接的数据包是raw格式
     void setRawData(bool bRaw);
-    ///获取无包头连接的数据接收BUF
-    CWX_UINT32  getRawRecvLen() const;
-    ///获取无包头连接的数据接收buf
-    void setRawRecvLen(CWX_UINT32 uiLen);
     ///获取连接是否需要主动监测KEEP-ALIVE
     bool isKeepalive() const;
     ///设置连接是否需要主动监测KEEP-ALIVE
@@ -196,7 +192,6 @@ private:
     bool               m_bActiveConn; ///< sign for active connection.
     bool               m_bActiveClose; ///< sign for close connection by user.
     bool               m_bRawData; ///< sign for raw data connection
-    CWX_UINT32          m_uiRawRecvLen; ///<max len for per-recieve
     bool               m_bKeepAlive; ///<sign for keep alive
     time_t             m_ttLastRecvMsgTime;///<last recv msg time
     time_t             m_ttLastSendMsgTime;///<last send msg time
