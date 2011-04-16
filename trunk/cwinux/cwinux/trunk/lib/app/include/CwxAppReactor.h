@@ -68,11 +68,13 @@ public:
     @param [in] hook hook函数
     @param [in] arg hook函数的参数。
     @param [in] bOnce 是否只运行一次。
+    @param [in] uiMiliTimeout 超时的毫秒数，0表示一直阻塞到事件发生。
     @return -1：失败；0：正常退出
     */
     int run(REACTOR_EVENT_HOOK hook=NULL,
         void* arg=NULL,
-        bool  bOnce=false);
+        bool  bOnce=false,
+        CWX_UINT32 uiMiliTimeout=0);
     /**
     @brief 停止架构事件的循环处理，多线程安全，任意线程都可以调用。
     @return -1：失败；0：正常退出

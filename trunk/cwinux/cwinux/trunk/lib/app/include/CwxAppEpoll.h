@@ -132,10 +132,10 @@ public:
     @brief 检测事件。
     @param [in] callback 事件的回调函数
     @param [in] arg 回调函数的参数
-    @param [in] bOnce 是否只执行一次
+    @param [in] uiMiliTimeout 超时的毫秒数，0表示一直阻塞到事件发生。
     @return -1：失败；0：成功
     */
-    int poll(REACTOR_CALLBACK callback, void* arg);
+    int poll(REACTOR_CALLBACK callback, void* arg, CWX_UINT32 uiMiliTimeout=0);
     ///停止运行
     void stop();
 private:

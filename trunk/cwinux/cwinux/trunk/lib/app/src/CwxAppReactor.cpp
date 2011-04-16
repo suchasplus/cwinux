@@ -109,7 +109,8 @@ int CwxAppReactor::close()
 */
 int CwxAppReactor::run(REACTOR_EVENT_HOOK hook,
                        void* arg,
-                       bool  bOnce)
+                       bool  bOnce,
+                       CWX_UINT32 uiMiliTimeout)
 {
 
     int ret = 0;

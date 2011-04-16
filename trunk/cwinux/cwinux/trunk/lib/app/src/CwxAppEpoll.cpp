@@ -451,7 +451,7 @@ int CwxAppEpoll::forkReinit()
 }
 
 
-int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg)
+int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg, CWX_UINT32 uiMiliTimeout)
 {
     int i = 0;
     int num = 0;
@@ -462,6 +462,11 @@ int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg)
     CwxAppHandler4Base* handler = NULL;
     ///计算超时时间
     timeout(ullTimeout);
+    if (uiMiliTimeout)
+    {
+        uiMiliTimeout *=1000;
+        if (!ullTimeout || (ullTimeout > uiMiliTimeout)) ullTimeout = uiMiliTimeout;
+    }
     if (!ullTimeout)
     {
         tv = -1;
