@@ -5,8 +5,9 @@ CWINUX_BEGIN_NAMESPACE
 
 
 CwxAppHandler4Msg::CwxAppHandler4Msg(CwxAppFramework* pApp, CwxAppReactor *reactor)
-:CwxAppHandler4Base(pApp, reactor)
+:CwxAppHandler4Base(reactor)
 {
+    m_pApp = pApp;
     m_conn.setHandler(this);
     m_uiSendByte = 0;
     m_curSndingMsg = 0;
