@@ -5,9 +5,8 @@
 CWINUX_BEGIN_NAMESPACE
 
 /// Force CwxAppHandler4Base to be an abstract base class.
-CwxAppHandler4Base::CwxAppHandler4Base (CwxAppFramework* pApp, CwxAppReactor * reactor)
+CwxAppHandler4Base::CwxAppHandler4Base (CwxAppReactor * reactor)
 {
-    m_pApp = pApp;
     m_reactor = reactor;
     m_handler = CWX_INVALID_HANDLE;
     m_type = CWX_APP_HANDLE_UNKNOW;
