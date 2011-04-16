@@ -99,9 +99,15 @@ public:
     {
         m_bCloseAll = bCloseAll;
     }
+    ///获取app
+    CwxAppFramework* getApp()
+    {
+        return m_pApp;
+    }
 private:
     CwxAppHandler4UnixConn* makeHander();
 private:
+    CwxAppFramework* m_pApp;
     string         m_strPathFile;///<unix-domain的路径文件
     CWX_UINT32	    m_uiSvrId;///<建立连接的svr-id
     CWX_UINT32     m_uiListenId;///<unix-domain 连接监听的监听ID

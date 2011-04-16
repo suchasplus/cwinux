@@ -16,8 +16,9 @@ CwxAppTcpAcceptor::CwxAppTcpAcceptor(CwxAppFramework* pApp,///<
                   CWX_UINT32 uiSockSndBuf,
                   CWX_UINT32 uiSockRecvBuf
                   )
-                  :CwxAppHandler4Base(pApp, reactor)
+                  :CwxAppHandler4Base(reactor)
 {
+    m_pApp = pApp;
     m_strAddr = szAddr;
     m_unPort = unPort;
     m_uiSvrId = uiSvrId;

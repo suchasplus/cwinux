@@ -12,8 +12,9 @@ CwxAppUnixAcceptor::CwxAppUnixAcceptor(CwxAppFramework* pApp,
                    bool      bKeepAlive, ///<keep alive
                    CWX_UINT16 unMode
                    )
-                   :CwxAppHandler4Base(pApp, reactor)
+                   :CwxAppHandler4Base(reactor)
 {
+    m_pApp = pApp;
     m_strPathFile = szPathFile;
     m_uiSvrId = uiSvrId;
     m_uiListenId = uiListenId;

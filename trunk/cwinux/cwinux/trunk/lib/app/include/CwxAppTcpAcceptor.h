@@ -121,9 +121,15 @@ public:
     {
         m_bCloseAll = bCloseAll;
     }
+    ///获取app
+    CwxAppFramework* getApp()
+    {
+        return m_pApp;
+    }
 private:
     CwxAppHandler4TcpConn* makeHander();
 private:
+    CwxAppFramework* m_pApp;
     string         m_strAddr;///<监听的地址
     CWX_UINT16     m_unPort;///<监听的端口号
     CWX_UINT32	    m_uiSvrId;///<建立连接的svr-id
