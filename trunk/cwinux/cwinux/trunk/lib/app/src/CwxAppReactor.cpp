@@ -113,11 +113,15 @@ int CwxAppReactor::run(REACTOR_EVENT_HOOK hook,
 {
 
     int ret = 0;
-    if (!m_bStop || !m_engine)
+    if (!bOnce)
     {
-        CWX_ERROR(("CwxAppReactor::open() must be invoke before CwxAppReactor::run()"));
-        return -1;
+        if (!m_bStop || !m_engine)
+        {
+            CWX_ERROR(("CwxAppReactor::open() must be invoke before CwxAppReactor::run()"));
+            return -1;
+        }
     }
+    m_bStop = false;
 
     do
     {
