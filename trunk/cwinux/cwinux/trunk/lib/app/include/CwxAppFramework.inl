@@ -288,7 +288,7 @@ inline int CwxAppFramework::openConn(CwxAppHandler4Msg& conn, bool& bStopListen)
         CWX_ERROR(("Failure to register_handler."));
         return -1;
     }
-    if (addRegConnMap(conn.getConnInfo().getConnId(),&conn)
+    if (addRegConnMap(conn.getConnInfo().getConnId(),&conn))
     {
         CWX_ERROR(("Failure to add handler to conn map"));
         return -1;
