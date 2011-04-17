@@ -510,6 +510,7 @@ int CwxAppFramework::noticeSuspendListen(CWX_UINT32 uiListenId){
 }
 
 int CwxAppFramework::noticeResumeConn(CWX_UINT32 uiConnId){
+    CwxAppHandler4Base* handler = 
     if (!m_pReactor->resumeHandlerByConnId(uiConnId, CwxAppHandler4Base::READ_MASK))
     {
         CWX_ERROR(("Failure to resume conn[%u]", uiConnId));

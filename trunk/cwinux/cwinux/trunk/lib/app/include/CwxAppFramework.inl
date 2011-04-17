@@ -269,6 +269,10 @@ inline CWX_UINT32 CwxAppFramework::getHandleConnId(CWX_HANDLE handle)
     if (m_pConnMap) return m_pConnMap->getHandleConnId(handle);
     return CWX_APP_INVALID_CONN_ID;
 }
+inline CwxAppHandler4Base* CwxAppFramework::getHandlerbyConnId(CWX_UINT32 uiConnId)
+{
+    return m_pConnMap?m_pConnMap->getHandlerbyConnId(uiConnId):NULL;
+}
 
 
 inline int CwxAppFramework::openConn(CwxAppHandler4Msg& conn, bool& bStopListen)
