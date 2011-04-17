@@ -230,7 +230,7 @@ private:
     int _resumeHandler (CwxAppHandler4Base *event_handler,
         int resume_mask);
     ///删除io事件处理handle。
-    CwxAppHandler4Base* _removeHandler (CWX_HANDLE handle, bool bRemoveConnId=true);
+    CwxAppHandler4Base* _removeHandler (CWX_HANDLE handle);
     ///suspend io事件处理handle。
     int _suspendHandler (CWX_HANDLE handle,
         int suspend_mask);
