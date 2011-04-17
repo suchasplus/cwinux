@@ -5,6 +5,7 @@ CWINUX_BEGIN_NAMESPACE
 inline int CwxAppReactor::registerHandler (CWX_HANDLE io_handle,
                                     CwxAppHandler4Base *event_handler,
                                     int mask,
+                                    CWX_UINT32 uiConnId,
                                     CWX_UINT32 uiMillSecond)
 {
     if (!CwxThread::equal(m_owner, CwxThread::self()))
@@ -14,15 +15,15 @@ inline int CwxAppReactor::registerHandler (CWX_HANDLE io_handle,
         this->notice();
         {
             CwxMutexGuard<CwxMutexLock> lock(&m_lock);
-            ret =  _registerHandler(io_handle, event_handler, mask, uiMillSecond);
+            ret =  _registerHandler(io_handle, event_handler, mask, uiConnId, uiMillSecond);
         }
         m_rwLock.release();
         return ret;
     }
-    return _registerHandler(io_handle, event_handler, mask, uiMillSecond);
+    return _registerHandler(io_handle, event_handler, mask, uiConnId, uiMillSecond);
 }
 ///删除io事件处理handle
-inline int CwxAppReactor::removeHandler (CwxAppHandler4Base *event_handler)
+inline int CwxAppReactor::removeHandler (CwxAppHandler4Base *event_handler, bool bRemoveConnId)
 {
     if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
@@ -31,12 +32,12 @@ inline int CwxAppReactor::removeHandler (CwxAppHandler4Base *event_handler)
         this->notice();
         {
             CwxMutexGuard<CwxMutexLock> lock(&m_lock);
-            ret = _removeHandler(event_handler);
+            ret = _removeHandler(event_handler, bRemoveConnId);
         }
         m_rwLock.release();
         return ret;
     }
-    return _removeHandler(event_handler);
+    return _removeHandler(event_handler, bRemoveConnId);
 }
 
 ///注册IO事件处理handle
@@ -75,7 +76,7 @@ inline int CwxAppReactor::resumeHandler (CwxAppHandler4Base *event_handler, int 
 }
 
 
-inline CwxAppHandler4Base* CwxAppReactor::removeHandler (CWX_HANDLE handle)
+inline CwxAppHandler4Base* CwxAppReactor::removeHandler (CWX_HANDLE handle, bool bRemoveConnId)
 {
     if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
@@ -84,12 +85,12 @@ inline CwxAppHandler4Base* CwxAppReactor::removeHandler (CWX_HANDLE handle)
         this->notice();
         {
             CwxMutexGuard<CwxMutexLock> lock(&m_lock);
-            ret = _removeHandler(handle);
+            ret = _removeHandler(handle, bRemoveConnId);
         }
         m_rwLock.release();
         return ret;
     }
-    return _removeHandler(handle);
+    return _removeHandler(handle, bRemoveConnId);
 }
 
 inline int CwxAppReactor::suspendHandler (CWX_HANDLE handle,
@@ -129,9 +130,84 @@ inline int CwxAppReactor::resumeHandler (CWX_HANDLE handle,
 
 }
 
+inline CwxAppHandler4Base* CwxAppReactor::removeHandlerByConnId (CWX_UINT32 uiConnId, bool bRemoveConnId)
+{
+    if (!CwxThread::equal(m_owner, CwxThread::self()))
+    {
+        CwxAppHandler4Base* ret = NULL;
+        m_rwLock.acquire_read();
+        this->notice();
+        {
+            CwxMutexGuard<CwxMutexLock> lock(&m_lock);
+            ret = _removeHandlerByConnId(uiConnId, bRemoveConnId);
+        }
+        m_rwLock.release();
+        return ret;
+    }
+    return _removeHandlerByConnId(uiConnId, bRemoveConnId);
+}
 
+inline int CwxAppReactor::suspendHandlerByConnId (CWX_UINT32 uiConnId,
+                            int suspend_mask)
+{
+    if (!CwxThread::equal(m_owner, CwxThread::self()))
+    {
+        int ret = 0;
+        m_rwLock.acquire_read();
+        this->notice();
+        {
+            CwxMutexGuard<CwxMutexLock> lock(&m_lock);
+            ret = _suspendHandlerByConnId(uiConnId, suspend_mask);
+        }
+        m_rwLock.release();
+        return ret;
+    }
+    return _suspendHandlerByConnId(uiConnId, suspend_mask);
+}
 
+inline int CwxAppReactor::resumeHandlerByConnId (CWX_UINT32 uiConnId,
+                           int resume_mask)
+{
+    if (!CwxThread::equal(m_owner, CwxThread::self()))
+    {
+        int ret = 0;
+        m_rwLock.acquire_read();
+        this->notice();
+        {
+            CwxMutexGuard<CwxMutexLock> lock(&m_lock);
+            ret =  _resumeHandlerByConnId(uiConnId, resume_mask);
+        }
+        m_rwLock.release();
+        return ret;
 
+    }
+    return _resumeHandlerByConnId(uiConnId, resume_mask);
+}
+
+///从Conn map删除指定的Handler，此时，连接必须没有注册。
+inline CwxAppHandler4Base* CwxAppReactor::removeFromConnMap(CWX_UINT32 uiConnId)
+{
+    CwxMutexGuard<CwxMutexLock> lock(&m_connMapMutex);
+    hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*连接*/>::iterator iter = m_connMap.find(uiConnId);
+    if (iter == m_connMap.end())
+    {
+        CWX_DEBUG(("ConnId[%u]'s handler doesn't exist in conn-map", uiConnId));
+        return NULL ;
+    }
+    CwxAppHandler4Base* handler = iter->second;
+    if (handler->getHandle() != CWX_INVALID_HANDLE)
+    {
+        if (m_engine->m_eHandler[handler->getHandle()].m_handler)
+        {
+            CWX_ERROR(("ConnId[%u]'s handler[%d] is in register state, can't remove from conn-map",
+                uiConnId,
+                (int)handler->getHandle()));
+            return NULL;
+        }
+    }
+    m_connMap.erase(iter);
+    return handler;
+}
 
 ///注册signal事件处理handle
 inline int CwxAppReactor::registerSignal(int signum,
@@ -247,6 +323,20 @@ inline void CwxAppReactor::noticed(CwxAppNotice*& head)
 }
 
 
+inline CWX_UINT32 CwxAppReactor::getNextConnId()
+{
+    CwxMutexGuard<CwxMutexLock> lock(&m_connMapMutex);
+    CWX_UINT32 uiConnId = m_uiCurConnId + 1;
+    while(1)
+    {
+        if (m_connMap.find(uiConnId) == m_connMap.end()) break;
+        uiConnId++;
+        if (uiConnId > CWX_APP_MAX_CONN_ID) uiConnId = CWX_APP_MIN_CONN_ID;
+    }
+    m_uiCurConnId = uiConnId;
+    return uiConnId;
+}
+
 /**
 @brief 检查指定IO的handle是否已经注册。
 @return true：注册；false：没有注册
@@ -256,6 +346,23 @@ inline bool CwxAppReactor::isRegIoHandle(CWX_HANDLE handle)
     return _isRegIoHandle(handle);
 }
 
+
+///根据conn id获取对应的handler
+inline CwxAppHandler4Base* CwxAppReactor::getHandlerByConnId(CWX_UINT32 uiConnId)
+{
+    CWX_ASSERT(CwxThread::equal(m_owner, CwxThread::self()));
+    if (!CwxThread::equal(m_owner, CwxThread::self()))
+    {
+        CWX_ERROR(("Only owner thread can invoke CwxAppReactor::getHandlerByConnId()"));
+        return NULL;
+    }
+    {
+        CwxMutexGuard<CwxMutexLock> lock(&m_connMapMutex);
+        hash_map<CWX_UINT32, CwxAppHandler4Base*>::iterator iter = m_connMap.find(uiConnId);
+        if (iter == m_connMap.end()) return NULL;
+        return iter->second;
+    }
+}
 
 /**
 @brief 检查指定sig的handle是否已经注册。
@@ -301,6 +408,7 @@ inline bool CwxAppReactor::isMask(CWX_HANDLE handle, int mask)
 inline int CwxAppReactor::_registerHandler (CWX_HANDLE io_handle,
                                     CwxAppHandler4Base *event_handler,
                                     int mask,
+                                    CWX_UINT32 uiConnId,
                                     CWX_UINT32 uiMillSecond)
 {
     int ret = 0;
@@ -309,6 +417,13 @@ inline int CwxAppReactor::_registerHandler (CWX_HANDLE io_handle,
         CWX_ERROR(("Handle[%d] exists, conn_id[%d]", (int)io_handle, uiConnId));
         return -1;
     }
+    if ((CWX_APP_INVALID_CONN_ID != uiConnId) 
+        && !enableRegConnMap(uiConnId, event_handler))
+    {
+        CWX_ERROR(("Conn handler with conn_id[%u] exists.", uiConnId));
+        return -1;
+    }
+
     event_handler->setRegType(REG_TYPE_IO);
     event_handler->setHandle(io_handle);
     mask &=CwxAppHandler4Base::IO_MASK; ///只支持READ、WRITE、PERSIST、TIMEOUT四种掩码
@@ -316,7 +431,15 @@ inline int CwxAppReactor::_registerHandler (CWX_HANDLE io_handle,
         event_handler,
         mask,
         uiMillSecond);
-    if (0 != ret)
+    if (0 == ret)
+    {
+        if (uiConnId != CWX_APP_INVALID_CONN_ID)
+        {
+            addRegConnMap(uiConnId, event_handler);
+            m_connId[io_handle] = uiConnId;
+        }
+    }
+    else
     {
         CWX_ERROR(("Failure to add event handler to event-base, handle[%d], conn_id[%u], errno=%d",
             (int)io_handle, 
@@ -327,9 +450,9 @@ inline int CwxAppReactor::_registerHandler (CWX_HANDLE io_handle,
 }
 
 ///删除io事件处理handle
-inline int CwxAppReactor::_removeHandler (CwxAppHandler4Base *event_handler)
+inline int CwxAppReactor::_removeHandler (CwxAppHandler4Base *event_handler, bool bRemoveConnId)
 {
-    return _removeHandler(event_handler->getHandle())?0:-1;
+    return _removeHandler(event_handler->getHandle(), bRemoveConnId)?0:-1;
 }
 
 ///注册IO事件处理handle
@@ -389,7 +512,7 @@ inline int CwxAppReactor::_resumeHandler (CwxAppHandler4Base *event_handler, int
 
 
 ///删除io事件处理handle。
-inline CwxAppHandler4Base* CwxAppReactor::_removeHandler (CWX_HANDLE handle)
+inline CwxAppHandler4Base* CwxAppReactor::_removeHandler (CWX_HANDLE handle, bool bRemoveConnId)
 {
     if (handle >= CWX_APP_MAX_IO_NUM)
     {
@@ -404,6 +527,13 @@ inline CwxAppHandler4Base* CwxAppReactor::_removeHandler (CWX_HANDLE handle)
         CWX_DEBUG(("Handle[%d] doesn't exist", (int)handle));
         return NULL;
     }
+    if (bRemoveConnId && 
+        (m_connId[handle] != CWX_APP_INVALID_CONN_ID))
+    {
+        removeRegConnMap(m_connId[handle]);
+    }
+    m_connId[handle] = CWX_APP_INVALID_CONN_ID;
+
     return handler;
 }
 
@@ -435,6 +565,48 @@ inline int CwxAppReactor::_resumeHandler (CWX_HANDLE handle,
     return m_engine->resumeHandler(handle, resume_mask);
 }
 
+///删除io事件处理handle。
+inline CwxAppHandler4Base* CwxAppReactor::_removeHandlerByConnId (CWX_UINT32 uiConnId,
+                                                                  bool bRemoveConnId)
+{
+    hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*连接对象*/>::iterator iter = m_connMap.find(uiConnId);
+    if (iter == m_connMap.end())
+    {
+        CWX_DEBUG(("ConnId[%u] doesn't exist", uiConnId));
+        return NULL;
+    }
+    CwxAppHandler4Base* handler = iter->second;
+    _removeHandler(handler, bRemoveConnId);
+    return handler;
+}
+
+///suspend io事件处理handle。
+inline int CwxAppReactor::_suspendHandlerByConnId (CWX_UINT32 uiConnId,
+                             int suspend_mask)
+{
+    hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*连接对象*/>::iterator iter = m_connMap.find(uiConnId);
+    if (iter == m_connMap.end())
+    {
+        CWX_DEBUG(("ConnId[%u] doesn't exist", uiConnId));
+        return -1;
+    }
+    CwxAppHandler4Base* handler = iter->second;
+    return _suspendHandler(handler, suspend_mask);
+}
+
+/// resume io事件处理handle。
+inline int CwxAppReactor::_resumeHandlerByConnId (CWX_UINT32 uiConnId,
+                            int resume_mask)
+{
+    hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*连接对象*/>::iterator iter = m_connMap.find(uiConnId);
+    if (iter == m_connMap.end())
+    {
+        CWX_DEBUG(("ConnId[%u] doesn't exist", uiConnId));
+        return -1;
+    }
+    CwxAppHandler4Base* handler = iter->second;
+    return _resumeHandler(handler, resume_mask);
+}
 
 
 ///注册signal事件处理handle
@@ -589,5 +761,38 @@ inline CwxAppHandler4Base* CwxAppReactor::_getSigHandler(int sig)
     return m_engine->m_sHandler[sig];
 
 }
+
+
+inline bool CwxAppReactor::enableRegConnMap(CWX_UINT32 uiConnId, CwxAppHandler4Base* handler)
+{
+    CWX_ASSERT(uiConnId != CWX_APP_INVALID_CONN_ID);
+    {
+        CwxMutexGuard<CwxMutexLock> lock(&m_connMapMutex);
+        hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*连接*/>::iterator iter = m_connMap.find(uiConnId);
+        return ((iter==m_connMap.end())||(iter->second == handler))?true:false;
+    }
+}
+inline void CwxAppReactor::addRegConnMap(CWX_UINT32 uiConnId, CwxAppHandler4Base* handler)
+{
+    CWX_ASSERT(uiConnId != CWX_APP_INVALID_CONN_ID);
+    {
+        CwxMutexGuard<CwxMutexLock> lock(&m_connMapMutex);
+        m_connMap[uiConnId] = handler;
+    }
+}
+
+inline CwxAppHandler4Base* CwxAppReactor::removeRegConnMap(CWX_UINT32 uiConnId)
+{
+    CwxMutexGuard<CwxMutexLock> lock(&m_connMapMutex);
+    CwxAppHandler4Base* handler = NULL;
+    hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*连接对象*/>::iterator iter = m_connMap.find(uiConnId);
+    if (iter != m_connMap.end())
+    {
+        handler = iter->second;
+        m_connMap.erase(iter);
+    }
+    return handler;
+}
+
 
 CWINUX_END_NAMESPACE

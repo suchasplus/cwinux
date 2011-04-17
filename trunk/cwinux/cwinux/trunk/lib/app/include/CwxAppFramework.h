@@ -74,79 +74,6 @@ private:
         CWX_UINT32 m_uiSvrId;
         CWX_UINT32 m_uiHostId;
     };
-    ///连接id到fd的映射对象
-    class ConnMap
-    {
-    public:
-        ConnMap():m_connMap(CWX_APP_MAX_IO_NUM * 2)
-        {
-            memset(m_connId, 0x00, sizeof(m_connId));
-            m_uiCurConnId = CWX_APP_MIN_CONN_ID;
-        }
-        ~ConnMap()
-        {
-        }
-    public:
-        CWX_UINT32 getNextConnId()
-        {
-            CwxMutexGuard<CwxMutexLock> lock(&m_connMapMutex);
-            CWX_UINT32 uiConnId = m_uiCurConnId;
-            while(1)
-            {
-                if (m_connMap.find(uiConnId) == m_connMap.end()) break;
-                uiConnId++;
-                if (uiConnId > CWX_APP_MAX_CONN_ID) uiConnId = CWX_APP_MIN_CONN_ID;
-            }
-            m_uiCurConnId = uiConnId + 1;
-            return uiConnId;
-        }
-        bool enableRegConnMap(CWX_UINT32 uiConnId, CwxAppHandler4Base* handler)
-        {
-            CWX_ASSERT(uiConnId != CWX_APP_INVALID_CONN_ID);
-            {
-                CwxMutexGuard<CwxMutexLock> lock(&m_connMapMutex);
-                hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*连接*/>::iterator iter = m_connMap.find(uiConnId);
-                return ((iter==m_connMap.end())||(iter->second == handler))?true:false;
-            }
-        }
-        bool addRegConnMap(CWX_UINT32 uiConnId, CwxAppHandler4Base* handler)
-        {
-            CWX_ASSERT(uiConnId != CWX_APP_INVALID_CONN_ID);
-            {
-                CwxMutexGuard<CwxMutexLock> lock(&m_connMapMutex);
-                if (m_connId[handler->getHandle()] == CWX_APP_INVALID_CONN_ID)
-                {
-                    m_connMap[uiConnId] = handler;
-                    m_connId[handler->getHandle()] = uiConnId;
-                }
-            }
-        }
-        CwxAppHandler4Base* removeRegConnMap(CWX_UINT32 uiConnId)
-        {
-            CwxMutexGuard<CwxMutexLock> lock(&m_connMapMutex);
-            CwxAppHandler4Base* handler = NULL;
-            hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*连接对象*/>::iterator iter = m_connMap.find(uiConnId);
-            if (iter != m_connMap.end())
-            {
-                handler = iter->second;
-                m_connMap.erase(iter);
-                m_connId[handler->getHandle()] = CWX_APP_INVALID_CONN_ID;
-            }
-            return handler;
-        }
-        CWX_UINT32 getHandleConnId(CWX_HANDLE handle)
-        {
-            if ((handle>=0) && (handle<CWX_APP_MAX_IO_NUM))
-                return m_connId[handle];
-            return CWX_APP_INVALID_CONN_ID;
-        }
-    private:
-        CwxMutexLock           m_connMapMutex;///<m_connMap的锁，本身m_lock就可以保护，但为了提高getNextConnId()，其受双锁保护
-        CWX_UINT32              m_connId[CWX_APP_MAX_IO_NUM]; ///<handler id到conn-id的映射
-        CWX_UINT32             m_uiCurConnId; ///<上次分配的连接ID
-        hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*连接对象*/> m_connMap; ///<基于Conn id的连接Map
-
-    };
     ///IO handle的hash定义
     typedef hash_set<CWX_HANDLE, char, CwxNumHash<CWX_UINT32> > HandleHash;
 
@@ -620,12 +547,6 @@ public:
     CwxAppUnixConnector* getUnixConnector();
     ///return the reactor.
     CwxAppReactor* reactor();
-    ///获取下一个连接id
-    CWX_UINT32 getNextConnId();
-    bool enableRegConnMap(CWX_UINT32 uiConnId, CwxAppHandler4Base* handler);
-    bool addRegConnMap(CWX_UINT32 uiConnId, CwxAppHandler4Base* handler);
-    CwxAppHandler4Base* removeRegConnMap(CWX_UINT32 uiConnId);
-    CWX_UINT32 getHandleConnId(CWX_HANDLE handle);
 public:
     /*
     一下接口是由底层的msg handler调用的，子类或其他对象不能够使用。
@@ -705,7 +626,6 @@ private:
     bool                       m_bCmdRestart;///<启动命令是否要重启服务
     bool                       m_bStopped;///<服务是否在退出状态
     CwxAppReactor*	            m_pReactor; ///<the reactor for event loop.
-    ConnMap*                    m_pConnMap; ///<连接的map对象
     CWX_UINT32                 m_uiTimeClick; ///<时钟刻度，单位为ms
     string                      m_strWorkDir; ///<工作目录.
     string                      m_strAppName; //<服务名字

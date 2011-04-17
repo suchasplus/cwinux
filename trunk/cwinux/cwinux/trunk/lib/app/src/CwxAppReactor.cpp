@@ -3,10 +3,13 @@
 CWINUX_BEGIN_NAMESPACE
 
 CwxAppReactor::CwxAppReactor(bool bEnableSig)
+:m_connMap(CWX_APP_MAX_IO_NUM * 2)
 {
     m_bEnableSig = bEnableSig;
     m_owner = CwxThread::self();
     m_bStop = true;
+    ///初始化IO handler的数组
+    memset(m_connId, 0x00, sizeof(m_connId));
     ///创建notice pipe对象
     m_pNoticePipe = NULL;
     //事件驱动
@@ -87,11 +90,14 @@ int CwxAppReactor::close()
         return -1;
     }
     m_bStop = true;
+    memset(m_connId, 0x00, sizeof(m_connId));
     if (m_pNoticePipe)
     {
         delete m_pNoticePipe;
         m_pNoticePipe = NULL;
     }
+    m_uiCurConnId = 0;
+    m_connMap.clear();
     if (m_engine) delete m_engine;
     m_engine = NULL;
     return 0;
@@ -177,6 +183,17 @@ int CwxAppReactor::stop()
 void CwxAppReactor::callback(CwxAppHandler4Base* handler, int mask, bool bPersist, void *arg)
 {
     CwxAppReactor* reactor = (CwxAppReactor*)arg;
+    if (!bPersist)
+    {
+        switch(handler->getRegType())
+        {
+        case REG_TYPE_IO:
+            reactor->m_connId[handler->getHandle()] = CWX_APP_INVALID_CONN_ID;
+            break;
+        default:
+            break;
+        }
+    }
     int ret = handler->handle_event(mask, handler->getHandle());
     if (-1 == ret)
     {

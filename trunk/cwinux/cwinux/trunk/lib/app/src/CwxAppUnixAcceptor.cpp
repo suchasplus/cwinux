@@ -157,7 +157,7 @@ CwxAppHandler4UnixConn* CwxAppUnixAcceptor::makeHander()
     ch->getConnInfo().setState(CwxAppConnInfo::ESTABLISHING);
     ch->getConnInfo().setSvrId(this->m_uiSvrId);
     ch->getConnInfo().setHostId(0);
-    ch->getConnInfo().setConnId(getApp()->getNextConnId());
+    ch->getConnInfo().setConnId(reactor()->getNextConnId());
     ch->getConnInfo().setListenId(this->m_uiListenId);
     ch->getConnInfo().setActiveConn(false);
     ch->getConnInfo().setKeepalive(this->m_bKeepAlive);

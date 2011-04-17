@@ -26,7 +26,6 @@ CwxAppFramework::CwxAppFramework(CWX_UINT16 unAppMode,
     m_bCmdRestart = false;
     m_bStopped = false;
     m_pReactor = NULL;
-    m_pConnMap = NULL;
     m_uiTimeClick = 0;
     m_uiLogSize = CWX_APP_DEF_LOG_FILE_SIZE;
     m_unLogFileNum = CWX_APP_DEF_LOG_FILE_NUM;
@@ -321,7 +320,7 @@ int CwxAppFramework::noticeTcpConnect(CWX_UINT32 uiSvrId,
 
     CwxAppHandler4TcpConn* handle = m_pHandleCache->fetchTcpHandle();
     if (!handle) handle = new CwxAppHandler4TcpConn(this, reactor());
-    CWX_UINT32 uiConnId = getNextConnId();
+    CWX_UINT32 uiConnId = m_pReactor->getNextConnId();
     handle->getConnInfo().setSvrId(uiSvrId);
     handle->getConnInfo().setHostId(uiHostId);
     handle->setConnectAddr(szAddr);
@@ -363,7 +362,7 @@ int CwxAppFramework::noticeLsockConnect(CWX_UINT32 uiSvrId,
     }
     CwxAppHandler4UnixConn* handle = m_pHandleCache->fetchUnixHandle();
     if (!handle) handle = new CwxAppHandler4UnixConn(this, reactor());
-    CWX_UINT32 uiConnId = getNextConnId();
+    CWX_UINT32 uiConnId = m_pReactor->getNextConnId();
     handle->getConnInfo().setSvrId(uiSvrId);
     handle->getConnInfo().setHostId(uiHostId);
     handle->setConnectPathFile(szPathFile);
@@ -402,7 +401,7 @@ int CwxAppFramework::noticeHandle4Msg(CWX_UINT32 uiSvrId,
     }
     CwxAppHandler4IoMsg* handle = m_pHandleCache->fetchIoMsgHandle();
     if (!handle) handle = new CwxAppHandler4IoMsg(this, reactor());
-    CWX_UINT32 uiConnId = getNextConnId();
+    CWX_UINT32 uiConnId = m_pReactor->getNextConnId();
     handle->getConnInfo().setActiveConn(false);
     handle->getConnInfo().setState(CwxAppConnInfo::ESTABLISHING);
     handle->getConnInfo().setSvrId(uiSvrId);
@@ -918,8 +917,6 @@ int CwxAppFramework::initRunEnv()
     m_pHandleCache = new CwxAppHandlerCache();
     //register the notice function
     regNoticeFunc();
-    //½¨Á¢map
-    m_pConnMap = new ConnMap;
     //create the notice handle
     m_pNoticeHandler = new CwxAppHandler4Notice(this, m_pReactor);
     m_pReactor = new CwxAppReactor(true);
@@ -1095,11 +1092,7 @@ void CwxAppFramework::destroy()
         delete m_pListenMgr;
         m_pListenMgr = NULL;
     }
-    if (m_pConnMap)
-    {
-        delete m_pConnMap;
-        m_pConnMap = NULL;
-    }
+
     if (this->m_pReactor)
     {
         m_pReactor->close();

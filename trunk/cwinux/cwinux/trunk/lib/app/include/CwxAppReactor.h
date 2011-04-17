@@ -93,14 +93,16 @@ public:
     int registerHandler (CWX_HANDLE io_handle,
         CwxAppHandler4Base *event_handler,
         int mask,
+        CWX_UINT32 uiConnId=CWX_APP_INVALID_CONN_ID,
         CWX_UINT32 uiMillSecond = 0);
     /**
     @brief 删除io事件处理handle。多线程安全，任意线程都可以调用。
     @param [in] event_handler 移除的event-handler
+    @param [in] bRemoveConnId 是否也从conn-id的map中删除
     @return -1：失败；
              0：成功；
     */
-    int removeHandler (CwxAppHandler4Base *event_handler);
+    int removeHandler (CwxAppHandler4Base *event_handler, bool bRemoveConnId=true);
     /**
     @brief suspend io事件处理handle。多线程安全，任意线程都可以调用。
     @param [in] event_handler suspend的event-handler
@@ -123,9 +125,10 @@ public:
     /**
     @brief 删除io事件处理handle。多线程安全，任意线程都可以调用。
     @param [in] handle 移除的 io handle
+    @param [in] bRemoveConnId 是否也从conn-id的map中删除
     @return NULL：不存在；否则：成功；
     */
-    CwxAppHandler4Base* removeHandler (CWX_HANDLE handle);
+    CwxAppHandler4Base* removeHandler (CWX_HANDLE handle, bool bRemoveConnId=true);
     /**
     @brief suspend io事件处理handle。多线程安全，任意线程都可以调用。
     @param [in] handle suspend io handle
@@ -143,6 +146,34 @@ public:
     */
     int resumeHandler (CWX_HANDLE handle,
         int resume_mask);
+
+    /**
+    @brief 删除io事件处理handle。多线程安全，任意线程都可以调用。
+    @param [in] uiConnId 连接ID
+    @param [in] bRemoveConnId 是否也从conn-id的map中删除
+    @return NULL：失败；否则：成功；
+    */
+    CwxAppHandler4Base* removeHandlerByConnId (CWX_UINT32 uiConnId, bool bRemoveConnId=true);
+    /**
+    @brief suspend io事件处理handle。多线程安全，任意线程都可以调用。
+    @param [in] uiConnId 连接ID
+    @param [in] suspend_mask suspend的事件,为READ_MASK、WRITE_MASK组合
+    @return -1：失败；
+    0：成功；
+    */
+    int suspendHandlerByConnId (CWX_UINT32 uiConnId,
+        int suspend_mask);
+    /**
+    @brief resume io事件处理handle。多线程安全，任意线程都可以调用。
+    @param [in] uiConnId 连接ID
+    @param [in] resume_mask resume的事件,为READ_MASK、WRITE_MASK组合
+    @return -1：失败；
+    0：成功；
+    */
+    int resumeHandlerByConnId (CWX_UINT32 uiConnId,
+        int resume_mask);
+    ///从Conn map删除指定的Handler，此时，连接必须没有注册。多线程安全，任意线程都可以调用。
+    CwxAppHandler4Base* removeFromConnMap(CWX_UINT32 uiConnId);
 
     /**
     @brief 注册signal事件处理handle，信号具有PERSIST属性。多线程安全，任意线程都可以调用。
@@ -193,11 +224,15 @@ public:
     ///fork的re-init方法，返回值，0：成功；-1：失败
     int forkReinit();
 public:
+    ///获取下一个可用的连接Id。多线程安全，任意线程都可以调用。
+    CWX_UINT32 getNextConnId();
     /**
     @brief 检查指定IO的handle是否已经注册。多线程安全，任意线程都可以调用。
     @return true：注册；false：没有注册
     */
     bool isRegIoHandle(CWX_HANDLE handle);
+    ///根据conn id获取对应的handler，必须是owner thread
+    CwxAppHandler4Base* getHandlerByConnId(CWX_UINT32 uiConnId);
     /**
     @brief 检查指定sig的handle是否已经注册。
     @return true：注册；false：没有注册
@@ -221,9 +256,10 @@ private:
     int _registerHandler (CWX_HANDLE io_handle,
         CwxAppHandler4Base *event_handler,
         int mask,
+        CWX_UINT32 uiConnId=CWX_APP_INVALID_CONN_ID,
         CWX_UINT32 uiMillSecond = 0);
     ///删除io事件处理handle
-    int _removeHandler (CwxAppHandler4Base *event_handler);
+    int _removeHandler (CwxAppHandler4Base *event_handler, bool bRemoveConnId=true);
     ///注册IO事件处理handle
     int _suspendHandler (CwxAppHandler4Base *event_handler,
         int suspend_mask);
@@ -238,7 +274,13 @@ private:
     ///resume io事件处理handle。
     int _resumeHandler (CWX_HANDLE handle,
         int resume_mask);
+    ///删除io事件处理handle。
+    CwxAppHandler4Base* _removeHandlerByConnId (CWX_UINT32 uiConnId, bool bRemoveConnId=true);
+    ///suspend io事件处理handle。
+    int _suspendHandlerByConnId (CWX_UINT32 uiConnId,
         int suspend_mask);
+    /// resume io事件处理handle。
+    int _resumeHandlerByConnId (CWX_UINT32 uiConnId,
         int resume_mask);
     ///注册signal事件处理handle
     int _registerSignal(int signum,
@@ -293,13 +335,23 @@ private:
     @return 返回handle对应的event handler；NULL表示不存在
     */
     CwxAppHandler4Base* _getSigHandler(int sig);
+
+    ///检查handler对应的conn-id是否能加入conn-map中
+    bool enableRegConnMap(CWX_UINT32 uiConnId, CwxAppHandler4Base* handler);
+    void addRegConnMap(CWX_UINT32 uiConnId, CwxAppHandler4Base* handler);
+    CwxAppHandler4Base* removeRegConnMap(CWX_UINT32 uiConnId);
     static void callback(CwxAppHandler4Base* handler, int mask, bool bPersist, void *arg);
+
 private:
     bool                    m_bEnableSig;///<是否注册signal
     CwxMutexLock            m_lock; ///<全局锁
     CwxRwLock               m_rwLock; ///<读写锁
     pthread_t               m_owner; ///<reactor的owner 线程
     bool                    m_bStop; ///<reactor是否已经停止
+    CWX_UINT32              m_connId[CWX_APP_MAX_IO_NUM]; ///<handler id到conn-id的映射
+    CWX_UINT32             m_uiCurConnId; ///<上次分配的连接ID
+    CwxMutexLock           m_connMapMutex;///<m_connMap的锁，本身m_lock就可以保护，但为了提高getNextConnId()，其受双锁保护
+    hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*连接对象*/> m_connMap; ///<基于Conn id的连接Map
     CwxAppNoticePipe*       m_pNoticePipe;
     ///引擎的资源
     CwxAppEpoll*            m_engine; ///<epoll的engine
