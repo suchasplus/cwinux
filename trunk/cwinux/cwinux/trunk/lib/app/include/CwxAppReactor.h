@@ -85,7 +85,6 @@ public:
     @param [in] io_handle 监测的IO handle
     @param [in] event_handler io handle对应的event handler。
     @param [in] mask 注册的事件掩码，为READ_MASK、WRITE_MASK、PERSIST_MASK组合
-    @param [in] uiConnId 连接ID，若连接ID不为CWX_APP_INVALID_CONN_ID，则会基于连接ID进行管理。
     @param [in] uiMillSecond 超时毫秒数，0表示不进行超时检测。
     @return -1：失败；
             0：成功；
@@ -237,8 +236,6 @@ private:
         int suspend_mask);
     ///resume io事件处理handle。
     int _resumeHandler (CWX_HANDLE handle,
-        int resume_mask);
-        int suspend_mask);
         int resume_mask);
     ///注册signal事件处理handle
     int _registerSignal(int signum,
