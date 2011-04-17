@@ -161,7 +161,7 @@ int CwxAppHandler4UnixConn::close(CWX_HANDLE )
     }
     else
     {
-        reactor()->removeFromConnMap(m_conn.getConnId());
+        getApp->removeRegConnMap(m_conn.getConnId());
         getApp()->getHandlerCache()->cacheUnixHandle(this);
     }
 

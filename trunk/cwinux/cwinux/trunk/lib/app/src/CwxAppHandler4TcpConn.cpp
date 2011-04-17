@@ -174,7 +174,7 @@ int CwxAppHandler4TcpConn::close(CWX_HANDLE )
     }
     else
     {
-        reactor()->removeFromConnMap(m_conn.getConnId());
+        getApp->removeRegConnMap(m_conn.getConnId());
         getApp()->getHandlerCache()->cacheTcpHandle(this);
     }
 
