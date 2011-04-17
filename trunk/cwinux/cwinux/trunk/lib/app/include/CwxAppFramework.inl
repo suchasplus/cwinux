@@ -242,6 +242,35 @@ inline CwxAppReactor* CwxAppFramework::reactor()
     return m_pReactor;
 }
 
+///获取下一个连接id
+inline CWX_UINT32 CwxAppFramework::getNextConnId()
+{
+    if (m_pConnMap) return m_pConnMap->getNextConnId();
+    return CWX_APP_INVALID_CONN_ID;
+}
+
+inline bool CwxAppFramework::enableRegConnMap(CWX_UINT32 uiConnId, CwxAppHandler4Base* handler)
+{
+    if (m_pConnMap) return m_pConnMap->enableRegConnMap(uiConnId, handler);
+    return false;
+}
+inline bool CwxAppFramework::addRegConnMap(CWX_UINT32 uiConnId, CwxAppHandler4Base* handler)
+{
+    if (m_pConnMap) return m_pConnMap->addRegConnMap(uiConnId, handler);
+    return false;
+}
+inline CwxAppHandler4Base* CwxAppFramework::removeRegConnMap(CWX_UINT32 uiConnId)
+{
+    if (m_pConnMap) return m_pConnMap->removeRegConnMap(uiConnId);
+    return NULL;
+}
+inline CWX_UINT32 CwxAppFramework::getHandleConnId(CWX_HANDLE handle)
+{
+    if (m_pConnMap) return m_pConnMap->getHandleConnId(handle);
+    return CWX_APP_INVALID_CONN_ID;
+}
+
+
 inline int CwxAppFramework::openConn(CwxAppHandler4Msg& conn, bool& bStopListen)
 {
     bool bSuspendConn = false;
@@ -254,10 +283,14 @@ inline int CwxAppFramework::openConn(CwxAppHandler4Msg& conn, bool& bStopListen)
 
     if (this->reactor()->registerHandler(conn.getHandle(),
         &conn,
-        CwxAppHandler4Base::PREAD_MASK,
-        conn.getConnInfo().getConnId()) == -1)
+        CwxAppHandler4Base::PREAD_MASK) == -1)
     {
         CWX_ERROR(("Failure to register_handler."));
+        return -1;
+    }
+    if (m_pConnMap->addRegConnMap(conn.getConnInfo().getConnId(),conn))
+    {
+        CWX_ERROR(("Failure to add handler to conn map"));
         return -1;
     }
     if (bSuspendConn)
