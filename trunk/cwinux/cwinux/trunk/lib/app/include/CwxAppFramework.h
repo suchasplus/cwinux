@@ -118,8 +118,10 @@ private:
                 {
                     m_connMap[uiConnId] = handler;
                     m_connId[handler->getHandle()] = uiConnId;
+                    return true;
                 }
             }
+            return false;
         }
         CwxAppHandler4Base* removeRegConnMap(CWX_UINT32 uiConnId)
         {

@@ -152,7 +152,8 @@ int CwxAppHandler4TcpConn::close(CWX_HANDLE )
             if (this->reactor()->scheduleTimer(this, CwxTimeValue(uiInternal/1000, (uiInternal%1000) * 1000)) == -1)
             {
                 CWX_ERROR(("Failure schedule_timer to noticeReconnect for conn id[%u]", m_conn.getConnId()));
-                reactor()->removeHandlerByConnId(m_conn.getConnId());
+                reactor()->removeHandler(getHandle());
+                getApp()->removeRegConnMap(m_conn.getConnId());
                 delete this;
                 return 0;
             }
