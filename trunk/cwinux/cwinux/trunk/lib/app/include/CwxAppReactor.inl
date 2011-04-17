@@ -306,7 +306,7 @@ inline int CwxAppReactor::_registerHandler (CWX_HANDLE io_handle,
     int ret = 0;
     if (_isRegIoHandle(io_handle))
     {
-        CWX_ERROR(("Handle[%d] exist", (int)io_handle));
+        CWX_ERROR(("Handle[%d] exists, conn_id[%d]", (int)io_handle, uiConnId));
         return -1;
     }
     event_handler->setRegType(REG_TYPE_IO);
@@ -318,8 +318,9 @@ inline int CwxAppReactor::_registerHandler (CWX_HANDLE io_handle,
         uiMillSecond);
     if (0 != ret)
     {
-        CWX_ERROR(("Failure to add event handler to event-base, handle[%d], errno=%d",
+        CWX_ERROR(("Failure to add event handler to event-base, handle[%d], conn_id[%u], errno=%d",
             (int)io_handle, 
+            uiConnId,
             errno));
     }
     return ret==0?0:-1;

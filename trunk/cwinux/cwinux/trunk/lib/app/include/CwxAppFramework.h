@@ -118,10 +118,8 @@ private:
                 {
                     m_connMap[uiConnId] = handler;
                     m_connId[handler->getHandle()] = uiConnId;
-                    return true;
                 }
             }
-            return false;
         }
         CwxAppHandler4Base* removeRegConnMap(CWX_UINT32 uiConnId)
         {
@@ -141,16 +139,6 @@ private:
             if ((handle>=0) && (handle<CWX_APP_MAX_IO_NUM))
                 return m_connId[handle];
             return CWX_APP_INVALID_CONN_ID;
-        }
-        CwxAppHandler4Base* getHandlerbyConnId(CWX_UINT32 uiConnId)
-        {
-            CwxMutexGuard<CwxMutexLock> lock(&m_connMapMutex);
-            hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*连接对象*/>::iterator iter = m_connMap.find(uiConnId);
-            if (iter != m_connMap.end())
-            {
-                return iter->second;
-            }
-            return NULL;
         }
     private:
         CwxMutexLock           m_connMapMutex;///<m_connMap的锁，本身m_lock就可以保护，但为了提高getNextConnId()，其受双锁保护
@@ -638,7 +626,6 @@ public:
     bool addRegConnMap(CWX_UINT32 uiConnId, CwxAppHandler4Base* handler);
     CwxAppHandler4Base* removeRegConnMap(CWX_UINT32 uiConnId);
     CWX_UINT32 getHandleConnId(CWX_HANDLE handle);
-    CwxAppHandler4Base* getHandlerbyConnId(CWX_UINT32 uiConnId);
 public:
     /*
     一下接口是由底层的msg handler调用的，子类或其他对象不能够使用。

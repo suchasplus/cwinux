@@ -52,15 +52,12 @@ int CwxAppHandler4UnixConn::close(CWX_HANDLE )
     case CwxAppConnInfo::ESTABLISHING:
         szState = "ESTABLISHING";///可能注册了消息收发
         if (CWX_INVALID_HANDLE != getHandle())
-            reactor()->removeHandler(this);
+            reactor()->removeHandler(this, false);
         break;
     case CwxAppConnInfo::ESTABLISHED:
         szState = "ESTABLISHED";///一定注册了消息收发
         if (CWX_INVALID_HANDLE != getHandle())
-        {
-            reactor()->removeHandler(this);
-            getApp()->removeRegConnMap(getConnInfo().getConnId());
-        }
+            reactor()->removeHandler(this, false);
         break;
     case CwxAppConnInfo::FAILED:
         szState = "FAILED";///一定没有注册消息收发
@@ -140,8 +137,7 @@ int CwxAppHandler4UnixConn::close(CWX_HANDLE )
             if (this->reactor()->scheduleTimer(this, CwxTimeValue(uiInternal/1000, (uiInternal%1000) * 1000)) == -1)
             {
                 CWX_ERROR(("Failure schedule_timer to noticeReconnect for conn id[%u]", m_conn.getConnId()));
-                reactor()->removeHandler(getHandle());
-                getApp()->removeRegConnMap(m_conn.getConnId());
+                reactor()->removeHandlerByConnId(m_conn.getConnId());
                 delete this;
                 return 0;
             }
@@ -161,7 +157,7 @@ int CwxAppHandler4UnixConn::close(CWX_HANDLE )
     }
     else
     {
-        getApp()->removeRegConnMap(m_conn.getConnId());
+        reactor()->removeFromConnMap(m_conn.getConnId());
         getApp()->getHandlerCache()->cacheUnixHandle(this);
     }
 

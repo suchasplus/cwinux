@@ -269,10 +269,6 @@ inline CWX_UINT32 CwxAppFramework::getHandleConnId(CWX_HANDLE handle)
     if (m_pConnMap) return m_pConnMap->getHandleConnId(handle);
     return CWX_APP_INVALID_CONN_ID;
 }
-inline CwxAppHandler4Base* CwxAppFramework::getHandlerbyConnId(CWX_UINT32 uiConnId)
-{
-    return m_pConnMap?m_pConnMap->getHandlerbyConnId(uiConnId):NULL;
-}
 
 
 inline int CwxAppFramework::openConn(CwxAppHandler4Msg& conn, bool& bStopListen)
@@ -292,7 +288,7 @@ inline int CwxAppFramework::openConn(CwxAppHandler4Msg& conn, bool& bStopListen)
         CWX_ERROR(("Failure to register_handler."));
         return -1;
     }
-    if (addRegConnMap(conn.getConnInfo().getConnId(),&conn))
+    if (m_pConnMap->addRegConnMap(conn.getConnInfo().getConnId(),conn))
     {
         CWX_ERROR(("Failure to add handler to conn map"));
         return -1;
