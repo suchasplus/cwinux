@@ -60,7 +60,7 @@ public:
     */
     int close();
     /**
-    @brief 架构事件的循环处理API，实现消息的分发，调用线程为reactor的owner。
+    @brief 架构事件的循环处理API，实现消息的分发，调用线程为channel的owner。
     @param [in] uiMiliTimeout 超时的毫秒数，0表示一直阻塞到事件发生。
     @return -1：失败；0：正常退出
     */
@@ -80,7 +80,7 @@ public:
     0：成功；
     */
     int registerHandler (CWX_HANDLE io_handle,
-        CwxAppHandler4Base *CwxAppHandler4Channel,
+        CwxAppHandler4Channel *CwxAppHandler4Channel,
         int mask,
         CWX_UINT32 uiMillSecond = 0);
     /**
@@ -150,6 +150,9 @@ public:
     int notice();
 public:
     /**
+    */
+public:
+    /**
     @brief 检查指定IO的handle是否已经注册。多线程安全，任意线程都可以调用。
     @return true：注册；false：没有注册
     */
@@ -209,7 +212,7 @@ private:
     @return 返回handle对应的event handler；NULL表示不存在
     */
     CwxAppHandler4Channel* _getIoHandler(CWX_HANDLE handle);
-    static void callback(CwxAppHandler4Channel* handler, int mask, bool bPersist, void *arg);
+    static void callback(CwxAppHandler4Base* handler, int mask, bool bPersist, void *arg);
 private:
     class NoticeHanlder:public CwxAppHandler4Base
     {

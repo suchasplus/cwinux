@@ -1,4 +1,4 @@
-#include "CwxAppReactor.h"
+#include "CwxAppChannel.h"
 
 CWINUX_BEGIN_NAMESPACE
 
@@ -6,62 +6,33 @@ CwxAppChannel::CwxAppChannel()
 {
     m_owner = CwxThread::self();
     m_bStop = true;
-    ///初始化IO handler的数组
-    memset(m_connId, 0x00, sizeof(m_connId));
+    m_noticeFd[0] = CWX_INVALID_HANDLE;
+    m_noticeFd[1] = CWX_INVALID_HANDLE;
     ///创建notice pipe对象
-    m_pNoticePipe = NULL;
+    m_pNoticeHandler = NULL;
     //事件驱动
     m_engine= NULL;
-
-    CwxMutexLock            m_lock; ///<全局锁
-    CwxRwLock               m_rwLock; ///<读写锁
-    pthread_t               m_owner; ///<reactor的owner 线程
-    bool                    m_bStop; ///<reactor是否已经停止
-    int                     m_noticeFd[2]; ///<notice的读写handle
-    ///引擎的资源
-    CwxAppEpoll*            m_engine; ///<epoll的engine
-    NoticeHanlder*          m_pNoticeHandler; ///<notice的handler
-
 }
 
 
-CwxAppReactor::~CwxAppReactor()
+CwxAppChannel::~CwxAppChannel()
 {
     close();
 }
 
-///fork的re-init方法，返回值，0：成功；-1：失败
-int CwxAppReactor::forkReinit()
-{
-    if (m_engine)
-    {
-        m_owner = CwxThread::self();
-        int ret = m_engine->forkReinit();
-        if (-1 == ret)
-        {
-            CWX_ERROR(("Failure to invoke libevent::event_reinit"));
-            return -1;
-        }
-        return 0;
-    }
-    CWX_ERROR(("Epoll engine doesn't init"));
-    return -1;
-}
-
 ///打开reactor，return -1：失败；0：成功
-int CwxAppReactor::open()
+int CwxAppChannel::open()
 {
     if (!m_bStop)
     {
         CWX_ERROR(("Can't re-open the openning reactor"));
         return -1;
     }
+    close();
     ///设置reactor的owner
     m_owner = CwxThread::self();
-    ///清理reactor
-    this->close();
     ///创建notice pipe对象
-    m_pNoticePipe = new CwxAppNoticePipe();
+    m_pNoticeHandler = new NoticeHanlder();
     ///创建engine
     if (m_engine)
     {
@@ -70,34 +41,58 @@ int CwxAppReactor::open()
     }
     m_engine = new CwxAppEpoll();
     if (0 != m_engine->init()) return -1;
-    if (m_pNoticePipe->init() != 0)
+    //注册notice handler
+    if (0 != pipe(m_noticeFd))
     {
-        CWX_ERROR(("Failure to invoke CwxAppNoticePipe::init()"));
+        CWX_ERROR(("Failure to invokde pipe to create signal fd, errno=%d", errno));
         return -1;
     }
-    CWX_DEBUG(("Success to open CwxAppReactor"));
+    if (0 != CwxIpcSap::setCloexec(m_noticeFd[0], true))
+    {
+        CWX_ERROR(("Failure to set notice handle[0]'s m_noticeFd sign, errno=%d", errno));
+        return -1;
+    }
+    if (0 != CwxIpcSap::setCloexec(m_noticeFd[1], true))
+    {
+        CWX_ERROR(("Failure to set notice handle[1]'s cloexec sign, errno=%d", errno));
+        return -1;
+    }
+    if (0 != CwxIpcSap::setNonblock(m_noticeFd[0], true))
+    {
+        CWX_ERROR(("Failure to set notice handle[0]'s noblock sign, errno=%d", errno));
+        return -1;
+    }
+    if (0 != CwxIpcSap::setNonblock(m_noticeFd[1], true))
+    {
+        CWX_ERROR(("Failure to set notice handle[1]'s noblock sign, errno=%d", errno));
+        return -1;
+    }
+    //注册信号fd的读
+    if (0 != m_engine->registerHandler(m_noticeFd[0], m_pNoticeHandler, CwxAppHandler4Base::PREAD_MASK))
+    {
+        CWX_ERROR(("Failure to register notice handle to engine"));
+        return -1;
+    }
+    
+    CWX_DEBUG(("Success to open CwxAppChannel"));
+    m_bStop = false;
     return 0;
 }
 
 ///关闭reactor，return -1：失败；0：成功
-int CwxAppReactor::close()
+int CwxAppChannel::close()
 {
-    if (!CwxThread::equal(m_owner, CwxThread::self()))
+    if (!m_bStop)
     {
-        CWX_ERROR(("CwxAppReactor::close must be invoked by owner thread"));
+        CWX_ERROR(("CwxAppChannel::close must be invoked after stop"));
         return -1;
     }
-    m_bStop = true;
-    memset(m_connId, 0x00, sizeof(m_connId));
-    if (m_pNoticePipe)
-    {
-        delete m_pNoticePipe;
-        m_pNoticePipe = NULL;
-    }
-    m_uiCurConnId = 0;
-    m_connMap.clear();
     if (m_engine) delete m_engine;
     m_engine = NULL;
+    if (m_noticeFd[0] != CWX_INVALID_HANDLE)::close(m_noticeFd[0]);
+    m_noticeFd[0] = CWX_INVALID_HANDLE;
+    if (m_noticeFd[1] != CWX_INVALID_HANDLE)::close(m_noticeFd[1]);
+    m_noticeFd[1] = CWX_INVALID_HANDLE;
     return 0;
 }
 
@@ -105,75 +100,61 @@ int CwxAppReactor::close()
 @brief 架构事件的循环处理API，实现消息的分发。
 @return -1：失败；0：正常退出
 */
-int CwxAppReactor::run(CwxAppHandler4Base* noticeHandler,
-                       REACTOR_EVENT_HOOK hook,
-                       void* arg)
+int CwxAppChannel::dispatch(CWX_UINT32 uiMiliTimeout)
 {
     int ret = 0;
-    if (!m_bStop || !m_engine)
+    if (!m_engine)
     {
-        CWX_ERROR(("CwxAppReactor::open() must be invoke before CwxAppReactor::run()"));
+        CWX_ERROR(("CwxAppChannel::open() must be invoke before CwxAppReactor::run()"));
         return -1;
     }
-    ///设置reactor的owner
-    m_owner = CwxThread::self();
-    ///注册notice handler
-    noticeHandler->setHandle(m_pNoticePipe->getPipeReader());
-    if (0 != this->registerHandler(m_pNoticePipe->getPipeReader(),
-        noticeHandler,
-        CwxAppHandler4Base::PREAD_MASK))
+    if (m_bStop)
     {
-        CWX_ERROR(("Failure to register CwxAppHandler4Notice notice handler"));
+        CWX_ERROR(("Channel is stopped."));
         return -1;
     }
-    m_bStop = false;
-
-    while(!m_bStop)
+    ///检查channel的owner
+    if (!CwxThread::equal(m_owner, CwxThread::self()))
+    {
+        CWX_ERROR(("CwxAppChannel::dispatch() must be invoked by CwxAppChannel::open()'s thread"));
+        return -1;
+    }
     {
         {
             ///带锁执行event-loop
             CwxMutexGuard<CwxMutexLock> lock(&m_lock);
-            ret = m_engine->poll(CwxAppReactor::callback, this);
+            ret = m_engine->poll(CwxAppChannel::callback, this, uiMiliTimeout);
         }
         if (m_bStop)
         {
             CWX_DEBUG(("Stop running for stop"));
-            break;
+            return 0;
         }
         if (0 != ret)
         {
             if ((-1 == ret) && (EINTR != errno))
             {
                 CWX_ERROR(("Failure to running epoll with -1, errno=%d", errno));
-                break;
+                return -1;
             }
         }
-        ///调用hook
-        if (hook)
-        {
-            if (0 != hook(arg))
-            {
-                CWX_DEBUG(("Stop running for hook() without 0"));
-                break;
-            }
-        }
-        ///等待其他的线程执行各种操作。
+        //wait other thread
         m_rwLock.acquire_write();
         m_rwLock.release();
-    }
-    return ret;
+    };
+    return 0;
 }
 
 /**
 @brief 停止架构事件的循环处理。
 @return -1：失败；0：正常退出
 */
-int CwxAppReactor::stop()
+int CwxAppChannel::stop()
 {
     if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
         m_rwLock.acquire_read();
-        this->notice(NULL);
+        this->notice();
         {
             CwxMutexGuard<CwxMutexLock> lock(&m_lock);
             return _stop();
@@ -183,20 +164,8 @@ int CwxAppReactor::stop()
     return _stop();
 }
 
-void CwxAppReactor::callback(CwxAppHandler4Base* handler, int mask, bool bPersist, void *arg)
+void CwxAppChannel::callback(CwxAppHandler4Base* handler, int mask, bool bPersist, void *)
 {
-    CwxAppReactor* reactor = (CwxAppReactor*)arg;
-    if (!bPersist)
-    {
-        switch(handler->getRegType())
-        {
-        case REG_TYPE_IO:
-            reactor->m_connId[handler->getHandle()] = CWX_APP_INVALID_CONN_ID;
-            break;
-        default:
-            break;
-        }
-    }
     int ret = handler->handle_event(mask, handler->getHandle());
     if (-1 == ret)
     {

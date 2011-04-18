@@ -99,7 +99,7 @@ int CwxAppEpoll::init()
         //´´½¨signalµÄhandle
         if (0 != pipe(m_signalFd))
         {
-            CWX_ERROR(("Failure to invokde socketpair to create signal fd, errno=%d", errno));
+            CWX_ERROR(("Failure to invokde pipe to create signal fd, errno=%d", errno));
             return -1;
         }
         if (0 != CwxIpcSap::setCloexec(m_signalFd[0], true))

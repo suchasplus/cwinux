@@ -3,7 +3,7 @@ CWINUX_BEGIN_NAMESPACE
 
 ///注册IO事件处理handle
 inline int CwxAppChannel::registerHandler (CWX_HANDLE io_handle,
-                                           CwxAppHandler4Base *event_handler,
+                                           CwxAppHandler4Channel *event_handler,
                                            int mask,
                                            CWX_UINT32 uiMillSecond)
 {
@@ -22,7 +22,7 @@ inline int CwxAppChannel::registerHandler (CWX_HANDLE io_handle,
     return _registerHandler(io_handle, event_handler, mask, uiMillSecond);
 }
 ///删除io事件处理handle
-inline int CwxAppChannel::removeHandler (CwxAppHandler4Base *event_handler)
+inline int CwxAppChannel::removeHandler (CwxAppHandler4Channel *event_handler)
 {
     if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
@@ -40,7 +40,7 @@ inline int CwxAppChannel::removeHandler (CwxAppHandler4Base *event_handler)
 }
 
 ///注册IO事件处理handle
-inline int CwxAppChannel::suspendHandler (CwxAppHandler4Base *event_handler, int suspend_mask)
+inline int CwxAppChannel::suspendHandler (CwxAppHandler4Channel *event_handler, int suspend_mask)
 {
     if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
@@ -57,7 +57,7 @@ inline int CwxAppChannel::suspendHandler (CwxAppHandler4Base *event_handler, int
     return _suspendHandler(event_handler, suspend_mask);
 }
 ///删除io事件处理handle
-inline int CwxAppChannel::resumeHandler (CwxAppHandler4Base *event_handler, int resume_mask)
+inline int CwxAppChannel::resumeHandler (CwxAppHandler4Channel *event_handler, int resume_mask)
 {
     if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
@@ -75,11 +75,11 @@ inline int CwxAppChannel::resumeHandler (CwxAppHandler4Base *event_handler, int 
 }
 
 
-inline CwxAppHandler4Base* CwxAppReactor::removeHandler (CWX_HANDLE handle)
+inline CwxAppHandler4Channel* CwxAppChannel::removeHandler (CWX_HANDLE handle)
 {
     if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
-        CwxAppHandler4Base* ret = NULL;
+        CwxAppHandler4Channel* ret = NULL;
         m_rwLock.acquire_read();
         this->notice();
         {
@@ -92,7 +92,7 @@ inline CwxAppHandler4Base* CwxAppReactor::removeHandler (CWX_HANDLE handle)
     return _removeHandler(handle);
 }
 
-inline int CwxAppReactor::suspendHandler (CWX_HANDLE handle,
+inline int CwxAppChannel::suspendHandler (CWX_HANDLE handle,
                                           int suspend_mask)
 {
     if (!CwxThread::equal(m_owner, CwxThread::self()))
@@ -110,7 +110,7 @@ inline int CwxAppReactor::suspendHandler (CWX_HANDLE handle,
     return _suspendHandler(handle, suspend_mask);
 }
 
-inline int CwxAppReactor::resumeHandler (CWX_HANDLE handle,
+inline int CwxAppChannel::resumeHandler (CWX_HANDLE handle,
                                          int resume_mask)
 {
     if (!CwxThread::equal(m_owner, CwxThread::self()))
@@ -129,67 +129,8 @@ inline int CwxAppReactor::resumeHandler (CWX_HANDLE handle,
 
 }
 
-
-
-
-
-///注册signal事件处理handle
-inline int CwxAppReactor::registerSignal(int signum,
-                                         CwxAppHandler4Base *event_handler
-                                         )
-{
-    if (!CwxThread::equal(m_owner, CwxThread::self()))
-    {
-        int ret = 0;
-        m_rwLock.acquire_read();
-        this->notice();
-        {
-            CwxMutexGuard<CwxMutexLock> lock(&m_lock);
-            ret =  _registerSignal(signum, event_handler);
-        }
-        m_rwLock.release();
-        return ret;
-    }
-    return _registerSignal(signum, event_handler);
-}
-
-///删除signal事件处理handle
-inline int CwxAppReactor::removeSignal(CwxAppHandler4Base *event_handler)
-{
-    if (!CwxThread::equal(m_owner, CwxThread::self()))
-    {
-        int ret = 0;
-        m_rwLock.acquire_read();
-        this->notice();
-        {
-            CwxMutexGuard<CwxMutexLock> lock(&m_lock);
-            ret = _removeSignal(event_handler);
-        }
-        m_rwLock.release();
-        return ret;
-    }
-    return _removeSignal(event_handler);
-}
-
-inline CwxAppHandler4Base* CwxAppReactor::removeSignal(int sig)
-{
-    if (!CwxThread::equal(m_owner, CwxThread::self()))
-    {
-        CwxAppHandler4Base* handler = NULL;
-        m_rwLock.acquire_read();
-        this->notice();
-        {
-            CwxMutexGuard<CwxMutexLock> lock(&m_lock);
-            handler = _removeSignal(sig);
-        }
-        m_rwLock.release();
-        return handler;
-    }
-    return _removeSignal(sig);
-}
-
 ///设置定时处理handle
-inline int CwxAppReactor::scheduleTimer (CwxAppHandler4Base *event_handler,
+inline int CwxAppChannel::scheduleTimer (CwxAppHandler4Channel *event_handler,
                                          CwxTimeValue const&interval)
 {
     if (!CwxThread::equal(m_owner, CwxThread::self()))
@@ -208,7 +149,7 @@ inline int CwxAppReactor::scheduleTimer (CwxAppHandler4Base *event_handler,
 }
 
 ///取消定时处理handle
-inline int CwxAppReactor::cancelTimer (CwxAppHandler4Base *event_handler)
+inline int CwxAppChannel::cancelTimer (CwxAppHandler4Channel *event_handler)
 {
     if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
@@ -225,25 +166,10 @@ inline int CwxAppReactor::cancelTimer (CwxAppHandler4Base *event_handler)
     return _cancelTimer(event_handler);
 }
 
-inline int CwxAppReactor::notice(CwxAppNotice* notice)
+inline int CwxAppChannel::notice()
 {
-    int ret = 0;
-    if (notice)
-    {
-        ret = m_pNoticePipe->notice(notice);
-    }
-    ret =  m_pNoticePipe->noticeDummy();
-    if (0 != ret)
-    {
-        CWX_ERROR(("Failure to notice the event pipe, stop framework"));
-        m_bStop = true;
-    }
-    return ret;
-}
-
-inline void CwxAppReactor::noticed(CwxAppNotice*& head)
-{
-    return m_pNoticePipe->noticed(head);
+    write(m_noticeFd[1], "1", 1);
+    return 0;
 }
 
 
@@ -251,55 +177,39 @@ inline void CwxAppReactor::noticed(CwxAppNotice*& head)
 @brief 检查指定IO的handle是否已经注册。
 @return true：注册；false：没有注册
 */
-inline bool CwxAppReactor::isRegIoHandle(CWX_HANDLE handle)
+inline bool CwxAppChannel::isRegIoHandle(CWX_HANDLE handle)
 {
     return _isRegIoHandle(handle);
 }
 
 
-/**
-@brief 检查指定sig的handle是否已经注册。
-@return true：注册；false：没有注册
-*/
-inline bool CwxAppReactor::isRegSigHandle(int sig)
-{
-    return _isRegSigHandle(sig);
-}
-/**
-@brief 获取指定sig对应的event handler。
-@return 返回handle对应的event handler；NULL表示不存在
-*/
-inline CwxAppHandler4Base* CwxAppReactor::getSigHandler(int sig)
-{
-    return _getSigHandler(sig);
-}
 ///Return the ID of the "owner" thread.
-inline pthread_t CwxAppReactor::getOwner() const
+inline pthread_t CwxAppChannel::getOwner() const
 {
     return m_owner;
 }
 ///是否stop
-inline bool CwxAppReactor::isStop()
+inline bool CwxAppChannel::isStop()
 {
     return m_bStop;
 }
 
 ///获取当前的时间
-inline void CwxAppReactor::getCurTime(CwxTimeValue& current)
+inline void CwxAppChannel::getCurTime(CwxTimeValue& current)
 {
     current.now();
 }
 
 ///io handle是否设置指定的mask
-inline bool CwxAppReactor::isMask(CWX_HANDLE handle, int mask)
+inline bool CwxAppChannel::isMask(CWX_HANDLE handle, int mask)
 {
     return CWX_CHECK_ATTR(m_engine->m_eHandler[handle].m_mask, mask);
 }
 
 
 ///注册IO事件处理handle
-inline int CwxAppReactor::_registerHandler (CWX_HANDLE io_handle,
-                                            CwxAppHandler4Base *event_handler,
+inline int CwxAppChannel::_registerHandler (CWX_HANDLE io_handle,
+                                            CwxAppHandler4Channel *event_handler,
                                             int mask,
                                             CWX_UINT32 uiMillSecond)
 {
@@ -309,7 +219,6 @@ inline int CwxAppReactor::_registerHandler (CWX_HANDLE io_handle,
         CWX_ERROR(("Handle[%d] exist", (int)io_handle));
         return -1;
     }
-    event_handler->setRegType(REG_TYPE_IO);
     event_handler->setHandle(io_handle);
     mask &=CwxAppHandler4Base::IO_MASK; ///只支持READ、WRITE、PERSIST、TIMEOUT四种掩码
     ret = m_engine->registerHandler(io_handle,
@@ -326,25 +235,18 @@ inline int CwxAppReactor::_registerHandler (CWX_HANDLE io_handle,
 }
 
 ///删除io事件处理handle
-inline int CwxAppReactor::_removeHandler (CwxAppHandler4Base *event_handler)
+inline int CwxAppChannel::_removeHandler (CwxAppHandler4Channel *event_handler)
 {
     return _removeHandler(event_handler->getHandle())?0:-1;
 }
 
 ///注册IO事件处理handle
-inline int CwxAppReactor::_suspendHandler (CwxAppHandler4Base *event_handler, int suspend_mask)
+inline int CwxAppChannel::_suspendHandler (CwxAppHandler4Channel *event_handler, int suspend_mask)
 {
     int ret=0;
     if (!_isRegIoHandle(event_handler))
     {
         CWX_ERROR(("event handle[%d] doesn't exist", (int)event_handler->getHandle()));
-        return -1;
-    }
-    if (event_handler->getRegType() != REG_TYPE_IO)
-    {
-        CWX_ERROR(("event handle[%d] isn't io handle, it's [%d]",
-            (int)event_handler->getHandle(),
-            event_handler->getType()));
         return -1;
     }
     ret = m_engine->suspendHandler(event_handler->getHandle(), suspend_mask);
@@ -359,7 +261,7 @@ inline int CwxAppReactor::_suspendHandler (CwxAppHandler4Base *event_handler, in
 }
 
 ///删除io事件处理handle
-inline int CwxAppReactor::_resumeHandler (CwxAppHandler4Base *event_handler, int resume_mask)
+inline int CwxAppChannel::_resumeHandler (CwxAppHandler4Channel *event_handler, int resume_mask)
 {
     int ret = 0;
     if (!_isRegIoHandle(event_handler))
@@ -367,14 +269,6 @@ inline int CwxAppReactor::_resumeHandler (CwxAppHandler4Base *event_handler, int
         CWX_ERROR(("event handle[%d] doesn't exist", (int)event_handler->getHandle()));
         return -1;
     }
-    if (event_handler->getRegType() != REG_TYPE_IO)
-    {
-        CWX_ERROR(("event handle[%d] isn't io handle, it's [%d]",
-            (int)event_handler->getHandle(),
-            event_handler->getType()));
-        return -1;
-    }
-
     ret = m_engine->resumeHandler(event_handler->getHandle(), resume_mask);
     if (0 != ret)
     {
@@ -388,7 +282,7 @@ inline int CwxAppReactor::_resumeHandler (CwxAppHandler4Base *event_handler, int
 
 
 ///删除io事件处理handle。
-inline CwxAppHandler4Base* CwxAppReactor::_removeHandler (CWX_HANDLE handle)
+inline CwxAppChannel* CwxAppReactor::_removeHandler (CWX_HANDLE handle)
 {
     if (handle >= CWX_APP_MAX_IO_NUM)
     {
@@ -397,7 +291,7 @@ inline CwxAppHandler4Base* CwxAppReactor::_removeHandler (CWX_HANDLE handle)
             CWX_APP_MAX_IO_NUM));
         return NULL;
     }
-    CwxAppHandler4Base* handler= m_engine->removeHandler(handle);
+    CwxAppHandler4Channel* handler= (CwxAppHandler4Channel*)m_engine->removeHandler(handle);
     if (!handler)
     {
         CWX_DEBUG(("Handle[%d] doesn't exist", (int)handle));
@@ -407,7 +301,7 @@ inline CwxAppHandler4Base* CwxAppReactor::_removeHandler (CWX_HANDLE handle)
 }
 
 ///suspend io事件处理handle。
-inline int CwxAppReactor::_suspendHandler (CWX_HANDLE handle,
+inline int CwxAppChannel::_suspendHandler (CWX_HANDLE handle,
                                            int suspend_mask)
 {
     if (handle >= CWX_APP_MAX_IO_NUM)
@@ -421,7 +315,7 @@ inline int CwxAppReactor::_suspendHandler (CWX_HANDLE handle,
 }
 
 ///resume io事件处理handle。
-inline int CwxAppReactor::_resumeHandler (CWX_HANDLE handle,
+inline int CwxAppChannel::_resumeHandler (CWX_HANDLE handle,
                                           int resume_mask)
 {
     if (handle >= CWX_APP_MAX_IO_NUM)
@@ -436,70 +330,8 @@ inline int CwxAppReactor::_resumeHandler (CWX_HANDLE handle,
 
 
 
-///注册signal事件处理handle
-inline int CwxAppReactor::_registerSignal(int signum,
-                                          CwxAppHandler4Base *event_handler
-                                          )
-{
-    if (_isRegSigHandle(signum))
-    {
-        CWX_ERROR(("Sig[%d] has been registered", signum));
-        return -1;
-    }
-    event_handler->setRegType(REG_TYPE_SIG);
-    event_handler->setHandle(signum);
-    int ret = m_engine->registerSignal(signum, event_handler);
-    if (0 != ret)
-    {
-        CWX_ERROR(("Failure to register Sig[%d] handler to event base, errno=%d",
-            signum,
-            errno));
-        return -1;
-    }
-    return 0;
-}
-
-///删除signal事件处理handle
-inline int CwxAppReactor::_removeSignal(CwxAppHandler4Base *event_handler)
-{
-    int signum = event_handler->getHandle();
-    if (!_isRegSigHandle(signum))
-    {
-        CWX_DEBUG(("Sig[%d] doesn't registered", signum));
-        return 0;
-    }
-    if (event_handler->getRegType() != REG_TYPE_SIG)
-    {
-        CWX_ERROR(("Handler with handle[%d] is not signal handler, it's type[%d]",
-            (int)event_handler->getHandle(),
-            event_handler->getType()));
-        return -1;
-    }
-    if (!m_engine->removeSignal(event_handler->getHandle()))
-    {
-        CWX_ERROR(("Failure to remvoe signal[%d] handle from event-base, errno=%d", 
-            event_handler->getHandle(),
-            errno));
-        return -1;
-    }
-    return 0;
-}
-
-inline CwxAppHandler4Base* CwxAppReactor::_removeSignal(int sig)
-{
-    if (sig <0 || sig>CWX_APP_MAX_SIGNAL_ID)
-    {
-        CWX_ERROR(("Sig[%d] exceed the max sig-no[%d]",
-            sig,
-            CWX_APP_MAX_SIGNAL_ID));
-        return NULL;
-    }
-    return m_engine->removeSignal(sig);
-}
-
-
 ///设置定时处理handle
-inline int CwxAppReactor::_scheduleTimer (CwxAppHandler4Base *event_handler,
+inline int CwxAppChannel::_scheduleTimer (CwxAppHandler4Channel *event_handler,
                                           CwxTimeValue const&interval)
 {
     int ret = m_engine->scheduleTimer(event_handler, interval);
@@ -513,7 +345,7 @@ inline int CwxAppReactor::_scheduleTimer (CwxAppHandler4Base *event_handler,
 
 }
 ///取消定时处理handle
-inline int CwxAppReactor::_cancelTimer (CwxAppHandler4Base *event_handler)
+inline int CwxAppChannel::_cancelTimer (CwxAppHandler4Channel *event_handler)
 {
 
     int ret = m_engine->cancelTimer(event_handler);
@@ -526,13 +358,13 @@ inline int CwxAppReactor::_cancelTimer (CwxAppHandler4Base *event_handler)
     return 0;
 }
 
-inline bool CwxAppReactor::_isRegIoHandle(CWX_HANDLE handle)
+inline bool CwxAppChannel::_isRegIoHandle(CWX_HANDLE handle)
 {
     if (handle >= CWX_APP_MAX_IO_NUM) return true;
     return m_engine->m_eHandler[handle].m_handler != NULL;
 }
 
-inline bool CwxAppReactor::_isRegIoHandle(CwxAppHandler4Base* handler)
+inline bool CwxAppChannel::_isRegIoHandle(CwxAppHandler4Channel* handler)
 {
     if (handler->getHandle() >= CWX_APP_MAX_IO_NUM) return true;
     return m_engine->m_eHandler[handler->getHandle()].m_handler == handler;
@@ -543,7 +375,7 @@ inline bool CwxAppReactor::_isRegIoHandle(CwxAppHandler4Base* handler)
 @brief 停止架构事件的循环处理。
 @return -1：失败；0：正常退出
 */
-inline int CwxAppReactor::_stop()
+inline int CwxAppChannel::_stop()
 {
     m_bStop = true;
     return 0;
@@ -555,38 +387,11 @@ inline int CwxAppReactor::_stop()
 @param bLock  true：api内部lock；false：外部加锁
 @return 返回handle对应的event handler；NULL表示不存在
 */
-inline CwxAppHandler4Base* CwxAppReactor::_getIoHandler(CWX_HANDLE handle)
+inline CwxAppHandler4Channel* CwxAppChannel::_getIoHandler(CWX_HANDLE handle)
 {
     if (handle >= CWX_APP_MAX_IO_NUM) return NULL;
-    return m_engine->m_eHandler[handle].m_handler;
+    return (CwxAppHandler4Channel*)m_engine->m_eHandler[handle].m_handler;
 }
-/**
-@brief 检查指定sig的handle是否已经注册。
-@return true：注册；false：没有注册
-*/
-inline bool CwxAppReactor::_isRegSigHandle(int sig)
-{
-    if (sig > CWX_APP_MAX_SIGNAL_ID) return false;
-    return m_engine->m_sHandler[sig] != NULL;
-}
-/**
-@brief 检查指定IO的handle是否已经注册。
-@return true：注册；false：没有注册
-*/
-inline bool CwxAppReactor::_isRegSigHandle(CwxAppHandler4Base* handler)
-{
-    if (handler->getHandle() > CWX_APP_MAX_SIGNAL_ID) return false;
-    return m_engine->m_sHandler[handler->getHandle()] == handler;
-}
-/**
-@brief 获取指定sig对应的event handler。
-@return 返回handle对应的event handler；NULL表示不存在
-*/
-inline CwxAppHandler4Base* CwxAppReactor::_getSigHandler(int sig)
-{
-    if (sig > CWX_APP_MAX_SIGNAL_ID) return NULL;
-    return m_engine->m_sHandler[sig];
 
-}
 
 CWINUX_END_NAMESPACE
