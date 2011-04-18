@@ -25,8 +25,7 @@
 #include "CwxAppMacro.h"
 #include "CwxLogger.h"
 #include "CwxAppHandler4Base.h"
-#include "CwxAppConnInfo.h"
-#include "CwxAppChannel.h"
+#include "CwxDTail.h"
 
 CWINUX_BEGIN_NAMESPACE
 /**
@@ -118,18 +117,16 @@ public:
 private:
     ///以非阻塞的方式，发送消息。返回值,-1: failure; 0: not send all;1:send a msg
     inline int nonBlockSend();
+    friend class 
 protected:
-    CwxMsgHead             m_header;
-    CwxAppConnInfo         m_conn;///<connection information
     CWX_UINT32             m_uiSendByte; ///the sent bytes number for current message.
-    CwxMsgBlock*         m_curSndingMsg; ///<current sending msg;
-    CwxMsgBlock*         m_waitSendMsgHead; ///<The header for wait to be sent msg.
-    CwxMsgBlock*         m_waitSendMsgTail;   ///<The tail for wait to be sent msg.
-    char                  m_szHeadBuf[CwxMsgHead::MSG_HEAD_LEN];///<the buf for header
+    CwxMsgBlock*           m_curSndingMsg; ///<current sending msg;
+    CwxMsgBlock*           m_waitSendMsgHead; ///<The header for wait to be sent msg.
+    CwxMsgBlock*           m_waitSendMsgTail;   ///<The tail for wait to be sent msg.
     CWX_UINT32             m_uiRecvHeadLen; ///<recieved msg header's byte number.
     CWX_UINT32             m_uiRecvDataLen; ///<recieved data's byte number.
-    CwxMsgBlock*        m_recvMsgData; ///<the recieved msg data
-    int                   m_connErrNo;
+    CwxMsgBlock*           m_recvMsgData; ///<the recieved msg data
+    CwxAppChannel*         m_channel;
 };
 CWINUX_END_NAMESPACE
 

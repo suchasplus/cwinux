@@ -30,6 +30,7 @@
 #include "CwxLogger.h"
 #include "CwxAppEpoll.h"
 #include "CwxAppHandler4Channel.h"
+#include "CwxStl.h"
 
 CWINUX_BEGIN_NAMESPACE
 
@@ -236,9 +237,9 @@ private:
     CwxMutexLock            m_lock; ///<全局锁
     CwxRwLock               m_rwLock; ///<读写锁
     pthread_t               m_owner; ///<reactor的owner 线程
+    set<CwxAppHandler4Channel*>  m_deferHandlers; ///<此set中的handler，每次dispatch会执行一次,并移除。
     bool                    m_bStop; ///<reactor是否已经停止
     int                     m_noticeFd[2]; ///<notice的读写handle
-    ///引擎的资源
     CwxAppEpoll*            m_engine; ///<epoll的engine
     NoticeHanlder*          m_pNoticeHandler; ///<notice的handler
 };
