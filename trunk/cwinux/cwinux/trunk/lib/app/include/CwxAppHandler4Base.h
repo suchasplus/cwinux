@@ -65,11 +65,6 @@ public :
     */
     virtual int handle_event(int event, CWX_HANDLE handle=CWX_INVALID_HANDLE)=0;
     
-    /**
-    @brief Handler的延迟执行事件，在每次dispatch时执行。
-    @return void
-    */
-    virtual void handle_defer();
     ///handle close
     virtual int close(CWX_HANDLE handle=CWX_INVALID_HANDLE)=0;
 public:

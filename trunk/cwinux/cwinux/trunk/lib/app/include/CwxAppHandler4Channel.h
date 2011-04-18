@@ -54,46 +54,33 @@ public:
     @return -1：处理失败； 0：处理成功
     */
     virtual int handle_event(int event, CWX_HANDLE handle=CWX_INVALID_HANDLE);
-    ///handle close
-    virtual int close(CWX_HANDLE handle=CWX_INVALID_HANDLE);
     /**
-    @brief 获取连接的对端地址
-    @param [in,out] szBuf 返回地址的buf,获取成功后以\\0结束。
-    @param [in] unSize szBuf的大小。
-    @return 返回szBuf
+    @brief 连接可写事件，返回-1，handle_close()会被调用
+    @return -1：处理失败，会调用handle_close()； 0：处理成功
     */
-    ///发送消息
     virtual int handle_output();
-    ///接收消息
+    /**
+    @brief 连接可读事件，返回-1，handle_close()会被调用
+    @return -1：处理失败，会调用handle_close()； 0：处理成功
+    */
     virtual int handle_input();
-    ///超时
-    virtual void handle_timeout();
+    /**
+    @brief 连接超时事件，返回-1，handle_close()会被调用
+    @return -1：处理失败，会调用handle_close()； 0：处理成功
+    */
+    virtual int handle_timeout();
+    /**
+    @brief Handler的延迟执行事件，在每次dispatch时执行。
+    @return -1：处理失败，会调用handle_close()； 0：处理成功
+    */
+    virtual int handle_defer();
+    /**
+    @brief 连接关闭
+    @param [in] handle  连接handle。
+    @return -1：处理失败； 0：处理成功
+    */
+    virtual int close(CWX_HANDLE handle=CWX_INVALID_HANDLE);
 
-    /**
-    @brief 通知连接开始发送一个消息。<br>
-    只有在MSG指定BEGIN_NOTICE的时候才调用.
-    @param [in] msg 要发送的消息。
-    @return -1：取消消息的发送。 0：发送消息。
-    */
-    virtual int onStartSendMsg(CwxMsgBlock* msg);
-    /**
-    @brief 通知连接完成一个消息的发送。<br>
-    只有在MSG指定FINISH_NOTICE的时候才调用.
-    @param [in,out] msg 传入发送完毕的消息，若返回NULL，则msg有上层释放，否则底层释放。
-    @return 
-    CwxMsgSendCtrl::UNDO_CONN：不修改连接的接收状态
-    CwxMsgSendCtrl::RESUME_CONN：让连接从suspend状态变为数据接收状态。
-    CwxMsgSendCtrl::SUSPEND_CONN：让连接从数据接收状态变为suspend状态
-    */
-    virtual CWX_UINT32 onEndSendMsg(CwxMsgBlock*& msg);
-
-    /**
-    @brief 通知一个消息发送失败。<br>
-    只有在MSG指定FAIL_NOTICE的时候才调用.
-    @param [in,out] msg 发送失败的消息，若返回NULL，则msg有上层释放，否则底层释放。
-    @return void。
-    */
-    virtual void onFailSendMsg(CwxMsgBlock*& msg);
 public:
     ///清空对象
     void clear();

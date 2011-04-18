@@ -67,7 +67,7 @@ int CwxAppHandler4Channel::handle_event(int event, CWX_HANDLE)
     }
     if (CWX_CHECK_ATTR(event, CwxAppHandler4Base::TIMEOUT_MASK))
     {
-        handle_timeout();
+        if (0 != handle_timeout()) return -1;
     }
     return 0;
 }
@@ -323,8 +323,14 @@ desc:
 return:
 	0  : success.
 ***/
-void CwxAppHandler4Channel::handle_timeout()
+int CwxAppHandler4Channel::handle_timeout()
 {
+    return 0;
+}
+
+int CwxAppHandler4Channel::handle_defer()
+{
+    return 0;
 }
 
 ///由于没有消息发送，使连接的发送监测休眠.返回值， -1: failure, 0: success
