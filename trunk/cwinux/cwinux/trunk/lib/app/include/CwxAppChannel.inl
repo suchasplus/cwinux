@@ -166,6 +166,46 @@ inline int CwxAppChannel::cancelTimer (CwxAppHandler4Channel *event_handler)
     return _cancelTimer(event_handler);
 }
 
+inline bool CwxAppChannel::regDeferHander(CwxAppHandler4Channel* event_handler)
+{
+    if (!CwxThread::equal(m_owner, CwxThread::self()))
+    {
+        int ret = 0;
+        m_rwLock.acquire_read();
+        this->notice();
+        {
+            CwxMutexGuard<CwxMutexLock> lock(&m_lock);
+            ret = _regDeferHander(event_handler);
+        }
+        m_rwLock.release();
+        return ret;
+    }
+    return _regDeferHander(event_handler);
+}
+/**
+@brief 删除defer handler。多线程安全，任意线程都可以调用。
+@param [in] event_handler defer的event handler
+@return true：成功；false：不存在；
+*/
+inline bool CwxAppChannel::eraseDeferHander(CwxAppHandler4Channel* event_handler)
+{
+    if (!CwxThread::equal(m_owner, CwxThread::self()))
+    {
+        int ret = 0;
+        m_rwLock.acquire_read();
+        this->notice();
+        {
+            CwxMutexGuard<CwxMutexLock> lock(&m_lock);
+            ret = _eraseDeferHander(event_handler);
+        }
+        m_rwLock.release();
+        return ret;
+    }
+    return _eraseDeferHander(event_handler);
+
+}
+
+
 inline int CwxAppChannel::notice()
 {
     write(m_noticeFd[1], "1", 1);
@@ -357,6 +397,30 @@ inline int CwxAppChannel::_cancelTimer (CwxAppHandler4Channel *event_handler)
     }
     return 0;
 }
+
+///添加defer handler
+inline bool CwxAppChannel::_regDeferHander(CwxAppHandler4Channel* event_handler)
+{
+    set<CwxAppHandler4Channel*>::iterator iter = m_deferHandlers.find(event_handler);
+    if (iter != m_deferHandlers.end())
+    {
+        m_deferHandlers.insert(event_handler);
+        return true;
+    }
+    return false;
+}
+///删除defer handler。
+inline bool CwxAppChannel::_eraseDeferHander(CwxAppHandler4Channel* event_handler)
+{
+    set<CwxAppHandler4Channel*>::iterator iter = m_deferHandlers.find(event_handler);
+    if (iter != m_deferHandlers.end())
+    {
+        m_deferHandlers.erase(iter);
+        return true;
+    }
+    return false;
+}
+
 
 inline bool CwxAppChannel::_isRegIoHandle(CWX_HANDLE handle)
 {
