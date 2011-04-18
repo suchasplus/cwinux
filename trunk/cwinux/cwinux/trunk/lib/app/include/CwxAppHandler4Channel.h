@@ -62,35 +62,39 @@ public:
     @param [in] unSize szBuf的大小。
     @return 返回szBuf
     */
-    virtual char* getRemoteAddr(char* szBuf, CWX_UINT16 unSize);
-    /**
-    @brief 获取连接的对端port
-    @return 连接对端的port
-    */
-    virtual CWX_UINT16 getRemotePort();
-    /**
-    @brief 获取连接本端的地址
-    @param [in,out] szBuf 返回地址的buf,获取成功后以\\0结束。
-    @param [in] unSize szBuf的大小。
-    @return 返回szBuf
-    */
-    virtual char* getLocalAddr(char* szBuf, CWX_UINT16 unSize);
-    /**
-    @brief 获取连接的本端port
-    @return 连接对端的port
-    */
-    virtual CWX_UINT16 getLocalPort();
     ///发送消息
     virtual int handle_output();
     ///接收消息
     virtual int handle_input();
     ///超时
     virtual void handle_timeout();
+
+    /**
+    @brief 通知连接开始发送一个消息。<br>
+    只有在MSG指定BEGIN_NOTICE的时候才调用.
+    @param [in] msg 要发送的消息。
+    @return -1：取消消息的发送。 0：发送消息。
+    */
+    virtual int onStartSendMsg(CwxMsgBlock* msg);
+    /**
+    @brief 通知连接完成一个消息的发送。<br>
+    只有在MSG指定FINISH_NOTICE的时候才调用.
+    @param [in,out] msg 传入发送完毕的消息，若返回NULL，则msg有上层释放，否则底层释放。
+    @return 
+    CwxMsgSendCtrl::UNDO_CONN：不修改连接的接收状态
+    CwxMsgSendCtrl::RESUME_CONN：让连接从suspend状态变为数据接收状态。
+    CwxMsgSendCtrl::SUSPEND_CONN：让连接从数据接收状态变为suspend状态
+    */
+    virtual CWX_UINT32 onEndSendMsg(CwxMsgBlock*& msg);
+
+    /**
+    @brief 通知一个消息发送失败。<br>
+    只有在MSG指定FAIL_NOTICE的时候才调用.
+    @param [in,out] msg 发送失败的消息，若返回NULL，则msg有上层释放，否则底层释放。
+    @return void。
+    */
+    virtual void onFailSendMsg(CwxMsgBlock*& msg);
 public:
-    ///获取连接的信息对象
-    CwxAppConnInfo& getConnInfo();
-    ///获取连接的信息对象
-    CwxAppConnInfo const& getConnInfo() const;
     ///清空对象
     void clear();
     ///获取下一个待发送的消息，返回值：0，没有待发送信息；1,获得了一个待发送消息
@@ -101,19 +105,10 @@ public:
     inline int cancelWakeup();
     ///唤醒连接的可写监控，以发送未发送完毕的数据.返回值， -1:failure； 0:success。
     inline int wakeUp();
-    ///检查是否suspend连接的可读、可写监测
-    bool isStopListen() const;
-    ///设置stop listen
-    void setStopListen(bool bStop);
     ///是否有可发送的数据包
     bool isEmpty() const;
-    ///获取连接时的错误代码
-    int getConnErrNo() const;
-    ///获取app
-    CwxAppFramework* getApp()
-    {
-        return m_pApp;
-    }
+    ///获取channel
+    CwxAppChannel* channel();
 private:
     ///以非阻塞的方式，发送消息。返回值,-1: failure; 0: not send all;1:send a msg
     inline int nonBlockSend();

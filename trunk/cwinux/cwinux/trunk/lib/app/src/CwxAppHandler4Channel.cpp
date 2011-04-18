@@ -7,16 +7,14 @@ CWINUX_BEGIN_NAMESPACE
 CwxAppHandler4Channel::CwxAppHandler4Channel(CwxAppChannel *channel)
 :CwxAppHandler4Base(NULL)
 {
-    m_conn.setHandler(this);
     m_uiSendByte = 0;
     m_curSndingMsg = 0;
     m_waitSendMsgHead = NULL;
     m_waitSendMsgTail = NULL;
-    memset(m_szHeadBuf, 0x00, CwxMsgHead::MSG_HEAD_LEN);
     m_uiRecvHeadLen = 0;
     m_uiRecvDataLen = 0;
     m_recvMsgData = NULL;
-    m_connErrNo = 0;
+    m_channel = channel;
 }
 
 ///析构函数
@@ -33,40 +31,12 @@ CwxAppHandler4Channel::~CwxAppHandler4Channel()
 
 int CwxAppHandler4Channel::open (void * )
 {
-    if (getApp()->isStopped()) return -1;
-    if (CwxAppConnInfo::CONNECTING == m_conn.getState())
+    if (0 != channel()->registerHandler(getHandle(),
+        this,
+        CwxAppHandler4Base::READ_MASK))
     {
-        if (0 != reactor()->registerHandler(getHandle(),
-            this,
-            CwxAppHandler4Base::WRITE_MASK))
-        {
-            CWX_ERROR(("Failure to register conn[%u] for waiting connecting",
-                m_conn.getConnId()));
-            return -1;
-        }
-
-    }
-    else if (CwxAppConnInfo::ESTABLISHING == m_conn.getState())
-    {
-        //清空对象的变化数据
-        this->clear();
-        m_conn.setFailConnNum(0);
-        // Turn on non-blocking I/O.
-        if	(CwxSockIo::setNonblock(getHandle(), true) == -1)
-        {
-            m_conn.setState(CwxAppConnInfo::FAILED);
-            CWX_ERROR(("Failure to set the connection for NONBLOCK.conn[%u]",
-                m_conn.getConnId()));
-            return -1;
-        }
-        int iRet = this->getApp()->openConn(*this, m_bStopListen);
-        if (-1 == iRet) return -1;
-        m_conn.setState(CwxAppConnInfo::ESTABLISHED);
-    }
-    else
-    {
-        CWX_ASSERT(0);
-        CWX_ERROR(("Invalid conn state[%d]", m_conn.getState()));
+        CWX_ERROR(("Failure to register conn[%d] for read_mask",
+            getHandle()));
         return -1;
     }
     return 0;
@@ -74,6 +44,7 @@ int CwxAppHandler4Channel::open (void * )
 
 int CwxAppHandler4Channel::close(CWX_HANDLE)
 {
+    channel()->removeHandler(this);
     delete this;
     return 0;
 }
@@ -86,45 +57,17 @@ int CwxAppHandler4Channel::close(CWX_HANDLE)
 */
 int CwxAppHandler4Channel::handle_event(int event, CWX_HANDLE)
 {
-    if (CwxAppConnInfo::ESTABLISHED == m_conn.getState())
-    {///通信状态
-        CWX_ASSERT((event&~CwxAppHandler4Base::RW_MASK)==0);
-        if (CWX_CHECK_ATTR(event, CwxAppHandler4Base::WRITE_MASK))
-        {
-            if (0 != handle_output()) return -1;
-        }
-        if (CWX_CHECK_ATTR(event, CwxAppHandler4Base::READ_MASK))
-        {
-            if (0 != handle_input()) return -1;
-        }
-    }
-    else if (CwxAppConnInfo::CONNECTING == m_conn.getState())
-    {///等待连接状态
-        CWX_ASSERT((event&~CwxAppHandler4Base::WRITE_MASK)==0);
-        int sock_err = 0;
-        socklen_t sock_err_len = sizeof (sock_err);
-        int sockopt_ret = ::getsockopt (getHandle(), SOL_SOCKET, SO_ERROR,
-            &sock_err, &sock_err_len);
-        if ((sockopt_ret < 0) || sock_err)
-        {
-            m_connErrNo = sock_err;
-            return -1;
-        }
-        m_conn.setState(CwxAppConnInfo::ESTABLISHING);
-        if (-1 == open()) return -1;
-    }
-    else if (CwxAppConnInfo::TIMEOUT == m_conn.getState())
+    if (CWX_CHECK_ATTR(event, CwxAppHandler4Base::WRITE_MASK))
     {
-        CWX_ASSERT((event&~CwxAppHandler4Base::TIMEOUT_MASK)==0);
-        if (CWX_CHECK_ATTR(event, CwxAppHandler4Base::TIMEOUT_MASK))
-        {
-            handle_timeout();
-        }
+        if (0 != handle_output()) return -1;
     }
-    else
+    if (CWX_CHECK_ATTR(event, CwxAppHandler4Base::READ_MASK))
     {
-        CWX_ASSERT(0);
-        return -1;
+        if (0 != handle_input()) return -1;
+    }
+    if (CWX_CHECK_ATTR(event, CwxAppHandler4Base::TIMEOUT_MASK))
+    {
+        handle_timeout();
     }
     return 0;
 }
@@ -132,13 +75,12 @@ int CwxAppHandler4Channel::handle_event(int event, CWX_HANDLE)
 
 int CwxAppHandler4Channel::handle_output ()
 {
-    if (getApp()->isStopped()) return 0;
-	int result = 0;
+    int result = 0;
     CWX_UINT32 uiNum = 0;
     bool bCloseConn = false;
     bool bReconn = false;
     CWX_UINT32 uiReconnDelay = 0;
-	// The list had better not be empty, otherwise there's a bug!
+    // The list had better not be empty, otherwise there's a bug!
     while(1)
     {
         if (NULL == this->m_curSndingMsg)
@@ -152,7 +94,6 @@ int CwxAppHandler4Channel::handle_output ()
                 {
                     if (-1 == this->getApp()->onStartSendMsg(m_curSndingMsg, *this))
                     {
-                        this->m_conn.setWaitingMsgNum(this->m_conn.getWaitingMsgNum()-1);
                         CwxMsgBlockAlloc::free(this->m_curSndingMsg);
                         this->m_curSndingMsg = NULL;
                         continue; //next msg;
@@ -384,49 +325,27 @@ return:
 ***/
 void CwxAppHandler4Channel::handle_timeout()
 {
-    CWX_ASSERT(0);
 }
 
-
-/**
-@brief 获取连接的对端地址
-@param [in,out] szBuf 返回地址的buf,获取成功后以\\0结束。
-@param [in] unSize szBuf的大小。
-@return 返回szBuf
-*/
-char* CwxAppHandler4Channel::getRemoteAddr(char* szBuf, CWX_UINT16 )
+///由于没有消息发送，使连接的发送监测休眠.返回值， -1: failure, 0: success
+int CwxAppHandler4Channel::cancelWakeup()
 {
-    szBuf[0] = 0x00;
-    return szBuf;
-}
-/**
-@brief 获取连接的对端port
-@return 连接对端的port
-*/
-CWX_UINT16 CwxAppHandler4Channel::getRemotePort()
-{
-    return 0;
-}
-/**
-@brief 获取连接本端的地址
-@param [in,out] szBuf 返回地址的buf,获取成功后以\\0结束。
-@param [in] unSize szBuf的大小。
-@return 返回szBuf
-*/
-char* CwxAppHandler4Channel::getLocalAddr(char* szBuf, CWX_UINT16 )
-{
-    szBuf[0]=0x00;
-    return szBuf;
-}
-/**
-@brief 获取连接的本端port
-@return 连接对端的port
-*/
-CWX_UINT16 CwxAppHandler4Channel::getLocalPort()
-{
+    if(-1 == this->channel()->suspendHandler(this, CwxAppHandler4Base::WRITE_MASK)){
+        CWX_ERROR(("Failure to cancel wakeup a connection. conn[%d]", getHandle()));
+        return -1;
+    }
     return 0;
 }
 
+///唤醒连接的可写监控，以发送未发送完毕的数据.返回值， -1:failure； 0:success。
+int CwxAppHandler4Channel::wakeUp()
+{
+    if(-1 == this->CwxAppChannel()->resumeHandler(this, CwxAppHandler4Base::WRITE_MASK)){
+        CWX_ERROR(("Failure to wakeup a connection. conn[%d]", getHandle()));
+        return -1;
+    }
+    return 0;
+}
 
 CWINUX_END_NAMESPACE
 
