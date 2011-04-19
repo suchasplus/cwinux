@@ -111,7 +111,7 @@ int CwxAppHandler4Channel::handle_output ()
     if (0 == result)
     {// Partial send.
         CWX_ASSERT (errno == EWOULDBLOCK);
-        break;
+        return 0;
     }
     else if (1 == result)
     {//finish
@@ -138,8 +138,7 @@ int CwxAppHandler4Channel::handle_output ()
         }
         if (bCloseConn)
         {
-            result = -1;
-            break;
+            return -1;
         }
         if (m_curSndingMsg)
         {
@@ -155,9 +154,9 @@ int CwxAppHandler4Channel::handle_output ()
         }
         if (m_curSndingMsg) CwxMsgBlockAlloc::free(m_curSndingMsg);
         this->m_curSndingMsg = NULL;
-        break;
+        return -1;
     }
-    return -1==result?-1:0;
+    return -1;
 }
 
 /***

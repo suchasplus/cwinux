@@ -322,7 +322,7 @@ inline int CwxAppChannel::_resumeHandler (CwxAppHandler4Channel *event_handler, 
 
 
 ///删除io事件处理handle。
-inline CwxAppChannel* CwxAppReactor::_removeHandler (CWX_HANDLE handle)
+inline CwxAppChannel* CwxAppChannel::_removeHandler (CWX_HANDLE handle)
 {
     if (handle >= CWX_APP_MAX_IO_NUM)
     {
