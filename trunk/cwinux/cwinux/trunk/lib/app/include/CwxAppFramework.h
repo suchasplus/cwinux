@@ -328,7 +328,7 @@ public:
     */
     virtual void onSignal(int signum);
     /**
-    @brief 通知建立建立一个CWX_APP_MSG_MODE连接。建立的连接是非阻塞模式。<br>
+    @brief 通知建立建立一个CWX_APP_EVENT_MODE连接。建立的连接是非阻塞模式。<br>
     @param [in] uiSvrId 连接的svr id。
     @param [in] uiHostId 连接的host id。
     @param [in] handle 连接的handle。

@@ -12,10 +12,6 @@ inline void CwxAppHandler4Channel::clear()
         m_waitSendMsgHead = m_curSndingMsg;
     }
     m_waitSendMsgTail = NULL;
-    m_uiRecvHeadLen = 0;
-    m_uiRecvDataLen = 0;
-    if (m_recvMsgData) CwxMsgBlockAlloc::free(m_recvMsgData);
-    m_recvMsgData = NULL;
 }
 
 ///获取下一个待发送的消息，返回值：0，没有待发送信息；1,获得了一个待发送消息

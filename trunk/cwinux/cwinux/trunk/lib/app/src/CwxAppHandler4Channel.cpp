@@ -11,9 +11,6 @@ CwxAppHandler4Channel::CwxAppHandler4Channel(CwxAppChannel *channel)
     m_curSndingMsg = 0;
     m_waitSendMsgHead = NULL;
     m_waitSendMsgTail = NULL;
-    m_uiRecvHeadLen = 0;
-    m_uiRecvDataLen = 0;
-    m_recvMsgData = NULL;
     m_channel = channel;
 }
 

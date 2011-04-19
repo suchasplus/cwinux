@@ -137,9 +137,6 @@ protected:
     CwxMsgBlock*           m_curSndingMsg; ///<current sending msg;
     CwxMsgBlock*           m_waitSendMsgHead; ///<The header for wait to be sent msg.
     CwxMsgBlock*           m_waitSendMsgTail;   ///<The tail for wait to be sent msg.
-    CWX_UINT32             m_uiRecvHeadLen; ///<recieved msg header's byte number.
-    CWX_UINT32             m_uiRecvDataLen; ///<recieved data's byte number.
-    CwxMsgBlock*           m_recvMsgData; ///<the recieved msg data
     CwxAppChannel*         m_channel;
 };
 CWINUX_END_NAMESPACE
