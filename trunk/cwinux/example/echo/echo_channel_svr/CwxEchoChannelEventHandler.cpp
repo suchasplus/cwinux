@@ -8,7 +8,6 @@ int CwxEchoChannelEventHandler::handle_input()
 {
     ssize_t recv_size = 0;
     ssize_t need_size = 0;
-    int result = 0;
     need_size = CwxMsgHead::MSG_HEAD_LEN - this->m_uiRecvHeadLen;
     if (need_size > 0 )
     {//not get complete head
