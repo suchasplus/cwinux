@@ -6,15 +6,11 @@ pkgconfigdir =
 BUILD_DATE=$(shell date +%F)
 
 
-bin_PROGRAMS = cwx_echo
-cwx_echo_CPPFLAGS = -D_BUILD_DATE="$(BUILD_DATE)" -W -Wall
-cwx_echo_SOURCES = \
-	CwxEchoApp.cpp\
-	CwxEchoConfig.cpp\
-	cwx_echo.cpp\
-	CwxEchoEventHandler.cpp
-cwx_echo_LDADD=
-cwx_echo_LDFLAGS =-L@xml_expat_dir@/lib -L@cwinux_dir@/lib
+bin_PROGRAMS = cwx_echo_channel
+cwx_echo_channel_CPPFLAGS = -D_BUILD_DATE="$(BUILD_DATE)" -W -Wall
+cwx_echo_channel_SOURCES = CwxEchoChannelApp.cpp  CwxEchoChannelConfig.cpp  cwx_echo_channel.cpp  CwxEchoChannelEventHandler.cpp
+cwx_echo_channel_LDADD=
+cwx_echo_channel_LDFLAGS =-L@xml_expat_dir@/lib -L@cwinux_dir@/lib
 LIBS=-lcwxapp -lcwxnet -lcwxparse -lcwxcmn -lexpat -lpthread -ldl -lrt
 INCLUDES=-I@cwinux_dir@/include/app -I@cwinux_dir@/include/cmn -I@cwinux_dir@/include/net -I@cwinux_dir@/include/parse -I@xml_expat_dir@/include
 

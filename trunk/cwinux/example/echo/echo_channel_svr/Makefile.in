@@ -36,8 +36,8 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-bin_PROGRAMS = cwx_echo$(EXEEXT)
-subdir = echo_svr
+bin_PROGRAMS = cwx_echo_channel$(EXEEXT)
+subdir = echo_channel_svr
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.in
@@ -48,11 +48,13 @@ CONFIG_CLEAN_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
-am_cwx_echo_OBJECTS = cwx_echo-CwxEchoApp.$(OBJEXT) \
-	cwx_echo-CwxEchoConfig.$(OBJEXT) cwx_echo-cwx_echo.$(OBJEXT) \
-	cwx_echo-CwxEchoEventHandler.$(OBJEXT)
-cwx_echo_OBJECTS = $(am_cwx_echo_OBJECTS)
-cwx_echo_DEPENDENCIES =
+am_cwx_echo_channel_OBJECTS =  \
+	cwx_echo_channel-CwxEchoChannelApp.$(OBJEXT) \
+	cwx_echo_channel-CwxEchoChannelConfig.$(OBJEXT) \
+	cwx_echo_channel-cwx_echo_channel.$(OBJEXT) \
+	cwx_echo_channel-CwxEchoChannelEventHandler.$(OBJEXT)
+cwx_echo_channel_OBJECTS = $(am_cwx_echo_channel_OBJECTS)
+cwx_echo_channel_DEPENDENCIES =
 DEFAULT_INCLUDES = -I. -I$(srcdir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -64,8 +66,8 @@ LTCXXCOMPILE = $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) \
 CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(cwx_echo_SOURCES)
-DIST_SOURCES = $(cwx_echo_SOURCES)
+SOURCES = $(cwx_echo_channel_SOURCES)
+DIST_SOURCES = $(cwx_echo_channel_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -170,15 +172,10 @@ target_alias = @target_alias@
 xml_expat_dir = @xml_expat_dir@
 pkgconfigdir = 
 BUILD_DATE = $(shell date +%F)
-cwx_echo_CPPFLAGS = -D_BUILD_DATE="$(BUILD_DATE)" -W -Wall
-cwx_echo_SOURCES = \
-	CwxEchoApp.cpp\
-	CwxEchoConfig.cpp\
-	cwx_echo.cpp\
-	CwxEchoEventHandler.cpp
-
-cwx_echo_LDADD = 
-cwx_echo_LDFLAGS = -L@xml_expat_dir@/lib -L@cwinux_dir@/lib
+cwx_echo_channel_CPPFLAGS = -D_BUILD_DATE="$(BUILD_DATE)" -W -Wall
+cwx_echo_channel_SOURCES = CwxEchoChannelApp.cpp  CwxEchoChannelConfig.cpp  cwx_echo_channel.cpp  CwxEchoChannelEventHandler.cpp
+cwx_echo_channel_LDADD = 
+cwx_echo_channel_LDFLAGS = -L@xml_expat_dir@/lib -L@cwinux_dir@/lib
 INCLUDES = -I@cwinux_dir@/include/app -I@cwinux_dir@/include/cmn -I@cwinux_dir@/include/net -I@cwinux_dir@/include/parse -I@xml_expat_dir@/include
 all: all-am
 
@@ -193,9 +190,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  echo_svr/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  echo_channel_svr/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  echo_svr/Makefile
+	  $(AUTOMAKE) --gnu  echo_channel_svr/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -241,9 +238,9 @@ clean-binPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-cwx_echo$(EXEEXT): $(cwx_echo_OBJECTS) $(cwx_echo_DEPENDENCIES) 
-	@rm -f cwx_echo$(EXEEXT)
-	$(CXXLINK) $(cwx_echo_LDFLAGS) $(cwx_echo_OBJECTS) $(cwx_echo_LDADD) $(LIBS)
+cwx_echo_channel$(EXEEXT): $(cwx_echo_channel_OBJECTS) $(cwx_echo_channel_DEPENDENCIES) 
+	@rm -f cwx_echo_channel$(EXEEXT)
+	$(CXXLINK) $(cwx_echo_channel_LDFLAGS) $(cwx_echo_channel_OBJECTS) $(cwx_echo_channel_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -251,10 +248,10 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cwx_echo-CwxEchoApp.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cwx_echo-CwxEchoConfig.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cwx_echo-CwxEchoEventHandler.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cwx_echo-cwx_echo.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cwx_echo_channel-CwxEchoChannelApp.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cwx_echo_channel-CwxEchoChannelConfig.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cwx_echo_channel-CwxEchoChannelEventHandler.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cwx_echo_channel-cwx_echo_channel.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
@@ -277,61 +274,61 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LTCXXCOMPILE) -c -o $@ $<
 
-cwx_echo-CwxEchoApp.o: CwxEchoApp.cpp
-@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cwx_echo-CwxEchoApp.o -MD -MP -MF "$(DEPDIR)/cwx_echo-CwxEchoApp.Tpo" -c -o cwx_echo-CwxEchoApp.o `test -f 'CwxEchoApp.cpp' || echo '$(srcdir)/'`CwxEchoApp.cpp; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/cwx_echo-CwxEchoApp.Tpo" "$(DEPDIR)/cwx_echo-CwxEchoApp.Po"; else rm -f "$(DEPDIR)/cwx_echo-CwxEchoApp.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxEchoApp.cpp' object='cwx_echo-CwxEchoApp.o' libtool=no @AMDEPBACKSLASH@
+cwx_echo_channel-CwxEchoChannelApp.o: CwxEchoChannelApp.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_channel_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cwx_echo_channel-CwxEchoChannelApp.o -MD -MP -MF "$(DEPDIR)/cwx_echo_channel-CwxEchoChannelApp.Tpo" -c -o cwx_echo_channel-CwxEchoChannelApp.o `test -f 'CwxEchoChannelApp.cpp' || echo '$(srcdir)/'`CwxEchoChannelApp.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/cwx_echo_channel-CwxEchoChannelApp.Tpo" "$(DEPDIR)/cwx_echo_channel-CwxEchoChannelApp.Po"; else rm -f "$(DEPDIR)/cwx_echo_channel-CwxEchoChannelApp.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxEchoChannelApp.cpp' object='cwx_echo_channel-CwxEchoChannelApp.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cwx_echo-CwxEchoApp.o `test -f 'CwxEchoApp.cpp' || echo '$(srcdir)/'`CwxEchoApp.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_channel_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cwx_echo_channel-CwxEchoChannelApp.o `test -f 'CwxEchoChannelApp.cpp' || echo '$(srcdir)/'`CwxEchoChannelApp.cpp
 
-cwx_echo-CwxEchoApp.obj: CwxEchoApp.cpp
-@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cwx_echo-CwxEchoApp.obj -MD -MP -MF "$(DEPDIR)/cwx_echo-CwxEchoApp.Tpo" -c -o cwx_echo-CwxEchoApp.obj `if test -f 'CwxEchoApp.cpp'; then $(CYGPATH_W) 'CwxEchoApp.cpp'; else $(CYGPATH_W) '$(srcdir)/CwxEchoApp.cpp'; fi`; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/cwx_echo-CwxEchoApp.Tpo" "$(DEPDIR)/cwx_echo-CwxEchoApp.Po"; else rm -f "$(DEPDIR)/cwx_echo-CwxEchoApp.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxEchoApp.cpp' object='cwx_echo-CwxEchoApp.obj' libtool=no @AMDEPBACKSLASH@
+cwx_echo_channel-CwxEchoChannelApp.obj: CwxEchoChannelApp.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_channel_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cwx_echo_channel-CwxEchoChannelApp.obj -MD -MP -MF "$(DEPDIR)/cwx_echo_channel-CwxEchoChannelApp.Tpo" -c -o cwx_echo_channel-CwxEchoChannelApp.obj `if test -f 'CwxEchoChannelApp.cpp'; then $(CYGPATH_W) 'CwxEchoChannelApp.cpp'; else $(CYGPATH_W) '$(srcdir)/CwxEchoChannelApp.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/cwx_echo_channel-CwxEchoChannelApp.Tpo" "$(DEPDIR)/cwx_echo_channel-CwxEchoChannelApp.Po"; else rm -f "$(DEPDIR)/cwx_echo_channel-CwxEchoChannelApp.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxEchoChannelApp.cpp' object='cwx_echo_channel-CwxEchoChannelApp.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cwx_echo-CwxEchoApp.obj `if test -f 'CwxEchoApp.cpp'; then $(CYGPATH_W) 'CwxEchoApp.cpp'; else $(CYGPATH_W) '$(srcdir)/CwxEchoApp.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_channel_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cwx_echo_channel-CwxEchoChannelApp.obj `if test -f 'CwxEchoChannelApp.cpp'; then $(CYGPATH_W) 'CwxEchoChannelApp.cpp'; else $(CYGPATH_W) '$(srcdir)/CwxEchoChannelApp.cpp'; fi`
 
-cwx_echo-CwxEchoConfig.o: CwxEchoConfig.cpp
-@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cwx_echo-CwxEchoConfig.o -MD -MP -MF "$(DEPDIR)/cwx_echo-CwxEchoConfig.Tpo" -c -o cwx_echo-CwxEchoConfig.o `test -f 'CwxEchoConfig.cpp' || echo '$(srcdir)/'`CwxEchoConfig.cpp; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/cwx_echo-CwxEchoConfig.Tpo" "$(DEPDIR)/cwx_echo-CwxEchoConfig.Po"; else rm -f "$(DEPDIR)/cwx_echo-CwxEchoConfig.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxEchoConfig.cpp' object='cwx_echo-CwxEchoConfig.o' libtool=no @AMDEPBACKSLASH@
+cwx_echo_channel-CwxEchoChannelConfig.o: CwxEchoChannelConfig.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_channel_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cwx_echo_channel-CwxEchoChannelConfig.o -MD -MP -MF "$(DEPDIR)/cwx_echo_channel-CwxEchoChannelConfig.Tpo" -c -o cwx_echo_channel-CwxEchoChannelConfig.o `test -f 'CwxEchoChannelConfig.cpp' || echo '$(srcdir)/'`CwxEchoChannelConfig.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/cwx_echo_channel-CwxEchoChannelConfig.Tpo" "$(DEPDIR)/cwx_echo_channel-CwxEchoChannelConfig.Po"; else rm -f "$(DEPDIR)/cwx_echo_channel-CwxEchoChannelConfig.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxEchoChannelConfig.cpp' object='cwx_echo_channel-CwxEchoChannelConfig.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cwx_echo-CwxEchoConfig.o `test -f 'CwxEchoConfig.cpp' || echo '$(srcdir)/'`CwxEchoConfig.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_channel_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cwx_echo_channel-CwxEchoChannelConfig.o `test -f 'CwxEchoChannelConfig.cpp' || echo '$(srcdir)/'`CwxEchoChannelConfig.cpp
 
-cwx_echo-CwxEchoConfig.obj: CwxEchoConfig.cpp
-@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cwx_echo-CwxEchoConfig.obj -MD -MP -MF "$(DEPDIR)/cwx_echo-CwxEchoConfig.Tpo" -c -o cwx_echo-CwxEchoConfig.obj `if test -f 'CwxEchoConfig.cpp'; then $(CYGPATH_W) 'CwxEchoConfig.cpp'; else $(CYGPATH_W) '$(srcdir)/CwxEchoConfig.cpp'; fi`; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/cwx_echo-CwxEchoConfig.Tpo" "$(DEPDIR)/cwx_echo-CwxEchoConfig.Po"; else rm -f "$(DEPDIR)/cwx_echo-CwxEchoConfig.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxEchoConfig.cpp' object='cwx_echo-CwxEchoConfig.obj' libtool=no @AMDEPBACKSLASH@
+cwx_echo_channel-CwxEchoChannelConfig.obj: CwxEchoChannelConfig.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_channel_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cwx_echo_channel-CwxEchoChannelConfig.obj -MD -MP -MF "$(DEPDIR)/cwx_echo_channel-CwxEchoChannelConfig.Tpo" -c -o cwx_echo_channel-CwxEchoChannelConfig.obj `if test -f 'CwxEchoChannelConfig.cpp'; then $(CYGPATH_W) 'CwxEchoChannelConfig.cpp'; else $(CYGPATH_W) '$(srcdir)/CwxEchoChannelConfig.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/cwx_echo_channel-CwxEchoChannelConfig.Tpo" "$(DEPDIR)/cwx_echo_channel-CwxEchoChannelConfig.Po"; else rm -f "$(DEPDIR)/cwx_echo_channel-CwxEchoChannelConfig.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxEchoChannelConfig.cpp' object='cwx_echo_channel-CwxEchoChannelConfig.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cwx_echo-CwxEchoConfig.obj `if test -f 'CwxEchoConfig.cpp'; then $(CYGPATH_W) 'CwxEchoConfig.cpp'; else $(CYGPATH_W) '$(srcdir)/CwxEchoConfig.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_channel_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cwx_echo_channel-CwxEchoChannelConfig.obj `if test -f 'CwxEchoChannelConfig.cpp'; then $(CYGPATH_W) 'CwxEchoChannelConfig.cpp'; else $(CYGPATH_W) '$(srcdir)/CwxEchoChannelConfig.cpp'; fi`
 
-cwx_echo-cwx_echo.o: cwx_echo.cpp
-@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cwx_echo-cwx_echo.o -MD -MP -MF "$(DEPDIR)/cwx_echo-cwx_echo.Tpo" -c -o cwx_echo-cwx_echo.o `test -f 'cwx_echo.cpp' || echo '$(srcdir)/'`cwx_echo.cpp; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/cwx_echo-cwx_echo.Tpo" "$(DEPDIR)/cwx_echo-cwx_echo.Po"; else rm -f "$(DEPDIR)/cwx_echo-cwx_echo.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cwx_echo.cpp' object='cwx_echo-cwx_echo.o' libtool=no @AMDEPBACKSLASH@
+cwx_echo_channel-cwx_echo_channel.o: cwx_echo_channel.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_channel_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cwx_echo_channel-cwx_echo_channel.o -MD -MP -MF "$(DEPDIR)/cwx_echo_channel-cwx_echo_channel.Tpo" -c -o cwx_echo_channel-cwx_echo_channel.o `test -f 'cwx_echo_channel.cpp' || echo '$(srcdir)/'`cwx_echo_channel.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/cwx_echo_channel-cwx_echo_channel.Tpo" "$(DEPDIR)/cwx_echo_channel-cwx_echo_channel.Po"; else rm -f "$(DEPDIR)/cwx_echo_channel-cwx_echo_channel.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cwx_echo_channel.cpp' object='cwx_echo_channel-cwx_echo_channel.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cwx_echo-cwx_echo.o `test -f 'cwx_echo.cpp' || echo '$(srcdir)/'`cwx_echo.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_channel_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cwx_echo_channel-cwx_echo_channel.o `test -f 'cwx_echo_channel.cpp' || echo '$(srcdir)/'`cwx_echo_channel.cpp
 
-cwx_echo-cwx_echo.obj: cwx_echo.cpp
-@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cwx_echo-cwx_echo.obj -MD -MP -MF "$(DEPDIR)/cwx_echo-cwx_echo.Tpo" -c -o cwx_echo-cwx_echo.obj `if test -f 'cwx_echo.cpp'; then $(CYGPATH_W) 'cwx_echo.cpp'; else $(CYGPATH_W) '$(srcdir)/cwx_echo.cpp'; fi`; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/cwx_echo-cwx_echo.Tpo" "$(DEPDIR)/cwx_echo-cwx_echo.Po"; else rm -f "$(DEPDIR)/cwx_echo-cwx_echo.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cwx_echo.cpp' object='cwx_echo-cwx_echo.obj' libtool=no @AMDEPBACKSLASH@
+cwx_echo_channel-cwx_echo_channel.obj: cwx_echo_channel.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_channel_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cwx_echo_channel-cwx_echo_channel.obj -MD -MP -MF "$(DEPDIR)/cwx_echo_channel-cwx_echo_channel.Tpo" -c -o cwx_echo_channel-cwx_echo_channel.obj `if test -f 'cwx_echo_channel.cpp'; then $(CYGPATH_W) 'cwx_echo_channel.cpp'; else $(CYGPATH_W) '$(srcdir)/cwx_echo_channel.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/cwx_echo_channel-cwx_echo_channel.Tpo" "$(DEPDIR)/cwx_echo_channel-cwx_echo_channel.Po"; else rm -f "$(DEPDIR)/cwx_echo_channel-cwx_echo_channel.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cwx_echo_channel.cpp' object='cwx_echo_channel-cwx_echo_channel.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cwx_echo-cwx_echo.obj `if test -f 'cwx_echo.cpp'; then $(CYGPATH_W) 'cwx_echo.cpp'; else $(CYGPATH_W) '$(srcdir)/cwx_echo.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_channel_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cwx_echo_channel-cwx_echo_channel.obj `if test -f 'cwx_echo_channel.cpp'; then $(CYGPATH_W) 'cwx_echo_channel.cpp'; else $(CYGPATH_W) '$(srcdir)/cwx_echo_channel.cpp'; fi`
 
-cwx_echo-CwxEchoEventHandler.o: CwxEchoEventHandler.cpp
-@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cwx_echo-CwxEchoEventHandler.o -MD -MP -MF "$(DEPDIR)/cwx_echo-CwxEchoEventHandler.Tpo" -c -o cwx_echo-CwxEchoEventHandler.o `test -f 'CwxEchoEventHandler.cpp' || echo '$(srcdir)/'`CwxEchoEventHandler.cpp; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/cwx_echo-CwxEchoEventHandler.Tpo" "$(DEPDIR)/cwx_echo-CwxEchoEventHandler.Po"; else rm -f "$(DEPDIR)/cwx_echo-CwxEchoEventHandler.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxEchoEventHandler.cpp' object='cwx_echo-CwxEchoEventHandler.o' libtool=no @AMDEPBACKSLASH@
+cwx_echo_channel-CwxEchoChannelEventHandler.o: CwxEchoChannelEventHandler.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_channel_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cwx_echo_channel-CwxEchoChannelEventHandler.o -MD -MP -MF "$(DEPDIR)/cwx_echo_channel-CwxEchoChannelEventHandler.Tpo" -c -o cwx_echo_channel-CwxEchoChannelEventHandler.o `test -f 'CwxEchoChannelEventHandler.cpp' || echo '$(srcdir)/'`CwxEchoChannelEventHandler.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/cwx_echo_channel-CwxEchoChannelEventHandler.Tpo" "$(DEPDIR)/cwx_echo_channel-CwxEchoChannelEventHandler.Po"; else rm -f "$(DEPDIR)/cwx_echo_channel-CwxEchoChannelEventHandler.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxEchoChannelEventHandler.cpp' object='cwx_echo_channel-CwxEchoChannelEventHandler.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cwx_echo-CwxEchoEventHandler.o `test -f 'CwxEchoEventHandler.cpp' || echo '$(srcdir)/'`CwxEchoEventHandler.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_channel_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cwx_echo_channel-CwxEchoChannelEventHandler.o `test -f 'CwxEchoChannelEventHandler.cpp' || echo '$(srcdir)/'`CwxEchoChannelEventHandler.cpp
 
-cwx_echo-CwxEchoEventHandler.obj: CwxEchoEventHandler.cpp
-@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cwx_echo-CwxEchoEventHandler.obj -MD -MP -MF "$(DEPDIR)/cwx_echo-CwxEchoEventHandler.Tpo" -c -o cwx_echo-CwxEchoEventHandler.obj `if test -f 'CwxEchoEventHandler.cpp'; then $(CYGPATH_W) 'CwxEchoEventHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/CwxEchoEventHandler.cpp'; fi`; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/cwx_echo-CwxEchoEventHandler.Tpo" "$(DEPDIR)/cwx_echo-CwxEchoEventHandler.Po"; else rm -f "$(DEPDIR)/cwx_echo-CwxEchoEventHandler.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxEchoEventHandler.cpp' object='cwx_echo-CwxEchoEventHandler.obj' libtool=no @AMDEPBACKSLASH@
+cwx_echo_channel-CwxEchoChannelEventHandler.obj: CwxEchoChannelEventHandler.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_channel_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cwx_echo_channel-CwxEchoChannelEventHandler.obj -MD -MP -MF "$(DEPDIR)/cwx_echo_channel-CwxEchoChannelEventHandler.Tpo" -c -o cwx_echo_channel-CwxEchoChannelEventHandler.obj `if test -f 'CwxEchoChannelEventHandler.cpp'; then $(CYGPATH_W) 'CwxEchoChannelEventHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/CwxEchoChannelEventHandler.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/cwx_echo_channel-CwxEchoChannelEventHandler.Tpo" "$(DEPDIR)/cwx_echo_channel-CwxEchoChannelEventHandler.Po"; else rm -f "$(DEPDIR)/cwx_echo_channel-CwxEchoChannelEventHandler.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxEchoChannelEventHandler.cpp' object='cwx_echo_channel-CwxEchoChannelEventHandler.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cwx_echo-CwxEchoEventHandler.obj `if test -f 'CwxEchoEventHandler.cpp'; then $(CYGPATH_W) 'CwxEchoEventHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/CwxEchoEventHandler.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_channel_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cwx_echo_channel-CwxEchoChannelEventHandler.obj `if test -f 'CwxEchoChannelEventHandler.cpp'; then $(CYGPATH_W) 'CwxEchoChannelEventHandler.cpp'; else $(CYGPATH_W) '$(srcdir)/CwxEchoChannelEventHandler.cpp'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

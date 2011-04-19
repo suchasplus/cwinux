@@ -3,6 +3,6 @@
   <workdir path="/usr/home/wenbo/cwinux_google/cwinux/cwinux/example/echo/echo_client"/>
   <listen ip="172.16.42.65" port="9300"/>
   <unix path="/usr/home/wenbo/cwinux_google/cwinux/cwinux/example/echo/echo_svr/echo.unix"/>
-  <conn  num="10" type="tcp" lasting="1"/>
-  <data  size="128"/>
+  <conn  num="1" type="tcp" lasting="1"/>
+  <data  size="1020"/>
 </svr_def>
