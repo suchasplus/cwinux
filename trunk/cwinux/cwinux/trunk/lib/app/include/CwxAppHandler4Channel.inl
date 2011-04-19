@@ -36,7 +36,11 @@ inline bool CwxAppHandler4Channel::putMsg(CwxMsgBlock* msg)
     }else{
         this->m_waitSendMsgTail = this->m_waitSendMsgHead = msg;
     }
-    return handle_output()==0?true:false;
+    if (!isEmpty())
+    {
+        this->wakeUp();
+    };
+    return true;
 }
 
 
