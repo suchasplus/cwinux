@@ -540,29 +540,26 @@ int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg, CWX_UINT32 uiMiliTim
         }
     }
     //¼ì²â³¬Ê±
-    if (!m_timeHeap.isEmpty())
+    while (!m_timeHeap.isEmpty() && (m_timeHeap.top()->getTimeout() < ullNow))
     {
-        while (m_timeHeap.top()->getTimeout() < ullNow)
+        if (m_bStop) return 0;
+        if (m_timeHeap.top()->getHandle() != CWX_INVALID_HANDLE)
         {
-            if (m_bStop) return 0;
-            if (m_timeHeap.top()->getHandle() != CWX_INVALID_HANDLE)
+            handler = removeHandler(m_timeHeap.top()->getHandle());
+            if (!handler)
             {
-                handler = removeHandler(m_timeHeap.top()->getHandle());
-                if (!handler)
-                {
-                    CWX_ERROR(("Failure to remove timeout handler, fd[%d]", event->data.fd));
-                }
+                CWX_ERROR(("Failure to remove timeout handler, fd[%d]", event->data.fd));
             }
-            else
-            {
-                handler = m_timeHeap.pop();
-
-            }
-            callback(handler,
-                CwxAppHandler4Base::TIMEOUT_MASK,
-                false,
-                arg);
         }
+        else
+        {
+            handler = m_timeHeap.pop();
+
+        }
+        callback(handler,
+            CwxAppHandler4Base::TIMEOUT_MASK,
+            false,
+            arg);
     }
     return 0;
 }
