@@ -67,7 +67,9 @@ int CwxEchoClientApp::initRunEnv(){
             if (0 > this->noticeTcpConnect(SVR_TYPE_ECHO,
                 0,
                 this->m_config.m_listen.getHostName().c_str(),
-                this->m_config.m_listen.getPort()))
+                this->m_config.m_listen.getPort(),
+                false,
+                false))
             {
                 CWX_ERROR(("Can't connect the echo service: addr=%s, port=%d",
                     this->m_config.m_listen.getHostName().c_str(),
@@ -78,7 +80,9 @@ int CwxEchoClientApp::initRunEnv(){
             //create  conn
             if (0 > this->noticeLsockConnect(SVR_TYPE_ECHO,
                 0,
-                this->m_config.m_strUnixPathFile.c_str()))
+                this->m_config.m_strUnixPathFile.c_str(),
+                false,
+                false))
             {
                 CWX_ERROR(("Can't connect the echo service: addr=%s, port=%d",
                     this->m_config.m_listen.getHostName().c_str(),
