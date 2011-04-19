@@ -34,6 +34,8 @@ CWINUX_BEGIN_NAMESPACE
 @brief Channel的io通信基类
 */
 
+class CwxAppChannel;
+
 class CWX_API CwxAppHandler4Channel:public CwxAppHandler4Base
 {
 public:
