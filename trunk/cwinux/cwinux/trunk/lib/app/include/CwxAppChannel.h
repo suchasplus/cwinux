@@ -155,7 +155,7 @@ public:
     @param [in] event_handler defer的event handler
     @return true：成功；false：不存在；
     */
-    bool eraseDeferHander(CwxAppHandler4Channel* event_handler)
+    bool eraseDeferHander(CwxAppHandler4Channel* event_handler);
     /**
     @brief notice reactor。多线程安全，任意线程都可以调用。
     @return -1：失败；  0：成功；
@@ -208,7 +208,7 @@ private:
     ///添加defer handler
     bool _regDeferHander(CwxAppHandler4Channel* event_handler);
     ///删除defer handler。
-    bool _eraseDeferHander(CwxAppHandler4Channel* event_handler)
+    bool _eraseDeferHander(CwxAppHandler4Channel* event_handler);
 
     /**
     @brief 停止架构事件的循环处理。

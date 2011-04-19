@@ -123,7 +123,7 @@ int CwxAppHandler4Channel::handle_output ()
             {
                 if (0 != channel()->resumeHandler(this, CwxAppHandler4Base::READ_MASK))
                 {
-                    CWX_ERROR(("Failure to resume handler with conn_id[%u]", m_conn.getConnId()));
+                    CWX_ERROR(("Failure to resume handler with conn_id[%d]", getHandle()));
                     return -1;
                 }
             }
@@ -131,7 +131,7 @@ int CwxAppHandler4Channel::handle_output ()
             {
                 if (0 != channel()->suspendHandler(this, CwxAppHandler4Base::READ_MASK))
                 {
-                    CWX_ERROR(("Failure to suspend handler with conn_id[%u]", m_conn.getConnId()));
+                    CWX_ERROR(("Failure to suspend handler with conn_id[%d]", getHandle()));
                     return -1;
                 }
             }
