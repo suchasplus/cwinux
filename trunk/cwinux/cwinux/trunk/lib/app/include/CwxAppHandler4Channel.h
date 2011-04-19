@@ -122,9 +122,9 @@ public:
     ///对要发送的消息排队，返回值：true：成功；false：失败，失败时因为队列已满
     inline bool putMsg(CwxMsgBlock* msg);
     ///由于没有消息发送，使连接的发送监测休眠.返回值， -1: failure, 0: success
-    inline int cancelWakeup();
+    int cancelWakeup();
     ///唤醒连接的可写监控，以发送未发送完毕的数据.返回值， -1:failure； 0:success。
-    inline int wakeUp();
+    int wakeUp();
     ///是否有可发送的数据包
     bool isEmpty() const;
     ///获取channel
