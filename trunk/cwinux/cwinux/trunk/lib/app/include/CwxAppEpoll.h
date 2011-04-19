@@ -35,6 +35,7 @@
 CWINUX_BEGIN_NAMESPACE
 
 class CwxAppReactor;
+class CwxAppChannel;
 
 /**
 @class CwxAppEpoll
@@ -180,6 +181,7 @@ private:
     };
 private:
     friend class CwxAppReactor;
+    friend class CwxAppChannel;
 private:
     int                             m_epfd;     ///<epoll的fd
     struct epoll_event              m_events[CWX_APP_MAX_IO_NUM]; ///<epoll的event 数组
