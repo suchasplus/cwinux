@@ -187,7 +187,7 @@ int CwxEchoChannelApp::ThreadDoQueue(CwxMsgQueue* queue, CwxAppChannel* channel)
         {
             iRet = queue->dequeue(block);
             if (-1 == iRet) return -1;
-            CWX_ASSERT((block->event().getEvent() == CwxEventInfo::CONN_CREATED);
+            CWX_ASSERT(block->event().getEvent() == CwxEventInfo::CONN_CREATED);
             if (channel->isRegIoHandle(block->event().getIoHandle()))
             {
                 CWX_ERROR(("Handler[%] is register", block->event().getIoHandle()));
