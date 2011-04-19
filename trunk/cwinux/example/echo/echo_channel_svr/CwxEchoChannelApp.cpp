@@ -207,6 +207,7 @@ int CwxEchoChannelApp::ThreadDoQueue(CwxMsgQueue* queue, CwxAppChannel* channel)
         CwxMsgBlockAlloc::free(block);
         block = NULL;
     }
+    if (queue->isDeactived()) return -1;
     return 0;
 }
 
