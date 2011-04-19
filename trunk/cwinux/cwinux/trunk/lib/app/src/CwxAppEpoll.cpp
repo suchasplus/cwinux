@@ -457,24 +457,30 @@ int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg, CWX_UINT32 uiMiliTim
     int num = 0;
     CWX_UINT64 ullNow = CwxDate::getTimestamp();
     CWX_UINT64 ullTimeout = 0;
-    int tv=0;
+    int tv=-1;
     struct epoll_event *event=NULL;
     CwxAppHandler4Base* handler = NULL;
     ///计算超时时间
     timeout(ullTimeout);
-    if (uiMiliTimeout)
+    if (ullTimeout)
     {
-        uiMiliTimeout *=1000;
-        if (!ullTimeout || (ullTimeout > uiMiliTimeout)) ullTimeout = uiMiliTimeout;
+        if (ullTimeout < ullNow)
+        {
+            tv =1;
+        }
+        else
+        {
+            ullTimeout -= ullNow;
+            tv = ullTimeout/1000;
+            if (tv < 1) tv = 1;
+        }
+        if (uiMiliTimeout && (tv > (int)uiMiliTimeout)) tv = uiMiliTimeout;
     }
-    if (!ullTimeout)
+    else if (uiMiliTimeout)
     {
-        tv = -1;
-    }else
-    {
-        tv = (int)(ullTimeout - ullNow)/1000;
-        if (tv < 1) tv = 1;
+        tv = uiMiliTimeout;
     }
+
     m_bStop = false;
     num = epoll_wait(m_epfd, m_events, CWX_APP_MAX_IO_NUM, tv);
     if (num > 0)
