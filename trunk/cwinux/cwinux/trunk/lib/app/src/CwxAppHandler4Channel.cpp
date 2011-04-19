@@ -142,6 +142,7 @@ int CwxAppHandler4Channel::handle_output ()
             CwxMsgBlockAlloc::free(m_curSndingMsg);
             this->m_curSndingMsg = NULL;
         }
+        return 0;
     }
     else
     {//failure
