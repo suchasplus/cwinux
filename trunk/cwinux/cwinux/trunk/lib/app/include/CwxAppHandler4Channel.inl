@@ -36,6 +36,7 @@ inline bool CwxAppHandler4Channel::putMsg(CwxMsgBlock* msg)
     }else{
         this->m_waitSendMsgTail = this->m_waitSendMsgHead = msg;
     }
+    getNextMsg();
     int ret = nonBlockSend();
     if (-1 == ret) return false;
     if (isEmpty())
