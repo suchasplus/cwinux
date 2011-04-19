@@ -26,6 +26,7 @@
 #include "CwxLogger.h"
 #include "CwxAppHandler4Base.h"
 #include "CwxDTail.h"
+#include "CwxMsgBlock.h"
 
 CWINUX_BEGIN_NAMESPACE
 /**
@@ -80,6 +81,36 @@ public:
     @return -1：处理失败； 0：处理成功
     */
     virtual int close(CWX_HANDLE handle=CWX_INVALID_HANDLE);
+    /**
+    @brief 通知连接开始发送一个消息。<br>
+    只有在MSG指定BEGIN_NOTICE的时候才调用.
+    @param [in] msg 要发送的消息。
+    @return -1：取消消息的发送。 0：发送消息。
+    */
+    virtual int onStartSendMsg(CwxMsgBlock* msg);
+    /**
+    @brief 通知连接完成一个消息的发送。<br>
+    只有在Msg指定FINISH_NOTICE的时候才调用.
+    @param [in,out] msg 传入发送完毕的消息，若返回NULL，则msg有上层释放，否则底层释放。
+    @return 
+    CwxMsgSendCtrl::UNDO_CONN：不修改连接的接收状态
+    CwxMsgSendCtrl::RESUME_CONN：让连接从suspend状态变为数据接收状态。
+    CwxMsgSendCtrl::SUSPEND_CONN：让连接从数据接收状态变为suspend状态
+    */
+    virtual CWX_UINT32 onEndSendMsg(CwxMsgBlock*& msg);
+
+    /**
+    @brief 通知连接上，一个消息发送失败。<br>
+    只有在Msg指定FAIL_NOTICE的时候才调用.
+    @param [in,out] msg 发送失败的消息，若返回NULL，则msg有上层释放，否则底层释放。
+    @return void。
+    */
+    virtual void onFailSendMsg(CwxMsgBlock*& msg);
+    /**
+    @brief 通知连接关闭。
+    @return 对于主动连接，1：不从engine中移除注册；0：不从engine中移除注册但不删除handler；-1：从engine中将handle移除并删除。
+    */
+    virtual int onConnClosed();
 
 public:
     ///清空对象
