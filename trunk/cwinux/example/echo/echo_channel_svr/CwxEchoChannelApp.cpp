@@ -101,7 +101,7 @@ int CwxEchoChannelApp::initRunEnv(){
             CwxEchoChannelApp::ThreadMain,
             m_channel);
         ///启动线程，线程池中线程的线程栈大小为1M。
-        if ( 0 != m_threadPool->start(NULL)){
+        if ( 0 != m_threadPool[i]->start(NULL)){
             CWX_ERROR(("Failure to start thread pool"));
             return -1;
         }
