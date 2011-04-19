@@ -98,7 +98,7 @@ int CwxEchoChannelApp::initRunEnv(){
             1,
             getThreadPoolMgr(),
             &getCommander(),
-            CwxEchoChannelApp::ThreadMain(),
+            CwxEchoChannelApp::ThreadMain,
             m_channel);
         ///启动线程，线程池中线程的线程栈大小为1M。
         if ( 0 != m_threadPool->start(NULL)){
@@ -133,7 +133,7 @@ void CwxEchoChannelApp::onSignal(int signum){
 int CwxEchoChannelApp::onConnCreated(CWX_UINT32 uiSvrId,
                           CWX_UINT32 uiHostId,
                           CWX_HANDLE handle,
-                          bool& bSuspendListen)
+                          bool& )
 {
     CwxMsgBlock* msg = CwxMsgBlockAlloc::malloc(0);
     msg->event().setSvrId(uiSvrId);
@@ -210,22 +210,19 @@ int CwxEchoChannelApp::ThreadDoQueue(CwxMsgQueue* queue, CwxAppChannel* channel)
     return 0;
 }
 
-void* CwxEchoChannelApp::ThreadMain(CwxTss* tss, CwxMsgQueue* queue, void* arg)
+void* CwxEchoChannelApp::ThreadMain(CwxTss* , CwxMsgQueue* queue, void* arg)
 {
-    int iRet = 0;
-    CwxAppChannel* channel = (CwxAppChannel* arg);
+    CwxAppChannel* channel = (CwxAppChannel*) arg;
     if (0 != channel->open())
     {
         CWX_ERROR(("Failure to open channel"));
         return NULL;
     }
-    CwxMsgBlock* block = NULL;
-    CwxEchoChannelEventHandler* handler = NULL;
     while(1)
     {
         //获取队列中的消息并处理
         if (0 != ThreadDoQueue(queue, channel)) break;
-        if (-1 == m_channel->dispatch(5))
+        if (-1 == channel->dispatch(5))
         {
             CWX_ERROR(("Failure to invoke CwxAppChannel::dispatch()"));
             sleep(1);
