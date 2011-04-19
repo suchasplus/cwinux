@@ -78,7 +78,9 @@ am_libcwxapp_la_OBJECTS = libcwxapp_la-CwxAppConfig.lo \
 	libcwxapp_la-CwxAppProcessMgr.lo \
 	libcwxapp_la-CwxAppHandler4IoMsg.lo \
 	libcwxapp_la-CwxAppHandler4Time.lo \
-	libcwxapp_la-CwxAppReactor.lo libcwxapp_la-CwxAppEpoll.lo
+	libcwxapp_la-CwxAppReactor.lo libcwxapp_la-CwxAppEpoll.lo \
+	libcwxapp_la-CwxAppHandler4Channel.lo \
+	libcwxapp_la-CwxAppChannel.lo
 libcwxapp_la_OBJECTS = $(am_libcwxapp_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -222,7 +224,9 @@ libcwxapp_la_SOURCES = \
 	CwxAppHandler4IoMsg.cpp\
 	CwxAppHandler4Time.cpp\
 	CwxAppReactor.cpp\
-        CwxAppEpoll.cpp
+        CwxAppEpoll.cpp\
+	CwxAppHandler4Channel.cpp\
+	CwxAppChannel.cpp
 
 libcwxapp_la_LDFLAGS = 
 cwxappincludedir = $(prefix)/include/app
@@ -262,7 +266,11 @@ cwxappinclude_HEADERS = \
 	../include/CwxAppHandler4Time.h\
 	../include/CwxAppNoticePipe.inl\
 	../include/CwxAppHandler4Base.inl\
-	../include/CwxAppHandler4UnixConn.h
+	../include/CwxAppHandler4UnixConn.h\
+	../include/CwxAppChannel.h\
+	../include/CwxAppChannel.inl\
+	../include/CwxAppHandler4Channel.h\
+	../include/CwxAppHandler4Channel.inl
 
 INCLUDES = -I$(srcdir)/../include -I$(srcdir)/../../cmn/include -I$(srcdir)/../../net/include
 all: all-am
@@ -334,11 +342,13 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxapp_la-CwxAppChannel.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxapp_la-CwxAppConfig.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxapp_la-CwxAppConnInfo.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxapp_la-CwxAppEpoll.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxapp_la-CwxAppFramework.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxapp_la-CwxAppHandler4Base.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxapp_la-CwxAppHandler4Channel.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxapp_la-CwxAppHandler4IoEvent.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxapp_la-CwxAppHandler4IoMsg.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxapp_la-CwxAppHandler4Msg.Plo@am__quote@
@@ -539,6 +549,20 @@ libcwxapp_la-CwxAppEpoll.lo: CwxAppEpoll.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxAppEpoll.cpp' object='libcwxapp_la-CwxAppEpoll.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxapp_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxapp_la-CwxAppEpoll.lo `test -f 'CwxAppEpoll.cpp' || echo '$(srcdir)/'`CwxAppEpoll.cpp
+
+libcwxapp_la-CwxAppHandler4Channel.lo: CwxAppHandler4Channel.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxapp_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwxapp_la-CwxAppHandler4Channel.lo -MD -MP -MF "$(DEPDIR)/libcwxapp_la-CwxAppHandler4Channel.Tpo" -c -o libcwxapp_la-CwxAppHandler4Channel.lo `test -f 'CwxAppHandler4Channel.cpp' || echo '$(srcdir)/'`CwxAppHandler4Channel.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/libcwxapp_la-CwxAppHandler4Channel.Tpo" "$(DEPDIR)/libcwxapp_la-CwxAppHandler4Channel.Plo"; else rm -f "$(DEPDIR)/libcwxapp_la-CwxAppHandler4Channel.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxAppHandler4Channel.cpp' object='libcwxapp_la-CwxAppHandler4Channel.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxapp_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxapp_la-CwxAppHandler4Channel.lo `test -f 'CwxAppHandler4Channel.cpp' || echo '$(srcdir)/'`CwxAppHandler4Channel.cpp
+
+libcwxapp_la-CwxAppChannel.lo: CwxAppChannel.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxapp_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwxapp_la-CwxAppChannel.lo -MD -MP -MF "$(DEPDIR)/libcwxapp_la-CwxAppChannel.Tpo" -c -o libcwxapp_la-CwxAppChannel.lo `test -f 'CwxAppChannel.cpp' || echo '$(srcdir)/'`CwxAppChannel.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/libcwxapp_la-CwxAppChannel.Tpo" "$(DEPDIR)/libcwxapp_la-CwxAppChannel.Plo"; else rm -f "$(DEPDIR)/libcwxapp_la-CwxAppChannel.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxAppChannel.cpp' object='libcwxapp_la-CwxAppChannel.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxapp_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxapp_la-CwxAppChannel.lo `test -f 'CwxAppChannel.cpp' || echo '$(srcdir)/'`CwxAppChannel.cpp
 
 mostlyclean-libtool:
 	-rm -f *.lo
