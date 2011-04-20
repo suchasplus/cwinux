@@ -109,8 +109,7 @@ public:
     @param [in] uiMaxTaskNum Taskboard中管理的TASK的最大值
     */
     CwxAppFramework(CWX_UINT16 unAppMode=CwxAppFramework::APP_MODE_TWIN,
-        CWX_UINT32 uiMaxTaskNum=CWX_APP_MAX_TASK_NUM,
-        CWX_UINT32 uiRawBufSize = CWX_APP_DEF_RAW_BUF_LEN);
+        CWX_UINT32 uiMaxTaskNum=CWX_APP_MAX_TASK_NUM);
     ///析构函数
     virtual ~CwxAppFramework();
     /**
@@ -362,7 +361,7 @@ public:
     virtual int onConnClosed(CwxAppHandler4Msg & conn);
 
     /**
-    @brief 通知从CWX_APP_MSG_MODE模式的连接收到一个消息
+    @brief 通知从CWX_APP_MSG_MODE模式的、非raw类型连接收到一个消息
     @param [in] msg 收到的消息，空表示没有消息体。
     @param [in] conn 收到消息的连接。
     @param [in] header 收到消息的消息头。
@@ -372,6 +371,14 @@ public:
     virtual int onRecvMsg(CwxMsgBlock* msg,
         CwxAppHandler4Msg& conn,
         CwxMsgHead const& header,
+        bool& bSuspendConn);
+    /**
+    @brief 通知CWX_APP_MSG_MODE模式的、raw类型连接有数据到达，数据需要用户自己读取
+    @param [in] conn 有消息的连接。
+    @param [out] bSuspendConn 若为true,则暂停消息接收；false，接收连接上的消息。
+    @return -1：消息无效，关闭连接。 0：成功。
+    */
+    virtual int onRecvMsg(CwxAppHandler4Msg& conn,
         bool& bSuspendConn);
 
     /**
@@ -513,10 +520,6 @@ public:
     CWX_UINT16 getLogCheckSecond() const ;
     ///设置Log的check间隔
     void setLogCheckSecond(CWX_UINT16 unSecond) ;
-    ///获取raw buf的大小
-    CWX_UINT32 getRawRecvBufSize() const;
-    ///获取raw buf的空间
-    char* getRawRecvBuf();
     ///获取是否在debug模式
     bool isDebug() const;
     ///设置debug模式
@@ -614,8 +617,6 @@ private:
     string                     m_strVersion;///<程序的版本号
     string                     m_strLastModifyDatetime;///<程序的最后修改时间
     string                     m_strLastCompileDatetime;///<程序的编译时间
-    CWX_UINT32                 m_uiRawBufSize;
-    char*                      m_szRawBuf;
     CwxAppHandler4StdIo*        m_pStdIoHandler;///<接收标准输入的Handle
     CwxAppHandler4Time*         m_pTimeHandler; ///<时钟事件的handler
     CwxAppHandler4Notice*       m_pNoticeHandler; ///<处理通知事件的Handle

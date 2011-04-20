@@ -160,16 +160,6 @@ inline void CwxAppFramework::setLogCheckSecond(CWX_UINT16 unSecond)
         m_unLogCheckSecond = MIN_LOG_CHECK_SECOND;
 }
 
-///获取raw buf的大小
-inline CWX_UINT32 CwxAppFramework::getRawRecvBufSize() const
-{
-    return m_uiRawBufSize;
-}
-///获取raw buf的空间
-inline char* CwxAppFramework::getRawRecvBuf()
-{
-    return m_szRawBuf;
-}
 
 inline bool CwxAppFramework::isDebug() const
 {

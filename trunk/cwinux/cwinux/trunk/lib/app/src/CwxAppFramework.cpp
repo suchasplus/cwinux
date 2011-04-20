@@ -5,8 +5,7 @@
 CWINUX_BEGIN_NAMESPACE
 
 CwxAppFramework::CwxAppFramework(CWX_UINT16 unAppMode,
-                  CWX_UINT32 uiMaxTaskNum,
-                  CWX_UINT32 uiRawBufSize)
+                  CWX_UINT32 uiMaxTaskNum)
                   :m_unAppMode(unAppMode),
                   m_taskBoard(uiMaxTaskNum)
 {
@@ -15,10 +14,6 @@ CwxAppFramework::CwxAppFramework(CWX_UINT16 unAppMode,
     m_strVersion = "unknown";
     m_strLastModifyDatetime = "unknown";
     m_strLastCompileDatetime = "unknown";
-    m_szRawBuf = NULL;
-    m_uiRawBufSize = uiRawBufSize;
-    if (m_uiRawBufSize < 4096) m_uiRawBufSize = 4096;
-    if (m_uiRawBufSize > 64 * 1024 * 1024) m_uiRawBufSize = 64 * 1024 * 1024;
     m_pStdIoHandler = NULL;
     m_pTimeHandler = NULL;
     m_pNoticeHandler = NULL;
@@ -398,6 +393,20 @@ int CwxAppFramework::noticeHandle4Msg(CWX_UINT32 uiSvrId,
         CWX_ERROR(("svr-id must not less than SVR_TYPE_USER_START"));
         return -1;
     }
+    if (bKeepAlive)
+    {
+        if (0 != CwxSocket::setKeepalive(ioHandle,
+            true,
+            CWX_APP_DEF_KEEPALIVE_IDLE,
+            CWX_APP_DEF_KEEPALIVE_INTERNAL,
+            CWX_APP_DEF_KEEPALIVE_COUNT))
+        {
+            CWX_ERROR(("Failure to set handle[%d] keep-alive, errno=%d",
+                ioHandle,
+                errno));
+            return -1;
+        }
+    }
     CwxAppHandler4IoMsg* handle = m_pHandleCache->fetchIoMsgHandle();
     if (!handle) handle = new CwxAppHandler4IoMsg(this, reactor());
     CWX_UINT32 uiConnId = m_pReactor->getNextConnId();
@@ -693,6 +702,32 @@ int CwxAppFramework::onRecvMsg(CwxMsgBlock* msg,
     return 0;
     
 }
+
+int CwxAppFramework::onRecvMsg(CwxAppHandler4Msg& conn,
+                      bool& bSuspendConn)
+{
+    CWX_DEBUG(("recv msg, svr_id=%u, host_id=%u, conn_id=%u",
+        conn.getConnInfo().getSvrId(),
+        conn.getConnInfo().getHostId(),
+        conn.getConnInfo().getConnId()));
+    char szBuf[4096];
+    int ret = 0;
+    while(1)
+    {
+        ret = CwxSocket::read(conn.getHandle(), szBuf, 4096);
+        if (0>=ret)
+        {
+            if ((0 == ret) || (errno != EWOULDBLOCK))
+            {
+                return -1; //error
+            }
+            return 0;
+        }
+        if (ret < 4096) return 0;
+    }
+    return ret;
+}
+
 int CwxAppFramework::onStartSendMsg(CwxMsgBlock* msg,
                                     CwxAppHandler4Msg& conn)
 {
@@ -823,13 +858,6 @@ void CwxAppFramework::unblockSignal(int signal)
 
 int CwxAppFramework::initRunEnv()
 {
-    if (m_szRawBuf) delete [] m_szRawBuf;
-    m_szRawBuf = new char[m_uiRawBufSize];
-    if (!m_szRawBuf)
-    {
-        CWX_ERROR(("Failure to malloc raw recv buf, size:%d", m_uiRawBufSize));
-        return -1;
-    }
     if (!this->m_strWorkDir.length()){
         CWX_ERROR(("Must set work directory."));
         return -1;
@@ -1059,10 +1087,6 @@ void CwxAppFramework::destroy()
         delete m_pThreadPoolMgr;
         m_pThreadPoolMgr = NULL;
     }
-    if (m_szRawBuf) delete [] m_szRawBuf;
-    m_szRawBuf = NULL;
-    m_uiRawBufSize = 0;
-
     m_pTss = NULL;
     m_bStopped = false;
     m_bEnableHook = false;

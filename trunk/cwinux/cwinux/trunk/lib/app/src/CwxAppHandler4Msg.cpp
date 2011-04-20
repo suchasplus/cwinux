@@ -249,131 +249,110 @@ int CwxAppHandler4Msg::handle_input ()
     ssize_t recv_size = 0;
     ssize_t need_size = 0;
     int result = 0;
+    if (this->m_conn.isRawData())
+    {//recv raw data
+        bSuspend = false;
+        result = this->getApp()->onRecvMsg(this, bSuspend);
+        if (bSuspend)
+        {
+            if (0 != reactor()->suspendHandler(this, CwxAppHandler4Base::READ_MASK))
+            {
+                CWX_ERROR(("Failure to suspend handler with conn_id[%u]", m_conn.getConnId()));
+                return -1;
+            }
+        }
+        return result>=0?0:-1;
+    }
+    //not recv raw data
     while(1)
     {
-        if (this->m_conn.isRawData())
-        {//recv raw data
-            need_size = this->getApp()->getRawRecvBufSize();
-            recv_size = CwxSocket::recv(getHandle(), this->getApp()->getRawRecvBuf(), need_size);
+        need_size = CwxMsgHead::MSG_HEAD_LEN - this->m_uiRecvHeadLen;
+        if (need_size > 0 )
+        {//not get complete head
+            recv_size = CwxSocket::recv(getHandle(), this->m_szHeadBuf + this->m_uiRecvHeadLen, need_size);
             if (recv_size <=0 )
             { //error or signal
-                if ((0 == recv_size) || (errno != EWOULDBLOCK))
+                if ((0==recv_size) || ((errno != EWOULDBLOCK) && (errno != EINTR)))
                 {
                     return -1; //error
                 }
                 else
-                {//signal
+                {//signal or no data
                     m_conn.setContinueRecvNum(0);
                     return 0;
                 }
             }
-            CWX_ASSERT(!m_recvMsgData);
-            this->m_recvMsgData = CwxMsgBlockAlloc::malloc(recv_size);
-            memcpy(m_recvMsgData->wr_ptr(), this->getApp()->getRawRecvBuf(), recv_size);
+            this->m_uiRecvHeadLen += recv_size;
+            if (recv_size < need_size)
+            {
+                m_conn.setContinueRecvNum(0);
+                return 0;
+            }
+            this->m_szHeadBuf[this->m_uiRecvHeadLen] = 0x00;
+            if (!m_header.fromNet(this->m_szHeadBuf))
+            {
+                CWX_ERROR(("Msg header is error."));
+                return -1;
+            }
+            if (m_header.getDataLen() > 0) this->m_recvMsgData = CwxMsgBlockAlloc::malloc(m_header.getDataLen());
+            CWX_ASSERT(this->m_uiRecvDataLen==0);
+        }//end  if (need_size > 0)
+        //recv data
+        need_size = m_header.getDataLen() - this->m_uiRecvDataLen;
+        if (need_size > 0)
+        {//not get complete data
+            recv_size = CwxSocket::recv(getHandle(), this->m_recvMsgData->wr_ptr(), need_size);
+            if (recv_size <=0 )
+            { //error or signal
+                if ((errno != EWOULDBLOCK)&&(errno != EINTR))
+                {
+                    return -1; //error
+                }
+                else
+                {//signal or no data
+                    m_conn.setContinueRecvNum(0);
+                    return 0;
+                }
+            }
             //move write pointer
             this->m_recvMsgData->wr_ptr(recv_size);
-            bSuspend = false;
-            result = this->getApp()->recvMessage(m_header, this->m_recvMsgData, *this, bSuspend);
-            if (bSuspend)
+            this->m_uiRecvDataLen += recv_size;
+            if (recv_size < need_size)
             {
-                if (0 != reactor()->suspendHandler(this, CwxAppHandler4Base::READ_MASK))
-                {
-                    CWX_ERROR(("Failure to suspend handler with conn_id[%u]", m_conn.getConnId()));
-                    return -1;
-                }
+                m_conn.setContinueRecvNum(0);
+                return 0;
             }
-            this->m_recvMsgData = NULL;
         }
-        else
-        {//not recv raw data
-            need_size = CwxMsgHead::MSG_HEAD_LEN - this->m_uiRecvHeadLen;
-            if (need_size > 0 )
-            {//not get complete head
-                recv_size = CwxSocket::recv(getHandle(), this->m_szHeadBuf + this->m_uiRecvHeadLen, need_size);
-                if (recv_size <=0 )
-                { //error or signal
-                    if ((0==recv_size) || ((errno != EWOULDBLOCK) && (errno != EINTR)))
-                    {
-                        return -1; //error
-                    }
-                    else
-                    {//signal or no data
-                        m_conn.setContinueRecvNum(0);
-                        return 0;
-                    }
-                }
-                this->m_uiRecvHeadLen += recv_size;
-                if (recv_size < need_size)
-                {
-                    m_conn.setContinueRecvNum(0);
-                    return 0;
-                }
-                this->m_szHeadBuf[this->m_uiRecvHeadLen] = 0x00;
-                if (!m_header.fromNet(this->m_szHeadBuf))
-                {
-                    CWX_ERROR(("Msg header is error."));
-                    return -1;
-                }
-                if (m_header.getDataLen() > 0) this->m_recvMsgData = CwxMsgBlockAlloc::malloc(m_header.getDataLen());
-                CWX_ASSERT(this->m_uiRecvDataLen==0);
-            }//end  if (need_size > 0)
-            //recv data
-            need_size = m_header.getDataLen() - this->m_uiRecvDataLen;
-            if (need_size > 0)
-            {//not get complete data
-                recv_size = CwxSocket::recv(getHandle(), this->m_recvMsgData->wr_ptr(), need_size);
-                if (recv_size <=0 )
-                { //error or signal
-                    if ((errno != EWOULDBLOCK)&&(errno != EINTR))
-                    {
-                        return -1; //error
-                    }
-                    else
-                    {//signal or no data
-                        m_conn.setContinueRecvNum(0);
-                        return 0;
-                    }
-                }
-                //move write pointer
-                this->m_recvMsgData->wr_ptr(recv_size);
-                this->m_uiRecvDataLen += recv_size;
-                if (recv_size < need_size)
-                {
-                    m_conn.setContinueRecvNum(0);
-                    return 0;
-                }
-            }
-            //notice recieving a msg.
-            if (!this->m_recvMsgData) this->m_recvMsgData = CwxMsgBlockAlloc::malloc(0);
-            bSuspend = false;
-            result = this->getApp()->recvMessage(m_header, this->m_recvMsgData, *this, bSuspend);
-            if (bSuspend)
-            {
-                if (0 != reactor()->suspendHandler(this, CwxAppHandler4Base::READ_MASK))
-                {
-                    CWX_ERROR(("Failure to suspend handler with conn_id[%u]", m_conn.getConnId()));
-                    return -1;
-                }
-            }
-
-            this->m_recvMsgData = NULL;
-            this->m_uiRecvHeadLen = 0;
-            this->m_uiRecvDataLen = 0;
-        }
-        if (0 < result)
-        {///recv next msg
-            CWX_ASSERT(m_uiRecvDataLen==0);
-            CWX_ASSERT(m_uiRecvHeadLen==0);
-            m_conn.setContinueRecvNum(m_conn.getContinueRecvNum()+1);
-            continue;
-        }
-        else
+        //notice recieving a msg.
+        if (!this->m_recvMsgData) this->m_recvMsgData = CwxMsgBlockAlloc::malloc(0);
+        bSuspend = false;
+        result = this->getApp()->recvMessage(m_header, this->m_recvMsgData, *this, bSuspend);
+        if (bSuspend)
         {
-            CWX_ASSERT(m_uiRecvDataLen==0);
-            CWX_ASSERT(m_uiRecvHeadLen==0);
-            m_conn.setContinueRecvNum(0);
-            break;
+            if (0 != reactor()->suspendHandler(this, CwxAppHandler4Base::READ_MASK))
+            {
+                CWX_ERROR(("Failure to suspend handler with conn_id[%u]", m_conn.getConnId()));
+                return -1;
+            }
         }
+
+        this->m_recvMsgData = NULL;
+        this->m_uiRecvHeadLen = 0;
+        this->m_uiRecvDataLen = 0;
+    }
+    if (0 < result)
+    {///recv next msg
+        CWX_ASSERT(m_uiRecvDataLen==0);
+        CWX_ASSERT(m_uiRecvHeadLen==0);
+        m_conn.setContinueRecvNum(m_conn.getContinueRecvNum()+1);
+        continue;
+    }
+    else
+    {
+        CWX_ASSERT(m_uiRecvDataLen==0);
+        CWX_ASSERT(m_uiRecvHeadLen==0);
+        m_conn.setContinueRecvNum(0);
+        break;
     }
     return result>=0?0:-1;
 }
