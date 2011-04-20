@@ -750,7 +750,7 @@ int CwxBinLogMgr::init(CWX_UINT32 uiMaxDay, char* szErr2K)
         if (!_isManageBinLogFile(pBinLogFile))
         {
             CwxFile::rmFile(pBinLogFile->getDataFileName().c_str());
-            CwxFile::rmFile(pBinLogFile->getIndexFileName().c_str())
+            CwxFile::rmFile(pBinLogFile->getIndexFileName().c_str());
             delete pBinLogFile;
             break;
         }
@@ -885,7 +885,7 @@ int CwxBinLogMgr::append(CWX_UINT64 ullSid,
         {
             if (_isManageBinLogFile(m_arrBinlog[0])) break;
             CwxFile::rmFile(m_arrBinlog[0]->getDataFileName().c_str());
-            CwxFile::rmFile(m_arrBinlog[0]->getIndexFileName().c_str())
+            CwxFile::rmFile(m_arrBinlog[0]->getIndexFileName().c_str());
             delete m_arrBinlog[0];
             m_arrBinlog.erase(m_arrBinlog.begin());
         }
@@ -1336,7 +1336,6 @@ CWX_INT64 CwxBinLogMgr::leftLogNum(CwxBinLogCursor const* pCursor)
 
 CWX_UINT64 CwxBinLogMgr::getFileStartSid(CWX_UINT32 ttTimestamp)
 {
-    CWX_UINT64 ullSid;
     CwxReadLockGuard<CwxRwLock> lock(&m_rwLock);
     for (CWX_UINT32 i=0; i<m_arrBinlog.size(); i++)
     {
