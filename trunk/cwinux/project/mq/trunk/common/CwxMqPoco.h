@@ -147,7 +147,7 @@ public:
     ///释放协议。
     static void destory();
     ///返回值，CWX_MQ_SUCCESS：成功；其他都是失败
-    static int packRecvData(CwxMqTss* pTss,
+    static int packRecvData(CwxPackageWriter* writer,
         CwxMsgBlock*& msg,
         CWX_UINT32 uiTaskId,
         CwxKeyValueItem const& data,
@@ -159,7 +159,7 @@ public:
         char* szErr2K=NULL
         );
     ///返回值，CWX_MQ_SUCCESS：成功；其他都是失败
-    static int parseRecvData(CwxMqTss* pTss,
+    static int parseRecvData(CwxPackageReader* reader,
         CwxMsgBlock const* msg,
         CwxKeyValueItem const*& data,
         CWX_UINT32& group,
@@ -171,7 +171,7 @@ public:
 
 
     ///返回值：CWX_MQ_SUCCESS：成功；其他都是失败
-    static int packRecvDataReply(CwxMqTss* pTss,
+    static int packRecvDataReply(CwxPackageWriter* writer,
         CwxMsgBlock*& msg,
         CWX_UINT32 uiTaskId,
         int ret,
@@ -179,7 +179,7 @@ public:
         char const* szErrMsg,
         char* szErr2K=NULL);
     ///返回值：CWX_MQ_SUCCESS：成功；其他都是失败
-    static int parseRecvDataReply(CwxMqTss* pTss,
+    static int parseRecvDataReply(CwxPackageReader* reader,
         CwxMsgBlock const* msg,
         int& ret,
         CWX_UINT64& ullSid,
@@ -187,7 +187,7 @@ public:
         char* szErr2K=NULL);
 
     ///返回值，CWX_MQ_SUCCESS：成功；其他都是失败
-    static int packCommit(CwxMqTss* pTss,
+    static int packCommit(CwxPackageWriter* writer,
         CwxMsgBlock*& msg,
         CWX_UINT32 uiTaskId,
         char const* user=NULL,
@@ -195,7 +195,7 @@ public:
         char* szErr2K=NULL
         );
     ///返回值，CWX_MQ_SUCCESS：成功；其他都是失败
-    static int parseCommit(CwxMqTss* pTss,
+    static int parseCommit(CwxPackageReader* reader,
         CwxMsgBlock const* msg,
         char const*& user,
         char const*& passwd,
@@ -204,14 +204,14 @@ public:
 
 
     ///返回值：CWX_MQ_SUCCESS：成功；其他都是失败
-    static int packCommitReply(CwxMqTss* pTss,
+    static int packCommitReply(CwxPackageWriter* writer,
         CwxMsgBlock*& msg,
         CWX_UINT32 uiTaskId,
         int ret,
         char const* szErrMsg,
         char* szErr2K=NULL);
     ///返回值：CWX_MQ_SUCCESS：成功；其他都是失败
-    static int parseCommitReply(CwxMqTss* pTss,
+    static int parseCommitReply(CwxPackageReader* reader,
         CwxMsgBlock const* msg,
         int& ret,
         char const*& szErrMsg,
@@ -219,7 +219,7 @@ public:
 
 
     ///返回值：CWX_MQ_SUCCESS：成功；其他都是失败
-    static int packReportData(CwxMqTss* pTss,
+    static int packReportData(CwxPackageWriter* writer,
         CwxMsgBlock*& msg,
         CWX_UINT32 uiTaskId,
         CWX_UINT64 ullSid,
@@ -229,7 +229,7 @@ public:
         char const* passwd=NULL,
         char* szErr2K=NULL);
     ///返回值：CWX_MQ_SUCCESS：成功；其他都是失败
-    static int parseReportData(CwxMqTss* pTss,
+    static int parseReportData(CwxPackageReader* reader,
         CwxMsgBlock const* msg,
         CWX_UINT64& ullSid,
         bool&       bNewly,
@@ -240,7 +240,7 @@ public:
 
 
     ///返回值：CWX_MQ_SUCCESS：成功；其他都是失败
-    static int packReportDataReply(CwxMqTss* pTss,
+    static int packReportDataReply(CwxPackageWriter* writer,
         CwxMsgBlock*& msg,
         CWX_UINT32 uiTaskId,
         int ret,
@@ -248,7 +248,7 @@ public:
         char const* szErrMsg,
         char* szErr2K=NULL);
     ///返回值：CWX_MQ_SUCCESS：成功；其他都是失败
-    static int parseReportDataReply(CwxMqTss* pTss,
+    static int parseReportDataReply(CwxPackageReader* reader,
         CwxMsgBlock const* msg,
         int& ret,
         CWX_UINT64& ullSid,
@@ -256,7 +256,7 @@ public:
         char* szErr2K=NULL);
 
     ///返回值：CWX_MQ_SUCCESS：成功；其他都是失败
-    static int packSyncData(CwxMqTss* pTss,
+    static int packSyncData(CwxPackageWriter* writer,
         CwxMsgBlock*& msg,
         CWX_UINT32 uiTaskId,
         CWX_UINT64 ullSid,
@@ -267,7 +267,7 @@ public:
         CWX_UINT32 attr,
         char* szErr2K=NULL);
     ///返回值：CWX_MQ_SUCCESS：成功；其他都是失败
-    static int parseSyncData(CwxMqTss* pTss,
+    static int parseSyncData(CwxPackageReader* reader,
         CwxMsgBlock const* msg,
         CWX_UINT64& ullSid,
         CWX_UINT32& uiTimeStamp,
@@ -278,18 +278,18 @@ public:
         char* szErr2K=NULL);
 
     ///返回值：CWX_MQ_SUCCESS：成功；其他都是失败
-    static int packSyncDataReply(CwxMqTss* pTss,
+    static int packSyncDataReply(CwxPackageWriter* writer,
         CwxMsgBlock*& msg,
         CWX_UINT32 uiTaskId,
         CWX_UINT64 ullSid,
         char* szErr2K=NULL);
     ///返回值：CWX_MQ_SUCCESS：成功；其他都是失败
-    static int parseSyncDataReply(CwxMqTss* pTss,
+    static int parseSyncDataReply(CwxPackageReader* reader,
         CwxMsgBlock const* msg,
         CWX_UINT64& ullSid,
         char* szErr2K=NULL);
     ///返回值：CWX_MQ_SUCCESS：成功；其他都是失败
-    static int packFetchMq(CwxMqTss* pTss,
+    static int packFetchMq(CwxPackageWriter* writer,
         CwxMsgBlock*& msg,
         bool bBlock,
         char const* queue_name,
@@ -297,7 +297,7 @@ public:
         char const* passwd=NULL,
         char* szErr2K=NULL);
     ///返回值：CWX_MQ_SUCCESS：成功；其他都是失败
-    static int parseFetchMq(CwxMqTss* pTss,
+    static int parseFetchMq(CwxPackageReader* reader,
         CwxMsgBlock const* msg,
         bool& bBlock,
         char const*& queue_name,
@@ -306,7 +306,7 @@ public:
         char* szErr2K=NULL);
 
     ///返回值：CWX_MQ_SUCCESS：成功；其他都是失败
-    static int packFetchMqReply(CwxMqTss* pTss,
+    static int packFetchMqReply(CwxPackageWriter* writer,
         CwxMsgBlock*& msg,
         int  ret,
         char const* szErrMsg,
@@ -318,7 +318,7 @@ public:
         CWX_UINT32 attr,
         char* szErr2K=NULL);
     ///返回值：CWX_MQ_SUCCESS：成功；其他都是失败
-    static int parseFetchMqReply(CwxMqTss* pTss,
+    static int parseFetchMqReply(CwxPackageReader* reader,
         CwxMsgBlock const* msg,
         int&  ret,
         char const*& szErrMsg,
