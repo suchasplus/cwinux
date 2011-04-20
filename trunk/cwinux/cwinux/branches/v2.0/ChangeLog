@@ -1,0 +1,12 @@
+*********************************************************************
+2010-10-15    cwinux@gmail.com   v1.1
+store模块的CwxBinLogMgr，增加了读写锁，支持写排他，读并发。
+同时，则加了系统lock文件，防止多个服务多次打开。
+*********************************************************************
+2010-10-15    cwinux@gmail.com   v1.1
+app模块的CwxAppThreadPoolEx类，增加了基于thread-id获取消息的接口：
+inline size_t getQueuedMsgNum(CWX_UINT16 unThreadIndex);
+*********************************************************************
+2010-11-5    cwinux@gmail.com   v1.2.1
+store模块的CwxBinLogFile类，修改sid的折半查找算法的bug，缺少+-1，api为：
+int CwxBinLogFile::seek(CwxBinLogCursor& cursor, CWX_UINT8 ucMode);

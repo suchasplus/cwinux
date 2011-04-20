@@ -1,0 +1,39 @@
+<?xml version='1.0'?>
+<!-- This is the config file for UI service -->
+<svr_def>
+    <common>
+        <workdir value="/home/wbdiao/ABOnline/src/b2c/b2c_ui" />
+		<work_thread num="1" />
+		<timeout num="5000"/>
+        <template_query_listen ip="192.168.1.88" port="28931"/>
+        <raw_query_listen ip="192.168.1.88" port="28932"/>
+		<shm_key value="888888"/>
+		<digest_ui_style value="digest_biz" />
+	</common>
+	<ui_template>
+	    <!-- ui: query's; type: biz's type  -->
+		<!--
+		<template  ui="digest_biz"  type="*" template_file="UI_DigestBiz.xml"/>
+		-->
+	</ui_template>
+	<bbts_svr  group="2">
+    <group id = "1">
+		     <host ip="192.168.1.88" port="8904"/>
+	            <dwb1>dwb1</dwb1>
+                    <dwb2>dwb2</dwb2>
+                    <dwb1>dwb3</dwb1>
+    </group>
+		<group id="2">
+			   <host ip="192.168.1.88" port="8903"/>
+		</group>
+  </bbts_svr>
+	<bps_svr  group="2">
+    <group id = "1">
+		    <host ip="192.168.1.88" port="8904"/>
+    </group>
+		<group id="2">
+			 <host ip="192.168.1.88" port="8903"/>
+		</group>
+	</bps_svr>
+</svr_def>
+
