@@ -182,7 +182,7 @@ int CwxAppHandler4Channel::handle_timeout()
     return 0;
 }
 
-int CwxAppHandler4Channel::handle_defer()
+int CwxAppHandler4Channel::handle_redo()
 {
     return 0;
 }

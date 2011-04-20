@@ -145,17 +145,17 @@ public:
     ///取消定时处理handle。多线程安全，任意线程都可以调用。
     int cancelTimer (CwxAppHandler4Channel *event_handler);
     /**
-    @brief 注册defer handler，defer的handler在dispatch会被执行一次并移除。多线程安全，任意线程都可以调用。
-    @param [in] event_handler defer的event handler
+    @brief 注册redo handler，redo的handler在dispatch会被执行一次并移除。多线程安全，任意线程都可以调用。
+    @param [in] event_handler redo的event handler
     @return true：成功；false：存在；
     */
-    bool regDeferHander(CwxAppHandler4Channel* event_handler);
+    bool regRedoHander(CwxAppHandler4Channel* event_handler);
     /**
-    @brief 删除defer handler。多线程安全，任意线程都可以调用。
-    @param [in] event_handler defer的event handler
+    @brief 删除redo handler。多线程安全，任意线程都可以调用。
+    @param [in] event_handler redoe的event handler
     @return true：成功；false：不存在；
     */
-    bool eraseDeferHander(CwxAppHandler4Channel* event_handler);
+    bool eraseRedoHander(CwxAppHandler4Channel* event_handler);
     /**
     @brief notice reactor。多线程安全，任意线程都可以调用。
     @return -1：失败；  0：成功；
@@ -205,10 +205,10 @@ private:
         CwxTimeValue const &interval );
     ///取消定时处理handle
     int _cancelTimer (CwxAppHandler4Channel *event_handler);
-    ///添加defer handler
-    bool _regDeferHander(CwxAppHandler4Channel* event_handler);
-    ///删除defer handler。
-    bool _eraseDeferHander(CwxAppHandler4Channel* event_handler);
+    ///添加redo handler
+    bool _regRedoHander(CwxAppHandler4Channel* event_handler);
+    ///删除redo handler。
+    bool _eraseRedoHander(CwxAppHandler4Channel* event_handler);
 
     /**
     @brief 停止架构事件的循环处理。
@@ -254,7 +254,7 @@ private:
     CwxMutexLock            m_lock; ///<全局锁
     CwxRwLock               m_rwLock; ///<读写锁
     pthread_t               m_owner; ///<reactor的owner 线程
-    set<CwxAppHandler4Channel*>  m_deferHandlers; ///<此set中的handler，每次dispatch会执行一次,并移除。
+    set<CwxAppHandler4Channel*>  m_redoHandlers; ///<此set中的handler，每次dispatch会执行一次,并移除。
     bool                    m_bStop; ///<reactor是否已经停止
     int                     m_noticeFd[2]; ///<notice的读写handle
     CwxAppEpoll*            m_engine; ///<epoll的engine

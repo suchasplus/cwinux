@@ -87,7 +87,7 @@ int CwxAppChannel::close()
         CWX_ERROR(("CwxAppChannel::close must be invoked after stop"));
         return -1;
     }
-    m_deferHandlers.clear();
+    m_redoHandlers.clear();
     if (m_engine) delete m_engine;
     m_engine = NULL;
     if (m_noticeFd[0] != CWX_INVALID_HANDLE)::close(m_noticeFd[0]);
@@ -125,16 +125,16 @@ int CwxAppChannel::dispatch(CWX_UINT32 uiMiliTimeout)
             ///´øËøÖ´ÐÐevent-loop
             CwxMutexGuard<CwxMutexLock> lock(&m_lock);
             ret = m_engine->poll(CwxAppChannel::callback, this, uiMiliTimeout);
-            if (m_deferHandlers.size())
+            if (m_redoHandlers.size())
             {
-                CwxAppHandler4Channel* deferHander = NULL;
-                set<CwxAppHandler4Channel*>::iterator iter = m_deferHandlers.begin();
-                while(iter != m_deferHandlers.end())
+                CwxAppHandler4Channel* redoHander = NULL;
+                set<CwxAppHandler4Channel*>::iterator iter = m_redoHandlers.begin();
+                while(iter != m_redoHandlers.end())
                 {
-                    deferHander = *iter;
-                    m_deferHandlers.erase(iter);
-                    iter = m_deferHandlers.begin();
-                    deferHander->handle_defer();
+                    redoHander = *iter;
+                    m_redoHandlers.erase(iter);
+                    iter = m_redoHandlers.begin();
+                    redoHander->handle_redo();
                 }
 
             }

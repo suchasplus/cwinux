@@ -166,7 +166,7 @@ inline int CwxAppChannel::cancelTimer (CwxAppHandler4Channel *event_handler)
     return _cancelTimer(event_handler);
 }
 
-inline bool CwxAppChannel::regDeferHander(CwxAppHandler4Channel* event_handler)
+inline bool CwxAppChannel::regRedoHander(CwxAppHandler4Channel* event_handler)
 {
     if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
@@ -175,19 +175,19 @@ inline bool CwxAppChannel::regDeferHander(CwxAppHandler4Channel* event_handler)
         this->notice();
         {
             CwxMutexGuard<CwxMutexLock> lock(&m_lock);
-            ret = _regDeferHander(event_handler);
+            ret = _regRedoHander(event_handler);
         }
         m_rwLock.release();
         return ret;
     }
-    return _regDeferHander(event_handler);
+    return _regRedoHander(event_handler);
 }
 /**
-@brief 删除defer handler。多线程安全，任意线程都可以调用。
-@param [in] event_handler defer的event handler
+@brief 删除redo handler。多线程安全，任意线程都可以调用。
+@param [in] event_handler redo的event handler
 @return true：成功；false：不存在；
 */
-inline bool CwxAppChannel::eraseDeferHander(CwxAppHandler4Channel* event_handler)
+inline bool CwxAppChannel::eraseRedoHander(CwxAppHandler4Channel* event_handler)
 {
     if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
@@ -196,12 +196,12 @@ inline bool CwxAppChannel::eraseDeferHander(CwxAppHandler4Channel* event_handler
         this->notice();
         {
             CwxMutexGuard<CwxMutexLock> lock(&m_lock);
-            ret = _eraseDeferHander(event_handler);
+            ret = _eraseRedoHander(event_handler);
         }
         m_rwLock.release();
         return ret;
     }
-    return _eraseDeferHander(event_handler);
+    return _eraseRedoHander(event_handler);
 
 }
 
@@ -398,24 +398,24 @@ inline int CwxAppChannel::_cancelTimer (CwxAppHandler4Channel *event_handler)
     return 0;
 }
 
-///添加defer handler
-inline bool CwxAppChannel::_regDeferHander(CwxAppHandler4Channel* event_handler)
+///添加redo handler
+inline bool CwxAppChannel::_regRedoHander(CwxAppHandler4Channel* event_handler)
 {
-    set<CwxAppHandler4Channel*>::iterator iter = m_deferHandlers.find(event_handler);
-    if (iter != m_deferHandlers.end())
+    set<CwxAppHandler4Channel*>::iterator iter = m_redoHandlers.find(event_handler);
+    if (iter != m_redoHandlers.end())
     {
-        m_deferHandlers.insert(event_handler);
+        m_redoHandlers.insert(event_handler);
         return true;
     }
     return false;
 }
-///删除defer handler。
-inline bool CwxAppChannel::_eraseDeferHander(CwxAppHandler4Channel* event_handler)
+///删除redo handler。
+inline bool CwxAppChannel::_eraseRedoHander(CwxAppHandler4Channel* event_handler)
 {
-    set<CwxAppHandler4Channel*>::iterator iter = m_deferHandlers.find(event_handler);
-    if (iter != m_deferHandlers.end())
+    set<CwxAppHandler4Channel*>::iterator iter = m_redoHandlers.find(event_handler);
+    if (iter != m_redoHandlers.end())
     {
-        m_deferHandlers.erase(iter);
+        m_redoHandlers.erase(iter);
         return true;
     }
     return false;

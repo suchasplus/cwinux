@@ -73,10 +73,10 @@ public:
     */
     virtual int handle_timeout();
     /**
-    @brief Handler的延迟执行事件，在每次dispatch时执行。
+    @brief Handler的redo事件，在每次dispatch时执行。
     @return -1：处理失败，会调用handle_close()； 0：处理成功
     */
-    virtual int handle_defer();
+    virtual int handle_redo();
     /**
     @brief 连接关闭
     @param [in] handle  连接handle。
