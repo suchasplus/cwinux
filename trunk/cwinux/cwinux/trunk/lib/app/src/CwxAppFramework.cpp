@@ -704,7 +704,7 @@ int CwxAppFramework::onRecvMsg(CwxMsgBlock* msg,
 }
 
 int CwxAppFramework::onRecvMsg(CwxAppHandler4Msg& conn,
-                      bool& bSuspendConn)
+                      bool& )
 {
     CWX_DEBUG(("recv msg, svr_id=%u, host_id=%u, conn_id=%u",
         conn.getConnInfo().getSvrId(),
