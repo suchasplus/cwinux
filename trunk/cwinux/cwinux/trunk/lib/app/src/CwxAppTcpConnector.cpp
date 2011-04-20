@@ -47,7 +47,7 @@ int CwxAppTcpConnector::connect(CwxAppHandler4TcpConn* pHandler,
             {
                 CWX_ERROR(("Failure to set handle[%d] addr:%s, port:%u to keep-alive, errno=%d",
                     stream.getHandle(),
-                    szAddr.c_str(),
+                    szAddr,
                     unPort,
                     errno));
             }
