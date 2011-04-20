@@ -9,6 +9,8 @@ inline int CwxSocket::setOption (CWX_HANDLE handle, int level,
     return ::setsockopt(handle, level, option, optval, (socklen_t)optlen);
 }
 
+
+
 /// Wrapper around the @c getsockopt system call.
 inline int CwxSocket::getOption (CWX_HANDLE handle,
                       int level,

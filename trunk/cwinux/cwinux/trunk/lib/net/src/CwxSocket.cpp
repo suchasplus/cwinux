@@ -5,6 +5,39 @@ CWINUX_BEGIN_NAMESPACE
 int  CwxSocket::m_enableIpv6 = -1;
 int  CwxSocket::m_enableIpv4 = -1;
 
+int CwxSocket::setKeepalive(CWX_HANDLE handle,
+                                   bool bKeepalive,
+                                   int idle,
+                                   int inter,
+                                   int count)
+{
+    int keepAlive = bKeepalive?1:0;
+    if(::setsockopt(handle,
+        SOL_SOCKET,
+        SO_KEEPALIVE,
+        (void*)&keepAlive,
+        sizeof(keepAlive)) == -1)
+    {
+        return -1;
+    }
+    if (!bKeepalive) return 0;
+
+    if(::setsockopt(handle,SOL_TCP,TCP_KEEPIDLE,(void *)&idle,sizeof(idle)) == -1)
+    {
+        return -1;
+    }
+    if(::setsockopt(handle,SOL_TCP,TCP_KEEPINTVL,(void *)&inter,sizeof(inter)) == -1)
+    {
+        return -1;
+    }
+    if(::setsockopt(handle,SOL_TCP,TCP_KEEPCNT,(void *)&count,sizeof(count)) == -1)
+    {
+        return -1;
+    }
+    return 0;
+}
+
+
 ssize_t CwxSocket::read_n (CWX_HANDLE handle,
                        void *buf,
                        size_t len,

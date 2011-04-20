@@ -38,7 +38,6 @@ CwxAppFramework::CwxAppFramework(CWX_UINT16 unAppMode,
     m_pHandleCache = NULL;
     m_pTcpConnector = NULL; ///<TCPµÄconnector
     m_pUnixConnector = NULL; ///<unixµÄconnector
-    m_pKeepAliveMap = NULL;
     m_pThreadPoolMgr = NULL;
     m_bDebug = false;
 }
@@ -610,61 +609,6 @@ void CwxAppFramework::onTime(CwxTimeValue const& current)
         lastLogTime = time(NULL);
     }
 
-    static time_t lastCheckKeepAliveTime = 0;
-    time_t ttNow = time(NULL);
-    if (ttNow - lastCheckKeepAliveTime > getKeepAliveSecond())
-    {
-        lastCheckKeepAliveTime = ttNow;
-        IdConnMap::iterator iter = m_pKeepAliveMap->begin();
-        CwxAppHandler4Msg* conn;
-        CwxMsgBlock* msg;
-        CwxMsgHead header;
-        while(iter != m_pKeepAliveMap->end())
-        {
-            conn = iter->second;
-            if (conn->getConnInfo().isKeepAliveReply())
-            {//check send new keep-alive
-                if ((ttNow - conn->getConnInfo().getLastRecvMsgTime() > getKeepAliveSecond()) &&
-                    (ttNow - conn->getConnInfo().getLastSendMsgTime() > getKeepAliveSecond()))
-                {//send keep-alive
-                    msg = header.packKeepalive(false);
-                    conn->getConnInfo().setKeepAliveReply(false);
-                    conn->getConnInfo().setKeepAliveSendTime(ttNow);
-                    if (msg)
-                    {
-                        msg->send_ctrl().setSvrId(conn->getConnInfo().getSvrId());
-                        msg->send_ctrl().setHostId(conn->getConnInfo().getHostId());
-                        msg->send_ctrl().setConnId(conn->getConnInfo().getConnId());
-                        msg->send_ctrl().setUserData(NULL);
-                        msg->send_ctrl().setMsgAttr(CwxMsgSendCtrl::NONE);
-                        this->sendMsgByConn(msg);
-                        CWX_DEBUG(("Send keep alive to host, conn=%d",
-                            conn->getConnInfo().getConnId()));
-                    }
-                }
-            }
-            else
-            {//check keep-alive reply
-                if (ttNow - conn->getConnInfo().getKeepAliveSendTime() > DEF_KEEPALIVE_REPLY_SECOND)
-                {
-                    CWX_ERROR(("svr_id:%u, host_id:%u, conn_id:%u 's connection don't reply the keep-alive for %u second, close it.",
-                        conn->getConnInfo().getSvrId(),
-                        conn->getConnInfo().getHostId(),
-                        conn->getConnInfo().getConnId(),
-                        DEF_KEEPALIVE_REPLY_SECOND));
-                    if (conn->getConnInfo().isActiveConn())
-                    {
-                        this->noticeReconnect(conn->getConnInfo().getConnId());
-                    }
-                    else
-                    {
-                        this->noticeCloseConn(conn->getConnInfo().getConnId());
-                    }
-                }
-            }
-            iter ++;
-        }
-    }
 
     static time_t ttLastStateCheck = time(NULL);
     if (time(NULL) - ttLastStateCheck > 1)
@@ -909,8 +853,6 @@ int CwxAppFramework::initRunEnv()
 
     //change work directory
     ::chdir (this->m_strWorkDir.c_str());
-    //create keep alive map
-    m_pKeepAliveMap = new IdConnMap();
     //create the listen map
     m_pListenMgr = new CwxAppListenMgr(this);
     //create the handler cache
@@ -1111,11 +1053,6 @@ void CwxAppFramework::destroy()
         m_pHandleCache = NULL;
     }
    
-    if (m_pKeepAliveMap)
-    {
-        delete m_pKeepAliveMap;
-        m_pKeepAliveMap = NULL;
-    }
 
     if (m_pThreadPoolMgr)
     {

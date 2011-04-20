@@ -65,6 +65,21 @@ int CwxAppTcpAcceptor::accept(CwxINetAddr const& addr)
         return -1;
     }
     this->setHandle(m_acceptor.getHandle());
+    if (m_bKeepAlive)
+    {
+        if (0 != CwxSocket::setKeepalive(getHandle(),
+            true,
+            CWX_APP_DEF_KEEPALIVE_IDLE,
+            CWX_APP_DEF_KEEPALIVE_INTERNAL,
+            CWX_APP_DEF_KEEPALIVE_COUNT))
+        {
+            CWX_ERROR(("Failure to set listen addr:%s, port:%u to keep-alive, errno=%d",
+                m_strAddr.c_str(),
+                m_unPort,
+                errno));
+            return -1;
+        }
+    }
     return 0;
 }
 
@@ -102,6 +117,22 @@ int CwxAppTcpAcceptor::handle_event(int , CWX_HANDLE)
             CWX_ERROR(("Failure to CwxSockAcceptor::accept, errno=%d", errno));
             return 0;
         }
+        if (m_bKeepAlive)
+        {
+            if (0 != CwxSocket::setKeepalive(m_stream.getHandle(),
+                true,
+                CWX_APP_DEF_KEEPALIVE_IDLE,
+                CWX_APP_DEF_KEEPALIVE_INTERNAL,
+                CWX_APP_DEF_KEEPALIVE_COUNT))
+            {
+                CWX_ERROR(("Failure to set handle[%d] addr:%s, port:%u to keep-alive, errno=%d",
+                    m_stream.getHandle(),
+                    m_strAddr.c_str(),
+                    m_unPort,
+                    errno));
+            }
+        }
+
         if (CWX_APP_MSG_MODE == m_unMode)
         {
             CwxAppHandler4TcpConn *handler = makeHander();

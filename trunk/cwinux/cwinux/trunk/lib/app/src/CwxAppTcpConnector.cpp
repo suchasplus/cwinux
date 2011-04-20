@@ -37,6 +37,21 @@ int CwxAppTcpConnector::connect(CwxAppHandler4TcpConn* pHandler,
     {
         pHandler->setHandle(stream.getHandle());
         pHandler->getConnInfo().setState(CwxAppConnInfo::ESTABLISHING);
+        if (pHandler->getConnInfo().isKeepalive())
+        {
+            if (0 != CwxSocket::setKeepalive(stream.getHandle(),
+                true,
+                CWX_APP_DEF_KEEPALIVE_IDLE,
+                CWX_APP_DEF_KEEPALIVE_INTERNAL,
+                CWX_APP_DEF_KEEPALIVE_COUNT))
+            {
+                CWX_ERROR(("Failure to set handle[%d] addr:%s, port:%u to keep-alive, errno=%d",
+                    stream.getHandle(),
+                    szAddr.c_str(),
+                    unPort,
+                    errno));
+            }
+        }
         if (-1 == pHandler->open(NULL)) return -1;
         return 1;
     }

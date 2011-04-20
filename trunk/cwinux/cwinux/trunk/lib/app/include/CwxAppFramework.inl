@@ -268,7 +268,6 @@ inline int CwxAppFramework::openConn(CwxAppHandler4Msg& conn, bool& bStopListen)
     {
         conn.getConnInfo().setKeepAliveReply(true);
         conn.getConnInfo().setLastRecvMsgTime(time(NULL));
-        (*m_pKeepAliveMap)[conn.getConnInfo().getConnId()] = &conn;
     }
 
     return 0;
@@ -336,10 +335,6 @@ inline int CwxAppFramework::recvSysMessage(CwxMsgBlock* msg, CwxAppHandler4Msg& 
 inline int CwxAppFramework::connClosed(CwxAppHandler4Msg& conn)
 {
     if (isStopped()) return 0;
-    if (conn.getConnInfo().isKeepalive())
-    {
-        m_pKeepAliveMap->erase(conn.getConnInfo().getConnId());
-    }
     int iRet = this->onConnClosed(conn);
     return iRet;
 }

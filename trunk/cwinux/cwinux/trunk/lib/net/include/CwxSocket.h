@@ -47,6 +47,21 @@ public:
         socklen_t optlen);
 
     /**
+    @brief 打开、关闭连接的keep-alive开关。
+    @param [in] handle socket 的handle。
+    @param [in] bKeepalive 打开keep-alive
+    @param [in] idle 开始首次KeepAlive探测前的TCP空闭时间(second）
+    @param [in] inter 两次KeepAlive探测间的时间间隔(second)
+    @param [in] count 判定断开前的KeepAlive探测次数。
+    @return -1：failure；0：成功。与setsockopt一致
+    */
+    static int setKeepalive(CWX_HANDLE handle,
+        bool bKeepalive,
+        int idle,
+        int inter,
+        int count);
+
+    /**
     @brief 封装了getsockopt api，获取socket handle的参数。
     @param [in] handle socket 的handle。
     @param [in] level setsockopt的level

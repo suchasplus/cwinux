@@ -79,8 +79,6 @@ private:
 
     ///消息处理函数的类型定义
     typedef void (*fnNoticeApi)(CwxAppFramework* pApp, CwxAppNotice* pNotice);
-    ///连接对象的MAP定义
-    typedef map<CWX_UINT32, CwxAppHandler4Msg*> IdConnMap;
 
 public:
     ///APP模式的枚举类型定义
@@ -644,7 +642,6 @@ private:
     CwxAppTcpConnector*         m_pTcpConnector; ///<TCP的connector
     CwxAppUnixConnector*        m_pUnixConnector; ///<unix的connector
     //not lock for communite thread only access
-    IdConnMap*                 m_pKeepAliveMap;///<需要进行KEEP-ALIVE的连接MAP
     fnNoticeApi                m_arrNoticeApi[CwxAppNotice::ALL_NOTICE_NUM + 1];///<notcie的消息映射
     CwxThreadPoolMgr*        m_pThreadPoolMgr;///<线程池管理对象
     //调试控制
