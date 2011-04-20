@@ -477,9 +477,14 @@ public:
     @param [in] szLogPath binlog文件所在的目录。
     @param [in] szFilePrex binlog文件的前缀，形成的文件名为szFilePrex_xxxxxxxxxx，xxxxxxxxxx为文件序号。
     @param [in] ullMaxFileSize binlog文件的最大大小。
+    @param [in] bDelOutManageLogFile 是否删除不再管理范围内的文件。
     @return 无。
     */
-    CwxBinLogMgr(char const* szLogPath, char const* szFilePrex, CWX_UINT64 ullMaxFileSize);
+    CwxBinLogMgr(char const* szLogPath,
+        char const* szFilePrex,
+        CWX_UINT64 ullMaxFileSize,
+        bool       bDelOutManageLogFile = false
+        );
     ///析构函数
     ~CwxBinLogMgr();
 public:
@@ -624,10 +629,6 @@ public:
     inline bool isBinLogFile(string const& strFileName);
     ///判断一个文件名是否是一个binlog的索引文件
     inline bool isBinLogIndexFile(string const& strFileName);
-    ///设置binlog的起始日期
-    inline void setBinlogDayStart(CWX_UINT32 ttDay);
-    ///获取binlog的结束日期
-    inline CWX_UINT32 getBinlogDayStart() const;
     ///获取binlog的前缀名
     inline  string const& getBinlogPrexName() const;
     ///是否有效的前缀名
@@ -657,9 +658,9 @@ private:
     string					  m_strLogPath; ///<binlog文件的根目录
     string                    m_strPrexLogPath; ///<指定前缀的binlog文件的目录
     string                   m_strFilePrex; ///<binlog文件的前缀名
+    bool                     m_bDelOutManageLogFile; ///<是否删除不在管理内的文件
     CWX_UINT64               m_ullMaxFileSize; ///<binlog文件的最大大小
     CWX_UINT32               m_uiMaxDay; ///<管理的binlog的最小天数
-    CWX_UINT32               m_ttDayStart; ///<binlog的起始日期
     char                     m_szErr2K[2048]; ///<binlog 管理器无效的原因
     int                      m_fdLock; ///<系统锁文件句柄
 

@@ -621,7 +621,7 @@ int CwxBinLogFile::createIndex(char* szErr2K)
                     CwxBinLogMgr  class
 ***********************************************************************/
 
-CwxBinLogMgr::CwxBinLogMgr(char const* szLogPath, char const* szFilePrex, CWX_UINT64 ullMaxFileSize)
+CwxBinLogMgr::CwxBinLogMgr(char const* szLogPath, char const* szFilePrex, CWX_UINT64 ullMaxFileSize, bool bDelOutManageLogFile)
 {
     m_bValid = false;
     strcpy(m_szErr2K, "Not init.");
@@ -632,7 +632,7 @@ CwxBinLogMgr::CwxBinLogMgr(char const* szLogPath, char const* szFilePrex, CWX_UI
     m_strFilePrex = szFilePrex;
     m_ullMaxFileSize = ullMaxFileSize;
     m_uiMaxDay = DEF_MANAGE_MAX_DAY;
-    m_ttDayStart = 0;
+    m_bDelOutManageLogFile = bDelOutManageLogFile;
     m_fdLock = -1;
     m_ullMinSid = 0; ///<binlog文件的最小sid
     m_ullMaxSid = 0; ///<binlog文件的最大sid
@@ -749,6 +749,8 @@ int CwxBinLogMgr::init(CWX_UINT32 uiMaxDay, char* szErr2K)
         //如果binlog超出管理的范围，则break
         if (!_isManageBinLogFile(pBinLogFile))
         {
+            CwxFile::rmFile(pBinLogFile->getDataFileName().c_str());
+            CwxFile::rmFile(pBinLogFile->getIndexFileName().c_str())
             delete pBinLogFile;
             break;
         }
@@ -882,6 +884,8 @@ int CwxBinLogMgr::append(CWX_UINT64 ullSid,
         while(m_arrBinlog.size())
         {
             if (_isManageBinLogFile(m_arrBinlog[0])) break;
+            CwxFile::rmFile(m_arrBinlog[0]->getDataFileName().c_str());
+            CwxFile::rmFile(m_arrBinlog[0]->getIndexFileName().c_str())
             delete m_arrBinlog[0];
             m_arrBinlog.erase(m_arrBinlog.begin());
         }

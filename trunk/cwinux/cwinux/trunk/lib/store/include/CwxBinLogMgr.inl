@@ -711,16 +711,6 @@ inline bool CwxBinLogMgr::isBinLogIndexFile(string const& strFileName)
     CWX_UINT32 uiFileNo = getBinLogFileNo(strFileName, ttDay);
     return getIndexFileNameByFileNo(uiFileNo, ttDay, strTmp) == strFileName;
 }
-///设置binlog的起始日期
-inline void CwxBinLogMgr::setBinlogDayStart(CWX_UINT32 ttDay)
-{
-    m_ttDayStart = CwxDate::trimToDay(ttDay);
-}
-///获取binlog的结束日期
-inline CWX_UINT32 CwxBinLogMgr::getBinlogDayStart() const
-{
-    return m_ttDayStart;
-}
 ///获取binlog的前缀名
 inline  string const& CwxBinLogMgr::getBinlogPrexName() const
 {
@@ -758,10 +748,9 @@ inline CwxBinLogFile* CwxBinLogMgr::_getMaxBinLogFile()
 
 inline bool CwxBinLogMgr::_isManageBinLogFile(CwxBinLogFile* pBinLogFile)
 {
-    if(pBinLogFile->getFileDay() < m_ttDayStart) return false;
     if (!m_pCurBinlog) return true;
     ///如果文件被cursor使用，则被管理
-    return (m_pCurBinlog->getFileDay() - pBinLogFile->getFileDay())/(3600 * 24) < m_uiMaxDay;
+    return (m_pCurBinlog->getMaxTimestamp() - pBinLogFile->getMaxTimestamp()) < m_uiMaxDay * (3600 * 24);
 }
 
 ///检查cursor是否有效
