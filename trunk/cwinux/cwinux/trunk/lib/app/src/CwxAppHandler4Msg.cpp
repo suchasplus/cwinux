@@ -252,7 +252,7 @@ int CwxAppHandler4Msg::handle_input ()
     if (this->m_conn.isRawData())
     {//recv raw data
         bSuspend = false;
-        result = this->getApp()->onRecvMsg(this, bSuspend);
+        result = this->getApp()->onRecvMsg(*this, bSuspend);
         if (bSuspend)
         {
             if (0 != reactor()->suspendHandler(this, CwxAppHandler4Base::READ_MASK))
@@ -339,20 +339,20 @@ int CwxAppHandler4Msg::handle_input ()
         this->m_recvMsgData = NULL;
         this->m_uiRecvHeadLen = 0;
         this->m_uiRecvDataLen = 0;
-    }
-    if (0 < result)
-    {///recv next msg
-        CWX_ASSERT(m_uiRecvDataLen==0);
-        CWX_ASSERT(m_uiRecvHeadLen==0);
-        m_conn.setContinueRecvNum(m_conn.getContinueRecvNum()+1);
-        continue;
-    }
-    else
-    {
-        CWX_ASSERT(m_uiRecvDataLen==0);
-        CWX_ASSERT(m_uiRecvHeadLen==0);
-        m_conn.setContinueRecvNum(0);
-        break;
+        if (0 < result)
+        {///recv next msg
+            CWX_ASSERT(m_uiRecvDataLen==0);
+            CWX_ASSERT(m_uiRecvHeadLen==0);
+            m_conn.setContinueRecvNum(m_conn.getContinueRecvNum()+1);
+            continue;
+        }
+        else
+        {
+            CWX_ASSERT(m_uiRecvDataLen==0);
+            CWX_ASSERT(m_uiRecvHeadLen==0);
+            m_conn.setContinueRecvNum(0);
+            break;
+        }
     }
     return result>=0?0:-1;
 }
