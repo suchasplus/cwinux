@@ -47,9 +47,9 @@
 #define CWX_APP_DEF_BACKLOG_NUM   8192
 
 
-#define CWX_APP_DEF_KEEPALIVE_IDLE 10;//开始首次KeepAlive探测前的TCP空闭时间
-#define CWX_APP_DEF_KEEPALIVE_INTERNAL 5;//两次KeepAlive探测间的时间间隔
-#define CWX_APP_DEF_KEEPALIVE_COUNT   2;//判定断开前的KeepAlive探测次数
+#define CWX_APP_DEF_KEEPALIVE_IDLE 10//开始首次KeepAlive探测前的TCP空闭时间
+#define CWX_APP_DEF_KEEPALIVE_INTERNAL 5//两次KeepAlive探测间的时间间隔
+#define CWX_APP_DEF_KEEPALIVE_COUNT   2//判定断开前的KeepAlive探测次数
 
 #include "CwxPost.h"
 #endif
