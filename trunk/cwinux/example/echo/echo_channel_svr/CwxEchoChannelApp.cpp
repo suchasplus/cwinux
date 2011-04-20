@@ -229,6 +229,7 @@ void* CwxEchoChannelApp::ThreadMain(CwxTss* , CwxMsgQueue* queue, void* arg)
             sleep(1);
         }
     }
+    channel->stop();
     channel->close();
     return NULL;
 }
