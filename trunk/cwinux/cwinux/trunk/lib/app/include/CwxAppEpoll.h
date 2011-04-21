@@ -139,6 +139,8 @@ public:
     int poll(REACTOR_CALLBACK callback, void* arg, CWX_UINT32 uiMiliTimeout=0);
     ///停止运行
     void stop();
+    ///获取当前的时间
+    void getCurTime(CwxTimeValue& current);
 private:
     ///获取下一个的epoll的超时时间
     void timeout(CWX_UINT64& ullTime);
@@ -194,6 +196,7 @@ private:
     CwxMinHeap<CwxAppHandler4Base>  m_timeHeap; ///<时间堆
     SignalHanlder*                  m_sigHandler; ///<读取signal事件的handle
     bool                            m_bStop; ///<是否停止
+    CwxTimeValue                    m_current; ///<当前的时间
 };
 
 

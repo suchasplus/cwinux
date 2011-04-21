@@ -68,5 +68,11 @@ inline void CwxAppEpoll::stop()
     m_bStop = true;
 }
 
+///获取当前的时间
+inline void CwxAppEpoll::getCurTime(CwxTimeValue& current)
+{
+    current = m_current;
+}
+
 
 CWINUX_END_NAMESPACE

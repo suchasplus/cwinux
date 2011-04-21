@@ -29,10 +29,10 @@ public:
     }
 public:
     /**
-    @brief 连接可读事件，返回-1，handle_close()会被调用
-    @return -1：处理失败，会调用handle_close()； 0：处理成功
+    @brief 连接可读事件，返回-1，close()会被调用
+    @return -1：处理失败，会调用close()； 0：处理成功
     */
-    virtual int handle_input();
+    virtual int onInput();
     /**
     @brief 通知连接关闭。
     @return 对于主动连接，1：不从engine中移除注册；0：不从engine中移除注册但不删除handler；-1：从engine中将handle移除并删除。

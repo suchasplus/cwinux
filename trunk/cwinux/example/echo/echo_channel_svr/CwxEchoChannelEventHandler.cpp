@@ -1,10 +1,10 @@
 #include "CwxEchoChannelEventHandler.h"
 
 /**
-@brief 连接可读事件，返回-1，handle_close()会被调用
-@return -1：处理失败，会调用handle_close()； 0：处理成功
+@brief 连接可读事件，返回-1，close()会被调用
+@return -1：处理失败，会调用close()； 0：处理成功
 */
-int CwxEchoChannelEventHandler::handle_input()
+int CwxEchoChannelEventHandler::onInput()
 {
     ssize_t recv_size = 0;
     ssize_t need_size = 0;

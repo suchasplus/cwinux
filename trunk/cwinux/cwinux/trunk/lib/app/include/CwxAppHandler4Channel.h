@@ -51,32 +51,25 @@ public:
     */
     virtual int open (void * arg= 0);
     /**
-    @brief 接受连接上的事件
-    @param [in] event 连接的handle上的事件
-    @param [in] handle  发生的事件的handle。
-    @return -1：处理失败； 0：处理成功
+    @brief 连接可写事件，返回-1，close()会被调用
+    @return -1：处理失败，会调用close()； 0：处理成功
     */
-    virtual int handle_event(int event, CWX_HANDLE handle=CWX_INVALID_HANDLE);
+    virtual int onOutput();
     /**
-    @brief 连接可写事件，返回-1，handle_close()会被调用
-    @return -1：处理失败，会调用handle_close()； 0：处理成功
+    @brief 连接可读事件，返回-1，close()会被调用
+    @return -1：处理失败，会调用close()； 0：处理成功
     */
-    virtual int handle_output();
+    virtual int onInput();
     /**
-    @brief 连接可读事件，返回-1，handle_close()会被调用
-    @return -1：处理失败，会调用handle_close()； 0：处理成功
+    @brief 连接超时事件，返回-1，close()会被调用
+    @return -1：处理失败，会调用close()； 0：处理成功
     */
-    virtual int handle_input();
-    /**
-    @brief 连接超时事件，返回-1，handle_close()会被调用
-    @return -1：处理失败，会调用handle_close()； 0：处理成功
-    */
-    virtual int handle_timeout();
+    virtual int onTimeout(CwxTimeValue const& current);
     /**
     @brief Handler的redo事件，在每次dispatch时执行。
-    @return -1：处理失败，会调用handle_close()； 0：处理成功
+    @return -1：处理失败，会调用close()； 0：处理成功
     */
-    virtual int handle_redo();
+    virtual int onRedo();
     /**
     @brief 连接关闭
     @param [in] handle  连接handle。
@@ -129,6 +122,14 @@ public:
     bool isEmpty() const;
     ///获取channel
     CwxAppChannel* channel();
+protected:
+    /**
+    @brief 接受连接上的事件
+    @param [in] event 连接的handle上的事件
+    @param [in] handle  发生的事件的handle。
+    @return -1：处理失败； 0：处理成功
+    */
+    virtual int handle_event(int event, CWX_HANDLE handle=CWX_INVALID_HANDLE);
 private:
     ///以非阻塞的方式，发送消息。返回值,-1: failure; 0: not send all;1:send a msg
     inline int nonBlockSend();

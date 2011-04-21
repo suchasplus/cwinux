@@ -134,7 +134,7 @@ int CwxAppChannel::dispatch(CWX_UINT32 uiMiliTimeout)
                     redoHander = *iter;
                     m_redoHandlers.erase(iter);
                     iter = m_redoHandlers.begin();
-                    redoHander->handle_redo();
+                    redoHander->onRedo();
                 }
 
             }

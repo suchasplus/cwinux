@@ -64,21 +64,23 @@ int CwxAppHandler4Channel::handle_event(int event, CWX_HANDLE)
 {
     if (CWX_CHECK_ATTR(event, CwxAppHandler4Base::WRITE_MASK))
     {
-        if (0 != handle_output()) return -1;
+        if (0 != onOutput()) return -1;
     }
     if (CWX_CHECK_ATTR(event, CwxAppHandler4Base::READ_MASK))
     {
-        if (0 != handle_input()) return -1;
+        if (0 != onInput()) return -1;
     }
     if (CWX_CHECK_ATTR(event, CwxAppHandler4Base::TIMEOUT_MASK))
     {
-        if (0 != handle_timeout()) return -1;
+        CwxTimeValue current;
+        channel()->getCurTime(current);
+        if (0 != onTimeout(current)) return -1;
     }
     return 0;
 }
 
 
-int CwxAppHandler4Channel::handle_output ()
+int CwxAppHandler4Channel::onOutput ()
 {
     int result = 0;
     bool bCloseConn = false;
@@ -166,7 +168,7 @@ return:
 	-1 : failure, handle_close is invoked.
 	0  : success.
 ***/
-int CwxAppHandler4Channel::handle_input ()
+int CwxAppHandler4Channel::onInput ()
 {
     return -1;
 }
@@ -177,12 +179,12 @@ desc:
 return:
 	0  : success.
 ***/
-int CwxAppHandler4Channel::handle_timeout()
+int CwxAppHandler4Channel::onTimeout(CwxTimeValue const& current)
 {
     return 0;
 }
 
-int CwxAppHandler4Channel::handle_redo()
+int CwxAppHandler4Channel::onRedo()
 {
     return 0;
 }

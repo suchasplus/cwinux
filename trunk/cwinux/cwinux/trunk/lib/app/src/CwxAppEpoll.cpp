@@ -24,6 +24,7 @@ CwxAppEpoll::CwxAppEpoll(bool bEnableSignal):m_timeHeap(4096)
         m_sigHandler = NULL;
     }
     m_bStop = false;
+    m_current.now();
 }
 
 CwxAppEpoll::~CwxAppEpoll()
@@ -455,11 +456,13 @@ int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg, CWX_UINT32 uiMiliTim
 {
     int i = 0;
     int num = 0;
-    CWX_UINT64 ullNow = CwxDate::getTimestamp();
+    CWX_UINT64 ullNow = 0;
     CWX_UINT64 ullTimeout = 0;
     int tv=-1;
     struct epoll_event *event=NULL;
     CwxAppHandler4Base* handler = NULL;
+    m_current.now();
+    ullNow = m_current.to_usec();
     ///计算超时时间
     timeout(ullTimeout);
     if (ullTimeout)
