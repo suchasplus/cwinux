@@ -10,7 +10,7 @@ int CwxEchoChannelEventHandler::onInput()
         m_uiRecvHeadLen,
         m_uiRecvDataLen,
         m_szHeadBuf,
-        m_handler,
+        m_header,
         m_recvMsgData);
     if (1 != ret) return ret;
     replyMessage();
