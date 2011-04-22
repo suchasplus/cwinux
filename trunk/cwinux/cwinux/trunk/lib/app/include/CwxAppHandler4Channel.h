@@ -141,12 +141,15 @@ protected:
 private:
     ///以非阻塞的方式，发送消息。返回值,-1: failure; 0: not send all;1:send a msg
     inline int nonBlockSend();
+    friend class CwxAppChannel;
 protected:
     CWX_UINT32             m_uiSendByte; ///the sent bytes number for current message.
     CwxMsgBlock*           m_curSndingMsg; ///<current sending msg;
     CwxMsgBlock*           m_waitSendMsgHead; ///<The header for wait to be sent msg.
     CwxMsgBlock*           m_waitSendMsgTail;   ///<The tail for wait to be sent msg.
     CwxAppChannel*         m_channel;
+private:
+    bool                   m_bRedo;
 };
 CWINUX_END_NAMESPACE
 

@@ -401,10 +401,10 @@ inline int CwxAppChannel::_cancelTimer (CwxAppHandler4Channel *event_handler)
 ///Ìí¼Óredo handler
 inline bool CwxAppChannel::_regRedoHander(CwxAppHandler4Channel* event_handler)
 {
-    set<CwxAppHandler4Channel*>::iterator iter = m_redoHandlers.find(event_handler);
-    if (iter != m_redoHandlers.end())
+    if (!event_handler->m_bRedo)
     {
-        m_redoHandlers.insert(event_handler);
+        m_pCurRedoSet->insert(event_handler);
+        event_handler->m_bRedo = true;
         return true;
     }
     return false;
@@ -412,11 +412,15 @@ inline bool CwxAppChannel::_regRedoHander(CwxAppHandler4Channel* event_handler)
 ///É¾³ýredo handler¡£
 inline bool CwxAppChannel::_eraseRedoHander(CwxAppHandler4Channel* event_handler)
 {
-    set<CwxAppHandler4Channel*>::iterator iter = m_redoHandlers.find(event_handler);
-    if (iter != m_redoHandlers.end())
+    if (event_handler->m_bRedo)
     {
-        m_redoHandlers.erase(iter);
-        return true;
+        set<CwxAppHandler4Channel*>::iterator iter = m_pCurRedoSet->find(event_handler);
+        if (iter != m_pCurRedoSet->end())
+        {
+            event_handler->m_bRedo = false;
+            m_pCurRedoSet->erase(iter);
+            return true;
+        }
     }
     return false;
 }

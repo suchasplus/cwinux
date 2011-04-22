@@ -12,6 +12,8 @@ CwxAppChannel::CwxAppChannel()
     m_pNoticeHandler = NULL;
     //事件驱动
     m_engine= NULL;
+    //
+    m_pCurRedoSet = &m_redoHandlers_1;
 }
 
 
@@ -87,7 +89,9 @@ int CwxAppChannel::close()
         CWX_ERROR(("CwxAppChannel::close must be invoked after stop"));
         return -1;
     }
-    m_redoHandlers.clear();
+    m_redoHandlers_1.clear();
+    m_redoHandlers_2.clear();
+    m_pCurRedoSet= &m_redoHandlers_1;
     if (m_engine) delete m_engine;
     m_engine = NULL;
     if (m_noticeFd[0] != CWX_INVALID_HANDLE)::close(m_noticeFd[0]);
@@ -125,18 +129,30 @@ int CwxAppChannel::dispatch(CWX_UINT32 uiMiliTimeout)
             ///带锁执行event-loop
             CwxMutexGuard<CwxMutexLock> lock(&m_lock);
             ret = m_engine->poll(CwxAppChannel::callback, this, uiMiliTimeout);
-            if (m_redoHandlers.size())
+            if (m_pCurRedoSet->size())
             {
+                set<CwxAppHandler4Channel*>* pCurRedoSet = m_pCurRedoSet;
+                if (m_pCurRedoSet == &m_redoHandlers_1)
+                {
+                    m_pCurRedoSet = &m_redoHandlers_2;
+                }
+                else
+                {
+                    m_pCurRedoSet = &m_redoHandlers_1;
+                }
+                m_pCurRedoSet->clear();
+
                 CwxAppHandler4Channel* redoHander = NULL;
-                set<CwxAppHandler4Channel*>::iterator iter = m_redoHandlers.begin();
-                while(iter != m_redoHandlers.end())
+                set<CwxAppHandler4Channel*>::iterator iter = pCurRedoSet.begin();
+                while(iter != pCurRedoSet.end())
                 {
                     redoHander = *iter;
-                    m_redoHandlers.erase(iter);
-                    iter = m_redoHandlers.begin();
+                    pCurRedoSet.erase(iter);
+                    redoHander->m_bRedo = false;
                     redoHander->onRedo();
+                    iter++;
                 }
-
+                pCurRedoSet->clear();
             }
 
         }

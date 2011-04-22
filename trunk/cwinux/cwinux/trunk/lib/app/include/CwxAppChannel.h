@@ -255,7 +255,9 @@ private:
     CwxMutexLock            m_lock; ///<全局锁
     CwxRwLock               m_rwLock; ///<读写锁
     pthread_t               m_owner; ///<reactor的owner 线程
-    set<CwxAppHandler4Channel*>  m_redoHandlers; ///<此set中的handler，每次dispatch会执行一次,并移除。
+    set<CwxAppHandler4Channel*>* m_pCurRedoSet;
+    set<CwxAppHandler4Channel*>  m_redoHandlers_1; ///<此set中的handler，每次dispatch会执行一次,并移除。
+    set<CwxAppHandler4Channel*>  m_redoHandlers_2; ///<此set中的handler，每次dispatch会执行一次,并移除。
     bool                    m_bStop; ///<reactor是否已经停止
     int                     m_noticeFd[2]; ///<notice的读写handle
     CwxAppEpoll*            m_engine; ///<epoll的engine

@@ -12,6 +12,7 @@ CwxAppHandler4Channel::CwxAppHandler4Channel(CwxAppChannel *channel)
     m_waitSendMsgHead = NULL;
     m_waitSendMsgTail = NULL;
     m_channel = channel;
+    m_bRedo = false;
 }
 
 ///Îö¹¹º¯Êı
@@ -50,6 +51,10 @@ int CwxAppHandler4Channel::close(CWX_HANDLE)
     else if (0 == ret)
     {
         channel()->removeHandler(this);
+    }
+    if (m_bRedo)
+    {
+        channel()->eraseRedoHander(this);
     }
     return 0;
 }
