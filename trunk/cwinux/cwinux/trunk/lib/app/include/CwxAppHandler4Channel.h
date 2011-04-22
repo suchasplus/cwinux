@@ -103,7 +103,7 @@ public:
     virtual void onFailSendMsg(CwxMsgBlock*& msg);
     /**
     @brief 通知连接关闭。
-    @return 对于主动连接，1：不从engine中移除注册；0：不从engine中移除注册但不删除handler；-1：从engine中将handle移除并删除。
+    @return 1：不从engine中移除注册；0：从engine中移除注册但不删除handler；-1：从engine中将handle移除并删除。
     */
     virtual int onConnClosed();
 
@@ -122,6 +122,14 @@ public:
     bool isEmpty() const;
     ///获取channel
     CwxAppChannel* channel();
+public:
+    ///返回值：-1：读取失败；0：数据包没有读完；1：读取了一个数据包
+    static int recvPackage(CWX_HANDLE handle, 
+        CWX_UINT32& uiRecvHeadLen,
+        CWX_UINT32& uiRecvDataLen,
+        char*      szRecvHead,
+        CwxMsgHead& header,
+        CwxMsgBlock*& msg);
 protected:
     /**
     @brief 接受连接上的事件

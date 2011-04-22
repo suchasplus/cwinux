@@ -235,5 +235,71 @@ int CwxAppHandler4Channel::wakeUp()
     return 0;
 }
 
+int CwxAppHandler4Channel::recvPackage(CWX_HANDLE handle,
+                                       CWX_UINT32& uiRecvHeadLen,
+                                       CWX_UINT32& uiRecvDataLen,
+                                       char*      szRecvHead,
+                                       CwxMsgHead& header,
+                                       CwxMsgBlock*& msg)
+{
+    ssize_t recv_size = 0;
+    ssize_t need_size = 0;
+    need_size = CwxMsgHead::MSG_HEAD_LEN - uiRecvHeadLen;
+    if (need_size > 0 )
+    {//not get complete head
+        recv_size = CwxSocket::recv(handle, szRecvHead + uiRecvHeadLen, need_size);
+        if (recv_size <=0 )
+        { //error or signal
+            if ((0==recv_size) || ((errno != EWOULDBLOCK) && (errno != EINTR)))
+            {
+                return -1; //error
+            }
+            else
+            {//signal or no data
+                return 0;
+            }
+        }
+        uiRecvHeadLen += recv_size;
+        if (recv_size < need_size)
+        {
+            return 0;
+        }
+        szRecvHead[uiRecvHeadLen] = 0x00;
+        if (!header.fromNet(szRecvHead))
+        {
+            CWX_ERROR(("Msg header is error."));
+            return -1;
+        }
+        if (header.getDataLen() > 0) msg = CwxMsgBlockAlloc::malloc(header.getDataLen());
+        uiRecvDataLen = 0;
+    }//end  if (need_size > 0)
+    //recv data
+    need_size = header.getDataLen() - uiRecvDataLen;
+    if (need_size > 0)
+    {//not get complete data
+        recv_size = CwxSocket::recv(handle, msg->wr_ptr(), need_size);
+        if (recv_size <=0 )
+        { //error or signal
+            if ((errno != EWOULDBLOCK)&&(errno != EINTR))
+            {
+                return -1; //error
+            }
+            else
+            {//signal or no data
+                return 0;
+            }
+        }
+        //move write pointer
+        msg->wr_ptr(recv_size);
+        uiRecvDataLen += recv_size;
+        if (recv_size < need_size)
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+
 CWINUX_END_NAMESPACE
 
