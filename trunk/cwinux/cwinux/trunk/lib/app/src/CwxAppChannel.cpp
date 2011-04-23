@@ -149,7 +149,10 @@ int CwxAppChannel::dispatch(CWX_UINT32 uiMiliTimeout)
                     redoHander = *iter;
                     pCurRedoSet.erase(iter);
                     redoHander->m_bRedo = false;
-                    redoHander->onRedo();
+                    if (-1 == redoHander->onRedo())
+                    {
+                        redoHander->close();
+                    }
                     iter++;
                 }
                 pCurRedoSet->clear();
