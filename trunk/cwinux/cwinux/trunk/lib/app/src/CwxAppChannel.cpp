@@ -143,11 +143,10 @@ int CwxAppChannel::dispatch(CWX_UINT32 uiMiliTimeout)
                 m_pCurRedoSet->clear();
 
                 CwxAppHandler4Channel* redoHander = NULL;
-                set<CwxAppHandler4Channel*>::iterator iter = pCurRedoSet.begin();
-                while(iter != pCurRedoSet.end())
+                set<CwxAppHandler4Channel*>::iterator iter = pCurRedoSet->begin();
+                while(iter != pCurRedoSet->end())
                 {
                     redoHander = *iter;
-                    pCurRedoSet.erase(iter);
                     redoHander->m_bRedo = false;
                     if (-1 == redoHander->onRedo())
                     {
