@@ -197,7 +197,7 @@ int CwxAppChannel::stop()
     return _stop();
 }
 
-void CwxAppChannel::callback(CwxAppHandler4Base* handler, int mask, bool bPersist, void *)
+void CwxAppChannel::callback(CwxAppHandler4Base* handler, int mask, bool , void *)
 {
     int ret = handler->handle_event(mask, handler->getHandle());
     if (-1 == ret)
