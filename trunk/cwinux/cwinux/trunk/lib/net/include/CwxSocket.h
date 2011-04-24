@@ -23,7 +23,7 @@
 #include "CwxNetMacro.h"
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <netinet/tcp.h>
+#include <linux/tcp.h>
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxSocket
