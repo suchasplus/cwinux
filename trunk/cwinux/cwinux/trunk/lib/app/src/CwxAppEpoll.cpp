@@ -535,6 +535,7 @@ int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg, CWX_UINT32 uiMiliTim
             if (m_arrSignals[i])
             {
                 m_arrSignals[i] = 0;
+                CWX_ASSERT(m_sHandler[i]);
                 callback(m_sHandler[i],
                     CwxAppHandler4Base::SIGNAL_MASK,
                     true,
