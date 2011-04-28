@@ -34,7 +34,7 @@ int CwxAppHandler4Channel::open (void * )
     if	(CwxSockIo::setNonblock(getHandle(), true) == -1)
     {
         CWX_ERROR(("Failure to set the connection for NONBLOCK.conn[%d]",
-            getHandle));
+            getHandle()));
         return -1;
     }
 
