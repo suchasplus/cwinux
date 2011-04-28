@@ -29,6 +29,14 @@ CwxAppHandler4Channel::~CwxAppHandler4Channel()
 
 int CwxAppHandler4Channel::open (void * )
 {
+    //设置连接为非阻塞状态
+    if	(CwxSockIo::setNonblock(getHandle(), true) == -1)
+    {
+        CWX_ERROR(("Failure to set the connection for NONBLOCK.conn[%d]",
+            getHandle));
+        return -1;
+    }
+
     if (0 != channel()->registerHandler(getHandle(),
         this,
         CwxAppHandler4Base::READ_MASK))

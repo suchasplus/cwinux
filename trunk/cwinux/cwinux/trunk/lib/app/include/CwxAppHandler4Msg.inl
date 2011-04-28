@@ -102,7 +102,7 @@ inline void CwxAppHandler4Msg::setStopListen(bool bStop)
 
 inline bool CwxAppHandler4Msg::isEmpty() const
 {
-    return !this->m_curSndingMsg && ! this->m_waitSendMsgHead;
+    return (!this->m_curSndingMsg) && (!this->m_waitSendMsgHead);
 
 }
 

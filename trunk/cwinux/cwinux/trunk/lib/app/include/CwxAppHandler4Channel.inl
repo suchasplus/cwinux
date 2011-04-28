@@ -47,7 +47,7 @@ inline bool CwxAppHandler4Channel::putMsg(CwxMsgBlock* msg)
 
 inline bool CwxAppHandler4Channel::isEmpty() const
 {
-    return !this->m_curSndingMsg && ! this->m_waitSendMsgHead;
+    return (!this->m_curSndingMsg) && (!this->m_waitSendMsgHead);
 
 }
 
