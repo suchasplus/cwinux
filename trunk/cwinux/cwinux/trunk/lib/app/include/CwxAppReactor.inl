@@ -524,7 +524,7 @@ inline CwxAppHandler4Base* CwxAppReactor::_removeHandler (CWX_HANDLE handle, boo
     CwxAppHandler4Base* handler= m_engine->removeHandler(handle);
     if (!handler)
     {
-        CWX_DEBUG(("Handle[%d] doesn't exist", (int)handle));
+//        CWX_DEBUG(("Handle[%d] doesn't exist", (int)handle));
         return NULL;
     }
     if (bRemoveConnId && 
