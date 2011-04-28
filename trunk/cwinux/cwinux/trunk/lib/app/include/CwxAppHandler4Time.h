@@ -61,7 +61,6 @@ public:
     }
 private:
     CwxTimeValue    m_internal;
-    CwxTimeValue    m_cur;
     CwxAppFramework* m_pApp;
 };
 

@@ -29,8 +29,7 @@ int CwxAppHandler4Time::open (void *)
 int CwxAppHandler4Time::handle_event(int, CWX_HANDLE )
 {
     if (getApp()->isStopped()) return 0;
-    reactor()->getCurTime(m_cur);
-    getApp()->onTime(m_cur);
+    getApp()->onTime(reactor()->getCurTime());
     if (0 != reactor()->scheduleTimer(this,m_internal))
     {
         CWX_ERROR(("Failure to re-register time click handle"));

@@ -77,9 +77,7 @@ int CwxAppHandler4Channel::handle_event(int event, CWX_HANDLE)
     }
     if (CWX_CHECK_ATTR(event, CwxAppHandler4Base::TIMEOUT_MASK))
     {
-        CwxTimeValue current;
-        channel()->getCurTime(current);
-        if (0 != onTimeout(current)) return -1;
+        if (0 != onTimeout( channel()->getCurTime())) return -1;
     }
     return 0;
 }
