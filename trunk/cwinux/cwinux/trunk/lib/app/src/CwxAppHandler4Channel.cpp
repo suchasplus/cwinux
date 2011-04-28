@@ -40,7 +40,7 @@ int CwxAppHandler4Channel::open (void * )
 
     if (0 != channel()->registerHandler(getHandle(),
         this,
-        CwxAppHandler4Base::READ_MASK))
+        CwxAppHandler4Base::PREAD_MASK))
     {
         CWX_ERROR(("Failure to register conn[%d] for read_mask",
             getHandle()));
