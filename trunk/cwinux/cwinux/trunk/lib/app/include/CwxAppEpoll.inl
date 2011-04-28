@@ -69,9 +69,9 @@ inline void CwxAppEpoll::stop()
 }
 
 ///获取当前的时间
-inline void CwxAppEpoll::getCurTime(CwxTimeValue& current)
+inline CwxTimeValue const& CwxAppEpoll::getCurTime() const
 {
-    current = m_current;
+    return m_current;
 }
 
 

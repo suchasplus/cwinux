@@ -392,9 +392,9 @@ inline bool CwxAppReactor::isStop()
 }
 
 ///获取当前的时间
-inline void CwxAppReactor::getCurTime(CwxTimeValue& current)
+inline CwxTimeValue const& CwxAppReactor::getCurTime() const
 {
-    current.now();
+    return m_engine->getCurTime();
 }
 
 ///io handle是否设置指定的mask

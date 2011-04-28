@@ -140,7 +140,7 @@ public:
     ///停止运行
     void stop();
     ///获取当前的时间
-    void getCurTime(CwxTimeValue& current);
+    CwxTimeValue const& getCurTime() const;
 private:
     ///获取下一个的epoll的超时时间
     void timeout(CWX_UINT64& ullTime);

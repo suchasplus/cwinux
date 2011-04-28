@@ -235,9 +235,9 @@ inline bool CwxAppChannel::isStop()
 }
 
 ///获取当前的时间
-inline void CwxAppChannel::getCurTime(CwxTimeValue& current)
+inline CwxTimeValue const& CwxAppChannel::getCurTime() const
 {
-    m_engine->getCurTime(current);
+    return m_engine->getCurTime();
 }
 
 ///io handle是否设置指定的mask

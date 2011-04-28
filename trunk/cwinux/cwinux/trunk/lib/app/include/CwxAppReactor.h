@@ -248,7 +248,7 @@ public:
     ///是否stop
     bool isStop();
     ///获取当前的时间
-    void getCurTime(CwxTimeValue& current);
+    CwxTimeValue const& getCurTime() const;
     ///io handle是否设置指定的mask
     bool isMask(CWX_HANDLE handle, int mask);
 private:
