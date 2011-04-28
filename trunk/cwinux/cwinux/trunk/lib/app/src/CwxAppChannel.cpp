@@ -41,7 +41,7 @@ int CwxAppChannel::open()
         delete m_engine;
         m_engine = NULL;
     }
-    m_engine = new CwxAppEpoll();
+    m_engine = new CwxAppEpoll(false);
     if (0 != m_engine->init()) return -1;
     //×¢²ánotice handler
     if (0 != pipe(m_noticeFd))
