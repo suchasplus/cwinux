@@ -750,7 +750,7 @@ inline bool CwxBinLogMgr::_isManageBinLogFile(CwxBinLogFile* pBinLogFile)
 {
     if (!m_pCurBinlog) return true;
     ///如果文件被cursor使用，则被管理
-    return (m_pCurBinlog->getMaxTimestamp() - pBinLogFile->getMaxTimestamp()) < m_uiMaxDay * (3600 * 24);
+    return (m_ttMaxTimestamp - pBinLogFile->getMaxTimestamp()) < m_uiMaxDay * (3600 * 24);
 }
 
 ///检查cursor是否有效

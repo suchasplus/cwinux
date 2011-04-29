@@ -746,6 +746,18 @@ int CwxBinLogMgr::init(CWX_UINT32 uiMaxDay, char* szErr2K)
             if (szErr2K) strcpy(szErr2K, m_szErr2K);
             return -1;
         }
+        if (!m_pCurBinlog)
+        {
+            m_ullMaxSid = pBinLogFile->getMaxSid();
+            m_ullMinSid = pBinLogFile->getMinSid();
+            m_ttMaxTimestamp = pBinLogFile->getMaxTimestamp();
+            m_ttMinTimestamp = pBinLogFile->getMinTimestamp();
+        }
+        else
+        {
+            m_ullMinSid = pBinLogFile->getMinSid();
+            m_ttMinTimestamp = pBinLogFile->getMinTimestamp();
+        }
         //如果binlog超出管理的范围，则break
         if (!_isManageBinLogFile(pBinLogFile))
         {
@@ -759,9 +771,6 @@ int CwxBinLogMgr::init(CWX_UINT32 uiMaxDay, char* szErr2K)
         if (!m_pCurBinlog)
         {
             m_pCurBinlog = pBinLogFile;
-            m_ullMaxSid = pBinLogFile->getMaxSid();
-            m_ullMinSid = pBinLogFile->getMinSid();
-            m_ttMaxTimestamp = pBinLogFile->getMaxTimestamp();
         }
         else
         {
@@ -790,8 +799,6 @@ int CwxBinLogMgr::init(CWX_UINT32 uiMaxDay, char* szErr2K)
                 pBinLogFile->m_nextBinLogFile = m_arrBinlog[0];
             }
             m_arrBinlog.insert(m_arrBinlog.begin(), pBinLogFile);
-            m_ullMinSid = pBinLogFile->getMinSid();
-            m_ttMinTimestamp = pBinLogFile->getMinTimestamp();
         }
         map_iter++;
     }
