@@ -195,9 +195,7 @@ int CwxEchoChannelApp::ThreadDoQueue(CwxMsgQueue* queue, CwxAppChannel* channel)
             }
             handler = new CwxEchoChannelEventHandler(channel);
             handler->setHandle(block->event().getIoHandle());
-            if (0 != channel->registerHandler(handler->getHandle(),
-                handler,
-                CwxAppHandler4Base::PREAD_MASK))
+            if (0 != handler->open(NULL))
             {
                 CWX_ERROR(("Failure to register handler[%d]", handler->getHandle()));
                 delete handler;
