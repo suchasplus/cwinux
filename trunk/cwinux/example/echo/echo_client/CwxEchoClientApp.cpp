@@ -226,8 +226,8 @@ int CwxEchoClientApp::setSockAttr(CWX_HANDLE handle, void* arg)
     if (setsockopt(handle, IPPROTO_TCP, TCP_NODELAY, (void *)&flags, sizeof(flags)) != 0)
     {
         CWX_ERROR(("Failure to set listen addr:%s, port:%u NODELAY, errno=%d",
-            m_config.m_listen.getHostName().c_str(),
-            m_config.m_listen.getPort(),
+            app->m_config.m_listen.getHostName().c_str(),
+            app->m_config.m_listen.getPort(),
             errno));
         return -1;
     }
@@ -235,8 +235,8 @@ int CwxEchoClientApp::setSockAttr(CWX_HANDLE handle, void* arg)
     if (setsockopt(handle, SOL_SOCKET, SO_LINGER, (void *)&ling, sizeof(ling)) != 0)
     {
         CWX_ERROR(("Failure to set listen addr:%s, port:%u LINGER, errno=%d",
-            m_config.m_listen.getHostName().c_str(),
-            m_config.m_listen.getPort(),
+            app->m_config.m_listen.getHostName().c_str(),
+            app->m_config.m_listen.getPort(),
             errno));
         return -1;
     }
