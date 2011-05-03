@@ -69,6 +69,7 @@ int CwxAppChannel::open()
         CWX_ERROR(("Failure to set notice handle[1]'s noblock sign, errno=%d", errno));
         return -1;
     }
+    m_pNoticeHandler->setHandle(m_noticeFd[0]);
     //×¢²áÐÅºÅfdµÄ¶Á
     if (0 != m_engine->registerHandler(m_noticeFd[0], m_pNoticeHandler, CwxAppHandler4Base::PREAD_MASK))
     {
