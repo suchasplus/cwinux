@@ -384,7 +384,6 @@ int CwxAppFramework::noticeHandle4Msg(CWX_UINT32 uiSvrId,
                 CWX_UINT32 uiHostId,
                 CWX_HANDLE ioHandle,
                 bool bRawData,
-                bool bKeepAlive,
                 void* userData
                 )
 {
@@ -392,20 +391,6 @@ int CwxAppFramework::noticeHandle4Msg(CWX_UINT32 uiSvrId,
     {
         CWX_ERROR(("svr-id must not less than SVR_TYPE_USER_START"));
         return -1;
-    }
-    if (bKeepAlive)
-    {
-        if (0 != CwxSocket::setKeepalive(ioHandle,
-            true,
-            CWX_APP_DEF_KEEPALIVE_IDLE,
-            CWX_APP_DEF_KEEPALIVE_INTERNAL,
-            CWX_APP_DEF_KEEPALIVE_COUNT))
-        {
-            CWX_ERROR(("Failure to set handle[%d] keep-alive, errno=%d",
-                ioHandle,
-                errno));
-            return -1;
-        }
     }
     CwxAppHandler4IoMsg* handle = m_pHandleCache->fetchIoMsgHandle();
     if (!handle) handle = new CwxAppHandler4IoMsg(this, reactor());

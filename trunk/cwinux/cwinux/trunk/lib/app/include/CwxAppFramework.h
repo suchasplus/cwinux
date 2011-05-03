@@ -214,7 +214,6 @@ public:
     @param [in] uiHostId 设定连接的Host ID。
     @param [in] handle IO handle。
     @param [in] bRawData 此连接上接受的数据，是否具有包头. true：具有包头；false：没有包头.
-    @param [in] bKeepAlive 对建立的连接，是否执行KeepAlive.
     @param [in] userData 与此链接相关的用户数据
     @param [in] pPai 通信数据适配器对象
     @return  >0：此连接的CONN_ID；-1：注册失败。
@@ -223,7 +222,6 @@ public:
         CWX_UINT32 uiHostId,
         CWX_HANDLE handle,
         bool bRawData = false,
-        bool bKeepAlive = false,
         void* userData = NULL
         );
     /**
