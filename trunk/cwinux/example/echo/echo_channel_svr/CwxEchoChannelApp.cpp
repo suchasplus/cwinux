@@ -63,8 +63,8 @@ int CwxEchoChannelApp::initRunEnv(){
         this->m_config.m_listen.getHostName().c_str(),
         this->m_config.m_listen.getPort(),
         false,
-        false,
-        CWX_APP_EVENT_MODE))
+        CWX_APP_MSG_MODE,
+        CwxEchoChannelApp::setSockAttr))
     {
         CWX_ERROR(("Can't register the echo acceptor port: addr=%s, port=%d",
             this->m_config.m_listen.getHostName().c_str(),
@@ -230,4 +230,55 @@ void* CwxEchoChannelApp::ThreadMain(CwxTss* , CwxMsgQueue* queue, void* arg)
     channel->stop();
     channel->close();
     return NULL;
+}
+
+int CwxEchoChannelApp::setSockAttr(CWX_HANDLE handle)
+{
+    int iSockBuf = 1024 * 1024;
+    while (setsockopt(handle, SOL_SOCKET, SO_SNDBUF, (void*)&iSockBuf, sizeof(iSockBuf)) < 0)
+    {
+        iSockBuf -= 1024;
+        if (iSockBuf <= 1024) break;
+    }
+    iSockBuf = 1024 * 1024;
+    while(setsockopt(handle, SOL_SOCKET, SO_RCVBUF, (void *)&iSockBuf, sizeof(iSockBuf)) < 0)
+    {
+        iSockBuf -= 1024;
+        if (iSockBuf <= 1024) break;
+    }
+
+    if (m_config.m_listen.isKeepAlive())
+    {
+        if (0 != CwxSocket::setKeepalive(handle,
+            true,
+            CWX_APP_DEF_KEEPALIVE_IDLE,
+            CWX_APP_DEF_KEEPALIVE_INTERNAL,
+            CWX_APP_DEF_KEEPALIVE_COUNT))
+        {
+            CWX_ERROR(("Failure to set listen addr:%s, port:%u to keep-alive, errno=%d",
+                m_config.m_listen.getHostName().c_str(),
+                m_config.m_listen.getPort(),
+                errno));
+            return -1;
+        }
+    }
+
+    int flags= 1;
+    if (setsockopt(handle, IPPROTO_TCP, TCP_NODELAY, (void *)&flags, sizeof(flags)) != 0)
+    {
+        CWX_ERROR(("Failure to set listen addr:%s, port:%u NODELAY, errno=%d",
+            m_config.m_listen.getHostName().c_str(),
+            m_config.m_listen.getPort(),
+            errno));
+        return -1;
+    }
+    struct linger ling= {0, 0};
+    if (setsockopt(handle, SOL_SOCKET, SO_LINGER, (void *)&ling, sizeof(ling)) != 0)
+    {
+        CWX_ERROR(("Failure to set listen addr:%s, port:%u LINGER, errno=%d",
+            m_config.m_listen.getHostName().c_str(),
+            m_config.m_listen.getPort(),
+            errno));
+        return -1;
+    }
 }

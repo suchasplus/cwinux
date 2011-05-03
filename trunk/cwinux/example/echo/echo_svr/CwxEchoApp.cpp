@@ -64,7 +64,10 @@ int CwxEchoApp::initRunEnv(){
     ///全部由m_eventHandler对象来处理
     if (0 > this->noticeTcpListen(SVR_TYPE_ECHO, 
         this->m_config.m_listen.getHostName().c_str(),
-        this->m_config.m_listen.getPort()))
+        this->m_config.m_listen.getPort(),
+        false,
+        CWX_APP_MSG_MODE,
+        CwxEchoApp::setSockAttr))
     {
         CWX_ERROR(("Can't register the echo acceptor port: addr=%s, port=%d",
             this->m_config.m_listen.getHostName().c_str(),
@@ -133,6 +136,57 @@ int CwxEchoApp::onRecvMsg(CwxMsgBlock* msg, CwxAppHandler4Msg& conn, CwxMsgHead 
     m_threadPool->append(msg);
     return 0;
 
+}
+
+int CwxEchoApp::setSockAttr(CWX_HANDLE handle)
+{
+    int iSockBuf = 1024 * 1024;
+    while (setsockopt(handle, SOL_SOCKET, SO_SNDBUF, (void*)&iSockBuf, sizeof(iSockBuf)) < 0)
+    {
+        iSockBuf -= 1024;
+        if (iSockBuf <= 1024) break;
+    }
+    iSockBuf = 1024 * 1024;
+    while(setsockopt(handle, SOL_SOCKET, SO_RCVBUF, (void *)&iSockBuf, sizeof(iSockBuf)) < 0)
+    {
+        iSockBuf -= 1024;
+        if (iSockBuf <= 1024) break;
+    }
+
+    if (m_config.m_listen.isKeepAlive())
+    {
+        if (0 != CwxSocket::setKeepalive(handle,
+            true,
+            CWX_APP_DEF_KEEPALIVE_IDLE,
+            CWX_APP_DEF_KEEPALIVE_INTERNAL,
+            CWX_APP_DEF_KEEPALIVE_COUNT))
+        {
+            CWX_ERROR(("Failure to set listen addr:%s, port:%u to keep-alive, errno=%d",
+                m_config.m_listen.getHostName().c_str(),
+                m_config.m_listen.getPort(),
+                errno));
+            return -1;
+        }
+    }
+
+    int flags= 1;
+    if (setsockopt(handle, IPPROTO_TCP, TCP_NODELAY, (void *)&flags, sizeof(flags)) != 0)
+    {
+        CWX_ERROR(("Failure to set listen addr:%s, port:%u NODELAY, errno=%d",
+            m_config.m_listen.getHostName().c_str(),
+            m_config.m_listen.getPort(),
+            errno));
+        return -1;
+    }
+    struct linger ling= {0, 0};
+    if (setsockopt(handle, SOL_SOCKET, SO_LINGER, (void *)&ling, sizeof(ling)) != 0)
+    {
+        CWX_ERROR(("Failure to set listen addr:%s, port:%u LINGER, errno=%d",
+            m_config.m_listen.getHostName().c_str(),
+            m_config.m_listen.getPort(),
+            errno));
+        return -1;
+    }
 }
 
 void CwxEchoApp::destroy()

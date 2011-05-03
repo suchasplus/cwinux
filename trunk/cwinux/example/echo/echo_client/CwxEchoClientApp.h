@@ -45,6 +45,8 @@ protected:
     //init the Enviroment before run.0:success, -1:failure.
 	virtual int initRunEnv();
 private:
+    ///设置socket的属性
+    static int setSockAttr(CWX_HANDLE handle);
     //发送echo请求
     void sendNextMsg(CWX_UINT32 uiSvrId, CWX_UINT32 uiHostId, CWX_UINT32 uiConnId);
 private:
