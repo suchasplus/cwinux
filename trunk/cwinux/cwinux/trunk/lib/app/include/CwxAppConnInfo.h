@@ -23,6 +23,7 @@
 #include "CwxStl.h"
 #include "CwxStlFunc.h"
 #include "CwxLogger.h"
+#include "CwxNetMacro.h"
 
 CWINUX_BEGIN_NAMESPACE
 class CwxAppHandler4Msg;
