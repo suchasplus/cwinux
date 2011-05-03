@@ -44,7 +44,8 @@ int CwxAppTcpAcceptor::accept(CwxINetAddr const& addr)
         CWX_APP_DEF_BACKLOG_NUM,
         addr.getAddrType(),
         0,
-        m_fn))
+        m_fn,
+        m_fnArg))
     {
         CWX_ERROR(("Failure to listen addr:%s, port:%u, errno=%d",
             m_strAddr.c_str(),

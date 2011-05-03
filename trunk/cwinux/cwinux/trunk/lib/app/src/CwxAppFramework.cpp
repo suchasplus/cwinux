@@ -1167,7 +1167,8 @@ void CwxAppFramework::innerNoticeTcpConnect(CwxAppFramework* pApp,
         handle->getConnectAddr().c_str(),
         handle->getConnectPort(),
         AF_UNSPEC,
-        handle->getConnInfo().getSockFunc()))
+        handle->getConnInfo().getSockFunc(),
+        handle->getConnInfo().getSockFuncArg()))
     {
         handle->close();
     }
@@ -1179,7 +1180,8 @@ void CwxAppFramework::innerNoticeUnixConnect(CwxAppFramework* pApp, CwxAppNotice
     CwxAppHandler4UnixConn* handle = (CwxAppHandler4UnixConn*)pNotice->m_noticeArg;
     if (-1 == pApp->m_pUnixConnector->connect(handle,
         handle->getConnectPathFile().c_str(),
-        handle->getConnInfo().getSockFunc()))
+        handle->getConnInfo().getSockFunc(),
+        handle->getConnInfo().getSockFuncArg()))
     {
         handle->close();
     }
