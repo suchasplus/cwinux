@@ -41,8 +41,7 @@ public:
         int backlog = DEF_BACK_LOG,
         int domain = PF_INET,
         int protocol = 0,
-        CWX_UINT32 uiSockSndBuf = 0,
-        CWX_UINT32 uiSockRecvBuf = 0);
+        CWX_NET_SOCKET_ATTR_FUNC fn=NULL);
     ///析构函数.
     ~CwxSockAcceptor(void);
 public:
@@ -53,8 +52,7 @@ public:
     @param [in] backlog listen最大排队的数量。
     @param [in] domain 协议族，就是socket()中的domain，PF_UNSPEC表示采用addr中的协议族。
     @param [in] protocol 连接的协议，就是socket()的protocol参数，由于一个协议家族的socket 类型，其protocol也是唯一的，为0就可以了。
-    @param [in] uiSockSndBuf socket的发送buf大小。0表示缺省值。
-    @param [in] uiSockRecvBuf socket的接受buf大小。0表示缺省值。
+    @param [in] fn socket 设置的function。
     @return -1：错误，errno记录错误的原因；0：成功。
     */
     int listen(CwxAddr const& addr,

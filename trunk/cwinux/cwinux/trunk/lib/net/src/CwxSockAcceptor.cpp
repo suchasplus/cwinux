@@ -12,10 +12,9 @@ CwxSockAcceptor::CwxSockAcceptor(CwxAddr const& addr,
                 int backlog,
                 int domain,
                 int protocol,
-                CWX_UINT32 uiSockSndBuf,
-                CWX_UINT32 uiSockRecvBuf)
+                CWX_NET_SOCKET_ATTR_FUNC fn)
 {
-    this->listen(addr, reuse, backlog, domain, protocol, uiSockSndBuf, uiSockRecvBuf);
+    this->listen(addr, reuse, backlog, domain, protocol, fn);
 }
 
 ///Îö¹¹º¯Êı.
