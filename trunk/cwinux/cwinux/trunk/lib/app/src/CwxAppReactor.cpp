@@ -129,7 +129,7 @@ int CwxAppReactor::run(REACTOR_EVENT_HOOK hook,
         {
             ///´øËøÖ´ÐÐevent-loop
             CwxMutexGuard<CwxMutexLock> lock(&m_lock);
-            ret = m_engine->poll(CwxAppReactor::callback, this);
+            ret = m_engine->poll(CwxAppReactor::callback, this, uiMiliTimeout);
         }
         if (m_bStop)
         {

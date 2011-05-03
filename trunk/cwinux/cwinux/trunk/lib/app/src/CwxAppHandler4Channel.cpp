@@ -191,7 +191,7 @@ desc:
 return:
 	0  : success.
 ***/
-int CwxAppHandler4Channel::onTimeout(CwxTimeValue const& current)
+int CwxAppHandler4Channel::onTimeout(CwxTimeValue const& )
 {
     return 0;
 }
