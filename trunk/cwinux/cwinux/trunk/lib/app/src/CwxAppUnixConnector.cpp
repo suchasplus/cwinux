@@ -29,7 +29,8 @@ int CwxAppUnixConnector::connect(CwxAppHandler4UnixConn* pHandler,
         CwxAddr::sap_any,
         &timer,
         0,
-        true);
+        true,
+        fn);
     if (0 == ret)
     {
         pHandler->setHandle(stream.getHandle());
