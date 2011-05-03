@@ -4,10 +4,11 @@ inline int CwxUnixAcceptor::listen(CwxAddr const& addr,
                             bool reuse,
                             int backlog,
                             int domain,
-                            int protocol)
+                            int protocol,
+                            CWX_NET_SOCKET_ATTR_FUNC fn)
 {
     this->local_addr_ = *((CwxUnixAddr *) &addr);
-    return CwxSockAcceptor::listen(addr, reuse, backlog, domain, protocol);
+    return CwxSockAcceptor::listen(addr, reuse, backlog, domain, protocol, fn);
 }
 
 inline int CwxUnixAcceptor::remove (void)

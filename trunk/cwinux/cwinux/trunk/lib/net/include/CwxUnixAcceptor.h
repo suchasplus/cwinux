@@ -37,7 +37,8 @@ public:
         bool reuse= 0,
         int backlog = DEF_BACK_LOG,
         int domain = PF_UNIX,
-        int protocol = 0);
+        int protocol = 0,
+        CWX_NET_SOCKET_ATTR_FUNC fn=NULL);
 
     ///Îö¹¹º¯Êý.
     ~CwxUnixAcceptor(void);
