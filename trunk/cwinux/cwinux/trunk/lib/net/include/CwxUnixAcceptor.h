@@ -38,7 +38,8 @@ public:
         int backlog = DEF_BACK_LOG,
         int domain = PF_UNIX,
         int protocol = 0,
-        CWX_NET_SOCKET_ATTR_FUNC fn=NULL);
+        CWX_NET_SOCKET_ATTR_FUNC fn=NULL,
+        void* fnArg=NULL);
 
     ///析构函数.
     ~CwxUnixAcceptor(void);
@@ -58,7 +59,8 @@ public:
         int backlog = DEF_BACK_LOG,
         int domain = PF_UNIX,
         int protocol = 0,
-        CWX_NET_SOCKET_ATTR_FUNC fn=NULL);
+        CWX_NET_SOCKET_ATTR_FUNC fn=NULL,
+        void* fnArg = NULL);
     /**
     @brief 接收一个被动TCP连接。
     @param [in] stream 返回接收到的被动连接。

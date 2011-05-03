@@ -157,6 +157,10 @@ public:
     CWX_NET_SOCKET_ATTR_FUNC getSockFunc() const;
     ///设置socket设置的function
     void setSockFunc(CWX_NET_SOCKET_ATTR_FUNC fn);
+    ///获取socket设置function的arg
+    void* getSockFuncArg() const;
+    ///设置socket设置function的arg
+    void setSockFuncArg(void* arg);
     ///获取连接对应的handler
     CwxAppHandler4Msg* getHandler();
     ///设置连接对应的handler
@@ -188,6 +192,7 @@ private:
     bool               m_bReconn; ///<是否是重连
     CWX_UINT32         m_uiReconnDelay; ///<重连延时的毫秒数
     CWX_NET_SOCKET_ATTR_FUNC m_fn; ///<socket 设置的function
+    void*              m_fnArg; ////<socket 设置的function的arg 参数
     CwxAppHandler4Msg*  m_pHandler; ///<连接对应的Handler
 };
 

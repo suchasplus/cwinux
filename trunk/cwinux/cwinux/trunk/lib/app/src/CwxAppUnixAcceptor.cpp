@@ -10,7 +10,8 @@ CwxAppUnixAcceptor::CwxAppUnixAcceptor(CwxAppFramework* pApp,
                    CWX_UINT32 uiListenId, ///<acceptor's listen id
                    bool      bRawData, ///<connect's msg having header
                    CWX_UINT16 unMode,
-                   CWX_NET_SOCKET_ATTR_FUNC fn
+                   CWX_NET_SOCKET_ATTR_FUNC fn,
+                   void* fnArg
                    )
                    :CwxAppHandler4Base(reactor)
 {
@@ -21,6 +22,7 @@ CwxAppUnixAcceptor::CwxAppUnixAcceptor(CwxAppFramework* pApp,
     m_bRawData = bRawData;
     m_unMode = unMode;
     m_fn = fn;
+    m_fnArg = fnArg;
     m_bCloseAll = false;
 }
 

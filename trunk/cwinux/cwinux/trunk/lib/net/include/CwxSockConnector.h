@@ -52,7 +52,8 @@ public:
         CwxTimeouter* timeout=0,
         int protocol = 0,
         bool reuse_addr = false,
-        CWX_NET_SOCKET_ATTR_FUNC fn=NULL ///<socket设置的function
+        CWX_NET_SOCKET_ATTR_FUNC fn=NULL, ///<socket设置的function
+        void* fnArg=NULL
     );
     /**
     @brief 设置连接完成后的连接标志。

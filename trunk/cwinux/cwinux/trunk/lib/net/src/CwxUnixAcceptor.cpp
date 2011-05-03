@@ -11,9 +11,10 @@ CwxUnixAcceptor::CwxUnixAcceptor(CwxAddr const& addr,
                 int backlog,
                 int domain,
                 int protocol,
-                CWX_NET_SOCKET_ATTR_FUNC fn)
+                CWX_NET_SOCKET_ATTR_FUNC fn,
+                void* fnArg)
 {
-    listen(addr, reuse, backlog, domain, protocol, fn);
+    listen(addr, reuse, backlog, domain, protocol, fn, fnArg);
 }
 
 ///Îö¹¹º¯Êý.

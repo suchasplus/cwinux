@@ -16,7 +16,8 @@ CwxAppUnixConnector::~CwxAppUnixConnector()
 
 int CwxAppUnixConnector::connect(CwxAppHandler4UnixConn* pHandler,
                              char const* szPathFile,
-                             CWX_NET_SOCKET_ATTR_FUNC fn
+                             CWX_NET_SOCKET_ATTR_FUNC fn,
+                             void* fnArg
                              )
 {
     CwxTimeValue timeout;
@@ -30,7 +31,8 @@ int CwxAppUnixConnector::connect(CwxAppHandler4UnixConn* pHandler,
         &timer,
         0,
         true,
-        fn);
+        fn,
+        fnArg);
     if (0 == ret)
     {
         pHandler->setHandle(stream.getHandle());

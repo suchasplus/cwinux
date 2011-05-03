@@ -12,9 +12,10 @@ CwxSockAcceptor::CwxSockAcceptor(CwxAddr const& addr,
                 int backlog,
                 int domain,
                 int protocol,
-                CWX_NET_SOCKET_ATTR_FUNC fn)
+                CWX_NET_SOCKET_ATTR_FUNC fn,
+                void* fnArg)
 {
-    this->listen(addr, reuse, backlog, domain, protocol, fn);
+    this->listen(addr, reuse, backlog, domain, protocol, fn, fnArg);
 }
 
 ///Îö¹¹º¯Êý.
@@ -28,7 +29,8 @@ int CwxSockAcceptor::listen(CwxAddr const& addr,
                                    int backlog,
                                    int domain,
                                    int protocol,
-                                   CWX_NET_SOCKET_ATTR_FUNC fn)
+                                   CWX_NET_SOCKET_ATTR_FUNC fn,
+                                   void* fnArg)
 {
     int error = 0;
 
@@ -41,7 +43,7 @@ int CwxSockAcceptor::listen(CwxAddr const& addr,
     }
     if (fn)
     {
-        if (0 != fn(getHandle())) return -1;
+        if (0 != fn(getHandle(), fnArg)) return -1;
     }
 
 #if (CWX_HAS_IPV6)

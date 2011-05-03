@@ -17,7 +17,8 @@ int CwxAppTcpConnector::connect(CwxAppHandler4TcpConn* pHandler,
                             char const* szAddr,
                             CWX_UINT16 unPort,
                             int iFamily,
-                            CWX_NET_SOCKET_ATTR_FUNC fn)
+                            CWX_NET_SOCKET_ATTR_FUNC fn,
+                            void* fnArg)
 {
     CwxTimeValue timeout;
     CwxTimeouter timer(&timeout);
@@ -30,7 +31,8 @@ int CwxAppTcpConnector::connect(CwxAppHandler4TcpConn* pHandler,
         &timer,
         0,
         true,
-        fn);
+        fn,
+        fnArg);
     if (0 == ret)
     {
         pHandler->setHandle(stream.getHandle());

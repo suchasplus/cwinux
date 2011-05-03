@@ -51,7 +51,8 @@ public:
         CWX_UINT32 uiListenId, ///<acceptor's listen id
         bool      bRawData = false, ///<connect's msg having header
         CWX_UINT16 unMode = CWX_APP_MSG_MODE,
-        CWX_NET_SOCKET_ATTR_FUNC fn=NULL
+        CWX_NET_SOCKET_ATTR_FUNC fn=NULL,
+        void* fnArg = NULL
         );
     ///析构函数
     ~CwxAppUnixAcceptor();
@@ -115,6 +116,7 @@ private:
     CWX_UINT16     m_unMode;///<架构负责建立连接数据接收，还是只检测连接的事件
     bool           m_bCloseAll;///<listen关闭的时候，是否关闭其所建立的连接
     CWX_NET_SOCKET_ATTR_FUNC m_fn; ///<socket设置的funciton
+    void*          m_fnArg;
     CwxUnixAcceptor m_acceptor; ///<监听器
     CwxUnixStream   m_stream;
 };

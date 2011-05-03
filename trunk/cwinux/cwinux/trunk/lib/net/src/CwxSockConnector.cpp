@@ -17,7 +17,8 @@ int CwxSockConnector::connect (CwxSockStream& stream,
                                CwxTimeouter* timeout,
                                int protocol,
                                bool reuse_addr,
-                               CWX_NET_SOCKET_ATTR_FUNC fn)
+                               CWX_NET_SOCKET_ATTR_FUNC fn,
+                               void* fnArg)
 {
     if ((stream.getHandle() == CWX_INVALID_HANDLE) &&
         (stream.open(remoteAddr.getType(),
@@ -51,7 +52,7 @@ int CwxSockConnector::connect (CwxSockStream& stream,
     }
     if (fn)
     {
-        if (0 != fn(stream.getHandle()))
+        if (0 != fn(stream.getHandle(), fnArg))
         {
             CwxErrGuard guard;
             stream.close();

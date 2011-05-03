@@ -137,6 +137,7 @@ public:
             CWX_APP_MSG_MODE表示有架构负责消息的收发；<br>
             CWX_APP_EVENT_MODE表示架构只负责连接上读写事件的通知。
     @param [in] fn listen socket的熟悉设置函数，若为空，则不设置。
+    @param [in] fnArg fn函数的arg参数。
     @return >0：此监听的Listen ID；-1：失败。
     */
     int noticeTcpListen(CWX_UINT32 uiSvrId,
@@ -144,7 +145,8 @@ public:
         CWX_UINT16 unPort,
         bool bRawData = false,
         CWX_UINT16 unMode=CWX_APP_MSG_MODE,
-        CWX_NET_SOCKET_ATTR_FUNC fn=NULL);
+        CWX_NET_SOCKET_ATTR_FUNC fn=NULL,
+        void* fnArg = NULL);
     /**
     @brief 往架构注册一个local ipc监听，并设置各种属性
     @param [in] uiSvrId 由此监听所建立的连接的SVR ID。
@@ -155,13 +157,15 @@ public:
             CWX_APP_MSG_MODE表示有架构负责消息的收发；<br>
             CWX_APP_EVENT_MODE表示架构只负责连接上读写事件的通知。
     @param [in] fn listen socket的熟悉设置函数，若为空，则不设置。
+    @param [in] fnArg fn函数的arg参数。
     @return >0：此监听的Listen ID；-1：失败。
     */
     int noticeLsockListen(CWX_UINT32 uiSvrId,
         char const* szPathFile,
         bool bRawData = false,
         CWX_UINT16 unMode=CWX_APP_MSG_MODE,
-        CWX_NET_SOCKET_ATTR_FUNC fn=NULL);
+        CWX_NET_SOCKET_ATTR_FUNC fn=NULL,
+        void* arg = NULL);
     /**
     @brief 往架构注册一个主动的TCP连接
     @param [in] uiSvrId 设定连接的SVR ID。
@@ -172,6 +176,7 @@ public:
     @param [in] unMinRetryInternal 连接失败时的最小连接间隔.
     @param [in] unMaxRetryInternal 连接失败时的最大连接间隔.
     @param [in] fn socket的熟悉设置函数，若为空，则不设置。
+    @param [in] fnArg fn函数的arg参数。
     @return  >0：此连接的CONN_ID；-1：注册失败。
     */
     int noticeTcpConnect(CWX_UINT32 uiSvrId,
@@ -181,7 +186,8 @@ public:
         bool bRawData = false,
         CWX_UINT16 unMinRetryInternal = 1,
         CWX_UINT16 unMaxRetryInternal = 60,
-        CWX_NET_SOCKET_ATTR_FUNC fn=NULL);
+        CWX_NET_SOCKET_ATTR_FUNC fn=NULL,
+        void* fnArg=NULL);
     /**
     @brief 往架构注册一个主动的Local IPC连接
     @param [in] uiSvrId 设定连接的SVR ID。
@@ -191,7 +197,8 @@ public:
     @param [in] unMinRetryInternal 连接失败时的最小连接间隔.
     @param [in] unMaxRetryInternal 连接失败时的最大连接间隔.
     @param [in] fn socket的熟悉设置函数，若为空，则不设置。
-   @return  >0：此连接的CONN_ID；-1：注册失败。
+    @param [in] fnArg fn函数的arg参数。
+    @return  >0：此连接的CONN_ID；-1：注册失败。
     */
     int noticeLsockConnect(CWX_UINT32 uiSvrId,
         CWX_UINT32 uiHostId,
@@ -199,7 +206,8 @@ public:
         bool bRawData = false,
         CWX_UINT16 unMinRetryInternal = 1,
         CWX_UINT16 unMaxRetryInternal = 60,
-        CWX_NET_SOCKET_ATTR_FUNC fn=NULL);
+        CWX_NET_SOCKET_ATTR_FUNC fn=NULL,
+        void* fnArg = NULL);
     /**
     @brief 往架构注册一个IO handle连接,此链接一定是CWX_APP_MSG_MODE模式。
     @param [in] uiSvrId 设定连接的SVR ID。

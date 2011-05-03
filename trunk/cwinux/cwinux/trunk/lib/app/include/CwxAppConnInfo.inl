@@ -275,6 +275,18 @@ inline void CwxAppConnInfo::setSockFunc(CWX_NET_SOCKET_ATTR_FUNC fn)
     m_fn = fn;
 }
 
+///获取socket设置function的arg
+inline void* CwxAppConnInfo::getSockFuncArg() const
+{
+    return m_fnArg;
+}
+///设置socket设置function的arg
+inline void CwxAppConnInfo::setSockFuncArg(void* arg)
+{
+    m_fnArg = arg;
+}
+
+
 
 
 ///获取连接对应的handler
