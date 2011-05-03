@@ -176,7 +176,7 @@ private:
         virtual int handle_event(int , CWX_HANDLE handle)
         {
             char sigBuf[64];
-            recv(handle, sigBuf, sizeof(sigBuf), 0);
+            read(handle, sigBuf, 64);
             return 0;
         }
         virtual int close(CWX_HANDLE ){return 0;}
