@@ -38,7 +38,7 @@ public:
                         bool& bSuspendConn///<true：停止此连接继续接受稍息，false：此连接可以继续接受消息
                         );
 protected:
-    static int setSockAttr(CWX_HANDLE handle);
+    static int setSockAttr(CWX_HANDLE handle, void* arg);
 
     ///重载运行环境设置API
 	virtual int initRunEnv();

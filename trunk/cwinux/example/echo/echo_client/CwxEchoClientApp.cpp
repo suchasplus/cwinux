@@ -71,7 +71,8 @@ int CwxEchoClientApp::initRunEnv(){
                 false,
                 1,
                 60,
-                CwxEchoClientApp::setSockAttr))
+                CwxEchoClientApp::setSockAttr,
+                this))
             {
                 CWX_ERROR(("Can't connect the echo service: addr=%s, port=%d",
                     this->m_config.m_listen.getHostName().c_str(),
@@ -189,8 +190,9 @@ void CwxEchoClientApp::sendNextMsg(CWX_UINT32 uiSvrId, CWX_UINT32 uiHostId, CWX_
     m_uiSendNum++;
 }
 
-int CwxEchoClientApp::setSockAttr(CWX_HANDLE handle)
+int CwxEchoClientApp::setSockAttr(CWX_HANDLE handle, void* arg)
 {
+    CwxEchoClientApp* app = (CwxEchoClientApp*) arg;
     int iSockBuf = 1024 * 1024;
     while (setsockopt(handle, SOL_SOCKET, SO_SNDBUF, (void*)&iSockBuf, sizeof(iSockBuf)) < 0)
     {
@@ -204,7 +206,7 @@ int CwxEchoClientApp::setSockAttr(CWX_HANDLE handle)
         if (iSockBuf <= 1024) break;
     }
 
-    if (m_config.m_listen.isKeepAlive())
+    if (app->m_config.m_listen.isKeepAlive())
     {
         if (0 != CwxSocket::setKeepalive(handle,
             true,
@@ -213,8 +215,8 @@ int CwxEchoClientApp::setSockAttr(CWX_HANDLE handle)
             CWX_APP_DEF_KEEPALIVE_COUNT))
         {
             CWX_ERROR(("Failure to set listen addr:%s, port:%u to keep-alive, errno=%d",
-                m_config.m_listen.getHostName().c_str(),
-                m_config.m_listen.getPort(),
+                app->m_config.m_listen.getHostName().c_str(),
+                app->m_config.m_listen.getPort(),
                 errno));
             return -1;
         }

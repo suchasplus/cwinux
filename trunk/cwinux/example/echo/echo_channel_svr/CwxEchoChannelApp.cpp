@@ -64,7 +64,8 @@ int CwxEchoChannelApp::initRunEnv(){
         this->m_config.m_listen.getPort(),
         false,
         CWX_APP_MSG_MODE,
-        CwxEchoChannelApp::setSockAttr))
+        CwxEchoChannelApp::setSockAttr,
+        this))
     {
         CWX_ERROR(("Can't register the echo acceptor port: addr=%s, port=%d",
             this->m_config.m_listen.getHostName().c_str(),
@@ -232,8 +233,9 @@ void* CwxEchoChannelApp::ThreadMain(CwxTss* , CwxMsgQueue* queue, void* arg)
     return NULL;
 }
 
-int CwxEchoChannelApp::setSockAttr(CWX_HANDLE handle)
+int CwxEchoChannelApp::setSockAttr(CWX_HANDLE handle, void* arg)
 {
+    CwxEchoChannelApp* app = (CwxEchoChannelApp*)arg;
     int iSockBuf = 1024 * 1024;
     while (setsockopt(handle, SOL_SOCKET, SO_SNDBUF, (void*)&iSockBuf, sizeof(iSockBuf)) < 0)
     {
@@ -247,7 +249,7 @@ int CwxEchoChannelApp::setSockAttr(CWX_HANDLE handle)
         if (iSockBuf <= 1024) break;
     }
 
-    if (m_config.m_listen.isKeepAlive())
+    if (app->m_config.m_listen.isKeepAlive())
     {
         if (0 != CwxSocket::setKeepalive(handle,
             true,
@@ -256,8 +258,8 @@ int CwxEchoChannelApp::setSockAttr(CWX_HANDLE handle)
             CWX_APP_DEF_KEEPALIVE_COUNT))
         {
             CWX_ERROR(("Failure to set listen addr:%s, port:%u to keep-alive, errno=%d",
-                m_config.m_listen.getHostName().c_str(),
-                m_config.m_listen.getPort(),
+                app->m_config.m_listen.getHostName().c_str(),
+                app->m_config.m_listen.getPort(),
                 errno));
             return -1;
         }
@@ -267,8 +269,8 @@ int CwxEchoChannelApp::setSockAttr(CWX_HANDLE handle)
     if (setsockopt(handle, IPPROTO_TCP, TCP_NODELAY, (void *)&flags, sizeof(flags)) != 0)
     {
         CWX_ERROR(("Failure to set listen addr:%s, port:%u NODELAY, errno=%d",
-            m_config.m_listen.getHostName().c_str(),
-            m_config.m_listen.getPort(),
+            app->m_config.m_listen.getHostName().c_str(),
+            app->m_config.m_listen.getPort(),
             errno));
         return -1;
     }
@@ -276,9 +278,10 @@ int CwxEchoChannelApp::setSockAttr(CWX_HANDLE handle)
     if (setsockopt(handle, SOL_SOCKET, SO_LINGER, (void *)&ling, sizeof(ling)) != 0)
     {
         CWX_ERROR(("Failure to set listen addr:%s, port:%u LINGER, errno=%d",
-            m_config.m_listen.getHostName().c_str(),
-            m_config.m_listen.getPort(),
+            app->m_config.m_listen.getHostName().c_str(),
+            app->m_config.m_listen.getPort(),
             errno));
         return -1;
     }
+    return 0;
 }

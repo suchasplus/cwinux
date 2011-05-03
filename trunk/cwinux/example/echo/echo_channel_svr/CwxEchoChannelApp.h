@@ -42,7 +42,7 @@ public:
     ///0：正常；-1：队列停止
     static int ThreadDoQueue(CwxMsgQueue* queue, CwxAppChannel* channel);
 
-    static int setSockAttr(CWX_HANDLE handle);
+    static int setSockAttr(CWX_HANDLE handle, void* arg);
 protected:
     ///重载运行环境设置API
 	virtual int initRunEnv();
