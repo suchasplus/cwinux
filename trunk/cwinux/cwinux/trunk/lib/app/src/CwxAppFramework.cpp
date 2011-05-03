@@ -407,7 +407,6 @@ int CwxAppFramework::noticeHandle4Msg(CWX_UINT32 uiSvrId,
     handle->getConnInfo().setSvrId(uiSvrId);
     handle->getConnInfo().setHostId(uiHostId);
     handle->getConnInfo().setRawData(bRawData);
-    handle->getConnInfo().setKeepalive(bRawData?false:bKeepAlive);
     handle->getConnInfo().setConnId(uiConnId);
     handle->setHandle(ioHandle);
     handle->getConnInfo().setInvokeCreate(false);

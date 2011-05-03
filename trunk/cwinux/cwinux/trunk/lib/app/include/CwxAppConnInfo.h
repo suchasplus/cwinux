@@ -113,14 +113,6 @@ public:
     time_t  getLastSendMsgTime() const;
     ///设置连接最新发送消息的时间
     void setLastSendMsgTime(time_t ttTime);
-    ///获取KEEP-ALIVE连接最新发送KEEP-ALIVE的时间
-    time_t  getKeepAliveSendTime() const;
-    ///设置KEEP-ALIVE连接最新发送KEEP-ALIVE的时间
-    void setKeepAliveSendTime(time_t ttTime);
-    ///获取是否收到了连接的KEEP-ALIVE回复
-    bool isKeepAliveReply() const;
-    ///设置是否收到了连接的KEEP-ALIVE回复
-    void setKeepAliveReply(bool bReply);
     ///获取连接的用户数据
     void*  getUserData() const;
     ///设置连接的用户数据
@@ -187,8 +179,6 @@ private:
     bool               m_bRawData; ///< sign for raw data connection
     time_t             m_ttLastRecvMsgTime;///<last recv msg time
     time_t             m_ttLastSendMsgTime;///<last send msg time
-    time_t             m_ttKeepAliveSendTime;///<keep-alive send time
-    bool               m_bKeepAliveReply; ///<sign for waiting keep-alive reply
     void*              m_pUserData; ///<user dat for connection
     CWX_UINT32         m_uiContinueRecvNum; ///<conintue recv msg num
     CWX_UINT32         m_uiContinueSendNum; ///<连续发送的最大数量

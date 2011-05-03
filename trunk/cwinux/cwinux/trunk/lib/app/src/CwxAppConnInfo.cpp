@@ -16,8 +16,6 @@ CwxAppConnInfo::CwxAppConnInfo()
     m_bRawData = false;
     m_ttLastRecvMsgTime = 0;
     m_ttLastSendMsgTime = 0;
-    m_ttKeepAliveSendTime = 0;
-    m_bKeepAliveReply = true;
     m_pUserData = NULL;
     m_uiContinueRecvNum = 0;
     m_uiContinueSendNum = 0;

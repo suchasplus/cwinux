@@ -152,25 +152,6 @@ inline void CwxAppConnInfo::setLastSendMsgTime(time_t ttTime)
     m_ttLastSendMsgTime = ttTime;
 }
 
-///获取KEEP-ALIVE连接最新发送KEEP-ALIVE的时间
-inline time_t  CwxAppConnInfo::getKeepAliveSendTime() const
-{
-    return m_ttKeepAliveSendTime;
-}
-inline void CwxAppConnInfo::setKeepAliveSendTime(time_t ttTime)
-{
-    m_ttKeepAliveSendTime = ttTime;
-}
-
-///获取是否收到了连接的KEEP-ALIVE回复
-inline bool CwxAppConnInfo::isKeepAliveReply() const
-{
-    return m_bKeepAliveReply;
-}
-inline void CwxAppConnInfo::setKeepAliveReply(bool bReply)
-{
-    m_bKeepAliveReply = bReply;
-}
 
 ///获取连接的用户数据
 inline void*  CwxAppConnInfo::getUserData() const
