@@ -75,10 +75,7 @@ int CwxEchoChannelApp::initRunEnv(){
     ///监听UNIX DOMAIN连接，其建立的连接的svr-id都为SVR_TYPE_ECHO，接收的消息的svr-id都为SVR_TYPE_ECHO。
     ///全部由m_eventHandler对象来处理
     if (0 > this->noticeLsockListen(SVR_TYPE_ECHO, 
-        this->m_config.m_strUnixPathFile.c_str(),
-        false,
-        false,
-        CWX_APP_EVENT_MODE))
+        this->m_config.m_strUnixPathFile.c_str()))
     {
         CWX_ERROR(("Can't register the echo unix acceptor port: path=%s",
             m_config.m_strUnixPathFile.c_str()));
