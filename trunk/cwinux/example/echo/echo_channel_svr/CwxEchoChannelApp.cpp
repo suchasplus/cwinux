@@ -224,7 +224,7 @@ void* CwxEchoChannelApp::ThreadMain(CwxTss* , CwxMsgQueue* queue, void* arg)
     {
         //获取队列中的消息并处理
         if (0 != ThreadDoQueue(queue, channel)) break;
-        if (-1 == channel->dispatch(1))
+        if (-1 == channel->dispatch(100))
         {
             CWX_ERROR(("Failure to invoke CwxAppChannel::dispatch()"));
             sleep(1);
