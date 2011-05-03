@@ -41,7 +41,8 @@ public:
 public:
     //建立连接， -1：失败；0：等待连接；1：建立连接
     int connect (CwxAppHandler4UnixConn* pHandler,
-        char const* szPathFile ///<connect addr
+        char const* szPathFile, ///<connect addr
+        CWX_NET_SOCKET_ATTR_FUNC fn=NULL ///<socket设置的function
         );
 private:
     CwxAppFramework* m_pApp;

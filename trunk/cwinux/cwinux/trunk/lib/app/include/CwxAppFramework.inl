@@ -254,11 +254,6 @@ inline int CwxAppFramework::openConn(CwxAppHandler4Msg& conn, bool& bStopListen)
     {
         this->reactor()->suspendHandler(&conn, CwxAppHandler4Base::READ_MASK);
     }
-    if (conn.getConnInfo().isKeepalive())
-    {
-        conn.getConnInfo().setKeepAliveReply(true);
-        conn.getConnInfo().setLastRecvMsgTime(time(NULL));
-    }
 
     return 0;
 }
@@ -304,7 +299,6 @@ inline int CwxAppFramework::recvSysMessage(CwxMsgBlock* msg, CwxAppHandler4Msg& 
         }
         if (header.isKeepAlive(true))
         {//keepalive-reply
-            conn.getConnInfo().setKeepAliveReply(true);
             CWX_DEBUG(("sys-msg is keep-alive-reply for svr_id:%u, host_id:%u, conn_id:%u",
                 conn.getConnInfo().getSvrId(),
                 conn.getConnInfo().getHostId(),

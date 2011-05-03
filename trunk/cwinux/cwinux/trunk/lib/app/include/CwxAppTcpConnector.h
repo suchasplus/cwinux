@@ -43,8 +43,7 @@ public:
         char const* szAddr, ///<connect addr
         CWX_UINT16 unPort, ///<connect port
         int iFamily=AF_UNSPEC, ///<family
-        CWX_UINT32 uiSockSndBuf=0, ///<socket snd buf
-        CWX_UINT32 uiSockRecvBuf=0 ///<socket recv buf
+        CWX_NET_SOCKET_ATTR_FUNC fn=NULL ///<socketÉèÖÃµÄfunction
         );
 private:
     CwxAppFramework* m_pApp;

@@ -17,8 +17,7 @@ int CwxSockConnector::connect (CwxSockStream& stream,
                                CwxTimeouter* timeout,
                                int protocol,
                                bool reuse_addr,
-                               CWX_UINT32 uiSockSndBuf,
-                               CWX_UINT32 uiSockRecvBuf)
+                               CWX_NET_SOCKET_ATTR_FUNC fn)
 {
     if ((stream.getHandle() == CWX_INVALID_HANDLE) &&
         (stream.open(remoteAddr.getType(),
@@ -38,7 +37,7 @@ int CwxSockConnector::connect (CwxSockStream& stream,
             laddr,
             size) == -1)
         {
-            CwxErrGuard guard();
+            CwxErrGuard guard;
             stream.close ();
             return -1;
         }
@@ -46,28 +45,17 @@ int CwxSockConnector::connect (CwxSockStream& stream,
     // Enable non-blocking, if required.
     if ((timeout != 0) && (stream.setNonblock(true) == -1))
     {
-        CwxErrGuard guard();
+        CwxErrGuard guard;
         stream.close ();
         return -1;
     }
-    if (0 != uiSockSndBuf)
+    if (fn)
     {
-        int bufLen = (uiSockSndBuf + 1023)/1024;
-        bufLen *=1024;
-        while (setsockopt(stream.getHandle (), SOL_SOCKET, SO_SNDBUF, (void*)&bufLen, sizeof( bufLen)) < 0)
+        if (0 != fn(stream.getHandle()))
         {
-            bufLen -= 1024;
-            if (bufLen <= 1024) break;
-        }
-    }
-    if (0 != uiSockRecvBuf)
-    {
-        int bufLen = (uiSockSndBuf + 1023)/1024;
-        bufLen *=1024;
-        while(setsockopt(stream.getHandle (), SOL_SOCKET, SO_RCVBUF, (void *)&bufLen, sizeof(bufLen)) < 0)
-        {
-            bufLen -= 1024;
-            if (bufLen <= 1024) break;
+            CwxErrGuard guard;
+            stream.close();
+            return -1;
         }
     }
     int result = ::connect (stream.getHandle (),
@@ -105,13 +93,13 @@ int CwxSockConnector::connect (CwxSockStream& stream,
         result = stream.setNonblock(false);
         if (result == -1)
         {
-            CwxErrGuard guard();
+            CwxErrGuard guard;
             stream.close ();
         }
     }
     else if (!(errno == EWOULDBLOCK || errno == ETIMEDOUT))
     {
-        CwxErrGuard guard();
+        CwxErrGuard guard;
         stream.close ();
     }
     return result;
@@ -125,7 +113,7 @@ int CwxSockConnector::complete (CwxSockStream &stream,
     {
         if (CwxSocket::handleReady(stream.getHandle(), timeout, false, true, false, true) < 1)
         {
-            CwxErrGuard guard();
+            CwxErrGuard guard;
             stream.close();
             return -1;
         }
@@ -151,7 +139,7 @@ int CwxSockConnector::complete (CwxSockStream &stream,
             &len) == -1)
         {
             // Save/restore errno.
-            CwxErrGuard guard();
+            CwxErrGuard guard;
             stream.close ();
             return -1;
         }

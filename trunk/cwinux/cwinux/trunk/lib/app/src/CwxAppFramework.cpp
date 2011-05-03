@@ -174,10 +174,8 @@ int CwxAppFramework::noticeTcpListen(CWX_UINT32 uiSvrId,
                                   char const* szAddr,
                                   CWX_UINT16 unPort,
                                   bool bRawData,
-                                  bool bKeepAlive,
                                   CWX_UINT16 unMode,
-                                  CWX_UINT32 uiSockSndBuf,
-                                  CWX_UINT32 uiSockRecvBuf)
+                                  CWX_NET_SOCKET_ATTR_FUNC fn)
 {
     if (uiSvrId < SVR_TYPE_USER_START)
     {
@@ -196,10 +194,8 @@ int CwxAppFramework::noticeTcpListen(CWX_UINT32 uiSvrId,
         uiSvrId,
         uiListenId,
         bRawData,
-        bRawData?false:bKeepAlive,
         unMode,
-        uiSockSndBuf,
-        uiSockRecvBuf);
+        fn);
     if (strcmp(szAddr, "*") == 0)
     {
         inetAddr.set(unPort);
@@ -242,8 +238,8 @@ int CwxAppFramework::noticeTcpListen(CWX_UINT32 uiSvrId,
 int CwxAppFramework::noticeLsockListen(CWX_UINT32 uiSvrId,
                    char const* szPathFile,
                    bool bRawData ,
-                   bool bKeepAlive,
-                   CWX_UINT16 unMode)
+                   CWX_UINT16 unMode,
+                   CWX_NET_SOCKET_ATTR_FUNC fn)
 {
     if (uiSvrId < SVR_TYPE_USER_START)
     {
@@ -261,8 +257,8 @@ int CwxAppFramework::noticeLsockListen(CWX_UINT32 uiSvrId,
         uiSvrId,
         uiListenId,
         bRawData,
-        bRawData?false:bKeepAlive,
-        unMode);
+        unMode,
+        fn);
     unixAddr.set(szPathFile);
     CwxFile::rmFile(szPathFile);
     //register the acceptor
@@ -300,11 +296,9 @@ int CwxAppFramework::noticeTcpConnect(CWX_UINT32 uiSvrId,
                   char const* szAddr,
                   CWX_UINT16 unPort,
                   bool bRawData,
-                  bool bKeepAlive,
                   CWX_UINT16 unMinRetryInternal,
                   CWX_UINT16 unMaxRetryInternal,
-                  CWX_UINT32 uiSockSndBuf,
-                  CWX_UINT32 uiSockRecvBuf)
+                  CWX_NET_SOCKET_ATTR_FUNC fn)
 {
     if (uiSvrId < SVR_TYPE_USER_START)
     {
@@ -320,13 +314,11 @@ int CwxAppFramework::noticeTcpConnect(CWX_UINT32 uiSvrId,
     handle->setConnectAddr(szAddr);
     handle->setConnectPort(unPort);
     handle->getConnInfo().setRawData(bRawData);
-    handle->getConnInfo().setKeepalive(bRawData?false:bKeepAlive);
     handle->getConnInfo().setMinRetryInternal(unMinRetryInternal);
     handle->getConnInfo().setMaxRetryInternal(unMaxRetryInternal);
     handle->getConnInfo().setConnId(uiConnId);
-    handle->getConnInfo().setSockSndBuf(uiSockSndBuf);
-    handle->getConnInfo().setSockRecvBuf(uiSockRecvBuf);
     handle->getConnInfo().setActiveConn(true);
+    handle->getConnInfo().setSockFunc(fn);
 
     CwxAppNotice* notice = new CwxAppNotice();
     notice->m_unNoticeType = CwxAppNotice::TCP_CONNECT;
@@ -345,9 +337,9 @@ int CwxAppFramework::noticeLsockConnect(CWX_UINT32 uiSvrId,
                     CWX_UINT32 uiHostId,
                     char const* szPathFile,
                     bool bRawData,
-                    bool bKeepAlive,
                     CWX_UINT16 unMinRetryInternal,
-                    CWX_UINT16 unMaxRetryInternal)
+                    CWX_UINT16 unMaxRetryInternal,
+                    CWX_NET_SOCKET_ATTR_FUNC fn)
 {
     if (uiSvrId < SVR_TYPE_USER_START)
     {
@@ -361,11 +353,11 @@ int CwxAppFramework::noticeLsockConnect(CWX_UINT32 uiSvrId,
     handle->getConnInfo().setHostId(uiHostId);
     handle->setConnectPathFile(szPathFile);
     handle->getConnInfo().setRawData(bRawData);
-    handle->getConnInfo().setKeepalive(bRawData?false:bKeepAlive);
     handle->getConnInfo().setMinRetryInternal(unMinRetryInternal);
     handle->getConnInfo().setMaxRetryInternal(unMaxRetryInternal);
     handle->getConnInfo().setConnId(uiConnId);
     handle->getConnInfo().setActiveConn(true);
+    handle->getConnInfo().setSockFunc(fn);
     CwxAppNotice* notice = new CwxAppNotice();
     notice->m_unNoticeType = CwxAppNotice::UNIX_CONNECT;
     notice->m_noticeArg = handle;
@@ -1168,8 +1160,7 @@ void CwxAppFramework::innerNoticeTcpConnect(CwxAppFramework* pApp,
         handle->getConnectAddr().c_str(),
         handle->getConnectPort(),
         AF_UNSPEC,
-        handle->getConnInfo().getSockSndBuf(),
-        handle->getConnInfo().getSockRecvBuf()))
+        handle->getConnInfo().getSockFunc()))
     {
         handle->close();
     }
@@ -1180,7 +1171,8 @@ void CwxAppFramework::innerNoticeUnixConnect(CwxAppFramework* pApp, CwxAppNotice
 {
     CwxAppHandler4UnixConn* handle = (CwxAppHandler4UnixConn*)pNotice->m_noticeArg;
     if (-1 == pApp->m_pUnixConnector->connect(handle,
-        handle->getConnectPathFile().c_str()))
+        handle->getConnectPathFile().c_str(),
+        handle->getConnInfo().getSockFunc()))
     {
         handle->close();
     }

@@ -15,7 +15,8 @@ CwxAppUnixConnector::~CwxAppUnixConnector()
 }
 
 int CwxAppUnixConnector::connect(CwxAppHandler4UnixConn* pHandler,
-                             char const* szPathFile
+                             char const* szPathFile,
+                             CWX_NET_SOCKET_ATTR_FUNC fn
                              )
 {
     CwxTimeValue timeout;

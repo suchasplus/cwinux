@@ -104,10 +104,6 @@ public:
     bool isRawData() const ;
     ///设置连接的数据包是raw格式
     void setRawData(bool bRaw);
-    ///获取连接是否需要主动监测KEEP-ALIVE
-    bool isKeepalive() const;
-    ///设置连接是否需要主动监测KEEP-ALIVE
-    void setKeepalive(bool bKeepAlive);
     ///获取连接最新收到消息的时间
     time_t  getLastRecvMsgTime() const;
     ///设置连接最新收到消息的时间
@@ -164,16 +160,12 @@ public:
     CWX_UINT32 getReconnDelay() const;
     ///设置重新连接延时的毫秒数
     void setReconnDelay(CWX_UINT32 uiDelay);
+    ///获取socket设置的function
+    CWX_NET_SOCKET_ATTR_FUNC getSockFunc() const;
+    ///设置socket设置的function
+    void setSockFunc(CWX_NET_SOCKET_ATTR_FUNC fn);
     ///获取连接对应的handler
     CwxAppHandler4Msg* getHandler();
-    ///设置发送socket buf
-    void setSockSndBuf(CWX_UINT32 uiSndBuf);
-    ///获取发送socket buf
-    CWX_UINT32 getSockSndBuf() const;
-    ///设置接受socket buf
-    void setSockRecvBuf(CWX_UINT32 uiRecvBuf);
-    ///获取接受socket buf
-    CWX_UINT32 getSockRecvBuf() const;
     ///设置连接对应的handler
     void setHandler(CwxAppHandler4Msg*  pHandler);
 public:
@@ -192,7 +184,6 @@ private:
     bool               m_bActiveConn; ///< sign for active connection.
     bool               m_bActiveClose; ///< sign for close connection by user.
     bool               m_bRawData; ///< sign for raw data connection
-    bool               m_bKeepAlive; ///<sign for keep alive
     time_t             m_ttLastRecvMsgTime;///<last recv msg time
     time_t             m_ttLastSendMsgTime;///<last send msg time
     time_t             m_ttKeepAliveSendTime;///<keep-alive send time
@@ -205,8 +196,7 @@ private:
     bool               m_bInvokeCreate; ///<是否在open的时候，调用CwxAppFramework::onCreate，默认调用
     bool               m_bReconn; ///<是否是重连
     CWX_UINT32         m_uiReconnDelay; ///<重连延时的毫秒数
-    CWX_UINT32         m_uiSockSndBuf; ///<socket的发送buf大小。
-    CWX_UINT32         m_uiSockRecvBuf; ///<socket的接受buf大小。
+    CWX_NET_SOCKET_ATTR_FUNC m_fn; ///<socket 设置的function
     CwxAppHandler4Msg*  m_pHandler; ///<连接对应的Handler
 };
 

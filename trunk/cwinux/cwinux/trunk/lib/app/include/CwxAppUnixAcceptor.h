@@ -50,8 +50,8 @@ public:
         CWX_UINT32 uiSvrId, ///<connect's svr-id
         CWX_UINT32 uiListenId, ///<acceptor's listen id
         bool      bRawData = false, ///<connect's msg having header
-        bool      bKeepAlive = true, ///<keep alive
-        CWX_UINT16 unMode = CWX_APP_MSG_MODE
+        CWX_UINT16 unMode = CWX_APP_MSG_MODE,
+        CWX_NET_SOCKET_ATTR_FUNC fn=NULL
         );
     ///析构函数
     ~CwxAppUnixAcceptor();
@@ -112,9 +112,9 @@ private:
     CWX_UINT32	    m_uiSvrId;///<建立连接的svr-id
     CWX_UINT32     m_uiListenId;///<unix-domain 连接监听的监听ID
     bool           m_bRawData;///<建立的连接是否按无格式数据流的方式接受
-    bool           m_bKeepAlive;///<建立的连接是否需要执行keep-alive check
     CWX_UINT16     m_unMode;///<架构负责建立连接数据接收，还是只检测连接的事件
     bool           m_bCloseAll;///<listen关闭的时候，是否关闭其所建立的连接
+    CWX_NET_SOCKET_ATTR_FUNC m_fn; ///<socket设置的funciton
     CwxUnixAcceptor m_acceptor; ///<监听器
     CwxUnixStream   m_stream;
 };

@@ -17,8 +17,7 @@ int CwxAppTcpConnector::connect(CwxAppHandler4TcpConn* pHandler,
                             char const* szAddr,
                             CWX_UINT16 unPort,
                             int iFamily,
-                            CWX_UINT32 uiSockSndBuf,
-                            CWX_UINT32 uiSockRecvBuf)
+                            CWX_NET_SOCKET_ATTR_FUNC fn)
 {
     CwxTimeValue timeout;
     CwxTimeouter timer(&timeout);
@@ -31,27 +30,11 @@ int CwxAppTcpConnector::connect(CwxAppHandler4TcpConn* pHandler,
         &timer,
         0,
         true,
-        uiSockSndBuf,
-        uiSockRecvBuf);
+        fn);
     if (0 == ret)
     {
         pHandler->setHandle(stream.getHandle());
         pHandler->getConnInfo().setState(CwxAppConnInfo::ESTABLISHING);
-        if (pHandler->getConnInfo().isKeepalive())
-        {
-            if (0 != CwxSocket::setKeepalive(stream.getHandle(),
-                true,
-                CWX_APP_DEF_KEEPALIVE_IDLE,
-                CWX_APP_DEF_KEEPALIVE_INTERNAL,
-                CWX_APP_DEF_KEEPALIVE_COUNT))
-            {
-                CWX_ERROR(("Failure to set handle[%d] addr:%s, port:%u to keep-alive, errno=%d",
-                    stream.getHandle(),
-                    szAddr,
-                    unPort,
-                    errno));
-            }
-        }
         if (-1 == pHandler->open(NULL)) return -1;
         return 1;
     }

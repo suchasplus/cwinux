@@ -49,13 +49,15 @@ public:
     @param [in] backlog listen最大排队的数量。
     @param [in] domain 协议族，就是socket()中的domain，就是PF_UNIX。
     @param [in] protocol 连接的协议，就是socket()的protocol参数，由于一个协议家族的socket 类型，其protocol也是唯一的，为0就可以了。
+    @param [in] fn listen socket属性设置的function。
     @return -1：错误，errno记录错误的原因；0：成功。
     */
     int listen(CwxAddr const& addr,
         bool reuse= 0,
         int backlog = DEF_BACK_LOG,
         int domain = PF_UNIX,
-        int protocol = 0);
+        int protocol = 0,
+        CWX_NET_SOCKET_ATTR_FUNC fn=NULL);
     /**
     @brief 接收一个被动TCP连接。
     @param [in] stream 返回接收到的被动连接。

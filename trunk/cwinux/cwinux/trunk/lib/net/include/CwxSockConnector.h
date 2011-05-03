@@ -43,6 +43,7 @@ public:
     @param [in] timeout 连接的超时时间，若NULL，表示没有超时限制。若值为0，则表示若没有连接上，立即返回。
     @param [in] protocol 连接的协议，就是socket()的protocol参数，由于一个协议家族的socket 类型，其protocol也是唯一的，为0就可以了。
     @param [in] reuse_addr 是否重用本地地址。
+    @param [in] fn socket属性设置的function。
     @return -1：错误，errno记录错误的原因；0：成功。
     */
     int connect (CwxSockStream& stream,
@@ -51,8 +52,7 @@ public:
         CwxTimeouter* timeout=0,
         int protocol = 0,
         bool reuse_addr = false,
-        CWX_UINT32 uiSockSndBuf=0, ///<socket snd buf
-        CWX_UINT32 uiSockRecvBuf=0 ///<socket recv buf
+        CWX_NET_SOCKET_ATTR_FUNC fn=NULL ///<socket设置的function
     );
     /**
     @brief 设置连接完成后的连接标志。

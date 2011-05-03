@@ -14,7 +14,6 @@ CwxAppConnInfo::CwxAppConnInfo()
     m_bActiveConn = false;
     m_bActiveClose = false;
     m_bRawData = false;
-    m_bKeepAlive = true;
     m_ttLastRecvMsgTime = 0;
     m_ttLastSendMsgTime = 0;
     m_ttKeepAliveSendTime = 0;
@@ -27,9 +26,6 @@ CwxAppConnInfo::CwxAppConnInfo()
     m_bInvokeCreate = true;
     m_bReconn = false;
     m_uiReconnDelay = 0;
-    m_uiSockSndBuf = 0;
-    m_uiSockRecvBuf =0;
-
     m_pHandler = NULL;
 }
 

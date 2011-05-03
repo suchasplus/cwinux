@@ -11,11 +11,8 @@ CwxAppTcpAcceptor::CwxAppTcpAcceptor(CwxAppFramework* pApp,///<
                   CWX_UINT32 uiSvrId, ///<connect's svr-id
                   CWX_UINT32 uiListenId, ///<acceptor's listen id
                   bool      bRawData, ///<connect's msg having header
-                  bool      bKeepAlive, ///<keep alive
                   CWX_UINT16 unMode,
-                  CWX_UINT32 uiSockSndBuf,
-                  CWX_UINT32 uiSockRecvBuf
-                  )
+                  CWX_NET_SOCKET_ATTR_FUNC fn)
                   :CwxAppHandler4Base(reactor)
 {
     m_pApp = pApp;
@@ -24,10 +21,8 @@ CwxAppTcpAcceptor::CwxAppTcpAcceptor(CwxAppFramework* pApp,///<
     m_uiSvrId = uiSvrId;
     m_uiListenId = uiListenId;
     m_bRawData = bRawData;
-    m_bKeepAlive = bKeepAlive;
     m_unMode = unMode;
-    m_uiSockSndBuf = uiSockSndBuf;
-    m_uiSockRecvBuf = uiSockRecvBuf;
+    m_fn = fn;
     m_bCloseAll = false;
 }
 
@@ -47,8 +42,7 @@ int CwxAppTcpAcceptor::accept(CwxINetAddr const& addr)
         CWX_APP_DEF_BACKLOG_NUM,
         addr.getAddrType(),
         0,
-        m_uiSockSndBuf,
-        m_uiSockRecvBuf))
+        m_fn))
     {
         CWX_ERROR(("Failure to listen addr:%s, port:%u, errno=%d",
             m_strAddr.c_str(),
@@ -65,21 +59,6 @@ int CwxAppTcpAcceptor::accept(CwxINetAddr const& addr)
         return -1;
     }
     this->setHandle(m_acceptor.getHandle());
-    if (m_bKeepAlive)
-    {
-        if (0 != CwxSocket::setKeepalive(getHandle(),
-            true,
-            CWX_APP_DEF_KEEPALIVE_IDLE,
-            CWX_APP_DEF_KEEPALIVE_INTERNAL,
-            CWX_APP_DEF_KEEPALIVE_COUNT))
-        {
-            CWX_ERROR(("Failure to set listen addr:%s, port:%u to keep-alive, errno=%d",
-                m_strAddr.c_str(),
-                m_unPort,
-                errno));
-            return -1;
-        }
-    }
     return 0;
 }
 
@@ -117,21 +96,6 @@ int CwxAppTcpAcceptor::handle_event(int , CWX_HANDLE)
             CWX_ERROR(("Failure to CwxSockAcceptor::accept, errno=%d", errno));
             return 0;
         }
-        if (m_bKeepAlive)
-        {
-            if (0 != CwxSocket::setKeepalive(m_stream.getHandle(),
-                true,
-                CWX_APP_DEF_KEEPALIVE_IDLE,
-                CWX_APP_DEF_KEEPALIVE_INTERNAL,
-                CWX_APP_DEF_KEEPALIVE_COUNT))
-            {
-                CWX_ERROR(("Failure to set handle[%d] addr:%s, port:%u to keep-alive, errno=%d",
-                    m_stream.getHandle(),
-                    m_strAddr.c_str(),
-                    m_unPort,
-                    errno));
-            }
-        }
 
         if (CWX_APP_MSG_MODE == m_unMode)
         {
@@ -142,28 +106,6 @@ int CwxAppTcpAcceptor::handle_event(int , CWX_HANDLE)
                 return 0;
             }
             handler->setHandle(m_stream.getHandle());
-            handler->getConnInfo().setSockSndBuf(m_uiSockSndBuf);
-            handler->getConnInfo().setSockRecvBuf(m_uiSockRecvBuf);
-            if (0 != m_uiSockSndBuf)
-            {
-                int bufLen = (m_uiSockSndBuf + 1023)/1024;
-                bufLen *=1024;
-                while (setsockopt(m_stream.getHandle(), SOL_SOCKET, SO_SNDBUF, (void*)&bufLen, sizeof( bufLen)) < 0)
-                {
-                    bufLen -= 1024;
-                    if (bufLen <= 1024) break;
-                }
-            }
-            if (0 != m_uiSockRecvBuf)
-            {
-                int bufLen = (m_uiSockRecvBuf + 1023)/1024;
-                bufLen *=1024;
-                while(setsockopt(m_stream.getHandle(), SOL_SOCKET, SO_RCVBUF, (void *)&bufLen, sizeof(bufLen)) < 0)
-                {
-                    bufLen -= 1024;
-                    if (bufLen <= 1024) break;
-                }
-            }
             ret = handler->open(this);
             if (-1 == ret) handler->close();
             if (handler->isStopListen()){
@@ -233,7 +175,6 @@ CwxAppHandler4TcpConn* CwxAppTcpAcceptor::makeHander()
     ch->getConnInfo().setConnId(reactor()->getNextConnId());
     ch->getConnInfo().setListenId(this->m_uiListenId);
     ch->getConnInfo().setActiveConn(false);
-    ch->getConnInfo().setKeepalive(this->m_bKeepAlive);
     ch->getConnInfo().setRawData(this->m_bRawData);
     return ch;
 }

@@ -131,15 +131,6 @@ inline void CwxAppConnInfo::setRawData(bool bRaw)
 }
 
 
-///获取连接是否需要主动监测KEEP-ALIVE
-inline bool CwxAppConnInfo::isKeepalive() const 
-{
-    return m_bKeepAlive;
-}
-inline void CwxAppConnInfo::setKeepalive(bool bKeepAlive)
-{
-    m_bKeepAlive = bKeepAlive;
-}
 
 ///获取连接最新收到消息的时间
 inline time_t  CwxAppConnInfo::getLastRecvMsgTime() const 
@@ -292,6 +283,18 @@ inline void CwxAppConnInfo::setReconnDelay(CWX_UINT32 uiDelay)
     m_uiReconnDelay = uiDelay;
 }
 
+///获取socket设置的function
+inline CWX_NET_SOCKET_ATTR_FUNC CwxAppConnInfo::getSockFunc() const
+{
+    return m_fn;
+}
+///设置socket设置的function
+inline void CwxAppConnInfo::setSockFunc(CWX_NET_SOCKET_ATTR_FUNC fn)
+{
+    m_fn = fn;
+}
+
+
 
 ///获取连接对应的handler
 inline CwxAppHandler4Msg* CwxAppConnInfo::getHandler()
@@ -304,26 +307,6 @@ inline void CwxAppConnInfo::setHandler(CwxAppHandler4Msg*  pHandler)
     m_pHandler = pHandler;
 }
 
-///设置发送socket buf
-inline void CwxAppConnInfo::setSockSndBuf(CWX_UINT32 uiSndBuf)
-{
-    m_uiSockSndBuf = uiSndBuf;
-}
-///获取发送socket buf
-inline CWX_UINT32 CwxAppConnInfo::getSockSndBuf() const
-{
-    return m_uiSockSndBuf;
-}
-///设置接受socket buf
-inline void CwxAppConnInfo::setSockRecvBuf(CWX_UINT32 uiRecvBuf)
-{
-    m_uiSockRecvBuf = uiRecvBuf;
-}
-///获取接受socket buf
-inline CWX_UINT32 CwxAppConnInfo::getSockRecvBuf() const
-{
-    return m_uiSockRecvBuf;
-}
 
 
 inline void CwxAppConnInfo::reset()

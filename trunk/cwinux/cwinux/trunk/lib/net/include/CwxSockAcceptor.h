@@ -62,8 +62,7 @@ public:
         int backlog = DEF_BACK_LOG,
         int domain = PF_INET,
         int protocol = 0,
-        CWX_UINT32 uiSockSndBuf = 0,
-        CWX_UINT32 uiSockRecvBuf = 0);
+        CWX_NET_SOCKET_ATTR_FUNC fn=NULL);
     /**
     @brief 接收一个被动TCP连接。
     @param [in] stream 返回接收到的被动连接。

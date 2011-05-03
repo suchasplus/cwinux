@@ -10,9 +10,10 @@ CwxUnixAcceptor::CwxUnixAcceptor(CwxAddr const& addr,
                 bool reuse,
                 int backlog,
                 int domain,
-                int protocol)
+                int protocol,
+                CWX_NET_SOCKET_ATTR_FUNC fn)
 {
-    listen(addr, reuse, backlog, domain, protocol);
+    listen(addr, reuse, backlog, domain, protocol, fn);
 }
 
 ///Îö¹¹º¯Êý.

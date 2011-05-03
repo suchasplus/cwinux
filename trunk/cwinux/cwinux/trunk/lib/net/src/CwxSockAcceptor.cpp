@@ -29,8 +29,7 @@ int CwxSockAcceptor::listen(CwxAddr const& addr,
                                    int backlog,
                                    int domain,
                                    int protocol,
-                                   CWX_UINT32 uiSockSndBuf,
-                                   CWX_UINT32 uiSockRecvBuf)
+                                   CWX_NET_SOCKET_ATTR_FUNC fn)
 {
     int error = 0;
 
@@ -41,25 +40,9 @@ int CwxSockAcceptor::listen(CwxAddr const& addr,
     {
         return -1;
     }
-    if (0 != uiSockSndBuf)
+    if (fn)
     {
-        int bufLen = (uiSockSndBuf + 1023)/1024;
-        bufLen *=1024;
-        while (setsockopt(getHandle(), SOL_SOCKET, SO_SNDBUF, (void*)&bufLen, sizeof( bufLen)) < 0)
-        {
-            bufLen -= 1024;
-            if (bufLen <= 1024) break;
-        }
-    }
-    if (0 != uiSockRecvBuf)
-    {
-        int bufLen = (uiSockSndBuf + 1023)/1024;
-        bufLen *=1024;
-        while(setsockopt(getHandle(), SOL_SOCKET, SO_RCVBUF, (void *)&bufLen, sizeof(bufLen)) < 0)
-        {
-            bufLen -= 1024;
-            if (bufLen <= 1024) break;
-        }
+        if (0 != fn(getHandle())) return -1;
     }
 
 #if (CWX_HAS_IPV6)

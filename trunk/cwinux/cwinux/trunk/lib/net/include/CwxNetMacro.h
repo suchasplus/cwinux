@@ -44,6 +44,10 @@
 
 #define CWX_MAX_HOST_NAME_LEN  256
 
+
+///消息socket handle的设置函数，0：成功；-1：失败
+typedef int (*CWX_NET_SOCKET_ATTR_FUNC)(CWX_HANDLE handle);
+
 #include "CwxPost.h"
 
 #endif
