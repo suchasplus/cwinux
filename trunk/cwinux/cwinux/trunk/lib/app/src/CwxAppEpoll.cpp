@@ -526,7 +526,7 @@ int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg, CWX_UINT32 uiMiliTim
         }
     }
     //¼ì²âsignal
-    if (m_bSignal)
+    if (m_bSignal && m_bEnableSignal)
     {
         if (m_bStop) return 0;
         m_bSignal = 0;
