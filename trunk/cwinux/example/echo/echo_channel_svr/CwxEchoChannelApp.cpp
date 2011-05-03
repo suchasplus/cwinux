@@ -144,7 +144,7 @@ int CwxEchoChannelApp::onConnCreated(CWX_UINT32 uiSvrId,
     ///将消息放到线程池队列中，有内部的线程调用其处理handle来处理
     if (m_threadPool[handle%m_config.m_unThreadNum]->append(msg) <= 1)
     {
-        m_channel[handle%m_config.m_unThreadNum].notice();
+        m_channel[handle%m_config.m_unThreadNum]->notice();
     }
     return 0;
 }
