@@ -40,10 +40,7 @@ int CwxThreadPoolEx::start(CwxTss** pThrEnv, size_t stack_size)
         return -1;
     }
     m_mgr->add(getGroupId(), this);
-    for (i=0; i<getThreadNum(); i++)
-    {
-        if (m_threadArr[i]) delete m_threadArr[i];
-    }
+    m_threadArr = new CwxThread*[getThreadNum()];
     for (i=0; i<getThreadNum(); i++)
     {
         m_threadArr[i] =  new CwxThread(getGroupId(),
