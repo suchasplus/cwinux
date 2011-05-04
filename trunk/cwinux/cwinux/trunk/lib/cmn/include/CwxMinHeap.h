@@ -2,7 +2,7 @@
 #define __CWX_MIN_HEAP_H__
 /*
 版权声明：
-    本软件遵循GNU LGPL（http://www.gnu.org/copyleft/lesser.html）
+    本软件遵循GNU GPL V3（http://www.gnu.org/licenses/gpl.html）
 */
 /************************************************************************
 * 本代码Copy自Libevent，min_heap.h，我只是将其翻译成了模板类，一下是其license声明。
