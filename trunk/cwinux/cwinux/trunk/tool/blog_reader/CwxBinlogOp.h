@@ -2,8 +2,8 @@
 #define __CWX_BINLOG_OP_H__
 /*
 版权声明：
-本软件遵循GNU GPL V3（http://www.gnu.org/licenses/gpl.html），
-联系方式：email:cwinux@gmail.com；微博:http://t.sina.com.cn/cwinux
+    本软件遵循GNU GPL V3（http://www.gnu.org/licenses/gpl.html），
+    联系方式：email:cwinux@gmail.com；微博:http://t.sina.com.cn/cwinux
 */
 /**
 @file CwxBinlogOp.h
