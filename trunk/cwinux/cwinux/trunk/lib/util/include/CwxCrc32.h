@@ -10,14 +10,14 @@
 // found in the LICENSE file. See the AUTHORS file for names of contributors.
 
 
-#include "CwxPre.h"
-#include "CwxGlobalMacro.h"
-#include "CwxType.h"
-#include "CwxUtilMacro.h"
 #include <stddef.h>
 #include <stdint.h>
 #include <ctype.h>
 #include <endian.h>
+#include "CwxPre.h"
+#include "CwxGlobalMacro.h"
+#include "CwxType.h"
+#include "CwxUtilMacro.h"
 /**
 *@file  CwxMd5.h
 *@brief  本代码来源于google levelDB的crc32，由CWINUX从C翻译为了C++，并采用CWINUX的接口
@@ -71,7 +71,7 @@ private:
     CwxCrc32()
     {
     }
-}
+};
 
 CWINUX_END_NAMESPACE
 
