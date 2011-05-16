@@ -11,7 +11,6 @@ CWINUX_BEGIN_NAMESPACE
 
 
 #include <stdint.h>
-#include "util/coding.h"
 
 
 static const CWX_UINT32 table0_[256] = 
@@ -282,7 +281,7 @@ static const CWX_UINT32 table3_[256] = {
 };
 
 // Used to fetch a naturally-aligned 32-bit word in little endian byte-order
-static inline CWX_UINT32 LE_LOAD32(const uint8_t *p)
+static inline CWX_UINT32 LE_LOAD32(const uint8_t *ptr)
 {
     if (__BYTE_ORDER == __LITTLE_ENDIAN)
     {
@@ -292,12 +291,10 @@ static inline CWX_UINT32 LE_LOAD32(const uint8_t *p)
         return result;
     } else {
         return (uint32_t)(ptr[0])
-            | (uint32_t)(ptr[1]) << 8
-            | (uint32_t)(ptr[2]) << 16
-            | (uint32_t)(ptr[3]) << 24);
+            | ((uint32_t)(ptr[1]) << 8)
+            | ((uint32_t)(ptr[2]) << 16)
+            | ((uint32_t)(ptr[3]) << 24);
     }
-
-  return DecodeFixed32((const char*)p);
 }
 
 CWX_UINT32 CwxCrc32::extend(CWX_UINT32 crc, const char* buf, size_t size) {
