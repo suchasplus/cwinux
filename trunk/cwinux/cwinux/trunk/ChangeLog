@@ -22,3 +22,6 @@ CwxLruCache对象的定义错误。
 
 新：template<typename KEY, typename DATA, typename HASH=hash<KEY>, typename EQUAL=equal_to<KEY>, typename KSIZE=CwxSize<KEY>, typename DSIZE=CwxSize<DATA> >
 
+*********************************************************************
+2011-5-16    cwinux@gmail.com   v2.0
+增加了util/CwxCrc32的对象，对应的文件为util/include/CwxCrc32.h、util/src/CwxCrc32.cpp。
