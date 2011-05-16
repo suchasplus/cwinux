@@ -91,7 +91,7 @@ KSIZE：key的内存大小的计算方法对象，默认为CwxSize(KEY)
 DSIZE：data的内存大小的计算方法对象，默认为CwxSize(KEY)
 */
 
-template<typename KEY, typename DATA, typename HASH=hash<KEY>, typename EQUAL=equal_to<KEY>, typename KSIZE=CwxSize(KEY), typename DSIZE=CwxSize(DATA) >
+template<typename KEY, typename DATA, typename HASH=hash<KEY>, typename EQUAL=equal_to<KEY>, typename KSIZE=CwxSize<KEY>, typename DSIZE=CwxSize<DATA> >
 class CwxLruCache
 {
 public:
