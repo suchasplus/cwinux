@@ -15,3 +15,10 @@ int CwxBinLogFile::seek(CwxBinLogCursor& cursor, CWX_UINT8 ucMode);
 CwxThreadPoolEx对象的m_threadArr成员没有创建，造成线程start()的时候core。
 在int CwxThreadPoolEx::start(CwxTss** pThrEnv, size_t stack_size)中增加了
 m_threadArr = new CwxThread*[getThreadNum()];的代码。
+*********************************************************************
+2011-5-16    cwinux@gmail.com   v2.0
+CwxLruCache对象的定义错误。
+旧：template<typename KEY, typename DATA, typename HASH=hash<KEY>, typename EQUAL=equal_to<KEY>, typename KSIZE=CwxSize(KEY), typename DSIZE=CwxSize(DATA) >
+
+新：template<typename KEY, typename DATA, typename HASH=hash<KEY>, typename EQUAL=equal_to<KEY>, typename KSIZE=CwxSize<KEY>, typename DSIZE=CwxSize<DATA> >
+
