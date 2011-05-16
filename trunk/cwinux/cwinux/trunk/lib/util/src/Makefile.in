@@ -58,7 +58,7 @@ libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libcwxutil_la_LIBADD =
 am_libcwxutil_la_OBJECTS = libcwxutil_la-CwxDayLogger.lo \
-	libcwxutil_la-CwxMd5.lo
+	libcwxutil_la-CwxMd5.lo libcwxutil_la-CwxCrc32.lo
 libcwxutil_la_OBJECTS = $(am_libcwxutil_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -181,13 +181,15 @@ lib_LTLIBRARIES = libcwxutil.la
 libcwxutil_la_CPPFLAGS = -W -Wall
 libcwxutil_la_SOURCES = \
 	CwxDayLogger.cpp\
-	CwxMd5.cpp
+	CwxMd5.cpp\
+	CwxCrc32.cpp
 
 libcwxutil_la_LDFLAGS = 
 cwxutilincludedir = $(prefix)/include/util
 cwxutilinclude_HEADERS = \
 	../include/CwxDayLogger.h\
 	../include/CwxMd5.h\
+	../include/CwxCrc32.h\
 	../include/CwxUtilMacro.h
 
 INCLUDES = -I$(srcdir)/../include -I$(srcdir)/../../cmn/include -I$(srcdir)/../../net/include -I$(srcdir)/../../parse/include
@@ -260,6 +262,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxutil_la-CwxCrc32.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxutil_la-CwxDayLogger.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxutil_la-CwxMd5.Plo@am__quote@
 
@@ -297,6 +300,13 @@ libcwxutil_la-CwxMd5.lo: CwxMd5.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxMd5.cpp' object='libcwxutil_la-CwxMd5.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxutil_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxutil_la-CwxMd5.lo `test -f 'CwxMd5.cpp' || echo '$(srcdir)/'`CwxMd5.cpp
+
+libcwxutil_la-CwxCrc32.lo: CwxCrc32.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxutil_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwxutil_la-CwxCrc32.lo -MD -MP -MF "$(DEPDIR)/libcwxutil_la-CwxCrc32.Tpo" -c -o libcwxutil_la-CwxCrc32.lo `test -f 'CwxCrc32.cpp' || echo '$(srcdir)/'`CwxCrc32.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/libcwxutil_la-CwxCrc32.Tpo" "$(DEPDIR)/libcwxutil_la-CwxCrc32.Plo"; else rm -f "$(DEPDIR)/libcwxutil_la-CwxCrc32.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxCrc32.cpp' object='libcwxutil_la-CwxCrc32.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxutil_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxutil_la-CwxCrc32.lo `test -f 'CwxCrc32.cpp' || echo '$(srcdir)/'`CwxCrc32.cpp
 
 mostlyclean-libtool:
 	-rm -f *.lo
