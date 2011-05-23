@@ -190,6 +190,8 @@ public:
     static CWX_UINT32 getKvLen(CWX_UINT16 unKeyLen, CWX_UINT32 uiDataLen);
     ///通过key/value的长度及key的长度，获取data的长度
     static CWX_UINT32 getDataLen(CWX_UINT32 uiKeyValueLen, CWX_UINT16 unKeyLen);
+    ///返回key在key/value中的偏移
+    static CWX_UINT16 getKeyOffset();
 private:
     /**
     *@brief 将package的内容，输出成文本，对于嵌套的key，会嵌套输出。
