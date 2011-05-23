@@ -123,5 +123,11 @@ inline CWX_UINT32 CwxPackage::getDataLen(CWX_UINT32 uiKeyValueLen, CWX_UINT16 un
     return uiKeyValueLen - unKeyLen - 8;
 }
 
+///返回key在key/value中的偏移
+inline CWX_UINT16 CwxPackage::getKeyOffset()
+{
+    return 6;
+}
+
 
 CWINUX_END_NAMESPACE
