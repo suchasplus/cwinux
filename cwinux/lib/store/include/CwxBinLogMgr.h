@@ -225,6 +225,8 @@ public:
     inline CWX_UINT32 getFileNo() const;
     ///获取当前的错误信息
     inline char const* getErrMsg() const;
+    ///获取cursor的state
+    inline CWX_UINT8 getSeekState() { return m_ucSeekState;}
 private:
     friend class CwxBinLogFile;
     friend class CwxBinLogMgr;
