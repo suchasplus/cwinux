@@ -130,6 +130,7 @@ int CwxAppEpoll::init()
             CWX_ERROR(("Failure to register signal handle to engine"));
             return -1;
         }
+        CWX_ERROR(("SIG HALDLER :%d  %d", m_signalFd[0], m_sigHandler->getHandle()));
     }
     return 0;
 }
