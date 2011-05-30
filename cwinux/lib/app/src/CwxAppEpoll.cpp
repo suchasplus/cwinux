@@ -124,6 +124,7 @@ int CwxAppEpoll::init()
             return -1;
         }
         //×¢²áÐÅºÅfdµÄ¶Á
+        m_sigHandler->setHandle(m_signalFd[0]);
         if (0 != registerHandler(m_signalFd[0], m_sigHandler, CwxAppHandler4Base::PREAD_MASK))
         {
             CWX_ERROR(("Failure to register signal handle to engine"));
@@ -431,6 +432,7 @@ int CwxAppEpoll::forkReinit()
         }
         if (m_bEnableSignal)
         {
+            m_sigHandler->setHandle(m_signalFd[0]);
             if (0 != registerHandler(m_signalFd[0], m_sigHandler, CwxAppHandler4Base::PREAD_MASK))
             {
                 CWX_ERROR(("Failure to register handle to engine"));
