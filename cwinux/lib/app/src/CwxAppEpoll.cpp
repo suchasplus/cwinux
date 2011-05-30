@@ -445,7 +445,7 @@ int CwxAppEpoll::forkReinit()
         {
             m_arrSignals[i] = 0;
         }
-        m_bSignal = false;
+        m_bSignal = 0;
     }
 
     return 0;
@@ -493,11 +493,11 @@ int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg, CWX_UINT32 uiMiliTim
             int mask = 0;
             if (m_bStop) return 0;
             event = &m_events[i];
-            if (m_signalFd[0] == event->data.fd)
+/*            if (m_signalFd[0] == event->data.fd)
             {
                 CWX_ASSERT(event->events == EPOLLIN);
                 continue;
-            }
+            }*/
             CWX_ASSERT(m_eHandler[event->data.fd].m_handler);
             if (event->events & EPOLLIN) mask |= CwxAppHandler4Base::READ_MASK;
             if (event->events & EPOLLOUT) mask |= CwxAppHandler4Base::WRITE_MASK;
