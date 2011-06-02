@@ -31,13 +31,13 @@ typedef struct {
 	uint32_t total[2];
 	uint32_t state[4];
 	unsigned char buffer[64];
-} md5_context;
+} cwx_md5_context;
 
-void md5_start(md5_context *ctx);
-void md5_update(md5_context *ctx, const void *input, unsigned int length);
-void md5_finish(md5_context *ctx, unsigned char digest[16]);
+void cwx_md5_start(cwx_md5_context *ctx);
+void cwx_md5_update(cwx_md5_context *ctx, const void *input, unsigned int length);
+void cwx_md5_finish(cwx_md5_context *ctx, unsigned char digest[16]);
 
-void md5_checksum(unsigned char digest[16], const void *input, unsigned int length);
+void cwx_md5_checksum(unsigned char digest[16], const void *input, unsigned int length);
 
 #ifdef __cplusplus
 }
