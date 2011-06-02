@@ -59,7 +59,8 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 libcwinux_la_LIBADD =
 am_libcwinux_la_OBJECTS = libcwinux_la-cwx_msg_header.lo \
 	libcwinux_la-cwx_package.lo libcwinux_la-cwx_package_writer.lo \
-	libcwinux_la-cwx_package_reader.lo libcwinux_la-cwx_socket.lo
+	libcwinux_la-cwx_package_reader.lo libcwinux_la-cwx_socket.lo \
+	libcwinux_la-cwx_crc32.lo libcwinux_la-cwx_md5.lo
 libcwinux_la_OBJECTS = $(am_libcwinux_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -72,6 +73,14 @@ LTCOMPILE = $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) \
 CCLD = $(CC)
 LINK = $(LIBTOOL) --tag=CC --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
+	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+LTCXXCOMPILE = $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CXXFLAGS) $(CXXFLAGS)
+CXXLD = $(CXX)
+CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(libcwinux_la_SOURCES)
 DIST_SOURCES = $(libcwinux_la_SOURCES)
 cwinuxincludeHEADERS_INSTALL = $(INSTALL_HEADER)
@@ -179,15 +188,15 @@ target_alias = @target_alias@
 pkgconfigdir = 
 lib_LTLIBRARIES = libcwinux.la
 libcwinux_la_CPPFLAGS = -W -Wall
-libcwinux_la_SOURCES = cwx_msg_header.c  cwx_package.c cwx_package_writer.c  cwx_package_reader.c cwx_socket.c
+libcwinux_la_SOURCES = cwx_msg_header.c  cwx_package.c cwx_package_writer.c  cwx_package_reader.c cwx_socket.c cwx_crc32.cpp cwx_md5.cpp
 libcwinux_la_LDFLAGS = 
 cwinuxincludedir = $(prefix)/include
-cwinuxinclude_HEADERS = cwx_config.h  cwx_msg_header.h  cwx_package.h cwx_package_reader.h cwx_package_writer.h cwx_socket.h
+cwinuxinclude_HEADERS = cwx_config.h  cwx_msg_header.h  cwx_package.h cwx_package_reader.h cwx_package_writer.h cwx_socket.h cwx_crc32.h cwx_md5.h
 INCLUDES = -I$(srcdir)
 all: all-am
 
 .SUFFIXES:
-.SUFFIXES: .c .lo .o .obj
+.SUFFIXES: .c .cpp .lo .o .obj
 $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -245,7 +254,7 @@ clean-libLTLIBRARIES:
 	  rm -f "$${dir}/so_locations"; \
 	done
 libcwinux.la: $(libcwinux_la_OBJECTS) $(libcwinux_la_DEPENDENCIES) 
-	$(LINK) -rpath $(libdir) $(libcwinux_la_LDFLAGS) $(libcwinux_la_OBJECTS) $(libcwinux_la_LIBADD) $(LIBS)
+	$(CXXLINK) -rpath $(libdir) $(libcwinux_la_LDFLAGS) $(libcwinux_la_OBJECTS) $(libcwinux_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -253,6 +262,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwinux_la-cwx_crc32.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwinux_la-cwx_md5.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwinux_la-cwx_msg_header.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwinux_la-cwx_package.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwinux_la-cwx_package_reader.Plo@am__quote@
@@ -314,6 +325,41 @@ libcwinux_la-cwx_socket.lo: cwx_socket.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='cwx_socket.c' object='libcwinux_la-cwx_socket.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwinux_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libcwinux_la-cwx_socket.lo `test -f 'cwx_socket.c' || echo '$(srcdir)/'`cwx_socket.c
+
+.cpp.o:
+@am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/$*.Tpo" "$(DEPDIR)/$*.Po"; else rm -f "$(DEPDIR)/$*.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ $<
+
+.cpp.obj:
+@am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ `$(CYGPATH_W) '$<'`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/$*.Tpo" "$(DEPDIR)/$*.Po"; else rm -f "$(DEPDIR)/$*.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+
+.cpp.lo:
+@am__fastdepCXX_TRUE@	if $(LTCXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/$*.Tpo" "$(DEPDIR)/$*.Plo"; else rm -f "$(DEPDIR)/$*.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LTCXXCOMPILE) -c -o $@ $<
+
+libcwinux_la-cwx_crc32.lo: cwx_crc32.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwinux_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwinux_la-cwx_crc32.lo -MD -MP -MF "$(DEPDIR)/libcwinux_la-cwx_crc32.Tpo" -c -o libcwinux_la-cwx_crc32.lo `test -f 'cwx_crc32.cpp' || echo '$(srcdir)/'`cwx_crc32.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/libcwinux_la-cwx_crc32.Tpo" "$(DEPDIR)/libcwinux_la-cwx_crc32.Plo"; else rm -f "$(DEPDIR)/libcwinux_la-cwx_crc32.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cwx_crc32.cpp' object='libcwinux_la-cwx_crc32.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwinux_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwinux_la-cwx_crc32.lo `test -f 'cwx_crc32.cpp' || echo '$(srcdir)/'`cwx_crc32.cpp
+
+libcwinux_la-cwx_md5.lo: cwx_md5.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwinux_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwinux_la-cwx_md5.lo -MD -MP -MF "$(DEPDIR)/libcwinux_la-cwx_md5.Tpo" -c -o libcwinux_la-cwx_md5.lo `test -f 'cwx_md5.cpp' || echo '$(srcdir)/'`cwx_md5.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/libcwinux_la-cwx_md5.Tpo" "$(DEPDIR)/libcwinux_la-cwx_md5.Plo"; else rm -f "$(DEPDIR)/libcwinux_la-cwx_md5.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cwx_md5.cpp' object='libcwinux_la-cwx_md5.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwinux_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwinux_la-cwx_md5.lo `test -f 'cwx_md5.cpp' || echo '$(srcdir)/'`cwx_md5.cpp
 
 mostlyclean-libtool:
 	-rm -f *.lo
