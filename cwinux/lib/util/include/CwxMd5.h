@@ -54,7 +54,7 @@ public:
     *@param [in] uiLen 内容的长度.
     *@return void.
     */
-    void update(unsigned char *szBuf, CWX_UINT32 uiLen);
+    void update(unsigned char const *szBuf, CWX_UINT32 uiLen);
     /**
     *@brief  输出16字节的签名内容
     *@param [out] digest 输出内容的签名.
@@ -63,7 +63,7 @@ public:
     void final(unsigned char digest[16]);
 private:
     void transform(CWX_UINT32 buf[4], CWX_UINT32 const in[16]);
-    void byteReverse(unsigned char *buf, CWX_UINT32 uiLen);
+    void byteReverse(unsigned char const *buf, CWX_UINT32 uiLen);
     void init();
 private:
     CWX_UINT32     m_buf[4]; 

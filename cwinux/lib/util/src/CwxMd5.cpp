@@ -205,7 +205,7 @@ void CwxMd5::transform(CWX_UINT32 buf[4], CWX_UINT32 const in[16]){
 
 
 }
-void CwxMd5::byteReverse(unsigned char *buf, CWX_UINT32 uiLen){
+void CwxMd5::byteReverse(unsigned char const *buf, CWX_UINT32 uiLen){
     CWX_UINT32* t;
     do {
         t = (CWX_UINT32*)buf;

@@ -27,7 +27,7 @@ class CwxMsgBlock;
 */
 class CWX_API CwxMsgHead
 {
-private:
+public:
     enum{
         ATTR_SYS_MSG = (1<<0), ///<系统消息, bit0
         ATTR_COMPRESS = (1<<1) ///<数据是压缩数据
