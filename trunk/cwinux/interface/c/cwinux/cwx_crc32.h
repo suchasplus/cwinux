@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include <ctype.h>
 #include <endian.h>
+#include "cwx_config.h"
 
 /**
 *@file  cwx_dd5.h
