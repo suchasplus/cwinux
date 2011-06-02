@@ -6,7 +6,7 @@ pkgconfigdir =
 lib_LTLIBRARIES = libcwinux.la
 libcwinux_la_CPPFLAGS = -W -Wall
 
-libcwinux_la_SOURCES = cwx_msg_header.c  cwx_package.c cwx_package_writer.c  cwx_package_reader.c cwx_socket.c cwx_crc32.cpp cwx_md5.cpp
+libcwinux_la_SOURCES = cwx_msg_header.c  cwx_package.c cwx_package_writer.c  cwx_package_reader.c cwx_socket.c cwx_crc32.c cwx_md5.c
 libcwinux_la_LDFLAGS = 
 
 cwinuxincludedir=$(prefix)/include
