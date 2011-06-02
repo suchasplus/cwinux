@@ -17,6 +17,10 @@
 *@warning нч
 *@bug   
 */
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define  CWX_CRC32_MASK_DELTA  0xa282ead8ul
 
 // Return the crc32c of concat(A, data[0,n-1]) where init_crc is the
@@ -48,5 +52,8 @@ inline CWX_UINT32 cwx_crc32_unmask(CWX_UINT32 masked_crc)
     return ((rot >> 17) | (rot << 15));
 }
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif

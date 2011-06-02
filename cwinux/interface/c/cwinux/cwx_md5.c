@@ -19,7 +19,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "md5.h"
+#include "cwx_md5.h"
 #include <string.h>
 
 #ifdef XSLIB_RCSID
@@ -42,7 +42,7 @@ static const char rcsid[] = "$XJG: xslib/md5.c,v 1.6 2006/03/16 04:25:13 jiagui 
 	(b)[(i) + 3] = (unsigned char) ( (n) >> 24 );	\
 }
 
-void md5_start(md5_context * ctx)
+void cwx_md5_start(cwx_md5_context * ctx)
 {
     ctx->total[0] = 0;
     ctx->total[1] = 0;
@@ -53,7 +53,7 @@ void md5_start(md5_context * ctx)
     ctx->state[3] = 0x10325476;
 }
 
-static void md5_process(md5_context * ctx, unsigned char data[64])
+static void md5_process(cwx_md5_context * ctx, unsigned char data[64])
 {
 	uint32_t X[16], A, B, C, D;
 
@@ -165,7 +165,7 @@ static void md5_process(md5_context * ctx, unsigned char data[64])
 	ctx->state[3] += D;
 }
 
-void md5_update(md5_context * ctx, const void *input, unsigned int length)
+void cwx_md5_update(cwx_md5_context * ctx, const void *input, unsigned int length)
 {
 	uint32_t left, fill;
         const char* input_1 = (const char*)input;
@@ -208,7 +208,7 @@ static unsigned char md5_padding[64] = {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
-void md5_finish(md5_context * ctx, unsigned char digest[16])
+void cwx_md5_finish(cwx_md5_context * ctx, unsigned char digest[16])
 {
 	uint32_t last, padn;
 	uint32_t high, low;
@@ -223,8 +223,8 @@ void md5_finish(md5_context * ctx, unsigned char digest[16])
 	last = ctx->total[0] & 0x3F;
 	padn = (last < 56) ? (56 - last) : (120 - last);
 
-	md5_update(ctx, md5_padding, padn);
-	md5_update(ctx, msglen, 8);
+	cwx_md5_update(ctx, md5_padding, padn);
+	cwx_md5_update(ctx, msglen, 8);
 
 	PUT_UINT32(ctx->state[0], digest, 0);
 	PUT_UINT32(ctx->state[1], digest, 4);
@@ -232,13 +232,13 @@ void md5_finish(md5_context * ctx, unsigned char digest[16])
 	PUT_UINT32(ctx->state[3], digest, 12);
 }
 
-void md5_checksum(unsigned char digest[16], const void *input, unsigned int length)
+void cwx_md5_checksum(unsigned char digest[16], const void *input, unsigned int length)
 {
-	md5_context ctx;
+	cwx_md5_context ctx;
 
-	md5_start(&ctx);
-	md5_update(&ctx, input, length);
-	md5_finish(&ctx, digest);
+	cwx_md5_start(&ctx);
+	cwx_md5_update(&ctx, input, length);
+	cwx_md5_finish(&ctx, digest);
 }
 
 
@@ -276,7 +276,7 @@ int main(int argc, char *argv[])
 	FILE *f;
 	int i, j;
 	char output[33];
-	md5_context ctx;
+	cwx_md5_context ctx;
 	unsigned char buf[1000];
 	unsigned char md5sum[16];
 
@@ -287,9 +287,9 @@ int main(int argc, char *argv[])
 		for (i = 0; i < 7; i++) {
 			printf(" Test %d ", i + 1);
 
-			md5_start(&ctx);
-			md5_update(&ctx, (unsigned char *) msg[i], strlen(msg[i]));
-			md5_finish(&ctx, md5sum);
+			cwx_md5_start(&ctx);
+			cwx_md5_update(&ctx, (unsigned char *) msg[i], strlen(msg[i]));
+			cwx_md5_finish(&ctx, md5sum);
 
 			for (j = 0; j < 16; j++) {
 				sprintf(output + j * 2, "%02x", md5sum[j]);
@@ -311,13 +311,13 @@ int main(int argc, char *argv[])
 			return 1;
 		}
 
-		md5_start(&ctx);
+		cwx_md5_start(&ctx);
 
 		while ((i = fread(buf, 1, sizeof(buf), f)) > 0) {
-			md5_update(&ctx, buf, i);
+			cwx_md5_update(&ctx, buf, i);
 		}
 
-		md5_finish(&ctx, md5sum);
+		cwx_md5_finish(&ctx, md5sum);
 
 		for (j = 0; j < 16; j++) {
 			printf("%02x", md5sum[j]);
