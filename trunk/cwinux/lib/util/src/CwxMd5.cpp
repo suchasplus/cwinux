@@ -39,7 +39,7 @@ CwxMd5::~CwxMd5(){
 
 }
 
-void CwxMd5::update(unsigned char *szBuf, CWX_UINT32 uiLen)
+void CwxMd5::update(unsigned char const*szBuf, CWX_UINT32 uiLen)
 {
     CWX_UINT32 t;
     /* Update bitcount */
