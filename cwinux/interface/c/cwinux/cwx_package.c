@@ -287,6 +287,11 @@ CWX_UINT32 cwx_pg_get_value_len(CWX_UINT32 uiKeyValueLen, CWX_UINT16 unKeyLen)
     return uiKeyValueLen - unKeyLen - 8;
 }
 
+CWX_UINT16 cwx_pg_get_key_offset()
+{
+    return 6;
+}
+
 #ifdef __cplusplus
 }
 #endif

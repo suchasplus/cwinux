@@ -185,6 +185,11 @@ CWX_UINT32 cwx_pg_get_kv_len(CWX_UINT16 unKeyLen, CWX_UINT32 uiDataLen);
 */
 CWX_UINT32 cwx_pg_get_value_len(CWX_UINT32 uiKeyValueLen, CWX_UINT16 unKeyLen);
 
+/**
+*@brief 获取key在key/value中的内存数据偏移值。
+*@return 返回key在key/value中的偏移。
+*/
+CWX_UINT16 cwx_pg_get_key_offset();
 #ifdef __cplusplus
 }
 #endif
