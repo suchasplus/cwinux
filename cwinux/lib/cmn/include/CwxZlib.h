@@ -42,9 +42,9 @@ public:
         unsigned long& ulDestLen,
         const unsigned char* szSrc,
         unsigned long ulSrcLen,
-        CWX_UINT8 ucLevel=Z_DEFAULT_COMPRESSION)
+        int level=Z_DEFAULT_COMPRESSION)
     {
-        int ret = compress2(szDest, &ulDestLen, szSrc, ulSrcLen, ucLevel);
+        int ret = compress2(szDest, &ulDestLen, szSrc, ulSrcLen, level);
         return Z_OK == ret;
     }
     /**
