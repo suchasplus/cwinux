@@ -84,7 +84,7 @@ public:
     {
         if (m_pElement) free(m_pElement);
         m_uiCount = 0;
-        m_pElement = malloc(m_uiAll * sizeof(TYPE*));
+        m_pElement = (TYPE**)malloc(m_uiAll * sizeof(TYPE*));
         return 0;
     }
     /**
