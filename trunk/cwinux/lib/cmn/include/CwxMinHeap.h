@@ -73,7 +73,7 @@ public:
     ///Îö¹¹º¯Êý
     ~CwxMinHeap()
     {
-        if (m_pElement) delete [] m_pElement;
+        if (m_pElement) free(m_pElement);
     }
 public:
     /**
@@ -82,9 +82,9 @@ public:
     */
     int init()
     {
-        if (m_pElement) delete [] m_pElement;
+        if (m_pElement) free(m_pElement);
         m_uiCount = 0;
-        m_pElement = new TYPE*[m_uiAll];
+        m_pElement = malloc(m_uiAll * sizeof(TYPE*));
         return 0;
     }
     /**
