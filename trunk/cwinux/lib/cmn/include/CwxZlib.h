@@ -44,7 +44,8 @@ public:
         unsigned long ulSrcLen,
         CWX_UINT8 ucLevel=Z_DEFAULT_COMPRESSION)
     {
-        return Z_OK == compress2(szDest, &ulDestLen, szSrc, ulSrcLen, ucLevel);
+        int ret = compress2(szDest, &ulDestLen, szSrc, ulSrcLen, ucLevel);
+        return Z_OK == ret;
     }
     /**
     *@brief 对压缩的数据解压
