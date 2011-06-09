@@ -60,7 +60,8 @@ public:
         const unsigned char* szSrc,
         unsigned long ulSrcLen)
     {
-        return Z_OK == uncompress(szDest,&ulDestLen,szSrc,ulSrcLen);
+        int ret = uncompress(szDest,&ulDestLen,szSrc,ulSrcLen);
+        return Z_OK == ret;
     }
 };
 
