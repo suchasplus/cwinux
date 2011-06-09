@@ -156,6 +156,11 @@ public:
     { 
         return 0==m_uiCount;
     }
+    inline TYPE const* at(CWX_UINT32 index)
+    {
+        if (index >= m_uiCount) return NULL;
+        return m_pElement[index];
+    }
 private:
     bool resize(CWX_UINT32 size)
     {
