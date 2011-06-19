@@ -237,8 +237,8 @@ void CwxMd5::final(unsigned char digest[16])
     last = total[0] & 0x3F;
     padn = (last < 56) ? (56 - last) : (120 - last);
 
-    md5_update(md5_padding, padn);
-    md5_update(msglen, 8);
+    update(md5_padding, padn);
+    update(msglen, 8);
 
     PUT_UINT32(state[0], digest, 0);
     PUT_UINT32(state[1], digest, 4);
