@@ -64,7 +64,7 @@ public:
     */
     void final(unsigned char digest[16]);
 private:
-    void md5_process(unsigned char data[64])
+    void md5_process(unsigned char data[64]);
 private:
     CWX_UINT32 total[2];
     CWX_UINT32 state[4];

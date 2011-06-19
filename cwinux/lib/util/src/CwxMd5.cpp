@@ -240,10 +240,10 @@ void CwxMd5::final(unsigned char digest[16])
     md5_update(md5_padding, padn);
     md5_update(msglen, 8);
 
-    PUT_UINT32(ctx->state[0], digest, 0);
-    PUT_UINT32(ctx->state[1], digest, 4);
-    PUT_UINT32(ctx->state[2], digest, 8);
-    PUT_UINT32(ctx->state[3], digest, 12);
+    PUT_UINT32(state[0], digest, 0);
+    PUT_UINT32(state[1], digest, 4);
+    PUT_UINT32(state[2], digest, 8);
+    PUT_UINT32(state[3], digest, 12);
     reset();
 }
 
