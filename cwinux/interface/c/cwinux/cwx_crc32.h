@@ -6,11 +6,12 @@
 #include <stdint.h>
 #include <ctype.h>
 #include <endian.h>
+#include <zlib.h>
 #include "cwx_config.h"
 
 /**
 *@file  cwx_dd5.h
-*@brief  本代码来源于google levelDB的crc32
+*@brief  crc32签名
 *@author cwinux@gmail.com
 *@version 0.1
 *@date    2011-05-16
@@ -34,23 +35,6 @@ inline CWX_UINT32 cwx_crc32_value(const char* data, size_t n)
     return cwx_crc32_extend(0, data, n);
 }
 
-// Return a masked representation of crc.
-//
-// Motivation: it is problematic to compute the CRC of a string that
-// contains embedded CRCs.  Therefore we recommend that CRCs stored
-// somewhere (e.g., in files) should be masked before being stored.
-inline CWX_UINT32 cwx_crc32_mask(CWX_UINT32 crc)
-{
-    // Rotate right by 15 bits and add a constant.
-    return ((crc >> 15) | (crc << 17)) + CWX_CRC32_MASK_DELTA;
-}
-
-// Return the crc whose masked representation is masked_crc.
-inline CWX_UINT32 cwx_crc32_unmask(CWX_UINT32 masked_crc)
-{
-    CWX_UINT32 rot = masked_crc - CWX_CRC32_MASK_DELTA;
-    return ((rot >> 17) | (rot << 15));
-}
 
 #ifdef __cplusplus
 }
