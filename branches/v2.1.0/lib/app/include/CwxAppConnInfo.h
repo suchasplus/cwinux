@@ -186,7 +186,7 @@ private:
     void*              m_pUserData; ///<user dat for connection
     CWX_UINT32         m_uiContinueRecvNum; ///<conintue recv msg num
     CWX_UINT32         m_uiContinueSendNum; ///<连续发送的最大数量
-    CWX_UINT32         m_uiMaxWaitingMsgNum;
+    CWX_UINT32         m_uiMaxWaitingMsgNum; ///<最大等待消息的数量
     CWX_UINT32         m_uiWaitingMsgNum;///<waiting msg num
     bool               m_bInvokeCreate; ///<是否在open的时候，调用CwxAppFramework::onCreate，默认调用
     bool               m_bReconn; ///<是否是重连
