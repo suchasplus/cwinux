@@ -88,7 +88,7 @@ int CwxBinLogCursor::data(char * szBuf, CWX_UINT32& uiBufLen)
 
 void CwxBinLogCursor::close()
 {
-    if (m_fd) ::close(m_fd);
+    if (-1 != m_fd) ::close(m_fd);
     m_fd = -1;
     m_bDangling = true;
 }
