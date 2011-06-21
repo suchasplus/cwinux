@@ -48,6 +48,8 @@ public:
     ///析构函数
     ~CwxMd5();
 public:
+    ///情况对象，可以再次签名
+    void reset();
     /**
     *@brief  根据buf的内容，对MD5签名进行更新
     *@param [in] szBuf 签名的内容.
@@ -62,13 +64,11 @@ public:
     */
     void final(unsigned char digest[16]);
 private:
-    void transform(CWX_UINT32 buf[4], CWX_UINT32 const in[16]);
-    void byteReverse(unsigned char const *buf, CWX_UINT32 uiLen);
-    void init();
+    void md5_process(unsigned char data[64]);
 private:
-    CWX_UINT32     m_buf[4]; 
-    CWX_UINT32     m_bits[2];
-    unsigned char  m_in[64];
+    CWX_UINT32 total[2];
+    CWX_UINT32 state[4];
+    unsigned char buffer[64];
 };
 
 CWINUX_END_NAMESPACE
