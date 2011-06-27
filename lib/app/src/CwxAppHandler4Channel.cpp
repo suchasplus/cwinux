@@ -303,7 +303,7 @@ int CwxAppHandler4Channel::recvPackage(CWX_HANDLE handle,
             CWX_ERROR(("Msg header is error."));
             return -1;
         }
-        if (header.getDataLen() > 0) msg = CwxMsgBlockAlloc::malloc(header.getDataLen());
+        msg = CwxMsgBlockAlloc::malloc(header.getDataLen());
         uiRecvDataLen = 0;
     }//end  if (need_size > 0)
     //recv data
