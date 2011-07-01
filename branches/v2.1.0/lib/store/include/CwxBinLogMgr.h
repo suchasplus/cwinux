@@ -728,6 +728,7 @@ private:
     ///一下变量都在读写锁保护之中
     bool                     m_bValid; ///<binlog 管理器是否有效。
     vector<CwxBinLogFile*>   m_arrBinlog; ///<不包含当前binlog文件的binlog文件数组，按照FileNo升序，也是sid的升序
+	set<CwxBinLogCursor*>    m_cursorSet; ///<建立的所有cursor的集合
     CwxBinLogFile*           m_pCurBinlog;///<当前写的binlog文件
     CWX_UINT64               m_ullMinSid; ///<binlog文件的最小sid
     CWX_UINT64               m_ullMaxSid; ///<binlog文件的最大sid

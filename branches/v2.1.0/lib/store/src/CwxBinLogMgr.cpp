@@ -845,6 +845,12 @@ CwxBinLogMgr::~CwxBinLogMgr()
         delete m_arrBinlog[i];
     }
     m_arrBinlog.clear();
+	set<CwxBinLogCursor*>::iterator iter =  m_cursorSet.begin();
+	while(iter != m_cursorSet.end())
+	{
+		delete *iter;
+		iter++;
+	}
 }
 
 // -1：失败；0：成功。
@@ -1216,6 +1222,14 @@ void CwxBinLogMgr::clear()
 
 void CwxBinLogMgr::_clear()
 {
+	set<CwxBinLogCursor*>::iterator iter = m_cursorSet.begin();
+	while(iter != m_cursorSet.end())
+	{
+		delete *iter;
+		iter++;
+	}
+	m_cursorSet.clear();
+
     if (m_pCurBinlog) delete m_pCurBinlog;
     m_pCurBinlog = NULL;
     CWX_UINT32 i = 0;
@@ -1243,10 +1257,13 @@ void CwxBinLogMgr::_clear()
 //NULL 失败；否则返回游标对象的指针。
 CwxBinLogCursor* CwxBinLogMgr::createCurser()
 {
+	///读锁保护
+	CwxWriteLockGuard<CwxRwLock> lock(&m_rwLock);
     CwxBinLogCursor* pCursor =  new CwxBinLogCursor();
     pCursor->m_ullSid = 0;
     pCursor->m_ucSeekState = CURSOR_STATE_UNSEEK;
     pCursor->m_pBinLogFile = NULL;
+	m_cursorSet.insert(pCursor);
     return pCursor;
 }
 
@@ -1600,9 +1617,16 @@ int CwxBinLogMgr::prev(CwxBinLogCursor* pCursor, char* szData, CWX_UINT32& uiDat
 //-1：失败；0：成功。
 int CwxBinLogMgr::destoryCurser(CwxBinLogCursor*& pCursor)
 {
-    if (pCursor) delete pCursor;
-    pCursor = NULL;
-    return 0;
+	CwxWriteLockGuard<CwxRwLock> lock(&m_rwLock);
+	set<CwxBinLogCursor*>::iterator iter =  m_cursorSet.find(pCursor);
+	if (iter != m_cursorSet.end())
+	{
+		m_cursorSet.erase(iter);
+		delete pCursor;
+		pCursor = NULL;
+		return 0;
+	}
+	return -1;
 }
 
 CWX_INT64 CwxBinLogMgr::leftLogNum(CwxBinLogCursor const* pCursor)
