@@ -463,6 +463,7 @@ int CwxBinLogFile::commit(char* szErr2K)
 int CwxBinLogFile::upper(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K)
 {
 	CWX_ASSERT(m_bValid);
+	if (!m_uiLogNum) return 0;
 
 	//根据指定的SID定位
 	int fd = -1;
@@ -518,7 +519,7 @@ int CwxBinLogFile::upper(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K
 	}
 	if (ullSid >= index.getSid())
 	{//next item
-		ullOffset = index.getOffset() + index.getLogLen() + CwxBinLogHeader::BIN_LOG_HEADER_SIZE;
+		ullOffset += CwxBinLogIndex::BIN_LOG_INDEX_SIZE;
 		if (0 != readIndex(fd, index, ullOffset, szErr2K))
 		{
 			::close(fd);
@@ -529,6 +530,77 @@ int CwxBinLogFile::upper(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K
 	return 1;
 }
 
+// -1：失败；0：不存在；1：发现
+int CwxBinLogFile::lower(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K)
+{
+	CWX_ASSERT(m_bValid);
+	if (!m_uiLogNum) return 0;
+
+	//根据指定的SID定位
+	int fd = -1;
+	CWX_UINT64 ullOffset = 0;
+	//折半查找
+	fd = ::open(m_strIndexFileName.c_str(), O_RDONLY);
+	if (-1 == fd)
+	{
+		if (szErr2K) CwxCommon::snprintf(szErr2K, 2047, "Failure to open index file:%s, errno=%d", m_strIndexFileName.c_str(), errno);
+		return -1;
+	}
+	if (ullSid < m_ullMinSid)
+	{
+		::close(fd);
+		return 0;///不存在
+	}
+	if (ullSid >= m_ullMaxSid)
+	{
+		//获取最后一个
+		if (0 != readIndex(fd, index, (m_uiLogNum - 1) * CwxBinLogIndex::BIN_LOG_INDEX_SIZE, szErr2K))
+		{
+			::close(fd);
+			return -1;
+		}
+		::close(fd);
+		return 1;
+	}
+
+	CWX_UINT32 uiStart = 0;
+	CWX_UINT32 uiEnd = m_uiLogNum - 1;
+	CWX_UINT32 uiMid = 0;
+	while(uiEnd >= uiStart)
+	{
+		uiMid = (uiStart + uiEnd)/2;
+		ullOffset = uiMid;
+		ullOffset *= CwxBinLogIndex::BIN_LOG_INDEX_SIZE;
+		if (0 != readIndex(fd, index, ullOffset, szErr2K))
+		{
+			::close(fd);
+			return -1;
+		}
+		if (ullSid == index.getSid())
+		{
+			break;
+		}
+		else if (ullSid < index.getSid())
+		{
+			uiEnd = uiMid-1;
+		}
+		else
+		{
+			uiStart = uiMid+1;
+		}
+	}
+	if (ullSid < index.getSid())
+	{//next item
+		ullOffset -= CwxBinLogIndex::BIN_LOG_INDEX_SIZE;
+		if (0 != readIndex(fd, index, ullOffset, szErr2K))
+		{
+			::close(fd);
+			return -1;
+		}
+	}
+	::close(fd);
+	return 1;
+}
 
 //-2：不存在完成的记录头；-1：失败；0：不存在；1：定位到指定的位置
 int CwxBinLogFile::seek(CwxBinLogCursor& cursor, CWX_UINT8 ucMode)
@@ -542,8 +614,8 @@ int CwxBinLogFile::seek(CwxBinLogCursor& cursor, CWX_UINT8 ucMode)
     
     //根据指定的SID定位
 	CwxBinLogIndex item;
-	iRet = upper(cursor->m_ullSid, index, cursor->m_szErr2K);
-	if (1 != iRet) return iRet；
+	iRet = upper(cursor->m_ullSid, item, cursor->m_szErr2K);
+	if (1 != iRet) return iRet;
     return cursor.seek(item.getOffset());
 }
 
@@ -1202,19 +1274,13 @@ int CwxBinLogMgr::_upper(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K
 	}
 
 	//定位sid所在的binlog文件
-	if (ullSid>=m_pCurBinlog->getMinSid())
-	{///在当前binlog文件内
-		pBinLogFile = m_pCurBinlog;
-	}
-	else
-	{///查找历史数据
-		for (CWX_UINT32 i=0; i<m_arrBinlog.size(); i++)
+	///从小到大查找历史数据
+	for (CWX_UINT32 i=0; i<m_arrBinlog.size(); i++)
+	{
+		if (ullSid < m_arrBinlog[i]->getMaxSid())
 		{
-			if (ullSid < m_arrBinlog[i]->getMaxSid())
-			{
-				pBinLogFile = m_arrBinlog[i];
-				break;
-			}
+			pBinLogFile = m_arrBinlog[i];
+			break;
 		}
 	}
 	if (!pBinLogFile) pBinLogFile = m_pCurBinlog;
@@ -1224,6 +1290,51 @@ int CwxBinLogMgr::_upper(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K
 	return iRet;
 }
 
+/**
+@brief 获取不大于ullSid的最大binlog header
+@param [in] ullSid 要查找的sid。
+@param [out] index 满足条件的binlog index。
+@return -1：失败；0：不存在；1：发现
+*/
+int CwxBinLogMgr::lower(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K)
+{
+	///读锁保护
+	CwxReadLockGuard<CwxRwLock> lock(&m_rwLock);
+	return _lower(ullSid, index, szErr2K);
+}
+
+///-1：失败；0：不存在；1：发现。
+int CwxBinLogMgr::_lower(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K)
+{
+	CwxBinLogFile* pBinLogFile = NULL;
+	int iRet = 0;
+	if (!m_pCurBinlog || (ullSid < getMinSid()) )
+	{///没有记录
+		return 0;
+	}
+
+	//定位sid所在的binlog文件
+	if (ullSid>=m_pCurBinlog->getMinSid())
+	{///在当前binlog文件内
+		pBinLogFile = m_pCurBinlog;
+	}
+	else
+	{///查找历史数据
+		for (CWX_UINT32 i=m_arrBinlog.size(); i>0; i--)
+		{
+			if (ullSid >= m_arrBinlog[i-1]->getMinSid())
+			{
+				pBinLogFile = m_arrBinlog[i-1];
+				break;
+			}
+		}
+	}
+	CWX_ASSERT(pBinLogFile);
+
+	//定位cursor
+	iRet = pBinLogFile->lower(ullSid, index, szErr2K);
+	return iRet;
+}
 
 /// -1：失败；0：无法定位到ullSid下一个binlog；1：定位到ullSid下一个的binlog上。
 int CwxBinLogMgr::seek(CwxBinLogCursor* pCursor, CWX_UINT64 ullSid)
