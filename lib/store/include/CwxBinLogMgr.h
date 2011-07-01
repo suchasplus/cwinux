@@ -334,13 +334,20 @@ public:
     int commit(char* szErr2K=NULL);
 
 	/**
-	@brief 获取不小于ullSid的最小binlog header
+	@brief 获取大于ullSid的最小binlog header
 	@param [in] ullSid 要查找的sid。
 	@param [out] index 满足条件的binlog index。
 	@return -1：失败；0：不存在；1：发现
 	*/
 	int upper(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K=NULL);
 
+	/**
+	@brief 获取不大于ullSid的最大binlog header
+	@param [in] ullSid 要查找的sid。
+	@param [out] index 满足条件的binlog index。
+	@return -1：失败；0：不存在；1：发现
+	*/
+	int lower(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K=NULL);
     /**
     @brief 定位Cursor的位置
     @param [in] cursor 日志读handle。
@@ -549,12 +556,19 @@ public:
     void clear();
 public:
 	/**
-	@brief 获取不小于ullSid的最小binlog header
+	@brief 获取大于ullSid的最小binlog header
 	@param [in] ullSid 要查找的sid。
 	@param [out] index 满足条件的binlog index。
 	@return -1：失败；0：不存在；1：发现
 	*/
 	int upper(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K=NULL);
+	/**
+	@brief 获取不大于ullSid的最大binlog header
+	@param [in] ullSid 要查找的sid。
+	@param [out] index 满足条件的binlog index。
+	@return -1：失败；0：不存在；1：发现
+	*/
+	int lower(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K=NULL);
 
 	/**
     @brief 创建binlog读取的游标
@@ -669,12 +683,19 @@ private:
     ///清空binlog管理器
     void _clear();
 	/**
-	@brief 获取不小于ullSid的最小binlog header
+	@brief 获取大于ullSid的最小binlog header
 	@param [in] ullSid 要查找的sid。
 	@param [out] index 满足条件的binlog index。
 	@return -1：失败；0：不存在；1：发现
 	*/
 	int _upper(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K=NULL);
+	/**
+	@brief 获取不大于ullSid的最大binlog header
+	@param [in] ullSid 要查找的sid。
+	@param [out] index 满足条件的binlog index。
+	@return -1：失败；0：不存在；1：发现
+	*/
+	int _lower(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K=NULL);
     /**
     @brief 将binlog读取的游标移到>ullSid的binlog处。
     @param [in] pCursor binlog的读取游标。
