@@ -1285,10 +1285,6 @@ int CwxBinLogMgr::_upper(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K
 {
 	CwxBinLogFile* pBinLogFile = NULL;
 	int iRet = 0;
-	if (!m_pCurBinlog || (ullSid >= m_pCurBinlog->getMaxSid()))
-	{///超过最大值
-		return 0;
-	}
 
 	//定位sid所在的binlog文件
 	///从小到大查找历史数据
@@ -1300,8 +1296,15 @@ int CwxBinLogMgr::_upper(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K
 			break;
 		}
 	}
-	if (!pBinLogFile) pBinLogFile = m_pCurBinlog;
-
+	if (!pBinLogFile)
+	{
+		if (m_pCurBinlog && (ullSid < m_pCurBinlog->getMaxSid()))
+			pBinLogFile = m_pCurBinlog;
+	}
+	if (!pBinLogFile)
+	{///超过最大值
+		return 0;
+	}
 	//定位cursor
 	iRet = pBinLogFile->upper(ullSid, index, szErr2K);
 	return iRet;
@@ -1325,10 +1328,6 @@ int CwxBinLogMgr::_lower(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K
 {
 	CwxBinLogFile* pBinLogFile = NULL;
 	int iRet = 0;
-	if (!m_pCurBinlog || (ullSid < getMinSid()) )
-	{///没有记录
-		return 0;
-	}
 
 	//定位sid所在的binlog文件
 	if (ullSid>=m_pCurBinlog->getMinSid())
@@ -1345,6 +1344,10 @@ int CwxBinLogMgr::_lower(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K
 				break;
 			}
 		}
+	}
+	if (!pBinLogFile)
+	{///没有记录
+		return 0;
 	}
 	CWX_ASSERT(pBinLogFile);
 
