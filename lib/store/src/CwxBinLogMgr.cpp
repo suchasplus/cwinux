@@ -1290,7 +1290,7 @@ int CwxBinLogMgr::_upper(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K
 	///从小到大查找历史数据
 	for (CWX_UINT32 i=0; i<m_arrBinlog.size(); i++)
 	{
-		if (ullSid < m_arrBinlog[i]->getMaxSid())
+		if (ullSid < m_arrBinlog[i]->getMaxSid()) ///如果小于最大值，则一定存在
 		{
 			pBinLogFile = m_arrBinlog[i];
 			break;
@@ -1298,7 +1298,7 @@ int CwxBinLogMgr::_upper(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K
 	}
 	if (!pBinLogFile)
 	{
-		if (m_pCurBinlog && (ullSid < m_pCurBinlog->getMaxSid()))
+		if (m_pCurBinlog && (ullSid < m_pCurBinlog->getMaxSid())) ///当前binglog存在而且小于最大值
 			pBinLogFile = m_pCurBinlog;
 	}
 	if (!pBinLogFile)
@@ -1329,8 +1329,8 @@ int CwxBinLogMgr::_lower(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K
 	CwxBinLogFile* pBinLogFile = NULL;
 	int iRet = 0;
 
-	//定位sid所在的binlog文件
-	if (ullSid>=m_pCurBinlog->getMinSid())
+	//定位sid所在的binlog文件，从大到小查找
+	if (m_pCurBinlog && (ullSid>=m_pCurBinlog->getMinSid())) ///<如果不小于最小值
 	{///在当前binlog文件内
 		pBinLogFile = m_pCurBinlog;
 	}
@@ -1338,7 +1338,7 @@ int CwxBinLogMgr::_lower(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K
 	{///查找历史数据
 		for (CWX_UINT32 i=m_arrBinlog.size(); i>0; i--)
 		{
-			if (ullSid >= m_arrBinlog[i-1]->getMinSid())
+			if (ullSid >= m_arrBinlog[i-1]->getMinSid()) ///<如果不小于最小值
 			{
 				pBinLogFile = m_arrBinlog[i-1];
 				break;
@@ -1349,7 +1349,6 @@ int CwxBinLogMgr::_lower(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K
 	{///没有记录
 		return 0;
 	}
-	CWX_ASSERT(pBinLogFile);
 
 	//定位cursor
 	iRet = pBinLogFile->lower(ullSid, index, szErr2K);
