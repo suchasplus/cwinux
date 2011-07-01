@@ -176,6 +176,12 @@ class CwxBinLogMgr;
 class CwxBinLogCursor
 {
 public:
+	enum
+	{
+		BINLOG_READ_BLOCK_BIT = 14, ///16K的读取buf。
+		BINLOG_READ_BLOCK_SIZE = 1<<14
+	};
+public:
     ///构造函数
     CwxBinLogCursor();
     ///析构函数
@@ -238,6 +244,10 @@ private:
     int header(CWX_UINT64 ullOffset);
     //获取cursor的文件 io handle
     inline int getHandle() const;
+	//读取数据
+	ssize_t pread(int fildes, void *buf, size_t nbyte, off_t offset);
+	//读取一页
+	bool preadPage(CWX_UINT64 ullBlockNo, CWX_UINT32 uiOffset);
 private:
     string             m_strFileName; ///<文件的名字
     int                m_fd;///<文件的handle
@@ -245,6 +255,9 @@ private:
     CwxBinLogHeader     m_curLogHeader; ///<当前log的header
     char               m_szHeadBuf[CwxBinLogHeader::BIN_LOG_HEADER_SIZE]; ///<log header的buf空间
     char               m_szErr2K[2048];///<错误信息buf
+	char			   m_szReadBlock[BINLOG_READ_BLOCK_SIZE];  ///<文件读取的buf
+	CWX_UINT64         m_ullBlockNo;   ///<当前cache的block no
+	CWX_UINT32		   m_uiBlockDataOffset; ///<块中数据结束偏移
     //由CwxBinLogMgr使用的状态值
     CWX_UINT64          m_ullSid; ///<seek的sid
     CWX_UINT8           m_ucSeekState; ///<seek的状态
@@ -319,6 +332,15 @@ public:
     @return -1：失败；0：成功。
     */
     int commit(char* szErr2K=NULL);
+
+	/**
+	@brief 获取不小于ullSid的最小binlog header
+	@param [in] ullSid 要查找的sid。
+	@param [out] index 满足条件的binlog index。
+	@return -1：失败；0：不存在；1：发现
+	*/
+	int upper(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K=NULL);
+
     /**
     @brief 定位Cursor的位置
     @param [in] cursor 日志读handle。
@@ -526,7 +548,15 @@ public:
     ///清空binlog管理器
     void clear();
 public:
-    /**
+	/**
+	@brief 获取不小于ullSid的最小binlog header
+	@param [in] ullSid 要查找的sid。
+	@param [out] index 满足条件的binlog index。
+	@return -1：失败；0：不存在；1：发现
+	*/
+	int upper(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K=NULL);
+
+	/**
     @brief 创建binlog读取的游标
     @return NULL：失败；否则返回游标对象的指针。
     */
@@ -638,6 +668,13 @@ public:
 private:
     ///清空binlog管理器
     void _clear();
+	/**
+	@brief 获取不小于ullSid的最小binlog header
+	@param [in] ullSid 要查找的sid。
+	@param [out] index 满足条件的binlog index。
+	@return -1：失败；0：不存在；1：发现
+	*/
+	int _upper(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K=NULL);
     /**
     @brief 将binlog读取的游标移到>ullSid的binlog处。
     @param [in] pCursor binlog的读取游标。
