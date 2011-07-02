@@ -336,25 +336,38 @@ public:
 	/**
 	@brief 获取大于ullSid的最小binlog header
 	@param [in] ullSid 要查找的sid。
-	@param [out] index 满足条件的binlog index。
+	@param [out] item 满足条件的binlog index。
+	@param [out] index 第几个记录。
+	@param [out] szErr2K 出错时的错误消息。
 	@return -1：失败；0：不存在；1：发现
 	*/
-	int upper(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K=NULL);
+	int upper(CWX_UINT64 ullSid, CwxBinLogIndex& item, CWX_UINT32& index, char* szErr2K=NULL);
 
 	/**
 	@brief 获取不大于ullSid的最大binlog header
 	@param [in] ullSid 要查找的sid。
-	@param [out] index 满足条件的binlog index。
+	@param [out] item 满足条件的binlog index。
+	@param [out] index 第几个记录。
+	@param [out] szErr2K 出错时的错误消息。
 	@return -1：失败；0：不存在；1：发现
 	*/
-	int lower(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K=NULL);
+	int lower(CWX_UINT64 ullSid, CwxBinLogIndex&item, CWX_UINT32& index, char* szErr2K=NULL);
     /**
-    @brief 定位Cursor的位置
-    @param [in] cursor 日志读handle。
-    @param [in] ucMode 定位的模式，SEEK_START：定位到文件的开头；SEEK_TAIL：定位到文件的最后；SEEK_SID：定位到第一个大于cursor.getSid()的日志处。
-    @return -2：不存在完成的记录头；-1：失败；0：不存在；1：定位到指定的位置
+    @brief 将binlog truncate到指定的sid。也就是说将指定sid后的数据删除。只有write mode下才能truncate。
+    @param [in] ullSid truncate的sid点。
+	@param [out] szErr2K 出错时的错误消息。
+    @return -1：失败；0：成功。若失败的话，可能会造成Binlog File对象无效，需要判读valid状态。
     */
-    int seek(CwxBinLogCursor& cursor, CWX_UINT8 ucMode=SEEK_SID);
+    int truncate(CWX_UINT64 ullSid, char* szErr2K=NULL);
+
+	/**
+	@brief 定位Cursor的位置
+	@param [in] cursor 日志读handle。
+	@param [in] ucMode 定位的模式，SEEK_START：定位到文件的开头；SEEK_TAIL：定位到文件的最后；SEEK_SID：定位到第一个大于cursor.getSid()的日志处。
+	@return -2：不存在完成的记录头；-1：失败；0：不存在；1：定位到指定的位置
+	*/
+	int seek(CwxBinLogCursor& cursor, CWX_UINT8 ucMode=SEEK_SID);
+
     /**
     @brief 删除指定的binlog文件及其索引文件
     @param [in] szPathFileName binlog文件名。
