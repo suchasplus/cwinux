@@ -655,7 +655,7 @@ int CwxBinLogFile::truncate(CWX_UINT64 ullSid, char* szErr2K)
 	}
 	//重新打开文件
 	string strFileName = m_strPathFileName;
-	return open(strFileName, false, false, szErr2K);
+	return open(strFileName.c_str(), false, false, szErr2K);
 }
 
 //-2：不存在完成的记录头；-1：失败；0：不存在；1：定位到指定的位置
@@ -664,7 +664,7 @@ int CwxBinLogFile::seek(CwxBinLogCursor& cursor, CWX_UINT8 ucMode)
     CWX_ASSERT(m_bValid);
 	if (!m_bValid)
 	{
-		CwxCommon::snprintf(cursor->m_szErr2K, 2047, "CwxBinlogFile is invalid, file:%s", m_strPathFileName.c_str());
+		CwxCommon::snprintf(cursor.m_szErr2K, 2047, "CwxBinlogFile is invalid, file:%s", m_strPathFileName.c_str());
 		return -1;
 	}
     int iRet = cursor.open(m_strPathFileName.c_str());
@@ -674,7 +674,7 @@ int CwxBinLogFile::seek(CwxBinLogCursor& cursor, CWX_UINT8 ucMode)
     
     //根据指定的SID定位
 	CwxBinLogIndex item;
-	iRet = upper(cursor->m_ullSid, item, cursor->m_szErr2K);
+	iRet = upper(cursor.m_ullSid, item, cursor.m_szErr2K);
 	if (1 != iRet) return iRet;
     return cursor.seek(item.getOffset());
 }
@@ -1454,7 +1454,7 @@ int CwxBinLogMgr::_seek(CwxBinLogCursor* pCursor, CWX_UINT64 ullSid)
     pCursor->m_pBinLogFile = NULL;
 	if(!m_bValid)
 	{
-		if (szErr2K) strcpy(pCursor->m_szErr2K, m_szErr2K);
+		strcpy(pCursor->m_szErr2K, m_szErr2K);
 		return -1;
 	}
     if (!m_pCurBinlog || 
@@ -1512,7 +1512,7 @@ int CwxBinLogMgr::next(CwxBinLogCursor* pCursor)
     CwxReadLockGuard<CwxRwLock> lock(&m_rwLock);
 	if(!m_bValid)
 	{
-		if (szErr2K) strcpy(pCursor->m_szErr2K, m_szErr2K);
+		strcpy(pCursor->m_szErr2K, m_szErr2K);
 		return -1;
 	}
     if (!isCursorValid(pCursor))
@@ -1583,7 +1583,7 @@ int CwxBinLogMgr::prev(CwxBinLogCursor* pCursor)
     CwxReadLockGuard<CwxRwLock> lock(&m_rwLock);
 	if(!m_bValid)
 	{
-		if (szErr2K) strcpy(pCursor->m_szErr2K, m_szErr2K);
+		strcpy(pCursor->m_szErr2K, m_szErr2K);
 		return -1;
 	}
     if (!isCursorValid(pCursor))
@@ -1666,7 +1666,7 @@ int CwxBinLogMgr::fetch(CwxBinLogCursor* pCursor, char* szData, CWX_UINT32& uiDa
 {
 	if(!m_bValid)
 	{
-		if (szErr2K) strcpy(pCursor->m_szErr2K, m_szErr2K);
+		strcpy(pCursor->m_szErr2K, m_szErr2K);
 		return -1;
 	}
     if (!isCursorValid(pCursor))
