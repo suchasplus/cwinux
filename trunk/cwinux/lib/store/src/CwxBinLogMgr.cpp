@@ -173,7 +173,7 @@ ssize_t CwxBinLogCursor::pread(int fildes, void *buf, size_t nbyte, CWX_UINT64 o
 		{//Êý¾Ý×ã¹»
 			memcpy(buf, m_szReadBlock + uiBlockStartOffset, uiBlockEndOffset - uiBlockStartOffset);
 			pos = uiBlockEndOffset - uiBlockStartOffset;
-			if (BINLOG_READ_BLOCK_SIZE != uiBlockEndOffset) return pos;
+			if (ullStartBlock == ullEndBlock) return pos;
 		}
 		else
 		{//not enough data
