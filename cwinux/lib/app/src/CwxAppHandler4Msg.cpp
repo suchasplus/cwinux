@@ -408,6 +408,40 @@ CWX_UINT16 CwxAppHandler4Msg::getLocalPort()
     return 0;
 }
 
+void CwxAppHandler4Msg::clear()
+{
+	m_conn.reset();
+	m_uiSendByte = 0;
+
+	if (m_curSndingMsg)
+	{
+		if (m_curSndingMsg->send_ctrl().isFailNotice())
+		{
+			this->getApp()->onFailSendMsg(m_curSndingMsg);
+		}
+		if (m_curSndingMsg) CwxMsgBlockAlloc::free(m_curSndingMsg);
+		this->m_curSndingMsg = NULL;
+	}
+	m_curSndingMsg = NULL;
+	while(m_waitSendMsgHead)
+	{
+		m_curSndingMsg = m_waitSendMsgHead->m_next;
+		if (m_waitSendMsgHead->send_ctrl().isFailNotice())
+		{
+			this->getApp()->onFailSendMsg(m_waitSendMsgHead);
+		}
+		if (m_waitSendMsgHead) CwxMsgBlockAlloc::free(m_waitSendMsgHead);
+		m_waitSendMsgHead = m_curSndingMsg;
+	}
+	m_waitSendMsgTail = NULL;
+	m_uiRecvHeadLen = 0;
+	m_uiRecvDataLen = 0;
+	if (m_recvMsgData) CwxMsgBlockAlloc::free(m_recvMsgData);
+	m_recvMsgData = NULL;
+	m_bStopListen = false;
+	m_connErrNo = 0;
+}
+
 
 CWINUX_END_NAMESPACE
 
