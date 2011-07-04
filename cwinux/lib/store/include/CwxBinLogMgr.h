@@ -176,6 +176,12 @@ class CwxBinLogMgr;
 class CwxBinLogCursor
 {
 public:
+	enum
+	{
+		BINLOG_READ_BLOCK_BIT = 16, ///<64K的读取buf。
+		BINLOG_READ_BLOCK_SIZE = 1<<BINLOG_READ_BLOCK_BIT ///<64K的读取buf。
+	};
+public:
     ///构造函数
     CwxBinLogCursor();
     ///析构函数
@@ -238,6 +244,10 @@ private:
     int header(CWX_UINT64 ullOffset);
     //获取cursor的文件 io handle
     inline int getHandle() const;
+	//读取数据
+	ssize_t pread(int fildes, void *buf, size_t nbyte, CWX_UINT64 offset);
+	//读取一页
+	bool preadPage(int fildes, CWX_UINT64 ullBlockNo, CWX_UINT32 uiOffset);
 private:
     string             m_strFileName; ///<文件的名字
     int                m_fd;///<文件的handle
@@ -245,6 +255,9 @@ private:
     CwxBinLogHeader     m_curLogHeader; ///<当前log的header
     char               m_szHeadBuf[CwxBinLogHeader::BIN_LOG_HEADER_SIZE]; ///<log header的buf空间
     char               m_szErr2K[2048];///<错误信息buf
+	char			   m_szReadBlock[BINLOG_READ_BLOCK_SIZE];  ///<文件读取的buf
+	CWX_UINT64         m_ullBlockNo;   ///<当前cache的block no
+	CWX_UINT32		   m_uiBlockDataOffset; ///<块中数据结束偏移
     //由CwxBinLogMgr使用的状态值
     CWX_UINT64          m_ullSid; ///<seek的sid
     CWX_UINT8           m_ucSeekState; ///<seek的状态
@@ -319,13 +332,42 @@ public:
     @return -1：失败；0：成功。
     */
     int commit(char* szErr2K=NULL);
+
+	/**
+	@brief 获取大于ullSid的最小binlog header
+	@param [in] ullSid 要查找的sid。
+	@param [out] item 满足条件的binlog index。
+	@param [out] index 第几个记录。
+	@param [out] szErr2K 出错时的错误消息。
+	@return -1：失败；0：不存在；1：发现
+	*/
+	int upper(CWX_UINT64 ullSid, CwxBinLogIndex& item, CWX_UINT32& index, char* szErr2K=NULL);
+
+	/**
+	@brief 获取不大于ullSid的最大binlog header
+	@param [in] ullSid 要查找的sid。
+	@param [out] item 满足条件的binlog index。
+	@param [out] index 第几个记录。
+	@param [out] szErr2K 出错时的错误消息。
+	@return -1：失败；0：不存在；1：发现
+	*/
+	int lower(CWX_UINT64 ullSid, CwxBinLogIndex&item, CWX_UINT32& index, char* szErr2K=NULL);
     /**
-    @brief 定位Cursor的位置
-    @param [in] cursor 日志读handle。
-    @param [in] ucMode 定位的模式，SEEK_START：定位到文件的开头；SEEK_TAIL：定位到文件的最后；SEEK_SID：定位到第一个大于cursor.getSid()的日志处。
-    @return -2：不存在完成的记录头；-1：失败；0：不存在；1：定位到指定的位置
+    @brief 将binlog truncate到指定的sid。也就是说将指定sid后的数据删除。只有write mode下才能truncate。
+    @param [in] ullSid truncate的sid点。
+	@param [out] szErr2K 出错时的错误消息。
+    @return -1：失败；0：成功。若失败的话，可能会造成Binlog File对象无效，需要判读valid状态。
     */
-    int seek(CwxBinLogCursor& cursor, CWX_UINT8 ucMode=SEEK_SID);
+    int truncate(CWX_UINT64 ullSid, char* szErr2K=NULL);
+
+	/**
+	@brief 定位Cursor的位置
+	@param [in] cursor 日志读handle。
+	@param [in] ucMode 定位的模式，SEEK_START：定位到文件的开头；SEEK_TAIL：定位到文件的最后；SEEK_SID：定位到第一个大于cursor.getSid()的日志处。
+	@return -2：不存在完成的记录头；-1：失败；0：不存在；1：定位到指定的位置
+	*/
+	int seek(CwxBinLogCursor& cursor, CWX_UINT8 ucMode=SEEK_SID);
+
     /**
     @brief 删除指定的binlog文件及其索引文件
     @param [in] szPathFileName binlog文件名。
@@ -526,7 +568,22 @@ public:
     ///清空binlog管理器
     void clear();
 public:
-    /**
+	/**
+	@brief 获取大于ullSid的最小binlog header
+	@param [in] ullSid 要查找的sid。
+	@param [out] index 满足条件的binlog index。
+	@return -1：失败；0：不存在；1：发现
+	*/
+	int upper(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K=NULL);
+	/**
+	@brief 获取不大于ullSid的最大binlog header
+	@param [in] ullSid 要查找的sid。
+	@param [out] index 满足条件的binlog index。
+	@return -1：失败；0：不存在；1：发现
+	*/
+	int lower(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K=NULL);
+
+	/**
     @brief 创建binlog读取的游标
     @return NULL：失败；否则返回游标对象的指针。
     */
@@ -638,6 +695,20 @@ public:
 private:
     ///清空binlog管理器
     void _clear();
+	/**
+	@brief 获取大于ullSid的最小binlog header
+	@param [in] ullSid 要查找的sid。
+	@param [out] index 满足条件的binlog index。
+	@return -1：失败；0：不存在；1：发现
+	*/
+	int _upper(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K=NULL);
+	/**
+	@brief 获取不大于ullSid的最大binlog header
+	@param [in] ullSid 要查找的sid。
+	@param [out] index 满足条件的binlog index。
+	@return -1：失败；0：不存在；1：发现
+	*/
+	int _lower(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K=NULL);
     /**
     @brief 将binlog读取的游标移到>ullSid的binlog处。
     @param [in] pCursor binlog的读取游标。
@@ -670,6 +741,7 @@ private:
     ///一下变量都在读写锁保护之中
     bool                     m_bValid; ///<binlog 管理器是否有效。
     vector<CwxBinLogFile*>   m_arrBinlog; ///<不包含当前binlog文件的binlog文件数组，按照FileNo升序，也是sid的升序
+	set<CwxBinLogCursor*>    m_cursorSet; ///<建立的所有cursor的集合
     CwxBinLogFile*           m_pCurBinlog;///<当前写的binlog文件
     CWX_UINT64               m_ullMinSid; ///<binlog文件的最小sid
     CWX_UINT64               m_ullMaxSid; ///<binlog文件的最大sid

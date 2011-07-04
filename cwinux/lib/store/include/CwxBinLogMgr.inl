@@ -464,7 +464,6 @@ inline int CwxBinLogCursor::getHandle() const
 }
 
 
-
 /***********************************************************************
                     CwxBinLogFile  class
 ***********************************************************************/
@@ -563,9 +562,21 @@ inline string const& CwxBinLogFile::getIndexFileName() const
 inline int CwxBinLogFile::readIndex(int fd, CwxBinLogIndex& index, CWX_UINT64 ullOffset, char* szErr2K) const
 {
     char szBuf[CwxBinLogIndex::BIN_LOG_INDEX_SIZE];
-    if (CwxBinLogIndex::BIN_LOG_INDEX_SIZE != pread(fd, &szBuf, CwxBinLogIndex::BIN_LOG_INDEX_SIZE, ullOffset))
+	ssize_t ret = pread(fd, &szBuf, CwxBinLogIndex::BIN_LOG_INDEX_SIZE, ullOffset);
+    if (CwxBinLogIndex::BIN_LOG_INDEX_SIZE != ret)
     {
-        if (szErr2K) CwxCommon::snprintf(szErr2K, 2047, "Failure to read binlog index, file:%s, errno=%d", this->m_strIndexFileName.c_str(), errno);
+		if (szErr2K)
+		{
+			if (-1 == ret)
+			{
+				CwxCommon::snprintf(szErr2K, 2047, "Failure to read binlog index, file:%s, errno=%d", this->m_strIndexFileName.c_str(), errno);
+			}
+			else
+			{
+				char szOffset[32];
+				CwxCommon::snprintf(szErr2K, 2047, "No complete index record, offset:%s", CwxCommon::toString(ullOffset, szOffset, 10));
+			}
+		}
         return -1;
     }
     index.unserialize(szBuf);
