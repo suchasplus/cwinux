@@ -40,7 +40,7 @@ int CwxAppHandler4Notice::handle_event(int , CWX_HANDLE)
 
 int CwxAppHandler4Notice::close(CWX_HANDLE)
 {
-    reactor()->removeHandler(this);
+    if (reactor())reactor()->removeHandler(this);
     if (!getApp()->isStopped()) getApp()->stop();
     return 0;
 }

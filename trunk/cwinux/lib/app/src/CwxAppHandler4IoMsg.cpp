@@ -28,7 +28,7 @@ int CwxAppHandler4IoMsg::close(CWX_HANDLE )
         ));
     ///´ÓreactorÖÐÒÆ³ý
     if (CWX_INVALID_HANDLE != getHandle())
-        reactor()->removeHandler(this);
+        if (reactor()) reactor()->removeHandler(this);
 
     m_conn.setState(CwxAppConnInfo::FAILED);
 

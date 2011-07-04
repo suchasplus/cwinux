@@ -158,7 +158,7 @@ int CwxAppTcpAcceptor::close(CWX_HANDLE)
 {
     if (CWX_INVALID_HANDLE != getHandle())
     {
-        reactor()->removeHandler(this);
+        if (reactor()) reactor()->removeHandler(this);
         ::close(getHandle());
         setHandle(CWX_INVALID_HANDLE);
         m_acceptor.setHandle(CWX_INVALID_HANDLE);
