@@ -178,8 +178,8 @@ class CwxBinLogCursor
 public:
 	enum
 	{
-		BINLOG_READ_BLOCK_BIT = 14, ///16K的读取buf。
-		BINLOG_READ_BLOCK_SIZE = 1<<14
+		BINLOG_READ_BLOCK_BIT = 16, ///<64K的读取buf。
+		BINLOG_READ_BLOCK_SIZE = 1<<BINLOG_READ_BLOCK_BIT ///<64K的读取buf。
 	};
 public:
     ///构造函数
@@ -245,7 +245,7 @@ private:
     //获取cursor的文件 io handle
     inline int getHandle() const;
 	//读取数据
-	ssize_t pread(int fildes, void *buf, size_t nbyte, off_t offset);
+	ssize_t pread(int fildes, void *buf, size_t nbyte, CWX_UINT64 offset);
 	//读取一页
 	bool preadPage(CWX_UINT64 ullBlockNo, CWX_UINT32 uiOffset);
 private:

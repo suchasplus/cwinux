@@ -574,7 +574,7 @@ inline int CwxBinLogFile::readIndex(int fd, CwxBinLogIndex& index, CWX_UINT64 ul
 			else
 			{
 				char szOffset[32];
-				CwxCommon::snprintf(szErr2K£¬ 2047, "No complete index record, offset:%s", CwxCommon::toString(uullOffset, szOffset, 10));
+				CwxCommon::snprintf(szErr2K, 2047, "No complete index record, offset:%s", CwxCommon::toString(ullOffset, szOffset, 10));
 			}
 		}
         return -1;
