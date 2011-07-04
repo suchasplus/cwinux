@@ -28,7 +28,7 @@ int CwxBinLogCursor::open(char const* szFileName)
     if (-1 != this->m_fd)
 	{
 		::close(m_fd);
-		m_fd = -1£»
+		m_fd = -1;
 	}
     m_fd = ::open(szFileName, O_RDONLY);
     if (-1 == m_fd)
@@ -145,7 +145,7 @@ inline bool CwxBinLogCursor::preadPage(CWX_UINT64 ullBlockNo, CWX_UINT32 uiOffse
 			m_uiBlockDataOffset += ret;
 			return true;
 		}
-		if (EOVERFLOW = errno) return true;
+		if (EOVERFLOW == errno) return true;
 		if (EINTR == errno) continue;
 		break;
 	} while(1);
@@ -528,7 +528,7 @@ int CwxBinLogFile::upper(CWX_UINT64 ullSid, CwxBinLogIndex& item, CWX_UINT32& in
 	{//next item
 		ullOffset += CwxBinLogIndex::BIN_LOG_INDEX_SIZE;
 		index++;
-		if (0 != readIndex(fd, index, ullOffset, szErr2K))
+		if (0 != readIndex(fd, item, ullOffset, szErr2K))
 		{
 			::close(fd);
 			return -1;
