@@ -10,6 +10,8 @@ CwxBinLogCursor::CwxBinLogCursor()
     m_bDangling = true;
     m_szHeadBuf[0] = 0x00;
     m_szErr2K[0] = 0x00;
+	m_ullBlockNo = 0;
+	m_uiBlockDataOffset = 0;
     m_ullSid = 0; ///<seek的sid
     m_ucSeekState = 0; ///<seek的状态
     m_pBinLogFile = NULL;
@@ -23,7 +25,11 @@ CwxBinLogCursor::~CwxBinLogCursor()
 
 int CwxBinLogCursor::open(char const* szFileName)
 {
-    if (-1 != this->m_fd) ::close(m_fd);
+    if (-1 != this->m_fd)
+	{
+		::close(m_fd);
+		m_fd = -1;
+	}
     m_fd = ::open(szFileName, O_RDONLY);
     if (-1 == m_fd)
     {
@@ -34,9 +40,8 @@ int CwxBinLogCursor::open(char const* szFileName)
     m_bDangling = true;
     m_curLogHeader.reset();
     m_szErr2K[0] = 0x00;
-/*    m_ullSid = 0;
-    m_ucSeekState = 0; ///<seek的状态
-    m_pBinLogFile = NULL;*/
+	m_ullBlockNo = 0;
+	m_uiBlockDataOffset = 0;
     return 0;
 }
 
@@ -72,10 +77,7 @@ int CwxBinLogCursor::data(char * szBuf, CWX_UINT32& uiBufLen)
         if (iRet != (int)m_curLogHeader.getLogLen())
         {
             if (-1 == iRet)
-            {
-                CwxCommon::snprintf(this->m_szErr2K, 2047, "Failure to read file, errno=%d", errno);
-                return -1;
-            }
+				return -1;
             uiBufLen = iRet;
             CwxCommon::snprintf(this->m_szErr2K, 2047, "Log's dat is less, log-data-size[%u], read-size[%u]",
                 m_curLogHeader.getLogLen(), iRet);
@@ -88,7 +90,7 @@ int CwxBinLogCursor::data(char * szBuf, CWX_UINT32& uiBufLen)
 
 void CwxBinLogCursor::close()
 {
-    if (m_fd) ::close(m_fd);
+    if (-1 != m_fd) ::close(m_fd);
     m_fd = -1;
     m_bDangling = true;
 }
@@ -107,7 +109,6 @@ int CwxBinLogCursor::header(CWX_UINT64 ullOffset)
         }
         else if(-1 == iRet)
         {
-            CwxCommon::snprintf(this->m_szErr2K, 2047, "Failure to read bin-log, errno=%d.", errno);
             return -1;
         }
         CwxCommon::snprintf(this->m_szErr2K, 2047, "Log is incomplete");
@@ -124,6 +125,105 @@ int CwxBinLogCursor::header(CWX_UINT64 ullOffset)
         return -1;
     }
     return 1;
+}
+
+inline bool CwxBinLogCursor::preadPage(int fildes, CWX_UINT64 ullBlockNo, CWX_UINT32 uiOffset)
+{
+	CWX_ASSERT(uiOffset<=BINLOG_READ_BLOCK_SIZE);
+	ssize_t ret = 0;
+	if (ullBlockNo != m_ullBlockNo)
+	{
+		m_ullBlockNo = ullBlockNo;
+		m_uiBlockDataOffset = 0;
+	}
+	if ((ullBlockNo == m_ullBlockNo)&&(uiOffset <= m_uiBlockDataOffset)) return true;
+	do 
+	{
+		ret = ::pread(fildes, m_szReadBlock + m_uiBlockDataOffset, BINLOG_READ_BLOCK_SIZE - m_uiBlockDataOffset, (ullBlockNo<<BINLOG_READ_BLOCK_BIT) + m_uiBlockDataOffset);
+		if (-1 != ret)
+		{
+			m_uiBlockDataOffset += ret;
+			return true;
+		}
+		if (EOVERFLOW == errno) return true;
+		if (EINTR == errno) continue;
+		break;
+	} while(1);
+	CwxCommon::snprintf(this->m_szErr2K, 2047, "Failure to read bin-log file:%s, errno=%d.", m_strFileName.c_str(), errno);
+	return false;
+}
+
+//读取数据
+ssize_t CwxBinLogCursor::pread(int fildes, void *buf, size_t nbyte, CWX_UINT64 offset)
+{
+	size_t pos = 0;
+	if (nbyte)
+	{
+		CWX_UINT64 ullStartBlock = offset>>BINLOG_READ_BLOCK_BIT;
+		CWX_UINT64 ullEndBlock = (offset + nbyte - 1)>>BINLOG_READ_BLOCK_BIT;
+		CWX_UINT64 ullBlockNum = ullEndBlock - ullStartBlock + 1;
+		CWX_UINT32 uiBlockStartOffset = 0;
+		CWX_UINT32 uiBlockEndOffset = 0;
+
+		//get first block
+		uiBlockStartOffset = offset - (ullStartBlock << BINLOG_READ_BLOCK_BIT);
+		uiBlockEndOffset = ullBlockNum==1?uiBlockStartOffset + nbyte:(CWX_UINT32)BINLOG_READ_BLOCK_SIZE;
+		if (!preadPage(fildes, ullStartBlock, uiBlockEndOffset)) return -1;
+		if (uiBlockEndOffset <= m_uiBlockDataOffset)
+		{//数据足够
+			memcpy(buf, m_szReadBlock + uiBlockStartOffset, uiBlockEndOffset - uiBlockStartOffset);
+			pos = uiBlockEndOffset - uiBlockStartOffset;
+			if (BINLOG_READ_BLOCK_SIZE != uiBlockEndOffset) return pos;
+		}
+		else
+		{//not enough data
+			if (uiBlockStartOffset < m_uiBlockDataOffset)
+			{
+				memcpy(buf, m_szReadBlock + uiBlockStartOffset, m_uiBlockDataOffset - uiBlockStartOffset);
+				pos = m_uiBlockDataOffset - uiBlockStartOffset;
+				return pos;
+			}
+			return 0;
+		}
+		//get middle block
+		if (ullBlockNum > 2)
+		{//read middle
+			ssize_t ret = 0;
+			do 
+			{
+				ret = ::pread(fildes, (char*)buf+pos, (ullBlockNum - 2)<<BINLOG_READ_BLOCK_BIT, (ullStartBlock + 1)<<BINLOG_READ_BLOCK_BIT);
+				if (-1 != ret)
+				{
+					pos += ret;
+					if (ret != ((ullBlockNum - 2)<<BINLOG_READ_BLOCK_BIT)) //finish
+						return pos;
+					break;
+				}
+				if (EOVERFLOW == errno) return pos;
+				if (EINTR == errno) continue;
+				CwxCommon::snprintf(this->m_szErr2K, 2047, "Failure to read bin-log file:%s, errno=%d.", m_strFileName.c_str(), errno);
+				return -1;
+			} while(1);
+		}		
+		//get last block
+		{
+			CWX_ASSERT(nbyte > pos);
+			uiBlockEndOffset = nbyte - pos;
+			if (!preadPage(fildes, ullEndBlock, uiBlockEndOffset)) return -1;
+			if (uiBlockEndOffset <= m_uiBlockDataOffset)
+			{//数据足够
+				memcpy((char*)buf + pos, m_szReadBlock, uiBlockEndOffset);
+				pos += uiBlockEndOffset;
+			}
+			else
+			{//not enough data
+				memcpy((char*)buf + pos, m_szReadBlock, m_uiBlockDataOffset);
+				pos += m_uiBlockDataOffset;
+			}
+
+		}
+	}
+	return pos;
 }
 
 
@@ -360,68 +460,224 @@ int CwxBinLogFile::commit(char* szErr2K)
     return 0;
 }
 
+int CwxBinLogFile::upper(CWX_UINT64 ullSid, CwxBinLogIndex& item, CWX_UINT32& index, char* szErr2K)
+{
+	CWX_ASSERT(m_bValid);
+	if (!m_bValid)
+	{
+		if (szErr2K) CwxCommon::snprintf(szErr2K, 2047, "CwxBinlogFile is invalid, file:%s", m_strPathFileName.c_str());
+		return -1;
+	}
+	if (!m_uiLogNum) return 0;
+
+	//根据指定的SID定位
+	int fd = -1;
+	CWX_UINT64 ullOffset = 0;
+	//折半查找
+	fd = ::open(m_strIndexFileName.c_str(), O_RDONLY);
+	if (-1 == fd)
+	{
+		if (szErr2K) CwxCommon::snprintf(szErr2K, 2047, "Failure to open index file:%s, errno=%d", m_strIndexFileName.c_str(), errno);
+		return -1;
+	}
+	if (ullSid >= m_ullMaxSid)
+	{
+		::close(fd);
+		return 0;///不存在
+	}
+	if (ullSid < m_ullMinSid)
+	{
+		index = 0;
+		if (0 != readIndex(fd, item, 0, szErr2K))
+		{
+			::close(fd);
+			return -1;
+		}
+		::close(fd);
+		return 1;
+	}
+
+	CWX_UINT32 uiStart = 0;
+	CWX_UINT32 uiEnd = m_uiLogNum - 1;
+	CWX_UINT32 uiMid = 0;
+	while(uiEnd >= uiStart)
+	{
+		uiMid = (uiStart + uiEnd)/2;
+		ullOffset = uiMid;
+		ullOffset *= CwxBinLogIndex::BIN_LOG_INDEX_SIZE;
+		if (0 != readIndex(fd, item, ullOffset, szErr2K))
+		{
+			::close(fd);
+			return -1;
+		}
+		if (ullSid == item.getSid())
+		{
+			break;
+		}
+		else if (ullSid < item.getSid())
+		{
+			uiEnd = uiMid-1;
+		}
+		else
+		{
+			uiStart = uiMid+1;
+		}
+	}
+	index = uiMid;
+	if (ullSid >= item.getSid())
+	{//next item
+		ullOffset += CwxBinLogIndex::BIN_LOG_INDEX_SIZE;
+		index++;
+		if (0 != readIndex(fd, item, ullOffset, szErr2K))
+		{
+			::close(fd);
+			return -1;
+		}
+	}
+	::close(fd);
+	return 1;
+}
+
+// -1：失败；0：不存在；1：发现
+int CwxBinLogFile::lower(CWX_UINT64 ullSid, CwxBinLogIndex& item, CWX_UINT32& index, char* szErr2K)
+{
+	CWX_ASSERT(m_bValid);
+	if (!m_bValid)
+	{
+		if (szErr2K) CwxCommon::snprintf(szErr2K, 2047, "CwxBinlogFile is invalid, file:%s", m_strPathFileName.c_str());
+		return -1;
+	}
+	if (!m_uiLogNum) return 0;
+
+	//根据指定的SID定位
+	int fd = -1;
+	CWX_UINT64 ullOffset = 0;
+	//折半查找
+	fd = ::open(m_strIndexFileName.c_str(), O_RDONLY);
+	if (-1 == fd)
+	{
+		if (szErr2K) CwxCommon::snprintf(szErr2K, 2047, "Failure to open index file:%s, errno=%d", m_strIndexFileName.c_str(), errno);
+		return -1;
+	}
+	if (ullSid < m_ullMinSid)
+	{
+		::close(fd);
+		return 0;///不存在
+	}
+	if (ullSid >= m_ullMaxSid)
+	{
+		//获取最后一个
+		index = m_uiLogNum - 1;
+		if (0 != readIndex(fd, item, index * CwxBinLogIndex::BIN_LOG_INDEX_SIZE, szErr2K))
+		{
+			::close(fd);
+			return -1;
+		}
+		::close(fd);
+		return 1;
+	}
+
+	CWX_UINT32 uiStart = 0;
+	CWX_UINT32 uiEnd = m_uiLogNum - 1;
+	CWX_UINT32 uiMid = 0;
+	while(uiEnd >= uiStart)
+	{
+		uiMid = (uiStart + uiEnd)/2;
+		ullOffset = uiMid;
+		ullOffset *= CwxBinLogIndex::BIN_LOG_INDEX_SIZE;
+		if (0 != readIndex(fd, item, ullOffset, szErr2K))
+		{
+			::close(fd);
+			return -1;
+		}
+		if (ullSid == item.getSid())
+		{
+			break;
+		}
+		else if (ullSid < item.getSid())
+		{
+			uiEnd = uiMid-1;
+		}
+		else
+		{
+			uiStart = uiMid+1;
+		}
+	}
+	index = uiMid;
+	if (ullSid < item.getSid())
+	{//next item
+		ullOffset -= CwxBinLogIndex::BIN_LOG_INDEX_SIZE;
+		index--;
+		if (0 != readIndex(fd, item, ullOffset, szErr2K))
+		{
+			::close(fd);
+			return -1;
+		}
+	}
+	::close(fd);
+	return 1;
+}
+
+/// -1：失败；0：成功
+int CwxBinLogFile::truncate(CWX_UINT64 ullSid, char* szErr2K)
+{
+	CWX_ASSERT(m_bValid);
+	if (!m_bValid)
+	{
+		if (szErr2K) CwxCommon::snprintf(szErr2K, 2047, "CwxBinlogFile is invalid, file:%s", m_strPathFileName.c_str());
+		return -1;
+	}
+	if (m_bReadOnly)
+	{
+		if (szErr2K) CwxCommon::snprintf(szErr2K, 2047, "CwxBinlogFile is readonly, file:%s", m_strPathFileName.c_str());
+		return -1;
+	}
+	CwxBinLogIndex index;
+	CWX_UINT32 pos=0;
+	int ret = upper(ullSid, index, pos, szErr2K);
+	if (-1 == ret) return -1;
+	if (0 == ret) return 0; ///所有记录都小于ullSid
+	//truncate index 文件
+	off_t offset = pos;
+	offset *= CwxBinLogIndex::BIN_LOG_INDEX_SIZE;
+	if (0 != ftruncate(m_indexFd, offset))
+	{
+		if (szErr2K) CwxCommon::snprintf(szErr2K, 2047, "Failure to truncate index file:%s, errno=%d", m_strIndexFileName.c_str(), errno);
+		close();
+		return -1;
+	}
+	offset = index.getOffset();
+	if (0 != ftruncate(m_fd, offset))
+	{
+		if (szErr2K) CwxCommon::snprintf(szErr2K, 2047, "Failure to truncate data file:%s, errno=%d", m_strPathFileName.c_str(), errno);
+		close();
+		return -1;
+	}
+	//重新打开文件
+	string strFileName = m_strPathFileName;
+	return open(strFileName.c_str(), false, false, szErr2K);
+}
+
 //-2：不存在完成的记录头；-1：失败；0：不存在；1：定位到指定的位置
 int CwxBinLogFile::seek(CwxBinLogCursor& cursor, CWX_UINT8 ucMode)
 {
     CWX_ASSERT(m_bValid);
-
+	if (!m_bValid)
+	{
+		CwxCommon::snprintf(cursor.m_szErr2K, 2047, "CwxBinlogFile is invalid, file:%s", m_strPathFileName.c_str());
+		return -1;
+	}
     int iRet = cursor.open(m_strPathFileName.c_str());
     if (-1 == iRet) return -1;
     if (SEEK_START == ucMode)  return cursor.seek(0);
     if (SEEK_TAIL == ucMode) return cursor.seek(m_ullPrevLogOffset);
     
     //根据指定的SID定位
-    int fd = -1;
-    CWX_UINT64 ullOffset = 0;
-    if (cursor.m_ullSid >= m_ullMaxSid) return 0;///不存在
-    if (cursor.m_ullSid < m_ullMinSid )
-    {///从第一个开始
-        return cursor.seek(0);
-    }
-    //折半查找
-    fd = ::open(m_strIndexFileName.c_str(), O_RDONLY);
-    if (-1 == fd)
-    {
-        CwxCommon::snprintf(cursor.m_szErr2K, 2047, "Failure to open index file:%s, errno=%d", m_strIndexFileName.c_str(), errno);
-        return -1;
-    }
-    CWX_UINT32 uiStart = 0;
-    CWX_UINT32 uiEnd = m_uiLogNum - 1;
-    CWX_UINT32 uiMid = 0;
-    CwxBinLogIndex item;
-    while(uiEnd >= uiStart)
-    {
-        uiMid = (uiStart + uiEnd)/2;
-        ullOffset = uiMid;
-        ullOffset *= CwxBinLogIndex::BIN_LOG_INDEX_SIZE;
-        if (0 != readIndex(fd, item, ullOffset, cursor.m_szErr2K))
-        {
-            ::close(fd);
-            return -1;
-        }
-        if (cursor.m_ullSid == item.getSid())
-        {
-            break;
-        }
-        else if (cursor.m_ullSid < item.getSid())
-        {
-            uiEnd = uiMid-1;
-        }
-        else
-        {
-            uiStart = uiMid+1;
-        }
-    }
-    ::close(fd);
-    if (cursor.m_ullSid >= item.getSid())
-    {//next item
-        ullOffset = item.getOffset() + item.getLogLen() + CwxBinLogHeader::BIN_LOG_HEADER_SIZE;
-    }
-    else if (cursor.m_ullSid < item.getSid())
-    {
-        ullOffset = item.getOffset();
-    }
-    return cursor.seek(ullOffset);
+	CwxBinLogIndex item;
+	CWX_UINT32 index;
+	iRet = upper(cursor.m_ullSid, item, index, cursor.m_szErr2K);
+	if (1 != iRet) return iRet;
+    return cursor.seek(item.getOffset());
 }
 
 
@@ -650,6 +906,12 @@ CwxBinLogMgr::~CwxBinLogMgr()
         delete m_arrBinlog[i];
     }
     m_arrBinlog.clear();
+	set<CwxBinLogCursor*>::iterator iter =  m_cursorSet.begin();
+	while(iter != m_cursorSet.end())
+	{
+		delete *iter;
+		iter++;
+	}
 }
 
 // -1：失败；0：成功。
@@ -820,6 +1082,11 @@ int CwxBinLogMgr::append(CWX_UINT64 ullSid,
                          CWX_UINT32 uiDataLen,
                          char* szErr2K)
 {
+	if(!m_bValid)
+	{
+		if (szErr2K) strcpy(szErr2K, m_szErr2K);
+		return -1;
+	}
     ///写锁保护
     CwxWriteLockGuard<CwxRwLock> lock(&m_rwLock);
     //如果没有binlog文件，则创建初始binlog文件，初始文件序号为0
@@ -1002,6 +1269,11 @@ int CwxBinLogMgr::append(CWX_UINT64 ullSid,
 int CwxBinLogMgr::commit(char* szErr2K)
 {
     int iRet = 0;
+	if(!m_bValid)
+	{
+		if (szErr2K) strcpy(szErr2K, m_szErr2K);
+		return -1;
+	}
     if (m_pCurBinlog) iRet = m_pCurBinlog->commit(m_szErr2K);
     if (0 != iRet)
     {
@@ -1021,6 +1293,14 @@ void CwxBinLogMgr::clear()
 
 void CwxBinLogMgr::_clear()
 {
+	set<CwxBinLogCursor*>::iterator iter = m_cursorSet.begin();
+	while(iter != m_cursorSet.end())
+	{
+		delete *iter;
+		iter++;
+	}
+	m_cursorSet.clear();
+
     if (m_pCurBinlog) delete m_pCurBinlog;
     m_pCurBinlog = NULL;
     CWX_UINT32 i = 0;
@@ -1048,11 +1328,114 @@ void CwxBinLogMgr::_clear()
 //NULL 失败；否则返回游标对象的指针。
 CwxBinLogCursor* CwxBinLogMgr::createCurser()
 {
+	///读锁保护
+	CwxWriteLockGuard<CwxRwLock> lock(&m_rwLock);
     CwxBinLogCursor* pCursor =  new CwxBinLogCursor();
     pCursor->m_ullSid = 0;
     pCursor->m_ucSeekState = CURSOR_STATE_UNSEEK;
     pCursor->m_pBinLogFile = NULL;
+	m_cursorSet.insert(pCursor);
     return pCursor;
+}
+
+/**
+@brief 获取不小于ullSid的最小binlog header
+@param [in] ullSid 要查找的sid。
+@param [out] index 满足条件的binlog index。
+@return -1：失败；0：不存在；1：发现
+*/
+int CwxBinLogMgr::upper(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K)
+{
+	///读锁保护
+	CwxReadLockGuard<CwxRwLock> lock(&m_rwLock);
+	return _upper(ullSid, index, szErr2K);
+}
+
+///-1：失败；0：不存在；1：发现。
+int CwxBinLogMgr::_upper(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K)
+{
+	CwxBinLogFile* pBinLogFile = NULL;
+	int iRet = 0;
+
+	if(!m_bValid)
+	{
+		if (szErr2K) strcpy(szErr2K, m_szErr2K);
+		return -1;
+	}
+	//定位sid所在的binlog文件
+	///从小到大查找历史数据
+	for (CWX_UINT32 i=0; i<m_arrBinlog.size(); i++)
+	{
+		if (ullSid < m_arrBinlog[i]->getMaxSid()) ///如果小于最大值，则一定存在
+		{
+			pBinLogFile = m_arrBinlog[i];
+			break;
+		}
+	}
+	if (!pBinLogFile)
+	{
+		if (m_pCurBinlog && (ullSid < m_pCurBinlog->getMaxSid())) ///当前binglog存在而且小于最大值
+			pBinLogFile = m_pCurBinlog;
+	}
+	if (!pBinLogFile)
+	{///超过最大值
+		return 0;
+	}
+	//定位cursor
+	CWX_UINT32 pos=0;
+	iRet = pBinLogFile->upper(ullSid, index, pos, szErr2K);
+	return iRet;
+}
+
+/**
+@brief 获取不大于ullSid的最大binlog header
+@param [in] ullSid 要查找的sid。
+@param [out] index 满足条件的binlog index。
+@return -1：失败；0：不存在；1：发现
+*/
+int CwxBinLogMgr::lower(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K)
+{
+	///读锁保护
+	CwxReadLockGuard<CwxRwLock> lock(&m_rwLock);
+	return _lower(ullSid, index, szErr2K);
+}
+
+///-1：失败；0：不存在；1：发现。
+int CwxBinLogMgr::_lower(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K)
+{
+	CwxBinLogFile* pBinLogFile = NULL;
+	int iRet = 0;
+	if(!m_bValid)
+	{
+		if (szErr2K) strcpy(szErr2K, m_szErr2K);
+		return -1;
+	}
+
+	//定位sid所在的binlog文件，从大到小查找
+	if (m_pCurBinlog && (ullSid>=m_pCurBinlog->getMinSid())) ///<如果不小于最小值
+	{///在当前binlog文件内
+		pBinLogFile = m_pCurBinlog;
+	}
+	else
+	{///查找历史数据
+		for (CWX_UINT32 i=m_arrBinlog.size(); i>0; i--)
+		{
+			if (ullSid >= m_arrBinlog[i-1]->getMinSid()) ///<如果不小于最小值
+			{
+				pBinLogFile = m_arrBinlog[i-1];
+				break;
+			}
+		}
+	}
+	if (!pBinLogFile)
+	{///没有记录
+		return 0;
+	}
+
+	//定位cursor
+	CWX_UINT32 pos=0;
+	iRet = pBinLogFile->lower(ullSid, index, pos, szErr2K);
+	return iRet;
 }
 
 /// -1：失败；0：无法定位到ullSid下一个binlog；1：定位到ullSid下一个的binlog上。
@@ -1070,6 +1453,11 @@ int CwxBinLogMgr::_seek(CwxBinLogCursor* pCursor, CWX_UINT64 ullSid)
     int iRet = 0;
     pCursor->m_ullSid = ullSid;
     pCursor->m_pBinLogFile = NULL;
+	if(!m_bValid)
+	{
+		strcpy(pCursor->m_szErr2K, m_szErr2K);
+		return -1;
+	}
     if (!m_pCurBinlog || 
          (ullSid >= m_pCurBinlog->getMaxSid()))
     {///超过最大值
@@ -1117,11 +1505,17 @@ int CwxBinLogMgr::_seek(CwxBinLogCursor* pCursor, CWX_UINT64 ullSid)
     return -1;
 }
 
+
 //-1：失败；0：移到最后；1：成功移到下一个binlog。
 int CwxBinLogMgr::next(CwxBinLogCursor* pCursor)
 {
     ///读锁保护
     CwxReadLockGuard<CwxRwLock> lock(&m_rwLock);
+	if(!m_bValid)
+	{
+		strcpy(pCursor->m_szErr2K, m_szErr2K);
+		return -1;
+	}
     if (!isCursorValid(pCursor))
     {
         if (isUnseek(pCursor)) strcpy(pCursor->m_szErr2K, "Cursor is unseek.");
@@ -1188,6 +1582,11 @@ int CwxBinLogMgr::prev(CwxBinLogCursor* pCursor)
 {
     ///读锁保护
     CwxReadLockGuard<CwxRwLock> lock(&m_rwLock);
+	if(!m_bValid)
+	{
+		strcpy(pCursor->m_szErr2K, m_szErr2K);
+		return -1;
+	}
     if (!isCursorValid(pCursor))
     {
         if (isUnseek(pCursor)) strcpy(pCursor->m_szErr2K, "Cursor is unseek.");
@@ -1266,6 +1665,11 @@ int CwxBinLogMgr::prev(CwxBinLogCursor* pCursor)
 //-1：失败；0：成功获取下一条binlog。
 int CwxBinLogMgr::fetch(CwxBinLogCursor* pCursor, char* szData, CWX_UINT32& uiDataLen)
 {
+	if(!m_bValid)
+	{
+		strcpy(pCursor->m_szErr2K, m_szErr2K);
+		return -1;
+	}
     if (!isCursorValid(pCursor))
     {
         if (isUnseek(pCursor)) strcpy(pCursor->m_szErr2K, "Cursor is unseek.");
@@ -1319,9 +1723,16 @@ int CwxBinLogMgr::prev(CwxBinLogCursor* pCursor, char* szData, CWX_UINT32& uiDat
 //-1：失败；0：成功。
 int CwxBinLogMgr::destoryCurser(CwxBinLogCursor*& pCursor)
 {
-    if (pCursor) delete pCursor;
-    pCursor = NULL;
-    return 0;
+	CwxWriteLockGuard<CwxRwLock> lock(&m_rwLock);
+	set<CwxBinLogCursor*>::iterator iter =  m_cursorSet.find(pCursor);
+	if (iter != m_cursorSet.end())
+	{
+		m_cursorSet.erase(iter);
+		delete pCursor;
+		pCursor = NULL;
+		return 0;
+	}
+	return -1;
 }
 
 CWX_INT64 CwxBinLogMgr::leftLogNum(CwxBinLogCursor const* pCursor)
@@ -1400,6 +1811,7 @@ void CwxBinLogMgr::_outputManageBinLog()
     }
     fclose(fd);
 }
+
 
 
 
