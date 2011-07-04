@@ -1081,6 +1081,11 @@ int CwxBinLogMgr::append(CWX_UINT64 ullSid,
                          CWX_UINT32 uiDataLen,
                          char* szErr2K)
 {
+	if(!m_bValid)
+	{
+		if (szErr2K) strcpy(szErr2K, m_szErr2K);
+		return -1;
+	}
     ///写锁保护
     CwxWriteLockGuard<CwxRwLock> lock(&m_rwLock);
     //如果没有binlog文件，则创建初始binlog文件，初始文件序号为0
@@ -1263,6 +1268,11 @@ int CwxBinLogMgr::append(CWX_UINT64 ullSid,
 int CwxBinLogMgr::commit(char* szErr2K)
 {
     int iRet = 0;
+	if(!m_bValid)
+	{
+		if (szErr2K) strcpy(szErr2K, m_szErr2K);
+		return -1;
+	}
     if (m_pCurBinlog) iRet = m_pCurBinlog->commit(m_szErr2K);
     if (0 != iRet)
     {
@@ -1346,6 +1356,11 @@ int CwxBinLogMgr::_upper(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K
 	CwxBinLogFile* pBinLogFile = NULL;
 	int iRet = 0;
 
+	if(!m_bValid)
+	{
+		if (szErr2K) strcpy(szErr2K, m_szErr2K);
+		return -1;
+	}
 	//定位sid所在的binlog文件
 	///从小到大查找历史数据
 	for (CWX_UINT32 i=0; i<m_arrBinlog.size(); i++)
@@ -1389,6 +1404,11 @@ int CwxBinLogMgr::_lower(CWX_UINT64 ullSid, CwxBinLogIndex& index, char* szErr2K
 {
 	CwxBinLogFile* pBinLogFile = NULL;
 	int iRet = 0;
+	if(!m_bValid)
+	{
+		if (szErr2K) strcpy(szErr2K, m_szErr2K);
+		return -1;
+	}
 
 	//定位sid所在的binlog文件，从大到小查找
 	if (m_pCurBinlog && (ullSid>=m_pCurBinlog->getMinSid())) ///<如果不小于最小值
@@ -1432,6 +1452,11 @@ int CwxBinLogMgr::_seek(CwxBinLogCursor* pCursor, CWX_UINT64 ullSid)
     int iRet = 0;
     pCursor->m_ullSid = ullSid;
     pCursor->m_pBinLogFile = NULL;
+	if(!m_bValid)
+	{
+		if (szErr2K) strcpy(pCursor->m_szErr2K, m_szErr2K);
+		return -1;
+	}
     if (!m_pCurBinlog || 
          (ullSid >= m_pCurBinlog->getMaxSid()))
     {///超过最大值
@@ -1479,11 +1504,17 @@ int CwxBinLogMgr::_seek(CwxBinLogCursor* pCursor, CWX_UINT64 ullSid)
     return -1;
 }
 
+
 //-1：失败；0：移到最后；1：成功移到下一个binlog。
 int CwxBinLogMgr::next(CwxBinLogCursor* pCursor)
 {
     ///读锁保护
     CwxReadLockGuard<CwxRwLock> lock(&m_rwLock);
+	if(!m_bValid)
+	{
+		if (szErr2K) strcpy(pCursor->m_szErr2K, m_szErr2K);
+		return -1;
+	}
     if (!isCursorValid(pCursor))
     {
         if (isUnseek(pCursor)) strcpy(pCursor->m_szErr2K, "Cursor is unseek.");
@@ -1550,6 +1581,11 @@ int CwxBinLogMgr::prev(CwxBinLogCursor* pCursor)
 {
     ///读锁保护
     CwxReadLockGuard<CwxRwLock> lock(&m_rwLock);
+	if(!m_bValid)
+	{
+		if (szErr2K) strcpy(pCursor->m_szErr2K, m_szErr2K);
+		return -1;
+	}
     if (!isCursorValid(pCursor))
     {
         if (isUnseek(pCursor)) strcpy(pCursor->m_szErr2K, "Cursor is unseek.");
@@ -1628,6 +1664,11 @@ int CwxBinLogMgr::prev(CwxBinLogCursor* pCursor)
 //-1：失败；0：成功获取下一条binlog。
 int CwxBinLogMgr::fetch(CwxBinLogCursor* pCursor, char* szData, CWX_UINT32& uiDataLen)
 {
+	if(!m_bValid)
+	{
+		if (szErr2K) strcpy(pCursor->m_szErr2K, m_szErr2K);
+		return -1;
+	}
     if (!isCursorValid(pCursor))
     {
         if (isUnseek(pCursor)) strcpy(pCursor->m_szErr2K, "Cursor is unseek.");
