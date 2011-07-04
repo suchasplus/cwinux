@@ -45,7 +45,7 @@ int CwxAppHandler4StdIo::handle_event(int , CWX_HANDLE)
 int CwxAppHandler4StdIo::close(CWX_HANDLE)
 {
     if (getApp()->isStopped()) return 0;
-    reactor()->removeHandler(this);
+    if (reactor()) reactor()->removeHandler(this);
     this->setHandle(CWX_INVALID_HANDLE);
     delete this;
     return 0;

@@ -56,7 +56,7 @@ int CwxAppHandler4TcpConn::close(CWX_HANDLE )
                 m_strConnectAddr.c_str(),
                 m_unConnectPort,
                 getConnErrNo()));
-            reactor()->removeHandler(this);
+            if (reactor()) reactor()->removeHandler(this);
             break;
         case CwxAppConnInfo::TIMEOUT:
             szState = "TIMEOUT"; ///可能注册了timeout
@@ -65,12 +65,12 @@ int CwxAppHandler4TcpConn::close(CWX_HANDLE )
         case CwxAppConnInfo::ESTABLISHING:
             szState = "ESTABLISHING";///可能注册了消息收发
             if (CWX_INVALID_HANDLE != getHandle())
-                reactor()->removeHandler(this, false);
+                if (reactor()) reactor()->removeHandler(this, false);
             break;
         case CwxAppConnInfo::ESTABLISHED:
             szState = "ESTABLISHED";///一定注册了消息收发
             if (CWX_INVALID_HANDLE != getHandle())
-                reactor()->removeHandler(this, false);
+                if (reactor()) reactor()->removeHandler(this, false);
             break;
         case CwxAppConnInfo::FAILED:
             szState = "FAILED";///一定没有注册消息收发
@@ -152,7 +152,7 @@ int CwxAppHandler4TcpConn::close(CWX_HANDLE )
             if (this->reactor()->scheduleTimer(this, CwxTimeValue(uiInternal/1000, (uiInternal%1000) * 1000)) == -1)
             {
                 CWX_ERROR(("Failure schedule_timer to noticeReconnect for conn id[%u]", m_conn.getConnId()));
-                reactor()->removeHandlerByConnId(m_conn.getConnId());
+                if (reactor()) reactor()->removeHandlerByConnId(m_conn.getConnId());
                 delete this;
                 return 0;
             }
