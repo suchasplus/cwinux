@@ -4,14 +4,25 @@ CWINUX_BEGIN_NAMESPACE
 inline void CwxAppHandler4Channel::clear()
 {
     m_uiSendByte = 0;
-    if (m_curSndingMsg) CwxMsgBlockAlloc::free(m_curSndingMsg); 
-    m_curSndingMsg = NULL;
-    while(m_waitSendMsgHead){
-        m_curSndingMsg = m_waitSendMsgHead->m_next;
-        CwxMsgBlockAlloc::free(m_waitSendMsgHead);
-        m_waitSendMsgHead = m_curSndingMsg;
-    }
-    m_waitSendMsgTail = NULL;
+	if (m_curSndingMsg)
+	{
+		if (m_curSndingMsg->send_ctrl().isFailNotice())
+		{
+			onFailSendMsg(m_curSndingMsg);
+		}
+		if (m_curSndingMsg) CwxMsgBlockAlloc::free(m_curSndingMsg);
+	}
+	m_curSndingMsg = NULL;
+	while(m_waitSendMsgHead){
+		m_curSndingMsg = m_waitSendMsgHead->m_next;
+		if (m_waitSendMsgHead->send_ctrl().isFailNotice())
+		{
+			onFailSendMsg(m_waitSendMsgHead);
+		}
+		if (m_waitSendMsgHead) CwxMsgBlockAlloc::free(m_waitSendMsgHead);
+		m_waitSendMsgHead = m_curSndingMsg;
+	}
+	m_waitSendMsgTail = NULL;
 }
 
 ///获取下一个待发送的消息，返回值：0，没有待发送信息；1,获得了一个待发送消息
