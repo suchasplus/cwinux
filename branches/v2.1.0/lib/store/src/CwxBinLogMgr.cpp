@@ -127,7 +127,7 @@ int CwxBinLogCursor::header(CWX_UINT64 ullOffset)
     return 1;
 }
 
-inline bool CwxBinLogCursor::preadPage(CWX_UINT64 ullBlockNo, CWX_UINT32 uiOffset)
+inline bool CwxBinLogCursor::preadPage(int fildes, CWX_UINT64 ullBlockNo, CWX_UINT32 uiOffset)
 {
 	CWX_ASSERT(uiOffset<=BINLOG_READ_BLOCK_SIZE);
 	ssize_t ret = 0;
@@ -139,7 +139,7 @@ inline bool CwxBinLogCursor::preadPage(CWX_UINT64 ullBlockNo, CWX_UINT32 uiOffse
 	if ((ullBlockNo == m_ullBlockNo)&&(uiOffset <= m_uiBlockDataOffset)) return true;
 	do 
 	{
-		ret = ::pread(m_fd, m_szReadBlock + m_uiBlockDataOffset, BINLOG_READ_BLOCK_SIZE - m_uiBlockDataOffset, (ullBlockNo<<BINLOG_READ_BLOCK_BIT) + m_uiBlockDataOffset);
+		ret = ::pread(fildes, m_szReadBlock + m_uiBlockDataOffset, BINLOG_READ_BLOCK_SIZE - m_uiBlockDataOffset, (ullBlockNo<<BINLOG_READ_BLOCK_BIT) + m_uiBlockDataOffset);
 		if (-1 != ret)
 		{
 			m_uiBlockDataOffset += ret;
@@ -167,8 +167,8 @@ ssize_t CwxBinLogCursor::pread(int fildes, void *buf, size_t nbyte, CWX_UINT64 o
 
 		//get first block
 		uiBlockStartOffset = offset - (ullStartBlock << BINLOG_READ_BLOCK_BIT);
-		uiBlockEndOffset = ullBlockNum==1?uiBlockStartOffset + nbyte:BINLOG_READ_BLOCK_SIZE;
-		if (!preadPage(ullStartBlock, uiBlockEndOffset)) return -1;
+		uiBlockEndOffset = ullBlockNum==1?uiBlockStartOffset + nbyte:(CWX_UINT32)BINLOG_READ_BLOCK_SIZE;
+		if (!preadPage(fildes, ullStartBlock, uiBlockEndOffset)) return -1;
 		if (uiBlockEndOffset <= m_uiBlockDataOffset)
 		{//数据足够
 			memcpy(buf, m_szReadBlock + uiBlockStartOffset, uiBlockEndOffset - uiBlockStartOffset);
@@ -191,7 +191,7 @@ ssize_t CwxBinLogCursor::pread(int fildes, void *buf, size_t nbyte, CWX_UINT64 o
 			ssize_t ret = 0;
 			do 
 			{
-				ret = ::pread(m_fd, buf+pos, (ullBlockNum - 2)<<BINLOG_READ_BLOCK_BIT, (ullStartBlock + 1)<<BINLOG_READ_BLOCK_BIT);
+				ret = ::pread(fildes, (char*)buf+pos, (ullBlockNum - 2)<<BINLOG_READ_BLOCK_BIT, (ullStartBlock + 1)<<BINLOG_READ_BLOCK_BIT);
 				if (-1 != ret)
 				{
 					pos += ret;
@@ -199,7 +199,7 @@ ssize_t CwxBinLogCursor::pread(int fildes, void *buf, size_t nbyte, CWX_UINT64 o
 						return pos;
 					break;
 				}
-				if (EOVERFLOW = errno) return pos;
+				if (EOVERFLOW == errno) return pos;
 				if (EINTR == errno) continue;
 				CwxCommon::snprintf(this->m_szErr2K, 2047, "Failure to read bin-log file:%s, errno=%d.", m_strFileName.c_str(), errno);
 				return -1;
@@ -209,15 +209,15 @@ ssize_t CwxBinLogCursor::pread(int fildes, void *buf, size_t nbyte, CWX_UINT64 o
 		{
 			CWX_ASSERT(nbyte > pos);
 			uiBlockEndOffset = nbyte - pos;
-			if (!preadPage(ullEndBlock, uiBlockEndOffset)) return -1;
+			if (!preadPage(fildes, ullEndBlock, uiBlockEndOffset)) return -1;
 			if (uiBlockEndOffset <= m_uiBlockDataOffset)
 			{//数据足够
-				memcpy(buf + pos, m_szReadBlock, uiBlockEndOffset);
+				memcpy((char*)buf + pos, m_szReadBlock, uiBlockEndOffset);
 				pos += uiBlockEndOffset;
 			}
 			else
 			{//not enough data
-				memcpy(buf + pos, m_szReadBlock, m_uiBlockDataOffset);
+				memcpy((char*)buf + pos, m_szReadBlock, m_uiBlockDataOffset);
 				pos += m_uiBlockDataOffset;
 			}
 
@@ -674,7 +674,8 @@ int CwxBinLogFile::seek(CwxBinLogCursor& cursor, CWX_UINT8 ucMode)
     
     //根据指定的SID定位
 	CwxBinLogIndex item;
-	iRet = upper(cursor.m_ullSid, item, cursor.m_szErr2K);
+	CWX_UINT32 index;
+	iRet = upper(cursor.m_ullSid, item, index, cursor.m_szErr2K);
 	if (1 != iRet) return iRet;
     return cursor.seek(item.getOffset());
 }
