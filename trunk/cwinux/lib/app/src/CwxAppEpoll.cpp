@@ -36,7 +36,7 @@ CwxAppEpoll::~CwxAppEpoll()
         if (m_eHandler[i].m_handler)
         {
 //            removeHandler(i);
-            delete m_eHandler[i].m_handler;
+            m_eHandler[i].m_handler->close(m_eHandler[i].m_handler->getHandle());
         }
     }
     if (m_bEnableSignal)
@@ -44,14 +44,14 @@ CwxAppEpoll::~CwxAppEpoll()
         //É¾³ýsignal handler
         for (i=0; i<CWX_APP_MAX_SIGNAL_ID; i++)
         {
-            if (m_sHandler[i]) delete m_sHandler[i];
+            if (m_sHandler[i]) m_sHandler[i]->close(m_sHandler[i]->getHandle());
         }
     }
     //É¾³ýtimeout handler
     CwxAppHandler4Base* handler;
     while((handler=m_timeHeap.pop()))
     {
-        delete handler;
+        handler->close();
     }
     if (m_epfd != CWX_INVALID_HANDLE)
     {
