@@ -42,7 +42,7 @@ public:
     ///构造函数
     CwxAppHandler4Channel(CwxAppChannel *channel);
     ///析构函数
-    ~CwxAppHandler4Channel();
+    virtual ~CwxAppHandler4Channel();
 public:
     /**
     @brief 初始化建立的连接，并往Reactor注册连接
