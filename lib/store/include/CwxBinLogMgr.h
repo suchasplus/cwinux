@@ -247,7 +247,7 @@ private:
 	//读取数据
 	ssize_t pread(int fildes, void *buf, size_t nbyte, CWX_UINT64 offset);
 	//读取一页
-	bool preadPage(CWX_UINT64 ullBlockNo, CWX_UINT32 uiOffset);
+	bool preadPage(int fildes, CWX_UINT64 ullBlockNo, CWX_UINT32 uiOffset);
 private:
     string             m_strFileName; ///<文件的名字
     int                m_fd;///<文件的handle
