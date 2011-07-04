@@ -240,6 +240,7 @@ CWX_UINT32 CwxAppHandler4Channel::onEndSendMsg(CwxMsgBlock*& )
 void CwxAppHandler4Channel::onFailSendMsg(CwxMsgBlock*&)
 {
 
+
 }
 //return 对于主动连接，1：不从engine中移除注册；0：不从engine中移除注册但不删除handler；-1：从engine中将handle移除并删除。
 int CwxAppHandler4Channel::onConnClosed()
