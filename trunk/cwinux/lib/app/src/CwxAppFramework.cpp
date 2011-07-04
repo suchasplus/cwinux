@@ -422,7 +422,8 @@ int CwxAppFramework::noticeHandle4Event(CWX_UINT32 uiSvrId,
                                  CWX_UINT32 uiHostId,
                                  CWX_HANDLE handle,
                                  void* userData,
-                                 CWX_UINT16 unEventMask)
+                                 CWX_UINT16 unEventMask,
+                                 CWX_UINT32 uiMillSecond)
 {
     if (uiSvrId < SVR_TYPE_USER_START)
     {
@@ -442,7 +443,7 @@ int CwxAppFramework::noticeHandle4Event(CWX_UINT32 uiSvrId,
     pHandle->setHostId(uiHostId);
     pHandle->setIoEventMask(unEventMask);
     pHandle->setUserData(userData);
-    int ret = reactor()->registerHandler(handle, pHandle, unEventMask);
+    int ret = reactor()->registerHandler(handle, pHandle, unEventMask,CWX_APP_INVALID_CONN_ID, uiMillSecond);
     if (0 != ret)
     {
         pHandle->setHandle(CWX_INVALID_HANDLE);
@@ -566,7 +567,7 @@ int CwxAppFramework::sendMsgByConn(CwxMsgBlock* msg)
     }
     if (!msg->send_ctrl().getConnId())
     {
-        CWX_ERROR(("conn-id must be more than 0"));
+        CWX_ERROR(("CwxAppFramework::sendMsgByConn's conn-id must be more than 0"));
         return -1;
     }
     CwxAppNotice* notice = new CwxAppNotice();
@@ -576,6 +577,35 @@ int CwxAppFramework::sendMsgByConn(CwxMsgBlock* msg)
     {
         delete notice;
         CWX_ERROR(("Failure to notice send msg event by connection"));
+        return -1;
+    }
+    return 0;
+}
+
+/**
+@brief 往CWX_APP_MSG_MODE模式的SVR分组发送消息，具体发送的连接在OnSendMsgBySvr()中选定。
+@param [in] msg 要发送的消息，不能为空，此数据包有架构负责释放。
+@return 0：成功； -1：失败。
+*/
+int CwxAppFramework::sendMsgBySvr(CwxMsgBlock* msg)
+{
+    if (!msg || !msg->length())
+    {
+        CWX_ERROR(("sendMsgBySvr's msg is null, svr_id:%u", msg?msg->send_ctrl().getSvrId():0));
+        return -1;
+    }
+    if (!msg->send_ctrl().getSvrId())
+    {
+        CWX_ERROR(("CwxAppFramework::sendMsgBySvr's svr-id must be more than 0"));
+        return -1;
+    }
+    CwxAppNotice* notice = new CwxAppNotice();
+    notice->m_unNoticeType = CwxAppNotice::SEND_MSG_BY_SVR;
+    notice->m_noticeArg = (void*)msg;
+    if (0 != m_pReactor->notice(notice))
+    {
+        delete notice;
+        CWX_ERROR(("Failure to notice send msg event by svr"));
         return -1;
     }
     return 0;
@@ -710,6 +740,16 @@ int CwxAppFramework::onRecvMsg(CwxAppHandler4Msg& conn,
         if (ret < 4096) return 0;
     }
     return ret;
+}
+/**
+@brief 通知sendMsgByMsg()发送消息，需要有用户自己选择发送的连接并发送。<br>
+@param [in] msg 要发送的消息。
+@return -1：无法发送。 0：成功发送消息。
+*/
+int CwxAppFramework::onSendMsgBySvr(CwxMsgBlock* )
+{
+    CWX_ERROR(("Not overload the CwxAppFramework::onSendMsgBySvr."));
+    return -1;
 }
 
 int CwxAppFramework::onStartSendMsg(CwxMsgBlock* msg,
@@ -962,6 +1002,7 @@ int CwxAppFramework::initRunEnv()
 void CwxAppFramework::regNoticeFunc(){
     m_arrNoticeApi[CwxAppNotice::DUMMY] = NULL;
     m_arrNoticeApi[CwxAppNotice::SEND_MSG_BY_CONN] = &CwxAppFramework::innerNoticeSendMsgByConn;
+    m_arrNoticeApi[CwxAppNotice::SEND_MSG_BY_SVR] = &CwxAppFramework::innerNoticeSendMsgBySvr;
     m_arrNoticeApi[CwxAppNotice::TCP_CONNECT] = &CwxAppFramework::innerNoticeTcpConnect;
     m_arrNoticeApi[CwxAppNotice::UNIX_CONNECT] = &CwxAppFramework::innerNoticeUnixConnect;
     m_arrNoticeApi[CwxAppNotice::ADD_IO_HANDLE] = &CwxAppFramework::innerNoticeAddIoHandle;
@@ -1142,6 +1183,21 @@ void CwxAppFramework::innerNoticeSendMsgByConn(CwxAppFramework* pApp,
 }
 
 
+///notice send msg by svr
+void CwxAppFramework::innerNoticeSendMsgBySvr(CwxAppFramework* pApp,
+                                    CwxAppNotice* pNotice)
+{
+    CwxMsgBlock* msg = (CwxMsgBlock*)pNotice->m_noticeArg;
+    if (0 != pApp->onSendMsgBySvr(msg))
+    {
+        if (msg->send_ctrl().isFailNotice())
+        {
+            pApp->onFailSendMsg(msg);
+        }
+        if (msg) CwxMsgBlockAlloc::free(msg);
+    }
+    pNotice->m_noticeArg = NULL;
+}
 
 ///notice tcp connect
 void CwxAppFramework::innerNoticeTcpConnect(CwxAppFramework* pApp,

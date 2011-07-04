@@ -36,14 +36,15 @@ public:
     enum{
         DUMMY = 0,///<dummy类型
         SEND_MSG_BY_CONN = 1,///<往连接发送消息
-        TCP_CONNECT = 2,///<建立TCP连接
-        UNIX_CONNECT = 3,///<建立UNIX DOMAIN连接
-        ADD_IO_HANDLE = 4,///<IO HANDLE数据接收
-        TCP_LISTEN = 5,///<TCP listen
-        UNIX_LISTEN = 6,///<unix-domain listen
-        CLOSE_LISTEN = 7,///<关闭监听
-        CLOSE_CONNECT = 8,///<关闭连接
-        RECONNECTION = 9,///<重新连接
+        SEND_MSG_BY_SVR = 2, ///<往指定的SVR分组发送消息
+        TCP_CONNECT = 3,///<建立TCP连接
+        UNIX_CONNECT = 4,///<建立UNIX DOMAIN连接
+        ADD_IO_HANDLE = 5,///<IO HANDLE数据接收
+        TCP_LISTEN = 6,///<TCP listen
+        UNIX_LISTEN = 7,///<unix-domain listen
+        CLOSE_LISTEN = 8,///<关闭监听
+        CLOSE_CONNECT = 9,///<关闭连接
+        RECONNECTION = 10,///<重新连接
         ALL_NOTICE_NUM = 11///<Notice类型的数量
     };
 public:

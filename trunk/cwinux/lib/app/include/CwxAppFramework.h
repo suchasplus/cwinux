@@ -231,13 +231,15 @@ public:
     @param [in] handle IO handle。
     @param [in] userData 与此链接相关的用户数据
     @param [in] unEventMask 检测的事件掩码.
+    @param [in] uiMillSecond 超时毫秒数，0表示不进行超时检测。
     @return 0：成功;-1：注册失败。
     */
     int noticeHandle4Event(CWX_UINT32 uiSvrId,
         CWX_UINT32 uiHostId,
         CWX_HANDLE handle,
         void* userData,
-        CWX_UINT16 unEventMask= CwxAppHandler4Base::RW_MASK
+        CWX_UINT16 unEventMask= CwxAppHandler4Base::RW_MASK,
+        CWX_UINT32 uiMillSecond=0
         );
     /**
     @brief 关闭Socket的listen监听
@@ -303,6 +305,12 @@ public:
     @return 0：成功； -1：失败。
     */
     int sendMsgByConn(CwxMsgBlock* msg);
+    /**
+    @brief 往CWX_APP_MSG_MODE模式的SVR分组发送消息，具体发送的连接在OnSendMsgBySvr()中选定。
+    @param [in] msg 要发送的消息，不能为空，此数据包有架构负责释放。
+    @return 0：成功； -1：失败。
+    */
+    int sendMsgBySvr(CwxMsgBlock* msg);
 
 public:
     /**
@@ -378,7 +386,12 @@ public:
     */
     virtual int onRecvMsg(CwxAppHandler4Msg& conn,
         bool& bSuspendConn);
-
+    /**
+    @brief 通知sendMsgByMsg()发送消息，需要有用户自己选择发送的连接并发送。<br>
+    @param [in] msg 要发送的消息。
+    @return -1：无法发送。 0：成功发送消息。
+    */
+    virtual int onSendMsgBySvr(CwxMsgBlock* msg);
     /**
     @brief 通知CWX_APP_MSG_MODE模式的连接开始发送一个消息。<br>
     只有在sendMsg()的时候指定BEGIN_NOTICE的时候才调用.
@@ -414,7 +427,7 @@ public:
     @param [in] uiHostId handle的host id。
     @param [in] handle 可读或可写的IO HANDLE。
     @param [in] unRegEventMask 监控的事件。
-    @param [in] unEventMask  ready的事件。
+    @param [in] unEventMask  ready的事件，若超时的话，会有CwxAppHandler4Base::TIMEOUT_MASK。
     @param [in] userData 注册时的userData
     @return void。
     */
