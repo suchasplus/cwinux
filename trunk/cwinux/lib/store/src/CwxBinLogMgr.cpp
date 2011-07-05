@@ -837,24 +837,26 @@ int CwxBinLogFile::isRebuildIndex(char* szErr2K)
 int CwxBinLogFile::createIndex(char* szErr2K)
 {
     CwxBinLogIndex index;
-    CwxBinLogCursor cursor;
-    int iRet = cursor.open(m_strPathFileName.c_str());
+    CwxBinLogCursor* cursor = new CwxBinLogCursor();
+    int iRet = cursor->open(m_strPathFileName.c_str());
     m_ullIndexFileSize = 0;
     if (-1 == iRet)
     {
-        if (szErr2K) strcpy(szErr2K, cursor.getErrMsg());
+        if (szErr2K) strcpy(szErr2K, cursor->getErrMsg());
+		delete cursor;
         return -1;
     }
 
-    while(1 == (iRet = cursor.next()))
+    while(1 == (iRet = cursor->next()))
     {
-        index = cursor.getHeader();
+        index = cursor->getHeader();
         if (0 != writeIndex(m_indexFd, index, m_ullIndexFileSize, szErr2K)) return -1;
         m_ullIndexFileSize += CwxBinLogIndex::BIN_LOG_INDEX_SIZE;
     }
     if (-1 == iRet)
     {
-        if (szErr2K) strcpy(szErr2K, cursor.getErrMsg());
+        if (szErr2K) strcpy(szErr2K, cursor->getErrMsg());
+		delete cursor;
         return -1;
     }
     if (m_ullIndexFileSize)
@@ -869,6 +871,7 @@ int CwxBinLogFile::createIndex(char* szErr2K)
     ftruncate(m_fd, m_ullFileSize);
     //truncate index нд╪Ч
     ftruncate(m_indexFd, m_ullIndexFileSize);
+	delete cursor;
     return 0;
 }
 
