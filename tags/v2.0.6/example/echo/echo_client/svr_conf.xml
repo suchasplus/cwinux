@@ -1,0 +1,8 @@
+<?xml version='1.0'?>
+<svr_def>
+  <workdir path="/usr/home/wenbo/cwinux-google/example/echo/echo_client"/>
+  <listen ip="172.16.42.65" port="9300"/>
+  <unix path="/usr/home/wenbo/cwinux_google/cwinux/cwinux/example/echo/echo_svr/echo.unix"/>
+  <conn  num="50" type="tcp" lasting="1"/>
+  <data  size="1020"/>
+</svr_def>
