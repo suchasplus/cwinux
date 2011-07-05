@@ -195,7 +195,7 @@ ssize_t CwxBinLogCursor::pread(int fildes, void *buf, size_t nbyte, CWX_UINT64 o
 				if (-1 != ret)
 				{
 					pos += ret;
-					if (ret != ((ullBlockNum - 2)<<BINLOG_READ_BLOCK_BIT)) //finish
+					if ((CWX_UINT32)ret != ((ullBlockNum - 2)<<BINLOG_READ_BLOCK_BIT)) //finish
 						return pos;
 					break;
 				}
