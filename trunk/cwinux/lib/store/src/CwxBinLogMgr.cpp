@@ -776,7 +776,7 @@ int CwxBinLogFile::seek(CwxBinLogCursor& cursor, CWX_UINT8 ucMode)
 	//当前的sid一定在m_writeCache中存在
 	map<CWX_UINT64/*sid*/, unsigned char*>::const_iterator iter = m_writeCache->m_dataSidMap.upper_bound(cursor.m_ullSid);
 	CWX_ASSERT(iter != m_writeCache->m_dataSidMap.end());
-	return cursor.seek((char const*)iter->second, cursor.m_ullSid, false);
+	return cursor.seek((char const*)iter->second, iter->first, false);
 }
 
 
