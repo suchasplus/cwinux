@@ -562,7 +562,7 @@ int CwxBinLogFile::upper(CWX_UINT64 ullSid, CwxBinLogIndex& item, char* szErr2K)
 	{
 		return 0;///不存在
 	}
-	if (m_writeCache)
+	if (m_writeCache && m_writeCache->m_indexSidMap.size())
 	{
 		if (m_writeCache->m_ullPrevIndexSid <= ullSid)
 		{//比ullSid大的sid，一定在write cache中。
@@ -648,7 +648,7 @@ int CwxBinLogFile::lower(CWX_UINT64 ullSid, CwxBinLogIndex& item, char* szErr2K)
 		return 0;///不存在
 	}
 
-	if (m_writeCache)
+	if (m_writeCache && m_writeCache->m_indexSidMap.size())
 	{
 		if (m_writeCache->m_ullMinIndexSid <= ullSid)
 		{//不大于ullSid大的sid，一定在write cache中。
@@ -753,7 +753,7 @@ int CwxBinLogFile::seek(CwxBinLogCursor& cursor, CWX_UINT8 ucMode)
 	}
 	if (SEEK_TAIL == ucMode)
 	{
-		if (!m_writeCache || m_writeCache->m_uiDataLen/*没有cache数据*/)
+		if (!m_writeCache || !m_writeCache->m_uiDataLen/*没有cache数据*/)
 		{
 			return cursor.seek(m_ullPrevLogOffset);
 		}
@@ -1674,7 +1674,8 @@ int CwxBinLogMgr::next(CwxBinLogCursor* pCursor)
     }
 	//获取下一个，先检测在内存中是否存在
 	if (pCursor->m_pBinLogFile->m_writeCache && ///存在cache
-		(pCursor->m_curLogHeader.getSid() >= pCursor->m_pBinLogFile->m_writeCache->m_ullMinDataSid))
+		pCursor->m_pBinLogFile->m_writeCache->m_dataSidMap.size()&&
+		(pCursor->m_curLogHeader.getSid()  >= pCursor->m_pBinLogFile->m_writeCache->m_ullPrevDataSid))
 	{
 		map<CWX_UINT64/*sid*/, unsigned char*>::const_iterator iter = pCursor->m_pBinLogFile->m_writeCache->m_dataSidMap.upper_bound(pCursor->m_curLogHeader.getSid());
 		if (iter == pCursor->m_pBinLogFile->m_writeCache->m_dataSidMap.end())
@@ -1775,7 +1776,8 @@ int CwxBinLogMgr::prev(CwxBinLogCursor* pCursor)
 
 	//获取下一个，先检测在内存中是否存在
 	if (pCursor->m_pBinLogFile->m_writeCache && ///存在cache
-		(pCursor->m_curLogHeader.getSid() > pCursor->m_pBinLogFile->m_writeCache->m_ullMinDataSid))
+		pCursor->m_pBinLogFile->m_writeCache->m_dataSidMap.size()&&
+		(pCursor->m_curLogHeader.getSid() >= pCursor->m_pBinLogFile->m_writeCache->m_ullMinDataSid))
 	{
 		map<CWX_UINT64/*sid*/, unsigned char*>::const_iterator iter = pCursor->m_pBinLogFile->m_writeCache->m_dataSidMap.lower_bound(pCursor->m_curLogHeader.getSid());
 		if (iter->first == pCursor->m_curLogHeader.getSid()) iter--;
@@ -1836,6 +1838,7 @@ int CwxBinLogMgr::fetch(CwxBinLogCursor* pCursor, char* szData, CWX_UINT32& uiDa
     }
 	//检测是否在内存
 	if (pCursor->m_pBinLogFile->m_writeCache &&
+		pCursor->m_pBinLogFile->m_writeCache->m_dataSidMap.size()&&
 		(pCursor->m_curLogHeader.getSid() > pCursor->m_pBinLogFile->m_writeCache->m_ullMinDataSid))
 	{
 		map<CWX_UINT64/*sid*/, unsigned char*>::const_iterator iter = pCursor->m_pBinLogFile->m_writeCache->m_dataSidMap.find(pCursor->m_curLogHeader.getSid());
