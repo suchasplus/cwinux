@@ -42,7 +42,6 @@ private:
     void doPrev(CWX_UINT32 uiNum);
     void doSid(CWX_UINT64 ullSid);
     void doRecord(CWX_UINT32 uiRecord);
-    void doAttr(CWX_UINT32 uiMask, CWX_UINT32 uiAttr);
     void doGroup(CWX_UINT32 uiGroup);
     void doType(CWX_UINT32 uiType);
     void doKey(char const* szKey, char const* szValue);
@@ -58,8 +57,8 @@ private:
     char* getData(CWX_UINT32& uiLen);
 
 private:
-    map<CWX_UINT64/*sid*/, CWX_UINT64/*offset*/>  m_sidIndex; ///<每BINLOG_INDEX_INTERNAL条记录建立一条索引
-    map<CWX_UINT32/*rec_no*/, CWX_UINT64/*offset*/> m_recIndex; ///<每BINLOG_INDEX_INTERNAL条记录建立索引
+    map<CWX_UINT64/*sid*/, CWX_UINT32/*offset*/>  m_sidIndex; ///<每BINLOG_INDEX_INTERNAL条记录建立一条索引
+    map<CWX_UINT32/*rec_no*/, CWX_UINT32/*offset*/> m_recIndex; ///<每BINLOG_INDEX_INTERNAL条记录建立索引
     CwxBinLogCursor*     m_pCursor; ///<binlog的读取cursor
     char*               m_pBuf; ///<data读取的buf
     CWX_UINT32          m_uiBufLen; ///<data读取buf的空间大小
