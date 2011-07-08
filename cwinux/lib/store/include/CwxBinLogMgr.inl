@@ -425,6 +425,27 @@ inline int CwxBinLogCursor::seek(CWX_UINT64 ullOffset)
     return iRet;
 }
 
+inline int CwxBinLogCursor::seek(char const* header, CWX_UINT64 ullSid, bool bDangling)
+{
+	m_bDangling = bDangling;
+	if (!m_bDangling)
+	{
+		m_curLogHeader.unserialize(header);
+		if (ullSid != m_curLogHeader.getSid())
+		{
+			char szBuf1[64];
+			char szBuf2[64];
+			CwxCommon::snprintf(this->m_szErr2K, 2047, "Header buf's sid is:%s, but input sid is:%s. They are not same.",
+				CwxCommon::toString(m_curLogHeader.getSid(), szBuf1),
+				CwxCommon::toString(ullSid, szBuf2));
+			return -1;
+		}
+		return 1;
+	}
+	return 0;
+}
+
+
 inline bool CwxBinLogCursor::isDangling() const
 {
     return m_bDangling;
@@ -462,6 +483,48 @@ inline int CwxBinLogCursor::getHandle() const
 {
     return m_fd;
 }
+/***********************************************************************
+                    CwxBinLogWriteCache  class
+***********************************************************************/
+inline int CwxBinLogWriteCache::flushData(char* szErr2K)
+{
+	if (m_uiDataLen)
+	{
+		if (0 != ::pwrite(m_dataFd, m_dataBuf, m_uiDataLen, m_ullDataFileOffset))
+		{
+			if (szErr2K) CwxCommon::snprintf(szErr2K, 2047, "Failure to write data to binlog file, errno=%d", errno);
+			return -1;
+		}
+		m_ullPrevDataSid = m_ullMaxSid;
+		m_ullMinDataSid = 0;
+		m_ullDataFileOffset += m_uiDataLen; ///新的偏移位置
+		m_uiDataLen = 0;
+		m_dataSidMap.clear();
+	}
+	return 0;
+}
+
+
+inline int CwxBinLogWriteCache::flushIndex(char* szErr2K)
+{
+	if (m_uiIndexLen)
+	{
+		if (0 != ::pwrite(m_indexFd, m_indexBuf, m_uiIndexLen, m_ullIndexFileOffset))
+		{
+			if (szErr2K) CwxCommon::snprintf(szErr2K, 2047, "Failure to write index data to binlog index:%s, errno=%d", m_strPathFileName.c_str(), errno);
+			return -1;
+		}
+		m_ullPrevIndexSid = m_ullMaxSid;
+		m_ullMinIndexSid = 0;
+		m_ullIndexFileOffset += m_uiIndexLen;
+		m_uiIndexLen = 0;
+		m_indexSidMap.clear();
+	}
+	return 0;
+}
+
+
+
 
 
 /***********************************************************************
@@ -532,11 +595,13 @@ inline void CwxBinLogFile::setReadOnly()
     if (!m_bReadOnly)
     {
         m_bReadOnly = true;
-        commit(NULL);
+        commit(true, NULL);
         if (-1 != m_fd) ::close(m_fd);
         m_fd = -1;
         if (-1 != m_indexFd) ::close(m_indexFd);
         m_indexFd = -1;
+		if (m_writeCache) delete m_writeCache;
+		m_writeCache = NULL;
     }
 }
 
@@ -582,6 +647,7 @@ inline int CwxBinLogFile::readIndex(int fd, CwxBinLogIndex& index, CWX_UINT64 ul
     index.unserialize(szBuf);
     return 0;
 }
+
 // -1：失败；0：成功。
 inline int CwxBinLogFile::writeIndex(int fd, CwxBinLogIndex const& index, CWX_UINT64 ullOffset, char* szErr2K) const
 {
@@ -594,8 +660,6 @@ inline int CwxBinLogFile::writeIndex(int fd, CwxBinLogIndex const& index, CWX_UI
     }
     return 0;
 }
-
-
 
 /***********************************************************************
                     CwxBinLogMgr  class
