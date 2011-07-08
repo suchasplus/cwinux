@@ -4,7 +4,7 @@ includedir =
 pkgconfigdir = 
 
 lib_LTLIBRARIES = libcwxpoco.la
-libcwxpoco_la_CPPFLAGS = -W -Wall
+libcwxpoco_la_CPPFLAGS = -W -Wall -Wno-deprecated
 
 libcwxpoco_la_SOURCES = \
 	CwxHttpCookie.cpp

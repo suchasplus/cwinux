@@ -4,7 +4,7 @@ includedir =
 pkgconfigdir = 
 
 lib_LTLIBRARIES = libcwxparse.la
-libcwxparse_la_CPPFLAGS = -W -Wall
+libcwxparse_la_CPPFLAGS = -W -Wall -Wno-deprecated
 
 libcwxparse_la_SOURCES = \
 	CwxJsonParser.cpp\

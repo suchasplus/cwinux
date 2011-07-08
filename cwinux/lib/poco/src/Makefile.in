@@ -177,7 +177,7 @@ target_alias = @target_alias@
 xml_expat_dir = @xml_expat_dir@
 pkgconfigdir = 
 lib_LTLIBRARIES = libcwxpoco.la
-libcwxpoco_la_CPPFLAGS = -W -Wall
+libcwxpoco_la_CPPFLAGS = -W -Wall -Wno-deprecated
 libcwxpoco_la_SOURCES = \
 	CwxHttpCookie.cpp
 

@@ -200,7 +200,7 @@ target_alias = @target_alias@
 xml_expat_dir = @xml_expat_dir@
 pkgconfigdir = 
 lib_LTLIBRARIES = libcwxapp.la
-libcwxapp_la_CPPFLAGS = -W -Wall
+libcwxapp_la_CPPFLAGS = -W -Wall -Wno-deprecated
 libcwxapp_la_SOURCES = \
 	CwxAppConfig.cpp\
 	CwxAppHandler4Msg.cpp\

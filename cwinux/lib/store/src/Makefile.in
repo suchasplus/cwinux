@@ -178,7 +178,7 @@ target_alias = @target_alias@
 xml_expat_dir = @xml_expat_dir@
 pkgconfigdir = 
 lib_LTLIBRARIES = libcwxstore.la
-libcwxstore_la_CPPFLAGS = -W -Wall
+libcwxstore_la_CPPFLAGS = -W -Wall -Wno-deprecated
 libcwxstore_la_SOURCES = \
 	CwxBinLogMgr.cpp\
 	CwxSysLogFile.cpp

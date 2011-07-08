@@ -193,7 +193,7 @@ target_alias = @target_alias@
 xml_expat_dir = @xml_expat_dir@
 pkgconfigdir = 
 lib_LTLIBRARIES = libcwxcmn.la
-libcwxcmn_la_CPPFLAGS = -W -Wall
+libcwxcmn_la_CPPFLAGS = -W -Wall -Wno-deprecated
 libcwxcmn_la_SOURCES = \
 	CwxCharPool.cpp\
 	CwxFile.cpp\
