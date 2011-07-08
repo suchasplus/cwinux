@@ -1839,7 +1839,7 @@ int CwxBinLogMgr::fetch(CwxBinLogCursor* pCursor, char* szData, CWX_UINT32& uiDa
 	//¼ì²âÊÇ·ñÔÚÄÚ´æ
 	if (pCursor->m_pBinLogFile->m_writeCache &&
 		pCursor->m_pBinLogFile->m_writeCache->m_dataSidMap.size()&&
-		(pCursor->m_curLogHeader.getSid() > pCursor->m_pBinLogFile->m_writeCache->m_ullMinDataSid))
+		(pCursor->m_curLogHeader.getSid() >= pCursor->m_pBinLogFile->m_writeCache->m_ullMinDataSid))
 	{
 		map<CWX_UINT64/*sid*/, unsigned char*>::const_iterator iter = pCursor->m_pBinLogFile->m_writeCache->m_dataSidMap.find(pCursor->m_curLogHeader.getSid());
 		CWX_ASSERT(iter != pCursor->m_pBinLogFile->m_writeCache->m_dataSidMap.end());
