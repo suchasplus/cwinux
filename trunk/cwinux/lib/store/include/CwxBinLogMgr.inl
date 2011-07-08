@@ -594,8 +594,8 @@ inline void CwxBinLogFile::setReadOnly()
 {
     if (!m_bReadOnly)
     {
+		commit(true, NULL);
         m_bReadOnly = true;
-        commit(true, NULL);
         if (-1 != m_fd) ::close(m_fd);
         m_fd = -1;
         if (-1 != m_indexFd) ::close(m_indexFd);
