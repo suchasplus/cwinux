@@ -49,7 +49,6 @@ private:
     void doData();
     void doSave(string const& strFileName);
 //    void doDump(bool bHead, string const& strFileName);
-    void doZip(int bit);
 
     bool prepareBuf(CWX_UINT32 uiLen);
     bool prepareUnBuf(CWX_UINT32 uiLen);
@@ -69,7 +68,6 @@ private:
     CWX_UINT64          m_ullMinSid; ///<最小的sid值
     CWX_UINT64          m_ullMaxSid; ///<最大的sid值
     CWX_UINT32          m_uiRecNum; ///<binlog的数量
-    int                m_iZipBit; ///<head attr中的压缩位
     string              m_strLogFileName; ///<binlog文件的名字
     char                m_szErr2K[2048]; ///<错误时的错误消息
 };

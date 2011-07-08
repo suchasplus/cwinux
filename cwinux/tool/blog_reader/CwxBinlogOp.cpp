@@ -12,7 +12,6 @@ CwxBinlogOp::CwxBinlogOp(){
     m_ullMinSid = 0;
     m_ullMaxSid = 0;
     m_uiRecNum = 0;
-    m_iZipBit = -1;
     m_szErr2K[0] = 0x00;
 }
 
@@ -94,7 +93,6 @@ void CwxBinlogOp::clear(){
     m_ullMinSid = 0;
     m_ullMaxSid = 0;
     m_uiRecNum = 0;
-    m_iZipBit = -1;//not zip
     m_szErr2K[0] = 0x00;
 }
 
@@ -207,17 +205,6 @@ int CwxBinlogOp::doCommand(char* szCmd){
             iter++;
         }
         doDump(bHead, *iter);*/
-    }else if(0 == strcasecmp((*iter).c_str(), "zip")){
-        int iBits = -1;
-        if (2 == uiItemNum){
-            iter++;
-            iBits = atoi((*iter).c_str());
-            if ((iBits > 31) || (iBits < 0)){
-                printf("Invalid attr bit[%s], range:[0,31].\n", (*iter).c_str());
-                return 1;
-            }
-        }
-        doZip(iBits);
     }else if(0 == strcasecmp((*iter).c_str(), "exit")){
         return 0;
     }else{
@@ -252,11 +239,6 @@ void CwxBinlogOp::doInfo(){
     printf("Min Sid: %s\n", CwxCommon::toString(m_ullMinSid, szBuf));
     printf("Max Sid: %s\n", CwxCommon::toString(m_ullMaxSid, szBuf));
     printf("Record Num: %u\n", m_uiRecNum);
-    if (-1 == m_iZipBit){
-        printf("Zip bit: None\n");
-    }else{
-        printf("Zip bit: %d\n", m_iZipBit);
-    }
 }
 void CwxBinlogOp::doNext(CWX_UINT32 uiNum){
     int iRet = 0;
@@ -536,9 +518,6 @@ void CwxBinlogOp::doDump(bool bHead, string const& strFileName){
 
 }
 */
-void CwxBinlogOp::doZip(int bit){
-    m_iZipBit = bit;
-}
 
 bool CwxBinlogOp::prepareBuf(CWX_UINT32 uiLen){
     if (uiLen + 1 > m_uiBufLen){
@@ -591,21 +570,6 @@ char* CwxBinlogOp::getData(CWX_UINT32& uiLen){
         printf("Failure to read data, err:%s\n", m_pCursor->getErrMsg());
         return NULL;
     }
-    if (-1 != m_iZipBit){
-        if (CWX_CHECK_BIT(m_pCursor->getHeader().getAttr(), m_iZipBit)){//unpack
-            if (!prepareBuf(uiLen * BINLOG_COMPRESS_RATE)) return NULL;
-            unsigned long uiUnzipLen = m_uiUnBufLen;
-            if (!CwxZlib::unzip((unsigned char*)m_pUnBuf, uiUnzipLen, (unsigned char*)m_pBuf, uiLen)){
-                printf("Failure to unzip the data\n");
-                return NULL;
-            }
-            uiLen = uiUnzipLen;
-            pBuf = m_pUnBuf;
-        }else{
-            pBuf = m_pBuf;
-        }
-    }else{
-        pBuf = m_pBuf;
-    }
+	pBuf = m_pBuf;
     return pBuf;
 }
