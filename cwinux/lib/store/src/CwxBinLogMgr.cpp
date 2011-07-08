@@ -276,7 +276,7 @@ int CwxBinLogWriteCache::append(CwxBinLogHeader const& header, char const* szDat
 		}
 		pos = m_dataBuf + m_uiDataLen;
 		//copy header
-		header.serialize(m_dataBuf + m_uiDataLen);
+		header.serialize((char*)m_dataBuf + m_uiDataLen);
 		m_uiDataLen += CwxBinLogHeader::BIN_LOG_HEADER_SIZE;
 		memcpy(m_dataBuf + m_uiDataLen, szData, header.getLogLen());
 		m_uiDataLen += header.getLogLen();
@@ -297,7 +297,7 @@ int CwxBinLogWriteCache::append(CwxBinLogHeader const& header, char const* szDat
 		if (0 != flushIndex(szErr2K)) return -1;
 	}
 	pos = m_indexBuf + m_uiIndexLen;
-	index.serialize(pos);
+	index.serialize((char*)pos);
 	m_uiIndexLen += CwxBinLogIndex::BIN_LOG_INDEX_SIZE;
 	if (0 == m_ullMinIndexSid) m_ullMinIndexSid =  header.getSid();
 	m_indexSidMap[header.getSid()] = pos;
@@ -349,7 +349,7 @@ CwxBinLogFile::~CwxBinLogFile()
 int CwxBinLogFile::open(char const* szPathFile,
                         bool bReadOnly,
                         bool bCreate,
-						bool bCacheData=true,
+						bool bCacheData,
                         char* szErr2K)
 {
     string strIndexPathFileName;
@@ -437,7 +437,7 @@ int CwxBinLogFile::open(char const* szPathFile,
     }
 	else
 	{
-		m_writeCache = new CwxBinLogWriteCache(m_indexFd, m_fd, m_ullIndexFileSize, m_ullFileSize, bCacheData);
+		m_writeCache = new CwxBinLogWriteCache(m_indexFd, m_fd, m_ullIndexFileSize, m_ullFileSize, getMaxSid(), bCacheData);
 	}
     m_bValid = true;
     return 0;
@@ -453,7 +453,7 @@ int CwxBinLogFile::append(CWX_UINT64 ullSid,
                           CWX_UINT32 uiDataLen,
                           char* szErr2K)
 {
-    char szBuf[CwxBinLogHeader::BIN_LOG_HEADER_SIZE];
+//    char szBuf[CwxBinLogHeader::BIN_LOG_HEADER_SIZE];
     if (m_ullFileSize + FREE_BINLOG_FILE_SIZE + CwxBinLogHeader::BIN_LOG_HEADER_SIZE + uiDataLen >= m_ullMaxFileSize) return 0; //it's full.
 
     if (this->m_bReadOnly)
@@ -568,7 +568,7 @@ int CwxBinLogFile::upper(CWX_UINT64 ullSid, CwxBinLogIndex& item, char* szErr2K)
 		{//比ullSid大的sid，一定在write cache中。
 			map<CWX_UINT64/*sid*/, unsigned char*>::const_iterator iter = m_writeCache->m_indexSidMap.upper_bound(ullSid);
 			CWX_ASSERT((iter != m_writeCache->m_indexSidMap.end()));
-			item.unserialize(iter->second);
+			item.unserialize((char const*)iter->second);
 			return 1;
 		}
 	}
@@ -654,7 +654,7 @@ int CwxBinLogFile::lower(CWX_UINT64 ullSid, CwxBinLogIndex& item, char* szErr2K)
 		{//不大于ullSid大的sid，一定在write cache中。
 			map<CWX_UINT64/*sid*/, unsigned char*>::const_iterator iter = m_writeCache->m_indexSidMap.lower_bound(ullSid);
 			CWX_ASSERT((iter != m_writeCache->m_indexSidMap.end()));
-			item.unserialize(iter->second);
+			item.unserialize((char const*)iter->second);
 			return 1;
 		}
 	}
@@ -742,10 +742,10 @@ int CwxBinLogFile::seek(CwxBinLogCursor& cursor, CWX_UINT8 ucMode)
 		}
 		else
 		{
-			if (m_writeCache->m_dataSidMap->size())
+			if (m_writeCache->m_dataSidMap.size())
 			{//有数据，取第一个
 				map<CWX_UINT64/*sid*/, unsigned char*>::const_iterator iter = m_writeCache->m_dataSidMap.begin();
-				return cursor.seek(iter->second, getMinSid(), false);
+				return cursor.seek((char const*)iter->second, getMinSid(), false);
 			}
 			//没有数据，为dangling状态
 			return 0;
@@ -759,14 +759,14 @@ int CwxBinLogFile::seek(CwxBinLogCursor& cursor, CWX_UINT8 ucMode)
 		}
 		else
 		{//取最后一个记录
-			map<CWX_UINT64/*sid*/, unsigned char*>::const_iterator iter = m_writeCache->m_dataSidMap.rbegin();
-			return cursor.seek(iter->second, getMaxSid(), false);
+			map<CWX_UINT64/*sid*/, unsigned char*>::const_reverse_iterator iter = m_writeCache->m_dataSidMap.rbegin();
+			return cursor.seek((char const*)iter->second, getMaxSid(), false);
 		}
 	}
 
 	//根据指定的SID定位
 	if (cursor.m_ullSid >= getMaxSid()) return 0; ///不存在
-	if (!m_writeCache || (m_writeCache->m_ullPrevDataSid > cursor->m_ullSid) /*文件中存在比定位sid大的消息*/)
+	if (!m_writeCache || (m_writeCache->m_ullPrevDataSid > cursor.m_ullSid) /*文件中存在比定位sid大的消息*/)
 	{
 		CwxBinLogIndex item;
 		iRet = upper(cursor.m_ullSid, item, cursor.m_szErr2K);
@@ -774,11 +774,9 @@ int CwxBinLogFile::seek(CwxBinLogCursor& cursor, CWX_UINT8 ucMode)
 		return cursor.seek(item.getOffset());
 	}
 	//当前的sid一定在m_writeCache中存在
-	{
-		map<CWX_UINT64/*sid*/, unsigned char*>::const_iterator iter = m_writeCache->m_dataSidMap.upper_bound(cursor->m_ullSid);
-		CWX_ASSERT(iter != m_writeCache->m_dataSidMap.end());
-		return cursor.seek(iter->second, cursor->m_ullSid, false);
-	}
+	map<CWX_UINT64/*sid*/, unsigned char*>::const_iterator iter = m_writeCache->m_dataSidMap.upper_bound(cursor.m_ullSid);
+	CWX_ASSERT(iter != m_writeCache->m_dataSidMap.end());
+	return cursor.seek(iter->second, cursor.m_ullSid, false);
 }
 
 
@@ -1685,7 +1683,7 @@ int CwxBinLogMgr::next(CwxBinLogCursor* pCursor)
 		}
 		else
 		{
-			iRet = pCursor->seek(iter->second, iter->first, false);
+			iRet = pCursor->seek((char const*)iter->second, iter->first, false);
 		}
 	}
 	else
@@ -1781,7 +1779,7 @@ int CwxBinLogMgr::prev(CwxBinLogCursor* pCursor)
 	{
 		map<CWX_UINT64/*sid*/, unsigned char*>::const_iterator iter = pCursor->m_pBinLogFile->m_writeCache->m_dataSidMap.lower_bound(pCursor->m_curLogHeader.getSid());
 		if (iter->first == pCursor->m_curLogHeader.getSid()) iter--;
-		iRet = pCursor->seek(iter->second, iter->first, false);
+		iRet = pCursor->seek((char const*)iter->second, iter->first, false);
 	}
 	else
 	{
@@ -1838,7 +1836,7 @@ int CwxBinLogMgr::fetch(CwxBinLogCursor* pCursor, char* szData, CWX_UINT32& uiDa
     }
 	//检测是否在内存
 	if (pCursor->m_pBinLogFile->m_writeCache &&
-		(pCursor->m_curLogHeader->getSid() > pCursor->m_pBinLogFile->m_writeCache->m_ullMinDataSid))
+		(pCursor->m_curLogHeader.getSid() > pCursor->m_pBinLogFile->m_writeCache->m_ullMinDataSid))
 	{
 		map<CWX_UINT64/*sid*/, unsigned char*>::const_iterator iter = pCursor->m_pBinLogFile->m_writeCache->m_dataSidMap.find(pCursor->m_curLogHeader.getSid());
 		CWX_ASSERT(iter != pCursor->m_pBinLogFile->m_writeCache->m_dataSidMap.end());
