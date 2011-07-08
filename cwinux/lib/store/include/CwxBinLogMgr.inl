@@ -511,7 +511,7 @@ inline int CwxBinLogWriteCache::flushIndex(char* szErr2K)
 	{
 		if (0 != ::pwrite(m_indexFd, m_indexBuf, m_uiIndexLen, m_ullIndexFileOffset))
 		{
-			if (szErr2K) CwxCommon::snprintf(szErr2K, 2047, "Failure to write index data to binlog index:%s, errno=%d", m_strPathFileName.c_str(), errno);
+			if (szErr2K) CwxCommon::snprintf(szErr2K, 2047, "Failure to write index data to binlog index, errno=%d", errno);
 			return -1;
 		}
 		m_ullPrevIndexSid = m_ullMaxSid;
