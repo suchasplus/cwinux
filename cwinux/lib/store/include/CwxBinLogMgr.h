@@ -38,15 +38,15 @@ class CwxBinLogHeader
 {
 public:
     enum{
-        BIN_LOG_HEADER_SIZE = 48 ///<serialize的空间字节数
+        BIN_LOG_HEADER_SIZE = 32 ///<serialize的空间字节数
     };
 public:
     ///缺省构造函数
     inline CwxBinLogHeader();
     ///构造函数
-    inline CwxBinLogHeader(CWX_UINT64 ullSid, CWX_UINT32 uiDatetime, CWX_UINT64 ullOffset,
-                   CWX_UINT32 uiLogLen, CWX_UINT32 uiLogNo, CWX_UINT64 ullPrevOffset,
-                   CWX_UINT32 uiGroup, CWX_UINT32 uiType, CWX_UINT32 uiAttr);
+    inline CwxBinLogHeader(CWX_UINT64 ullSid, CWX_UINT32 uiDatetime, CWX_UINT32 uiOffset,
+                   CWX_UINT32 uiLogLen, CWX_UINT32 uiPrevOffset,
+                   CWX_UINT32 uiGroup, CWX_UINT32 uiType);
     ///拷贝构造
     inline CwxBinLogHeader(CwxBinLogHeader const& header);
     ///赋值操作
@@ -63,21 +63,17 @@ public:
     ///获取log的时间戳
     inline CWX_UINT32 getDatetime() const;
     ///设置log的文件偏移
-    inline void setOffset(CWX_UINT64 ullOffset);
+    inline void setOffset(CWX_UINT32 uiOffset);
     ///获取log的文件偏移
-    inline CWX_UINT64 getOffset() const;
+    inline CWX_UINT32 getOffset() const;
     ///设置log的长度，不包括log header的长度
     inline void setLogLen(CWX_UINT32 uiLogLen);
     ///获取log的长度，不包括log header的长度
     inline CWX_UINT32 getLogLen() const;
-    ///设置log在文件中的记录号
-    inline void setLogNo(CWX_UINT32 uiLogNo);
-    ///获取log在文件中的记录号
-    inline CWX_UINT32 getLogNo() const;
     ///设置前一个log的offset
-    inline void setPrevOffset(CWX_UINT64 ullPrevOffset);
+    inline void setPrevOffset(CWX_UINT32 uiPrevOffset);
     ///获取前一个log的offset
-    inline CWX_UINT64 getPrevOffset() const;
+    inline CWX_UINT32 getPrevOffset() const;
     ///设置binlog的分组
     inline void setGroup(CWX_UINT32 uiGroup);
     ///获取binlog的分组
@@ -86,10 +82,6 @@ public:
     inline void setType(CWX_UINT32 uiType);
     ///获取binlog的类型
     inline CWX_UINT32 getType() const;
-    ///设置binlog的属性
-    inline void setAttr(CWX_UINT32 uiAttr);
-    ///获取binlog的属性
-    inline CWX_UINT32 getAttr() const;
 public:
     ///将log header对象序列化，返回序列化占用的空间字节数
     inline CWX_UINT32 serialize(char* szBuf) const;
@@ -100,13 +92,11 @@ public:
 private:
     CWX_UINT64    m_ullSid; ///<同步序列号
     CWX_UINT32    m_uiDatetime; ///<记录的时间戳
-    CWX_UINT64    m_ullOffset; ///<记录的文件偏移
+    CWX_UINT32    m_uiOffset; ///<记录的文件偏移
     CWX_UINT32    m_uiLogLen; ///<记录的长度，不包括log header的长度
-    CWX_UINT32    m_uiLogNo; ///<记录的记录号
-    CWX_UINT64    m_ullPrevOffset; ///<前一个记录的文件偏移
+    CWX_UINT32    m_uiPrevOffset; ///<前一个记录的文件偏移
     CWX_UINT32    m_uiGroup; ///<binlog的group
     CWX_UINT32    m_uiType; ///<binlog的类型
-    CWX_UINT32    m_uiAttr; ///<binlog的属性
 };
 
 
@@ -118,13 +108,13 @@ class CwxBinLogIndex
 {
 public:
     enum{
-        BIN_LOG_INDEX_SIZE = 24 ///<serialize的空间字节数
+        BIN_LOG_INDEX_SIZE = 20 ///<serialize的空间字节数
     };
 public:
     ///缺省构造
     inline CwxBinLogIndex();
     ///构造函数
-    inline CwxBinLogIndex(CWX_UINT64 ullSid, CWX_UINT32 uiDatetime, CWX_UINT64 ullOffset, CWX_UINT32 uiLogLen);
+    inline CwxBinLogIndex(CWX_UINT64 ullSid, CWX_UINT32 uiDatetime, CWX_UINT32 uiOffset, CWX_UINT32 uiLogLen);
     ///拷贝构造
     inline CwxBinLogIndex(CwxBinLogIndex const& index);
     ///拷贝构造
@@ -145,7 +135,7 @@ public:
     ///获取log的时间戳
     inline CWX_UINT32 getDatetime() const;
     ///设置log的文件偏移
-    inline void setOffset(CWX_UINT64 ullOffset);
+    inline void setOffset(CWX_UINT32 uiOffset);
     ///获取log的文件偏移
     inline CWX_UINT64 getOffset() const;
     ///设置log的长度，不包括log header的长度
@@ -162,8 +152,8 @@ public:
 private:
     CWX_UINT64    m_ullSid; ///<同步序列号
     CWX_UINT32    m_uiDatetime; ///<binlog的timestamp
-    CWX_UINT64    m_ullOffset; ///<记录的文件偏移
-    CWX_UINT32    m_uiLogLen; ///<记录的长度，不包括log header的长度
+    CWX_UINT32    m_uiOffset; ///<记录的文件偏移
+	CWX_UINT32    m_uiLogLen; ///<记录的长度
 };
 
 class CwxBinLogFile;
@@ -207,10 +197,10 @@ public:
     inline int prev();
     /**
     @brief 文件偏移到指定的offset，offset的位置必须为一个log的开始位置
-    @param [in] ullOffset binlog在文件中的offset。
+    @param [in] uiOffset binlog在文件中的offset。
     @return -2：log的header不完整；-1：读取失败；0：超出范围；1：移到指定的offset
     */
-    inline int seek(CWX_UINT64 ullOffset);
+    inline int seek(CWX_UINT32 uiOffset);
 	/**
 	@brief 文件偏移到指定的header
 	@param [in] header binlog在header信息。
@@ -251,13 +241,13 @@ private:
     @param [in] uiOffset binlog在文件中的offset。
     @return -2：不存在完成的记录头；-1：失败；0：结束；1：读取一个
     */
-    int header(CWX_UINT64 ullOffset);
+    int header(CWX_UINT32 uiOffset);
     //获取cursor的文件 io handle
     inline int getHandle() const;
 	//读取数据
-	ssize_t pread(int fildes, void *buf, size_t nbyte, CWX_UINT64 offset);
+	ssize_t pread(int fildes, void *buf, size_t nbyte, CWX_UINT32 offset);
 	//读取一页
-	bool preadPage(int fildes, CWX_UINT64 ullBlockNo, CWX_UINT32 uiOffset);
+	bool preadPage(int fildes, CWX_UINT32 uiBlockNo, CWX_UINT32 uiOffset);
 private:
     string             m_strFileName; ///<文件的名字
     int                m_fd;///<文件的handle
@@ -266,7 +256,7 @@ private:
     char               m_szHeadBuf[CwxBinLogHeader::BIN_LOG_HEADER_SIZE]; ///<log header的buf空间
     char               m_szErr2K[2048];///<错误信息buf
 	char			   m_szReadBlock[BINLOG_READ_BLOCK_SIZE];  ///<文件读取的buf
-	CWX_UINT64         m_ullBlockNo;   ///<当前cache的block no
+	CWX_UINT32         m_uiBlockNo;   ///<当前cache的block no
 	CWX_UINT32		   m_uiBlockDataOffset; ///<块中数据结束偏移
     //由CwxBinLogMgr使用的状态值
     CWX_UINT64          m_ullSid; ///<seek的sid
@@ -300,8 +290,8 @@ public:
 	*/
 	CwxBinLogWriteCache(int indexFd,
 		int dataFd,
-		CWX_UINT64 ullIndexOffset,
-		CWX_UINT64 ullDataOffset,
+		CWX_UINT32 uiIndexOffset,
+		CWX_UINT32 uiDataOffset,
 		CWX_UINT64 ullSid,
 		bool bCacheData);
 	///析构函数
@@ -339,13 +329,13 @@ private:
 	bool			    m_bCacheData; ///是否cache data。
 	CWX_UINT64			m_ullPrevIndexSid; ///<前一个sid，此是对应的索引文件最大的sid，若为0，表示全部在内存。
 	CWX_UINT64			m_ullMinIndexSid; ///<索引cache的最小sid，若为0表示没有cache
-	CWX_UINT64          m_ullIndexFileOffset; ///<索引的文件写入偏移
+	CWX_UINT32          m_uiIndexFileOffset; ///<索引的文件写入偏移
 	unsigned char*		m_indexBuf;  ///<索引cache的buf。
 	CWX_UINT32			m_uiIndexLen;  ///<索引buf的长度
 	map<CWX_UINT64/*sid*/, unsigned char*>  m_indexSidMap; ///<index数据的sid索引
 	CWX_UINT64          m_ullPrevDataSid; ///<前一个sid，此是对应的数据文件最大的sid，若为0表示数据全部在内存
 	CWX_UINT64			m_ullMinDataSid; ///<data cache的最小sid，若为0表示没有cache
-	CWX_UINT64          m_ullDataFileOffset; ///<数据的文件写入偏移
+	CWX_UINT32          m_uiDataFileOffset; ///<数据的文件写入偏移
 	unsigned char*      m_dataBuf;    ///<数据的buf
 	CWX_UINT32			m_uiDataLen;  ///<数据buf的长度
 	map<CWX_UINT64/*sid*/, unsigned char*>  m_dataSidMap; ///<数据buf的log的sid索引
@@ -366,7 +356,7 @@ public:
         SEEK_SID = 2 ///<将光标移到文件的指定的SID
     };
     enum{
-        MIN_BINLOG_FILE_SIZE = 256 * 1024 * 1024, ///<满的binlog文件最小为256M
+        MIN_BINLOG_FILE_SIZE = 32 * 1024 * 1024, ///<满的binlog文件最小为256M
         FREE_BINLOG_FILE_SIZE = 4 * 1024 * 1024 ///<binlog预留的空间为4M
     };
 
@@ -375,10 +365,10 @@ public:
     @brief 构造函数
     @param [in] ttDay binlog文件的日期。
     @param [in] uiFileNo binlog文件的序号。
-    @param [in] ullMaxFileSize binlog文件的最大大小。
+    @param [in] uiMaxFileSize binlog文件的最大大小。
     @return 0：成功；-1：失败。
     */
-    CwxBinLogFile(CWX_UINT32 ttDay, CWX_UINT32 uiFileNo=0, CWX_UINT64 ullMaxFileSize=2*1024*1024);
+    CwxBinLogFile(CWX_UINT32 ttDay, CWX_UINT32 uiFileNo=0, CWX_UINT32 uiMaxFileSize=512*1024*1024);
     ///析构函数
     ~CwxBinLogFile();
     ///小于比较
@@ -411,7 +401,6 @@ public:
         CWX_UINT32 ttTimestamp,
         CWX_UINT32 uiGroup,
         CWX_UINT32 uiType,
-        CWX_UINT32 uiAttr,
         char const* szData,
         CWX_UINT32 uiDataLen,
         char* szErr2K=NULL);
@@ -473,7 +462,7 @@ public:
     ///获取binlog文件的log记录数
     inline CWX_UINT32 getLogNum() const;
     ///获取binlog文件的大小
-    inline CWX_UINT64 getFileSize() const;
+    inline CWX_UINT32 getFileSize() const;
     ///判断是否只读
     inline bool readOnly() const;
     ///设置只读
@@ -491,20 +480,20 @@ private:
     @brief 读取指定位置的索引记录
     @param [in] fd 索引文件的fd。
     @param [out] index 返回的索引。
-    @param [in] ullOffset 索引的位置。
+    @param [in] uiOffset 索引的位置。
     @param [in] szErr2K 错误信息buf，若为NULL则不返回错误消息。
     @return -1：失败；0：成功。
     */
-    inline int readIndex(int fd, CwxBinLogIndex& index, CWX_UINT64 ullOffset, char* szErr2K=NULL) const;
+    inline int readIndex(int fd, CwxBinLogIndex& index, CWX_UINT32 uiOffset, char* szErr2K=NULL) const;
     /**
     @brief 往指定的位置写入索引
     @param [in] fd 索引文件的fd。
     @param [in] index 写入的索引。
-    @param [in] ullOffset 索引的位置。
+    @param [in] uiOffset 索引的位置。
     @param [in] szErr2K 错误信息buf，若为NULL则不返回错误消息。
     @return -1：失败；0：成功。
     */
-    inline int writeIndex(int fd, CwxBinLogIndex const& index, CWX_UINT64 ullOffset, char* szErr2K=NULL) const;
+    inline int writeIndex(int fd, CwxBinLogIndex const& index, CWX_UINT32 uiOffset, char* szErr2K=NULL) const;
     /**
     @brief 创建指定的binlog文件
     @param [in] szErr2K 错误信息buf，若为NULL则不返回错误消息。
@@ -534,7 +523,7 @@ private:
     bool           m_bValid;       ///<是否有效
     string         m_strPathFileName; ///<binlog文件的名字
     string         m_strIndexFileName; ///<index文件的名字
-    CWX_UINT64     m_ullMaxFileSize; ///<新建立的binlog文件的最大大小。
+    CWX_UINT32     m_uiMaxFileSize; ///<新建立的binlog文件的最大大小。
     CWX_UINT64     m_ullMinSid; ///<binlog文件的最小sid
     volatile CWX_UINT64     m_ullMaxSid; ///<binlog文件的最大sid
     CWX_UINT32              m_ttMinTimestamp; ///<binlog文件的log开始时间
@@ -543,9 +532,9 @@ private:
     bool           m_bReadOnly; ///<是否为只读
     int            m_fd; ///<log文件的io handle
     int            m_indexFd; ///<索引文件的io handle
-    volatile CWX_UINT64      m_ullFileSize; ///<binlog数据文件大小，-1表示不存在
-    volatile CWX_UINT64      m_ullIndexFileSize; ///<索引文件的大小，-1表示不存在
-    volatile CWX_UINT64      m_ullPrevLogOffset; ///<前一个binlog的偏移
+    volatile CWX_UINT32      m_uiFileSize; ///<binlog数据文件大小，-1表示不存在
+    volatile CWX_UINT32      m_uiIndexFileSize; ///<索引文件的大小，-1表示不存在
+    volatile CWX_UINT32      m_uiPrevLogOffset; ///<前一个binlog的偏移
     CWX_UINT32          m_ttDay; ///日志文件的日期
     CWX_UINT32      m_uiFileNo; ///<日志所在日期的编号。
 	CwxBinLogWriteCache*  m_writeCache; ///<write 模式下的写cache。
@@ -590,7 +579,8 @@ public:
         DEF_MANAGE_MAX_DAY=30, ///<缺省管理binlog的最多天数
         MIN_MANAGE_DAY = 1, ///<管理binlog的最小天数
         MAX_MANAGE_DAY = 180, ///<管理binlog的最大天数
-        MIN_SID_NO = 1 ///<最小的sid序号
+        MIN_SID_NO = 1, ///<最小的sid序号
+		MAX_BINLOG_FILE_SIZE = 0X7FFFFFFF ///<2G
     };
     enum{
         CURSOR_STATE_UNSEEK = 0, ///<cursor处于未定位的状态
@@ -602,13 +592,13 @@ public:
     @brief 构造函数。
     @param [in] szLogPath binlog文件所在的目录。
     @param [in] szFilePrex binlog文件的前缀，形成的文件名为szFilePrex_xxxxxxxxxx，xxxxxxxxxx为文件序号。
-    @param [in] ullMaxFileSize binlog文件的最大大小。
+    @param [in] uiMaxFileSize binlog文件的最大大小。
     @param [in] bDelOutManageLogFile 是否删除不再管理范围内的文件。
     @return 无。
     */
     CwxBinLogMgr(char const* szLogPath,
         char const* szFilePrex,
-        CWX_UINT64 ullMaxFileSize,
+        CWX_UINT32 uiMaxFileSize,
         bool       bDelOutManageLogFile = false
         );
     ///析构函数
@@ -628,7 +618,6 @@ public:
     @param [in] ttTimestamp binlog的时间戳，通过此时间戳，控制binlog同步的天数。
     @param [in] uiType 日志的分组
     @param [in] uiType 日志的类型
-    @param [in] uiAttr 日志的属性
     @param [in] szData binlog的数据。
     @param [in] uiDataLen binlog的数据的长度。
     @param [in] szErr2K 若添加失败，则为失败的原因信息。
@@ -638,7 +627,6 @@ public:
         CWX_UINT32 ttTimestamp,
         CWX_UINT32 uiGroup,
         CWX_UINT32 uiType,
-        CWX_UINT32 uiAttr,
         char const* szData,
         CWX_UINT32 uiDataLen,
         char* szErr2K=NULL);
@@ -816,7 +804,7 @@ private:
     string                    m_strPrexLogPath; ///<指定前缀的binlog文件的目录
     string                   m_strFilePrex; ///<binlog文件的前缀名
     bool                     m_bDelOutManageLogFile; ///<是否删除不在管理内的文件
-    CWX_UINT64               m_ullMaxFileSize; ///<binlog文件的最大大小
+    CWX_UINT32               m_uiMaxFileSize; ///<binlog文件的最大大小
     CWX_UINT32               m_uiMaxDay; ///<管理的binlog的最小天数
 	bool					 m_bCache;  ///<是否对写入的数据进行cache
     char                     m_szErr2K[2048]; ///<binlog 管理器无效的原因
