@@ -490,7 +490,7 @@ inline int CwxBinLogWriteCache::flushData(char* szErr2K)
 {
 	if (m_uiDataLen)
 	{
-		if (0 != ::pwrite(m_dataFd, m_dataBuf, m_uiDataLen, m_ullDataFileOffset))
+		if (m_uiDataLen != (CWX_UINT32)::pwrite(m_dataFd, m_dataBuf, m_uiDataLen, m_ullDataFileOffset))
 		{
 			if (szErr2K) CwxCommon::snprintf(szErr2K, 2047, "Failure to write data to binlog file, errno=%d", errno);
 			return -1;
@@ -509,7 +509,7 @@ inline int CwxBinLogWriteCache::flushIndex(char* szErr2K)
 {
 	if (m_uiIndexLen)
 	{
-		if (0 != ::pwrite(m_indexFd, m_indexBuf, m_uiIndexLen, m_ullIndexFileOffset))
+		if (m_uiIndexLen != (CWX_UINT32)::pwrite(m_indexFd, m_indexBuf, m_uiIndexLen, m_ullIndexFileOffset))
 		{
 			if (szErr2K) CwxCommon::snprintf(szErr2K, 2047, "Failure to write index data to binlog index, errno=%d", errno);
 			return -1;
