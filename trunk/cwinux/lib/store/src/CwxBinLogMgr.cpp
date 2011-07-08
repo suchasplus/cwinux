@@ -973,8 +973,11 @@ int CwxBinLogFile::createIndex(char* szErr2K)
         m_ullFileSize = 0;
     }
     //truncate binlog 文件
+	char szBuf[64];
+	CWX_INFO(("Truncate file %s to size %s", m_strPathFileName.c_str(), CwxCommon::toString(m_ullFileSize, szBuf, 10)));
     ftruncate(m_fd, m_ullFileSize);
     //truncate index 文件
+	CWX_INFO(("Truncate file %s to size %s", m_strIndexFileName.c_str(), CwxCommon::toString(m_ullIndexFileSize, szBuf, 10)));
     ftruncate(m_indexFd, m_ullIndexFileSize);
 	delete cursor;
     return 0;
@@ -1136,8 +1139,8 @@ int CwxBinLogMgr::init(CWX_UINT32 uiMaxDay, bool bCache, char* szErr2K)
         //如果binlog超出管理的范围，则break
         if (!_isManageBinLogFile(pBinLogFile))
         {
-            CwxFile::rmFile(pBinLogFile->getDataFileName().c_str());
-            CwxFile::rmFile(pBinLogFile->getIndexFileName().c_str());
+			CWX_INFO(("Remove binlog file for outdate, file:%s", pBinLogFile->getDataFileName().c_str()));
+			CwxBinLogFile::remove(pBinLogFile->getDataFileName().c_str());
             delete pBinLogFile;
             break;
         }
@@ -1275,8 +1278,8 @@ int CwxBinLogMgr::append(CWX_UINT64 ullSid,
         while(m_arrBinlog.size())
         {
             if (_isManageBinLogFile(m_arrBinlog[0])) break;
-            CwxFile::rmFile(m_arrBinlog[0]->getDataFileName().c_str());
-            CwxFile::rmFile(m_arrBinlog[0]->getIndexFileName().c_str());
+			CWX_INFO(("Remove binlog file for outdate, file:%s", m_arrBinlog[0]->getDataFileName().c_str()));
+			CwxBinLogFile::remove(m_arrBinlog[0]->getDataFileName().c_str());
             delete m_arrBinlog[0];
             m_arrBinlog.erase(m_arrBinlog.begin());
         }
