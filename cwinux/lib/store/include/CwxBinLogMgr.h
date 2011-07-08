@@ -44,7 +44,7 @@ public:
     ///缺省构造函数
     inline CwxBinLogHeader();
     ///构造函数
-    inline CwxBinLogHeader(CWX_UINT64 ullSid, CWX_UINT32 uiDatetime, CWX_UINT32 uiOffset,
+    inline CwxBinLogHeader(CWX_UINT64 ullSid, CWX_UINT32 uiLogNo, CWX_UINT32 uiDatetime, CWX_UINT32 uiOffset,
                    CWX_UINT32 uiLogLen, CWX_UINT32 uiPrevOffset,
                    CWX_UINT32 uiGroup, CWX_UINT32 uiType);
     ///拷贝构造
@@ -58,6 +58,10 @@ public:
     inline void setSid(CWX_UINT64 ullSid);
     ///获取sid
     inline CWX_UINT64 getSid() const;
+	///设置记录号
+	inline void setLogNo(CWX_UINT32 uiLogNo);
+	///获取记录号
+	inline CWX_UINT32 getLogNo() const;
     ///设置log的时间戳
     inline void setDatetime(CWX_UINT32 uiDatetime);
     ///获取log的时间戳
@@ -91,6 +95,7 @@ public:
     inline void reset();
 private:
     CWX_UINT64    m_ullSid; ///<同步序列号
+	CWX_UINT32    m_uiLogNo; ///<记录号
     CWX_UINT32    m_uiDatetime; ///<记录的时间戳
     CWX_UINT32    m_uiOffset; ///<记录的文件偏移
     CWX_UINT32    m_uiLogLen; ///<记录的长度，不包括log header的长度
@@ -137,7 +142,7 @@ public:
     ///设置log的文件偏移
     inline void setOffset(CWX_UINT32 uiOffset);
     ///获取log的文件偏移
-    inline CWX_UINT64 getOffset() const;
+    inline CWX_UINT32 getOffset() const;
     ///设置log的长度，不包括log header的长度
     inline void setLogLen(CWX_UINT32 uiLogLen);
     ///获取log的长度，不包括log header的长度

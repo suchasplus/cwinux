@@ -132,7 +132,7 @@ inline bool CwxBinLogCursor::preadPage(int fildes, CWX_UINT32 uiBlockNo, CWX_UIN
 		m_uiBlockNo = uiBlockNo;
 		m_uiBlockDataOffset = 0;
 	}
-	if ((ullBlockNo == m_uiBlockNo)&&(uiOffset <= m_uiBlockDataOffset)) return true;
+	if ((uiBlockNo == m_uiBlockNo)&&(uiOffset <= m_uiBlockDataOffset)) return true;
 	do 
 	{
 		ret = ::pread(fildes, m_szReadBlock + m_uiBlockDataOffset, BINLOG_READ_BLOCK_SIZE - m_uiBlockDataOffset, (uiBlockNo<<BINLOG_READ_BLOCK_BIT) + m_uiBlockDataOffset);
@@ -477,6 +477,7 @@ int CwxBinLogFile::append(CWX_UINT64 ullSid,
         }
     }
     CwxBinLogHeader header(ullSid,
+		m_uiLogNum,
         (CWX_UINT32)ttTimestamp,
         m_uiFileSize,
         uiDataLen,
@@ -1108,7 +1109,7 @@ int CwxBinLogMgr::init(CWX_UINT32 uiMaxDay, bool bCache, char* szErr2K)
     CwxBinLogFile* pBinLogFile = NULL;
     while(map_iter != fileMap.rend())
     {
-        pBinLogFile = new CwxBinLogFile(map_iter->first.getDay(), map_iter->first.getFileNo(), m_ullMaxFileSize);
+        pBinLogFile = new CwxBinLogFile(map_iter->first.getDay(), map_iter->first.getFileNo(), m_uiMaxFileSize);
         if (0 != pBinLogFile->open(map_iter->second.c_str(),
             m_pCurBinlog?true:false,
             false,
