@@ -8,13 +8,14 @@ inline CwxBinLogHeader::CwxBinLogHeader()
 }
 
 inline CwxBinLogHeader::CwxBinLogHeader(CWX_UINT64 ullSid,
+										CWX_UINT32 uiLogNo,
                                      CWX_UINT32 uiDatetime,
                                      CWX_UINT32 uiOffset,
                                      CWX_UINT32 uiLogLen,
                                      CWX_UINT32 uiPrevOffset,
                                      CWX_UINT32 uiGroup,
                                      CWX_UINT32 uiType):
-m_ullSid(ullSid), m_uiDatetime(uiDatetime), m_uiOffset(uiOffset),
+m_ullSid(ullSid), m_uiLogNo(uiLogNo), m_uiDatetime(uiDatetime), m_uiOffset(uiOffset),
 m_uiLogLen(uiLogLen), m_uiPrevOffset(uiPrevOffset),
 m_uiGroup(uiGroup), m_uiType(uiType)
 {
@@ -48,6 +49,17 @@ inline void CwxBinLogHeader::setSid(CWX_UINT64 ullSid)
 inline CWX_UINT64 CwxBinLogHeader::getSid() const
 {
     return m_ullSid;
+}
+
+///设置记录号
+inline void CwxBinLogHeader::setLogNo(CWX_UINT32 uiLogNo)
+{
+	m_uiLogNo = uiLogNo;
+}
+///获取记录号
+inline CWX_UINT32 CwxBinLogHeader::getLogNo() const
+{
+	return m_uiLogNo;
 }
 
 inline void CwxBinLogHeader::setDatetime(CWX_UINT32 uiDatetime)
@@ -122,6 +134,8 @@ inline CWX_UINT32 CwxBinLogHeader::serialize(char* szBuf) const
     byte4 = CWX_HTONL(byte4); memcpy(szBuf+pos, &byte4, 4); pos+=4;
     byte4 = (CWX_UINT32)(m_ullSid&0xFFFFFFFF);
     byte4 = CWX_HTONL(byte4); memcpy(szBuf+pos, &byte4, 4); pos+=4;
+	//logno
+	byte4 = CWX_HTONL(m_uiLogNo); memcpy(szBuf+pos, &byte4, 4); pos+=4;
     //datetime
     byte4 = CWX_HTONL(m_uiDatetime); memcpy(szBuf+pos, &byte4, 4); pos+=4;
     //offset
@@ -147,6 +161,9 @@ inline CWX_UINT32 CwxBinLogHeader::unserialize(char const* szBuf)
     memcpy(&byte4, szBuf+pos, 4); pos += 4;
     m_ullSid <<=32;
     m_ullSid += CWX_NTOHL(byte4);
+	//log no
+	memcpy(&byte4, szBuf+pos, 4); pos += 4;
+	m_uiLogNo = CWX_NTOHL(byte4);
     //datetime
     memcpy(&byte4, szBuf+pos, 4); pos += 4;
     m_uiDatetime = CWX_NTOHL(byte4);
