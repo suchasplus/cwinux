@@ -38,7 +38,7 @@ class CwxBinLogHeader
 {
 public:
     enum{
-        BIN_LOG_HEADER_SIZE = 32 ///<serialize的空间字节数
+        BIN_LOG_HEADER_SIZE = 36 ///<serialize的空间字节数
     };
 public:
     ///缺省构造函数
