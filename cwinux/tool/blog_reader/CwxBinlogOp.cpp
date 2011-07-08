@@ -291,7 +291,7 @@ void CwxBinlogOp::doSid(CWX_UINT64 ullSid){
     CWX_UINT64 offset=0;
     char szBuf1[64], szBuf2[64];
     printf("Seeking to binlog, sid=%s\n", CwxCommon::toString(ullSid, szBuf1));
-    map<CWX_UINT64/*sid*/, CWX_UINT64/*offset*/>::iterator iter;
+    map<CWX_UINT64/*sid*/, CWX_UINT32/*offset*/>::iterator iter;
 
     if (ullSid < m_ullMinSid){
         printf("Sid[%s] is less than min sid[%s], it doesn't exist\n", 
@@ -350,7 +350,7 @@ void CwxBinlogOp::doRecord(CWX_UINT32 uiRecord){
     int iRet = 0;
     CWX_UINT64 offset=0;
     printf("Seeking to binlog, record index=%u\n", uiRecord);
-    map<CWX_UINT32/*rec_no*/, CWX_UINT64/*offset*/>::iterator iter;
+    map<CWX_UINT32/*rec_no*/, CWX_UINT32/*offset*/>::iterator iter;
     if (uiRecord + 1 > m_uiRecNum){
         printf("Record Index[%u] doesn't exist, total record is %u\n",
             uiRecord,
