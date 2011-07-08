@@ -302,7 +302,7 @@ int CwxBinLogWriteCache::append(CwxBinLogHeader const& header, char const* szDat
 	if (0 == m_ullMinIndexSid) m_ullMinIndexSid =  header.getSid();
 	m_indexSidMap[header.getSid()] = pos;
 	m_ullMaxSid = header.getSid();
-	return 0;
+	return 1;
 }
 
 
