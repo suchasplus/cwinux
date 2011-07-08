@@ -1,5 +1,4 @@
 #include "CwxBinLogMgr.h"
-
 CWINUX_BEGIN_NAMESPACE
 /***********************************************************************
                     CwxBinLogCursor  class

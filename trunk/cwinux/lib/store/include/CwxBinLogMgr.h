@@ -26,6 +26,7 @@
 #include "CwxDate.h"
 #include "CwxRwLock.h"
 #include "CwxLockGuard.h"
+#include "CwxLogger.h"
 
 CWINUX_BEGIN_NAMESPACE
 
