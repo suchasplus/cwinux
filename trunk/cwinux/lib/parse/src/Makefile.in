@@ -182,7 +182,7 @@ target_alias = @target_alias@
 xml_expat_dir = @xml_expat_dir@
 pkgconfigdir = 
 lib_LTLIBRARIES = libcwxparse.la
-libcwxparse_la_CPPFLAGS = -W -Wall
+libcwxparse_la_CPPFLAGS = -W -Wall -Wno-deprecated
 libcwxparse_la_SOURCES = \
 	CwxJsonParser.cpp\
 	CwxXmlFileConfigParser.cpp\

@@ -4,7 +4,7 @@ includedir =
 pkgconfigdir = 
 
 lib_LTLIBRARIES = libcwxutil.la
-libcwxutil_la_CPPFLAGS = -W -Wall
+libcwxutil_la_CPPFLAGS = -W -Wall -Wno-deprecated
 
 libcwxutil_la_SOURCES = \
 	CwxDayLogger.cpp\

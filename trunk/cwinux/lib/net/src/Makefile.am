@@ -4,7 +4,7 @@ includedir =
 pkgconfigdir = 
 
 lib_LTLIBRARIES = libcwxnet.la
-libcwxnet_la_CPPFLAGS = -W -Wall
+libcwxnet_la_CPPFLAGS = -W -Wall -Wno-deprecated
 
 libcwxnet_la_SOURCES = \
 	CwxAddr.cpp\

@@ -4,7 +4,7 @@ includedir =
 pkgconfigdir = 
 
 lib_LTLIBRARIES = libcwxstore.la
-libcwxstore_la_CPPFLAGS = -W -Wall
+libcwxstore_la_CPPFLAGS = -W -Wall -Wno-deprecated
 
 libcwxstore_la_SOURCES = \
 	CwxBinLogMgr.cpp\
