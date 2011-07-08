@@ -9,18 +9,15 @@ inline CwxBinLogHeader::CwxBinLogHeader()
 
 inline CwxBinLogHeader::CwxBinLogHeader(CWX_UINT64 ullSid,
                                      CWX_UINT32 uiDatetime,
-                                     CWX_UINT64 ullOffset,
+                                     CWX_UINT32 uiOffset,
                                      CWX_UINT32 uiLogLen,
-                                     CWX_UINT32 uiLogNo,
-                                     CWX_UINT64 ullPrevOffset,
+                                     CWX_UINT32 uiPrevOffset,
                                      CWX_UINT32 uiGroup,
-                                     CWX_UINT32 uiType,
-                                     CWX_UINT32 uiAttr):
-m_ullSid(ullSid), m_uiDatetime(uiDatetime), m_ullOffset(ullOffset),
-m_uiLogLen(uiLogLen), m_uiLogNo(uiLogNo), m_ullPrevOffset(ullPrevOffset),
-m_uiGroup(uiGroup), m_uiType(uiType),m_uiAttr(uiAttr)
+                                     CWX_UINT32 uiType):
+m_ullSid(ullSid), m_uiDatetime(uiDatetime), m_uiOffset(uiOffset),
+m_uiLogLen(uiLogLen), m_uiPrevOffset(uiPrevOffset),
+m_uiGroup(uiGroup), m_uiType(uiType)
 {
-
 }
 
 
@@ -63,14 +60,14 @@ inline CWX_UINT32 CwxBinLogHeader::getDatetime() const
     return m_uiDatetime;
 }
 
-inline void CwxBinLogHeader::setOffset(CWX_UINT64 ullOffset)
+inline void CwxBinLogHeader::setOffset(CWX_UINT32 uiOffset)
 {
-    m_ullOffset = ullOffset;
+    m_uiOffset = uiOffset;
 }
 
-inline CWX_UINT64 CwxBinLogHeader::getOffset() const
+inline CWX_UINT32 CwxBinLogHeader::getOffset() const
 {
-    return m_ullOffset;
+    return m_uiOffset;
 }
 
 inline void CwxBinLogHeader::setLogLen(CWX_UINT32 uiLogLen)
@@ -83,24 +80,14 @@ inline CWX_UINT32 CwxBinLogHeader::getLogLen() const
     return m_uiLogLen;
 }
 
-inline void CwxBinLogHeader::setLogNo(CWX_UINT32 uiLogNo)
+inline void CwxBinLogHeader::setPrevOffset(CWX_UINT32 uiPrevOffset)
 {
-    m_uiLogNo = uiLogNo;
+    m_uiPrevOffset = uiPrevOffset;
 }
 
-inline CWX_UINT32 CwxBinLogHeader::getLogNo() const
+inline CWX_UINT32 CwxBinLogHeader::getPrevOffset() const
 {
-    return m_uiLogNo;
-}
-
-inline void CwxBinLogHeader::setPrevOffset(CWX_UINT64 ullPrevOffset)
-{
-    m_ullPrevOffset = ullPrevOffset;
-}
-
-inline CWX_UINT64 CwxBinLogHeader::getPrevOffset() const
-{
-    return m_ullPrevOffset;
+    return m_uiPrevOffset;
 }
 
 ///设置binlog的分组
@@ -125,16 +112,6 @@ inline CWX_UINT32 CwxBinLogHeader::getType() const
     return m_uiType;
 }
 
-inline void CwxBinLogHeader::setAttr(CWX_UINT32 uiAttr)
-{
-    m_uiAttr = uiAttr;
-}
-
-inline CWX_UINT32 CwxBinLogHeader::getAttr() const
-{
-    return m_uiAttr;
-}
-
 
 inline CWX_UINT32 CwxBinLogHeader::serialize(char* szBuf) const
 {
@@ -148,25 +125,15 @@ inline CWX_UINT32 CwxBinLogHeader::serialize(char* szBuf) const
     //datetime
     byte4 = CWX_HTONL(m_uiDatetime); memcpy(szBuf+pos, &byte4, 4); pos+=4;
     //offset
-    byte4 = (CWX_UINT32)(m_ullOffset>>32);
-    byte4 = CWX_HTONL(byte4); memcpy(szBuf+pos, &byte4, 4); pos+=4;
-    byte4 = (CWX_UINT32)(m_ullOffset&0xFFFFFFFF);
-    byte4 = CWX_HTONL(byte4); memcpy(szBuf+pos, &byte4, 4); pos+=4;
+    byte4 = CWX_HTONL(m_uiOffset); memcpy(szBuf+pos, &byte4, 4); pos+=4;
     //log-length
     byte4 = CWX_HTONL(m_uiLogLen); memcpy(szBuf+pos, &byte4, 4); pos+=4;
-    //log-no
-    byte4 = CWX_HTONL(m_uiLogNo); memcpy(szBuf+pos, &byte4, 4); pos+=4;
     //prev-offset
-    byte4 = (CWX_UINT32)(m_ullPrevOffset>>32);
-    byte4 = CWX_HTONL(byte4); memcpy(szBuf+pos, &byte4, 4); pos+=4;
-    byte4 = (CWX_UINT32)(m_ullPrevOffset&0xFFFFFFFF);
-    byte4 = CWX_HTONL(byte4); memcpy(szBuf+pos, &byte4, 4); pos+=4;
+	byte4 = CWX_HTONL(m_uiPrevOffset); memcpy(szBuf+pos, &byte4, 4); pos+=4;
     //group
     byte4 = CWX_HTONL(m_uiGroup); memcpy(szBuf+pos, &byte4, 4); pos+=4;
     //type
     byte4 = CWX_HTONL(m_uiType); memcpy(szBuf+pos, &byte4, 4); pos+=4;
-    //attr
-    byte4 = CWX_HTONL(m_uiAttr); memcpy(szBuf+pos, &byte4, 4); pos+=4;
     return pos;
 }
 
@@ -184,32 +151,20 @@ inline CWX_UINT32 CwxBinLogHeader::unserialize(char const* szBuf)
     memcpy(&byte4, szBuf+pos, 4); pos += 4;
     m_uiDatetime = CWX_NTOHL(byte4);
     //offset
-    memcpy(&byte4, szBuf+pos, 4); pos += 4;
-    m_ullOffset = CWX_NTOHL(byte4);
-    memcpy(&byte4, szBuf+pos, 4); pos += 4;
-    m_ullOffset <<=32;
-    m_ullOffset += CWX_NTOHL(byte4);
+	memcpy(&byte4, szBuf+pos, 4); pos += 4;
+	m_uiOffset = CWX_NTOHL(byte4);
     //log-length
     memcpy(&byte4, szBuf+pos, 4); pos += 4;
     m_uiLogLen = CWX_NTOHL(byte4);
-    //log-no
-    memcpy(&byte4, szBuf+pos, 4); pos += 4;
-    m_uiLogNo = CWX_NTOHL(byte4);
     //prev-offset
-    memcpy(&byte4, szBuf+pos, 4); pos += 4;
-    m_ullPrevOffset = CWX_NTOHL(byte4);
-    memcpy(&byte4, szBuf+pos, 4); pos += 4;
-    m_ullPrevOffset <<=32;
-    m_ullPrevOffset += CWX_NTOHL(byte4);
+	memcpy(&byte4, szBuf+pos, 4); pos += 4;
+	m_uiPrevOffset = CWX_NTOHL(byte4);
     //group
     memcpy(&byte4, szBuf+pos, 4); pos += 4;
     m_uiGroup = CWX_NTOHL(byte4);
     //type
     memcpy(&byte4, szBuf+pos, 4); pos += 4;
     m_uiType = CWX_NTOHL(byte4);
-    //attr
-    memcpy(&byte4, szBuf+pos, 4); pos += 4;
-    m_uiAttr = CWX_NTOHL(byte4);
     return pos;
 }
 
@@ -227,8 +182,8 @@ inline CwxBinLogIndex::CwxBinLogIndex()
     memset(this, 0x00, sizeof(CwxBinLogIndex));
 }
 
-inline CwxBinLogIndex::CwxBinLogIndex(CWX_UINT64 ullSid, CWX_UINT32 uiDatetime, CWX_UINT64 ullOffset, CWX_UINT32 uiLogLen):
-m_ullSid(ullSid), m_uiDatetime(uiDatetime), m_ullOffset(ullOffset), m_uiLogLen(uiLogLen)
+inline CwxBinLogIndex::CwxBinLogIndex(CWX_UINT64 ullSid, CWX_UINT32 uiDatetime, CWX_UINT32 uiOffset, CWX_UINT32 uiLogLen):
+m_ullSid(ullSid), m_uiDatetime(uiDatetime), m_uiOffset(uiOffset), m_uiLogLen(uiLogLen)
 {
 }
 
@@ -241,7 +196,7 @@ inline CwxBinLogIndex::CwxBinLogIndex(CwxBinLogHeader const& header)
 {
     m_ullSid = header.getSid();
     m_uiDatetime = header.getDatetime();
-    m_ullOffset = header.getOffset();
+    m_uiOffset = header.getOffset();
     m_uiLogLen = header.getLogLen();
 }
 
@@ -258,7 +213,7 @@ inline CwxBinLogIndex& CwxBinLogIndex::operator=(CwxBinLogHeader const& header)
 {
     m_ullSid = header.getSid();
     m_uiDatetime = header.getDatetime();
-    m_ullOffset = header.getOffset();
+    m_uiOffset = header.getOffset();
     m_uiLogLen = header.getLogLen();
     return *this;
 }
@@ -289,14 +244,14 @@ inline CWX_UINT32 CwxBinLogIndex::getDatetime() const
 }
 
 
-inline void CwxBinLogIndex::setOffset(CWX_UINT64 ullOffset)
+inline void CwxBinLogIndex::setOffset(CWX_UINT32 uiOffset)
 {
-    m_ullOffset = ullOffset;
+    m_uiOffset = uiOffset;
 }
 
-inline CWX_UINT64 CwxBinLogIndex::getOffset() const
+inline CWX_UINT32 CwxBinLogIndex::getOffset() const
 {
-    return m_ullOffset;
+    return m_uiOffset;
 }
 
 inline void CwxBinLogIndex::setLogLen(CWX_UINT32 uiLogLen)
@@ -321,10 +276,7 @@ inline CWX_UINT32 CwxBinLogIndex::serialize(char* szBuf) const
     //datetime
     byte4 = CWX_HTONL(m_uiDatetime); memcpy(szBuf+pos, &byte4, 4); pos+=4;
     //offset
-    byte4 = (CWX_UINT32)(m_ullOffset>>32);
-    byte4 = CWX_HTONL(byte4); memcpy(szBuf+pos, &byte4, 4); pos+=4;
-    byte4 = (CWX_UINT32)(m_ullOffset&0xFFFFFFFF);
-    byte4 = CWX_HTONL(byte4); memcpy(szBuf+pos, &byte4, 4); pos+=4;
+	byte4 = CWX_HTONL(m_uiOffset); memcpy(szBuf+pos, &byte4, 4); pos+=4;
     //log-length
     byte4 = CWX_HTONL(m_uiLogLen); memcpy(szBuf+pos, &byte4, 4); pos+=4;
     return pos;
@@ -344,11 +296,8 @@ inline CWX_UINT32 CwxBinLogIndex::unserialize(char const* szBuf)
     memcpy(&byte4, szBuf+pos, 4); pos += 4;
     m_uiDatetime = CWX_NTOHL(byte4);
     //offset
-    memcpy(&byte4, szBuf+pos, 4); pos += 4;
-    m_ullOffset = CWX_NTOHL(byte4);
-    memcpy(&byte4, szBuf+pos, 4); pos += 4;
-    m_ullOffset <<=32;
-    m_ullOffset += CWX_NTOHL(byte4);
+	memcpy(&byte4, szBuf+pos, 4); pos += 4;
+	m_uiOffset = CWX_NTOHL(byte4);
     //log-length
     memcpy(&byte4, szBuf+pos, 4); pos += 4;
     m_uiLogLen = CWX_NTOHL(byte4);
@@ -408,14 +357,14 @@ inline int CwxBinLogCursor::prev()
     return -1;
 }
 
-inline int CwxBinLogCursor::seek(CWX_UINT64 ullOffset)
+inline int CwxBinLogCursor::seek(CWX_UINT32 uiOffset)
 {
-    int iRet = header(ullOffset);
+    int iRet = header(uiOffset);
     if (m_bDangling && (1 == iRet))
     {
         m_bDangling = false;
     }
-    else if (0 == ullOffset)
+    else if (0 == uiOffset)
     {
         if ((0 == iRet) || (-2 == iRet))
         {
@@ -490,14 +439,14 @@ inline int CwxBinLogWriteCache::flushData(char* szErr2K)
 {
 	if (m_uiDataLen)
 	{
-		if (m_uiDataLen != (CWX_UINT32)::pwrite(m_dataFd, m_dataBuf, m_uiDataLen, m_ullDataFileOffset))
+		if (m_uiDataLen != (CWX_UINT32)::pwrite(m_dataFd, m_dataBuf, m_uiDataLen, m_uiDataFileOffset))
 		{
 			if (szErr2K) CwxCommon::snprintf(szErr2K, 2047, "Failure to write data to binlog file, errno=%d", errno);
 			return -1;
 		}
 		m_ullPrevDataSid = m_ullMaxSid;
 		m_ullMinDataSid = 0;
-		m_ullDataFileOffset += m_uiDataLen; ///新的偏移位置
+		m_uiDataFileOffset += m_uiDataLen; ///新的偏移位置
 		m_uiDataLen = 0;
 		m_dataSidMap.clear();
 	}
@@ -509,14 +458,14 @@ inline int CwxBinLogWriteCache::flushIndex(char* szErr2K)
 {
 	if (m_uiIndexLen)
 	{
-		if (m_uiIndexLen != (CWX_UINT32)::pwrite(m_indexFd, m_indexBuf, m_uiIndexLen, m_ullIndexFileOffset))
+		if (m_uiIndexLen != (CWX_UINT32)::pwrite(m_indexFd, m_indexBuf, m_uiIndexLen, m_uiIndexFileOffset))
 		{
 			if (szErr2K) CwxCommon::snprintf(szErr2K, 2047, "Failure to write index data to binlog index, errno=%d", errno);
 			return -1;
 		}
 		m_ullPrevIndexSid = m_ullMaxSid;
 		m_ullMinIndexSid = 0;
-		m_ullIndexFileOffset += m_uiIndexLen;
+		m_uiIndexFileOffset += m_uiIndexLen;
 		m_uiIndexLen = 0;
 		m_indexSidMap.clear();
 	}
@@ -578,9 +527,9 @@ inline CWX_UINT32 CwxBinLogFile::getLogNum() const
 }
 
 ///获取binlog文件的大小
-inline CWX_UINT64 CwxBinLogFile::getFileSize() const
+inline CWX_UINT32 CwxBinLogFile::getFileSize() const
 {
-    return m_ullFileSize;
+    return m_uiFileSize;
 }
 
 ///判断是否只读
@@ -624,10 +573,10 @@ inline string const& CwxBinLogFile::getIndexFileName() const
 
 
 //-1：失败；0：成功。
-inline int CwxBinLogFile::readIndex(int fd, CwxBinLogIndex& index, CWX_UINT64 ullOffset, char* szErr2K) const
+inline int CwxBinLogFile::readIndex(int fd, CwxBinLogIndex& index, CWX_UINT32 uiOffset, char* szErr2K) const
 {
     char szBuf[CwxBinLogIndex::BIN_LOG_INDEX_SIZE];
-	ssize_t ret = pread(fd, &szBuf, CwxBinLogIndex::BIN_LOG_INDEX_SIZE, ullOffset);
+	ssize_t ret = pread(fd, &szBuf, CwxBinLogIndex::BIN_LOG_INDEX_SIZE, uiOffset);
     if (CwxBinLogIndex::BIN_LOG_INDEX_SIZE != ret)
     {
 		if (szErr2K)
@@ -638,8 +587,7 @@ inline int CwxBinLogFile::readIndex(int fd, CwxBinLogIndex& index, CWX_UINT64 ul
 			}
 			else
 			{
-				char szOffset[32];
-				CwxCommon::snprintf(szErr2K, 2047, "No complete index record, offset:%s", CwxCommon::toString(ullOffset, szOffset, 10));
+				CwxCommon::snprintf(szErr2K, 2047, "No complete index record, offset:%u", uiOffset);
 			}
 		}
         return -1;
@@ -649,11 +597,11 @@ inline int CwxBinLogFile::readIndex(int fd, CwxBinLogIndex& index, CWX_UINT64 ul
 }
 
 // -1：失败；0：成功。
-inline int CwxBinLogFile::writeIndex(int fd, CwxBinLogIndex const& index, CWX_UINT64 ullOffset, char* szErr2K) const
+inline int CwxBinLogFile::writeIndex(int fd, CwxBinLogIndex const& index, CWX_UINT32 uiOffset, char* szErr2K) const
 {
     char szBuf[CwxBinLogIndex::BIN_LOG_INDEX_SIZE];
     index.serialize(szBuf);
-    if (CwxBinLogIndex::BIN_LOG_INDEX_SIZE != pwrite(fd, szBuf, CwxBinLogIndex::BIN_LOG_INDEX_SIZE, ullOffset))
+    if (CwxBinLogIndex::BIN_LOG_INDEX_SIZE != pwrite(fd, szBuf, CwxBinLogIndex::BIN_LOG_INDEX_SIZE, uiOffset))
     {
         if (szErr2K) CwxCommon::snprintf(szErr2K, 2047, "Failure to write binlog index, file:%s, errno=%d", m_strIndexFileName.c_str(), errno);
         return -1;
