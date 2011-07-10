@@ -510,26 +510,24 @@ int CwxBinLogFile::append(CWX_UINT64 ullSid,
     return 1;
 }
 
-// -1：失败；0：成功。
-int CwxBinLogFile::commit(bool bFlushAll, char* szErr2K)
+int CwxBinLogFile::flush_cache(bool bFlushAll=false, char* szErr2K)
 {
-    if (this->m_bReadOnly)
-    {
-        if (szErr2K) CwxCommon::snprintf(szErr2K, 2047, "The log is opened in read mode, can't commit.file:%s", m_strPathFileName.c_str());
-        return -1;
-    }
-    if (!m_bValid)
-    {
-        if (szErr2K) CwxCommon::snprintf(szErr2K, 2047, "The log is not valid, can't commit. file:%s", m_strPathFileName.c_str());
-        return -1;
-    }
+	if (this->m_bReadOnly)
+	{
+		if (szErr2K) CwxCommon::snprintf(szErr2K, 2047, "The log is opened in read mode, can't commit.file:%s", m_strPathFileName.c_str());
+		return -1;
+	}
+	if (!m_bValid)
+	{
+		if (szErr2K) CwxCommon::snprintf(szErr2K, 2047, "The log is not valid, can't commit. file:%s", m_strPathFileName.c_str());
+		return -1;
+	}
 	//flush data 
 	if (0 != m_writeCache->flushData(szErr2K))
 	{
 		m_bValid = false;
 		return -1;
 	}
-	::fsync(m_fd);
 	if (bFlushAll)
 	{
 		if (0 != m_writeCache->flushIndex(szErr2K))
@@ -537,6 +535,15 @@ int CwxBinLogFile::commit(bool bFlushAll, char* szErr2K)
 			m_bValid = false;
 			return -1;
 		}
+	}
+	return 0;
+}
+
+int CwxBinLogFile::fsync_data(bool bFlushAll=false, char* szErr2K)
+{
+	::fsync(m_fd);
+	if (bFlushAll)
+	{
 		::fsync(m_indexFd);
 	}
     return 0;
@@ -1391,7 +1398,18 @@ int CwxBinLogMgr::commit(bool bAlL, char* szErr2K)
 		if (szErr2K) strcpy(szErr2K, m_szErr2K);
 		return -1;
 	}
-    if (m_pCurBinlog) iRet = m_pCurBinlog->commit(bAlL, m_szErr2K);
+	if (!m_pCurBinlog) return 0;
+	{
+		///写锁保护
+		CwxWriteLockGuard<CwxRwLock> lock(&m_rwLock);
+		iRet = m_pCurBinlog->flush_cache(bAlL, m_szErr2K);
+		if (0 != iRet)
+		{
+			if (szErr2K) strcpy(szErr2K, m_szErr2K);
+			return iRet;
+		}
+	}
+	iRet = m_pCurBinlog->fsync_data(bAlL, m_szErr2K); 
     if (0 != iRet)
     {
         if (szErr2K) strcpy(szErr2K, m_szErr2K);
