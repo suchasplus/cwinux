@@ -510,7 +510,7 @@ int CwxBinLogFile::append(CWX_UINT64 ullSid,
     return 1;
 }
 
-int CwxBinLogFile::flush_cache(bool bFlushAll=false, char* szErr2K)
+int CwxBinLogFile::flush_cache(bool bFlushAll, char* szErr2K)
 {
 	if (this->m_bReadOnly)
 	{
@@ -539,7 +539,7 @@ int CwxBinLogFile::flush_cache(bool bFlushAll=false, char* szErr2K)
 	return 0;
 }
 
-int CwxBinLogFile::fsync_data(bool bFlushAll=false, char* szErr2K)
+int CwxBinLogFile::fsync_data(bool bFlushAll, char*)
 {
 	::fsync(m_fd);
 	if (bFlushAll)
