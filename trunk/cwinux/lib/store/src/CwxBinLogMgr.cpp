@@ -1814,39 +1814,43 @@ int CwxBinLogMgr::prev(CwxBinLogCursor* pCursor)
 //-1：失败；0：成功获取下一条binlog。
 int CwxBinLogMgr::fetch(CwxBinLogCursor* pCursor, char* szData, CWX_UINT32& uiDataLen)
 {
-	if(!m_bValid)
+	///读锁保护
 	{
-		strcpy(pCursor->m_szErr2K, m_szErr2K);
-		return -1;
-	}
-    if (!isCursorValid(pCursor))
-    {
-        if (isUnseek(pCursor)) strcpy(pCursor->m_szErr2K, "Cursor is unseek.");
-        return -1;
-    }
-    if (CURSOR_STATE_UNSEEK == pCursor->m_ucSeekState)
-    {
-        strcpy(pCursor->m_szErr2K, "the cursor doesn't seek.");
-        return -1;
-    }
-	//检测是否在内存
-	if (pCursor->m_pBinLogFile->m_writeCache &&
-		pCursor->m_pBinLogFile->m_writeCache->m_dataSidMap.size()&&
-		(pCursor->m_curLogHeader.getSid() >= pCursor->m_pBinLogFile->m_writeCache->m_ullMinDataSid))
-	{
-		map<CWX_UINT64/*sid*/, unsigned char*>::const_iterator iter = pCursor->m_pBinLogFile->m_writeCache->m_dataSidMap.find(pCursor->m_curLogHeader.getSid());
-		CWX_ASSERT(iter != pCursor->m_pBinLogFile->m_writeCache->m_dataSidMap.end());
-		if (uiDataLen < pCursor->m_curLogHeader.getLogLen())
+		CwxReadLockGuard<CwxRwLock> lock(&m_rwLock);
+		if(!m_bValid)
 		{
-			CwxCommon::snprintf(pCursor->m_szErr2K, 2047, "Buf is too small, buf-size[%u], data-size[%u]",
-				uiDataLen, pCursor->m_curLogHeader.getLogLen());
-			pCursor->m_pBinLogFile = NULL;
-			pCursor->m_ucSeekState = CURSOR_STATE_ERROR;
+			strcpy(pCursor->m_szErr2K, m_szErr2K);
 			return -1;
 		}
-		memcpy(szData, iter->second + CwxBinLogHeader::BIN_LOG_HEADER_SIZE, pCursor->m_curLogHeader.getLogLen());
-		uiDataLen = pCursor->m_curLogHeader.getLogLen();
-		return 1;
+		if (!isCursorValid(pCursor))
+		{
+			if (isUnseek(pCursor)) strcpy(pCursor->m_szErr2K, "Cursor is unseek.");
+			return -1;
+		}
+		if (CURSOR_STATE_UNSEEK == pCursor->m_ucSeekState)
+		{
+			strcpy(pCursor->m_szErr2K, "the cursor doesn't seek.");
+			return -1;
+		}
+		//检测是否在内存
+		if (pCursor->m_pBinLogFile->m_writeCache &&
+			pCursor->m_pBinLogFile->m_writeCache->m_dataSidMap.size()&&
+			(pCursor->m_curLogHeader.getSid() >= pCursor->m_pBinLogFile->m_writeCache->m_ullMinDataSid))
+		{
+			map<CWX_UINT64/*sid*/, unsigned char*>::const_iterator iter = pCursor->m_pBinLogFile->m_writeCache->m_dataSidMap.find(pCursor->m_curLogHeader.getSid());
+			CWX_ASSERT(iter != pCursor->m_pBinLogFile->m_writeCache->m_dataSidMap.end());
+			if (uiDataLen < pCursor->m_curLogHeader.getLogLen())
+			{
+				CwxCommon::snprintf(pCursor->m_szErr2K, 2047, "Buf is too small, buf-size[%u], data-size[%u]",
+					uiDataLen, pCursor->m_curLogHeader.getLogLen());
+				pCursor->m_pBinLogFile = NULL;
+				pCursor->m_ucSeekState = CURSOR_STATE_ERROR;
+				return -1;
+			}
+			memcpy(szData, iter->second + CwxBinLogHeader::BIN_LOG_HEADER_SIZE, pCursor->m_curLogHeader.getLogLen());
+			uiDataLen = pCursor->m_curLogHeader.getLogLen();
+			return 1;
+		}
 	}
     int iRet = pCursor->data(szData, uiDataLen);
     //iRet: -2：数据不完成；-1：失败；>=0：获取数据的长度
