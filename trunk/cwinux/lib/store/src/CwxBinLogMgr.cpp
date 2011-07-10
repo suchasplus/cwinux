@@ -818,7 +818,8 @@ void CwxBinLogFile::close()
 {
 	if (!m_bReadOnly)
 	{
-		commit(true, NULL);
+		flush_cache(true, NULL);
+		fsync_data(true, NULL);
 	}
     if (-1 != m_fd) ::close(m_fd);
     m_fd = -1;
@@ -1013,7 +1014,8 @@ CwxBinLogMgr::~CwxBinLogMgr()
 {
     if (m_pCurBinlog)
 	{
-		m_pCurBinlog->commit(true, NULL);
+		m_pCurBinlog->flush_cache(true, NULL);
+		m_pCurBinlog->fsync_data(true, NULL);
 		delete m_pCurBinlog;
 	}
     CWX_UINT32 i = 0;
@@ -1438,7 +1440,8 @@ void CwxBinLogMgr::_clear()
 
     if (m_pCurBinlog)
 	{
-		m_pCurBinlog->commit(true, NULL);
+		m_pCurBinlog->flush_cache(true, NULL);
+		m_pCurBinlog->fsync_data(true, NULL);
 		delete m_pCurBinlog;
 	}
     m_pCurBinlog = NULL;
