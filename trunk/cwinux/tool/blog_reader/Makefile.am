@@ -7,7 +7,7 @@ BUILD_DATE=$(shell date +%F)
 
 
 bin_PROGRAMS = blog_reader
-blog_reader_CPPFLAGS = -D_BUILD_DATE="$(BUILD_DATE)"
+blog_reader_CPPFLAGS = -D_BUILD_DATE="$(BUILD_DATE)" -W -Wall -Wno-deprecated
 blog_reader_SOURCES = \
         binlog.cpp\
         CwxBinlogOp.cpp

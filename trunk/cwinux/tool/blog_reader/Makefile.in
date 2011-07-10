@@ -168,7 +168,7 @@ target_alias = @target_alias@
 xml_expat_dir = @xml_expat_dir@
 pkgconfigdir = 
 BUILD_DATE = $(shell date +%F)
-blog_reader_CPPFLAGS = -D_BUILD_DATE="$(BUILD_DATE)"
+blog_reader_CPPFLAGS = -D_BUILD_DATE="$(BUILD_DATE)" -W -Wall -Wno-deprecated
 blog_reader_SOURCES = \
         binlog.cpp\
         CwxBinlogOp.cpp
