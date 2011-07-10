@@ -409,13 +409,20 @@ public:
         char const* szData,
         CWX_UINT32 uiDataLen,
         char* szErr2K=NULL);
+	/**
+	@brief 确保将cache的数据写入到硬盘
+	@param [in] bFlushAll true:索引数据也需要flush到硬盘；false：只数据flush到硬盘。
+	@param [in] szErr2K 错误信息buf，若为NULL则不返回错误消息。
+	@return -1：失败；0：成功。
+	*/
+	int flush_cache(bool bFlushAll=false, char* szErr2K=NULL);
     /**
     @brief 确保写入的日志保存到硬盘
-	@param [in] bFlushAll true:索引数据也需要flush到硬盘；false：只数据flush到硬盘。
+	@param [in] bFlushAll true:索引数据也需要fsync到硬盘；false：只数据fsync到硬盘。
     @param [in] szErr2K 错误信息buf，若为NULL则不返回错误消息。
     @return -1：失败；0：成功。
     */
-    int commit(bool bFlushAll=false, char* szErr2K=NULL);
+    int fsync_data(bool bFlushAll=false, char* szErr2K=NULL);
 
 	/**
 	@brief 获取大于ullSid的最小binlog header
