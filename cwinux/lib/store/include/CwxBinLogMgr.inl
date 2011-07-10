@@ -560,7 +560,8 @@ inline void CwxBinLogFile::setReadOnly()
 {
     if (!m_bReadOnly)
     {
-		commit(true, NULL);
+		flush_cache(true, NULL);
+		fsync_data(true,NULL);
         m_bReadOnly = true;
         if (-1 != m_fd) ::close(m_fd);
         m_fd = -1;
