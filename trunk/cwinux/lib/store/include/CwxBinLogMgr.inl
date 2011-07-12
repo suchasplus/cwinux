@@ -645,6 +645,7 @@ inline bool CwxBinLogMgr::isOutRange(CwxBinLogCursor* pCursor)
 ///cursor对应的文件，是否在管理的范围之外
 inline bool CwxBinLogMgr::_isOutRange(CwxBinLogCursor*& pCursor)
 {
+	CWX_ASSERT(0); ///当前只要有cursor使用，则不会释放数据文件
     return pCursor->m_curLogHeader.getSid() < getMinSid();
 }
 
@@ -791,7 +792,24 @@ inline bool CwxBinLogMgr::_isManageBinLogFile(CwxBinLogFile* pBinLogFile)
 {
     if (!m_pCurBinlog) return true;
     ///如果文件被cursor使用，则被管理
-    return (m_ttMaxTimestamp - pBinLogFile->getMaxTimestamp()) < m_uiMaxHour * 3600;
+    if ((m_ttMaxTimestamp - pBinLogFile->getMaxTimestamp()) < m_uiMaxHour * 3600) return true;
+	//检测是否有cursor在使用
+	set<CwxBinLogCursor*>::iterator iter = m_cursorSet.begin();
+	while(iter != m_cursorSet.end())
+	{
+		if ((*iter)->m_pBinLogFile)
+		{
+			if (!(*pBinLogFile < *((*iter)->m_pBinLogFile))) 
+				return true;
+		}
+		else if ((*iter)->m_ullSid <= pBinLogFile->getMaxSid())
+		{
+			return true;
+		}
+		iter++;
+	}
+	return false;
+
 }
 
 ///检查cursor是否有效
