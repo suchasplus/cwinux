@@ -1000,7 +1000,7 @@ CwxBinLogMgr::CwxBinLogMgr(char const* szLogPath, char const* szFilePrex, CWX_UI
     m_strFilePrex = szFilePrex;
     m_uiMaxFileSize = uiMaxFileSize;
 	if (m_uiMaxFileSize > MAX_BINLOG_FILE_SIZE) m_uiMaxFileSize = MAX_BINLOG_FILE_SIZE;
-    m_uiMaxDay = DEF_MANAGE_MAX_DAY;
+    m_uiMaxHour = DEF_MANAGE_MAX_HOUR;
 	m_bCache = true;
     m_bDelOutManageLogFile = bDelOutManageLogFile;
     m_fdLock = -1;
@@ -1033,16 +1033,16 @@ CwxBinLogMgr::~CwxBinLogMgr()
 }
 
 // -1：失败；0：成功。
-int CwxBinLogMgr::init(CWX_UINT32 uiMaxDay, bool bCache, char* szErr2K)
+int CwxBinLogMgr::init(CWX_UINT32 uiMaxHour, bool bCache, char* szErr2K)
 {
     ///写锁保护
     CwxWriteLockGuard<CwxRwLock> lock(&m_rwLock);
     this->_clear();
     m_bValid = false;
     strcpy(m_szErr2K, "Not init.");
-    if (uiMaxDay < MIN_MANAGE_DAY) m_uiMaxDay = MIN_MANAGE_DAY;
-    if (uiMaxDay > MAX_MANAGE_DAY) m_uiMaxDay = MAX_MANAGE_DAY;
-    m_uiMaxDay = uiMaxDay;
+    if (uiMaxHour < MIN_MANAGE_HOUR) m_uiMaxHour = MIN_MANAGE_HOUR;
+    if (uiMaxHour > MAX_MANAGE_HOUR) m_uiMaxHour = MAX_MANAGE_HOUR;
+    m_uiMaxHour = uiMaxHour;
 
 	m_bCache = bCache;
 
@@ -1457,7 +1457,7 @@ void CwxBinLogMgr::_clear()
         m_fdLock = -1;
     }
     m_arrBinlog.clear();
-    m_uiMaxDay = DEF_MANAGE_MAX_DAY;
+    m_uiMaxHour = DEF_MANAGE_MAX_HOUR;
     m_ullMinSid = 0; ///<binlog文件的最小sid
     m_ullMaxSid = 0; ///<binlog文件的最大sid
     m_ttMinTimestamp = 0; ///<binlog文件的log开始时间
