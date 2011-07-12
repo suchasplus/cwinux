@@ -1129,6 +1129,14 @@ int CwxBinLogMgr::init(CWX_UINT32 uiMaxHour, bool bCache, char* szErr2K)
             if (szErr2K) strcpy(szErr2K, m_szErr2K);
             return -1;
         }
+		if (!pBinLogFile->getLogNum())
+		{///空数据文件，删除
+			CWX_INFO(("Remove binlog file for empty, file:%s", pBinLogFile->getDataFileName().c_str()));
+			CwxBinLogFile::remove(pBinLogFile->getDataFileName().c_str());
+			delete pBinLogFile;
+			map_iter++;
+			continue;
+		}
         if (!m_pCurBinlog)
         {
             m_ttMaxTimestamp = pBinLogFile->getMaxTimestamp();
@@ -1210,6 +1218,7 @@ int CwxBinLogMgr::append(CWX_UINT64 ullSid,
                          CWX_UINT32 uiDataLen,
                          char* szErr2K)
 {
+	bool bAddNewFile = false;
 	if(!m_bValid)
 	{
 		if (szErr2K) strcpy(szErr2K, m_szErr2K);
@@ -1283,26 +1292,8 @@ int CwxBinLogMgr::append(CWX_UINT64 ullSid,
         pBinLogFile->m_prevBinLogFile = m_pCurBinlog;
         m_pCurBinlog->m_nextBinLogFile = pBinLogFile;
         m_pCurBinlog = pBinLogFile;
-        //检查是否有超出管理范围的binlog文件
-        while(m_arrBinlog.size())
-        {
-            if (_isManageBinLogFile(m_arrBinlog[0])) break;
-			CWX_INFO(("Remove binlog file for outdate, file:%s", m_arrBinlog[0]->getDataFileName().c_str()));
-			CwxBinLogFile::remove(m_arrBinlog[0]->getDataFileName().c_str());
-            delete m_arrBinlog[0];
-            m_arrBinlog.erase(m_arrBinlog.begin());
-        }
-        if (m_arrBinlog.size())
-        {
-            m_arrBinlog[0]->m_prevBinLogFile = NULL;
-            m_ullMinSid = m_arrBinlog[0]->getMinSid();
-            m_ttMinTimestamp = m_arrBinlog[0]->getMinTimestamp();
-        }
-        else
-        {
-            m_ullMinSid = 0;
-            m_ttMinTimestamp = 0;
-        }
+
+		bAddNewFile = true;
         ///重新输出管理的binlog文件信息
         _outputManageBinLog();
     }
@@ -1332,6 +1323,48 @@ int CwxBinLogMgr::append(CWX_UINT64 ullSid,
             m_ullMinSid = ullSid;
             m_ttMinTimestamp = ttTimestamp;
         }
+		if (bAddNewFile)
+		{
+			if (0 != m_pCurBinlog->flush_cache(false, m_szErr2K))
+			{
+				if (!m_pCurBinlog->m_bValid)
+				{
+					m_bValid = false;
+				}
+				if (szErr2K) strcpy(szErr2K, m_szErr2K);
+				return -1;
+			}
+			if (0 != m_pCurBinlog->fsync_data(false, m_szErr2K))
+			{
+				if (!m_pCurBinlog->m_bValid)
+				{
+					m_bValid = false;
+				}
+				if (szErr2K) strcpy(szErr2K, m_szErr2K);
+				return -1;
+			}
+			//检查是否有超出管理范围的binlog文件
+			while(m_arrBinlog.size())
+			{
+				if (_isManageBinLogFile(m_arrBinlog[0])) break;
+				CWX_INFO(("Remove binlog file for outdate, file:%s", m_arrBinlog[0]->getDataFileName().c_str()));
+				CwxBinLogFile::remove(m_arrBinlog[0]->getDataFileName().c_str());
+				delete m_arrBinlog[0];
+				m_arrBinlog.erase(m_arrBinlog.begin());
+			}
+			if (m_arrBinlog.size())
+			{
+				m_arrBinlog[0]->m_prevBinLogFile = NULL;
+				m_ullMinSid = m_arrBinlog[0]->getMinSid();
+				m_ttMinTimestamp = m_arrBinlog[0]->getMinTimestamp();
+			}
+			else
+			{
+				m_ullMinSid = m_pCurBinlog->getMinSid();
+				m_ttMinTimestamp =m_pCurBinlog->getMinTimestamp();
+			}
+		}
+
         return 0;
     }
     if (0 == iRet)
