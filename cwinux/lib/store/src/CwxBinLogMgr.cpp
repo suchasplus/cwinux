@@ -1468,7 +1468,7 @@ void CwxBinLogMgr::_clear()
 
 
 //NULL 失败；否则返回游标对象的指针。
-CwxBinLogCursor* CwxBinLogMgr::createCurser(CWX_UINT64 ullSid=0, CWX_UINT8 ucState=CURSOR_STATE_UNSEEK)
+CwxBinLogCursor* CwxBinLogMgr::createCurser(CWX_UINT64 ullSid, CWX_UINT8 ucState)
 {
 	///读锁保护
 	CwxWriteLockGuard<CwxRwLock> lock(&m_rwLock);
