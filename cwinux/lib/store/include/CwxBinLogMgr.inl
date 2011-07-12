@@ -645,8 +645,9 @@ inline bool CwxBinLogMgr::isOutRange(CwxBinLogCursor* pCursor)
 ///cursor对应的文件，是否在管理的范围之外
 inline bool CwxBinLogMgr::_isOutRange(CwxBinLogCursor*& pCursor)
 {
-	CWX_ASSERT(0); ///当前只要有cursor使用，则不会释放数据文件
-    return pCursor->m_curLogHeader.getSid() < getMinSid();
+    bool ret = pCursor->m_curLogHeader.getSid() < getMinSid();
+	CWX_ASSERT(!ret);
+	return ret;
 }
 
 
