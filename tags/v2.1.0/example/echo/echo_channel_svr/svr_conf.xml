@@ -1,7 +1,0 @@
-<?xml version='1.0'?>
-<svr_def>
-  <workdir path="/usr/home/wenbo/cwinux_google/cwinux/cwinux/example/echo/echo_channel_svr"/>
-  <listen ip="172.16.42.65" port="9300"/>
-  <unix   path="/usr/home/wenbo/cwinux_google/cwinux/cwinux/example/echo/echo_channel_svr/echo.unix"/>
-  <thread  num="2"/>
-</svr_def>
