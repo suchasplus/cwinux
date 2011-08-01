@@ -802,7 +802,7 @@ inline bool CwxBinLogMgr::_isManageBinLogFile(CwxBinLogFile* pBinLogFile)
 		{//cursor的header一定有效
 			if ((*iter)->m_curLogHeader.getSid() <= pBinLogFile->getMaxSid())
 			{
-				CWX_ASSERT((*iter)->m_pBinLogFile == pBinLogFile));
+				CWX_ASSERT((*iter)->m_pBinLogFile == pBinLogFile);
 				return true;
 			}
 		}
