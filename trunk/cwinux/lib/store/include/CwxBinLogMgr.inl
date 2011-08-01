@@ -799,12 +799,15 @@ inline bool CwxBinLogMgr::_isManageBinLogFile(CwxBinLogFile* pBinLogFile)
 	while(iter != m_cursorSet.end())
 	{
 		if ((*iter)->m_pBinLogFile)
-		{
-			if (!(*pBinLogFile < *((*iter)->m_pBinLogFile))) 
+		{//cursor的header一定有效
+			if ((*iter)->m_curLogHeader.getSid() <= pBinLogFile->getMaxSid())
+			{
+				CWX_ASSERT((*iter)->m_pBinLogFile == pBinLogFile));
 				return true;
+			}
 		}
 		else if ((*iter)->m_ullSid <= pBinLogFile->getMaxSid())
-		{
+		{//cursor处于悬浮状态
 			return true;
 		}
 		iter++;
