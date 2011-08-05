@@ -713,8 +713,8 @@ inline string& CwxBinLogMgr::getFileNameByFileNo(CWX_UINT32 uiFileNo,
     snprintf(szPathFile, 511, "%s%s.%10.10d.%s.log",
         m_strPrexLogPath.c_str(),
         m_strFilePrex.c_str(),
-        strDay.substr(0,8).c_str(),
-        uiFileNo);
+		uiFileNo,
+        strDay.substr(0,8).c_str());
     strFileName = szPathFile;
     return strFileName;
 }
