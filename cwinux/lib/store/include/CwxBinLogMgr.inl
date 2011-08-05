@@ -710,7 +710,7 @@ inline string& CwxBinLogMgr::getFileNameByFileNo(CWX_UINT32 uiFileNo,
     char szPathFile[512];
     string strDay;
     CwxDate::getDateY4MDHMS2(ttDay, strDay);
-    snprintf(szPathFile, 511, "%s%s.%s.%4.4d.log",
+    snprintf(szPathFile, 511, "%s%s.%10.10d.%s.log",
         m_strPrexLogPath.c_str(),
         m_strFilePrex.c_str(),
         strDay.substr(0,8).c_str(),
@@ -732,10 +732,11 @@ inline CWX_UINT32 CwxBinLogMgr::getBinLogFileNo(string const& strFileName, CWX_U
 {
     
     if (strFileName.length() <= m_strPrexLogPath.length() + m_strFilePrex.length() + 13) return 0;
-    string strDay = strFileName.substr(m_strPrexLogPath.length() + m_strFilePrex.length() + 1, 8);
+	string strFileNum = strFileName.substr(m_strPrexLogPath.length() + m_strFilePrex.length() + 1, 10);
+    string strDay = strFileName.substr(m_strPrexLogPath.length() + m_strFilePrex.length() + 1 + 10 + 1, 8);
     strDay += "000000";
     ttDay = CwxDate::getDateY4MDHMS2(strDay);
-    return strtoul(strFileName.c_str() + m_strPrexLogPath.length() + m_strFilePrex.length() + 1 + 8 + 1, NULL, 10);
+    return strtoul(strFileNum.c_str(), NULL, 10);
 }
 
 inline bool CwxBinLogMgr::isBinLogFile(string const& strFileName)
@@ -793,7 +794,7 @@ inline bool CwxBinLogMgr::_isManageBinLogFile(CwxBinLogFile* pBinLogFile)
 {
     if (!m_pCurBinlog) return true;
     ///如果文件被cursor使用，则被管理
-    if ((m_ttMaxTimestamp - pBinLogFile->getMaxTimestamp()) < m_uiMaxHour * 3600) return true;
+	if (m_arrBinlog.size() <= m_uiMaxFileNum) return true;
 	//检测是否有cursor在使用
 	set<CwxBinLogCursor*>::iterator iter = m_cursorSet.begin();
 	while(iter != m_cursorSet.end())

@@ -461,7 +461,6 @@ int CwxBinLogFile::append(CWX_UINT64 ullSid,
         if (szErr2K) CwxCommon::snprintf(szErr2K, 2047, "The log is not valid, can't append record. file:%s", m_strPathFileName.c_str());
         return -1;
     }
-    if (ttTimestamp < m_ttMaxTimestamp) ttTimestamp = m_ttMaxTimestamp;
     //sid必须升序
     if (!m_uiLogNum)
     {
@@ -499,12 +498,16 @@ int CwxBinLogFile::append(CWX_UINT64 ullSid,
     m_uiIndexFileSize += CwxBinLogIndex::BIN_LOG_INDEX_SIZE;
     //设置sid、时间戳
     m_ullMaxSid = ullSid;
-    m_ttMaxTimestamp = ttTimestamp;
+    m_ttMaxTimestamp = ttTimestamp; ///时间应该是升序的，若不是升序说明时钟做了调整，必须包容这种调整。
     if (!m_uiLogNum)
     {
         m_ullMinSid = ullSid;
         m_ttMinTimestamp = ttTimestamp;
     }
+	if (m_ttMinTimestamp > ttTimestamp) ///若当前时间小于最小时间，则修改最小时间
+	{
+		m_ttMinTimestamp = ttTimestamp;
+	}
     //记录数加1
     m_uiLogNum ++;
     return 1;
@@ -1000,7 +1003,7 @@ CwxBinLogMgr::CwxBinLogMgr(char const* szLogPath, char const* szFilePrex, CWX_UI
     m_strFilePrex = szFilePrex;
     m_uiMaxFileSize = uiMaxFileSize;
 	if (m_uiMaxFileSize > MAX_BINLOG_FILE_SIZE) m_uiMaxFileSize = MAX_BINLOG_FILE_SIZE;
-    m_uiMaxHour = DEF_MANAGE_MAX_HOUR;
+    m_uiMaxFileNum = DEF_MANAGE_FILE_NUM;
 	m_bCache = true;
     m_bDelOutManageLogFile = bDelOutManageLogFile;
     m_fdLock = -1;
@@ -1033,16 +1036,16 @@ CwxBinLogMgr::~CwxBinLogMgr()
 }
 
 // -1：失败；0：成功。
-int CwxBinLogMgr::init(CWX_UINT32 uiMaxHour, bool bCache, char* szErr2K)
+int CwxBinLogMgr::init(CWX_UINT32 uiMaxFileNum, bool bCache, char* szErr2K)
 {
     ///写锁保护
     CwxWriteLockGuard<CwxRwLock> lock(&m_rwLock);
     this->_clear();
     m_bValid = false;
     strcpy(m_szErr2K, "Not init.");
-    if (uiMaxHour < MIN_MANAGE_HOUR) m_uiMaxHour = MIN_MANAGE_HOUR;
-    if (uiMaxHour > MAX_MANAGE_HOUR) m_uiMaxHour = MAX_MANAGE_HOUR;
-    m_uiMaxHour = uiMaxHour;
+    if (uiMaxFileNum < MIN_MANAGE_FILE_NUM) m_uiMaxFileNum = MIN_MANAGE_FILE_NUM;
+    if (uiMaxFileNum > MAX_MANAGE_FILE_NUM) m_uiMaxFileNum = MAX_MANAGE_FILE_NUM;
+    m_uiMaxFileNum = uiMaxFileNum;
 
 	m_bCache = bCache;
 
@@ -1147,22 +1150,6 @@ int CwxBinLogMgr::init(CWX_UINT32 uiMaxHour, bool bCache, char* szErr2K)
 			//设置最小的时间戳
 			m_ttMinTimestamp = pBinLogFile->getMinTimestamp();
 		}
-        //如果binlog超出管理的范围，则break
-/*        if (!_isManageBinLogFile(pBinLogFile))
-        {
-			CWX_INFO(("Remove binlog file for outdate, file:%s", pBinLogFile->getDataFileName().c_str()));
-			CwxBinLogFile::remove(pBinLogFile->getDataFileName().c_str());
-            delete pBinLogFile;
-			//删除剩余文件
-			map_iter++;
-			while(map_iter != fileMap.rend())
-			{
-				CWX_INFO(("Remove binlog file for outdate, file:%s", map_iter->second.c_str()));
-				CwxBinLogFile::remove(map_iter->second.c_str());
-				map_iter++;
-			}
-            break;
-        }*/
 
         pBinLogFile->m_nextBinLogFile = NULL;
         pBinLogFile->m_prevBinLogFile = NULL;
@@ -1226,12 +1213,11 @@ int CwxBinLogMgr::append(CWX_UINT64 ullSid,
     ///写锁保护
     CwxWriteLockGuard<CwxRwLock> lock(&m_rwLock);
     //如果没有binlog文件，则创建初始binlog文件，初始文件序号为0
-    if (ttTimestamp < m_ttMaxTimestamp) ttTimestamp = m_ttMaxTimestamp;
     if (!m_pCurBinlog)
     {
         string strPathFile;
-        m_pCurBinlog = new CwxBinLogFile(CwxDate::trimToDay(ttTimestamp), 0, m_uiMaxFileSize);
-        getFileNameByFileNo(0, m_pCurBinlog->getFileDay(), strPathFile);
+        m_pCurBinlog = new CwxBinLogFile(CwxDate::trimToDay(ttTimestamp), START_FILE_NUM, m_uiMaxFileSize);
+        getFileNameByFileNo(START_FILE_NUM, m_pCurBinlog->getFileDay(), strPathFile);
         if (0 != m_pCurBinlog->open(strPathFile.c_str(),
             false,
             true,
@@ -1270,8 +1256,9 @@ int CwxBinLogMgr::append(CWX_UINT64 ullSid,
     if ((CWX_UINT32)CwxDate::trimToDay(ttTimestamp) > m_pCurBinlog->getFileDay())///new day
     {
         string strPathFile;
-        getFileNameByFileNo(0, CwxDate::trimToDay(ttTimestamp), strPathFile);
-        CwxBinLogFile* pBinLogFile = new CwxBinLogFile(CwxDate::trimToDay(ttTimestamp), 0, m_uiMaxFileSize);
+		CWX_UINT32 uiFileNum = m_pCurBinlog->getFileNo() + 1; 
+        getFileNameByFileNo(uiFileNum, CwxDate::trimToDay(ttTimestamp), strPathFile);
+        CwxBinLogFile* pBinLogFile = new CwxBinLogFile(CwxDate::trimToDay(ttTimestamp), uiFileNum, m_uiMaxFileSize);
         if (0 != pBinLogFile->open(strPathFile.c_str(),
             false,
             true,
@@ -1342,16 +1329,19 @@ int CwxBinLogMgr::append(CWX_UINT64 ullSid,
             m_ullMinSid = ullSid;
             m_ttMinTimestamp = ttTimestamp;
         }
+		//可能会调整时钟
+		if (m_ttMinTimestamp > ttTimestamp) m_ttMinTimestamp = ttTimestamp;
         return 0;
     }
     if (0 == iRet)
     {
         string strPathFile;
-        getFileNameByFileNo(m_pCurBinlog->getFileNo() + 1,
+		CWX_UINT32 uiFileNum = m_pCurBinlog->getFileNo() + 1;
+        getFileNameByFileNo(uiFileNum,
             m_pCurBinlog->getFileDay(),
             strPathFile);
         CwxBinLogFile* pBinLogFile = new CwxBinLogFile(m_pCurBinlog->getFileDay(),
-            m_pCurBinlog->getFileNo() + 1, 
+            uiFileNum, 
             m_uiMaxFileSize);
         if (0 != pBinLogFile->open(strPathFile.c_str(),
             false,
@@ -1421,6 +1411,8 @@ int CwxBinLogMgr::append(CWX_UINT64 ullSid,
             m_ullMinSid = ullSid;
             m_ttMinTimestamp = ttTimestamp;
         }
+		//可能会调整时钟
+		if (m_ttMinTimestamp > ttTimestamp) m_ttMinTimestamp = ttTimestamp;
         return 0;
     }
     ///新文件无法放下一个记录
@@ -1497,7 +1489,7 @@ void CwxBinLogMgr::_clear()
         m_fdLock = -1;
     }
     m_arrBinlog.clear();
-    m_uiMaxHour = DEF_MANAGE_MAX_HOUR;
+    m_uiMaxFileNum = DEF_MANAGE_FILE_NUM;
     m_ullMinSid = 0; ///<binlog文件的最小sid
     m_ullMaxSid = 0; ///<binlog文件的最大sid
     m_ttMinTimestamp = 0; ///<binlog文件的log开始时间
