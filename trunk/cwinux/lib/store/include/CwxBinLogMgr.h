@@ -548,7 +548,7 @@ private:
     volatile CWX_UINT32      m_uiIndexFileSize; ///<索引文件的大小，-1表示不存在
     volatile CWX_UINT32      m_uiPrevLogOffset; ///<前一个binlog的偏移
     CWX_UINT32          m_ttDay; ///日志文件的日期
-    CWX_UINT32      m_uiFileNo; ///<日志所在日期的编号。
+    CWX_UINT32          m_uiFileNo; ///<日志编号。
 	CwxBinLogWriteCache*  m_writeCache; ///<write 模式下的写cache。
     //下面的变量由CwxBinLogMgr使用
     CwxBinLogFile*  m_prevBinLogFile; ///<前一个binlog文件,由CwxBinLogMgr管理
@@ -570,12 +570,10 @@ private:
         CwxBinLogFileItem(CWX_UINT32 day, CWX_UINT32 no):m_uiDay(day), m_uiNo(no){}
         bool operator == (CwxBinLogFileItem const& item) const
         {
-            return (m_uiDay == item.m_uiDay) && (m_uiNo == item.m_uiNo);
+            return m_uiNo == item.m_uiNo;
         }
         bool operator < (CwxBinLogFileItem const& item) const
         {
-            if (m_uiDay < item.m_uiDay) return true;
-            if (m_uiDay > item.m_uiDay) return false;
             return m_uiNo < item.m_uiNo;
         }
     public:
@@ -588,9 +586,10 @@ private:
     };
 public:
     enum{
-        DEF_MANAGE_MAX_HOUR=24 * 7, ///<缺省管理binlog的最多小时
-        MIN_MANAGE_HOUR = 1, ///<管理binlog的最小小时数
-        MAX_MANAGE_HOUR = 24 * 30, ///<管理binlog的最大小时数
+        DEF_MANAGE_FILE_NUM=10, ///<缺省管理binlog的数量
+        MIN_MANAGE_FILE_NUM = 1, ///<管理binlog的最小数量
+        MAX_MANAGE_FILE_NUM = 2048, ///<管理binlog的最大小时数
+		START_FILE_NUM = 1, ///<开始的文件序号
         MIN_SID_NO = 1, ///<最小的sid序号
 		MAX_BINLOG_FILE_SIZE = 0X7FFFFFFF ///<2G
     };
@@ -618,12 +617,12 @@ public:
 public:
     /**
     @brief 初始化binlog管理器对象。
-    @param [in] uiMaxHour 管理的binlog的最多小时。
+    @param [in] uiMaxFileNum 管理的binlog的最多数量。
 	@param [in] bCache 是否对写入的数据进行cache。
     @param [out] szErr2K 若初始化失败，返回失败的错误信息；若为NULL，即便失败也不返回错误的原因。
     @return -1：失败；0：成功。
     */
-    int init(CWX_UINT32 uiMaxHour, bool bCache, char* szErr2K=NULL);
+    int init(CWX_UINT32 uiMaxFileNum, bool bCache, char* szErr2K=NULL);
     /**
     @brief 添加一条binlog。
     @param [in] ullSid binlog的sid，其值必须大于当前已有的最大值。
@@ -818,7 +817,7 @@ private:
     string                   m_strFilePrex; ///<binlog文件的前缀名
     bool                     m_bDelOutManageLogFile; ///<是否删除不在管理内的文件
     CWX_UINT32               m_uiMaxFileSize; ///<binlog文件的最大大小
-    CWX_UINT32               m_uiMaxHour; ///<管理的binlog的最大小时数
+    CWX_UINT32               m_uiMaxFileNum; ///<管理的binlog的最大数量
 	bool					 m_bCache;  ///<是否对写入的数据进行cache
     char                     m_szErr2K[2048]; ///<binlog 管理器无效的原因
     int                      m_fdLock; ///<系统锁文件句柄
