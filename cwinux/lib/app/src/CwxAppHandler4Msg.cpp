@@ -105,6 +105,11 @@ int CwxAppHandler4Msg::handle_event(int event, CWX_HANDLE)
     }
     else if (CwxAppConnInfo::CONNECTING == m_conn.getState())
     {///等待连接状态
+		if ((event&CwxAppHandler4Base::TIMEOUT_MASK)== CwxAppHandler4Base::TIMEOUT_MASK)
+		{//连接超时
+			return -1;
+		}
+
         CWX_ASSERT((event&~CwxAppHandler4Base::WRITE_MASK)==0);
         int sock_err = 0;
         socklen_t sock_err_len = sizeof (sock_err);
