@@ -29,6 +29,7 @@ int CwxAppHandler4UnixConn::close(CWX_HANDLE )
 
     if (getApp()->isStopped())
     {
+		if (-1 != this->index()) reactor()->cancelTimer(this);
         delete this;
         return 0;
     }
