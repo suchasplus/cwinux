@@ -47,7 +47,7 @@ int CwxAppHandler4UnixConn::close(CWX_HANDLE )
         break;
     case CwxAppConnInfo::TIMEOUT:
         szState = "TIMEOUT"; ///可能注册了timeout
-        reactor()->cancelTimer(this);
+        if (-1 != this->index()) reactor()->cancelTimer(this);
         break;
     case CwxAppConnInfo::ESTABLISHING:
         szState = "ESTABLISHING";///可能注册了消息收发
