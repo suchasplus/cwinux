@@ -40,7 +40,10 @@ int CwxAppHandler4Msg::open (void * )
     {
         if (0 != reactor()->registerHandler(getHandle(),
             this,
-            CwxAppHandler4Base::WRITE_MASK))
+            CwxAppHandler4Base::WRITE_MASK,
+			CWX_APP_INVALID_CONN_ID,
+			1500
+			))
         {
             CWX_ERROR(("Failure to register conn[%u] for waiting connecting",
                 m_conn.getConnId()));
