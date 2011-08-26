@@ -281,7 +281,7 @@ public:
 	enum
 	{
 		BINLOG_WRITE_INDEX_CACHE_RECORD_NUM = 65536, ///<写索引的1536K， 24 * 64K=1536K
-		BINLOG_WRITE_DATA_CACHE_SIZE = 32 * 1024 * 1024  ///<写数据的cache大小32M
+		BINLOG_WRITE_DATA_CACHE_SIZE = 4 * 1024 * 1024  ///<写数据的cache大小4M
 	};
 public:
 	/**
