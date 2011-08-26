@@ -768,16 +768,10 @@ int CwxBinLogFile::seek(CwxBinLogCursor& cursor, CWX_UINT8 ucMode)
 		}
 	}
 
-	//根据指定的SID定位
-	if (cursor.m_ullSid >= getMaxSid()) return 0; ///不存在
-
-
-	{
-		CwxBinLogIndex item;
-		iRet = upper(cursor.m_ullSid, item, cursor.m_szErr2K);
-		if (1 != iRet) return iRet;
-		return cursor.seek(item.getOffset());
-	}
+	CwxBinLogIndex item;
+	iRet = upper(cursor.m_ullSid, item, cursor.m_szErr2K);
+	if (1 != iRet) return iRet;
+	return cursor.seek(item.getOffset());
 }
 
 
