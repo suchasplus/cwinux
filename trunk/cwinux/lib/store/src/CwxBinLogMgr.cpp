@@ -770,17 +770,14 @@ int CwxBinLogFile::seek(CwxBinLogCursor& cursor, CWX_UINT8 ucMode)
 
 	//根据指定的SID定位
 	if (cursor.m_ullSid >= getMaxSid()) return 0; ///不存在
-	if (!m_writeCache || (m_writeCache->m_ullPrevDataSid > cursor.m_ullSid) /*文件中存在比定位sid大的消息*/)
+
+
 	{
 		CwxBinLogIndex item;
 		iRet = upper(cursor.m_ullSid, item, cursor.m_szErr2K);
 		if (1 != iRet) return iRet;
 		return cursor.seek(item.getOffset());
 	}
-	//当前的sid一定在m_writeCache中存在
-	map<CWX_UINT64/*sid*/, unsigned char*>::const_iterator iter = m_writeCache->m_dataSidMap.upper_bound(cursor.m_ullSid);
-	CWX_ASSERT(iter != m_writeCache->m_dataSidMap.end());
-	return cursor.seek((char const*)iter->second, iter->first, false);
 }
 
 
