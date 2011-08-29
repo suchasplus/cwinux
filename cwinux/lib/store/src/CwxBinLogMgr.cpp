@@ -771,6 +771,15 @@ int CwxBinLogFile::seek(CwxBinLogCursor& cursor, CWX_UINT8 ucMode)
 	CwxBinLogIndex item;
 	iRet = upper(cursor.m_ullSid, item, cursor.m_szErr2K);
 	if (1 != iRet) return iRet;
+	//如果在内存，则处理
+	if (m_writeCache)
+	{
+		map<CWX_UINT64/*sid*/, unsigned char*>::const_iterator iter = m_writeCache->m_dataSidMap.find(item.getSid());
+		if (iter != m_writeCache->m_dataSidMap.end())
+		{
+			return cursor.seek((char const*)iter->second, item.getSid(), false);
+		}
+	}
 	return cursor.seek(item.getOffset());
 }
 
