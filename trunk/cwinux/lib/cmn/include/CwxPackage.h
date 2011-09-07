@@ -59,8 +59,8 @@ public:
         memset(this, 0x00, sizeof(CwxKeyValueItem));
     }
 public:
-    char*          m_szKey; ///<key的名字
-    char*          m_szData; ///<key的数据
+    char const*          m_szKey; ///<key的名字
+    char const*          m_szData; ///<key的数据
     CWX_UINT32      m_uiDataLen; ///<数据的长度
     CWX_UINT16      m_unKeyLen; ///<key的长度
     bool            m_bKeyValue; ///<true：value的本身也是key/value格式;false：value不是key/value格式
