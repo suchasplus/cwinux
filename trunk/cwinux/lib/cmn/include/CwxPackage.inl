@@ -69,7 +69,7 @@ inline int CwxPackage::removeKey(char *szMsg, CWX_UINT32& uiMsgLen, CWX_UINT16 u
 
 inline int CwxPackage::dump(char const* szMsg, CWX_UINT32 uiMsgLen, char* szOutBuf, CWX_UINT32& uiOutBufLen, char const* szTab, char const* szKeyBegin, char const* szKeyEnd, CwxEscape const* pEscape)
 {
-    int len=dumpEx(szMsg, uiMsgLen, szOutBuf, uiOutBufLen, szTab, 0, szKeyBegin, szKeyEnd, pEscape);
+    int len=dumpEx(szMsg, uiMsgLen, szOutBuf, uiOutBufLen, szTab, 1, szKeyBegin, szKeyEnd, pEscape);
     if (0>len) return len;
     szOutBuf[len] = 0x00;
     return len;
