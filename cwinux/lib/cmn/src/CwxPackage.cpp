@@ -208,7 +208,7 @@ int CwxPackage::dumpEx(char const* szMsg, CWX_UINT32 uiMsgLen, char* szOutBuf, C
             memcpy(szOutBuf + uiOutPos, szKeyEnd, uiEndLen);
             uiOutPos += uiEndLen;
             uiTmp = uiOutBufLen - uiOutPos;
-            len = dumpEx(item.m_szData, item.m_uiDataLen, szOutBuf + uiOutPos, uiTmp, szTab, uiTabNum, szKeyBegin, szKeyEnd, pEscape);
+            len = dumpEx(item.m_szData, item.m_uiDataLen, szOutBuf + uiOutPos, uiTmp, szTab, uiTabNum+1, szKeyBegin, szKeyEnd, pEscape);
             if (0>len) return len;
             uiOutPos += len;
         }
