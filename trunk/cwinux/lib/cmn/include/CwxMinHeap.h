@@ -64,7 +64,7 @@ public:
     @param [in] num heap中最多的元素数量
     @param [in] cmp 比较函数
     */
-    CwxMinHeap(CWX_UINT32 num, CMP const& cmp=less<TYPE>()):m_cmp(cmp)
+    CwxMinHeap(CWX_UINT32 num, CMP const& cmp=greater<TYPE>()):m_cmp(cmp)
     {
         m_uiAll = num;
         m_uiCount = 0;
