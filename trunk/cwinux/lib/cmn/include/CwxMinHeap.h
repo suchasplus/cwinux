@@ -55,7 +55,7 @@ CWINUX_BEGIN_NAMESPACE
        T1<T2£º·µ»Øtrue
        T1>=T2£º·µ»Øfalse
 */
-template <class TYPE, class CMP=less<TYPE> >
+template <class TYPE, class CMP=greater<TYPE> >
 class CWX_API CwxMinHeap
 {
 public:
