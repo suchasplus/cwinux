@@ -93,7 +93,7 @@ public:
     ///设置heap中的index
     void index(int index);
     ///超时比较函数
-    bool operator<(CwxAppHandler4Base const& base) const;
+    bool operator>(CwxAppHandler4Base const& base) const;
 protected:
     /// Force CwxAppHandler4Base to be an abstract base class.
     CwxAppHandler4Base (CwxAppReactor *reactor);
