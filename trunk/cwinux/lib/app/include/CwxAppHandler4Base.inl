@@ -67,9 +67,9 @@ inline void CwxAppHandler4Base::index(int index)
 
 
 ///超时比较函数
-inline bool CwxAppHandler4Base::operator<(CwxAppHandler4Base const& base) const
+inline bool CwxAppHandler4Base::operator>(CwxAppHandler4Base const& base) const
 {
-    return m_ullTimeout<base.m_ullTimeout;
+    return m_ullTimeout>base.m_ullTimeout;
 }
 
 
