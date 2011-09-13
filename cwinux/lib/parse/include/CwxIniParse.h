@@ -27,6 +27,7 @@
 #include "CwxType.h"
 #include "CwxStl.h"
 #include "CwxStlFunc.h"
+#include "CwxParseMacro.h"
 #include "CwxFile.h"
 #include "CwxCommon.h"
 
