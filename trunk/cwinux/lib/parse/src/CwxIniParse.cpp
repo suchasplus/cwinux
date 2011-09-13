@@ -29,7 +29,7 @@ bool CwxIniParse::load(string const& strFile){
 	map<string, string>* pAttr=NULL;
 	while((ret=CwxFile::readTxtLine(fd, line))==true){
 		if (line.empty()) break;
-		CwxCommon::trim(line, ' ');
+		CwxCommon::trim(line);
 		if (!line.length()) continue;
 		if ('#' == line[0]) continue;
 		if (('['==line[0])&&(']'==line[line.length()-1])){
