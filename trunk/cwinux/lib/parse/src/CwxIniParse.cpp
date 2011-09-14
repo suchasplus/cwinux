@@ -40,7 +40,7 @@ bool CwxIniParse::load(string const& strFile){
 				CwxCommon::snprintf(m_szErrMsg, 511, "Section[%s] is duplicate.", strSection.c_str());
 				return false;
 			}
-			pAttr = new map<string, string>;
+			pAttr = new list<pair<string, string> >;
 			m_attrs[strSection] = pAttr;
 			continue;
 		}
