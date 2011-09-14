@@ -121,8 +121,8 @@ bool CwxIniParse::getAttr(string const& strSection,
 {
 	map<string, list<pair<string, string> >*>::const_iterator iter = m_attrs.find(strSection);
 	if (iter == m_attrs.end()) return false;
-	list<pair<string, string> >::const_iterator attr_iter = (*iter)->second.begin();
-	while(attr_iter != iter->second.end())
+	list<pair<string, string> >::const_iterator attr_iter = iter->second->begin();
+	while(attr_iter != iter->second->end())
 	{
 		if (attr_iter->first == strAttr)
 		{
