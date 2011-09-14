@@ -825,6 +825,10 @@ int CwxAppFramework::run()
     if (this->initRunEnv() == -1)
     {
         this->destroy();
+		pid_t pid=getppid();
+		if (1 != pid){
+			kill(pid, SIGKILL);
+		}
         return -1;
     }
     if (this->reactor())
