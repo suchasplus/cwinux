@@ -9,7 +9,7 @@ CWINUX_BEGIN_NAMESPACE
 bool CwxIniParse::load(string const& strFile){
 	//清空属性
 	{
-		map<string, map<string, string>*>::iterator iter = m_attrs.begin();
+		map<string, list<pair<string, string> >*>::iterator iter = m_attrs.begin();
 		while(iter != m_attrs.end()){
 			delete iter->second;
 			iter++;
@@ -26,7 +26,7 @@ bool CwxIniParse::load(string const& strFile){
 	string strSection;
 	string strKey;
 	string strValue;
-	map<string, string>* pAttr=NULL;
+	list<pair<string, string> >* pAttr=NULL;
 	while((ret=CwxFile::readTxtLine(fd, line))==true){
 		if (line.empty()) break;
 		CwxCommon::trim(line);
@@ -68,7 +68,7 @@ bool CwxIniParse::load(string const& strFile){
 			CwxCommon::snprintf(m_szErrMsg, 511, "Property[%s]'s key is empty.", line.c_str());
 			return false;
 		}
-		(*pAttr)[strKey] = strValue;
+		pAttr->push_back(pair<string, string>(strKey, strValue));
 	}
 	fclose(fd);
 	if (!ret){
@@ -86,7 +86,7 @@ bool CwxIniParse::load(string const& strFile){
 void CwxIniParse::getSections(set<string>& sections) const
 {
 	sections.clear();
-	map<string, map<string, string>*>::const_iterator iter = m_attrs.begin();
+	map<string, list<pair<string, string> >*>::const_iterator iter = m_attrs.begin();
 	while(iter != m_attrs.end()){
 		sections.insert(iter->first);
 		iter++;
@@ -100,9 +100,9 @@ void CwxIniParse::getSections(set<string>& sections) const
 *@return false：section不存在；true：section存在.
 */ 
 bool CwxIniParse::getAttr(string const& strSection,
-				 map<string, string>& attr) const
+				 list<pair<string, string> >& attr) const
 {
-	map<string, map<string, string>*>::const_iterator iter = m_attrs.find(strSection);
+	map<string, list<pair<string, string> >*>::const_iterator iter = m_attrs.find(strSection);
 	if (iter == m_attrs.end()) return false;
 	attr.clear();
 	attr = *iter->second;
@@ -119,12 +119,19 @@ bool CwxIniParse::getAttr(string const& strSection,
 				 string const& strAttr,
 				 string& strValue) const
 {
-	map<string, map<string, string>*>::const_iterator iter = m_attrs.find(strSection);
+	map<string, list<pair<string, string> >*>::const_iterator iter = m_attrs.find(strSection);
 	if (iter == m_attrs.end()) return false;
-	map<string, string>::const_iterator attr_iter = iter->second->find(strAttr);
-	if (attr_iter == iter->second->end()) return false;
-	strValue = attr_iter->second;
-	return true;
+	list<pair<string, string> >::const_iterator attr_iter = iter->second.begin();
+	while(attr_iter != iter->second.end())
+	{
+		if (attr_iter->first == strAttr)
+		{
+			strValue = attr_iter->second;
+			return true;
+		}
+		attr_iter++;
+	}
+	return false;
 }
 
 

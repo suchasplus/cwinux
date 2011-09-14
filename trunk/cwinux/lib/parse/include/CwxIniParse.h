@@ -45,7 +45,7 @@ public:
     }
     ///析构函数
     ~CwxIniParse(){
-		map<string, map<string, string>*>::iterator iter = m_attrs.begin();
+		map<string, list<pair<string, string> >*>::iterator iter = m_attrs.begin();
 		while(iter != m_attrs.end()){
 			delete iter->second;
 			iter++;
@@ -71,7 +71,7 @@ public:
     *@return false：section不存在；true：section存在.
     */ 
     bool getAttr(string const& strSection,
-		map<string, string>& attr) const;
+		list<pair<string, string> >& attr) const;
     /**
     *@brief  获取一个字符串型属性值.
 	*@param [in] strSection section的名字。
@@ -86,7 +86,7 @@ public:
     char const* getErrMsg() const{ return m_szErrMsg;}
 private:
 	string							   m_strFile; ///<配置文件
-	map<string, map<string, string>*>  m_attrs; ///<配置属性
+	map<string, list<pair<string, string> >*>  m_attrs; ///<配置属性
     char m_szErrMsg[512];///<错误buf
 };
 
