@@ -82,6 +82,15 @@ public:
     bool getAttr(string const& strSection,
         string const& strAttr,
 		string& strValue) const;
+	/**
+	*@brief  是否存在指定的Section。
+	*@param [int] strSection section的名字。
+	*@return true：存在；false：不存在.
+	*/ 
+	bool isExistSection(string const& strSection){
+		return m_attrs.find(strSection) != m_attrs.end();
+	}
+
     ///返回错误信息
     char const* getErrMsg() const{ return m_szErrMsg;}
 private:
