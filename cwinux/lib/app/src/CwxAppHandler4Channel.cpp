@@ -77,6 +77,7 @@ int CwxAppHandler4Channel::close(CWX_HANDLE)
     {
         channel()->removeHandler(this);
         delete this;
+		return 0;
     }
     else if (0 == ret)
     {
