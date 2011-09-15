@@ -59,8 +59,8 @@ bool CwxIniParse::load(string const& strFile){
 			CwxCommon::snprintf(m_szErrMsg, 511, "Property[%s]'s key is empty.", line.c_str());
 			return false;
 		}
-		strKey = line.substr(0, string::npos-1);
-		strValue = line.substr(string::npos);
+		strKey = line.substr(0, string::npos);
+		strValue = line.substr(string::npos+1);
 		CwxCommon::trim(strKey);
 		CwxCommon::trim(strValue);
 		if (!strKey.length()){
