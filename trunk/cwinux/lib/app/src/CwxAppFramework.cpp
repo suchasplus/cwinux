@@ -827,7 +827,7 @@ int CwxAppFramework::run()
         this->destroy();
 		pid_t pid=getppid();
 		if (1 != pid){
-			kill(pid, SIGKILL);
+			kill(pid, SIGQUIT);
 		}
         return -1;
     }

@@ -212,7 +212,7 @@ int CwxAppProcessMgr::startProcess(int argc, char** argv, CWX_UINT16 unDelaySec)
     if (-1 == m_pProcess->m_pApp->init(argc, argv))
     {
 		pid_t ppid = getppid();
-		if (1 != ppid) kill(ppid, SIGKILL);
+		if (1 != ppid) kill(ppid, SIGQUIT);
         printf("Failure to invoke the work process's init().\n");
         exit(0);
     }
