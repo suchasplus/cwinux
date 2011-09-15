@@ -47,6 +47,7 @@ bool CwxFile::readTxtLine(FILE* fd, string& line)
         if (szBuf[strlen(szBuf)-1] == '\n'){//line end
             szBuf[strlen(szBuf)-1] = 0x00;
             line += szBuf;
+			if (line.empty()) line="";
             break;
         }
         line += szBuf;
