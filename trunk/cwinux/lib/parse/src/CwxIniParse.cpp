@@ -28,7 +28,7 @@ bool CwxIniParse::load(string const& strFile){
 	string strValue;
 	list<pair<string, string> >* pAttr=NULL;
 	while((ret=CwxFile::readTxtLine(fd, line))==true){
-		if (line.empty()) break;
+		if (feof(fd)) break;
 		CwxCommon::trim(line);
 		if (!line.length()) continue;
 		if ('#' == line[0]) continue;
