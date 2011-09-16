@@ -12,7 +12,8 @@ libcwxparse_la_SOURCES = \
 	CwxXmlPackageConv.cpp\
 	CwxXmlConfigParser.cpp\
 	CwxXmlFileParser.cpp\
-	CwxXmlParser.cpp
+	CwxXmlParser.cpp\
+	CwxIniParse.cpp
 
 libcwxparse_la_LDFLAGS = 
 
@@ -25,7 +26,8 @@ cwxparseinclude_HEADERS=\
 	../include/CwxXmlTreeNode.h\
 	../include/CwxXmlConfigParser.h\
 	../include/CwxXmlFileParser.h\
-	../include/CwxXmlParser.h
+	../include/CwxXmlParser.h\
+        ../include/CwxIniParse.h
 	
 INCLUDES=-I$(srcdir)/../include -I$(srcdir)/../../cmn/include -I@xml_expat_dir@/include
 

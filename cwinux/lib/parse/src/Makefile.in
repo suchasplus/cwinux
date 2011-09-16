@@ -62,7 +62,7 @@ am_libcwxparse_la_OBJECTS = libcwxparse_la-CwxJsonParser.lo \
 	libcwxparse_la-CwxXmlPackageConv.lo \
 	libcwxparse_la-CwxXmlConfigParser.lo \
 	libcwxparse_la-CwxXmlFileParser.lo \
-	libcwxparse_la-CwxXmlParser.lo
+	libcwxparse_la-CwxXmlParser.lo libcwxparse_la-CwxIniParse.lo
 libcwxparse_la_OBJECTS = $(am_libcwxparse_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -189,7 +189,8 @@ libcwxparse_la_SOURCES = \
 	CwxXmlPackageConv.cpp\
 	CwxXmlConfigParser.cpp\
 	CwxXmlFileParser.cpp\
-	CwxXmlParser.cpp
+	CwxXmlParser.cpp\
+	CwxIniParse.cpp
 
 libcwxparse_la_LDFLAGS = 
 cwxparseincludedir = $(prefix)/include/parse
@@ -201,7 +202,8 @@ cwxparseinclude_HEADERS = \
 	../include/CwxXmlTreeNode.h\
 	../include/CwxXmlConfigParser.h\
 	../include/CwxXmlFileParser.h\
-	../include/CwxXmlParser.h
+	../include/CwxXmlParser.h\
+        ../include/CwxIniParse.h
 
 INCLUDES = -I$(srcdir)/../include -I$(srcdir)/../../cmn/include -I@xml_expat_dir@/include
 all: all-am
@@ -273,6 +275,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxparse_la-CwxIniParse.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxparse_la-CwxJsonParser.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxparse_la-CwxXmlConfigParser.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxparse_la-CwxXmlFileConfigParser.Plo@am__quote@
@@ -342,6 +345,13 @@ libcwxparse_la-CwxXmlParser.lo: CwxXmlParser.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxXmlParser.cpp' object='libcwxparse_la-CwxXmlParser.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxparse_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxparse_la-CwxXmlParser.lo `test -f 'CwxXmlParser.cpp' || echo '$(srcdir)/'`CwxXmlParser.cpp
+
+libcwxparse_la-CwxIniParse.lo: CwxIniParse.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxparse_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwxparse_la-CwxIniParse.lo -MD -MP -MF "$(DEPDIR)/libcwxparse_la-CwxIniParse.Tpo" -c -o libcwxparse_la-CwxIniParse.lo `test -f 'CwxIniParse.cpp' || echo '$(srcdir)/'`CwxIniParse.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/libcwxparse_la-CwxIniParse.Tpo" "$(DEPDIR)/libcwxparse_la-CwxIniParse.Plo"; else rm -f "$(DEPDIR)/libcwxparse_la-CwxIniParse.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxIniParse.cpp' object='libcwxparse_la-CwxIniParse.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxparse_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxparse_la-CwxIniParse.lo `test -f 'CwxIniParse.cpp' || echo '$(srcdir)/'`CwxIniParse.cpp
 
 mostlyclean-libtool:
 	-rm -f *.lo
