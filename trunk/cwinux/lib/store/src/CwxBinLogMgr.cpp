@@ -348,6 +348,7 @@ int CwxBinLogFile::open(char const* szPathFile,
                         char* szErr2K)
 {
     string strIndexPathFileName;
+	m_bValid = false;
     //关闭对象
     close();
     m_bReadOnly = bCreate?false:bReadOnly;
@@ -434,6 +435,7 @@ int CwxBinLogFile::open(char const* szPathFile,
 	{
 		m_writeCache = new CwxBinLogWriteCache(m_indexFd, m_fd, m_uiIndexFileSize, m_uiFileSize, getMaxSid(), bCacheData);
 	}
+	m_bValid = true;
     return 0;
 }
 
@@ -480,6 +482,7 @@ int CwxBinLogFile::append(CWX_UINT64 ullSid,
 	if (0 == ret) return -1;
 	if (0 > ret)
 	{
+		m_bValid = false;
 		return -1;		
 	}
     ///更新前一个binlog的文件offset
@@ -502,6 +505,7 @@ int CwxBinLogFile::append(CWX_UINT64 ullSid,
 	}
     //记录数加1
     m_uiLogNum ++;
+	m_bValid = true;
     return 1;
 }
 
@@ -515,12 +519,14 @@ int CwxBinLogFile::flush_cache(bool bFlushAll, char* szErr2K)
 	//flush data 
 	if (0 != m_writeCache->flushData(szErr2K))
 	{
+		m_bValid = false;
 		return -1;
 	}
 	if (bFlushAll)
 	{
 		if (0 != m_writeCache->flushIndex(szErr2K))
 		{
+			m_bValid = false;
 			return -1;
 		}
 	}
@@ -539,7 +545,7 @@ int CwxBinLogFile::fsync_data(bool bFlushAll, char*)
 
 int CwxBinLogFile::upper(CWX_UINT64 ullSid, CwxBinLogIndex& item, char* szErr2K)
 {
-	CWX_ASSERT(m_bValid);
+//	CWX_ASSERT(m_bValid);
 	if (!m_uiLogNum) return 0;
 
 	if (ullSid >= m_ullMaxSid)
@@ -620,7 +626,7 @@ int CwxBinLogFile::upper(CWX_UINT64 ullSid, CwxBinLogIndex& item, char* szErr2K)
 // -1：失败；0：不存在；1：发现
 int CwxBinLogFile::lower(CWX_UINT64 ullSid, CwxBinLogIndex& item, char* szErr2K)
 {
-	CWX_ASSERT(m_bValid);
+//	CWX_ASSERT(m_bValid);
 	if (!m_uiLogNum) return 0;
 	if (ullSid < m_ullMinSid)
 	{
@@ -704,7 +710,7 @@ int CwxBinLogFile::lower(CWX_UINT64 ullSid, CwxBinLogIndex& item, char* szErr2K)
 //-2：不存在完成的记录头；-1：失败；0：不存在；1：定位到指定的位置
 int CwxBinLogFile::seek(CwxBinLogCursor& cursor, CWX_UINT8 ucMode)
 {
-    CWX_ASSERT(m_bValid);
+//    CWX_ASSERT(m_bValid);
     int iRet = cursor.open(m_strPathFileName.c_str());
     if (-1 == iRet) return -1;
 
