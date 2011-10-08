@@ -532,7 +532,7 @@ private:
     int createIndex(char* szErr2K=NULL);
     friend class CwxBinLogMgr;
 private:
-    bool           m_bValid;       ///<是否有效
+//    bool           m_bValid;       ///<是否有效
     string         m_strPathFileName; ///<binlog文件的名字
     string         m_strIndexFileName; ///<index文件的名字
     CWX_UINT32     m_uiMaxFileSize; ///<新建立的binlog文件的最大大小。
