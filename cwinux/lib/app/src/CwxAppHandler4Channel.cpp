@@ -73,6 +73,10 @@ int CwxAppHandler4Channel::close(CWX_HANDLE)
     m_waitSendMsgTail = NULL;
 
     int ret = onConnClosed();
+	if (m_bRedo)
+	{
+		channel()->eraseRedoHander(this);
+	}
     if (-1 == ret)
     {
         channel()->removeHandler(this);
@@ -82,10 +86,6 @@ int CwxAppHandler4Channel::close(CWX_HANDLE)
     else if (0 == ret)
     {
         channel()->removeHandler(this);
-    }
-    if (m_bRedo)
-    {
-        channel()->eraseRedoHander(this);
     }
     return 0;
 }
