@@ -68,7 +68,7 @@ bool CwxFile::readTxtFile(string const& strFileName, string& strData)
         delete [] szBuf;
         return false;
     }
-    strData = szBuf;
+    strData.assign(szBuf, file_size);
     fclose(fd);
     delete [] szBuf;
     return true;
