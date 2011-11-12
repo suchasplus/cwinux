@@ -36,6 +36,17 @@ inline CWX_UINT32 CwxAppConnInfo::getListenId() const
 {
     return m_uiListenId;
 }
+///获取连接超时时间
+inline CWX_UINT32 CwxAppConnInfo::getConnectTimeout() const
+{
+	return m_uiConnectTimeout;
+}
+///设置连接超时时间
+inline void CwxAppConnInfo::setConnectTimeout(CWX_UINT32 uiTimeout)
+{
+	m_uiConnectTimeout = uiTimeout;
+}
+
 inline void CwxAppConnInfo::setListenId(CWX_UINT32 uiListenId)
 {
     m_uiListenId = uiListenId;

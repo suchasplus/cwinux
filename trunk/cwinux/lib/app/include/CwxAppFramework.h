@@ -177,6 +177,7 @@ public:
     @param [in] unMaxRetryInternal 连接失败时的最大连接间隔.
     @param [in] fn socket的熟悉设置函数，若为空，则不设置。
     @param [in] fnArg fn函数的arg参数。
+	@param [in] uiMiliTimeout 连接超时时间，缺省0表示不进行超时控制，单位为毫秒。
     @return  >0：此连接的CONN_ID；-1：注册失败。
     */
     int noticeTcpConnect(CWX_UINT32 uiSvrId,
@@ -187,7 +188,8 @@ public:
         CWX_UINT16 unMinRetryInternal = 1,
         CWX_UINT16 unMaxRetryInternal = 60,
         CWX_NET_SOCKET_ATTR_FUNC fn=NULL,
-        void* fnArg=NULL);
+        void* fnArg=NULL,
+		CWX_UINT32 uiMiliTimeout=0);
     /**
     @brief 往架构注册一个主动的Local IPC连接
     @param [in] uiSvrId 设定连接的SVR ID。

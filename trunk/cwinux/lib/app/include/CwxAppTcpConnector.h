@@ -44,7 +44,8 @@ public:
         CWX_UINT16 unPort, ///<connect port
         int iFamily=AF_UNSPEC, ///<family
         CWX_NET_SOCKET_ATTR_FUNC fn=NULL, ///<socket设置的function
-        void* fnArg = NULL
+        void* fnArg = NULL,
+		CWX_UINT32 uiMiliTimeout = 0 ///<连接的超时时间
         );
 private:
     CwxAppFramework* m_pApp;

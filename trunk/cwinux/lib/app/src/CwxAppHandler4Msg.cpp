@@ -42,7 +42,7 @@ int CwxAppHandler4Msg::open (void * )
             this,
             CwxAppHandler4Base::WRITE_MASK,
 			CWX_APP_INVALID_CONN_ID,
-			1500
+			getConnInfo().getConnectTimeout()
 			))
         {
             CWX_ERROR(("Failure to register conn[%u] for waiting connecting",
