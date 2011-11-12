@@ -303,7 +303,8 @@ int CwxAppFramework::noticeTcpConnect(CWX_UINT32 uiSvrId,
                   CWX_UINT16 unMinRetryInternal,
                   CWX_UINT16 unMaxRetryInternal,
                   CWX_NET_SOCKET_ATTR_FUNC fn,
-                  void* fnArg)
+                  void* fnArg,
+				  CWX_UINT32 uiMiliTimeout)
 {
     if (uiSvrId < SVR_TYPE_USER_START)
     {
@@ -325,6 +326,7 @@ int CwxAppFramework::noticeTcpConnect(CWX_UINT32 uiSvrId,
     handle->getConnInfo().setActiveConn(true);
     handle->getConnInfo().setSockFunc(fn);
     handle->getConnInfo().setSockFuncArg(fnArg);
+	handle->getConnInfo().setConnectTimeout(uiMiliTimeout);
 
     CwxAppNotice* notice = new CwxAppNotice();
     notice->m_unNoticeType = CwxAppNotice::TCP_CONNECT;

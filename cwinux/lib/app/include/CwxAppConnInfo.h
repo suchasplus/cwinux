@@ -69,7 +69,10 @@ public:
     CWX_UINT32 getListenId() const;
     ///设置被动连接的Listen ID
     void setListenId(CWX_UINT32 uiListenId);
-
+	///获取连接超时时间
+	CWX_UINT32 getConnectTimeout() const;
+	///设置连接超时时间
+	void setConnectTimeout(CWX_UINT32 uiTimeout);
     ///获取连接的状态
     CWX_UINT16 getState() const;
     ///设置连接的状态
@@ -172,6 +175,7 @@ private:
     CWX_UINT32         m_uiSvrId;  ///<svr id
     CWX_UINT32         m_uiHostId; ///<host id
     CWX_UINT32         m_uiConnId;  ///<connection id
+	CWX_UINT32         m_uiConnectTimeout; ///<连接超时时间单位为ms
     CWX_UINT32         m_uiListenId; ///<accept connection's  acceptor ID. for passive conn.
     CWX_UINT16         m_unState; ///<connection state.
     time_t             m_ttCreateTime;///<connection's create time
