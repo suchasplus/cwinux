@@ -174,8 +174,8 @@ class CwxBinLogCursor
 public:
 	enum
 	{
-		BINLOG_READ_BLOCK_BIT = 22, ///<4M的读取buf。
-		BINLOG_READ_BLOCK_SIZE = 1<<BINLOG_READ_BLOCK_BIT ///<4M的读取buf。
+		BINLOG_READ_BLOCK_BIT = 16, ///<64K的读取buf。
+		BINLOG_READ_BLOCK_SIZE = 1<<BINLOG_READ_BLOCK_BIT ///<64K的读取buf。
 	};
 public:
     ///构造函数
@@ -189,7 +189,7 @@ public:
     @param [in] szFileName bin-log的文件名。
     @return -1：失败；0：成功
     */
-    int open(char const* szFileName);
+    int open(char const* szFileName, CWX_UINT32 uiFileNo, CWX_UINT32 uiFileDay);
     /**
     @brief 移到下一个log
     @return -2：log的header不完整；-1：读取失败；0：当前log为最后一个log；1：移到下一个log
@@ -263,90 +263,13 @@ private:
 	char			   m_szReadBlock[BINLOG_READ_BLOCK_SIZE];  ///<文件读取的buf
 	CWX_UINT32         m_uiBlockNo;   ///<当前cache的block no
 	CWX_UINT32		   m_uiBlockDataOffset; ///<块中数据结束偏移
+	CWX_UINT32		   m_uiFileDay; ///<文件的日期
+	CWX_UINT32         m_uiFileNo; ///<文件号
     //由CwxBinLogMgr使用的状态值
     CWX_UINT64          m_ullSid; ///<seek的sid
     CWX_UINT8           m_ucSeekState; ///<seek的状态
-    CwxBinLogFile*      m_pBinLogFile;
 
 };
-
-
-/**
-@class CwxBinLogWriteCache
-@brief BinLog文件的写cache对象，实现对binlog的写cache。
-*/
-class CwxBinLogWriteCache
-{
-public:
-	enum
-	{
-		BINLOG_WRITE_INDEX_CACHE_RECORD_NUM = 8192, ///<写索引的1536K， 24 * 8K=192K
-		BINLOG_WRITE_DATA_CACHE_SIZE = 4 * 1024 * 1024  ///<写数据的cache大小4M
-	};
-public:
-	/**
-	@brief 构造函数
-	@param [in] indexFd 索引文件的fd handle。
-	@param [in] dataFd 数据文件的fd handle。
-	@param [in] ullIndexOffset 索引文件当前的大小。
-	@param [in] ullDataOffset  数据文件当前的大小。
-	@param [in] ullSid  数据文件当前的最大sid。
-	@param [in] bCacheData     是否对数据文件进行cache。
-	*/
-	CwxBinLogWriteCache(int indexFd,
-		int dataFd,
-		CWX_UINT32 uiIndexOffset,
-		CWX_UINT32 uiDataOffset,
-		CWX_UINT64 ullSid,
-		bool bCacheData);
-	///析构函数
-	~CwxBinLogWriteCache();
-
-public:
-	/**
-	@brief 将cache的数据刷新到数据文件。
-	@param [out] szErr2K 出错时的错误信息。
-	@return 0:成功；-1：失败。此时数据文件写错误。
-	*/
-	int flushData(char* szErr2K=NULL);
-	/**
-	@brief 将cache的索引刷新到索引文件。
-	@param [out] szErr2K 出错时的错误信息。
-	@return 0:成功；-1：失败。此时索引文件写错误。
-	*/
-	int flushIndex(char* szErr2K=NULL);
-	/**
-	@brief 将数据文件写到cache中。
-	@param [int] header 消息的header。
-	@param [int] szData 消息的data。
-	@param [out] szErr2K 出错时的错误信息。
-	@return 1:成功；0：szData太大，超过buf的最大尺寸；-1：写数据失败；-2：写索引失败。
-	*/
-	int append(CwxBinLogHeader const& header, char const* szData, char* szErr2K=NULL);
-
-	friend class CwxBinLogFile;
-	friend class CwxBinLogMgr;
-	
-private:
-	int					m_indexFd;///<cache对应于索引文件的fd
-	int                 m_dataFd;///<cache对应于数据文件的fd
-	//binlog 写cache的信息
-	bool			    m_bCacheData; ///是否cache data。
-	CWX_UINT64			m_ullPrevIndexSid; ///<前一个sid，此是对应的索引文件最大的sid，若为0，表示全部在内存。
-	CWX_UINT64			m_ullMinIndexSid; ///<索引cache的最小sid，若为0表示没有cache
-	CWX_UINT32          m_uiIndexFileOffset; ///<索引的文件写入偏移
-	unsigned char*		m_indexBuf;  ///<索引cache的buf。
-	CWX_UINT32			m_uiIndexLen;  ///<索引buf的长度
-	map<CWX_UINT64/*sid*/, unsigned char*>  m_indexSidMap; ///<index数据的sid索引
-	CWX_UINT64          m_ullPrevDataSid; ///<前一个sid，此是对应的数据文件最大的sid，若为0表示数据全部在内存
-	CWX_UINT64			m_ullMinDataSid; ///<data cache的最小sid，若为0表示没有cache
-	CWX_UINT32          m_uiDataFileOffset; ///<数据的文件写入偏移
-	unsigned char*      m_dataBuf;    ///<数据的buf
-	CWX_UINT32			m_uiDataLen;  ///<数据buf的长度
-	map<CWX_UINT64/*sid*/, unsigned char*>  m_dataSidMap; ///<数据buf的log的sid索引
-	CWX_UINT64			m_ullMaxSid;   ///<当前最大的sid
-};
-
 
 /**
 @class CwxBinLogFile
@@ -385,11 +308,10 @@ public:
     @param [in] szPathFile 日志文件名。
     @param [in] bReadOnly 是否以只读方式打开，此时，文件必须存在。
     @param [in] bCreate 是否创建新日志文件，此时，日志文件必须不存在。
-	@param [in] bCacheData 是否对写入的数据进行内存cache。
     @param [in] szErr2K 错误信息buf，若为NULL则不返回错误消息。
     @return 0：成功；-1：失败。
     */
-    int open(char const* szPathFile, bool bReadOnly = true, bool bCreate=false, bool bCacheData=true, char* szErr2K=NULL);
+    int open(char const* szPathFile, bool bReadOnly = true, bool bCreate=false, char* szErr2K=NULL);
     /**
     @brief 往日志文件添加一个新日志
     @param [in] ullSid 日志的sid号。
@@ -409,20 +331,13 @@ public:
         char const* szData,
         CWX_UINT32 uiDataLen,
         char* szErr2K=NULL);
-	/**
-	@brief 确保将cache的数据写入到硬盘
-	@param [in] bFlushAll true:索引数据也需要flush到硬盘；false：只数据flush到硬盘。
-	@param [in] szErr2K 错误信息buf，若为NULL则不返回错误消息。
-	@return -1：失败；0：成功。
-	*/
-	int flush_cache(bool bFlushAll=false, char* szErr2K=NULL);
     /**
     @brief 确保写入的日志保存到硬盘
 	@param [in] bFlushAll true:索引数据也需要fsync到硬盘；false：只数据fsync到硬盘。
     @param [in] szErr2K 错误信息buf，若为NULL则不返回错误消息。
     @return -1：失败；0：成功。
     */
-    int fsync_data(bool bFlushAll=false, char* szErr2K=NULL);
+    int fsync(bool bFlushAll=false, char* szErr2K=NULL);
 
 	/**
 	@brief 获取大于ullSid的最小binlog header
@@ -449,6 +364,8 @@ public:
 	@return -2：不存在完成的记录头；-1：失败；0：不存在；1：定位到指定的位置
 	*/
 	int seek(CwxBinLogCursor& cursor, CWX_UINT8 ucMode=SEEK_SID);
+	///将数据trim到指定的sid，0：成功；-1：失败
+	int trim(CWX_UINT64 ullSid, char* szErr2K=NULL);
 
     /**
     @brief 删除指定的binlog文件及其索引文件
@@ -549,10 +466,6 @@ private:
     volatile CWX_UINT32      m_uiPrevLogOffset; ///<前一个binlog的偏移
     CWX_UINT32          m_ttDay; ///日志文件的日期
     CWX_UINT32          m_uiFileNo; ///<日志编号。
-	CwxBinLogWriteCache*  m_writeCache; ///<write 模式下的写cache。
-    //下面的变量由CwxBinLogMgr使用
-    CwxBinLogFile*  m_prevBinLogFile; ///<前一个binlog文件,由CwxBinLogMgr管理
-    CwxBinLogFile*  m_nextBinLogFile; ///<下一个binlog文件，由CwxBinLogMgr管理
 };
 
 
@@ -650,6 +563,8 @@ public:
     int commit(bool bAll= false, char* szErr2K=NULL);
     ///清空binlog管理器
     void clear();
+	///将数据trim到指定的sid，0：成功；-1：失败
+	int trim(CWX_UINT64 ullSid, char* szErr2K=NULL);
 public:
 	/**
 	@brief 获取大于ullSid的最小binlog header
@@ -821,11 +736,10 @@ private:
 	bool					 m_bCache;  ///<是否对写入的数据进行cache
     char                     m_szErr2K[2048]; ///<binlog 管理器无效的原因
     int                      m_fdLock; ///<系统锁文件句柄
-
     CwxRwLock                m_rwLock; ///<binlog的读写锁
     ///一下变量都在读写锁保护之中
     bool                     m_bValid; ///<binlog 管理器是否有效。
-    vector<CwxBinLogFile*>   m_arrBinlog; ///<不包含当前binlog文件的binlog文件数组，按照FileNo升序，也是sid的升序
+    map<CWX_UINT32/*file no*/, CwxBinLogFile*>   m_binlogMap; ///<不包含当前binlog文件的binlog文件的map
 	set<CwxBinLogCursor*>    m_cursorSet; ///<建立的所有cursor的集合
     CwxBinLogFile*           m_pCurBinlog;///<当前写的binlog文件
     CWX_UINT64               m_ullMinSid; ///<binlog文件的最小sid
