@@ -614,7 +614,7 @@ int CwxBinLogFile::seek(CwxBinLogCursor& cursor, CWX_UINT8 ucMode)
     CWX_ASSERT(m_bValid);
 	if (!m_bValid)
 	{
-		CwxCommon::snprintf(cursor.m_szErr2K, 2047, "CwxBinlogFile is invalid, file:%s", m_strPathFileName.c_str());
+		CwxCommon::snprintf(cursor.getErrMsg(), 2047, "CwxBinlogFile is invalid, file:%s", m_strPathFileName.c_str());
 		return -1;
 	}
     int iRet = cursor.open(m_strPathFileName.c_str(), m_uiFileNo, m_ttDay);
@@ -628,7 +628,7 @@ int CwxBinLogFile::seek(CwxBinLogCursor& cursor, CWX_UINT8 ucMode)
 	}
 
 	CwxBinLogIndex item;
-	iRet = upper(cursor.getSeekSid(), item, cursor.m_szErr2K);
+	iRet = upper(cursor.getSeekSid(), item, cursor.getErrMsg());
 	if (1 != iRet) return iRet;
 	return cursor.seek(item.getOffset());
 }
@@ -1662,7 +1662,7 @@ int CwxBinLogMgr::next(CwxBinLogCursor* pCursor)
 	}
     if (!pCursor->isReady())
     {
-        if (isUnseek(pCursor)) strcpy(pCursor->getErrMsg(), "Cursor is unseek.");
+        if (pCursor->isUnseek()) strcpy(pCursor->getErrMsg(), "Cursor is unseek.");
         return -1;
     }
     if (pCursor->isUnseek())

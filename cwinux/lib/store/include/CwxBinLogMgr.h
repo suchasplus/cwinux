@@ -582,7 +582,7 @@ public:
     @brief 创建binlog读取的游标
     @return NULL：失败；否则返回游标对象的指针。
     */
-    CwxBinLogCursor* createCurser(CWX_UINT64 ullSid=0, CWX_UINT8 ucState=CURSOR_STATE_UNSEEK);
+	CwxBinLogCursor* createCurser(CWX_UINT64 ullSid=0, CWX_UINT8 ucState=CwxBinLogCursor::CURSOR_STATE_UNSEEK);
     
     /**
     @brief 将binlog读取的游标移到>ullSid的binlog处。

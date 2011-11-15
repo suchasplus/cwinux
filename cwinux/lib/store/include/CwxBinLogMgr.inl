@@ -595,7 +595,7 @@ inline bool CwxBinLogMgr::isOutRange(CwxBinLogCursor* pCursor)
 ///cursor对应的文件，是否在管理的范围之外
 inline bool CwxBinLogMgr::_isOutRange(CwxBinLogCursor*& pCursor)
 {
-    bool ret = pCursor->m_curLogHeader.getSid() < getMinSid();
+    bool ret = pCursor->getHeader().getSid() < getMinSid();
 	CWX_ASSERT(!ret);
 	return ret;
 }
@@ -750,7 +750,7 @@ inline bool CwxBinLogMgr::_isManageBinLogFile(CwxBinLogFile* pBinLogFile)
 	while(iter != m_cursorSet.end())
 	{
 		if ((*iter)->isReady()){//cursor的header一定有效
-			if ((*iter)->m_curLogHeader.getSid() <= pBinLogFile->getMaxSid())
+			if ((*iter)->getHeader().getSid() <= pBinLogFile->getMaxSid())
 			{
 				return true;
 			}
