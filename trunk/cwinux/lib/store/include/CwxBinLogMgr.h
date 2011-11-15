@@ -229,7 +229,7 @@ public:
     ///获取文件的序号
     inline CWX_UINT32 getFileNo() const;
     ///获取当前的错误信息
-    inline char const* getErrMsg() const;
+    inline char* getErrMsg();
     ///获取cursor的SEEK STATE
     inline CWX_UINT8 getSeekState() const;
 	///设置cursor的SEEK STATE
@@ -653,10 +653,6 @@ public:
     inline bool isInvalid() const;
     ///cursor对应的文件，是否在管理的范围之外
     inline bool isOutRange(CwxBinLogCursor* pCursor);
-    ///获取cursor是否unseek
-    inline bool isUnseek(CwxBinLogCursor* pCursor);
-    ///检查cursor是否有效
-    inline bool isCursorValid(CwxBinLogCursor* pCursor) ;
     ///获取管理器无效的原因
     char const* getInvalidMsg() const;
     ///获取最小的sid
