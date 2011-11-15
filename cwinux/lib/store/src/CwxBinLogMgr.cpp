@@ -482,7 +482,6 @@ int CwxBinLogFile::upper(CWX_UINT64 ullSid, CwxBinLogIndex& item, char* szErr2K)
 			return -1;
 		}
 		::close(fd);
-		uiRecNo = 0;
 		return 1;
 	}
 
@@ -611,7 +610,7 @@ int CwxBinLogFile::seek(CwxBinLogCursor& cursor, CWX_UINT8 ucMode)
 		CwxCommon::snprintf(cursor.m_szErr2K, 2047, "CwxBinlogFile is invalid, file:%s", m_strPathFileName.c_str());
 		return -1;
 	}
-    int iRet = cursor.open(m_strPathFileName.c_str());
+    int iRet = cursor.open(m_strPathFileName.c_str(), m_uiFileNo, m_ttDay);
     if (-1 == iRet) return -1;
 
 	if (SEEK_START == ucMode){
@@ -637,7 +636,7 @@ int CwxBinLogFile::trim(CWX_UINT64 ullSid, char* szErr2K)
 		return -1;
 	}
 	CwxBinLogCursor cursor;
-	int iRet = cursor.open(m_strPathFileName.c_str());
+	int iRet = cursor.open(m_strPathFileName.c_str(), m_uiFileNo, m_ttDay);
 	if (-1 == iRet) return -1;
 
 	CwxBinLogIndex item;
@@ -652,7 +651,7 @@ int CwxBinLogFile::trim(CWX_UINT64 ullSid, char* szErr2K)
 				if ((0 == iRet) || (-2 == iRet)){
 					CwxCommon::snprintf(szErr2K, 2047, "File size is less %u", item.getOffset() + CwxBinLogHeader::BIN_LOG_HEADER_SIZE);
 				}else{
-					strcpy(szErr2K, cursor->getErrMsg());
+					strcpy(szErr2K, cursor.getErrMsg());
 				}
 			}
 			return -1;
@@ -862,7 +861,7 @@ int CwxBinLogFile::createIndex(char* szErr2K)
 {
     CwxBinLogIndex index;
     CwxBinLogCursor* cursor = new CwxBinLogCursor();
-    int iRet = cursor->open(m_strPathFileName.c_str());
+    int iRet = cursor->open(m_strPathFileName.c_str(), m_uiFileNo, m_ttDay);
     m_uiIndexFileSize = 0;
     if (-1 == iRet)
     {
@@ -941,11 +940,11 @@ CwxBinLogMgr::~CwxBinLogMgr()
 		iter++;
 	}
     m_binlogMap.clear();
-	set<CwxBinLogCursor*>::iterator iter =  m_cursorSet.begin();
-	while(iter != m_cursorSet.end())
+	set<CwxBinLogCursor*>::iterator set_iter =  m_cursorSet.begin();
+	while(set_iter != m_cursorSet.end())
 	{
-		delete *iter;
-		iter++;
+		delete *set_iter;
+		set_iter++;
 	}
 }
 
@@ -1352,7 +1351,6 @@ void CwxBinLogMgr::clear()
 int CwxBinLogMgr::trim(CWX_UINT64 ullSid, char* szErr2K){
 	CwxWriteLockGuard<CwxRwLock> lock(&m_rwLock);
 	CwxBinLogFile* pBinLogFile = NULL;
-	int iRet = 0;
 	if(!m_bValid)
 	{
 		if (szErr2K) strcpy(szErr2K, m_szErr2K);
@@ -1397,7 +1395,7 @@ int CwxBinLogMgr::trim(CWX_UINT64 ullSid, char* szErr2K){
 	}
 	if (uiFileNo < uiCurFileNo) m_pCurBinlog = NULL;
 	//删除所有大于此file no的文件
-	map<CWX_UINT32/*file no*/, CwxBinLogFile*>::iterator iter = m_binlogMap.upper_bound(uiFileNo);
+	iter = m_binlogMap.upper_bound(uiFileNo);
 	while(iter != m_binlogMap.end()){
 		CwxBinLogFile::remove(iter->second->getDataFileName().c_str());
 		delete iter->second;
@@ -1425,13 +1423,13 @@ int CwxBinLogMgr::trim(CWX_UINT64 ullSid, char* szErr2K){
 	///处理游标
 	set<CwxBinLogCursor*>::iterator cursor_iter = m_cursorSet.begin();
 	while(cursor_iter != m_cursorSet.end()){
-		if ((CURSOR_STATE_READY == (*iter)->m_ucSeekState)&&
-			((*iter)->getHeader().getSid() >= ullSid))
+		if ((CURSOR_STATE_READY == (*cursor_iter)->m_ucSeekState)&&
+			((*cursor_iter)->getHeader().getSid() >= ullSid))
 		{
-			(*iter)->m_ucSeekState = CURSOR_STATE_UNSEEK;
-			(*iter)->m_ullSid = (*iter)->getHeader().getSid();
+			(*cursor_iter)->m_ucSeekState = CURSOR_STATE_UNSEEK;
+			(*cursor_iter)->m_ullSid = (*cursor_iter)->getHeader().getSid();
 		}
-		iter++;
+		cursor_iter++;
 	}
 	return 0;
 }
@@ -1777,7 +1775,7 @@ int CwxBinLogMgr::prev(CwxBinLogCursor* pCursor)
 	map<CWX_UINT32/*file no*/, CwxBinLogFile*>::iterator iter = m_binlogMap.lower_bound(pCursor->getFileNo());
 	CWX_ASSERT(iter != m_binlogMap.end());
 	if (iter->first == pCursor->getFileNo()) iter--;
-    if (iter != m_binlogMap->end())
+    if (iter != m_binlogMap.end())
     {
         CWX_ASSERT(iter->second);
         iRet = iter->second->seek(*pCursor, CwxBinLogFile::SEEK_TAIL);
@@ -1878,8 +1876,8 @@ CWX_INT64 CwxBinLogMgr::leftLogNum(CwxBinLogCursor const* pCursor)
     CwxReadLockGuard<CwxRwLock> lock(&m_rwLock);
     if (!pCursor) return -1;
     if (CURSOR_STATE_READY != pCursor->m_ucSeekState) return -1;
-    CWX_INT64 num = m_binlogMap->find(pCursor->getFileNo())->second->getLogNum() - pCursor->m_curLogHeader.getLogNo();
-	map<CWX_UINT32/*file no*/, CwxBinLogFile*>::iterator iter = m_binlogMap.upper_bound(pFile->getFileNo());
+    CWX_INT64 num = m_binlogMap->find(pCursor->getFileNo())->second->getLogNum() - pCursor->getHeader().getLogNo();
+	map<CWX_UINT32/*file no*/, CwxBinLogFile*>::iterator iter = m_binlogMap.upper_bound(pCursor->getFileNo());
     while(iter != m_binlogMap.end())
     {
         num += iter->second->getLogNum();

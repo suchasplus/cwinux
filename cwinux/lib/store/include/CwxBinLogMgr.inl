@@ -736,7 +736,7 @@ inline bool CwxBinLogMgr::isValidPrexName(char const* szName)
 
 inline CwxBinLogFile* CwxBinLogMgr::_getMinBinLogFile() 
 {
-    if (m_binlogMap.begin() != m_binlogMap.end()) return m_binlogMap->begin()->second;
+    if (m_binlogMap.begin() != m_binlogMap.end()) return m_binlogMap.begin()->second;
     return m_pCurBinlog;
 }
 
