@@ -451,23 +451,23 @@ private:
     int createIndex(char* szErr2K=NULL);
     friend class CwxBinLogMgr;
 private:
-    bool           m_bValid;       ///<是否有效
-    string         m_strPathFileName; ///<binlog文件的名字
-    string         m_strIndexFileName; ///<index文件的名字
-    CWX_UINT32     m_uiMaxFileSize; ///<新建立的binlog文件的最大大小。
-    CWX_UINT64     m_ullMinSid; ///<binlog文件的最小sid
+    bool					m_bValid;       ///<是否有效
+    string					m_strPathFileName; ///<binlog文件的名字
+    string					m_strIndexFileName; ///<index文件的名字
+    CWX_UINT32				m_uiMaxFileSize; ///<新建立的binlog文件的最大大小。
+    CWX_UINT64				m_ullMinSid; ///<binlog文件的最小sid
     volatile CWX_UINT64     m_ullMaxSid; ///<binlog文件的最大sid
     CWX_UINT32              m_ttMinTimestamp; ///<binlog文件的log开始时间
     volatile CWX_UINT32     m_ttMaxTimestamp; ///<binlog文件的log结束时间
     volatile CWX_UINT32		m_uiLogNum; ///<binlog文件的log数量
-    bool           m_bReadOnly; ///<是否为只读
-    int            m_fd; ///<log文件的io handle
-    int            m_indexFd; ///<索引文件的io handle
-    volatile CWX_UINT32      m_uiFileSize; ///<binlog数据文件大小，-1表示不存在
-    volatile CWX_UINT32      m_uiIndexFileSize; ///<索引文件的大小，-1表示不存在
-    volatile CWX_UINT32      m_uiPrevLogOffset; ///<前一个binlog的偏移
-    CWX_UINT32          m_ttDay; ///日志文件的日期
-    CWX_UINT32          m_uiFileNo; ///<日志编号。
+    bool					m_bReadOnly; ///<是否为只读
+    int						m_fd; ///<log文件的io handle
+    int						m_indexFd; ///<索引文件的io handle
+    volatile CWX_UINT32     m_uiFileSize; ///<binlog数据文件大小，-1表示不存在
+    volatile CWX_UINT32     m_uiIndexFileSize; ///<索引文件的大小，-1表示不存在
+    volatile CWX_UINT32     m_uiPrevLogOffset; ///<前一个binlog的偏移
+    CWX_UINT32				m_ttDay; ///日志文件的日期
+    CWX_UINT32				m_uiFileNo; ///<日志编号。
 };
 
 
@@ -722,23 +722,23 @@ private:
 private:
     string					  m_strLogPath; ///<binlog文件的根目录
     string                    m_strPrexLogPath; ///<指定前缀的binlog文件的目录
-    string                   m_strFilePrex; ///<binlog文件的前缀名
-    bool                     m_bDelOutManageLogFile; ///<是否删除不在管理内的文件
-    CWX_UINT32               m_uiMaxFileSize; ///<binlog文件的最大大小
-    CWX_UINT32               m_uiMaxFileNum; ///<管理的binlog的最大数量
-	bool					 m_bCache;  ///<是否对写入的数据进行cache
-    char                     m_szErr2K[2048]; ///<binlog 管理器无效的原因
-    int                      m_fdLock; ///<系统锁文件句柄
-    CwxRwLock                m_rwLock; ///<binlog的读写锁
+    string					  m_strFilePrex; ///<binlog文件的前缀名
+    bool                      m_bDelOutManageLogFile; ///<是否删除不在管理内的文件
+    CWX_UINT32                m_uiMaxFileSize; ///<binlog文件的最大大小
+    CWX_UINT32                m_uiMaxFileNum; ///<管理的binlog的最大数量
+	bool					  m_bCache;  ///<是否对写入的数据进行cache
+    char                      m_szErr2K[2048]; ///<binlog 管理器无效的原因
+    int                       m_fdLock; ///<系统锁文件句柄
+    CwxRwLock                 m_rwLock; ///<binlog的读写锁
     ///一下变量都在读写锁保护之中
-    bool                     m_bValid; ///<binlog 管理器是否有效。
+    bool                      m_bValid; ///<binlog 管理器是否有效。
     map<CWX_UINT32/*file no*/, CwxBinLogFile*>   m_binlogMap; ///<不包含当前binlog文件的binlog文件的map
-	set<CwxBinLogCursor*>    m_cursorSet; ///<建立的所有cursor的集合
-    CwxBinLogFile*           m_pCurBinlog;///<当前写的binlog文件
-    CWX_UINT64               m_ullMinSid; ///<binlog文件的最小sid
-    CWX_UINT64               m_ullMaxSid; ///<binlog文件的最大sid
-    CWX_UINT32               m_ttMinTimestamp; ///<binlog文件的log开始时间
-    CWX_UINT32               m_ttMaxTimestamp; ///<binlog文件的log结束时间
+	set<CwxBinLogCursor*>     m_cursorSet; ///<建立的所有cursor的集合
+    CwxBinLogFile*            m_pCurBinlog;///<当前写的binlog文件
+    CWX_UINT64                m_ullMinSid; ///<binlog文件的最小sid
+    CWX_UINT64                m_ullMaxSid; ///<binlog文件的最大sid
+    CWX_UINT32                m_ttMinTimestamp; ///<binlog文件的log开始时间
+    CWX_UINT32                m_ttMaxTimestamp; ///<binlog文件的log结束时间
 };
 
 CWINUX_END_NAMESPACE
