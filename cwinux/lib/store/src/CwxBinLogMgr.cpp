@@ -1876,7 +1876,7 @@ CWX_INT64 CwxBinLogMgr::leftLogNum(CwxBinLogCursor const* pCursor)
     CwxReadLockGuard<CwxRwLock> lock(&m_rwLock);
     if (!pCursor) return -1;
     if (CURSOR_STATE_READY != pCursor->m_ucSeekState) return -1;
-    CWX_INT64 num = m_binlogMap->find(pCursor->getFileNo())->second->getLogNum() - pCursor->getHeader().getLogNo();
+    CWX_INT64 num = m_binlogMap.find(pCursor->getFileNo())->second->getLogNum() - pCursor->getHeader().getLogNo();
 	map<CWX_UINT32/*file no*/, CwxBinLogFile*>::iterator iter = m_binlogMap.upper_bound(pCursor->getFileNo());
     while(iter != m_binlogMap.end())
     {
