@@ -430,13 +430,13 @@ inline string const& CwxBinLogCursor::getFileName() const
 ///获取文件的日期
 inline CWX_UINT32 CwxBinLogCursor::getFileDay() const
 {
-    return m_pBinLogFile?m_pBinLogFile->getFileDay():0;
+    return m_uiFileDay;
 }
 
 ///获取文件的序号
 inline CWX_UINT32 CwxBinLogCursor::getFileNo() const
 {
-    return m_pBinLogFile?m_pBinLogFile->getFileNo():0;
+    return m_uiFileNo;
 }
 
 
@@ -449,48 +449,6 @@ inline int CwxBinLogCursor::getHandle() const
 {
     return m_fd;
 }
-/***********************************************************************
-                    CwxBinLogWriteCache  class
-***********************************************************************/
-inline int CwxBinLogWriteCache::flushData(char* szErr2K)
-{
-	if (m_uiDataLen)
-	{
-		if (m_uiDataLen != (CWX_UINT32)::pwrite(m_dataFd, m_dataBuf, m_uiDataLen, m_uiDataFileOffset))
-		{
-			if (szErr2K) CwxCommon::snprintf(szErr2K, 2047, "Failure to write data to binlog file, errno=%d", errno);
-			return -1;
-		}
-		m_ullPrevDataSid = m_ullMaxSid;
-		m_ullMinDataSid = 0;
-		m_uiDataFileOffset += m_uiDataLen; ///新的偏移位置
-		m_uiDataLen = 0;
-		m_dataSidMap.clear();
-	}
-	return 0;
-}
-
-
-inline int CwxBinLogWriteCache::flushIndex(char* szErr2K)
-{
-	if (m_uiIndexLen)
-	{
-		if (m_uiIndexLen != (CWX_UINT32)::pwrite(m_indexFd, m_indexBuf, m_uiIndexLen, m_uiIndexFileOffset))
-		{
-			if (szErr2K) CwxCommon::snprintf(szErr2K, 2047, "Failure to write index data to binlog index, errno=%d", errno);
-			return -1;
-		}
-		m_ullPrevIndexSid = m_ullMaxSid;
-		m_ullMinIndexSid = 0;
-		m_uiIndexFileOffset += m_uiIndexLen;
-		m_uiIndexLen = 0;
-		m_indexSidMap.clear();
-	}
-	return 0;
-}
-
-
-
 
 
 /***********************************************************************
@@ -560,15 +518,12 @@ inline void CwxBinLogFile::setReadOnly()
 {
     if (!m_bReadOnly)
     {
-		flush_cache(true, NULL);
-		fsync_data(true,NULL);
+		fsync(true,NULL);
         m_bReadOnly = true;
         if (-1 != m_fd) ::close(m_fd);
         m_fd = -1;
         if (-1 != m_indexFd) ::close(m_indexFd);
         m_indexFd = -1;
-		if (m_writeCache) delete m_writeCache;
-		m_writeCache = NULL;
     }
 }
 
@@ -781,7 +736,7 @@ inline bool CwxBinLogMgr::isValidPrexName(char const* szName)
 
 inline CwxBinLogFile* CwxBinLogMgr::_getMinBinLogFile() 
 {
-    if (m_arrBinlog.size()) return m_arrBinlog[0];
+    if (m_binlogMap.begin() != m_binlogMap.end()) return m_binlogMap->begin()->second;
     return m_pCurBinlog;
 }
 
@@ -794,16 +749,15 @@ inline bool CwxBinLogMgr::_isManageBinLogFile(CwxBinLogFile* pBinLogFile)
 {
     if (!m_pCurBinlog) return true;
     ///如果文件被cursor使用，则被管理
-	if (m_arrBinlog.size() <= m_uiMaxFileNum) return true;
+	if (m_binlogMap.size() <= m_uiMaxFileNum) return true;
 	//检测是否有cursor在使用
 	set<CwxBinLogCursor*>::iterator iter = m_cursorSet.begin();
 	while(iter != m_cursorSet.end())
 	{
-		if ((*iter)->m_pBinLogFile)
+		if (CURSOR_STATE_READY == (*iter)->m_ucSeekState)
 		{//cursor的header一定有效
 			if ((*iter)->m_curLogHeader.getSid() <= pBinLogFile->getMaxSid())
 			{
-				CWX_ASSERT((*iter)->m_pBinLogFile == pBinLogFile);
 				return true;
 			}
 		}
