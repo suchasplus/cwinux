@@ -334,88 +334,53 @@ inline void CwxBinLogIndex::reset()
 ***********************************************************************/
 inline int CwxBinLogCursor::next()
 {
-    if (-1 != m_fd)
-    {
-        if (m_bDangling)
-        {
-            int iRet = header(0);
-            if (1 == iRet)
-            {//m_curLogHeader有效
-                m_bDangling = false;
-            }
-            return iRet;
-        }
-        return header(m_curLogHeader.getOffset() + CwxBinLogHeader::BIN_LOG_HEADER_SIZE + m_curLogHeader.getLogLen());
-    }
-    CwxCommon::snprintf(this->m_szErr2K, 2047, "Cursor's file handle is invalid");
-    return -1;
+	if (CURSOR_STATE_ERROR == m_ucSeekState) return -1;
+	if (CURSOR_STATE_UNSEEK == m_ucSeekState) {
+		CwxCommon::snprintf(this->m_szErr2K, 2047, "Doesn't seek");
+		return -1;
+	}
+	if (-1 == m_fd)
+	{
+		CwxCommon::snprintf(this->m_szErr2K, 2047, "Cursor's file handle is invalid");
+		return -1;
+	}
+	return header(m_curLogHeader.getOffset() + CwxBinLogHeader::BIN_LOG_HEADER_SIZE + m_curLogHeader.getLogLen());
 }
 
 inline int CwxBinLogCursor::prev()
 {
-    if (-1 != m_fd)
-    {
-        if (m_bDangling)
-        {
-            int iRet = header(0);
-            if (1 == iRet)
-            {//m_curLogHeader有效
-                m_bDangling = false;
-            }
-            return iRet;
-        }
-        if (0 != m_curLogHeader.getOffset())
-        {
-           return header(m_curLogHeader.getPrevOffset());
-        }
-        return 0;
-    }
-    CwxCommon::snprintf(this->m_szErr2K, 2047, "Cursor's file handle is invalid");
-    return -1;
-}
-
-inline int CwxBinLogCursor::seek(CWX_UINT32 uiOffset)
-{
-    int iRet = header(uiOffset);
-    if (m_bDangling && (1 == iRet))
-    {
-        m_bDangling = false;
-    }
-    else if (0 == uiOffset)
-    {
-        if ((0 == iRet) || (-2 == iRet))
-        {
-           m_bDangling = true;
-        }
-    }
-    return iRet;
-}
-
-inline int CwxBinLogCursor::seek(char const* header, CWX_UINT64 ullSid, bool bDangling)
-{
-	m_bDangling = bDangling;
-	if (!m_bDangling)
+	if (CURSOR_STATE_ERROR == m_ucSeekState) return -1;
+	if (CURSOR_STATE_UNSEEK == m_ucSeekState) {
+		CwxCommon::snprintf(this->m_szErr2K, 2047, "Doesn't seek");
+		return -1;
+	}
+	if (-1 == m_fd)
 	{
-		m_curLogHeader.unserialize(header);
-		if (ullSid != m_curLogHeader.getSid())
-		{
-			char szBuf1[64];
-			char szBuf2[64];
-			CwxCommon::snprintf(this->m_szErr2K, 2047, "Header buf's sid is:%s, but input sid is:%s. They are not same.",
-				CwxCommon::toString(m_curLogHeader.getSid(), szBuf1),
-				CwxCommon::toString(ullSid, szBuf2));
-			return -1;
-		}
-		return 1;
+		CwxCommon::snprintf(this->m_szErr2K, 2047, "Cursor's file handle is invalid");
+		return -1;
+	}
+	if (0 != m_curLogHeader.getOffset())
+	{
+		return header(m_curLogHeader.getPrevOffset());
 	}
 	return 0;
 }
 
-
-inline bool CwxBinLogCursor::isDangling() const
+inline int CwxBinLogCursor::seek(CWX_UINT32 uiOffset)
 {
-    return m_bDangling;
+	m_ucSeekState = CURSOR_STATE_UNSEEK;
+	if (-1 == m_fd)
+	{
+		CwxCommon::snprintf(this->m_szErr2K, 2047, "Cursor's file handle is invalid");
+		return -1;
+	}
+    int iRet = header(uiOffset);
+    if (1 == iRet){
+		m_ucSeekState = CURSOR_STATE_READY;
+    }
+    return iRet;
 }
+
 
 inline CwxBinLogHeader const& CwxBinLogCursor::getHeader() const
 {
@@ -448,6 +413,36 @@ inline char const* CwxBinLogCursor::getErrMsg() const
 inline int CwxBinLogCursor::getHandle() const
 {
     return m_fd;
+}
+
+///获取cursor的SEEK STATE
+inline CWX_UINT8 CwxBinLogCursor::getSeekState() const{
+	return m_ucSeekState;
+}
+///设置cursor的SEEK STATE
+inline void CwxBinLogCursor::setSeekState(CWX_UINT8 ucSeekState){
+	m_ucSeekState = ucSeekState;
+}
+///获取cursor的SEEK SID
+inline CWX_UINT64 CwxBinLogCursor::getSeekSid() const{
+	return m_ullSeekSid;
+}
+///设置cursor的SEEK SID
+inline void CwxBinLogCursor::setSeekSid(CWX_UINT64 ullSid){
+	m_ullSeekSid = ullSid;
+}
+
+///是否ready
+inline bool CwxBinLogCursor::isReady() const{
+	return CURSOR_STATE_READY == m_ucSeekState;
+}
+///是否unseek
+inline bool CwxBinLogCursor::isUnseek() const{
+	return CURSOR_STATE_UNSEEK == m_ucSeekState;
+}
+///是否错误
+inline bool CwxBinLogCursor::isError() const{
+	return CURSOR_STATE_ERROR == m_ucSeekState;
 }
 
 
@@ -754,14 +749,13 @@ inline bool CwxBinLogMgr::_isManageBinLogFile(CwxBinLogFile* pBinLogFile)
 	set<CwxBinLogCursor*>::iterator iter = m_cursorSet.begin();
 	while(iter != m_cursorSet.end())
 	{
-		if (CURSOR_STATE_READY == (*iter)->m_ucSeekState)
-		{//cursor的header一定有效
+		if ((*iter)->isReady()){//cursor的header一定有效
 			if ((*iter)->m_curLogHeader.getSid() <= pBinLogFile->getMaxSid())
 			{
 				return true;
 			}
 		}
-		else if ((*iter)->m_ullSid <= pBinLogFile->getMaxSid())
+		else if ((*iter)->getSeekSid() <= pBinLogFile->getMaxSid())
 		{//cursor处于悬浮状态
 			return true;
 		}
@@ -774,12 +768,12 @@ inline bool CwxBinLogMgr::_isManageBinLogFile(CwxBinLogFile* pBinLogFile)
 ///检查cursor是否有效
 inline bool CwxBinLogMgr::isCursorValid(CwxBinLogCursor* pCursor)
 {
-    return  CURSOR_STATE_READY == pCursor->m_ucSeekState;
+    return  pCursor->isReady();
 }
 
 inline bool CwxBinLogMgr::isUnseek(CwxBinLogCursor* pCursor)
 {
-    return CURSOR_STATE_UNSEEK == pCursor->m_ucSeekState;
+    return pCursor->isUnseek();
 }
 
 

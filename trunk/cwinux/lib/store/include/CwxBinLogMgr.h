@@ -177,6 +177,11 @@ public:
 		BINLOG_READ_BLOCK_BIT = 16, ///<64K的读取buf。
 		BINLOG_READ_BLOCK_SIZE = 1<<BINLOG_READ_BLOCK_BIT ///<64K的读取buf。
 	};
+	enum{
+		CURSOR_STATE_UNSEEK = 0, ///<cursor处于未定位的状态
+		CURSOR_STATE_READY = 1, ///<cursor处于定位的状态
+		CURSOR_STATE_ERROR = 2 ///<cursor处于出错的状态
+	};
 public:
     ///构造函数
     CwxBinLogCursor();
@@ -206,15 +211,6 @@ public:
     @return -2：log的header不完整；-1：读取失败；0：超出范围；1：移到指定的offset
     */
     inline int seek(CWX_UINT32 uiOffset);
-	/**
-	@brief 文件偏移到指定的header
-	@param [in] header binlog在header信息。
-	@param [in] ullSid 要seek到的sid。
-	@param [in] bDangling 是否为悬空状态，若是，则header无效。
-	@return 1：成功；0：超出范围；-1：header与ullSid不对应
-	*/
-	inline int seek(char const* header, CWX_UINT64 ullSid, bool bDangling=false);
-
     /**
     @brief 获取当前log的data
     @param [in] szBuf binlog的buf。
@@ -224,8 +220,6 @@ public:
     int data(char * szBuf, CWX_UINT32& uiBufLen);
     ///关闭cursor
     void close();
-    ///获取cursor是否处于悬空状态
-    inline bool isDangling() const;
     ///获取当期log的记录头
     inline CwxBinLogHeader const& getHeader() const;
     ///获取文件的名字
@@ -236,11 +230,21 @@ public:
     inline CWX_UINT32 getFileNo() const;
     ///获取当前的错误信息
     inline char const* getErrMsg() const;
-    ///获取cursor的state
-    inline CWX_UINT8 getSeekState() { return m_ucSeekState;}
+    ///获取cursor的SEEK STATE
+    inline CWX_UINT8 getSeekState() const;
+	///设置cursor的SEEK STATE
+	inline void setSeekState(CWX_UINT8 ucSeekState);
+	///获取cursor的SEEK SID
+	inline CWX_UINT64 getSeekSid() const;
+	///设置cursor的SEEK SID
+	inline void setSeekSid(CWX_UINT64 ullSid);
+	///是否ready
+	inline bool isReady() const;
+	///是否unseek
+	inline bool isUnseek() const;
+	///是否错误
+	inline bool isError() const;
 private:
-    friend class CwxBinLogFile;
-    friend class CwxBinLogMgr;
     /**
     @brief 从指定位置，读取log的header。
     @param [in] uiOffset binlog在文件中的offset。
@@ -256,7 +260,6 @@ private:
 private:
     string             m_strFileName; ///<文件的名字
     int                m_fd;///<文件的handle
-    bool               m_bDangling; ///<cursor是否处于悬空状态
     CwxBinLogHeader     m_curLogHeader; ///<当前log的header
     char               m_szHeadBuf[CwxBinLogHeader::BIN_LOG_HEADER_SIZE]; ///<log header的buf空间
     char               m_szErr2K[2048];///<错误信息buf
@@ -266,9 +269,8 @@ private:
 	CWX_UINT32		   m_uiFileDay; ///<文件的日期
 	CWX_UINT32         m_uiFileNo; ///<文件号
     //由CwxBinLogMgr使用的状态值
-    CWX_UINT64          m_ullSid; ///<seek的sid
+    CWX_UINT64          m_ullSeekSid; ///<seek的sid
     CWX_UINT8           m_ucSeekState; ///<seek的状态
-
 };
 
 /**
@@ -506,11 +508,6 @@ public:
         MIN_SID_NO = 1, ///<最小的sid序号
 		MAX_BINLOG_FILE_SIZE = 0X7FFFFFFF ///<2G
     };
-    enum{
-        CURSOR_STATE_UNSEEK = 0, ///<cursor处于未定位的状态
-        CURSOR_STATE_READY = 1, ///<cursor处于定位的状态
-        CURSOR_STATE_ERROR = 2 ///<cursor处于出错的状态
-    };
 public:
     /**
     @brief 构造函数。
@@ -564,7 +561,7 @@ public:
     ///清空binlog管理器
     void clear();
 	///将数据trim到指定的sid，0：成功；-1：失败
-	int trim(CWX_UINT64 ullSid, char* szErr2K=NULL);
+//	int trim(CWX_UINT64 ullSid, char* szErr2K=NULL);
 public:
 	/**
 	@brief 获取大于ullSid的最小binlog header
