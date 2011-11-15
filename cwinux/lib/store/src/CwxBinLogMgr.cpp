@@ -1606,7 +1606,7 @@ int CwxBinLogMgr::_seek(CwxBinLogCursor* pCursor, CWX_UINT64 ullSid)
     pCursor->setSeekSid(ullSid);
 	if(!m_bValid)
 	{
-		strcpy(pCursor->m_szErr2K, m_szErr2K);
+		strcpy(pCursor->getErrMsg(), m_szErr2K);
 		return -1;
 	}
     if (!m_pCurBinlog || 
@@ -1642,7 +1642,7 @@ int CwxBinLogMgr::_seek(CwxBinLogCursor* pCursor, CWX_UINT64 ullSid)
     if ((-1 == iRet) || (-2 == iRet)) return -1; 
     //iRet == 0
     char szBuf1[64], szBuf2[64];
-    CwxCommon::snprintf(pCursor->m_szErr2K, 2047, "Sid[%s] should be found, but not. binlog-file's max-sid[%s], binlog file:%s",
+    CwxCommon::snprintf(pCursor->getErrMsg(), 2047, "Sid[%s] should be found, but not. binlog-file's max-sid[%s], binlog file:%s",
         CwxCommon::toString(ullSid, szBuf1),
         CwxCommon::toString(pBinLogFile->getMaxSid(), szBuf2),
         pBinLogFile->getDataFileName().c_str());
@@ -1657,12 +1657,12 @@ int CwxBinLogMgr::next(CwxBinLogCursor* pCursor)
     CwxReadLockGuard<CwxRwLock> lock(&m_rwLock);
 	if(!m_bValid)
 	{
-		strcpy(pCursor->m_szErr2K, m_szErr2K);
+		strcpy(pCursor->getErrMsg(), m_szErr2K);
 		return -1;
 	}
-    if (!isCursorValid(pCursor))
+    if (!pCursor->isReady())
     {
-        if (isUnseek(pCursor)) strcpy(pCursor->m_szErr2K, "Cursor is unseek.");
+        if (isUnseek(pCursor)) strcpy(pCursor->getErrMsg(), "Cursor is unseek.");
         return -1;
     }
     if (pCursor->isUnseek())
@@ -1682,7 +1682,7 @@ int CwxBinLogMgr::next(CwxBinLogCursor* pCursor)
 		pCursor->setSeekState(CwxBinLogCursor::CURSOR_STATE_ERROR);
         if (0 == iRet)
         {
-            CwxCommon::snprintf(pCursor->m_szErr2K, 2047, "Seek to binlog file's start, but return 0, LogNum=%d, file=%s",
+            CwxCommon::snprintf(pCursor->getErrMsg(), 2047, "Seek to binlog file's start, but return 0, LogNum=%d, file=%s",
                 pBinLogFile->getLogNum(),
                 pBinLogFile->getDataFileName().c_str());
         }
@@ -1706,7 +1706,7 @@ int CwxBinLogMgr::next(CwxBinLogCursor* pCursor)
 		pCursor->setSeekState(CwxBinLogCursor::CURSOR_STATE_ERROR);
         if (0 == iRet)
         {
-            CwxCommon::snprintf(pCursor->m_szErr2K, 2047, "Seek to binlog file's start, but return 0, LogNum=%d, file=%s",
+            CwxCommon::snprintf(pCursor->getErrMsg(), 2047, "Seek to binlog file's start, but return 0, LogNum=%d, file=%s",
                 iter->second->getLogNum(),
                 iter->second->getDataFileName().c_str());
         }
@@ -1723,12 +1723,12 @@ int CwxBinLogMgr::prev(CwxBinLogCursor* pCursor)
     CwxReadLockGuard<CwxRwLock> lock(&m_rwLock);
 	if(!m_bValid)
 	{
-		strcpy(pCursor->m_szErr2K, m_szErr2K);
+		strcpy(pCursor->getErrMsg(), m_szErr2K);
 		return -1;
 	}
-    if (!isCursorValid(pCursor))
+    if (!pCursor->isReady())
     {
-        if (isUnseek(pCursor)) strcpy(pCursor->m_szErr2K, "Cursor is unseek.");
+        if (pCursor->isUnseek()) strcpy(pCursor->getErrMsg(), "Cursor is unseek.");
         return -1;
     }
     if (pCursor->isUnseek())
@@ -1756,7 +1756,7 @@ int CwxBinLogMgr::prev(CwxBinLogCursor* pCursor)
 		pCursor->setSeekState(CwxBinLogCursor::CURSOR_STATE_ERROR);
         if (0 == iRet)
         {
-            CwxCommon::snprintf(pCursor->m_szErr2K, 2047, "Seek to binlog file's start, but return 0, LogNum=%d, file=%s",
+            CwxCommon::snprintf(pCursor->getErrMsg(), 2047, "Seek to binlog file's start, but return 0, LogNum=%d, file=%s",
                 pBinLogFile->getLogNum(),
                 pBinLogFile->getDataFileName().c_str());
         }
@@ -1783,7 +1783,7 @@ int CwxBinLogMgr::prev(CwxBinLogCursor* pCursor)
 		pCursor->setSeekState(CwxBinLogCursor::CURSOR_STATE_ERROR);
         if (0 == iRet)
         {
-            CwxCommon::snprintf(pCursor->m_szErr2K, 2047, "Seek to binlog file's end, but return 0, LogNum=%d, file=%s",
+            CwxCommon::snprintf(pCursor->getErrMsg(), 2047, "Seek to binlog file's end, but return 0, LogNum=%d, file=%s",
                 iter->second->getLogNum(),
                 iter->second->getDataFileName().c_str());
         }
@@ -1801,17 +1801,17 @@ int CwxBinLogMgr::fetch(CwxBinLogCursor* pCursor, char* szData, CWX_UINT32& uiDa
 		CwxReadLockGuard<CwxRwLock> lock(&m_rwLock);
 		if(!m_bValid)
 		{
-			strcpy(pCursor->m_szErr2K, m_szErr2K);
+			strcpy(pCursor->getErrMsg(), m_szErr2K);
 			return -1;
 		}
-		if (!isCursorValid(pCursor))
+		if (!pCursor->isReady())
 		{
-			if (isUnseek(pCursor)) strcpy(pCursor->m_szErr2K, "Cursor is unseek.");
+			if (pCursor->isUnseek()) strcpy(pCursor->getErrMsg(), "Cursor is unseek.");
 			return -1;
 		}
 		if (pCursor->isUnseek())
 		{
-			strcpy(pCursor->m_szErr2K, "the cursor doesn't seek.");
+			strcpy(pCursor->getErrMsg(), "the cursor doesn't seek.");
 			return -1;
 		}
 	}

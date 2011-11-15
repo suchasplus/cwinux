@@ -405,7 +405,7 @@ inline CWX_UINT32 CwxBinLogCursor::getFileNo() const
 }
 
 
-inline char const* CwxBinLogCursor::getErrMsg() const
+inline char* CwxBinLogCursor::getErrMsg()
 {
     return m_szErr2K;
 }
@@ -764,17 +764,5 @@ inline bool CwxBinLogMgr::_isManageBinLogFile(CwxBinLogFile* pBinLogFile)
 	return false;
 
 }
-
-///检查cursor是否有效
-inline bool CwxBinLogMgr::isCursorValid(CwxBinLogCursor* pCursor)
-{
-    return  pCursor->isReady();
-}
-
-inline bool CwxBinLogMgr::isUnseek(CwxBinLogCursor* pCursor)
-{
-    return pCursor->isUnseek();
-}
-
 
 CWINUX_END_NAMESPACE
