@@ -104,7 +104,7 @@ INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
-LIBS = -lcwxapp -lcwxnet -lcwxparse -lcwxcmn -lexpat -lpthread -ldl -lrt
+LIBS = -lcwxapp -lcwxnet -lcwxcmn -lpthread -ldl -lrt
 LIBTOOL = @LIBTOOL@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
@@ -167,7 +167,6 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-xml_expat_dir = @xml_expat_dir@
 pkgconfigdir = 
 BUILD_DATE = $(shell date +%F)
 cwx_echo_CPPFLAGS = -D_BUILD_DATE="$(BUILD_DATE)" -W -Wall
@@ -178,8 +177,8 @@ cwx_echo_SOURCES = \
 	CwxEchoEventHandler.cpp
 
 cwx_echo_LDADD = 
-cwx_echo_LDFLAGS = -L@xml_expat_dir@/lib -L@cwinux_dir@/lib
-INCLUDES = -I@cwinux_dir@/include/app -I@cwinux_dir@/include/cmn -I@cwinux_dir@/include/net -I@cwinux_dir@/include/parse -I@xml_expat_dir@/include
+cwx_echo_LDFLAGS = -L@cwinux_dir@/lib
+INCLUDES = -I@cwinux_dir@/include/app -I@cwinux_dir@/include/cmn -I@cwinux_dir@/include/net 
 all: all-am
 
 .SUFFIXES:

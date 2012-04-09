@@ -1,67 +1,65 @@
 #include "CwxEchoClientConfig.h"
 
 int CwxEchoClientConfig::loadConfig(string const & strConfFile){
-    CwxXmlFileConfigParser parser;
-    char const* pValue;
+    CwxIniParse parser;
     string value;
     //Ω‚Œˆ≈‰÷√Œƒº˛
-    if (false == parser.parse(strConfFile)){
-        snprintf(m_szError, 2047, "Failure to Load conf file.");
+    if (false == parser.load(strConfFile)){
+		snprintf(m_szError, 2047, "Failure to Load conf file:%s", strConfFile.c_str());
         return -1;
     }
-    //load workdir svr_def:workdir{path}
-    if ((NULL == (pValue=parser.getElementAttr("svr_def:workdir", "path"))) || !pValue[0]){
-        snprintf(m_szError, 2047, "Must set [svr_def:workdir].");
+    //load workdir
+    if (!parser.getAttr("client", "workdir", value) || !value.length()){
+        snprintf(m_szError, 2047, "Must set [client:workdir].");
         return -1;
     }
-    value = pValue;
 	if ('/' != value[value.length()-1]) value +="/";
     m_strWorkDir = value;
 
-    // load echo connect num
-    if ((NULL == (pValue=parser.getElementAttr("svr_def:conn", "num"))) || !pValue[0]){
-        snprintf(m_szError, 2047, "Must set [svr_def:conn:num].");
+    // load connect num
+    if (!parser.getAttr("client", "conn_num", value) || !value.length()){
+        snprintf(m_szError, 2047, "Must set [client:conn_num].");
         return -1;
     }
-    m_unConnNum = strtoul(pValue, NULL, 0);
+    m_unConnNum = strtoul(value.c_str(), NULL, 10);
     // load query conn type
-    if ((NULL == (pValue=parser.getElementAttr("svr_def:conn", "type"))) || !pValue[0]){
-        snprintf(m_szError, 2047, "Must set [svr_def:conn:type].");
+    if (!parser.getAttr("client", "conn_type", value) || !value.length()){
+        snprintf(m_szError, 2047, "Must set [client:conn_type].");
         return -1;
     }
-    m_bTcp = strcasecmp("tcp", pValue)==0?true:false;
+    m_bTcp = strcasecmp("tcp", value.c_str())==0?true:false;
 
     // load query conn lasting
-    if ((NULL == (pValue=parser.getElementAttr("svr_def:conn", "lasting"))) || !pValue[0]){
-        snprintf(m_szError, 2047, "Must set [svr_def:conn:lasting].");
+    if (!parser.getAttr("client", "conn_lasting", value) || !value.length()){
+        snprintf(m_szError, 2047, "Must set [client:conn_lasting].");
         return -1;
     }
-    m_bLasting = strcasecmp("1", pValue)==0?true:false;
+    m_bLasting = strcasecmp("1", value.c_str())==0?true:false;
 
     // data size
-    if ((NULL == (pValue=parser.getElementAttr("svr_def:data", "size"))) || !pValue[0]){
-        snprintf(m_szError, 2047, "Must set [svr_def:data].");
+    if (!parser.getAttr("client", "data_size", value) || !value.length()){
+        snprintf(m_szError, 2047, "Must set [client:data_size].");
         return -1;
     }
-    m_uiDataSize =strtoul(pValue, NULL, 0);
+    m_uiDataSize =strtoul(value.c_str(), NULL, 10);
     //load listen
-    if ((NULL == (pValue=parser.getElementAttr("svr_def:listen", "ip"))) || !pValue[0]){
-        snprintf(m_szError, 2047, "Must set [svr_def:listen:ip].");
+    if (!parser.getAttr("client", "listen", value) || !value.length()){
+        snprintf(m_szError, 2047, "Must set [client:listen].");
         return -1;
     }
-    m_listen.setHostName(pValue);
-    if ((NULL == (pValue=parser.getElementAttr("svr_def:listen", "port"))) || !pValue[0]){
-        snprintf(m_szError, 2047, "Must set [svr_def:listen:port].");
+    m_listen.setHostName(value.c_str());
+    if (!parser.getAttr("client", "port", value) || !value.length()){
+        snprintf(m_szError, 2047, "Must set [client:port].");
         return -1;
     }
-    m_listen.setPort(strtoul(pValue, NULL, 0));
+    m_listen.setPort(strtoul(value.c_str(), NULL, 10));
 
     //load svr_def:unix{path}
-    if ((NULL == (pValue=parser.getElementAttr("svr_def:unix", "path"))) || !pValue[0]){
-        snprintf(m_szError, 2047, "Must set [svr_def:unix].");
+    if (!parser.getAttr("client","unix", value) || !value.length()){
+        snprintf(m_szError, 2047, "Must set [client:unix].");
         return -1;
     }
-    m_strUnixPathFile = pValue;
+    m_strUnixPathFile = value;
 
     return 0;
 }

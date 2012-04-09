@@ -7,7 +7,7 @@
 */
 #include "CwxHostInfo.h"
 #include "CwxCommon.h"
-#include "CwxXmlFileConfigParser.h"
+#include "CwxIniParse.h"
 
 CWINUX_USING_NAMESPACE
 
