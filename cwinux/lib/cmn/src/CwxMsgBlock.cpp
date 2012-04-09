@@ -37,6 +37,7 @@ CwxMsgBlock* CwxMsgBlockAlloc::malloc(size_t size)
     CwxMsgBlock* pMsg = NULL;
     CwxMsgBlockAlloc* pAlloc = CwxMsgBlockAlloc::instance();
     int index = -1;
+
     if (size<=CACHE_MIN_BLOCK_SIZE)
     {
         size = CACHE_MIN_BLOCK_SIZE;
@@ -87,6 +88,19 @@ CwxMsgBlock* CwxMsgBlockAlloc::malloc(size_t size)
     pMsg->m_bFree = false;
     return pMsg;
 }
+
+///<克隆msg被copy内容
+CwxMsgBlock* CwxMsgBlockAlloc::clone(CwxMsgBlock* block){
+    CwxMsgBlock* msg = CwxMsgBlockAlloc::malloc(block->capacity());
+    msg->m_rdPos = block->m_rdPos;
+    msg->m_wrPos = block->m_wrPos;
+    msg->m_len = block->m_len;
+    memcpy(msg->m_buf, block->m_buf, msg->m_len);
+    memcpy(&msg->m_event, &block->m_event, sizeof(CwxEventInfo));
+    memcpy(&msg->m_sendCtrl, &block->m_sendCtrl, sizeof(CwxMsgSendCtrl));
+    return msg;
+}
+
 
 void CwxMsgBlockAlloc::free(CwxMsgBlock* block)
 {
@@ -152,6 +166,13 @@ CwxMsgBlock* CwxMsgBlockAlloc::pack(CwxMsgHead& header,
         pBlock->wr_ptr(uiDateLen);
     }
     return pBlock;
+}
+
+///释放空间
+void CwxMsgBlockAlloc::destroy()
+{
+    if (m_pInstance) delete m_pInstance;
+    m_pInstance = NULL;
 }
 
 

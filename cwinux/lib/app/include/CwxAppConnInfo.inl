@@ -320,7 +320,7 @@ inline void CwxAppConnInfo::reset()
     m_uiMaxWaitingMsgNum = 0;
     m_uiContinueRecvNum = 0;
     m_uiContinueSendNum = 0;
-    m_bInvokeCreate = true;
+//    m_bInvokeCreate = true;
     m_bReconn = false;
     m_uiReconnDelay = 0;
 }

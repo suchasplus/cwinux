@@ -269,7 +269,7 @@ class CWX_API CwxTaskBoard
 {
 public:
     ///Task的hash-map类型定义
-    typedef hash_map<CWX_UINT32/*taskid*/, CwxTaskBoardTask*, CwxNumHash<CWX_UINT32> > CWX_APP_TASK_MAP;
+    typedef hash_map<CWX_UINT32/*taskid*/, CwxTaskBoardTask* > CWX_APP_TASK_MAP;
 public:
     /**
     @brief 构造函数。
@@ -285,6 +285,11 @@ public:
     @return -1：失败；0：成功
     */
     int  init();
+    /**
+    @brief 检查指定Taskid的task是否存在。
+    @return 可用的task id
+    */
+    CWX_UINT32 getNextTaskId();
     /**
     @brief 检查指定Taskid的task是否存在。
     @param [in] uiTaskId Task id
@@ -377,6 +382,11 @@ public:
     ///清空Taskboard
     void reset();
 private:
+    /**
+    @brief 检查指定Taskid的task是否存在。
+    @return 可用的task id
+    */
+    CWX_UINT32 _getNextTaskId();
     ///不带锁的判断一个任务是否存在
     inline bool _isExist(CWX_UINT32 uiTaskId);
     ///不带锁往Taskboard添加一个Task
@@ -401,6 +411,7 @@ private:
     set<CwxTaskBoardTaskConns> m_taskConnSet;///<Task与Conn的对应Map
 	CwxMutexLock        m_lock;///<Taskboard的同步锁
     CWX_UINT32         m_uiMaxTaskNum;///<管理Task的最大数量
+    CWX_UINT32             m_uiTaskId; ///<当前最大的task id
 };
 
 CWINUX_END_NAMESPACE

@@ -34,7 +34,6 @@ int CwxAppHandler4Notice::handle_event(int , CWX_HANDLE)
     {//pipe is closed 
         CWX_ERROR(("Failure to read the notice pipe, errno=%d", errno));
     }
-    getApp()->noticeEvent();
     return 0;
 }
 

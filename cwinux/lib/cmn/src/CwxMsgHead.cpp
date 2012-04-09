@@ -2,6 +2,17 @@
 #include "CwxMsgBlock.h"
 
 CWINUX_BEGIN_NAMESPACE
+CWX_UINT32 CwxMsgHead::m_uiMaxMsgSize = CWX_MSG_SIZE_MAX;
+///设置package的最大大小
+void CwxMsgHead::setMaxMsgSize(CWX_UINT32 uiSize){
+    m_uiMaxMsgSize = uiSize;
+    if (m_uiMaxMsgSize < 1024) m_uiMaxMsgSize = 1024;
+}
+///获取package的最大大小
+CWX_UINT32 CwxMsgHead::getMaxMsgSize(){
+    return m_uiMaxMsgSize;
+}
+
 CwxMsgBlock* CwxMsgHead::packKeepalive(bool bReply)
 {
     CwxMsgBlock* msg = CwxMsgBlockAlloc::malloc(MSG_HEAD_LEN);

@@ -95,7 +95,7 @@ public:
         DEF_KEEPALIVE_SECOND = 30,///<缺省的连接KEEP-ALIVE检查间隔
         MIN_KEEPALIVE_SECOND = 1,///<最小的连接KEEP-ALIVE检查间隔
         MAX_KEEPALIVE_SECOND = 300,///<最大的连接KEEP-ALIVE检查间隔
-        DEF_KEEPALIVE_REPLY_SECOND = 10,///<KEEP-ALIVE回复时延
+        DEF_KEEPALIVE_REPLY_SECOND = 10///<KEEP-ALIVE回复时延
     };
     ///服务类型与线程组定义
     enum{

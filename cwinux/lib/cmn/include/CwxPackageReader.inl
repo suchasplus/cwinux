@@ -33,7 +33,7 @@ inline bool CwxPackageReader::getKey(char const* szKey, CWX_UINT32& value, bool 
     CwxKeyValueItem const* item = getKey(szKey, bSubKey);
     if (item)
     {
-        value = strtoul(item->m_szData, NULL, 0);
+        value = strtoul(item->m_szData, NULL, 10);
         return true;
     }
     return false;
@@ -43,7 +43,7 @@ inline bool CwxPackageReader::getKey(char const* szKey, CWX_INT32& value, bool b
     CwxKeyValueItem const* item = getKey(szKey, bSubKey);
     if (item)
     {
-        value = strtoul(item->m_szData, NULL, 0);
+        value = strtoul(item->m_szData, NULL, 10);
         return true;
     }
     return false;
@@ -55,7 +55,7 @@ inline bool CwxPackageReader::getKey(char const* szKey, CWX_UINT16& value, bool 
     CwxKeyValueItem const* item = getKey(szKey, bSubKey);
     if (item)
     {
-        value = strtoul(item->m_szData, NULL, 0);
+        value = strtoul(item->m_szData, NULL, 10);
         return true;
     }
     return false;
@@ -66,7 +66,7 @@ inline bool CwxPackageReader::getKey(char const* szKey, CWX_INT16& value, bool b
     CwxKeyValueItem const* item = getKey(szKey, bSubKey);
     if (item)
     {
-        value = strtoul(item->m_szData, NULL, 0);
+        value = strtoul(item->m_szData, NULL, 10);
         return true;
     }
     return false;
@@ -77,7 +77,7 @@ inline bool CwxPackageReader::getKey(char const* szKey, CWX_UINT8& value, bool b
     CwxKeyValueItem const* item = getKey(szKey, bSubKey);
     if (item)
     {
-        value = strtoul(item->m_szData, NULL, 0);
+        value = strtoul(item->m_szData, NULL, 10);
         return true;
     }
     return false;
@@ -88,7 +88,7 @@ inline bool CwxPackageReader::getKey(char const* szKey, char& value, bool bSubKe
     CwxKeyValueItem const* item = getKey(szKey, bSubKey);
     if (item)
     {
-        value = strtoul(item->m_szData, NULL, 0);
+        value = strtoul(item->m_szData, NULL, 10);
         return true;
     }
     return false;
@@ -99,7 +99,7 @@ inline bool CwxPackageReader::getKey(char const* szKey, CWX_INT64& value, bool b
     CwxKeyValueItem const* item = getKey(szKey, bSubKey);
     if (item)
     {
-        value = strtoull(item->m_szData, NULL, 0);
+        value = strtoull(item->m_szData, NULL, 10);
         return true;
     }
     return false;
@@ -110,22 +110,12 @@ inline bool CwxPackageReader::getKey(char const* szKey, CWX_UINT64& value, bool 
     CwxKeyValueItem const* item = getKey(szKey, bSubKey);
     if (item)
     {
-        value = strtoull(item->m_szData, NULL, 0);
+        value = strtoull(item->m_szData, NULL, 10);
         return true;
     }
     return false;
 }
-///Get data by key for bool. false:not exist, true:get one. 
-inline bool CwxPackageReader::getKey(char const* szKey, bool& bValue, bool bSubKey) const
-{
-    CwxKeyValueItem const* item = getKey(szKey, bSubKey);
-    if (item)
-    {
-        bValue = (strtoul(item->m_szData, NULL, 0)!=0);
-        return true;
-    }
-    return false;
-}
+
 ///获取当前package的Key的数量。
 inline CWX_UINT32 CwxPackageReader::getKeyNum() const
 {

@@ -296,11 +296,15 @@ public:
     static CwxMsgBlockAlloc* instance();
     ///<分配大小为size的block
     static CwxMsgBlock* malloc(size_t size);
+    ///<克隆msg被copy内容
+    static CwxMsgBlock* clone(CwxMsgBlock* block);
     ///<释放block
     static void free(CwxMsgBlock* block);
     static CwxMsgBlock* pack(CwxMsgHead& header,
         char const* szData,
         CWX_UINT32 uiDateLen);
+    ///释放空间
+    static void destroy();
 private:
     ///禁止创建实例
     CwxMsgBlockAlloc();

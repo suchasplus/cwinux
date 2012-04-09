@@ -456,6 +456,8 @@ int CwxAppEpoll::forkReinit()
 
 int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg, CWX_UINT32 uiMiliTimeout)
 {
+    static CWX_UINT64 ullLastTime=0;
+    bool bClockChange = false;
     int i = 0;
     int num = 0;
     CWX_UINT64 ullNow = 0;
@@ -465,33 +467,34 @@ int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg, CWX_UINT32 uiMiliTim
     CwxAppHandler4Base* handler = NULL;
     m_current.now();
     ullNow = m_current.to_usec();
+    
+    if (ullLastTime > ullNow + 1000000){ ///多余1秒
+        ullLastTime = ullNow;
+        bClockChange = true;
+    }else{
+        bClockChange = false;
+        ullLastTime = ullNow;
+    }
+
     ///计算超时时间
     timeout(ullTimeout);
-    if (ullTimeout)
-    {
-        if (ullTimeout < ullNow)
-        {
+    if (ullTimeout){
+        if (ullTimeout < ullNow){
             tv =1;
-        }
-        else
-        {
+        }else{
             ullTimeout -= ullNow;
             tv = ullTimeout/1000;
             if (tv < 1) tv = 1;
         }
         if (uiMiliTimeout && (tv > (int)uiMiliTimeout)) tv = uiMiliTimeout;
-    }
-    else if (uiMiliTimeout)
-    {
+    }else if (uiMiliTimeout){
         tv = uiMiliTimeout;
     }
 
     m_bStop = false;
     num = epoll_wait(m_epfd, m_events, CWX_APP_MAX_IO_NUM, tv);
-    if (num > 0)
-    {
-        for (i = 0; i < num; i++)
-        {
+    if (num > 0){
+        for (i = 0; i < num; i++){
             int mask = 0;
             if (m_bStop) return 0;
             event = &m_events[i];
@@ -546,26 +549,44 @@ int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg, CWX_UINT32 uiMiliTim
         }
     }
     //检测超时
-    while (!m_timeHeap.isEmpty() && (m_timeHeap.top()->getTimeout() < ullNow))
-    {
-        if (m_bStop) return 0;
-        if (m_timeHeap.top()->getHandle() != CWX_INVALID_HANDLE)
-        {
-            handler = removeHandler(m_timeHeap.top()->getHandle());
-            if (!handler)
-            {
-                CWX_ERROR(("Failure to remove timeout handler, fd[%d]", event->data.fd));
+    if (bClockChange){
+        list<CwxAppHandler4Base*> handles;
+        while(!m_timeHeap.isEmpty()){
+            if (m_bStop) return 0;
+            if (m_timeHeap.top()->getHandle() != CWX_INVALID_HANDLE){
+                handler = removeHandler(m_timeHeap.top()->getHandle());
+                if (!handler){
+                    CWX_ERROR(("Failure to remove timeout handler, fd[%d]", event->data.fd));
+                }
+            }else{
+                handler = m_timeHeap.pop();
             }
+            handles.push_back(handler);
         }
-        else
-        {
-            handler = m_timeHeap.pop();
-
+        list<CwxAppHandler4Base*>::iterator iter = handles.begin();
+        while(iter != handles.end()){
+            callback(*iter,
+                CwxAppHandler4Base::TIMEOUT_MASK,
+                false,
+                arg);
+            iter++;
         }
-        callback(handler,
-            CwxAppHandler4Base::TIMEOUT_MASK,
-            false,
-            arg);
+    }else{
+        while (!m_timeHeap.isEmpty() && (m_timeHeap.top()->getTimeout() < ullNow)){
+            if (m_bStop) return 0;
+            if (m_timeHeap.top()->getHandle() != CWX_INVALID_HANDLE){
+                handler = removeHandler(m_timeHeap.top()->getHandle());
+                if (!handler){
+                    CWX_ERROR(("Failure to remove timeout handler, fd[%d]", event->data.fd));
+                }
+            }else{
+                handler = m_timeHeap.pop();
+            }
+            callback(handler,
+                CwxAppHandler4Base::TIMEOUT_MASK,
+                false,
+                arg);
+        }
     }
     return 0;
 }

@@ -106,6 +106,8 @@ public:
     @return void
     */
     void error(char const* format, ...);
+    ///将szMsg的数据log到文件中
+    void log(char const* szMsg);
     /**
     @brief 打开uiLevel类型的日志输出，可以为多个类型的或
     @param [in] uiLevel 打开的日志类型
@@ -182,8 +184,6 @@ private:
     }
     ///关闭日志对象，返回值：0:success, -1:failure
     int closeLog();
-    ///记录日志
-    void log(char const* szMsg);
     ///设置下一个日志文件的环境信息
     void _nextLogFile();
     ///获取序号为seq的日志文件的名字
@@ -230,5 +230,8 @@ CWINUX_END_NAMESPACE
     CWX_TSS_FILE_NO = 0;\
     CWX_TSS_FILE_NAME = NULL;\
     CwxLogger::instance()->info msg;} while(0)
+///输出一个info信息
+#define CWX_LOG(msg) do {\
+    CwxLogger::instance()->log(msg);} while(0)
 #include "CwxPost.h"
 #endif
