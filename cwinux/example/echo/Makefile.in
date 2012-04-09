@@ -168,7 +168,6 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-xml_expat_dir = @xml_expat_dir@
 SUBDIRS = echo_client echo_svr echo_channel_svr
 all: all-recursive
 
