@@ -1,8 +1,8 @@
 [client]
-workdir=/usr/home/wenbo/jpool/src/cwinux/trunk/cwinux/example/echo/echo_client
+workdir=/usr/home/wenbo/cwinux/cwinux/trunk/cwinux/example/echo/echo_client
 listen=172.16.42.63
 port=9300
-unix=/usr/home/wenbo/jpool/src/cwinux/trunk/cwinux/example/echo/echo_svr/echo.unix
+unix=/usr/home/wenbo/cwinux/cwinux/trunk/cwinux/example/echo/echo_channel_svr/echo.unix
 conn_num=50
 conn_type=tcp
 conn_lasting=1
