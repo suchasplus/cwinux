@@ -30,6 +30,11 @@ inline int CwxThreadPoolEx::append(CwxMsgBlock* pMsg, CWX_UINT32 uiThread)
     return m_threadArr[uiIndex]->append(pMsg);
 }
 
+inline int CwxThreadPoolEx::appendHead(CwxMsgBlock* pMsg, CWX_UINT32 uiThread)
+{
+    CWX_UINT16 uiIndex = uiThread%getThreadNum();
+    return m_threadArr[uiIndex]->appendHead(pMsg);
+}
 
 CWINUX_END_NAMESPACE
 

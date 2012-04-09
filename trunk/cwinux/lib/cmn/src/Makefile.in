@@ -63,8 +63,7 @@ am_libcwxcmn_la_OBJECTS = libcwxcmn_la-CwxCharPool.lo \
 	libcwxcmn_la-CwxTss.lo libcwxcmn_la-CwxCommander.lo \
 	libcwxcmn_la-CwxGbkUnicodeMap.lo libcwxcmn_la-CwxMsgHead.lo \
 	libcwxcmn_la-CwxPackageWriter.lo libcwxcmn_la-CwxThread.lo \
-	libcwxcmn_la-CwxURI.lo libcwxcmn_la-CwxCommon.lo \
-	libcwxcmn_la-CwxGbkUnicodeMapDat.lo \
+	libcwxcmn_la-CwxCommon.lo libcwxcmn_la-CwxGbkUnicodeMapDat.lo \
 	libcwxcmn_la-CwxMsgQueue.lo libcwxcmn_la-CwxRwIdLocker.lo \
 	libcwxcmn_la-CwxThreadPool.lo libcwxcmn_la-CwxDate.lo \
 	libcwxcmn_la-CwxGetOpt.lo libcwxcmn_la-CwxMutexIdLocker.lo \
@@ -73,7 +72,9 @@ am_libcwxcmn_la_OBJECTS = libcwxcmn_la-CwxCharPool.lo \
 	libcwxcmn_la-CwxMutexLock.lo libcwxcmn_la-CwxSingleton.lo \
 	libcwxcmn_la-CwxThreadPoolMgr.lo libcwxcmn_la-CwxEscapeUtil.lo \
 	libcwxcmn_la-CwxMemLineReader.lo libcwxcmn_la-CwxPackage.lo \
-	libcwxcmn_la-CwxSingletonMgr.lo libcwxcmn_la-CwxTimeValue.lo
+	libcwxcmn_la-CwxSingletonMgr.lo libcwxcmn_la-CwxTimeValue.lo \
+	libcwxcmn_la-CwxCrc32.lo libcwxcmn_la-CwxIniParse.lo \
+	libcwxcmn_la-CwxMd5.lo
 libcwxcmn_la_OBJECTS = $(am_libcwxcmn_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -190,7 +191,6 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-xml_expat_dir = @xml_expat_dir@
 pkgconfigdir = 
 lib_LTLIBRARIES = libcwxcmn.la
 libcwxcmn_la_CPPFLAGS = -W -Wall -Wno-deprecated
@@ -206,7 +206,6 @@ libcwxcmn_la_SOURCES = \
 	CwxMsgHead.cpp\
 	CwxPackageWriter.cpp\
 	CwxThread.cpp\
-	CwxURI.cpp\
 	CwxCommon.cpp\
 	CwxGbkUnicodeMapDat.cpp\
 	CwxMsgQueue.cpp\
@@ -226,7 +225,10 @@ libcwxcmn_la_SOURCES = \
 	CwxMemLineReader.cpp\
 	CwxPackage.cpp\
 	CwxSingletonMgr.cpp\
-	CwxTimeValue.cpp
+	CwxTimeValue.cpp\
+	CwxCrc32.cpp\
+	CwxIniParse.cpp\
+	CwxMd5.cpp
 
 libcwxcmn_la_LDFLAGS = 
 cwxcmnincludedir = $(prefix)/include/cmn
@@ -302,8 +304,6 @@ cwxcmninclude_HEADERS = \
     ../include/CwxType.h\
     ../include/CwxTypePoolEx.h\
     ../include/CwxTypePool.h\
-    ../include/CwxURI.h\
-    ../include/CwxURI.inl\
     ../include/CwxZlib.h\
     ../include/CwxDTail.h\
     ../include/CwxSTail.h\
@@ -321,7 +321,10 @@ cwxcmninclude_HEADERS = \
     ../include/CwxThreadPoolMgr.h\
     ../include/CwxTpi.h\
     ../include/CwxTss.h\
-    ../include/CwxLogger.h
+    ../include/CwxLogger.h\
+    ../include/CwxCrc32.h\
+    ../include/CwxIniParse.h\
+    ../include/CwxMd5.h
 
 INCLUDES = -I$(srcdir)/../include
 all: all-am
@@ -396,6 +399,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxCharPool.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxCommander.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxCommon.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxCrc32.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxDate.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxEncodeXml.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxEscapeUtil.Plo@am__quote@
@@ -403,7 +407,9 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxGbkUnicodeMap.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxGbkUnicodeMapDat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxGetOpt.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxIniParse.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxLogger.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxMd5.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxMemLineReader.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxMsgBlock.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxMsgHead.Plo@am__quote@
@@ -424,7 +430,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxThreadPoolMgr.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxTimeValue.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxTss.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxURI.Plo@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
@@ -523,13 +528,6 @@ libcwxcmn_la-CwxThread.lo: CwxThread.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxThread.cpp' object='libcwxcmn_la-CwxThread.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxcmn_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxcmn_la-CwxThread.lo `test -f 'CwxThread.cpp' || echo '$(srcdir)/'`CwxThread.cpp
-
-libcwxcmn_la-CwxURI.lo: CwxURI.cpp
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxcmn_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwxcmn_la-CwxURI.lo -MD -MP -MF "$(DEPDIR)/libcwxcmn_la-CwxURI.Tpo" -c -o libcwxcmn_la-CwxURI.lo `test -f 'CwxURI.cpp' || echo '$(srcdir)/'`CwxURI.cpp; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/libcwxcmn_la-CwxURI.Tpo" "$(DEPDIR)/libcwxcmn_la-CwxURI.Plo"; else rm -f "$(DEPDIR)/libcwxcmn_la-CwxURI.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxURI.cpp' object='libcwxcmn_la-CwxURI.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxcmn_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxcmn_la-CwxURI.lo `test -f 'CwxURI.cpp' || echo '$(srcdir)/'`CwxURI.cpp
 
 libcwxcmn_la-CwxCommon.lo: CwxCommon.cpp
 @am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxcmn_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwxcmn_la-CwxCommon.lo -MD -MP -MF "$(DEPDIR)/libcwxcmn_la-CwxCommon.Tpo" -c -o libcwxcmn_la-CwxCommon.lo `test -f 'CwxCommon.cpp' || echo '$(srcdir)/'`CwxCommon.cpp; \
@@ -670,6 +668,27 @@ libcwxcmn_la-CwxTimeValue.lo: CwxTimeValue.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxTimeValue.cpp' object='libcwxcmn_la-CwxTimeValue.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxcmn_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxcmn_la-CwxTimeValue.lo `test -f 'CwxTimeValue.cpp' || echo '$(srcdir)/'`CwxTimeValue.cpp
+
+libcwxcmn_la-CwxCrc32.lo: CwxCrc32.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxcmn_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwxcmn_la-CwxCrc32.lo -MD -MP -MF "$(DEPDIR)/libcwxcmn_la-CwxCrc32.Tpo" -c -o libcwxcmn_la-CwxCrc32.lo `test -f 'CwxCrc32.cpp' || echo '$(srcdir)/'`CwxCrc32.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/libcwxcmn_la-CwxCrc32.Tpo" "$(DEPDIR)/libcwxcmn_la-CwxCrc32.Plo"; else rm -f "$(DEPDIR)/libcwxcmn_la-CwxCrc32.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxCrc32.cpp' object='libcwxcmn_la-CwxCrc32.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxcmn_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxcmn_la-CwxCrc32.lo `test -f 'CwxCrc32.cpp' || echo '$(srcdir)/'`CwxCrc32.cpp
+
+libcwxcmn_la-CwxIniParse.lo: CwxIniParse.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxcmn_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwxcmn_la-CwxIniParse.lo -MD -MP -MF "$(DEPDIR)/libcwxcmn_la-CwxIniParse.Tpo" -c -o libcwxcmn_la-CwxIniParse.lo `test -f 'CwxIniParse.cpp' || echo '$(srcdir)/'`CwxIniParse.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/libcwxcmn_la-CwxIniParse.Tpo" "$(DEPDIR)/libcwxcmn_la-CwxIniParse.Plo"; else rm -f "$(DEPDIR)/libcwxcmn_la-CwxIniParse.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxIniParse.cpp' object='libcwxcmn_la-CwxIniParse.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxcmn_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxcmn_la-CwxIniParse.lo `test -f 'CwxIniParse.cpp' || echo '$(srcdir)/'`CwxIniParse.cpp
+
+libcwxcmn_la-CwxMd5.lo: CwxMd5.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxcmn_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwxcmn_la-CwxMd5.lo -MD -MP -MF "$(DEPDIR)/libcwxcmn_la-CwxMd5.Tpo" -c -o libcwxcmn_la-CwxMd5.lo `test -f 'CwxMd5.cpp' || echo '$(srcdir)/'`CwxMd5.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/libcwxcmn_la-CwxMd5.Tpo" "$(DEPDIR)/libcwxcmn_la-CwxMd5.Plo"; else rm -f "$(DEPDIR)/libcwxcmn_la-CwxMd5.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxMd5.cpp' object='libcwxcmn_la-CwxMd5.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxcmn_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxcmn_la-CwxMd5.lo `test -f 'CwxMd5.cpp' || echo '$(srcdir)/'`CwxMd5.cpp
 
 mostlyclean-libtool:
 	-rm -f *.lo

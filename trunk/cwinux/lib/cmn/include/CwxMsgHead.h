@@ -172,6 +172,10 @@ public:
     {
         return m_uiDataLen;
     }
+    ///设置package的最大大小
+    static void setMaxMsgSize(CWX_UINT32 uiSize);
+    ///获取package的最大大小
+    static CWX_UINT32 getMaxMsgSize();
 private:
     CWX_UINT8      m_ucVersion;  ///<消息版本号
     CWX_UINT8      m_ucAttr;     ///<消息属性
@@ -179,6 +183,7 @@ private:
     CWX_UINT32     m_uiTaskId;   ///<任务号ID
     CWX_UINT32     m_uiDataLen;  ///<发送的数据长度，不包括包头
     char           m_szHead[MSG_HEAD_LEN]; ///< msg's data
+    static CWX_UINT32  m_uiMaxMsgSize;
 };
 
 CWINUX_END_NAMESPACE

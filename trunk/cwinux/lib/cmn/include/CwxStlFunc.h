@@ -78,6 +78,7 @@ public:
 */
 template<typename T> class CwxPointEqual
 {
+public:
     /**
     *@brief  比较T的指针key1与key2的内容而不是指针本身是否相等。<br>
     *        此是对对象的operator()进行了重载。<br>
@@ -96,6 +97,7 @@ template<typename T> class CwxPointEqual
 */
 template<typename T> class CwxPointLess
 {
+public:
     /**
     *@brief  比较*key1<*key2是否成立
     *        重载了CwxPointLess的operator()(T const *key1, T const *key2).

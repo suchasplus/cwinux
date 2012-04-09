@@ -97,7 +97,7 @@ void CwxLogger::info(char const* format, ...)
 {
     if (isEnableLog(LEVEL_INFO))
     {
-        CWX_UINT32 const LEN=CwxTss::TSS_2K_BUF;
+        CWX_UINT32 const LEN=CwxTss::TSS_ERR_BUF;
         char* szBuf = CwxTss::instance()->m_szErrMsg;
         int ret = _log_header(NULL, 0, szBuf, LEN);
         va_list args;
@@ -111,7 +111,7 @@ void CwxLogger::debug(char const* format, ...)
 {
     if (isEnableLog(LEVEL_DEBUG))
     {
-        CWX_UINT32 const LEN=CwxTss::TSS_2K_BUF;
+        CWX_UINT32 const LEN=CwxTss::TSS_ERR_BUF;
         char* szBuf = CwxTss::instance()->m_szErrMsg;
         char const* szFile = CWX_TSS_FILE_NAME;
         int line = CWX_TSS_FILE_NO;
@@ -127,7 +127,7 @@ void CwxLogger::debug(char const* format, ...)
 void CwxLogger::warning(char const* format, ...)
 {
     if (isEnableLog(LEVEL_WARNING)){
-        CWX_UINT32 const LEN=CwxTss::TSS_2K_BUF;
+        CWX_UINT32 const LEN=CwxTss::TSS_ERR_BUF;
         char* szBuf = CwxTss::instance()->m_szErrMsg;
         char const* szFile = CWX_TSS_FILE_NAME;
         int line = CWX_TSS_FILE_NO;
@@ -143,7 +143,7 @@ void CwxLogger::warning(char const* format, ...)
 void CwxLogger::error(char const* format, ...)
 {
     if (isEnableLog(LEVEL_ERROR)){
-        CWX_UINT32 const LEN=CwxTss::TSS_2K_BUF;
+        CWX_UINT32 const LEN=CwxTss::TSS_ERR_BUF;
         char* szBuf = CwxTss::instance()->m_szErrMsg;
         char const* szFile = CWX_TSS_FILE_NAME;
         int line = CWX_TSS_FILE_NO;

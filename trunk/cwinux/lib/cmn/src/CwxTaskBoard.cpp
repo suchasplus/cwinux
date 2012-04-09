@@ -23,6 +23,24 @@ int CwxTaskBoard::init()
     return 0;
 }
 
+CWX_UINT32 CwxTaskBoard::getNextTaskId()
+{
+    CwxMutexGuard<CwxMutexLock> lock(&m_lock);
+    return _getNextTaskId();
+}
+
+CWX_UINT32 CwxTaskBoard::_getNextTaskId(){
+    CWX_UINT32 uiTaskId = 0;
+    while(true){
+        if (0 == m_uiTaskId) m_uiTaskId++;
+        if (!_isExist(m_uiTaskId)) break;
+        m_uiTaskId++;
+    }
+    uiTaskId = m_uiTaskId;
+    m_uiTaskId++;
+    return uiTaskId;
+}
+
 bool CwxTaskBoard::isExist(CWX_UINT32 uiTaskId)
 {
     CwxMutexGuard<CwxMutexLock> lock(&m_lock);

@@ -15,6 +15,12 @@ inline int  CwxThread::append(CwxMsgBlock* pMsg)
 {
     return this->m_msgQueue->enqueue_tail(pMsg);
 }
+
+inline int  CwxThread::appendHead(CwxMsgBlock* pMsg)
+{
+    return this->m_msgQueue->enqueue(pMsg);
+}
+
 /**
 @brief 从线程的消息队列获取一个排队消息，若队列为空，则阻塞。
 @param [out] pMsg pop的消息。

@@ -73,6 +73,13 @@ public:
     */
     inline int  append(CwxMsgBlock* pMsg);
     /**
+    @brief 往线程的消息队列头添加一个新消息，以便及时消费。
+    @param [in] pMsg append的消息
+    @return -1：失败；>=0队列中排队的消息数量
+    */
+    int  appendHead(CwxMsgBlock* pMsg);
+
+    /**
     @brief 从线程的消息队列获取一个排队消息，若队列为空，则阻塞。
     @param [out] pMsg pop的消息。
     @return -1：失败；>=0队列中排队的消息数量

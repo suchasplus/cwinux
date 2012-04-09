@@ -75,8 +75,6 @@ public:
     bool getKey(char const* szKey, CWX_INT64& value, bool bSubKey=false) const ;
     ///Get data by key for UINT64. false:not exist, true:get one. 
     bool getKey(char const* szKey, CWX_UINT64& value, bool bSubKey=false) const ;
-    ///Get data by key for bool. false:not exist, true:get one. 
-    bool getKey(char const* szKey, bool& bValue, bool bSubKey) const;
     ///获取当前package的Key的数量。
     CWX_UINT32 getKeyNum() const ;
     ///return msg's size

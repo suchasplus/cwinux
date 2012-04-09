@@ -162,7 +162,8 @@ class CWX_API CwxTss
 {
 public:
     enum{
-        TSS_2K_BUF = 2048///<error-buffer的大小
+        TSS_2K_BUF = 2048,///<error-buffer的大小
+        TSS_ERR_BUF = 1024 * 16  ///<16K
     };
 public:
     ///构造函数
@@ -196,7 +197,7 @@ public:
     char const*              m_fileName;
 private:
     friend class CwxLogger;
-    char                     m_szErrMsg[TSS_2K_BUF + 1];///错误消息描述
+    char                     m_szErrMsg[TSS_ERR_BUF + 1];///错误消息描述
     CwxTssInfo               m_threadInfo;///<当前TSS的线程info
     static bool              m_bInit;///<对象是否已经执行了init操作
     static pthread_key_t     m_tssKey;///<线程的tss对象

@@ -270,6 +270,7 @@ inline CwxTaskBoard::CwxTaskBoard(CWX_UINT32 uiMaxTaskNum)
     m_pTaskMap = NULL;
     m_uiMaxTaskNum = uiMaxTaskNum;
     if (m_uiMaxTaskNum < 256) m_uiMaxTaskNum = 256;
+    m_uiTaskId = 0;
 
 }
 ///Îö¹¹º¯Êý

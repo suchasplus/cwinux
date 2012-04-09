@@ -40,7 +40,7 @@ inline bool CwxMsgHead::fromNet(char const* szHead)
     memcpy(&byte4, szHead+pos, 4); m_uiDataLen = CWX_NTOHL(byte4); pos+=4;
     //checksum
     memcpy(&byte2, szHead+pos, 2); unCheckSum = CWX_NTOHS(byte2); pos+=2;
-    if (CWX_MSG_SIZE_MAX < m_uiDataLen) return false;
+    if (m_uiMaxMsgSize < m_uiDataLen) return false;
     return (unCheckSum == (CWX_UINT16)(m_ucVersion + m_ucAttr + m_unMsgType + m_uiTaskId + m_uiDataLen))?true:false;
 }
 

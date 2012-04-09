@@ -18,7 +18,6 @@ libcwxcmn_la_SOURCES = \
 	CwxMsgHead.cpp\
 	CwxPackageWriter.cpp\
 	CwxThread.cpp\
-	CwxURI.cpp\
 	CwxCommon.cpp\
 	CwxGbkUnicodeMapDat.cpp\
 	CwxMsgQueue.cpp\
@@ -38,7 +37,10 @@ libcwxcmn_la_SOURCES = \
 	CwxMemLineReader.cpp\
 	CwxPackage.cpp\
 	CwxSingletonMgr.cpp\
-	CwxTimeValue.cpp
+	CwxTimeValue.cpp\
+	CwxCrc32.cpp\
+	CwxIniParse.cpp\
+	CwxMd5.cpp
 
 libcwxcmn_la_LDFLAGS = 
 
@@ -115,8 +117,6 @@ cwxcmninclude_HEADERS=\
     ../include/CwxType.h\
     ../include/CwxTypePoolEx.h\
     ../include/CwxTypePool.h\
-    ../include/CwxURI.h\
-    ../include/CwxURI.inl\
     ../include/CwxZlib.h\
     ../include/CwxDTail.h\
     ../include/CwxSTail.h\
@@ -134,7 +134,10 @@ cwxcmninclude_HEADERS=\
     ../include/CwxThreadPoolMgr.h\
     ../include/CwxTpi.h\
     ../include/CwxTss.h\
-    ../include/CwxLogger.h
+    ../include/CwxLogger.h\
+    ../include/CwxCrc32.h\
+    ../include/CwxIniParse.h\
+    ../include/CwxMd5.h
 
 	
 INCLUDES=-I$(srcdir)/../include

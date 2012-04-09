@@ -75,6 +75,13 @@ public:
     @return -1：失败；>=0为对应线程的队列中排队的消息数量
     */
     inline int append(CwxMsgBlock* pMsg, CWX_UINT32 uiThread);
+    /**
+    @brief 往线程的消息队列头添加一个新消息，以便及时消费。
+    @param [in] pMsg append的消息
+    @return -1：失败；>=0队列中排队的消息数量
+    */
+    int  appendHead(CwxMsgBlock* pMsg, CWX_UINT32 uiThread);
+
 protected:
     CwxCommander*          m_commander; ///<commander
     CWX_TSS_THR_FUNC       m_func; ///<用户指定的thread main function

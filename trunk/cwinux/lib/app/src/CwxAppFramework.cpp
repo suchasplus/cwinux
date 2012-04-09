@@ -1023,6 +1023,8 @@ int CwxAppFramework::hook(void* arg)
 {
     CwxAppFramework* pApp = (CwxAppFramework*)arg;
     if (!pApp->isStopped()){
+        ///分发事件
+        pApp->noticeEvent();
         //invoke the hook
         if (pApp->m_bEnableHook) pApp->onHook();
         //dispatch the fork event
