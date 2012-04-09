@@ -181,7 +181,6 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-xml_expat_dir = @xml_expat_dir@
 pkgconfigdir = 
 lib_LTLIBRARIES = libcwxnet.la
 libcwxnet_la_CPPFLAGS = -W -Wall -Wno-deprecated
