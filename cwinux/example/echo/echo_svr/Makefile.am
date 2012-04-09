@@ -15,7 +15,7 @@ cwx_echo_SOURCES = \
 	CwxEchoEventHandler.cpp
 cwx_echo_LDADD=
 cwx_echo_LDFLAGS =-L@cwinux_dir@/lib
-LIBS=-lcwxapp -lcwxnet -lcwxcmn -lpthread -ldl -lrt
+LIBS=-lcwxapp -lcwxnet -lcwxcmn -lz -lpthread -ldl -lrt
 INCLUDES=-I@cwinux_dir@/include/app -I@cwinux_dir@/include/cmn -I@cwinux_dir@/include/net 
 
 ## Clean up template repositories, etc.
