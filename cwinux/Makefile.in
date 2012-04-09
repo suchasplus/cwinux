@@ -167,8 +167,7 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-xml_expat_dir = @xml_expat_dir@
-SUBDIRS = lib/cmn/src lib/parse/src lib/store/src lib/net/src lib/poco/src lib/util/src lib/app/src  tool/blog_reader 
+SUBDIRS = lib/cmn/src lib/net/src lib/app/src 
 all: all-recursive
 
 .SUFFIXES:
@@ -588,11 +587,7 @@ uninstall-info: uninstall-info-recursive
 
 doc:
 	cd lib/cmn/src&&make doc&&cd ../../../
-	cd lib/parse/src&&make doc&&cd ../../../
-	cd lib/store/src&&make doc&&cd ../../../
 	cd lib/net/src&&make doc&&cd ../../../
-	cd lib/poco/src&&make doc&&cd ../../../
-	cd lib/util/src&&make doc&&cd ../../../
 	cd lib/app/src&&make doc&&cd ../../../
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
