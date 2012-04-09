@@ -1,49 +1,48 @@
 #include "CwxEchoConfig.h"
 
 int CwxEchoConfig::loadConfig(string const & strConfFile){
-    CwxXmlFileConfigParser parser;
-    char const* pValue;
-    string value;
-    //解析配置文件
-    if (false == parser.parse(strConfFile)){
-        snprintf(m_szError, 2047, "Failure to Load conf file.");
-        return -1;
-    }
-    //load workdir svr_def:workdir{path}
-    if ((NULL == (pValue=parser.getElementAttr("svr_def:workdir", "path"))) || !pValue[0]){
-        snprintf(m_szError, 2047, "Must set [svr_def:workdir].");
-        return -1;
-    }
-    value = pValue;
+	CwxIniParse parser;
+	string value;
+	//解析配置文件
+	if (false == parser.load(strConfFile)){
+		snprintf(m_szError, 2047, "Failure to Load conf file:%s", strConfFile.c_str());
+		return -1;
+	}
+	//load workdir
+	if (!parser.getAttr("svr", "workdir", value)|| !value.length()){
+		snprintf(m_szError, 2047, "Must set [svr:workdir].");
+		return -1;
+	}
 	if ('/' != value[value.length()-1]) value +="/";
-    m_strWorkDir = value;
+	m_strWorkDir = value;
 
-    //load svr_def:unix{path}
-    if ((NULL == (pValue=parser.getElementAttr("svr_def:unix", "path"))) || !pValue[0]){
-        snprintf(m_szError, 2047, "Must set [svr_def:unix].");
-        return -1;
-    }
-    m_strUnixPathFile = pValue;
+	//load unix
+	if (!parser.getAttr("svr", "unix", value) || !value.length()){
+		snprintf(m_szError, 2047, "Must set [svr:unix].");
+		return -1;
+	}
+	m_strUnixPathFile = value;
 
-    // load query thread num
-    if ((NULL == (pValue=parser.getElementAttr("svr_def:thread", "num"))) || !pValue[0]){
-        snprintf(m_szError, 2047, "Must set [svr_def:thread].");
-        return -1;
-    }
-    m_unThreadNum = strtoul(pValue, NULL, 0);
+	// load query thread num
+	if (!parser.getAttr("svr", "thread_num", value) || !value.length()){
+		snprintf(m_szError, 2047, "Must set [svr:thread_num].");
+		return -1;
+	}
+	m_unThreadNum = strtoul(value.c_str(), NULL, 10);
 
-    //load listen
-    if ((NULL == (pValue=parser.getElementAttr("svr_def:listen", "ip"))) || !pValue[0]){
-        snprintf(m_szError, 2047, "Must set [svr_def:listen:ip].");
-        return -1;
-    }
-    m_listen.setHostName(pValue);
-    if ((NULL == (pValue=parser.getElementAttr("svr_def:listen", "port"))) || !pValue[0]){
-        snprintf(m_szError, 2047, "Must set [svr_def:listen:port].");
-        return -1;
-    }
-    m_listen.setPort(strtoul(pValue, NULL, 0));
-    return 0;
+	//load listen
+	if (!parser.getAttr("svr", "listen", value) || !value.length()){
+		snprintf(m_szError, 2047, "Must set [svr:listen].");
+		return -1;
+	}
+	m_listen.setHostName(value);
+	if (!parser.getAttr("svr", "port", value) || !value.length()){
+		snprintf(m_szError, 2047, "Must set [svr:port].");
+		return -1;
+	}
+	m_listen.setPort(strtoul(value.c_str(), NULL, 10));
+	return 0;
+
 }
 
 void CwxEchoConfig::outputConfig(string & strConfig){

@@ -1,48 +1,46 @@
 #include "CwxEchoChannelConfig.h"
 
 int CwxEchoChannelConfig::loadConfig(string const & strConfFile){
-    CwxXmlFileConfigParser parser;
-    char const* pValue;
+    CwxIniParse parser;
     string value;
     //Ω‚Œˆ≈‰÷√Œƒº˛
-    if (false == parser.parse(strConfFile)){
-        snprintf(m_szError, 2047, "Failure to Load conf file.");
+    if (false == parser.load(strConfFile)){
+		snprintf(m_szError, 2047, "Failure to Load conf file:%s", strConfFile.c_str());
         return -1;
     }
-    //load workdir svr_def:workdir{path}
-    if ((NULL == (pValue=parser.getElementAttr("svr_def:workdir", "path"))) || !pValue[0]){
-        snprintf(m_szError, 2047, "Must set [svr_def:workdir].");
+    //load workdir
+    if (!parser.getAttr("channel_svr", "workdir", value)|| !value.length()){
+        snprintf(m_szError, 2047, "Must set [channel_svr:workdir].");
         return -1;
     }
-    value = pValue;
 	if ('/' != value[value.length()-1]) value +="/";
     m_strWorkDir = value;
 
-    //load svr_def:unix{path}
-    if ((NULL == (pValue=parser.getElementAttr("svr_def:unix", "path"))) || !pValue[0]){
-        snprintf(m_szError, 2047, "Must set [svr_def:unix].");
+    //load unix
+    if (!parser.getAttr("channel_svr", "unix", value) || !value.length()){
+        snprintf(m_szError, 2047, "Must set [channel_svr:unix].");
         return -1;
     }
-    m_strUnixPathFile = pValue;
+    m_strUnixPathFile = value;
 
     // load query thread num
-    if ((NULL == (pValue=parser.getElementAttr("svr_def:thread", "num"))) || !pValue[0]){
-        snprintf(m_szError, 2047, "Must set [svr_def:thread].");
+    if (!parser.getAttr("channel_svr", "thread_num", value) || !value.length()){
+        snprintf(m_szError, 2047, "Must set [channel_svr:thread_num].");
         return -1;
     }
-    m_unThreadNum = strtoul(pValue, NULL, 0);
+    m_unThreadNum = strtoul(value.c_str(), NULL, 10);
 
     //load listen
-    if ((NULL == (pValue=parser.getElementAttr("svr_def:listen", "ip"))) || !pValue[0]){
-        snprintf(m_szError, 2047, "Must set [svr_def:listen:ip].");
+    if (!parser.getAttr("channel_svr", "listen", value) || !value.length()){
+        snprintf(m_szError, 2047, "Must set [channel_svr:listen].");
         return -1;
     }
-    m_listen.setHostName(pValue);
-    if ((NULL == (pValue=parser.getElementAttr("svr_def:listen", "port"))) || !pValue[0]){
-        snprintf(m_szError, 2047, "Must set [svr_def:listen:port].");
+    m_listen.setHostName(value);
+    if (!parser.getAttr("channel_svr", "port", value) || !value.length()){
+        snprintf(m_szError, 2047, "Must set [channel_svr:port].");
         return -1;
     }
-    m_listen.setPort(strtoul(pValue, NULL, 0));
+    m_listen.setPort(strtoul(value.c_str(), NULL, 10));
     return 0;
 }
 

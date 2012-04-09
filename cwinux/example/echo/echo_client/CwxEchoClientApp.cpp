@@ -22,7 +22,7 @@ int CwxEchoClientApp::init(int argc, char** argv){
     if (CwxAppFramework::init(argc, argv) == -1) return -1;
     ///若没有通过-f指定配置文件，则采用默认的配置文件
     if ((NULL == this->getConfFile()) || (strlen(this->getConfFile()) == 0)){
-        this->setConfFile("svr_conf.xml");
+        this->setConfFile("svr_conf.cnf");
     }
     ///加载配置文件
     if (0 != m_config.loadConfig(getConfFile())){
