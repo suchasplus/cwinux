@@ -49,4 +49,7 @@ CwxLruCache对象的定义错误。
 2011-10-10    cwinux@gmail.com   v2.1.12
 1、修改CwxAppHandler4Channel::close ，在delete this前，首先检查是否m_bRedo，并cancel redo
 *********************************************************************
+2012-05-08    cwinux@gmail.com   v2.3.2
+1、修改CwxPackage CwxPackageWrite，在addKeyValue的时候，支持指定key的length，新增加了一批api。与旧版本兼容
+*********************************************************************
 
