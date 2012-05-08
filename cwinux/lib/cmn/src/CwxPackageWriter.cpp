@@ -25,19 +25,15 @@ void CwxPackageWriter::reset()
 }
 
 ///Add a new key.true: success; false:failure, get err-msg by GetError().
-bool CwxPackageWriter::addKeyValue(char const* szKey, char const* szData, CWX_UINT32 uiDataLen, bool bKeyValue)
-{
-    if (this->m_uiPackBufLen < this->m_uiCurPackPos + CwxPackage::getKvLen(strlen(szKey), uiDataLen))
-    {
-        CWX_UINT32 uiNewSize = m_uiPackBufLen * 2 + CwxPackage::getKvLen(strlen(szKey), uiDataLen);
+bool CwxPackageWriter::addKeyValue(char const* szKey, CWX_UINT16 unKeyLen, char const* szData, CWX_UINT32 uiDataLen, bool bKeyValue){
+    if (this->m_uiPackBufLen < this->m_uiCurPackPos + CwxPackage::getKvLen(unKeyLen, uiDataLen)){
+        CWX_UINT32 uiNewSize = m_uiPackBufLen * 2 + CwxPackage::getKvLen(unKeyLen, uiDataLen);
         char* pNew = new char[uiNewSize];
-        if (!pNew)
-        {
+        if (!pNew){
             CwxCommon::snprintf(this->m_szErr, ERR_MSG_LEN, "Failure to malloc buf, size=%u", uiNewSize);
             return false;
         }
-        if (m_uiCurPackPos)
-        {
+        if (m_uiCurPackPos){
             memcpy(pNew, m_szPackMsg, m_uiCurPackPos);
         }
         m_uiPackBufLen = uiNewSize;
@@ -48,6 +44,7 @@ bool CwxPackageWriter::addKeyValue(char const* szKey, char const* szData, CWX_UI
     if (0 ==(iRet = CwxPackage::appendKey(this->m_szPackMsg + this->m_uiCurPackPos,
         this->m_uiPackBufLen - this->m_uiCurPackPos,
         szKey,
+        unKeyLen,
         szData,
         uiDataLen,
         bKeyValue)))

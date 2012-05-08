@@ -28,9 +28,8 @@ int CwxPackage::getNextKey(char const* szMsg, CWX_UINT32 uiMsgLen, CwxKeyValueIt
 }
 
 //-1：包的空间太小；>0 打入的包的长度。
-int CwxPackage::appendKey(char *szMsg, CWX_UINT32 uiMsgLen, char const* szKey, char const* szValue, CWX_UINT32 uiDatalen, bool bKeyValue)
-{
-    CWX_UINT16 key_len = strlen(szKey);
+int CwxPackage::appendKey(char *szMsg, CWX_UINT32 uiMsgLen, char const* szKey, CWX_UINT16 unKeyLen, char const* szValue, CWX_UINT32 uiDatalen, bool bKeyValue){
+    CWX_UINT16 key_len = unKeyLen;
     CWX_UINT32 byte4;
     CWX_UINT16 byte2;
     CWX_UINT32 pos=0;
@@ -93,7 +92,7 @@ int CwxPackage::removeKey(char *szMsg, CWX_UINT32& uiMsgLen, char const* szKey, 
     return remove_key;
 }
 //-2空间不够，-1：无效的package，0：没有发现，1：修改了一个KEY。
-int CwxPackage::modifyKey(char *szMsg, CWX_UINT32& uiMsgLen, CWX_UINT32 uiMaxMsgLen, char const* szKey, char const* szData, CWX_UINT32 uiDataLen, bool bKeyValue, bool bCaseSensive)
+int CwxPackage::modifyKey(char *szMsg, CWX_UINT32& uiMsgLen, CWX_UINT32 uiMaxMsgLen, char const* szKey, CWX_UINT16 unKeyLen, char const* szData, CWX_UINT32 uiDataLen, bool bKeyValue, bool bCaseSensive)
 {
     CWX_UINT32 uiNewKeyLen = getKvLen(strlen(szKey), uiDataLen);
     CWX_UINT32 uiOldKeyLen = 0;
@@ -119,7 +118,7 @@ int CwxPackage::modifyKey(char *szMsg, CWX_UINT32& uiMsgLen, CWX_UINT32 uiMaxMsg
             uiOldKeyLen = (CWX_UINT32)len;
             if (uiMsgLen - uiOldKeyLen + uiNewKeyLen > uiMaxMsgLen) return -2;
             CwxCommon::memMove(szMsg + uiPos + uiNewKeyLen, szMsg+uiPos+len, uiMsgLen-uiPos-len);
-            appendKey(szMsg + uiPos, uiNewKeyLen, szKey, szData, uiDataLen, bKeyValue);
+            appendKey(szMsg + uiPos, uiNewKeyLen, szKey, unKeyLen, szData, uiDataLen, bKeyValue);
             uiMsgLen = uiMsgLen - uiOldKeyLen + uiNewKeyLen;
             return 1;
         }
@@ -148,7 +147,7 @@ int CwxPackage::modifyKey(char *szMsg, CWX_UINT32& uiMsgLen, CWX_UINT32 uiMaxMsg
     uiOldKeyLen = (CWX_UINT32)len;
     if (uiMsgLen - uiOldKeyLen + uiNewKeyLen > uiMaxMsgLen) return -2;
     CwxCommon::memMove(szMsg + uiPos + uiNewKeyLen, szMsg+uiPos+len, uiMsgLen-uiPos-len);
-    appendKey(szMsg + uiPos, uiNewKeyLen, item.m_szKey, szData, uiDataLen, bKeyValue);
+    appendKey(szMsg + uiPos, uiNewKeyLen, item.m_szKey, item.m_unKeyLen, szData, uiDataLen, bKeyValue);
     uiMsgLen = uiMsgLen - uiOldKeyLen + uiNewKeyLen;
     return 1;
 }
