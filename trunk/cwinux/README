@@ -8,4 +8,4 @@
 */
 
 
-./configure  --with-xml-expat=/usr  --prefix=/usr/home/wenbo/install/
+./configure   --prefix=/usr/home/wenbo/install/
