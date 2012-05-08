@@ -120,7 +120,7 @@ public:
     *@param [in] bKeyValue data是否为key/value
     *@return -1：包的空间太小；>=0 打入的包的长度。
     */
-    static int  appendKey(char *szMsg, CWX_UINT32 uiMsgLen, char const* szKey, char const* szValue, CWX_UINT32 uiDatalen, bool bKeyValue = false);
+    static int  appendKey(char *szMsg, CWX_UINT32 uiMsgLen, char const* szKey, CWX_UINT16 unKeyLen, char const* szValue, CWX_UINT32 uiDatalen, bool bKeyValue = false);
     /**
     *@brief 从package中删除key名字为szKey的Key/value。
     *@param [in, out] szMsg package。
@@ -151,7 +151,7 @@ public:
     *@param [in] bCaseSensive key的名字是否大小写敏感。true：大小写敏感，否则为不敏感。缺省敏感。
     *@return -2空间不够，-1：无效的package，0：没有发现，1：修改了一个KEY。
     */
-    static int  modifyKey(char *szMsg, CWX_UINT32& uiMsgLen, CWX_UINT32 uiMaxMsgLen, char const* szKey, char const* szData, CWX_UINT32 uiDataLen, bool bKeyValue=false, bool bCaseSensive=true);
+    static int  modifyKey(char *szMsg, CWX_UINT32& uiMsgLen, CWX_UINT32 uiMaxMsgLen, char const* szKey, CWX_UINT16 unKeyLen, char const* szData, CWX_UINT32 uiDataLen, bool bKeyValue=false, bool bCaseSensive=true);
     /**
     *@brief 将package中第unIndex的Key的内容，修改为szData指定的内容。
     *@param [in,out] szMsg package。

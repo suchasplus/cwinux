@@ -26,46 +26,31 @@ CwxPackageReader::~CwxPackageReader()
 CwxKeyValueItem const* CwxPackageReader::getKey(char const* szKey, bool bSubKey) const
 {
     char const* pNextSub = NULL;
-    if (bSubKey)
-    {
+    if (bSubKey){
         pNextSub = strchr(szKey, '.');
     }
-    if (!bSubKey || !pNextSub)
-    {
-        if (m_bIndex)
-        {
-            if (m_pKeyIndex)
-            {
+    if (!bSubKey || !pNextSub){
+        if (m_bIndex){
+            if (m_pKeyIndex){
                 CWX_PACKAGE_KEY_MAP_ITER iter = m_pKeyIndex->find(szKey);
-                if (iter != m_pKeyIndex->end())
-                {
+                if (iter != m_pKeyIndex->end()){
                     return iter->second;
                 }
             }
-        }
-        else
-        {
-            for (CWX_UINT32 i=0; i<m_uiKeyNum; i++)
-            {
-                if (m_bCaseSensive)
-                {
-                    if (strcmp(szKey, m_pKeyValue[i].m_szKey) == 0)
-                    {
+        }else{
+            for (CWX_UINT32 i=0; i<m_uiKeyNum; i++){
+                if (m_bCaseSensive){
+                    if (strcmp(szKey, m_pKeyValue[i].m_szKey) == 0){
                         return &m_pKeyValue[i];
                     }
-                }
-                else
-                {
-                    if (strcasecmp(szKey, m_pKeyValue[i].m_szKey) == 0)
-                    {
+                }else{
+                    if (strcasecmp(szKey, m_pKeyValue[i].m_szKey) == 0){
                         return &m_pKeyValue[i];
                     }
                 }
             }
         }
-    }
-    else
-    {
+    }else{
         string key(szKey, szKey - pNextSub);
         pNextSub++;
         CwxKeyValueItem const* pItem = this->getKey(key.c_str(), false);
@@ -74,8 +59,7 @@ CwxKeyValueItem const* CwxPackageReader::getKey(char const* szKey, bool bSubKey)
         CwxPackageReader reader(m_bCaseSensive);
         if (!reader.unpack(pItem->m_szData, pItem->m_uiDataLen, false, m_bCaseSensive)) return false;
         pItem = reader.getKey(pNextSub, true);
-        if (pItem)
-        {
+        if (pItem){
             m_tmpKey = *pItem;
             return &m_tmpKey;
         }
@@ -86,8 +70,7 @@ CwxKeyValueItem const* CwxPackageReader::getKey(char const* szKey, bool bSubKey)
 
 void CwxPackageReader::reset()
 {
-    if (m_pKeyValue)
-    {
+    if (m_pKeyValue){
         memset(m_pKeyValue, 0x00, sizeof(CwxKeyValueItem) * m_uiTotalKeyNum);
     }
     if (m_pKeyIndex) delete m_pKeyIndex;

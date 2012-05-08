@@ -63,6 +63,29 @@ public:
     bool addKeyValue(char const* szKey, CWX_UINT64 ullData);
     ///Add a new key.true: success; false:failure, get err-msg by GetError().
     bool addKeyValue(char const* szKey, CWX_INT64 llData);
+
+
+    ///Add a new key.true: success; false:failure, get err-msg by GetError().
+    bool addKeyValue(char const* szKey, CWX_UINT16 unKeyLen, char const* szData, CWX_UINT32 uiDataLen, bool bKeyValue = false);
+    ///Add a new key.true: success; false:failure, get err-msg by GetError().
+    bool addKeyValue(char const* szKey, CWX_UINT16 unKeyLen, string const& strData);
+    ///Add a new key.true: success; false:failure, get err-msg by GetError().
+    bool addKeyValue(char const* szKey, CWX_UINT16 unKeyLen, CWX_UINT8 ucData);
+    ///Add a new key.true: success; false:failure, get err-msg by GetError().
+    bool addKeyValue(char const* szKey, CWX_UINT16 unKeyLen, CWX_INT8 cData);
+    ///Add a new key.true: success; false:failure, get err-msg by GetError().
+    bool addKeyValue(char const* szKey, CWX_UINT16 unKeyLen, CWX_UINT16 unData);
+    ///Add a new key.true: success; false:failure, get err-msg by GetError().
+    bool addKeyValue(char const* szKey, CWX_UINT16 unKeyLen, CWX_INT16 nData);
+    ///Add a new key.true: success; false:failure, get err-msg by GetError().
+    bool addKeyValue(char const* szKey, CWX_UINT16 unKeyLen, CWX_UINT32 uiData);
+    ///Add a new key.true: success; false:failure, get err-msg by GetError().
+    bool addKeyValue(char const* szKey, CWX_UINT16 unKeyLen, CWX_INT32 iData);
+    ///Add a new key.true: success; false:failure, get err-msg by GetError().
+    bool addKeyValue(char const* szKey, CWX_UINT16 unKeyLen, CWX_UINT64 ullData);
+    ///Add a new key.true: success; false:failure, get err-msg by GetError().
+    bool addKeyValue(char const* szKey, CWX_UINT16 unKeyLen, CWX_INT64 llData);
+
     ///Package msg . true: success; false:failure, get err-msg by GetError().
     bool pack();
     ///获取当前package的Key的数量。
