@@ -1,5 +1,5 @@
-#ifndef __CWX_PACKAGE_READER_H__
-#define __CWX_PACKAGE_READER_H__
+#ifndef __CWX_PACKAGE_READER_EX_H__
+#define __CWX_PACKAGE_READER_EX_H__
 /*
 版权声明：
     本软件遵循GNU GPL V3（http://www.gnu.org/licenses/gpl.html），
@@ -8,7 +8,7 @@
 
 
 /**
-@file cwx_package_reader.h
+@file cwx_package_reader_ex.h
 @brief 定义key/value 数据包的读对象
 @author cwinux@gmail.com
 @version 1.0
@@ -16,7 +16,7 @@
 @warning
 @bug
 */
-#include "cwx_package.h"
+#include "cwx_package_ex.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -25,19 +25,19 @@ extern "C" {
 
 
 ///声明key/value数据包读对象的数据结构
-struct CWX_PG_READER;
+struct CWX_PG_READER_EX;
 
 /**
 *@brief 创建package reader的对象。
 *@return 0：创建失败；否则：创建的reader 对象。
 */
-struct CWX_PG_READER* cwx_pg_reader_create();
+struct CWX_PG_READER_EX* cwx_pg_reader_create_ex();
 
 /**
 *@brief 释放package reader的对象。
 *@return void。
 */
-void cwx_pg_reader_destory(struct CWX_PG_READER* reader);
+void cwx_pg_reader_destory_ex(struct CWX_PG_READER_EX* reader);
 
 /**
 *@brief unpack一个package，szMsg可以为一个空包，空包是一个有效的package。
@@ -48,7 +48,7 @@ void cwx_pg_reader_destory(struct CWX_PG_READER* reader);
 *@param [in] bCaseSensive key的名字是否大小写敏感。1：是；0：不是。
 *@return -1:错误；0:解包正确。通过cwx_pg_reader_error()获取失败的原因。
 */
-int cwx_pg_reader_unpack(struct CWX_PG_READER* reader,
+int cwx_pg_reader_unpack_ex(struct CWX_PG_READER_EX* reader,
            char const* szMsg,
            CWX_UINT32 uiMsgLen,
            int bindex,
@@ -61,7 +61,7 @@ int cwx_pg_reader_unpack(struct CWX_PG_READER* reader,
 *@param [in] bSubKey szKey是否为子key。1：是；0：不是。
 *@return 0:不存在；否则返回指定的key的key/value。
 */
-CWX_KEY_VALUE_ITEM_S const*  cwx_pg_reader_get_n_key(struct CWX_PG_READER const* reader,
+CWX_KEY_VALUE_ITEM_S const*  cwx_pg_reader_get_n_key_ex(struct CWX_PG_READER_EX const* reader,
                                char const* szKey,
                                CWX_UINT32  uiKeyLen,
                                int bSubKey);
@@ -72,7 +72,7 @@ CWX_KEY_VALUE_ITEM_S const*  cwx_pg_reader_get_n_key(struct CWX_PG_READER const*
 *@param [in] bSubKey szKey是否为子key。1：是；0：不是。
 *@return 0:不存在；否则返回指定的key的key/value。
 */
-CWX_KEY_VALUE_ITEM_S const*  cwx_pg_reader_get_key(struct CWX_PG_READER const* reader,
+CWX_KEY_VALUE_ITEM_S const*  cwx_pg_reader_get_key_ex(struct CWX_PG_READER_EX const* reader,
                                                      char const* szKey,
                                                      int bSubKey);
 /**
@@ -81,7 +81,7 @@ CWX_KEY_VALUE_ITEM_S const*  cwx_pg_reader_get_key(struct CWX_PG_READER const* r
 *@param [in] index 返回key的序号，从0开始。
 *@return 0:不存在；否则返回指定的key的key/value。
 */
-CWX_KEY_VALUE_ITEM_S const* cwx_pg_reader_get_key_by_index(struct CWX_PG_READER const* reader,
+CWX_KEY_VALUE_ITEM_S const* cwx_pg_reader_get_key_by_index_ex(struct CWX_PG_READER_EX const* reader,
                               CWX_UINT32 index);
 /**
 *@brief 从package reader中，获取Key的uint64的value值。
@@ -91,7 +91,7 @@ CWX_KEY_VALUE_ITEM_S const* cwx_pg_reader_get_key_by_index(struct CWX_PG_READER 
 *@param [in] bSubKey szKey是否为子key。1：是；0：不是。
 *@return 0:不存在；1：存在。
 */
-int cwx_pg_reader_get_uint64(struct CWX_PG_READER const* reader,
+int cwx_pg_reader_get_uint64_ex(struct CWX_PG_READER_EX const* reader,
                             char const* szKey,
                             CWX_UINT64* value,
                             int bSubKey);
@@ -103,7 +103,7 @@ int cwx_pg_reader_get_uint64(struct CWX_PG_READER const* reader,
 *@param [in] bSubKey szKey是否为子key。1：是；0：不是。
 *@return 0:不存在；1：存在。
 */
-int cwx_pg_reader_get_int64(struct CWX_PG_READER const* reader,
+int cwx_pg_reader_get_int64_ex(struct CWX_PG_READER_EX const* reader,
                              char const* szKey,
                              CWX_INT64* value,
                              int bSubKey);
@@ -115,7 +115,7 @@ int cwx_pg_reader_get_int64(struct CWX_PG_READER const* reader,
 *@param [in] bSubKey szKey是否为子key。1：是；0：不是。
 *@return 0:不存在；1：存在。
 */
-int cwx_pg_reader_get_uint32(struct CWX_PG_READER const* reader,
+int cwx_pg_reader_get_uint32_ex(struct CWX_PG_READER_EX const* reader,
                             char const* szKey,
                             CWX_UINT32* value,
                             int bSubKey);
@@ -127,7 +127,7 @@ int cwx_pg_reader_get_uint32(struct CWX_PG_READER const* reader,
 *@param [in] bSubKey szKey是否为子key。1：是；0：不是。
 *@return 0:不存在；1：存在。
 */
-int cwx_pg_reader_get_int32(struct CWX_PG_READER const* reader,
+int cwx_pg_reader_get_int32_ex(struct CWX_PG_READER_EX const* reader,
                              char const* szKey,
                              CWX_INT32* value,
                              int bSubKey);
@@ -139,7 +139,7 @@ int cwx_pg_reader_get_int32(struct CWX_PG_READER const* reader,
 *@param [in] bSubKey szKey是否为子key。1：是；0：不是。
 *@return 0:不存在；1：存在。
 */
-int cwx_pg_reader_get_uint16(struct CWX_PG_READER const* reader,
+int cwx_pg_reader_get_uint16_ex(struct CWX_PG_READER_EX const* reader,
                             char const* szKey,
                             CWX_UINT16* value,
                             int bSubKey);
@@ -151,7 +151,7 @@ int cwx_pg_reader_get_uint16(struct CWX_PG_READER const* reader,
 *@param [in] bSubKey szKey是否为子key。1：是；0：不是。
 *@return 0:不存在；1：存在。
 */
-int cwx_pg_reader_get_int16(struct CWX_PG_READER const* reader,
+int cwx_pg_reader_get_int16_ex(struct CWX_PG_READER_EX const* reader,
                              char const* szKey,
                              CWX_INT16* value,
                              int bSubKey);
@@ -163,7 +163,7 @@ int cwx_pg_reader_get_int16(struct CWX_PG_READER const* reader,
 *@param [in] bSubKey szKey是否为子key。1：是；0：不是。
 *@return 0:不存在；1：存在。
 */
-int cwx_pg_reader_get_uint8(struct CWX_PG_READER const* reader,
+int cwx_pg_reader_get_uint8_ex(struct CWX_PG_READER_EX const* reader,
                             char const* szKey,
                             CWX_UINT8* value,
                             int bSubKey);
@@ -175,23 +175,23 @@ int cwx_pg_reader_get_uint8(struct CWX_PG_READER const* reader,
 *@param [in] bSubKey szKey是否为子key。1：是；0：不是。
 *@return 0:不存在；1：存在。
 */
-int cwx_pg_reader_get_int8(struct CWX_PG_READER const* reader,
+int cwx_pg_reader_get_int8_ex(struct CWX_PG_READER_EX const* reader,
                             char const* szKey,
                             CWX_INT8* value,
                             int bSubKey);
 
 ///获取当前package的Key的数量。
-CWX_UINT32 cwx_pg_reader_get_key_num(struct CWX_PG_READER const* reader);
+CWX_UINT32 cwx_pg_reader_get_key_num_ex(struct CWX_PG_READER_EX const* reader);
 ///获取当前package的大小
-CWX_UINT32 cwx_pg_reader_get_msg_size(struct CWX_PG_READER const* reader);
+CWX_UINT32 cwx_pg_reader_get_msg_size_ex(struct CWX_PG_READER_EX const* reader);
 ///获取当前package的buf
-char const* cwx_pg_reader_get_msg(struct CWX_PG_READER const* reader);
+char const* cwx_pg_reader_get_msg_ex(struct CWX_PG_READER_EX const* reader);
 ///获取失败时的错误消息
-char const* cwx_pg_reader_get_error(struct CWX_PG_READER const* reader);
+char const* cwx_pg_reader_get_error_ex(struct CWX_PG_READER_EX const* reader);
 ///获取reader的key是否大小写敏感，1：是；0：不是
-int cwx_pg_reader_case_sensive(struct CWX_PG_READER const* reader);
+int cwx_pg_reader_case_sensive_ex(struct CWX_PG_READER_EX const* reader);
 ///获取reader是否对key进行索引，1：是；0：不是
-int cwx_pg_reader_is_index(struct CWX_PG_READER const* reader);
+int cwx_pg_reader_is_index_ex(struct CWX_PG_READER_EX const* reader);
 
 
 #ifdef __cplusplus

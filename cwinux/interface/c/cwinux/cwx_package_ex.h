@@ -1,5 +1,5 @@
-#ifndef __CWX_PACKAGE_H__
-#define __CWX_PACKAGE_H__
+#ifndef __CWX_PACKAGE_EX_H__
+#define __CWX_PACKAGE_EX_H__
 /*
 版权声明：
     本软件遵循GNU GPL V3（http://www.gnu.org/licenses/gpl.html），
@@ -8,7 +8,7 @@
 
 
 /**
-@file cwx_package.h
+@file cwx_package_ex.h
 @brief 定义key/value数据包的操作
 @author cwinux@gmail.com
 @version 1.0
@@ -17,25 +17,12 @@
 @bug
 */
 #include "cwx_config.h"
+#include "cwx_package.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-///Key/value标志位
-#define   CWX_PACKAGE_KV_BIT  31
-///最大的kv长度
-#define   CWX_PACKAGE_MAX_KV_LEN  0X7FFFFFFF
-
-///定义key/value数据对
-typedef struct CWX_KEY_VALUE_ITEM_S
-{
-    char*           m_szKey; ///<key的名字
-    char*           m_szData; ///<key的数据
-    CWX_UINT32      m_uiDataLen; ///<数据的长度
-    CWX_UINT16      m_unKeyLen; ///<key的长度
-    CWX_INT16       m_bKeyValue; ///<1：value的本身也是key/value格式;0：value不是key/value格式
-}CWX_KEY_VALUE_ITEM_S;
 
 /**
 *@brief 获取package中的下一个Key。
@@ -44,7 +31,7 @@ typedef struct CWX_KEY_VALUE_ITEM_S
 *@param [out] item 若key/value存在，则通过item返回Key/value的信息。
 *@return -1：包的格式非法；0:不存在；>0：Key/Value的长度。
 */
-int cwx_pg_get_next_key(char const* szMsg,
+int cwx_pg_get_next_key_ex(char const* szMsg,
                              CWX_UINT32 uiMsgLen,
                              CWX_KEY_VALUE_ITEM_S* item);
 
@@ -56,7 +43,7 @@ int cwx_pg_get_next_key(char const* szMsg,
 *@param [out] item 若key/value存在，则通过item返回Key/value的信息。
 *@return -1：包的格式非法；0:不存在；>0：Key/Value的长度。
 */
-int cwx_pg_get_key_by_index(char const *szMsg,
+int cwx_pg_get_key_by_index_ex(char const *szMsg,
                                  CWX_UINT32 uiMsgLen,
                                  CWX_UINT32 uiIndex,
                                  CWX_KEY_VALUE_ITEM_S* item);
@@ -70,7 +57,7 @@ int cwx_pg_get_key_by_index(char const *szMsg,
 *@param [in] bCaseSensive key的名字是否大小写敏感。1：大小写敏感；0为不敏感。
 *@return -1：包的格式非法；0:不存在；>0：Key/Value的长度。
 */
-int cwx_pg_get_key_by_name(char const *szMsg,
+int cwx_pg_get_key_by_name_ex(char const *szMsg,
                                 CWX_UINT32 uiMsgLen,
                                 char const* szKey,
                                 CWX_KEY_VALUE_ITEM_S* item,
@@ -87,7 +74,7 @@ int cwx_pg_get_key_by_name(char const *szMsg,
 *@param [in] bKeyValue data是否为key/value,1:是;0:不是
 *@return -1：包的空间太小；>0 打入的包的长度。
 */
-int cwx_pg_append_key(char *szMsg,
+int cwx_pg_append_key_ex(char *szMsg,
                            CWX_UINT32 uiMsgLen,
                            char const* szKey,
                            char const* szValue,
@@ -102,7 +89,7 @@ int cwx_pg_append_key(char *szMsg,
 *@param [in] bCaseSensive key的名字是否大小写敏感。1：大小写敏感；0为不敏感。
 *@return -1：无效的package，0：没有发现，>0：删除的数量。
 */
-int  cwx_pg_remove_key(char *szMsg,
+int  cwx_pg_remove_key_ex(char *szMsg,
                             CWX_UINT32* uiMsgLen,
                             char const* szKey,
                             int bAll,
@@ -114,7 +101,7 @@ int  cwx_pg_remove_key(char *szMsg,
 *@param [in] unIndex 要删除key的Index。
 *@return -1：无效的package，0：没有发现，1：删除了一个KEY。
 */
-int  cwx_pg_remove_key_by_index(char *szMsg,
+int  cwx_pg_remove_key_by_index_ex(char *szMsg,
                                      CWX_UINT32* uiMsgLen,
                                      CWX_UINT16 unIndex);
 /**
@@ -129,7 +116,7 @@ int  cwx_pg_remove_key_by_index(char *szMsg,
 *@param [in] bCaseSensive key的名字是否大小写敏感。1：大小写敏感，0：不敏感。
 *@return -2空间不够，-1：无效的package，0：没有发现，1：修改了一个KEY。
 */
-int  cwx_pg_modify_key(char *szMsg,
+int  cwx_pg_modify_key_ex(char *szMsg,
                       CWX_UINT32* uiMsgLen,
                       CWX_UINT32 uiMaxMsgLen,
                       char const* szKey,
@@ -148,7 +135,7 @@ int  cwx_pg_modify_key(char *szMsg,
 *@param [in] bKeyValue 新数据是否为Key/value格式。1：是；0：不是
 *@return -2空间不够，-1：无效的package，0：没有发现，1：修改了一个KEY。
 */
-int  cwx_pg_modify_key_by_index(char *szMsg,
+int  cwx_pg_modify_key_by_index_ex(char *szMsg,
                                      CWX_UINT32* uiMsgLen,
                                      CWX_UINT32 uiMaxMsgLen,
                                      CWX_UINT16 unIndex,
@@ -162,34 +149,78 @@ int  cwx_pg_modify_key_by_index(char *szMsg,
 *@param [in] uiMsgLen 包的长度
 *@return 1:有效的包；0：无效的包.
 */
-int cwx_pg_is_valid(char const *szMsg, CWX_UINT32 uiMsgLen);
+int cwx_pg_is_valid_ex(char const *szMsg, CWX_UINT32 uiMsgLen);
 /**
 *@brief 获取package的key的数量。
 *@param [in] szMsg package的buf
 *@param [in] uiMsgLen 包的长度
 *@return -1：无效的包，否则为key的数量。
 */
-int cwx_pg_get_key_num(char const* szMsg, CWX_UINT32 uiMsgLen);
+int cwx_pg_get_key_num_ex(char const* szMsg, CWX_UINT32 uiMsgLen);
 /**
 *@brief 通过Key的长度及data的长度，获取打包后的Key/value长度。
 *@param [in] unKeyLen key的长度
 *@param [in] uiDataLen valude的长度
 *@return 形成的key-value长度。
 */
-CWX_UINT32 cwx_pg_get_kv_len(CWX_UINT16 unKeyLen, CWX_UINT32 uiDataLen);
+CWX_UINT32 cwx_pg_get_kv_len_ex(CWX_UINT16 unKeyLen, CWX_UINT32 uiDataLen);
 /**
 *@brief 根据key-value长度与key的长度，计算出value部分的长度。
 *@param [in] uiKeyValueLen key-value的长度
 *@param [in] unKeyLen key的长度
 *@return 返回value的长度。
 */
-CWX_UINT32 cwx_pg_get_value_len(CWX_UINT32 uiKeyValueLen, CWX_UINT16 unKeyLen);
+CWX_UINT32 cwx_pg_get_value_len_ex(CWX_UINT32 uiKeyValueLen, CWX_UINT16 unKeyLen);
 
 /**
 *@brief 获取key在key/value中的内存数据偏移值。
 *@return 返回key在key/value中的偏移。
 */
-CWX_UINT16 cwx_pg_get_key_offset();
+CWX_UINT16 cwx_pg_get_key_offset_ex(CWX_UINT16 unKeyLen, CWX_UINT32 uiDataLen);
+
+///获得对UINT16的value进行encode后的长度
+CWX_UINT8 cwx_pg_encode_uint16_size(CWX_UINT16 value);
+
+///对UINT16整数进行解码，返回解码结束的位置，若为NULL表示解码失败
+unsigned char const* cwx_pg_decode_uint16(unsigned char const* szBuf, ///<
+                                  CWX_UINT32* uiBufLen, ///<传入buf的空间大小，返回剩余的大小
+                                  CWX_UINT16* value ///<解码出的数值
+                                  );
+
+///对整数进行编码，返回编码的值及编码后的长度
+unsigned char* cwx_pg_encode_uint16(CWX_UINT16 value, ///<要encode的值
+                            unsigned char* szBuf, ///<空间
+                            CWX_UINT32* uiLen ///<encode后的长度
+                            );
+
+///获得对UINT32的value进行encode后的长度
+CWX_UINT8 cwx_pg_encode_uint32_size(CWX_UINT32 value);
+
+///对UINT32整数进行解码，返回解码结束的位置，若为NULL表示解码失败
+unsigned char const* cwx_pg_decode_uint32(unsigned char const* szBuf, ///<
+                                  CWX_UINT32* uiBufLen, ///<传入buf的空间大小，返回剩余的大小
+                                  CWX_UINT32* value ///<解码出的数值
+                                  );
+
+///对整数进行编码，返回编码的值及编码后的长度
+unsigned char* cwx_pg_encode_uint32(CWX_UINT32 value, ///<要encode的值
+                            unsigned char* szBuf, ///<空间
+                            CWX_UINT32* uiLen ///<encode后的长度
+                            );
+
+///获得对UINT64的value进行encode后的长度
+CWX_UINT8 cwx_pg_encode_uint64_size(CWX_UINT64 value);
+
+///对UINT64整数进行解码，返回解码结束的位置，若为NULL表示解码失败
+unsigned char const* cwx_pg_decode_uint64(unsigned char const* szBuf, ///<
+                                  CWX_UINT32* uiBufLen, ///<传入buf的空间大小，返回剩余的大小
+                                  CWX_UINT64* value ///<解码出的数值
+                                  );
+///对UINT64整数进行编码，返回编码的值及编码后的长度
+unsigned char* cwx_pg_encode_uint64(CWX_UINT64 value, ///<要encode的值
+                            unsigned char* szBuf, ///<空间
+                            CWX_UINT32* uiLen ///<encode后的长度
+                            );
 #ifdef __cplusplus
 }
 #endif
