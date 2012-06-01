@@ -11,12 +11,14 @@ libcwxcmn_la_SOURCES = \
 	CwxFile.cpp\
 	CwxMsgBlock.cpp\
 	CwxPackageReader.cpp\
+	CwxPackageReaderEx.cpp\
 	CwxTaskBoard.cpp\
 	CwxTss.cpp\
 	CwxCommander.cpp\
 	CwxGbkUnicodeMap.cpp\
 	CwxMsgHead.cpp\
 	CwxPackageWriter.cpp\
+	CwxPackageWriterEx.cpp\
 	CwxThread.cpp\
 	CwxCommon.cpp\
 	CwxGbkUnicodeMapDat.cpp\
@@ -36,6 +38,7 @@ libcwxcmn_la_SOURCES = \
 	CwxEscapeUtil.cpp\
 	CwxMemLineReader.cpp\
 	CwxPackage.cpp\
+	CwxPackageEx.cpp\
 	CwxSingletonMgr.cpp\
 	CwxTimeValue.cpp\
 	CwxCrc32.cpp\
@@ -93,10 +96,16 @@ cwxcmninclude_HEADERS=\
     ../include/CwxMutexLock.inl\
     ../include/CwxPackage.h\
     ../include/CwxPackage.inl\
+    ../include/CwxPackageEx.h\
+    ../include/CwxPackageEx.inl\
     ../include/CwxPackageReader.h\
     ../include/CwxPackageReader.inl\
+    ../include/CwxPackageReaderEx.h\
+    ../include/CwxPackageReaderEx.inl\
     ../include/CwxPackageWriter.h\
     ../include/CwxPackageWriter.inl\
+    ../include/CwxPackageWriterEx.h\
+    ../include/CwxPackageWriterEx.inl\
     ../include/CwxPost.h\
     ../include/CwxPre.h\
     ../include/CwxReplMachine.h\
