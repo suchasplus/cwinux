@@ -300,6 +300,10 @@ CWX_UINT32 cwx_pg_reader_get_key_num(struct CWX_PG_READER const* reader)
 {
     return reader->m_uiKeyNum;
 }
+///获取全部的key
+CWX_KEY_VALUE_ITEM_S const* cwx_pg_reader_get_keys(struct CWX_PG_READER const* reader){
+    return reader->m_pKeyValue;
+}
 
 CWX_UINT32 cwx_pg_reader_get_msg_size(struct CWX_PG_READER const* reader)
 {
