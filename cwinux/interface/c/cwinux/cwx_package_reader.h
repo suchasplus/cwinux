@@ -182,6 +182,8 @@ int cwx_pg_reader_get_int8(struct CWX_PG_READER const* reader,
 
 ///获取当前package的Key的数量。
 CWX_UINT32 cwx_pg_reader_get_key_num(struct CWX_PG_READER const* reader);
+///获取全部的key
+CWX_KEY_VALUE_ITEM_S const* cwx_pg_reader_get_keys(struct CWX_PG_READER const* reader);
 ///获取当前package的大小
 CWX_UINT32 cwx_pg_reader_get_msg_size(struct CWX_PG_READER const* reader);
 ///获取当前package的buf
