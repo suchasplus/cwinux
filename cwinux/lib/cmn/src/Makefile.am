@@ -43,7 +43,8 @@ libcwxcmn_la_SOURCES = \
 	CwxTimeValue.cpp\
 	CwxCrc32.cpp\
 	CwxIniParse.cpp\
-	CwxMd5.cpp
+	CwxMd5.cpp\
+	CwxFbHash.cpp
 
 libcwxcmn_la_LDFLAGS = 
 
@@ -146,7 +147,8 @@ cwxcmninclude_HEADERS=\
     ../include/CwxLogger.h\
     ../include/CwxCrc32.h\
     ../include/CwxIniParse.h\
-    ../include/CwxMd5.h
+    ../include/CwxMd5.h\
+    ../include/CwxFbHash.h
 
 	
 INCLUDES=-I$(srcdir)/../include
