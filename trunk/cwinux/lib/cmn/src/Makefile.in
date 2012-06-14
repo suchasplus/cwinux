@@ -76,7 +76,8 @@ am_libcwxcmn_la_OBJECTS = libcwxcmn_la-CwxCharPool.lo \
 	libcwxcmn_la-CwxMemLineReader.lo libcwxcmn_la-CwxPackage.lo \
 	libcwxcmn_la-CwxPackageEx.lo libcwxcmn_la-CwxSingletonMgr.lo \
 	libcwxcmn_la-CwxTimeValue.lo libcwxcmn_la-CwxCrc32.lo \
-	libcwxcmn_la-CwxIniParse.lo libcwxcmn_la-CwxMd5.lo
+	libcwxcmn_la-CwxIniParse.lo libcwxcmn_la-CwxMd5.lo \
+	libcwxcmn_la-CwxFbHash.lo
 libcwxcmn_la_OBJECTS = $(am_libcwxcmn_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -233,7 +234,8 @@ libcwxcmn_la_SOURCES = \
 	CwxTimeValue.cpp\
 	CwxCrc32.cpp\
 	CwxIniParse.cpp\
-	CwxMd5.cpp
+	CwxMd5.cpp\
+	CwxFbHash.cpp
 
 libcwxcmn_la_LDFLAGS = 
 cwxcmnincludedir = $(prefix)/include/cmn
@@ -335,7 +337,8 @@ cwxcmninclude_HEADERS = \
     ../include/CwxLogger.h\
     ../include/CwxCrc32.h\
     ../include/CwxIniParse.h\
-    ../include/CwxMd5.h
+    ../include/CwxMd5.h\
+    ../include/CwxFbHash.h
 
 INCLUDES = -I$(srcdir)/../include
 all: all-am
@@ -414,6 +417,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxDate.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxEncodeXml.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxEscapeUtil.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxFbHash.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxFile.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxGbkUnicodeMap.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxGbkUnicodeMapDat.Plo@am__quote@
@@ -724,6 +728,13 @@ libcwxcmn_la-CwxMd5.lo: CwxMd5.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxMd5.cpp' object='libcwxcmn_la-CwxMd5.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxcmn_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxcmn_la-CwxMd5.lo `test -f 'CwxMd5.cpp' || echo '$(srcdir)/'`CwxMd5.cpp
+
+libcwxcmn_la-CwxFbHash.lo: CwxFbHash.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxcmn_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwxcmn_la-CwxFbHash.lo -MD -MP -MF "$(DEPDIR)/libcwxcmn_la-CwxFbHash.Tpo" -c -o libcwxcmn_la-CwxFbHash.lo `test -f 'CwxFbHash.cpp' || echo '$(srcdir)/'`CwxFbHash.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/libcwxcmn_la-CwxFbHash.Tpo" "$(DEPDIR)/libcwxcmn_la-CwxFbHash.Plo"; else rm -f "$(DEPDIR)/libcwxcmn_la-CwxFbHash.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxFbHash.cpp' object='libcwxcmn_la-CwxFbHash.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxcmn_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxcmn_la-CwxFbHash.lo `test -f 'CwxFbHash.cpp' || echo '$(srcdir)/'`CwxFbHash.cpp
 
 mostlyclean-libtool:
 	-rm -f *.lo
