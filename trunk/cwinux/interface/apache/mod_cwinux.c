@@ -887,7 +887,11 @@ static char* cwx_get_cookie(request_rec *r){
 }
 
 static char* cwx_get_ip(request_rec *r){
+#if AP_SERVER_MINORVERSION_NUMBER >=4
+    return r->connection->client_ip;
+#else
     return r->connection->remote_ip;
+#endif
 }
 
 static void cwx_set_header(request_rec* r, char const* key, char const* value){
