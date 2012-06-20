@@ -408,21 +408,21 @@ static const char* cwx_header_command(cmd_parms *cmd, void *pconfig,  char* arg)
 static const char* cwx_show_command(cmd_parms *cmd,  void *pconfig, char * def){
     CWX_CONFIG *config = cwx_get_server_config(cmd->server); 
     if (!config)  return 0;
-    config->m_user_config.m_show = def?(atoi(def)>0?1:0):0;
+    config->m_user_config.m_show = def?(strcmp(def, "true")==0?1:0):0;
     return 0;
 }
 
 static const char* cwx_delay_command(cmd_parms *cmd,  void *pconfig, char * def){
     CWX_CONFIG *config = cwx_get_server_config(cmd->server); 
     if (!config)  return 0;
-    config->m_user_config.m_delay = def?(atoi(def)>0?1:0):0;
+    config->m_user_config.m_delay = def?(strcmp(def, "true")==0?1:0):1;
     return 0;
 }
 
 static const char* cwx_persistent_command(cmd_parms *cmd,  void *pconfig, char * def){
     CWX_CONFIG *config = cwx_get_server_config(cmd->server); 
     if (!config)  return 0;
-    config->m_user_config.m_persistant = def?(atoi(def)>0?1:0):0;
+    config->m_user_config.m_persistant = def?(strcmp(def, "true")==0?1:0):1;
     return 0;
 }
 static const char* cwx_query_timeout_command(cmd_parms *cmd,  void *pconfig, char * def){
