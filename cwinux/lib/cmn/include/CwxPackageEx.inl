@@ -104,15 +104,9 @@ inline int CwxPackageEx::getKeyValueNum(char const* szMsg, CWX_UINT32 uiMsgLen)
 
 
 ///通过Key的长度及data的长度，获取打包后的Key/value长度。
-inline CWX_UINT32 CwxPackageEx::getKvLen(CWX_UINT16 unKeyLen, CWX_UINT32 uiDataLen)
-{
-    CWX_UINT32 uiLen = 2 + 1 + unKeyLen + uiDataLen + encodeUint16Size(unKeyLen) + encodeUint32Size(uiDataLen);
-    return (encodeUint32Size(uiDataLen) != encodeUint32Size(uiLen))?uiLen+1:uiLen;
-}
-
-///通过key/value的长度及key的长度，获取data的长度
-inline CWX_UINT32 CwxPackageEx::getDataLen(CWX_UINT32 uiKeyValueLen, CWX_UINT16 unKeyLen){
-    return uiKeyValueLen - unKeyLen - encodeUint16Size(unKeyLen) - encodeUint32Size(uiKeyValueLen) - 3;
+inline CWX_UINT32 CwxPackageEx::getKvLen(CWX_UINT16 unKeyLen, CWX_UINT32 uiDataLen){
+    ///data_len|key_len|key_value|key|\0|value\0
+    return encodeUint32Size(uiDataLen) + encodeUint16Size(unKeyLen) + 1 + unKeyLen + 1 + uiDataLen + 1 ;
 }
 
 ///获取key的offset
