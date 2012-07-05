@@ -3,7 +3,9 @@
 CWINUX_BEGIN_NAMESPACE
 
 //-1：包的格式非法；0:不存在；>0：Key/Value的长度。
-int CwxPackageEx::getNextKey(char const* szMsg, CWX_UINT32 uiMsgLen, CwxKeyValueItemEx& item)
+int CwxPackageEx::getNextKey(char const* szMsg,
+                             CWX_UINT32 uiMsgLen,
+                             CwxKeyValueItemEx& item)
 {
     CWX_UINT32 byte4 = 0;
     CWX_UINT16 byte2 = 0;
@@ -11,7 +13,8 @@ int CwxPackageEx::getNextKey(char const* szMsg, CWX_UINT32 uiMsgLen, CwxKeyValue
     bool    bKeyValue = false;
     unsigned char const* pos = (unsigned char*)szMsg;
     if (0 == uiLeftLen) return 0;
-    ///get kv len
+    ///data_len|key_len|key_value|key|\0|value\0
+    ///get data len
     pos = decodeUint32(pos, uiLeftLen, byte4);
     if (!pos) return -1;
     if (byte4 > uiMsgLen) return -1;//bad msg data package.
@@ -22,12 +25,13 @@ int CwxPackageEx::getNextKey(char const* szMsg, CWX_UINT32 uiMsgLen, CwxKeyValue
     pos++;
     item.m_unKeyLen = byte2;
     item.m_szKey = (char*)pos;
-    if ((byte2>=byte4) || (0 != pos[byte2])) return -1;//bad msg data package.
+    if (item.m_szKey[byte2]) return -1;//bad msg data package.
     //get value len
-    item.m_uiDataLen = getDataLen(byte4, item.m_unKeyLen);
+    item.m_uiDataLen = byte4;
     item.m_szData = item.m_szKey +  item.m_unKeyLen + 1;
     item.m_bKeyValue = bKeyValue;
-    return (int)byte4;
+    if (item.m_szData[byte4]) return -1;
+    return getKvLen(byte2, byte4);
 }
 
 //-1：包的空间太小；>0 打入的包的长度。
@@ -38,8 +42,9 @@ int CwxPackageEx::appendKey(char *szMsg, CWX_UINT32 uiMsgLen, char const* szKey,
     byte4 = getKvLen(unKeyLen, uiDatalen);
     if (byte4 > uiMsgLen) return -1;
     if (byte4 > CwxKeyValueItemEx::MAX_KV_LEN) return -1;
+    ///data_len|key_len|key_value|key|\0|value\0
     //append pair len
-    encodeUint32(byte4, (unsigned char*)szMsg, len); pos +=len;
+    encodeUint32(uiDatalen, (unsigned char*)szMsg, len); pos +=len;
     //append key len
     encodeUint16(unKeyLen, (unsigned char*)(szMsg + pos),len); pos +=len;
     //add key value sign
@@ -85,6 +90,7 @@ int CwxPackageEx::removeKey(char *szMsg, CWX_UINT32& uiMsgLen, char const* szKey
     }
     return remove_key;
 }
+
 
 //-2空间不够，-1：无效的package，0：没有发现，1：修改了一个KEY。
 int CwxPackageEx::modifyKey(char *szMsg, CWX_UINT32& uiMsgLen, CWX_UINT32 uiMaxMsgLen, char const* szKey, CWX_UINT16 unKeyLen, char const* szData, CWX_UINT32 uiDataLen, bool bKeyValue, bool bCaseSensive)

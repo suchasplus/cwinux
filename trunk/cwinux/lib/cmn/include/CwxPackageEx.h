@@ -31,38 +31,31 @@ public:
     };
 public:
     ///构造函数
-    CwxKeyValueItemEx()
-    {
+    CwxKeyValueItemEx(){
         memset(this, 0x00, sizeof(CwxKeyValueItemEx));
     }
     ///析构函数
-    ~CwxKeyValueItemEx()
-    {
-
-    }
+    ~CwxKeyValueItemEx(){}
     ///拷贝构造
-    CwxKeyValueItemEx(CwxKeyValueItemEx const& obj)
-    {
+    CwxKeyValueItemEx(CwxKeyValueItemEx const& obj){
         memcpy(this, &obj, sizeof(CwxKeyValueItemEx));
     }
     ///赋值操作
-    CwxKeyValueItemEx& operator=(CwxKeyValueItemEx const& obj)
-    {
+    CwxKeyValueItemEx& operator=(CwxKeyValueItemEx const& obj){
         memcpy(this, &obj, sizeof(CwxKeyValueItemEx));
         return *this;
     }
 public:
     ///对象清空操作
-    void reset()
-    {
+    void reset(){
         memset(this, 0x00, sizeof(CwxKeyValueItemEx));
     }
 public:
     char const*          m_szKey; ///<key的名字
     char const*          m_szData; ///<key的数据
-    CWX_UINT32      m_uiDataLen; ///<数据的长度
-    CWX_UINT16      m_unKeyLen; ///<key的长度
-    bool            m_bKeyValue; ///<true：value的本身也是key/value格式;false：value不是key/value格式
+    CWX_UINT32           m_uiDataLen; ///<数据的长度
+    CWX_UINT16           m_unKeyLen; ///<key的长度
+    bool                 m_bKeyValue; ///<true：value的本身也是key/value格式;false：value不是key/value格式
 };
 
 /**
@@ -78,8 +71,7 @@ public:
 * m_bIndex的数值，在unpack()及beginPack()的时候可以指定，在makeIndex()的时候也会设定为TRUE。
 */
 
-class CWX_API CwxPackageEx
-{
+class CWX_API CwxPackageEx{
 public:
     /**
     *@brief 获取package中的下一个Key。
@@ -88,7 +80,9 @@ public:
     *@param [out] item 若key/value存在，则通过item返回Key/value的信息。
     *@return -1：包的格式非法；0:不存在；>0：Key/Value的长度。
     */
-    static int  getNextKey(char const* szMsg, CWX_UINT32 uiMsgLen, CwxKeyValueItemEx& item);
+    static int  getNextKey(char const* szMsg,
+        CWX_UINT32 uiMsgLen,
+        CwxKeyValueItemEx& item);
     /**
     *@brief 获取package中的第uiIndex Key/Value。如果unIndex为0，则相当于GetNextKey()。
     *@param [in] szMsg 需要解包的package。
@@ -97,7 +91,10 @@ public:
     *@param [out] item 若key/value存在，则通过item返回Key/value的信息。
     *@return -1：包的格式非法；0:不存在；>0：Key/Value的长度。
     */
-    static int  getKeyByIndex(char const *szMsg, CWX_UINT32 uiMsgLen, CWX_UINT32 uiIndex, CwxKeyValueItemEx& item);
+    static int  getKeyByIndex(char const *szMsg,
+        CWX_UINT32 uiMsgLen,
+        CWX_UINT32 uiIndex,
+        CwxKeyValueItemEx& item);
     /**
     *@brief 获取package中的第一个key的名字为szKey的Key/Value。
     *@param [in] szMsg 需要解包的package。
@@ -107,7 +104,11 @@ public:
     *@param [in] bCaseSensive key的名字是否大小写敏感。true：大小写敏感，否则为不敏感。缺省敏感。
     *@return -1：包的格式非法；0:不存在；>0：Key/Value的长度。
     */
-    static int  getKeyByName(char const *szMsg, CWX_UINT32 uiMsgLen, char const* szKey, CwxKeyValueItemEx& item, bool bCaseSensive=true);
+    static int  getKeyByName(char const *szMsg,
+        CWX_UINT32 uiMsgLen,
+        char const* szKey,
+        CwxKeyValueItemEx& item,
+        bool bCaseSensive=true);
     /**
     *@brief 往package中添加一个新key/value。
     *@param [in,out] szMsg 需要解包的package。
@@ -118,7 +119,13 @@ public:
     *@param [in] bKeyValue data是否为key/value
     *@return -1：包的空间太小；>=0 打入的包的长度。
     */
-    static int  appendKey(char *szMsg, CWX_UINT32 uiMsgLen, char const* szKey, CWX_UINT16 unKeyLen, char const* szValue, CWX_UINT32 uiDatalen, bool bKeyValue = false);
+    static int  appendKey(char *szMsg,
+        CWX_UINT32 uiMsgLen,
+        char const* szKey,
+        CWX_UINT16 unKeyLen,
+        char const* szValue,
+        CWX_UINT32 uiDatalen,
+        bool bKeyValue = false);
     /**
     *@brief 从package中删除key名字为szKey的Key/value。
     *@param [in, out] szMsg package。
@@ -128,7 +135,11 @@ public:
     *@param [in] bCaseSensive key的名字是否大小写敏感。true：大小写敏感，否则为不敏感。缺省敏感。
     *@return -1：无效的package，0：没有发现，>0：删除的数量。
     */
-    static int  removeKey(char *szMsg, CWX_UINT32& uiMsgLen, char const* szKey, bool bAll=false, bool bCaseSensive=true);
+    static int  removeKey(char *szMsg,
+        CWX_UINT32& uiMsgLen,
+        char const* szKey,
+        bool bAll=false,
+        bool bCaseSensive=true);
     /**
     *@brief 从package中删除第unIndex的Key。
     *@param [in,out] szMsg package。
@@ -136,7 +147,9 @@ public:
     *@param [in] unIndex 要删除key的Index。
     *@return -1：无效的package，0：没有发现，1：删除了一个KEY。
     */
-    static int  removeKey(char *szMsg, CWX_UINT32& uiMsgLen, CWX_UINT16 unIndex);
+    static int  removeKey(char *szMsg,
+        CWX_UINT32& uiMsgLen,
+        CWX_UINT16 unIndex);
     /**
     *@brief 将package中第一个Key的名字为szKey的内容，修改为szData指定的内容。
     *@param [in,out] szMsg package。
@@ -149,7 +162,15 @@ public:
     *@param [in] bCaseSensive key的名字是否大小写敏感。true：大小写敏感，否则为不敏感。缺省敏感。
     *@return -2空间不够，-1：无效的package，0：没有发现，1：修改了一个KEY。
     */
-    static int  modifyKey(char *szMsg, CWX_UINT32& uiMsgLen, CWX_UINT32 uiMaxMsgLen, char const* szKey, CWX_UINT16 unKeyLen, char const* szData, CWX_UINT32 uiDataLen, bool bKeyValue=false, bool bCaseSensive=true);
+    static int  modifyKey(char *szMsg,
+        CWX_UINT32& uiMsgLen,
+        CWX_UINT32 uiMaxMsgLen,
+        char const* szKey,
+        CWX_UINT16 unKeyLen,
+        char const* szData,
+        CWX_UINT32 uiDataLen,
+        bool bKeyValue=false,
+        bool bCaseSensive=true);
     /**
     *@brief 将package中第unIndex的Key的内容，修改为szData指定的内容。
     *@param [in,out] szMsg package。
@@ -161,7 +182,13 @@ public:
     *@param [in] bKeyValue 新数据是否为Key/value格式。
     *@return -2空间不够，-1：无效的package，0：没有发现，1：修改了一个KEY。
     */
-    static int  modifyKey(char *szMsg, CWX_UINT32& uiMsgLen, CWX_UINT32 uiMaxMsgLen, CWX_UINT16 unIndex,char const* szData, CWX_UINT32 uiDataLen, bool bKeyValue=false);
+    static int  modifyKey(char *szMsg,
+        CWX_UINT32& uiMsgLen,
+        CWX_UINT32 uiMaxMsgLen,
+        CWX_UINT16 unIndex,
+        char const* szData,
+        CWX_UINT32 uiDataLen,
+        bool bKeyValue=false);
     /**
     *@brief 将package的内容，输出成文本，对于嵌套的key，会嵌套输出。
     *@param [in] szMsg package。
@@ -174,7 +201,14 @@ public:
     *@param [in] pEscape 对key名字与data的escape对象，NULL表示不进行字符编码，使用escape的encode方法。
     *@return -2空间不够，-1：无效的package，否则返回dump出的字符串的长度。
     */
-    static int  dump(char const* szMsg, CWX_UINT32 uiMsgLen, char* szOutBuf, CWX_UINT32& uiOutBufLen, char const* szTab="\t", char const* szKeyBegin=NULL, char const* szKeyEnd="\n", CwxEscape const* pEscape=NULL);
+    static int  dump(char const* szMsg,
+        CWX_UINT32 uiMsgLen,
+        char* szOutBuf,
+        CWX_UINT32& uiOutBufLen,
+        char const* szTab="\t",
+        char const* szKeyBegin=NULL,
+        char const* szKeyEnd="\n",
+        CwxEscape const* pEscape=NULL);
     /**
     *@brief 检查szMsg是否是一个有效的Package.uiMsgLen为0的时候，表示为空包。空包是一个有效的包。
     *@param [in] szMsg 要检查的包
@@ -186,8 +220,6 @@ public:
     static int getKeyValueNum(char const* szMsg, CWX_UINT32 uiMsgLen);
     ///通过Key的长度及data的长度，获取打包后的Key/value长度。
     static CWX_UINT32 getKvLen(CWX_UINT16 unKeyLen, CWX_UINT32 uiDataLen);
-    ///通过key/value的长度及key的长度，获取data的长度
-    static CWX_UINT32 getDataLen(CWX_UINT32 uiKeyValueLen, CWX_UINT16 unKeyLen);
     ///获取key的offset
     static CWX_UINT16 getKeyOffset(CWX_UINT16 unKeyLen, CWX_UINT32 uiDataLen);
     ///获得对UINT16的value进行encode后的长度
