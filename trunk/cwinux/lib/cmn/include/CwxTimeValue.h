@@ -19,7 +19,7 @@
 #include "CwxPre.h"
 #include "CwxGlobalMacro.h"
 #include "CwxType.h"
-
+#include <limits.h>
 CWINUX_BEGIN_NAMESPACE
 
 /**
