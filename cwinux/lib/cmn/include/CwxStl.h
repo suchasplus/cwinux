@@ -25,7 +25,7 @@
 #include <set>
 #include <map>
 #ifdef __GNUC__
-#define GCC_VERSION (__GNUC__ * 10000  + __GNUC_MINOR__ * 100)
+/*#define GCC_VERSION (__GNUC__ * 10000  + __GNUC_MINOR__ * 100)
 #if GCC_VERSION >= 40500
 #include <unordered_set>
 #include <unordered_map>
@@ -38,11 +38,11 @@ inline size_t __stl_hash_string(const char* __s)
     return size_t(__h);
 }
 
-#else
+#else*/
 #include <ext/hash_set>
 #include <ext/hash_map>
-#endif
-#undef  GCC_VERSION
+//#endif
+//#undef  GCC_VERSION
 using namespace __gnu_cxx;
 #define HAVE_STL_HASH  1
 #else
