@@ -165,14 +165,6 @@ int cwx_pg_get_key_num_ex(char const* szMsg, CWX_UINT32 uiMsgLen);
 */
 CWX_UINT32 cwx_pg_get_kv_len_ex(CWX_UINT16 unKeyLen, CWX_UINT32 uiDataLen);
 /**
-*@brief 根据key-value长度与key的长度，计算出value部分的长度。
-*@param [in] uiKeyValueLen key-value的长度
-*@param [in] unKeyLen key的长度
-*@return 返回value的长度。
-*/
-CWX_UINT32 cwx_pg_get_value_len_ex(CWX_UINT32 uiKeyValueLen, CWX_UINT16 unKeyLen);
-
-/**
 *@brief 获取key在key/value中的内存数据偏移值。
 *@return 返回key在key/value中的偏移。
 */

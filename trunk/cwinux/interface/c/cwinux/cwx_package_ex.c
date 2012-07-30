@@ -14,7 +14,8 @@ int cwx_pg_get_next_key_ex(char const* szMsg,
     int    bKeyValue = 0;
     unsigned char const* pos = (unsigned char*)szMsg;
     if (0 == uiLeftLen) return 0;
-    ///get kv len
+    ///data_len|key_len|key_value|key|\0|value\0
+    ///get data len
     pos = cwx_pg_decode_uint32(pos, &uiLeftLen, &byte4);
     if (!pos) return -1;
     if (byte4 > uiMsgLen) return -1;//bad msg data package.
@@ -25,12 +26,13 @@ int cwx_pg_get_next_key_ex(char const* szMsg,
     pos++;
     item->m_unKeyLen = byte2;
     item->m_szKey = (char*)pos;
-    if ((byte2>=byte4) || (0 != pos[byte2])) return -1;//bad msg data package.
+    if (item->m_szKey[byte2]) return -1;//bad msg data package.
     //get value len
-    item->m_uiDataLen = cwx_pg_get_value_len_ex(byte4, item->m_unKeyLen);
+    item->m_uiDataLen = byte4;
     item->m_szData = item->m_szKey +  item->m_unKeyLen + 1;
     item->m_bKeyValue = bKeyValue;
-    return (int)byte4;
+    if (item->m_szData[byte4]) return -1;
+    return cwx_pg_get_kv_len_ex(byte2, byte4);
 }
 
 int cwx_pg_get_key_by_index_ex(char const *szMsg,
@@ -83,7 +85,9 @@ int cwx_pg_append_key_ex(char *szMsg,
                            char const* szKey,
                            char const* szValue,
                            CWX_UINT32 uiDatalen, 
-                           int bKeyValue){
+                           int bKeyValue)
+{
+    ///data_len|key_len|key_value|key|\0|value\0
     CWX_UINT16 key_len = strlen(szKey);
     CWX_UINT32 byte4;
     CWX_UINT32 pos=0;
@@ -91,7 +95,7 @@ int cwx_pg_append_key_ex(char *szMsg,
     byte4 = cwx_pg_get_kv_len_ex(key_len, uiDatalen);
     if (byte4 > uiMsgLen) return -1;
     if (byte4 > CWX_PACKAGE_MAX_KV_LEN) return -1;
-    cwx_pg_encode_uint32(byte4, (unsigned char*)szMsg,&len); pos +=len;
+    cwx_pg_encode_uint32(uiDatalen, (unsigned char*)szMsg,&len); pos +=len;
     //append key len
     cwx_pg_encode_uint16(key_len, (unsigned char*)(szMsg + pos),&len); pos +=len;
     //add key value sign
@@ -279,13 +283,8 @@ int cwx_pg_get_key_num_ex(char const* szMsg, CWX_UINT32 uiMsgLen)
 
 CWX_UINT32 cwx_pg_get_kv_len_ex(CWX_UINT16 unKeyLen, CWX_UINT32 uiDataLen)
 {
-    CWX_UINT32 uiLen = 3 + unKeyLen + uiDataLen + cwx_pg_encode_uint16_size(unKeyLen) + cwx_pg_encode_uint32_size(uiDataLen);
-    return (cwx_pg_encode_uint32_size(uiLen) != cwx_pg_encode_uint32_size(uiDataLen))?uiLen+1:uiLen;
-}
-
-CWX_UINT32 cwx_pg_get_value_len_ex(CWX_UINT32 uiKeyValueLen, CWX_UINT16 unKeyLen)
-{
-    return uiKeyValueLen - unKeyLen - cwx_pg_encode_uint16_size(unKeyLen) - cwx_pg_encode_uint32_size(uiKeyValueLen) - 3;
+    ///data_len|key_len|key_value|key|\0|value\0
+    return cwx_pg_encode_uint32_size(uiDataLen) + cwx_pg_encode_uint16_size(unKeyLen) + 1 + unKeyLen + 1 + uiDataLen + 1 ;
 }
 
 CWX_UINT16 cwx_pg_get_key_offset_ex(CWX_UINT16 unKeyLen, CWX_UINT32 uiDataLen){
