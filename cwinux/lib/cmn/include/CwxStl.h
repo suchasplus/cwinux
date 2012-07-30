@@ -25,8 +25,13 @@
 #include <set>
 #include <map>
 #ifdef __GNUC__
+#if GCC_VERSION > 45000
+#include <unordered_set>
+#include <unordered_map>
+#else
 #include <ext/hash_set>
 #include <ext/hash_map>
+#endif
 using namespace __gnu_cxx;
 #define HAVE_STL_HASH  1
 #else
