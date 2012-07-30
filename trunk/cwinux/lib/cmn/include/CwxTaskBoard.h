@@ -16,6 +16,7 @@
 @bug
 */
 #include "CwxPre.h"
+#include "CwxStl.h"
 #include "CwxGlobalMacro.h"
 #include "CwxMutexLock.h"
 #include "CwxLockGuard.h"
