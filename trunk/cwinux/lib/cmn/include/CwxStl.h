@@ -26,9 +26,18 @@
 #include <map>
 #ifdef __GNUC__
 #define GCC_VERSION (__GNUC__ * 10000  + __GNUC_MINOR__ * 100)
-#if GCC_VERSION > 40500
+#if GCC_VERSION >= 40500
 #include <unordered_set>
 #include <unordered_map>
+
+inline size_t __stl_hash_string(const char* __s)
+{
+    unsigned long __h = 0;
+    for ( ; *__s; ++__s)
+        __h = 5*__h + *__s;
+    return size_t(__h);
+}
+
 #else
 #include <ext/hash_set>
 #include <ext/hash_map>
