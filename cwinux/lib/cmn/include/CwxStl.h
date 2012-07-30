@@ -37,7 +37,8 @@ inline size_t __stl_hash_string(const char* __s)
         __h = 5*__h + *__s;
     return size_t(__h);
 }
-
+#define hash_map  unordered_map
+#deinfe hash_set  unordered_set
 #else
 #include <ext/hash_set>
 #include <ext/hash_map>
