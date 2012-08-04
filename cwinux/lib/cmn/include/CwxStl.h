@@ -26,7 +26,7 @@
 #include <map>
 #ifdef __GNUC__
 #define GCC_VERSION (__GNUC__ * 10000  + __GNUC_MINOR__ * 100)
-#if GCC_VERSION >= 40500
+#if GCC_VERSION >= 40300
 #include <unordered_set>
 #include <unordered_map>
 
