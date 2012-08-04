@@ -18893,6 +18893,9 @@ _ACEOF
 
   fi
 
+if test "x$ax_cv_cxx_compile_cxx0x_cxx" = "xyes" ; then
+    CXXFLAGS="$CXXFLAGS -std=c++0x"
+fi
 
 
 
