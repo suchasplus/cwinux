@@ -4,7 +4,7 @@ includedir =
 pkgconfigdir = 
 
 lib_LTLIBRARIES = libcwxcmn.la
-libcwxcmn_la_CPPFLAGS = -W -Wall -Wno-deprecated
+libcwxcmn_la_CPPFLAGS = -W -Wall
 
 libcwxcmn_la_SOURCES = \
 	CwxCharPool.cpp\
