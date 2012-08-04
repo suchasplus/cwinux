@@ -4,7 +4,7 @@ includedir =
 pkgconfigdir = 
 
 lib_LTLIBRARIES = libcwxapp.la
-libcwxapp_la_CPPFLAGS = -W -Wall -Wno-deprecated
+libcwxapp_la_CPPFLAGS = -W -Wall
 
 libcwxapp_la_SOURCES = \
 	CwxAppConfig.cpp\

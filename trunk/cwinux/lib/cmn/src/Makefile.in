@@ -197,7 +197,7 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 pkgconfigdir = 
 lib_LTLIBRARIES = libcwxcmn.la
-libcwxcmn_la_CPPFLAGS = -W -Wall -Wno-deprecated
+libcwxcmn_la_CPPFLAGS = -W -Wall
 libcwxcmn_la_SOURCES = \
 	CwxCharPool.cpp\
 	CwxFile.cpp\
