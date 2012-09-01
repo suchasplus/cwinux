@@ -229,7 +229,7 @@ void CwxAppProcessMgr::stopHandler(int , siginfo_t *info, void *)
     {
         m_bExit = true;
         m_pProcess->m_unState = CwxAppProcessInfo::PROC_STATE_STOPPING;
-        kill(m_pProcess->m_pid, SIGQUIT);
+        if (info->si_pid != m_pProcess->m_pid) kill(m_pProcess->m_pid, SIGQUIT);
     }
 }
 
