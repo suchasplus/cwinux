@@ -1,14 +1,14 @@
-#ifndef __CWX_CONFIG_H__
+ï»¿#ifndef __CWX_CONFIG_H__
 #define __CWX_CONFIG_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file cwx_config.h
-@brief apache moduleµÄÊı¾İ¶¨Òå
+@brief apache moduleçš„æ•°æ®å®šä¹‰
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-12
@@ -22,46 +22,46 @@
 #include <nginx.h>
 
 
-///CWX_UINT64 Êı¾İÀàĞÍ¶¨Òå
+///CWX_UINT64 æ•°æ®ç±»å‹å®šä¹‰
 #define CWX_UINT64   uint64_t
 
-///CWX_UINT32 Êı¾İÀàĞÍ¶¨Òå
+///CWX_UINT32 æ•°æ®ç±»å‹å®šä¹‰
 #define CWX_UINT32   uint32_t
 
-///CWX_UINT16 Êı¾İÀàĞÍ¶¨Òå
+///CWX_UINT16 æ•°æ®ç±»å‹å®šä¹‰
 #define CWX_UINT16   uint16_t
-///CWX_UINT8 Êı¾İÀàĞÍ¶¨Òå
+///CWX_UINT8 æ•°æ®ç±»å‹å®šä¹‰
 #define CWX_UINT8   uint8_t
-///¶¨ÒåboolÀàĞÍ
+///å®šä¹‰boolç±»å‹
 #ifndef bool
 #define bool unsigned char
 #endif
-///¶¨Òåtrue
+///å®šä¹‰true
 #ifndef true
 #define true 1
 #endif
-///¶¨Òåfalse
+///å®šä¹‰false
 #ifndef false
 #define false 0
 #endif
 
-///È±Ê¡Êä³örespone
+///ç¼ºçœè¾“å‡ºrespone
 #define CWX_DEF_SHOW 0
-///È±Ê¡Êä³ödelay
+///ç¼ºçœè¾“å‡ºdelay
 #define CWX_DEF_DELAY 1
-///È±Ê¡Îª³Ö¾ÃÁ¬½Ó
+///ç¼ºçœä¸ºæŒä¹…è¿æ¥
 #define CWX_DEF_PERSISTANT 1
-///È±Ê¡µÄ²éÑ¯³¬Ê±Îª10s
+///ç¼ºçœçš„æŸ¥è¯¢è¶…æ—¶ä¸º10s
 #define CWX_DEF_QUERY_TIMEOUT 10000
-///È±Ê¡µÄÁ¬½Ó³¬Ê±Îª1s
+///ç¼ºçœçš„è¿æ¥è¶…æ—¶ä¸º1s
 #define CWX_DEF_CONN_TIMEOUT  1000
-///È±Ê¡µÄ»Ø¸´³¬Ê±Îª9s
+///ç¼ºçœçš„å›å¤è¶…æ—¶ä¸º9s
 #define CWX_DEF_REPLY_TIMEOUT 9000
-///È±Ê¡µÄÊµĞ§Á¬½ÓÖØÊÔ¼ä¸ôÎª2s
+///ç¼ºçœçš„å®æ•ˆè¿æ¥é‡è¯•é—´éš”ä¸º2s
 #define CWX_DEF_RESTORE_TIMEOUT 2000
-///È±Ê¡µÄ×îÉÙ¿ÕÏĞ³Ö¾ÃÁ¬½ÓÊıÎª2
+///ç¼ºçœçš„æœ€å°‘ç©ºé—²æŒä¹…è¿æ¥æ•°ä¸º2
 #define CWX_DEF_MIN_IDLE_CONN 2
-///È±Ê¡µÄ×î¶à¿ÕÏĞ³Ö¾ÃÁ¬½ÓÊıÎª4
+///ç¼ºçœçš„æœ€å¤šç©ºé—²æŒä¹…è¿æ¥æ•°ä¸º4
 #define CWX_DEF_MAX_IDLE_CONN 4
 
 #define CWX_VERSION "1.0"
@@ -78,10 +78,10 @@ typedef struct {
 
 ///key/value item
 typedef struct CWX_KEY_VALUE{
-    char*          m_key; ///<keyµÄÃû×Ö
-    char*          m_lowerkey; ///<keyµÄĞ¡Ğ´
-    char*          m_value; ///<keyµÄÄÚÈİ
-    struct CWX_KEY_VALUE*  m_next; ///<ÏÂÒ»¸ökey
+    char*          m_key; ///<keyçš„åå­—
+    char*          m_lowerkey; ///<keyçš„å°å†™
+    char*          m_value; ///<keyçš„å†…å®¹
+    struct CWX_KEY_VALUE*  m_next; ///<ä¸‹ä¸€ä¸ªkey
 }CWX_KEY_VALUE;
 
 

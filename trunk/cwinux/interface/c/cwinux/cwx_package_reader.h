@@ -1,15 +1,15 @@
-#ifndef __CWX_PACKAGE_READER_H__
+ï»¿#ifndef __CWX_PACKAGE_READER_H__
 #define __CWX_PACKAGE_READER_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 
 /**
 @file cwx_package_reader.h
-@brief ¶¨Òåkey/value Êı¾İ°üµÄ¶Á¶ÔÏó
+@brief å®šä¹‰key/value æ•°æ®åŒ…çš„è¯»å¯¹è±¡
 @author cwinux@gmail.com
 @version 1.0
 @date 2010-10-04
@@ -24,29 +24,29 @@ extern "C" {
 
 
 
-///ÉùÃ÷key/valueÊı¾İ°ü¶Á¶ÔÏóµÄÊı¾İ½á¹¹
+///å£°æ˜key/valueæ•°æ®åŒ…è¯»å¯¹è±¡çš„æ•°æ®ç»“æ„
 struct CWX_PG_READER;
 
 /**
-*@brief ´´½¨package readerµÄ¶ÔÏó¡£
-*@return 0£º´´½¨Ê§°Ü£»·ñÔò£º´´½¨µÄreader ¶ÔÏó¡£
+*@brief åˆ›å»ºpackage readerçš„å¯¹è±¡ã€‚
+*@return 0ï¼šåˆ›å»ºå¤±è´¥ï¼›å¦åˆ™ï¼šåˆ›å»ºçš„reader å¯¹è±¡ã€‚
 */
 struct CWX_PG_READER* cwx_pg_reader_create();
 
 /**
-*@brief ÊÍ·Åpackage readerµÄ¶ÔÏó¡£
-*@return void¡£
+*@brief é‡Šæ”¾package readerçš„å¯¹è±¡ã€‚
+*@return voidã€‚
 */
 void cwx_pg_reader_destory(struct CWX_PG_READER* reader);
 
 /**
-*@brief unpackÒ»¸öpackage£¬szMsg¿ÉÒÔÎªÒ»¸ö¿Õ°ü£¬¿Õ°üÊÇÒ»¸öÓĞĞ§µÄpackage¡£
-*@param [in] reader packageµÄreader¡£
-*@param [in] szMsg ĞèÒª½â°üµÄpackage¡£
-*@param [in] uiMsgLen packageµÄ³¤¶È¡£
-*@param [in] bindex ÊÇ·ñ´´½¨keyµÄË÷Òı¡£1£ºÊÇ£»0£º²»ÊÇ¡£
-*@param [in] bCaseSensive keyµÄÃû×ÖÊÇ·ñ´óĞ¡Ğ´Ãô¸Ğ¡£1£ºÊÇ£»0£º²»ÊÇ¡£
-*@return -1:´íÎó£»0:½â°üÕıÈ·¡£Í¨¹ıcwx_pg_reader_error()»ñÈ¡Ê§°ÜµÄÔ­Òò¡£
+*@brief unpackä¸€ä¸ªpackageï¼ŒszMsgå¯ä»¥ä¸ºä¸€ä¸ªç©ºåŒ…ï¼Œç©ºåŒ…æ˜¯ä¸€ä¸ªæœ‰æ•ˆçš„packageã€‚
+*@param [in] reader packageçš„readerã€‚
+*@param [in] szMsg éœ€è¦è§£åŒ…çš„packageã€‚
+*@param [in] uiMsgLen packageçš„é•¿åº¦ã€‚
+*@param [in] bindex æ˜¯å¦åˆ›å»ºkeyçš„ç´¢å¼•ã€‚1ï¼šæ˜¯ï¼›0ï¼šä¸æ˜¯ã€‚
+*@param [in] bCaseSensive keyçš„åå­—æ˜¯å¦å¤§å°å†™æ•æ„Ÿã€‚1ï¼šæ˜¯ï¼›0ï¼šä¸æ˜¯ã€‚
+*@return -1:é”™è¯¯ï¼›0:è§£åŒ…æ­£ç¡®ã€‚é€šè¿‡cwx_pg_reader_error()è·å–å¤±è´¥çš„åŸå› ã€‚
 */
 int cwx_pg_reader_unpack(struct CWX_PG_READER* reader,
            char const* szMsg,
@@ -54,145 +54,145 @@ int cwx_pg_reader_unpack(struct CWX_PG_READER* reader,
            int bindex,
            int bCaseSensive);
 /**
-*@brief ´Ópackage readerÖĞ£¬»ñÈ¡Ò»¸ökey£¬key¿ÉÒÔÊÇk1:k2:k3ÕâÑù¸ñÊ½µÄ×Ókey¡£
-*@param [in] reader packageµÄreader¡£
-*@param [in] szKey Òª»ñÈ¡µÄkeyµÄÃû×Ö¡£
-*@param [in] uiKeyLen Òª»ñÈ¡µÄkeyµÄ³¤¶È¡£
-*@param [in] bSubKey szKeyÊÇ·ñÎª×Ókey¡£1£ºÊÇ£»0£º²»ÊÇ¡£
-*@return 0:²»´æÔÚ£»·ñÔò·µ»ØÖ¸¶¨µÄkeyµÄkey/value¡£
+*@brief ä»package readerä¸­ï¼Œè·å–ä¸€ä¸ªkeyï¼Œkeyå¯ä»¥æ˜¯k1:k2:k3è¿™æ ·æ ¼å¼çš„å­keyã€‚
+*@param [in] reader packageçš„readerã€‚
+*@param [in] szKey è¦è·å–çš„keyçš„åå­—ã€‚
+*@param [in] uiKeyLen è¦è·å–çš„keyçš„é•¿åº¦ã€‚
+*@param [in] bSubKey szKeyæ˜¯å¦ä¸ºå­keyã€‚1ï¼šæ˜¯ï¼›0ï¼šä¸æ˜¯ã€‚
+*@return 0:ä¸å­˜åœ¨ï¼›å¦åˆ™è¿”å›æŒ‡å®šçš„keyçš„key/valueã€‚
 */
 CWX_KEY_VALUE_ITEM_S const*  cwx_pg_reader_get_n_key(struct CWX_PG_READER const* reader,
                                char const* szKey,
                                CWX_UINT32  uiKeyLen,
                                int bSubKey);
 /**
-*@brief ´Ópackage readerÖĞ£¬»ñÈ¡Ò»¸ökey£¬key¿ÉÒÔÊÇk1:k2:k3ÕâÑù¸ñÊ½µÄ×Ókey¡£
-*@param [in] reader packageµÄreader¡£
-*@param [in] szKey Òª»ñÈ¡µÄkeyµÄÃû×Ö¡£
-*@param [in] bSubKey szKeyÊÇ·ñÎª×Ókey¡£1£ºÊÇ£»0£º²»ÊÇ¡£
-*@return 0:²»´æÔÚ£»·ñÔò·µ»ØÖ¸¶¨µÄkeyµÄkey/value¡£
+*@brief ä»package readerä¸­ï¼Œè·å–ä¸€ä¸ªkeyï¼Œkeyå¯ä»¥æ˜¯k1:k2:k3è¿™æ ·æ ¼å¼çš„å­keyã€‚
+*@param [in] reader packageçš„readerã€‚
+*@param [in] szKey è¦è·å–çš„keyçš„åå­—ã€‚
+*@param [in] bSubKey szKeyæ˜¯å¦ä¸ºå­keyã€‚1ï¼šæ˜¯ï¼›0ï¼šä¸æ˜¯ã€‚
+*@return 0:ä¸å­˜åœ¨ï¼›å¦åˆ™è¿”å›æŒ‡å®šçš„keyçš„key/valueã€‚
 */
 CWX_KEY_VALUE_ITEM_S const*  cwx_pg_reader_get_key(struct CWX_PG_READER const* reader,
                                                      char const* szKey,
                                                      int bSubKey);
 /**
-*@brief ´Ópackage readerÖĞ£¬»ñÈ¡µÚindex¸ökey£¬index´Ó0¿ªÊ¼¡£
-*@param [in] reader packageµÄreader¡£
-*@param [in] index ·µ»ØkeyµÄĞòºÅ£¬´Ó0¿ªÊ¼¡£
-*@return 0:²»´æÔÚ£»·ñÔò·µ»ØÖ¸¶¨µÄkeyµÄkey/value¡£
+*@brief ä»package readerä¸­ï¼Œè·å–ç¬¬indexä¸ªkeyï¼Œindexä»0å¼€å§‹ã€‚
+*@param [in] reader packageçš„readerã€‚
+*@param [in] index è¿”å›keyçš„åºå·ï¼Œä»0å¼€å§‹ã€‚
+*@return 0:ä¸å­˜åœ¨ï¼›å¦åˆ™è¿”å›æŒ‡å®šçš„keyçš„key/valueã€‚
 */
 CWX_KEY_VALUE_ITEM_S const* cwx_pg_reader_get_key_by_index(struct CWX_PG_READER const* reader,
                               CWX_UINT32 index);
 /**
-*@brief ´Ópackage readerÖĞ£¬»ñÈ¡KeyµÄuint64µÄvalueÖµ¡£
-*@param [in] reader packageµÄreader¡£
-*@param [in] szKey Òª»ñÈ¡µÄkeyµÄÃû×Ö¡£
-*@param [in] value  valueµÄUINT64¡£
-*@param [in] bSubKey szKeyÊÇ·ñÎª×Ókey¡£1£ºÊÇ£»0£º²»ÊÇ¡£
-*@return 0:²»´æÔÚ£»1£º´æÔÚ¡£
+*@brief ä»package readerä¸­ï¼Œè·å–Keyçš„uint64çš„valueå€¼ã€‚
+*@param [in] reader packageçš„readerã€‚
+*@param [in] szKey è¦è·å–çš„keyçš„åå­—ã€‚
+*@param [in] value  valueçš„UINT64ã€‚
+*@param [in] bSubKey szKeyæ˜¯å¦ä¸ºå­keyã€‚1ï¼šæ˜¯ï¼›0ï¼šä¸æ˜¯ã€‚
+*@return 0:ä¸å­˜åœ¨ï¼›1ï¼šå­˜åœ¨ã€‚
 */
 int cwx_pg_reader_get_uint64(struct CWX_PG_READER const* reader,
                             char const* szKey,
                             CWX_UINT64* value,
                             int bSubKey);
 /**
-*@brief ´Ópackage readerÖĞ£¬»ñÈ¡KeyµÄint64µÄvalueÖµ¡£
-*@param [in] reader packageµÄreader¡£
-*@param [in] szKey Òª»ñÈ¡µÄkeyµÄÃû×Ö¡£
-*@param [in] value  valueµÄINT64¡£
-*@param [in] bSubKey szKeyÊÇ·ñÎª×Ókey¡£1£ºÊÇ£»0£º²»ÊÇ¡£
-*@return 0:²»´æÔÚ£»1£º´æÔÚ¡£
+*@brief ä»package readerä¸­ï¼Œè·å–Keyçš„int64çš„valueå€¼ã€‚
+*@param [in] reader packageçš„readerã€‚
+*@param [in] szKey è¦è·å–çš„keyçš„åå­—ã€‚
+*@param [in] value  valueçš„INT64ã€‚
+*@param [in] bSubKey szKeyæ˜¯å¦ä¸ºå­keyã€‚1ï¼šæ˜¯ï¼›0ï¼šä¸æ˜¯ã€‚
+*@return 0:ä¸å­˜åœ¨ï¼›1ï¼šå­˜åœ¨ã€‚
 */
 int cwx_pg_reader_get_int64(struct CWX_PG_READER const* reader,
                              char const* szKey,
                              CWX_INT64* value,
                              int bSubKey);
 /**
-*@brief ´Ópackage readerÖĞ£¬»ñÈ¡KeyµÄuint32µÄvalueÖµ¡£
-*@param [in] reader packageµÄreader¡£
-*@param [in] szKey Òª»ñÈ¡µÄkeyµÄÃû×Ö¡£
-*@param [in] value  valueµÄUINT32¡£
-*@param [in] bSubKey szKeyÊÇ·ñÎª×Ókey¡£1£ºÊÇ£»0£º²»ÊÇ¡£
-*@return 0:²»´æÔÚ£»1£º´æÔÚ¡£
+*@brief ä»package readerä¸­ï¼Œè·å–Keyçš„uint32çš„valueå€¼ã€‚
+*@param [in] reader packageçš„readerã€‚
+*@param [in] szKey è¦è·å–çš„keyçš„åå­—ã€‚
+*@param [in] value  valueçš„UINT32ã€‚
+*@param [in] bSubKey szKeyæ˜¯å¦ä¸ºå­keyã€‚1ï¼šæ˜¯ï¼›0ï¼šä¸æ˜¯ã€‚
+*@return 0:ä¸å­˜åœ¨ï¼›1ï¼šå­˜åœ¨ã€‚
 */
 int cwx_pg_reader_get_uint32(struct CWX_PG_READER const* reader,
                             char const* szKey,
                             CWX_UINT32* value,
                             int bSubKey);
 /**
-*@brief ´Ópackage readerÖĞ£¬»ñÈ¡KeyµÄint32µÄvalueÖµ¡£
-*@param [in] reader packageµÄreader¡£
-*@param [in] szKey Òª»ñÈ¡µÄkeyµÄÃû×Ö¡£
-*@param [in] value  valueµÄINT32¡£
-*@param [in] bSubKey szKeyÊÇ·ñÎª×Ókey¡£1£ºÊÇ£»0£º²»ÊÇ¡£
-*@return 0:²»´æÔÚ£»1£º´æÔÚ¡£
+*@brief ä»package readerä¸­ï¼Œè·å–Keyçš„int32çš„valueå€¼ã€‚
+*@param [in] reader packageçš„readerã€‚
+*@param [in] szKey è¦è·å–çš„keyçš„åå­—ã€‚
+*@param [in] value  valueçš„INT32ã€‚
+*@param [in] bSubKey szKeyæ˜¯å¦ä¸ºå­keyã€‚1ï¼šæ˜¯ï¼›0ï¼šä¸æ˜¯ã€‚
+*@return 0:ä¸å­˜åœ¨ï¼›1ï¼šå­˜åœ¨ã€‚
 */
 int cwx_pg_reader_get_int32(struct CWX_PG_READER const* reader,
                              char const* szKey,
                              CWX_INT32* value,
                              int bSubKey);
 /**
-*@brief ´Ópackage readerÖĞ£¬»ñÈ¡KeyµÄuint16µÄvalueÖµ¡£
-*@param [in] reader packageµÄreader¡£
-*@param [in] szKey Òª»ñÈ¡µÄkeyµÄÃû×Ö¡£
-*@param [in] value  valueµÄUINT16¡£
-*@param [in] bSubKey szKeyÊÇ·ñÎª×Ókey¡£1£ºÊÇ£»0£º²»ÊÇ¡£
-*@return 0:²»´æÔÚ£»1£º´æÔÚ¡£
+*@brief ä»package readerä¸­ï¼Œè·å–Keyçš„uint16çš„valueå€¼ã€‚
+*@param [in] reader packageçš„readerã€‚
+*@param [in] szKey è¦è·å–çš„keyçš„åå­—ã€‚
+*@param [in] value  valueçš„UINT16ã€‚
+*@param [in] bSubKey szKeyæ˜¯å¦ä¸ºå­keyã€‚1ï¼šæ˜¯ï¼›0ï¼šä¸æ˜¯ã€‚
+*@return 0:ä¸å­˜åœ¨ï¼›1ï¼šå­˜åœ¨ã€‚
 */
 int cwx_pg_reader_get_uint16(struct CWX_PG_READER const* reader,
                             char const* szKey,
                             CWX_UINT16* value,
                             int bSubKey);
 /**
-*@brief ´Ópackage readerÖĞ£¬»ñÈ¡KeyµÄint16µÄvalueÖµ¡£
-*@param [in] reader packageµÄreader¡£
-*@param [in] szKey Òª»ñÈ¡µÄkeyµÄÃû×Ö¡£
-*@param [in] value  valueµÄINT16¡£
-*@param [in] bSubKey szKeyÊÇ·ñÎª×Ókey¡£1£ºÊÇ£»0£º²»ÊÇ¡£
-*@return 0:²»´æÔÚ£»1£º´æÔÚ¡£
+*@brief ä»package readerä¸­ï¼Œè·å–Keyçš„int16çš„valueå€¼ã€‚
+*@param [in] reader packageçš„readerã€‚
+*@param [in] szKey è¦è·å–çš„keyçš„åå­—ã€‚
+*@param [in] value  valueçš„INT16ã€‚
+*@param [in] bSubKey szKeyæ˜¯å¦ä¸ºå­keyã€‚1ï¼šæ˜¯ï¼›0ï¼šä¸æ˜¯ã€‚
+*@return 0:ä¸å­˜åœ¨ï¼›1ï¼šå­˜åœ¨ã€‚
 */
 int cwx_pg_reader_get_int16(struct CWX_PG_READER const* reader,
                              char const* szKey,
                              CWX_INT16* value,
                              int bSubKey);
 /**
-*@brief ´Ópackage readerÖĞ£¬»ñÈ¡KeyµÄuint8µÄvalueÖµ¡£
-*@param [in] reader packageµÄreader¡£
-*@param [in] szKey Òª»ñÈ¡µÄkeyµÄÃû×Ö¡£
-*@param [in] value  valueµÄUINT8¡£
-*@param [in] bSubKey szKeyÊÇ·ñÎª×Ókey¡£1£ºÊÇ£»0£º²»ÊÇ¡£
-*@return 0:²»´æÔÚ£»1£º´æÔÚ¡£
+*@brief ä»package readerä¸­ï¼Œè·å–Keyçš„uint8çš„valueå€¼ã€‚
+*@param [in] reader packageçš„readerã€‚
+*@param [in] szKey è¦è·å–çš„keyçš„åå­—ã€‚
+*@param [in] value  valueçš„UINT8ã€‚
+*@param [in] bSubKey szKeyæ˜¯å¦ä¸ºå­keyã€‚1ï¼šæ˜¯ï¼›0ï¼šä¸æ˜¯ã€‚
+*@return 0:ä¸å­˜åœ¨ï¼›1ï¼šå­˜åœ¨ã€‚
 */
 int cwx_pg_reader_get_uint8(struct CWX_PG_READER const* reader,
                             char const* szKey,
                             CWX_UINT8* value,
                             int bSubKey);
 /**
-*@brief ´Ópackage readerÖĞ£¬»ñÈ¡KeyµÄint8µÄvalueÖµ¡£
-*@param [in] reader packageµÄreader¡£
-*@param [in] szKey Òª»ñÈ¡µÄkeyµÄÃû×Ö¡£
-*@param [in] value  valueµÄINT8¡£
-*@param [in] bSubKey szKeyÊÇ·ñÎª×Ókey¡£1£ºÊÇ£»0£º²»ÊÇ¡£
-*@return 0:²»´æÔÚ£»1£º´æÔÚ¡£
+*@brief ä»package readerä¸­ï¼Œè·å–Keyçš„int8çš„valueå€¼ã€‚
+*@param [in] reader packageçš„readerã€‚
+*@param [in] szKey è¦è·å–çš„keyçš„åå­—ã€‚
+*@param [in] value  valueçš„INT8ã€‚
+*@param [in] bSubKey szKeyæ˜¯å¦ä¸ºå­keyã€‚1ï¼šæ˜¯ï¼›0ï¼šä¸æ˜¯ã€‚
+*@return 0:ä¸å­˜åœ¨ï¼›1ï¼šå­˜åœ¨ã€‚
 */
 int cwx_pg_reader_get_int8(struct CWX_PG_READER const* reader,
                             char const* szKey,
                             CWX_INT8* value,
                             int bSubKey);
 
-///»ñÈ¡µ±Ç°packageµÄKeyµÄÊıÁ¿¡£
+///è·å–å½“å‰packageçš„Keyçš„æ•°é‡ã€‚
 CWX_UINT32 cwx_pg_reader_get_key_num(struct CWX_PG_READER const* reader);
-///»ñÈ¡È«²¿µÄkey
+///è·å–å…¨éƒ¨çš„key
 CWX_KEY_VALUE_ITEM_S const* cwx_pg_reader_get_keys(struct CWX_PG_READER const* reader);
-///»ñÈ¡µ±Ç°packageµÄ´óĞ¡
+///è·å–å½“å‰packageçš„å¤§å°
 CWX_UINT32 cwx_pg_reader_get_msg_size(struct CWX_PG_READER const* reader);
-///»ñÈ¡µ±Ç°packageµÄbuf
+///è·å–å½“å‰packageçš„buf
 char const* cwx_pg_reader_get_msg(struct CWX_PG_READER const* reader);
-///»ñÈ¡Ê§°ÜÊ±µÄ´íÎóÏûÏ¢
+///è·å–å¤±è´¥æ—¶çš„é”™è¯¯æ¶ˆæ¯
 char const* cwx_pg_reader_get_error(struct CWX_PG_READER const* reader);
-///»ñÈ¡readerµÄkeyÊÇ·ñ´óĞ¡Ğ´Ãô¸Ğ£¬1£ºÊÇ£»0£º²»ÊÇ
+///è·å–readerçš„keyæ˜¯å¦å¤§å°å†™æ•æ„Ÿï¼Œ1ï¼šæ˜¯ï¼›0ï¼šä¸æ˜¯
 int cwx_pg_reader_case_sensive(struct CWX_PG_READER const* reader);
-///»ñÈ¡readerÊÇ·ñ¶Ôkey½øĞĞË÷Òı£¬1£ºÊÇ£»0£º²»ÊÇ
+///è·å–readeræ˜¯å¦å¯¹keyè¿›è¡Œç´¢å¼•ï¼Œ1ï¼šæ˜¯ï¼›0ï¼šä¸æ˜¯
 int cwx_pg_reader_is_index(struct CWX_PG_READER const* reader);
 
 

@@ -1,4 +1,4 @@
-#include "cwx_package.h"
+﻿#include "cwx_package.h"
 
 int cwx_get_next_key(char const* szMsg, CWX_UINT32 uiMsgLen, CWX_KEY_VALUE_ITEM_S* item){
     CWX_UINT32 byte4 = 0;

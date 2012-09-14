@@ -1,4 +1,4 @@
-/* $XJG: xslib/md5.c,v 1.6 2006/03/16 04:25:13 jiagui Exp $ */
+﻿/* $XJG: xslib/md5.c,v 1.6 2006/03/16 04:25:13 jiagui Exp $ */
 /*
  * RFC 1321 compliant MD5 implementation
  *

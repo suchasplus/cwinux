@@ -1,15 +1,15 @@
-#ifndef __CWX_PACKAGE_H__
+ï»¿#ifndef __CWX_PACKAGE_H__
 #define __CWX_PACKAGE_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 
 /**
 @file cwx_package.h
-@brief ¶¨Òåkey/valueÊı¾İ°üµÄ²Ù×÷
+@brief å®šä¹‰key/valueæ•°æ®åŒ…çš„æ“ä½œ
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-12
@@ -18,73 +18,73 @@
 */
 #include "cwx_config.h"
 
-///Key/value±êÖ¾Î»
+///Key/valueæ ‡å¿—ä½
 #define   CWX_PACKAGE_KV_BIT  31
-///×î´óµÄkv³¤¶È
+///æœ€å¤§çš„kvé•¿åº¦
 #define   CWX_MAX_KV_LEN  0X7FFFFFFF
 
-///¶¨Òåkey/valueÊı¾İ¶Ô
+///å®šä¹‰key/valueæ•°æ®å¯¹
 typedef struct CWX_KEY_VALUE_ITEM_S{
-    char*          m_szKey; ///<keyµÄÃû×Ö
-    char*          m_szData; ///<keyµÄÊı¾İ
-    CWX_UINT32      m_uiDataLen; ///<Êı¾İµÄ³¤¶È
-    CWX_UINT16      m_unKeyLen; ///<keyµÄ³¤¶È
-    bool           m_bKeyValue; ///<true£ºvalueµÄ±¾ÉíÒ²ÊÇkey/value¸ñÊ½;false£ºvalue²»ÊÇkey/value¸ñÊ½
+    char*          m_szKey; ///<keyçš„åå­—
+    char*          m_szData; ///<keyçš„æ•°æ®
+    CWX_UINT32      m_uiDataLen; ///<æ•°æ®çš„é•¿åº¦
+    CWX_UINT16      m_unKeyLen; ///<keyçš„é•¿åº¦
+    bool           m_bKeyValue; ///<trueï¼švalueçš„æœ¬èº«ä¹Ÿæ˜¯key/valueæ ¼å¼;falseï¼švalueä¸æ˜¯key/valueæ ¼å¼
 }CWX_KEY_VALUE_ITEM_S;
 
 /**
-*@brief »ñÈ¡packageÖĞµÄÏÂÒ»¸öKey¡£
-*@param [in] szMsg ĞèÒª½â°üµÄpackage¡£
-*@param [in] uiMsgLen packageµÄ³¤¶È¡£
-*@param [out] item Èôkey/value´æÔÚ£¬ÔòÍ¨¹ıitem·µ»ØKey/valueµÄĞÅÏ¢¡£
-*@return -1£º°üµÄ¸ñÊ½·Ç·¨£»0:²»´æÔÚ£»>0£ºKey/ValueµÄ³¤¶È¡£
+*@brief è·å–packageä¸­çš„ä¸‹ä¸€ä¸ªKeyã€‚
+*@param [in] szMsg éœ€è¦è§£åŒ…çš„packageã€‚
+*@param [in] uiMsgLen packageçš„é•¿åº¦ã€‚
+*@param [out] item è‹¥key/valueå­˜åœ¨ï¼Œåˆ™é€šè¿‡itemè¿”å›Key/valueçš„ä¿¡æ¯ã€‚
+*@return -1ï¼šåŒ…çš„æ ¼å¼éæ³•ï¼›0:ä¸å­˜åœ¨ï¼›>0ï¼šKey/Valueçš„é•¿åº¦ã€‚
 */
 int cwx_get_next_key(char const* szMsg, CWX_UINT32 uiMsgLen, CWX_KEY_VALUE_ITEM_S* item);
 
 /**
-*@brief »ñÈ¡packageÖĞµÄµÚuiIndex Key/Value,Èç¹ûunIndexÎª0£¬ÔòÏàµ±ÓÚGetNextKey()¡£
-*@param [in] szMsg ĞèÒª½â°üµÄpackage¡£
-*@param [in] uiMsgLen packageµÄ³¤¶È¡£
-*@param [in] unIndex Òª»ñÈ¡µÄkeyµÄË÷Òı¡£
-*@param [out] item Èôkey/value´æÔÚ£¬ÔòÍ¨¹ıitem·µ»ØKey/valueµÄĞÅÏ¢¡£
-*@return -1£º°üµÄ¸ñÊ½·Ç·¨£»0:²»´æÔÚ£»>0£ºKey/ValueµÄ³¤¶È¡£
+*@brief è·å–packageä¸­çš„ç¬¬uiIndex Key/Value,å¦‚æœunIndexä¸º0ï¼Œåˆ™ç›¸å½“äºGetNextKey()ã€‚
+*@param [in] szMsg éœ€è¦è§£åŒ…çš„packageã€‚
+*@param [in] uiMsgLen packageçš„é•¿åº¦ã€‚
+*@param [in] unIndex è¦è·å–çš„keyçš„ç´¢å¼•ã€‚
+*@param [out] item è‹¥key/valueå­˜åœ¨ï¼Œåˆ™é€šè¿‡itemè¿”å›Key/valueçš„ä¿¡æ¯ã€‚
+*@return -1ï¼šåŒ…çš„æ ¼å¼éæ³•ï¼›0:ä¸å­˜åœ¨ï¼›>0ï¼šKey/Valueçš„é•¿åº¦ã€‚
 */
 int cwx_get_key_by_index(char const *szMsg, CWX_UINT32 uiMsgLen, CWX_UINT32 uiIndex, CWX_KEY_VALUE_ITEM_S* item);
 
 /**
-*@brief »ñÈ¡packageÖĞµÄµÚÒ»¸ökeyµÄÃû×ÖÎªszKeyµÄKey/Value¡£
-*@param [in] szMsg ĞèÒª½â°üµÄpackage¡£
-*@param [in] uiMsgLen packageµÄ³¤¶È¡£
-*@param [in] szKey Òª»ñÈ¡µÄkeyµÄÃû×Ö£¬ÈôkeyµÄÃû×ÖÖØ¸´£¬ÔòÖ»»ñÈ¡µÚÒ»¸ö¡£
-*@param [out] item Èôkey/value´æÔÚ£¬ÔòÍ¨¹ıitem·µ»ØKey/valueµÄĞÅÏ¢¡£
-*@return -1£º°üµÄ¸ñÊ½·Ç·¨£»0:²»´æÔÚ£»>0£ºKey/ValueµÄ³¤¶È¡£
+*@brief è·å–packageä¸­çš„ç¬¬ä¸€ä¸ªkeyçš„åå­—ä¸ºszKeyçš„Key/Valueã€‚
+*@param [in] szMsg éœ€è¦è§£åŒ…çš„packageã€‚
+*@param [in] uiMsgLen packageçš„é•¿åº¦ã€‚
+*@param [in] szKey è¦è·å–çš„keyçš„åå­—ï¼Œè‹¥keyçš„åå­—é‡å¤ï¼Œåˆ™åªè·å–ç¬¬ä¸€ä¸ªã€‚
+*@param [out] item è‹¥key/valueå­˜åœ¨ï¼Œåˆ™é€šè¿‡itemè¿”å›Key/valueçš„ä¿¡æ¯ã€‚
+*@return -1ï¼šåŒ…çš„æ ¼å¼éæ³•ï¼›0:ä¸å­˜åœ¨ï¼›>0ï¼šKey/Valueçš„é•¿åº¦ã€‚
 */
 int cwx_get_key_by_name(char const *szMsg, CWX_UINT32 uiMsgLen, char const* szKey, CWX_KEY_VALUE_ITEM_S* item);
 
 /**
-*@brief ÍùpackageÖĞÌí¼ÓÒ»¸öĞÂkey/value¡£
-*@param [in,out] szMsg ĞèÒª½â°üµÄpackage¡£
-*@param [in] uiMsgLen packageµÄ³¤¶È¡£
-*@param [in] szKey ÒªÌí¼ÓµÄkeyµÄÃû×Ö¡£
-*@param [in] szValue keyµÄdata¡£
-*@param [in] uiDatalen dataµÄ³¤¶È
-*@param [in] bKeyValue dataÊÇ·ñÎªkey/value
-*@return -1£º°üµÄ¿Õ¼äÌ«Ğ¡£»>0 ´òÈëµÄ°üµÄ³¤¶È¡£
+*@brief å¾€packageä¸­æ·»åŠ ä¸€ä¸ªæ–°key/valueã€‚
+*@param [in,out] szMsg éœ€è¦è§£åŒ…çš„packageã€‚
+*@param [in] uiMsgLen packageçš„é•¿åº¦ã€‚
+*@param [in] szKey è¦æ·»åŠ çš„keyçš„åå­—ã€‚
+*@param [in] szValue keyçš„dataã€‚
+*@param [in] uiDatalen dataçš„é•¿åº¦
+*@param [in] bKeyValue dataæ˜¯å¦ä¸ºkey/value
+*@return -1ï¼šåŒ…çš„ç©ºé—´å¤ªå°ï¼›>0 æ‰“å…¥çš„åŒ…çš„é•¿åº¦ã€‚
 */
 int cwx_append_key(char *szMsg, CWX_UINT32 uiMsgLen, char const* szKey, char const* szValue, CWX_UINT32 uiDatalen, bool bKeyValue);
 
 /**
-*@brief ¼ì²észMsgÊÇ·ñÊÇÒ»¸öÓĞĞ§µÄPackage.uiMsgLenÎª0µÄÊ±ºò£¬±íÊ¾Îª¿Õ°ü¡£¿Õ°üÊÇÒ»¸öÓĞĞ§µÄ°ü¡£
-*@param [in] szMsg Òª¼ì²éµÄ°ü
-*@param [in] uiMsgLen °üµÄ³¤¶È
-*@return true:ÓĞĞ§µÄ°ü£»false£ºÎŞĞ§µÄ°ü.
+*@brief æ£€æŸ¥szMsgæ˜¯å¦æ˜¯ä¸€ä¸ªæœ‰æ•ˆçš„Package.uiMsgLenä¸º0çš„æ—¶å€™ï¼Œè¡¨ç¤ºä¸ºç©ºåŒ…ã€‚ç©ºåŒ…æ˜¯ä¸€ä¸ªæœ‰æ•ˆçš„åŒ…ã€‚
+*@param [in] szMsg è¦æ£€æŸ¥çš„åŒ…
+*@param [in] uiMsgLen åŒ…çš„é•¿åº¦
+*@return true:æœ‰æ•ˆçš„åŒ…ï¼›falseï¼šæ— æ•ˆçš„åŒ….
 */
 bool cwx_is_valid_package(char const *szMsg, CWX_UINT32 uiMsgLen);
-///»ñÈ¡packageµÄkeyµÄÊıÁ¿, -1: invalid package
+///è·å–packageçš„keyçš„æ•°é‡, -1: invalid package
 int cwx_get_key_value_num(char const* szMsg, CWX_UINT32 uiMsgLen);
-///Í¨¹ıKeyµÄ³¤¶È¼°dataµÄ³¤¶È£¬»ñÈ¡´ò°üºóµÄKey/value³¤¶È¡£
+///é€šè¿‡Keyçš„é•¿åº¦åŠdataçš„é•¿åº¦ï¼Œè·å–æ‰“åŒ…åçš„Key/valueé•¿åº¦ã€‚
 CWX_UINT32 cwx_get_kv_len(CWX_UINT16 unKeyLen, CWX_UINT32 uiDataLen);
-///Í¨¹ıkey/valueµÄ³¤¶È¼°keyµÄ³¤¶È£¬»ñÈ¡dataµÄ³¤¶È
+///é€šè¿‡key/valueçš„é•¿åº¦åŠkeyçš„é•¿åº¦ï¼Œè·å–dataçš„é•¿åº¦
 CWX_UINT32 cwx_get_data_len(CWX_UINT32 uiKeyValueLen, CWX_UINT16 unKeyLen);
 
 #endif

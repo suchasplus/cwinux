@@ -1,4 +1,4 @@
-#include "cwx_package_ex.h"
+ï»¿#include "cwx_package_ex.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -291,17 +291,17 @@ CWX_UINT16 cwx_pg_get_key_offset_ex(CWX_UINT16 unKeyLen, CWX_UINT32 uiDataLen){
     return cwx_pg_encode_uint16_size(unKeyLen) + cwx_pg_encode_uint32_size(uiDataLen) + 1;
 }
 
-///»ñµÃ¶ÔUINT16µÄvalue½øĞĞencodeºóµÄ³¤¶È
+///è·å¾—å¯¹UINT16çš„valueè¿›è¡Œencodeåçš„é•¿åº¦
 CWX_UINT8 cwx_pg_encode_uint16_size(CWX_UINT16 value){
     if ((value>>14)&0x03) return 3;
     if ((value>>7)&0x7F) return 2;
     return 1;
 }
 
-///¶ÔUINT16ÕûÊı½øĞĞ½âÂë£¬·µ»Ø½âÂë½áÊøµÄÎ»ÖÃ£¬ÈôÎªNULL±íÊ¾½âÂëÊ§°Ü
+///å¯¹UINT16æ•´æ•°è¿›è¡Œè§£ç ï¼Œè¿”å›è§£ç ç»“æŸçš„ä½ç½®ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºè§£ç å¤±è´¥
 unsigned char const* cwx_pg_decode_uint16(unsigned char const* szBuf, ///<
-                                          CWX_UINT32* uiBufLen, ///<´«ÈëbufµÄ¿Õ¼ä´óĞ¡£¬·µ»ØÊ£ÓàµÄ´óĞ¡
-                                          CWX_UINT16* value ///<½âÂë³öµÄÊıÖµ
+                                          CWX_UINT32* uiBufLen, ///<ä¼ å…¥bufçš„ç©ºé—´å¤§å°ï¼Œè¿”å›å‰©ä½™çš„å¤§å°
+                                          CWX_UINT16* value ///<è§£ç å‡ºçš„æ•°å€¼
                                           )
 {
     CWX_UINT8 i=0, b=0;
@@ -319,10 +319,10 @@ unsigned char const* cwx_pg_decode_uint16(unsigned char const* szBuf, ///<
     return szBuf;
 }
 
-///¶ÔÕûÊı½øĞĞ±àÂë£¬·µ»Ø±àÂëµÄÖµ¼°±àÂëºóµÄ³¤¶È
-unsigned char* cwx_pg_encode_uint16(CWX_UINT16 value, ///<ÒªencodeµÄÖµ
-                                    unsigned char* szBuf, ///<¿Õ¼ä
-                                    CWX_UINT32* uiLen ///<encodeºóµÄ³¤¶È
+///å¯¹æ•´æ•°è¿›è¡Œç¼–ç ï¼Œè¿”å›ç¼–ç çš„å€¼åŠç¼–ç åçš„é•¿åº¦
+unsigned char* cwx_pg_encode_uint16(CWX_UINT16 value, ///<è¦encodeçš„å€¼
+                                    unsigned char* szBuf, ///<ç©ºé—´
+                                    CWX_UINT32* uiLen ///<encodeåçš„é•¿åº¦
                                     )
 {
     szBuf[0] = (value|0x80);
@@ -341,7 +341,7 @@ unsigned char* cwx_pg_encode_uint16(CWX_UINT16 value, ///<ÒªencodeµÄÖµ
 }
 
 
-///»ñµÃ¶ÔUINT32µÄvalue½øĞĞencodeºóµÄ³¤¶È
+///è·å¾—å¯¹UINT32çš„valueè¿›è¡Œencodeåçš„é•¿åº¦
 CWX_UINT8 cwx_pg_encode_uint32_size(CWX_UINT32 value){
     if ((value>>28)&0x0F) return 5;
     if ((value>>21)&0x7F) return 4;
@@ -350,10 +350,10 @@ CWX_UINT8 cwx_pg_encode_uint32_size(CWX_UINT32 value){
     return 1;
 }
 
-///¶ÔUINT32ÕûÊı½øĞĞ½âÂë£¬·µ»Ø½âÂë½áÊøµÄÎ»ÖÃ£¬ÈôÎªNULL±íÊ¾½âÂëÊ§°Ü
+///å¯¹UINT32æ•´æ•°è¿›è¡Œè§£ç ï¼Œè¿”å›è§£ç ç»“æŸçš„ä½ç½®ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºè§£ç å¤±è´¥
 unsigned char const* cwx_pg_decode_uint32(unsigned char const* szBuf, ///<
-                                          CWX_UINT32* uiBufLen, ///<´«ÈëbufµÄ¿Õ¼ä´óĞ¡£¬·µ»ØÊ£ÓàµÄ´óĞ¡
-                                          CWX_UINT32* value ///<½âÂë³öµÄÊıÖµ
+                                          CWX_UINT32* uiBufLen, ///<ä¼ å…¥bufçš„ç©ºé—´å¤§å°ï¼Œè¿”å›å‰©ä½™çš„å¤§å°
+                                          CWX_UINT32* value ///<è§£ç å‡ºçš„æ•°å€¼
                                           )
 {
     CWX_UINT8 i=0, b=0;
@@ -371,10 +371,10 @@ unsigned char const* cwx_pg_decode_uint32(unsigned char const* szBuf, ///<
     return szBuf;
 }
 
-///¶ÔÕûÊı½øĞĞ±àÂë£¬·µ»Ø±àÂëµÄÖµ¼°±àÂëºóµÄ³¤¶È
-unsigned char* cwx_pg_encode_uint32(CWX_UINT32 value, ///<ÒªencodeµÄÖµ
-                                    unsigned char* szBuf, ///<¿Õ¼ä
-                                    CWX_UINT32* uiLen ///<encodeºóµÄ³¤¶È
+///å¯¹æ•´æ•°è¿›è¡Œç¼–ç ï¼Œè¿”å›ç¼–ç çš„å€¼åŠç¼–ç åçš„é•¿åº¦
+unsigned char* cwx_pg_encode_uint32(CWX_UINT32 value, ///<è¦encodeçš„å€¼
+                                    unsigned char* szBuf, ///<ç©ºé—´
+                                    CWX_UINT32* uiLen ///<encodeåçš„é•¿åº¦
                                     )
 {
     szBuf[0] = (value|0x80);
@@ -402,7 +402,7 @@ unsigned char* cwx_pg_encode_uint32(CWX_UINT32 value, ///<ÒªencodeµÄÖµ
     return szBuf;
 }
 
-///»ñµÃ¶ÔUINT64µÄvalue½øĞĞencodeºóµÄ³¤¶È
+///è·å¾—å¯¹UINT64çš„valueè¿›è¡Œencodeåçš„é•¿åº¦
 CWX_UINT8 cwx_pg_encode_uint64_size(CWX_UINT64 value){
     if ((value>>63)&0x01) return 10;
     if ((value>>56)&0x7F) return 9;
@@ -417,10 +417,10 @@ CWX_UINT8 cwx_pg_encode_uint64_size(CWX_UINT64 value){
 
 }
 
-///¶ÔUINT64ÕûÊı½øĞĞ½âÂë£¬·µ»Ø½âÂë½áÊøµÄÎ»ÖÃ£¬ÈôÎªNULL±íÊ¾½âÂëÊ§°Ü
+///å¯¹UINT64æ•´æ•°è¿›è¡Œè§£ç ï¼Œè¿”å›è§£ç ç»“æŸçš„ä½ç½®ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºè§£ç å¤±è´¥
 unsigned char const* cwx_pg_decode_uint64(unsigned char const* szBuf, ///<
-                                          CWX_UINT32* uiBufLen, ///<´«ÈëbufµÄ¿Õ¼ä´óĞ¡£¬·µ»ØÊ£ÓàµÄ´óĞ¡
-                                          CWX_UINT64* value ///<½âÂë³öµÄÊıÖµ
+                                          CWX_UINT32* uiBufLen, ///<ä¼ å…¥bufçš„ç©ºé—´å¤§å°ï¼Œè¿”å›å‰©ä½™çš„å¤§å°
+                                          CWX_UINT64* value ///<è§£ç å‡ºçš„æ•°å€¼
                                           )
 {
     CWX_UINT8 i=0, b=0;
@@ -438,10 +438,10 @@ unsigned char const* cwx_pg_decode_uint64(unsigned char const* szBuf, ///<
     return szBuf;
 }
 
-///¶ÔUINT64ÕûÊı½øĞĞ±àÂë£¬·µ»Ø±àÂëµÄÖµ¼°±àÂëºóµÄ³¤¶È
-unsigned char* cwx_pg_encode_uint64(CWX_UINT64 value, ///<ÒªencodeµÄÖµ
-                                    unsigned char* szBuf, ///<¿Õ¼ä
-                                    CWX_UINT32* uiLen ///<encodeºóµÄ³¤¶È
+///å¯¹UINT64æ•´æ•°è¿›è¡Œç¼–ç ï¼Œè¿”å›ç¼–ç çš„å€¼åŠç¼–ç åçš„é•¿åº¦
+unsigned char* cwx_pg_encode_uint64(CWX_UINT64 value, ///<è¦encodeçš„å€¼
+                                    unsigned char* szBuf, ///<ç©ºé—´
+                                    CWX_UINT32* uiLen ///<encodeåçš„é•¿åº¦
                                     )
 {
     CWX_UINT32 part0 = (value);

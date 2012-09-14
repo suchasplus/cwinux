@@ -1,16 +1,16 @@
-#ifndef __CWX_MSG_HEADER_H__
+ï»¿#ifndef __CWX_MSG_HEADER_H__
 #define __CWX_MSG_HEADER_H__
 
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 
 /**
 @file cwx_msg_header.h
-@brief ¶¨Òåcwinux moduleÓëºóÌ¨·şÎñÍ¨ĞÅÊı¾İ°üµÄ°üÍ·¼°²Ù×÷
+@brief å®šä¹‰cwinux moduleä¸åå°æœåŠ¡é€šä¿¡æ•°æ®åŒ…çš„åŒ…å¤´åŠæ“ä½œ
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-12
@@ -19,34 +19,34 @@
 */
 #include "cwx_config.h"
 
-///¶¨ÒåÍ¨ĞÅ°üÍ·µÄ³¤¶È
+///å®šä¹‰é€šä¿¡åŒ…å¤´çš„é•¿åº¦
 #define  CWINUX_MSG_HEAD_LEN   14
-//¶¨Òåattr
-///¶¨ÒåÏµÍ³ÏûÏ¢µÄÊôĞÔ
+//å®šä¹‰attr
+///å®šä¹‰ç³»ç»Ÿæ¶ˆæ¯çš„å±æ€§
 #define  CWINUX_MSG_ATTR_SYS_MSG (1<<0)
-///¶¨ÒåÊı¾İÑ¹ËõµÄÊôĞÔ
+///å®šä¹‰æ•°æ®å‹ç¼©çš„å±æ€§
 #define  CWINUX_MSG_ATTR_COMPRESS (1<<1)
-///¶¨ÒåÍ¨ĞÅ°üÍ·
+///å®šä¹‰é€šä¿¡åŒ…å¤´
 typedef struct CWX_MSG_HEADER_S{
-    CWX_UINT8      m_ucVersion;  ///<ÏûÏ¢°æ±¾ºÅ
-    CWX_UINT8      m_ucAttr;     ///<ÏûÏ¢ÊôĞÔ
-    CWX_UINT16     m_unMsgType;  ///<ÏûÏ¢ÀàĞÍ
-    CWX_UINT32     m_uiTaskId;   ///<ÈÎÎñºÅID
-    CWX_UINT32     m_uiDataLen;  ///<·¢ËÍµÄÊı¾İ³¤¶È
+    CWX_UINT8      m_ucVersion;  ///<æ¶ˆæ¯ç‰ˆæœ¬å·
+    CWX_UINT8      m_ucAttr;     ///<æ¶ˆæ¯å±æ€§
+    CWX_UINT16     m_unMsgType;  ///<æ¶ˆæ¯ç±»å‹
+    CWX_UINT32     m_uiTaskId;   ///<ä»»åŠ¡å·ID
+    CWX_UINT32     m_uiDataLen;  ///<å‘é€çš„æ•°æ®é•¿åº¦
 }CWX_MSG_HEADER_S;
 
 /**
-*@brief ½«ÏûÏ¢Í·´ò°ü³ÉÍøÂç×Ö½ÚĞòµÄÊı¾İ°ü·µ»Ø
-*@param [in] header ½øĞĞpackµÄÏûÏ¢°üÍ·¡£
-*@param [out] szHead packedµÄÏûÏ¢°üÍ·buf
-*@return ·µ»ØszHead
+*@brief å°†æ¶ˆæ¯å¤´æ‰“åŒ…æˆç½‘ç»œå­—èŠ‚åºçš„æ•°æ®åŒ…è¿”å›
+*@param [in] header è¿›è¡Œpackçš„æ¶ˆæ¯åŒ…å¤´ã€‚
+*@param [out] szHead packedçš„æ¶ˆæ¯åŒ…å¤´buf
+*@return è¿”å›szHead
 */
 inline char const* cwx_pack_head(CWX_MSG_HEADER_S const*  header, char* szHead);
 /**
-*@brief ½«ÊÕµ½µÄÏûÏ¢Í·£¬½â³ÉÏûÏ¢Í·¶ÔÏó¡£
-*@param [in] szHead ÏûÏ¢°üÍ·µÄbuf
-*@param [out] header ÏûÏ¢°üÍ·
-*@return false:Ğ£ÑéÂë´íÎó£»true:½â°üÕıÈ·
+*@brief å°†æ”¶åˆ°çš„æ¶ˆæ¯å¤´ï¼Œè§£æˆæ¶ˆæ¯å¤´å¯¹è±¡ã€‚
+*@param [in] szHead æ¶ˆæ¯åŒ…å¤´çš„buf
+*@param [out] header æ¶ˆæ¯åŒ…å¤´
+*@return false:æ ¡éªŒç é”™è¯¯ï¼›true:è§£åŒ…æ­£ç¡®
 */
 inline bool cwx_unpack_head(char const* szHead, CWX_MSG_HEADER_S*  header);
 

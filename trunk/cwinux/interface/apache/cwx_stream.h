@@ -1,16 +1,16 @@
-#ifndef __CWX_STREAM_H__
+ï»¿#ifndef __CWX_STREAM_H__
 #define __CWX_STREAM_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 
 
 /**
 @file cwx_stream.h
-@brief apache moduleµÄÍ¨ĞÅ½Ó¿Ú¶¨Òå
+@brief apache moduleçš„é€šä¿¡æ¥å£å®šä¹‰
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-12
@@ -20,37 +20,37 @@
 
 #include "cwx_config.h"
 
-///»ñÈ¡µ±Ç°µÄÊ±¼ä£¬UINT64
+///è·å–å½“å‰çš„æ—¶é—´ï¼ŒUINT64
 CWX_UINT64 cwx_time_of_day();
 /**
-*@brief tcpÁ¬½Ó¡£
-*@param [in] conn  ÇëÇóµÄÁ¬½Ó»·¾³¶ÔÏó¡£
-*@param [in] millisecond Á¬½ÓµÄ³¬Ê±msÊı
-*@return -1£ºÊ§°Ü£»·ñÔòÎªÁ¬½ÓµÄhandle
+*@brief tcpè¿æ¥ã€‚
+*@param [in] conn  è¯·æ±‚çš„è¿æ¥ç¯å¢ƒå¯¹è±¡ã€‚
+*@param [in] millisecond è¿æ¥çš„è¶…æ—¶msæ•°
+*@return -1ï¼šå¤±è´¥ï¼›å¦åˆ™ä¸ºè¿æ¥çš„handle
 */
 int cwx_stream_connect(CWX_CONNECT* conn, CWX_UINT32 millisecond);
 /**
-*@brief ´ÓÁ¬½ÓÉÏ¶ÁÈ¡Êı¾İ¡£
-*@param [in] fd  Á¬½ÓµÄhandle¡£
-*@param [in] buf ´æ·Å¶ÁÈ¡Êı¾İµÄbuf
-*@param [in] length ¶ÁÈ¡µÄÊı¾İµÄ³¤¶È
-*@param [in] millisecond ¶ÁÈ¡µÄ³¬Ê±msÊı
-*@return -1£º¶ÁÈ¡Ê§°Ü£»0£º±íÊ¾³¬Ê±£»·ñÔòÎª¶ÁÈ¡µÄ×Ö½ÚÊı£¬Ó¦¸ÃÓëlengthÏàµÈ
+*@brief ä»è¿æ¥ä¸Šè¯»å–æ•°æ®ã€‚
+*@param [in] fd  è¿æ¥çš„handleã€‚
+*@param [in] buf å­˜æ”¾è¯»å–æ•°æ®çš„buf
+*@param [in] length è¯»å–çš„æ•°æ®çš„é•¿åº¦
+*@param [in] millisecond è¯»å–çš„è¶…æ—¶msæ•°
+*@return -1ï¼šè¯»å–å¤±è´¥ï¼›0ï¼šè¡¨ç¤ºè¶…æ—¶ï¼›å¦åˆ™ä¸ºè¯»å–çš„å­—èŠ‚æ•°ï¼Œåº”è¯¥ä¸lengthç›¸ç­‰
 */
 int cwx_stream_read(CWX_CONNECT* conn, void *buf, CWX_UINT32 length, CWX_UINT32 millisecond);
 /**
-*@brief ÍùÁ¬½ÓÉÏĞ´Êı¾İ¡£
-*@param [in] fd  Á¬½ÓµÄhandle¡£
-*@param [in] buf ·¢ËÍÊı¾İµÄbuf
-*@param [in] length ·¢ËÍÊı¾İµÄ³¤¶È
-*@param [in] millisecond ·¢ËÍµÄ³¬Ê±msÊı
-*@return -1£º·¢ËÍÊ§°Ü£»0£º±íÊ¾³¬Ê±£»·ñÔòÎª·¢ËÍµÄ×Ö½ÚÊı£¬Ó¦¸ÃÓëlengthÏàµÈ
+*@brief å¾€è¿æ¥ä¸Šå†™æ•°æ®ã€‚
+*@param [in] fd  è¿æ¥çš„handleã€‚
+*@param [in] buf å‘é€æ•°æ®çš„buf
+*@param [in] length å‘é€æ•°æ®çš„é•¿åº¦
+*@param [in] millisecond å‘é€çš„è¶…æ—¶msæ•°
+*@return -1ï¼šå‘é€å¤±è´¥ï¼›0ï¼šè¡¨ç¤ºè¶…æ—¶ï¼›å¦åˆ™ä¸ºå‘é€çš„å­—èŠ‚æ•°ï¼Œåº”è¯¥ä¸lengthç›¸ç­‰
 */
 int cwx_stream_write(CWX_CONNECT* conn, void *buf, CWX_UINT32 length, CWX_UINT32 millisecond);
 /**
-*@brief ¹Ø±ÕtcpÁ¬½Ó¡£
-*@param [in] fd  Á¬½ÓµÄhandle¡£
-*@return -1£º¹Ø±ÕÊ§°Ü£»0£º¹Ø±Õ³É¹¦
+*@brief å…³é—­tcpè¿æ¥ã€‚
+*@param [in] fd  è¿æ¥çš„handleã€‚
+*@return -1ï¼šå…³é—­å¤±è´¥ï¼›0ï¼šå…³é—­æˆåŠŸ
 */
 int cwx_stream_close(int fd);
 #endif

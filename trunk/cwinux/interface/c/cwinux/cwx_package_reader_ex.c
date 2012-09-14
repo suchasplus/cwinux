@@ -1,4 +1,4 @@
-#include "cwx_package_reader_ex.h"
+ï»¿#include "cwx_package_reader_ex.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -12,10 +12,10 @@ struct CWX_PG_READER_EX
     CWX_UINT32                   m_uiKeyNum; ///<package's key number
     char const*                  m_szPackMsg; ///<package's dat
     CWX_UINT32                   m_uiPackBufLen;///<package's buf length
-    CWX_INT8                     m_bIndex;///<ÊÇ·ñ½¨Á¢packageµÄË÷Òý
+    CWX_INT8                     m_bIndex;///<æ˜¯å¦å»ºç«‹packageçš„ç´¢å¼•
     CWX_INT8                     m_bCaseSensive;
-    CWX_KEY_VALUE_ITEM_S         m_tmpKey; ///<ÁÙÊ±key
-    char                         m_szErr[CWX_PG_READER_ERR_MSG_LEN + 1];///<´íÎóÄÚÈÝ
+    CWX_KEY_VALUE_ITEM_S         m_tmpKey; ///<ä¸´æ—¶key
+    char                         m_szErr[CWX_PG_READER_ERR_MSG_LEN + 1];///<é”™è¯¯å†…å®¹
 };
 
 static void reset(struct CWX_PG_READER_EX* reader)
@@ -301,7 +301,7 @@ CWX_UINT32 cwx_pg_reader_get_key_num_ex(struct CWX_PG_READER_EX const* reader)
     return reader->m_uiKeyNum;
 }
 
-///»ñÈ¡È«²¿µÄkey
+///èŽ·å–å…¨éƒ¨çš„key
 CWX_KEY_VALUE_ITEM_S const* cwx_pg_reader_get_keys_ex(struct CWX_PG_READER_EX const* reader)
 {
     return reader->m_pKeyValue;

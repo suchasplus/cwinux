@@ -1,4 +1,4 @@
-#include "cwx_msg_header.h"
+ï»¿#include "cwx_msg_header.h"
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -46,9 +46,9 @@ int cwx_msg_unpack_head(char const* szHead, CWX_MSG_HEADER_S *  header)
 }
 
 /**
-*@brief ÊÇ·ñÎªkeep-aliveµÄÏûÏ¢
-*@param [in] header ÏûÏ¢°üÍ·¡£
-*@return 1:ÊÇ£»0£º²»ÊÇ
+*@brief æ˜¯å¦ä¸ºkeep-aliveçš„æ¶ˆæ¯
+*@param [in] header æ¶ˆæ¯åŒ…å¤´ã€‚
+*@return 1:æ˜¯ï¼›0ï¼šä¸æ˜¯
 */
 int cwx_msg_is_keepalive(CWX_MSG_HEADER_S const*  header)
 {
@@ -56,9 +56,9 @@ int cwx_msg_is_keepalive(CWX_MSG_HEADER_S const*  header)
 }
 
 /**
-*@brief ÊÇ·ñÎªkeep-aliveµÄ»Ø¸´ÏûÏ¢
-*@param [in] header ÏûÏ¢°üÍ·¡£
-*@return 1:ÊÇ£»0£º²»ÊÇ
+*@brief æ˜¯å¦ä¸ºkeep-aliveçš„å›å¤æ¶ˆæ¯
+*@param [in] header æ¶ˆæ¯åŒ…å¤´ã€‚
+*@return 1:æ˜¯ï¼›0ï¼šä¸æ˜¯
 */
 int cwx_msg_is_keepalive_reply(CWX_MSG_HEADER_S const*  header)
 {
@@ -66,9 +66,9 @@ int cwx_msg_is_keepalive_reply(CWX_MSG_HEADER_S const*  header)
 }
 
 /**
-*@brief ÊÇ·ñÏµÍ³ÏûÏ¢
-*@param [in] header ÏûÏ¢°üÍ·¡£
-*@return 1:ÊÇ£»0£º²»ÊÇ
+*@brief æ˜¯å¦ç³»ç»Ÿæ¶ˆæ¯
+*@param [in] header æ¶ˆæ¯åŒ…å¤´ã€‚
+*@return 1:æ˜¯ï¼›0ï¼šä¸æ˜¯
 */
 int cwx_msg_is_sys_msg(CWX_MSG_HEADER_S const*  header)
 {
@@ -76,8 +76,8 @@ int cwx_msg_is_sys_msg(CWX_MSG_HEADER_S const*  header)
 }
 
 /**
-*@brief ÉèÖÃÏµÍ³ÏûÏ¢±ê¼Ç
-*@param [in] header ÏûÏ¢°üÍ·¡£
+*@brief è®¾ç½®ç³»ç»Ÿæ¶ˆæ¯æ ‡è®°
+*@param [in] header æ¶ˆæ¯åŒ…å¤´ã€‚
 *@return void
 */
 void cwx_msg_set_sys_msg(CWX_MSG_HEADER_S*  header)
@@ -86,8 +86,8 @@ void cwx_msg_set_sys_msg(CWX_MSG_HEADER_S*  header)
 }
 
 /**
-*@brief ÉèÖÃÏûÏ¢Í·Îªkeep-aliveĞÅÏ¢
-*@param [in] header ÏûÏ¢°üÍ·¡£
+*@brief è®¾ç½®æ¶ˆæ¯å¤´ä¸ºkeep-aliveä¿¡æ¯
+*@param [in] header æ¶ˆæ¯åŒ…å¤´ã€‚
 *@return void
 */
 void cwx_msg_set_keepalive(CWX_MSG_HEADER_S *  header)
@@ -97,8 +97,8 @@ void cwx_msg_set_keepalive(CWX_MSG_HEADER_S *  header)
 }
 
 /**
-*@brief ÉèÖÃÏûÏ¢Í·Îªkeep-aliveµÄreplyĞÅÏ¢
-*@param [in] header ÏûÏ¢°üÍ·¡£
+*@brief è®¾ç½®æ¶ˆæ¯å¤´ä¸ºkeep-aliveçš„replyä¿¡æ¯
+*@param [in] header æ¶ˆæ¯åŒ…å¤´ã€‚
 *@return void
 */
 void cwx_msg_set_keepalive_reply(CWX_MSG_HEADER_S *  header)

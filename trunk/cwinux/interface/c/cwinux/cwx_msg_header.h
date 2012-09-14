@@ -1,15 +1,15 @@
-#ifndef __CWX_MSG_HEADER_H__
+ï»¿#ifndef __CWX_MSG_HEADER_H__
 #define __CWX_MSG_HEADER_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 
 /**
 @file cwx_msg_header.h
-@brief ¶¨Òåcwinux ÏûÏ¢Í·
+@brief å®šä¹‰cwinux æ¶ˆæ¯å¤´
 @author cwinux@gmail.com
 @version 1.0
 @date 2010-10-04
@@ -23,83 +23,83 @@ extern "C" {
 #endif
 
 
-///¶¨ÒåÍ¨ĞÅ°üÍ·µÄ³¤¶È
+///å®šä¹‰é€šä¿¡åŒ…å¤´çš„é•¿åº¦
 #define  CWX_MSG_HEAD_LEN   14
 
-///¶¨ÒåÏµÍ³ÏûÏ¢µÄÊôĞÔ
+///å®šä¹‰ç³»ç»Ÿæ¶ˆæ¯çš„å±æ€§
 #define  CWX_MSG_ATTR_SYS_MSG (1<<0)
-///¶¨ÒåÊı¾İÑ¹ËõµÄÊôĞÔ
+///å®šä¹‰æ•°æ®å‹ç¼©çš„å±æ€§
 #define  CWX_MSG_ATTR_COMPRESS (1<<1)
 
-///keep aliveµÄÏûÏ¢ÀàĞÍ
+///keep aliveçš„æ¶ˆæ¯ç±»å‹
 #define CWX_MSG_TYPE_KEEPALIVE  1
-///keep alive»Ø¸´µÄÏûÏ¢ÀàĞÍ
+///keep aliveå›å¤çš„æ¶ˆæ¯ç±»å‹
 #define CWX_MSG_TYPE_KEEPALIVE_REPLY 2
 
-///¶¨ÒåÍ¨ĞÅ°üÍ·
+///å®šä¹‰é€šä¿¡åŒ…å¤´
 typedef struct CWX_MSG_HEADER_S
 {
-    CWX_UINT8      m_ucVersion;  ///<ÏûÏ¢°æ±¾ºÅ
-    CWX_UINT8      m_ucAttr;     ///<ÏûÏ¢ÊôĞÔ
-    CWX_UINT16     m_unMsgType;  ///<ÏûÏ¢ÀàĞÍ
-    CWX_UINT32     m_uiTaskId;   ///<ÈÎÎñºÅID
-    CWX_UINT32     m_uiDataLen;  ///<·¢ËÍµÄÊı¾İ³¤¶È
+    CWX_UINT8      m_ucVersion;  ///<æ¶ˆæ¯ç‰ˆæœ¬å·
+    CWX_UINT8      m_ucAttr;     ///<æ¶ˆæ¯å±æ€§
+    CWX_UINT16     m_unMsgType;  ///<æ¶ˆæ¯ç±»å‹
+    CWX_UINT32     m_uiTaskId;   ///<ä»»åŠ¡å·ID
+    CWX_UINT32     m_uiDataLen;  ///<å‘é€çš„æ•°æ®é•¿åº¦
 }CWX_MSG_HEADER_S;
 
 
 /**
-*@brief ½«ÏûÏ¢Í·´ò°ü³ÉÍøÂç×Ö½ÚĞòµÄÊı¾İ°ü·µ»Ø
-*@param [in] header ½øĞĞpackµÄÏûÏ¢°üÍ·¡£
-*@param [out] szHead packedµÄÏûÏ¢°üÍ·buf
-*@return ·µ»ØszHead
+*@brief å°†æ¶ˆæ¯å¤´æ‰“åŒ…æˆç½‘ç»œå­—èŠ‚åºçš„æ•°æ®åŒ…è¿”å›
+*@param [in] header è¿›è¡Œpackçš„æ¶ˆæ¯åŒ…å¤´ã€‚
+*@param [out] szHead packedçš„æ¶ˆæ¯åŒ…å¤´buf
+*@return è¿”å›szHead
 */
 char const* cwx_msg_pack_head(CWX_MSG_HEADER_S const*  header, char* szHead);
 /**
-*@brief ½«ÊÕµ½µÄÏûÏ¢Í·£¬½â³ÉÏûÏ¢Í·¶ÔÏó¡£
-*@param [in] szHead ÏûÏ¢°üÍ·µÄbuf
-*@param [out] header ÏûÏ¢°üÍ·
-*@return -1:Ğ£ÑéÂë´íÎó£»0:½â°üÕıÈ·
+*@brief å°†æ”¶åˆ°çš„æ¶ˆæ¯å¤´ï¼Œè§£æˆæ¶ˆæ¯å¤´å¯¹è±¡ã€‚
+*@param [in] szHead æ¶ˆæ¯åŒ…å¤´çš„buf
+*@param [out] header æ¶ˆæ¯åŒ…å¤´
+*@return -1:æ ¡éªŒç é”™è¯¯ï¼›0:è§£åŒ…æ­£ç¡®
 */
 int cwx_msg_unpack_head(char const* szHead, CWX_MSG_HEADER_S*  header);
 
 /**
-*@brief ÊÇ·ñÎªkeep-aliveµÄÏûÏ¢
-*@param [in] header ÏûÏ¢°üÍ·¡£
-*@return 1:ÊÇ£»0£º²»ÊÇ
+*@brief æ˜¯å¦ä¸ºkeep-aliveçš„æ¶ˆæ¯
+*@param [in] header æ¶ˆæ¯åŒ…å¤´ã€‚
+*@return 1:æ˜¯ï¼›0ï¼šä¸æ˜¯
 */
 int cwx_msg_is_keepalive(CWX_MSG_HEADER_S const*  header);
 
 /**
-*@brief ÊÇ·ñÎªkeep-aliveµÄ»Ø¸´ÏûÏ¢
-*@param [in] header ÏûÏ¢°üÍ·¡£
-*@return 1:ÊÇ£»0£º²»ÊÇ
+*@brief æ˜¯å¦ä¸ºkeep-aliveçš„å›å¤æ¶ˆæ¯
+*@param [in] header æ¶ˆæ¯åŒ…å¤´ã€‚
+*@return 1:æ˜¯ï¼›0ï¼šä¸æ˜¯
 */
 int cwx_msg_is_keepalive_reply(CWX_MSG_HEADER_S const*  header);
 
 /**
-*@brief ÊÇ·ñÏµÍ³ÏûÏ¢
-*@param [in] header ÏûÏ¢°üÍ·¡£
-*@return 1:ÊÇ£»0£º²»ÊÇ
+*@brief æ˜¯å¦ç³»ç»Ÿæ¶ˆæ¯
+*@param [in] header æ¶ˆæ¯åŒ…å¤´ã€‚
+*@return 1:æ˜¯ï¼›0ï¼šä¸æ˜¯
 */
 int cwx_msg_is_sys_msg(CWX_MSG_HEADER_S const*  header);
 
 /**
-*@brief ÉèÖÃÏµÍ³ÏûÏ¢±ê¼Ç
-*@param [in] header ÏûÏ¢°üÍ·¡£
+*@brief è®¾ç½®ç³»ç»Ÿæ¶ˆæ¯æ ‡è®°
+*@param [in] header æ¶ˆæ¯åŒ…å¤´ã€‚
 *@return void
 */
 void cwx_msg_set_sys_msg(CWX_MSG_HEADER_S*  header);
 
 /**
-*@brief ÉèÖÃÏûÏ¢Í·Îªkeep-aliveĞÅÏ¢
-*@param [in] header ÏûÏ¢°üÍ·¡£
+*@brief è®¾ç½®æ¶ˆæ¯å¤´ä¸ºkeep-aliveä¿¡æ¯
+*@param [in] header æ¶ˆæ¯åŒ…å¤´ã€‚
 *@return void
 */
 void cwx_msg_set_keepalive(CWX_MSG_HEADER_S *  header);
 
 /**
-*@brief ÉèÖÃÏûÏ¢Í·Îªkeep-aliveµÄreplyĞÅÏ¢
-*@param [in] header ÏûÏ¢°üÍ·¡£
+*@brief è®¾ç½®æ¶ˆæ¯å¤´ä¸ºkeep-aliveçš„replyä¿¡æ¯
+*@param [in] header æ¶ˆæ¯åŒ…å¤´ã€‚
 *@return void
 */
 void cwx_msg_set_keepalive_reply(CWX_MSG_HEADER_S *  header);
