@@ -1,9 +1,9 @@
-#include "CwxEchoClientConfig.h"
+ï»¿#include "CwxEchoClientConfig.h"
 
 int CwxEchoClientConfig::loadConfig(string const & strConfFile){
     CwxIniParse parser;
     string value;
-    //½âÎöÅäÖÃÎÄ¼ş
+    //è§£æé…ç½®æ–‡ä»¶
     if (false == parser.load(strConfFile)){
 		snprintf(m_szError, 2047, "Failure to Load conf file:%s", strConfFile.c_str());
         return -1;

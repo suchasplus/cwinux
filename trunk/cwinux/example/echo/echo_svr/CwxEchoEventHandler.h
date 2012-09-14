@@ -1,36 +1,36 @@
-#ifndef __CWX_ECHO_EVENT_HANDLER_H__
+ï»¿#ifndef __CWX_ECHO_EVENT_HANDLER_H__
 #define __CWX_ECHO_EVENT_HANDLER_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 #include "CwxCommander.h"
 
 CWINUX_USING_NAMESPACE
 
 class CwxEchoApp;
-///echoÇëÇóµÄ´¦Àíhandle£¬ÎªcommandµÄhandle
+///echoè¯·æ±‚çš„å¤„ç†handleï¼Œä¸ºcommandçš„handle
 class CwxEchoEventHandler : public CwxCmdOp 
 {
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxEchoEventHandler(CwxEchoApp* pApp):m_pApp(pApp)
     {
         m_ullMsgNum = 0;
     }
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     virtual ~CwxEchoEventHandler()
     {
 
     }
 public:
-    ///ÊÕµ½echoÇëÇóµÄ´¦Àíº¯Êı
-    virtual int onRecvMsg(CwxMsgBlock*& msg,///<echoÊı¾İ°ü¼°Ïà¹ØµÄÇëÇóÁ¬½ÓĞÅÏ¢
-                            CwxTss* pThrEnv///<´¦ÀíÏß³ÌµÄthread-specific-store
+    ///æ”¶åˆ°echoè¯·æ±‚çš„å¤„ç†å‡½æ•°
+    virtual int onRecvMsg(CwxMsgBlock*& msg,///<echoæ•°æ®åŒ…åŠç›¸å…³çš„è¯·æ±‚è¿æ¥ä¿¡æ¯
+                            CwxTss* pThrEnv///<å¤„ç†çº¿ç¨‹çš„thread-specific-store
                             );
 private:
-    CwxEchoApp*     m_pApp;  ///<app¶ÔÏó
+    CwxEchoApp*     m_pApp;  ///<appå¯¹è±¡
     CWX_UINT64      m_ullMsgNum;
 };
 

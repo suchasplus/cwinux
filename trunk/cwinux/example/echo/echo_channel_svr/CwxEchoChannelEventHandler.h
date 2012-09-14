@@ -1,9 +1,9 @@
-#ifndef __CWX_ECHO_CHANNEL_EVENT_HANDLER_H__
+ï»¿#ifndef __CWX_ECHO_CHANNEL_EVENT_HANDLER_H__
 #define __CWX_ECHO_CHANNEL_EVENT_HANDLER_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 #include "CwxAppHandler4Channel.h"
@@ -11,11 +11,11 @@
 
 CWINUX_USING_NAMESPACE
 
-///echoÇëÇóµÄ´¦Àíhandle£¬ÎªcommandµÄhandle
+///echoè¯·æ±‚çš„å¤„ç†handleï¼Œä¸ºcommandçš„handle
 class CwxEchoChannelEventHandler : public  CwxAppHandler4Channel
 {
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxEchoChannelEventHandler(CwxAppChannel *channel):CwxAppHandler4Channel(channel)
     {
         m_ullMsgNum = 0;
@@ -23,20 +23,20 @@ public:
         m_uiRecvDataLen = 0; ///<recieved data's byte number.
         m_recvMsgData = NULL; ///<the recieved msg data
     }
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     virtual ~CwxEchoChannelEventHandler()
     {
         if (m_recvMsgData) CwxMsgBlockAlloc::free(m_recvMsgData);
     }
 public:
     /**
-    @brief Á¬½Ó¿É¶ÁÊÂ¼ş£¬·µ»Ø-1£¬close()»á±»µ÷ÓÃ
-    @return -1£º´¦ÀíÊ§°Ü£¬»áµ÷ÓÃclose()£» 0£º´¦Àí³É¹¦
+    @brief è¿æ¥å¯è¯»äº‹ä»¶ï¼Œè¿”å›-1ï¼Œclose()ä¼šè¢«è°ƒç”¨
+    @return -1ï¼šå¤„ç†å¤±è´¥ï¼Œä¼šè°ƒç”¨close()ï¼› 0ï¼šå¤„ç†æˆåŠŸ
     */
     virtual int onInput();
     /**
-    @brief Í¨ÖªÁ¬½Ó¹Ø±Õ¡£
-    @return ¶ÔÓÚÖ÷¶¯Á¬½Ó£¬1£º²»´ÓengineÖĞÒÆ³ı×¢²á£»0£º²»´ÓengineÖĞÒÆ³ı×¢²áµ«²»É¾³ıhandler£»-1£º´ÓengineÖĞ½«handleÒÆ³ı²¢É¾³ı¡£
+    @brief é€šçŸ¥è¿æ¥å…³é—­ã€‚
+    @return å¯¹äºä¸»åŠ¨è¿æ¥ï¼Œ1ï¼šä¸ä»engineä¸­ç§»é™¤æ³¨å†Œï¼›0ï¼šä¸ä»engineä¸­ç§»é™¤æ³¨å†Œä½†ä¸åˆ é™¤handlerï¼›-1ï¼šä»engineä¸­å°†handleç§»é™¤å¹¶åˆ é™¤ã€‚
     */
     virtual int onConnClosed();
 private:
