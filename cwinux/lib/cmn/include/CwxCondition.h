@@ -1,14 +1,14 @@
-#ifndef __CWX_CONDITION_H__
+ï»¿#ifndef __CWX_CONDITION_H__
 #define __CWX_CONDITION_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxCondition.h
-@brief ÊµÏÖÁËConditionµÄ½Ó¿Ú¡£
+@brief å®ç°äº†Conditionçš„æ¥å£ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2010-07-10
@@ -24,38 +24,38 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class Condition
-@brief Condition¶ÔÏó¡£
+@brief Conditionå¯¹è±¡ã€‚
 */
 class CWX_API CwxCondition
 {
 public:
-    ///¹¹Ôìº¯Êı£¬´´½¨Ò»¸öÏß³ÌÅÅËûËø
+    ///æ„é€ å‡½æ•°ï¼Œåˆ›å»ºä¸€ä¸ªçº¿ç¨‹æ’ä»–é”
     CwxCondition(CwxMutexLock &lock, pthread_condattr_t * attr=NULL);
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxCondition();
 public:
     /**
-    @brief ×èÈûÖ±µ½´Ócondition·µ»Ø»òÕß³¬Ê±¡£
-    @param [in] timeout ³¬Ê±µÄÊ±¼ä£¬ÈôÎªNULL±íÊ¾³Ö¾ÃµÄµÈ´ı¡£
-    @return -1£ºÊ§°Ü£¬ÈôÊÇ³¬Ê±£¬ÔòerrnoÎªETIMEDOUT£» 0£º³É¹¦
+    @brief é˜»å¡ç›´åˆ°ä»conditionè¿”å›æˆ–è€…è¶…æ—¶ã€‚
+    @param [in] timeout è¶…æ—¶çš„æ—¶é—´ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºæŒä¹…çš„ç­‰å¾…ã€‚
+    @return -1ï¼šå¤±è´¥ï¼Œè‹¥æ˜¯è¶…æ—¶ï¼Œåˆ™errnoä¸ºETIMEDOUTï¼› 0ï¼šæˆåŠŸ
     */
     int wait (CwxTimeValue const *timeout = 0);
     /**
-    @brief Í¨ÖªÒ»¸öthread¡£
-    @return -1£ºÊ§°Ü£» 0£º³É¹¦
+    @brief é€šçŸ¥ä¸€ä¸ªthreadã€‚
+    @return -1ï¼šå¤±è´¥ï¼› 0ï¼šæˆåŠŸ
     */
     int signal (void);
     /**
-    @brief Í¨ÖªËùÓĞthread¡£
-    @return -1£ºÊ§°Ü£» 0£º³É¹¦
+    @brief é€šçŸ¥æ‰€æœ‰threadã€‚
+    @return -1ï¼šå¤±è´¥ï¼› 0ï¼šæˆåŠŸ
     */
     int broadcast(void);
-    ///»ñÈ¡Ëø
+    ///è·å–é”
     CwxMutexLock  &lock();
-    ///»ñÈ¡µ×²ãµÄcondition
+    ///è·å–åº•å±‚çš„condition
     pthread_cond_t* cond();
 private:
-    pthread_cond_t*  m_cond;///<condition¶ÔÏó
+    pthread_cond_t*  m_cond;///<conditionå¯¹è±¡
     CwxMutexLock&    m_lock;
 };
 

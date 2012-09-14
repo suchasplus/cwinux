@@ -1,14 +1,14 @@
-#ifndef __CWX_GBK_UNICODE_MAP_H__
+ï»¿#ifndef __CWX_GBK_UNICODE_MAP_H__
 #define __CWX_GBK_UNICODE_MAP_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxGbkUnicodeMap.h
-@brief ¶¨ÒåÁËGBKÓëUTF-8¡¢UTF-16×ª»»¾²Ì¬ÀàCwxGbkUnicodeMap¡£
+@brief å®šä¹‰äº†GBKä¸UTF-8ã€UTF-16è½¬æ¢é™æ€ç±»CwxGbkUnicodeMapã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-10
@@ -23,92 +23,92 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxGbkUnicodeMap
-@brief Ìá¹©¹«¹²¾²Ì¬API£¬ÊµÏÖGBK¡¢UTF-8¡¢UTF-16¼äµÄÏà»¥×ª»»
+@brief æä¾›å…¬å…±é™æ€APIï¼Œå®ç°GBKã€UTF-8ã€UTF-16é—´çš„ç›¸äº’è½¬æ¢
 */
 class CWX_API CwxGbkUnicodeMap
 {
 public:
     /**
-    @brief ½«Ò»¸öUTF16µÄ×Ö·û´®×ª»¯ÎªUTF8µÄ×Ö·û
-    @param [in] szUtf16 UTF16µÄ×Ö·û´®
-    @param [in,out] uiUtf16Len ´«ÈëUTF16µÄ×Ö·û´®µÄ³¤¶È£¬´«³ö×ª»¯µÄUTF16µÄ×Ö½ÚÊıÁ¿
-    @param [out] szUtf8 Êä³öµÄUTF8µÄ×Ö·û´®£¬ĞÎ³ÉµÄUTF8×Ö·û´®ÒÔ\\0½áÊø¡£
-    @param [in,out] uiUtf8Len ´«ÈëszUtf8µÄbuffer´óĞ¡£¬´«³öszUtf8µÄ³¤¶È
+    @brief å°†ä¸€ä¸ªUTF16çš„å­—ç¬¦ä¸²è½¬åŒ–ä¸ºUTF8çš„å­—ç¬¦
+    @param [in] szUtf16 UTF16çš„å­—ç¬¦ä¸²
+    @param [in,out] uiUtf16Len ä¼ å…¥UTF16çš„å­—ç¬¦ä¸²çš„é•¿åº¦ï¼Œä¼ å‡ºè½¬åŒ–çš„UTF16çš„å­—èŠ‚æ•°é‡
+    @param [out] szUtf8 è¾“å‡ºçš„UTF8çš„å­—ç¬¦ä¸²ï¼Œå½¢æˆçš„UTF8å­—ç¬¦ä¸²ä»¥\\0ç»“æŸã€‚
+    @param [in,out] uiUtf8Len ä¼ å…¥szUtf8çš„bufferå¤§å°ï¼Œä¼ å‡ºszUtf8çš„é•¿åº¦
     @return void
     */
     static void utf16ToUtf8(char const* szUtf16, size_t& uiUtf16Len, char* szUtf8, size_t& uiUtf8Len);
     /**
-    @brief ½«Ò»¸öUTF16µÄ×Ö·û´®×ª»¯ÎªGBKµÄ×Ö·û
-    @param [in] szUtf16 UTF16µÄ×Ö·û´®
-    @param [in,out] uiUtf16Len ´«ÈëUTF16µÄ×Ö·û´®µÄ³¤¶È£¬´«³ö×ª»¯µÄUTF16µÄ×Ö½ÚÊıÁ¿
-    @param [out] szGbk Êä³öµÄGBKµÄ×Ö·û´®£¬ĞÎ³ÉµÄGBK×Ö·û´®ÒÔ\\0½áÊø¡£
-    @param [in,out] uiGbkLen ´«ÈëszGbkµÄbuffer´óĞ¡£¬´«³öszGbkµÄ³¤¶È
+    @brief å°†ä¸€ä¸ªUTF16çš„å­—ç¬¦ä¸²è½¬åŒ–ä¸ºGBKçš„å­—ç¬¦
+    @param [in] szUtf16 UTF16çš„å­—ç¬¦ä¸²
+    @param [in,out] uiUtf16Len ä¼ å…¥UTF16çš„å­—ç¬¦ä¸²çš„é•¿åº¦ï¼Œä¼ å‡ºè½¬åŒ–çš„UTF16çš„å­—èŠ‚æ•°é‡
+    @param [out] szGbk è¾“å‡ºçš„GBKçš„å­—ç¬¦ä¸²ï¼Œå½¢æˆçš„GBKå­—ç¬¦ä¸²ä»¥\\0ç»“æŸã€‚
+    @param [in,out] uiGbkLen ä¼ å…¥szGbkçš„bufferå¤§å°ï¼Œä¼ å‡ºszGbkçš„é•¿åº¦
     @return void
     */
     static void utf16ToGbk(char const* szUtf16, CWX_UINT32& uiUtf16Len, char* szGbk, CWX_UINT32& uiGbkLen);
     /**
-    @brief ½«Ò»¸öUTF8µÄ×Ö·û´®×ª»¯ÎªUTF16µÄ×Ö·û
-    @param [in] szUtf8 UTF8µÄ×Ö·û´®
-    @param [in,out] uiUtf8Len ´«ÈëUTF8µÄ×Ö·û´®µÄ³¤¶È£¬´«³ö×ª»¯µÄUTF8µÄ×Ö½ÚÊıÁ¿
-    @param [out] szUtf16 Êä³öµÄUTF16µÄ×Ö·û´®£¬ĞÎ³ÉµÄUTF16×Ö·û´®ÒÔ\\0½áÊø¡£
-    @param [in,out] uiUtf16Len ´«ÈëszUtf16µÄbuffer´óĞ¡£¬´«³öszUtf16µÄ³¤¶È
+    @brief å°†ä¸€ä¸ªUTF8çš„å­—ç¬¦ä¸²è½¬åŒ–ä¸ºUTF16çš„å­—ç¬¦
+    @param [in] szUtf8 UTF8çš„å­—ç¬¦ä¸²
+    @param [in,out] uiUtf8Len ä¼ å…¥UTF8çš„å­—ç¬¦ä¸²çš„é•¿åº¦ï¼Œä¼ å‡ºè½¬åŒ–çš„UTF8çš„å­—èŠ‚æ•°é‡
+    @param [out] szUtf16 è¾“å‡ºçš„UTF16çš„å­—ç¬¦ä¸²ï¼Œå½¢æˆçš„UTF16å­—ç¬¦ä¸²ä»¥\\0ç»“æŸã€‚
+    @param [in,out] uiUtf16Len ä¼ å…¥szUtf16çš„bufferå¤§å°ï¼Œä¼ å‡ºszUtf16çš„é•¿åº¦
     @return void
     */
     static void utf8ToUtf16(char const* szUtf8, size_t& uiUtf8Len, char* szUtf16, size_t& uiUtf16Len);
     /**
-    @brief ½«Ò»¸öUTF8µÄ×Ö·û´®×ª»¯ÎªGBKµÄ×Ö·û
-    @param [in] szUtf8 UTF8µÄ×Ö·û´®
-    @param [in,out] uiUtf8Len ´«ÈëUTF8µÄ×Ö·û´®µÄ³¤¶È£¬´«³ö×ª»¯µÄUTF8µÄ×Ö½ÚÊıÁ¿
-    @param [out] szGbk Êä³öµÄGBKµÄ×Ö·û´®£¬ĞÎ³ÉµÄGBK×Ö·û´®ÒÔ\\0½áÊø¡£
-    @param [in,out] uiGbkLen ´«ÈëszGbkµÄbuffer´óĞ¡£¬´«³öszGbkµÄ³¤¶È
+    @brief å°†ä¸€ä¸ªUTF8çš„å­—ç¬¦ä¸²è½¬åŒ–ä¸ºGBKçš„å­—ç¬¦
+    @param [in] szUtf8 UTF8çš„å­—ç¬¦ä¸²
+    @param [in,out] uiUtf8Len ä¼ å…¥UTF8çš„å­—ç¬¦ä¸²çš„é•¿åº¦ï¼Œä¼ å‡ºè½¬åŒ–çš„UTF8çš„å­—èŠ‚æ•°é‡
+    @param [out] szGbk è¾“å‡ºçš„GBKçš„å­—ç¬¦ä¸²ï¼Œå½¢æˆçš„GBKå­—ç¬¦ä¸²ä»¥\\0ç»“æŸã€‚
+    @param [in,out] uiGbkLen ä¼ å…¥szGbkçš„bufferå¤§å°ï¼Œä¼ å‡ºszGbkçš„é•¿åº¦
     @return void
     */
     static void utf8ToGbk(char const* szUtf8, CWX_UINT32& uiUtf8Len, char* szGbk, CWX_UINT32& uiGbkLen);
     /**
-    @brief ½«Ò»¸öGBKµÄ×Ö·û´®×ª»¯ÎªUTF8µÄ×Ö·û
-    @param [in] szGbk GBKµÄ×Ö·û´®
-    @param [in,out] uiGbkLen ´«ÈëGBKµÄ×Ö·û´®µÄ³¤¶È£¬´«³ö×ª»¯µÄGBKµÄ×Ö½ÚÊıÁ¿
-    @param [out] szUtf8 Êä³öµÄUTF8µÄ×Ö·û´®£¬ĞÎ³ÉµÄutf8×Ö·û´®ÒÔ\\0½áÊø¡£
-    @param [in,out] uiUtf8Len ´«ÈëszUtf8µÄbuffer´óĞ¡£¬´«³öszUtf8µÄ³¤¶È
+    @brief å°†ä¸€ä¸ªGBKçš„å­—ç¬¦ä¸²è½¬åŒ–ä¸ºUTF8çš„å­—ç¬¦
+    @param [in] szGbk GBKçš„å­—ç¬¦ä¸²
+    @param [in,out] uiGbkLen ä¼ å…¥GBKçš„å­—ç¬¦ä¸²çš„é•¿åº¦ï¼Œä¼ å‡ºè½¬åŒ–çš„GBKçš„å­—èŠ‚æ•°é‡
+    @param [out] szUtf8 è¾“å‡ºçš„UTF8çš„å­—ç¬¦ä¸²ï¼Œå½¢æˆçš„utf8å­—ç¬¦ä¸²ä»¥\\0ç»“æŸã€‚
+    @param [in,out] uiUtf8Len ä¼ å…¥szUtf8çš„bufferå¤§å°ï¼Œä¼ å‡ºszUtf8çš„é•¿åº¦
     @return void
     */
     static void gbkToUtf8(char const* szGbk, CWX_UINT32& uiGbkLen, char* szUtf8, CWX_UINT32& uiUtf8Len);
     /**
-    @brief ½«Ò»¸öGBKµÄ×Ö·û´®×ª»¯ÎªUTF16µÄ×Ö·û
-    @param [in] szGbk GBKµÄ×Ö·û´®
-    @param [in,out] uiGbkLen ´«ÈëGBKµÄ×Ö·û´®µÄ³¤¶È£¬´«³ö×ª»¯µÄGBKµÄ×Ö½ÚÊıÁ¿
-    @param [out] szUtf16 Êä³öµÄUTF16µÄ×Ö·û´®£¬ĞÎ³ÉµÄutf16×Ö·û´®ÒÔ\\0½áÊø¡£
-    @param [in,out] uiUtf16Len ´«ÈëszUtf16µÄbuffer´óĞ¡£¬´«³öszUtf16µÄ³¤¶È
+    @brief å°†ä¸€ä¸ªGBKçš„å­—ç¬¦ä¸²è½¬åŒ–ä¸ºUTF16çš„å­—ç¬¦
+    @param [in] szGbk GBKçš„å­—ç¬¦ä¸²
+    @param [in,out] uiGbkLen ä¼ å…¥GBKçš„å­—ç¬¦ä¸²çš„é•¿åº¦ï¼Œä¼ å‡ºè½¬åŒ–çš„GBKçš„å­—èŠ‚æ•°é‡
+    @param [out] szUtf16 è¾“å‡ºçš„UTF16çš„å­—ç¬¦ä¸²ï¼Œå½¢æˆçš„utf16å­—ç¬¦ä¸²ä»¥\\0ç»“æŸã€‚
+    @param [in,out] uiUtf16Len ä¼ å…¥szUtf16çš„bufferå¤§å°ï¼Œä¼ å‡ºszUtf16çš„é•¿åº¦
     @return void
     */
     static void gbkToUtf16(char const* szGbk, CWX_UINT32& uiGbkLen, char* szUtf16, CWX_UINT32& uiUtf16Len);
     /**
-    @brief ½«Ò»¸öutf16µÄ×Ö·û±àÂë±äÎªÒ»¸öUTF8µÄ×Ö·û
-    @param [in] unUtf16 utf16×Ö·û±àÂë
-    @param [out] szUtf8 Êä³öµÄUTF8µÄ×Ö·û
-    @param [in,out] unUtf8Len ´«ÈëUTF8µÄbuffer´óĞ¡£¬´«³öunUtf16¶ÔÓ¦µÄUTF8×Ö·ûµÄ³¤¶È
+    @brief å°†ä¸€ä¸ªutf16çš„å­—ç¬¦ç¼–ç å˜ä¸ºä¸€ä¸ªUTF8çš„å­—ç¬¦
+    @param [in] unUtf16 utf16å­—ç¬¦ç¼–ç 
+    @param [out] szUtf8 è¾“å‡ºçš„UTF8çš„å­—ç¬¦
+    @param [in,out] unUtf8Len ä¼ å…¥UTF8çš„bufferå¤§å°ï¼Œä¼ å‡ºunUtf16å¯¹åº”çš„UTF8å­—ç¬¦çš„é•¿åº¦
     @return void
     */
     static void utf16ChrToUtf8(CWX_UINT16 unUtf16, char* szUtf8, CWX_UINT8& unUtf8Len);
     /**
-    @brief ½«Ò»¸öutf8µÄ×Ö·û±äÎªÒ»¸öUTF16µÄ×Ö·û
-    @param [in] szUtf8 Ò»¸öutf8×Ö·û
-    @param [in] unUtf8Len Ò»¸öUTF8µÄ×Ö·ûµÄ³¤¶È
-    @param [out] unUtf16 UTF8×Ö·û¶ÔÓ¦µÄUTF16±àÂë
+    @brief å°†ä¸€ä¸ªutf8çš„å­—ç¬¦å˜ä¸ºä¸€ä¸ªUTF16çš„å­—ç¬¦
+    @param [in] szUtf8 ä¸€ä¸ªutf8å­—ç¬¦
+    @param [in] unUtf8Len ä¸€ä¸ªUTF8çš„å­—ç¬¦çš„é•¿åº¦
+    @param [out] unUtf16 UTF8å­—ç¬¦å¯¹åº”çš„UTF16ç¼–ç 
     @return void
     */
     static void utf8ChrToUtf16(char const* szUtf8, CWX_UINT16 unUtf8Len, CWX_UINT16& unUtf16);
-    ///¸ù¾İGBKµÄ±àÂë£¬»ñÈ¡¶ÔÓ¦µÄUTF16±àÂë£¬ÈôÎª0±íÊ¾²»´æÔÚ£¬´Ë½öÏŞÓÚË«×Ö½ÚµÄGBK±àÂë
+    ///æ ¹æ®GBKçš„ç¼–ç ï¼Œè·å–å¯¹åº”çš„UTF16ç¼–ç ï¼Œè‹¥ä¸º0è¡¨ç¤ºä¸å­˜åœ¨ï¼Œæ­¤ä»…é™äºåŒå­—èŠ‚çš„GBKç¼–ç 
     static CWX_UINT16 gbkToUtf16 (CWX_UINT16 unGbk);
-    ///¸ù¾İUTF16µÄ±àÂë£¬»ñÈ¡¶ÔÓ¦µÄGBK±àÂë£¬ÈôÎª0±íÊ¾²»´æÔÚ£¬´Ë½öÏŞÓÚË«×Ö½ÚµÄGBK±àÂë
+    ///æ ¹æ®UTF16çš„ç¼–ç ï¼Œè·å–å¯¹åº”çš„GBKç¼–ç ï¼Œè‹¥ä¸º0è¡¨ç¤ºä¸å­˜åœ¨ï¼Œæ­¤ä»…é™äºåŒå­—èŠ‚çš„GBKç¼–ç 
     static CWX_UINT16 utf16ToGbk(CWX_UINT16 unUtf16);
 private:
     static unsigned short  m_gbkUtf16Map[65536];
     static unsigned short  m_utf16GbkMap[65536];
 private:
-    ///¹¹Ôìº¯Êı£¬½ûÖ¹ÊµÀı»¯
+    ///æ„é€ å‡½æ•°ï¼Œç¦æ­¢å®ä¾‹åŒ–
     CwxGbkUnicodeMap(){}
-    ///Îö¹¹º¯Êı£¬½ûÖ¹É¾³ı
+    ///ææ„å‡½æ•°ï¼Œç¦æ­¢åˆ é™¤
     ~CwxGbkUnicodeMap(){}
 };
 

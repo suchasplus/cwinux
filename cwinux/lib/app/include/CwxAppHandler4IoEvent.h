@@ -1,14 +1,14 @@
-#ifndef __CWX_APP_HANDLER_4_IO_EVENT_H__
+ï»¿#ifndef __CWX_APP_HANDLER_4_IO_EVENT_H__
 #define __CWX_APP_HANDLER_4_IO_EVENT_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxAppHandler4IoEvent.h
-@brief IOÊÂ¼ş¼à²âHandleµÄ¶¨Òå
+@brief IOäº‹ä»¶ç›‘æµ‹Handleçš„å®šä¹‰
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-07-20
@@ -31,28 +31,28 @@ class CwxAppFramework;
 
 /**
 @class CwxAppHandler4IoEvent
-@brief ´¦ÀíIO HANDLEÊÂ¼ş¼à²â¡£
+@brief å¤„ç†IO HANDLEäº‹ä»¶ç›‘æµ‹ã€‚
 */
 class CWX_API CwxAppHandler4IoEvent : public CwxAppHandler4Base
 {
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxAppHandler4IoEvent(CwxAppFramework* app,
         CwxAppReactor *reactor);
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxAppHandler4IoEvent();
 public:
     /**
-    @brief handler open¡£ÍùreactorµÄ×¢²á¡£
-    @param [in] arg  ÎŞĞ§²ÎÊı
-    @return -1£ºÊ§°Ü£» 0£º³É¹¦
+    @brief handler openã€‚å¾€reactorçš„æ³¨å†Œã€‚
+    @param [in] arg  æ— æ•ˆå‚æ•°
+    @return -1ï¼šå¤±è´¥ï¼› 0ï¼šæˆåŠŸ
     */
     virtual int open (void * arg= 0);
     /**
-    @brief Á¬½ÓÉÏÓĞÊÂ¼ş·¢Éú¡£
-    @param [in] event Á¬½ÓÉÏµÄÊÂ¼ş
-    @param [in] handle  ·¢ÉúµÄÊÂ¼şµÄhandle¡£
-    @return -1£º´¦ÀíÊ§°Ü£» 0£º´¦Àí³É¹¦
+    @brief è¿æ¥ä¸Šæœ‰äº‹ä»¶å‘ç”Ÿã€‚
+    @param [in] event è¿æ¥ä¸Šçš„äº‹ä»¶
+    @param [in] handle  å‘ç”Ÿçš„äº‹ä»¶çš„handleã€‚
+    @return -1ï¼šå¤„ç†å¤±è´¥ï¼› 0ï¼šå¤„ç†æˆåŠŸ
     */
     virtual int handle_event(int event, CWX_HANDLE handle=CWX_INVALID_HANDLE);
     ///handle close
@@ -98,7 +98,7 @@ public:
     {
         m_userData = userData;
     }
-    ///»ñÈ¡app
+    ///è·å–app
     CwxAppFramework* getApp()
     {
         return m_pApp;
@@ -108,10 +108,10 @@ public:
     CwxAppHandler4IoEvent* m_next;
 private:
     CwxAppFramework* m_pApp;
-    CWX_UINT32   m_uiSvrId;///<HandleµÄsvr id
-    CWX_UINT32   m_uiHostId;///<HandleµÄhost id
-    CWX_UINT16   m_ioEventMask;///<HandleµÄÊÂ¼ş¼à²âÑÚÂë
-    void*       m_userData;///<HandleµÄÓÃ»§Êı¾İ
+    CWX_UINT32   m_uiSvrId;///<Handleçš„svr id
+    CWX_UINT32   m_uiHostId;///<Handleçš„host id
+    CWX_UINT16   m_ioEventMask;///<Handleçš„äº‹ä»¶ç›‘æµ‹æ©ç 
+    void*       m_userData;///<Handleçš„ç”¨æˆ·æ•°æ®
 };
 
 CWINUX_END_NAMESPACE

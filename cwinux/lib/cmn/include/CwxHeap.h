@@ -1,14 +1,14 @@
-#ifndef __CWX_HEAP_H__
+ï»¿#ifndef __CWX_HEAP_H__
 #define __CWX_HEAP_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxHeap.h
-@brief Í¨¹ıSTLµÄHEAP ½Ó¿Ú£¬ÊµÏÖ×îĞ¡heap¡£
+@brief é€šè¿‡STLçš„HEAP æ¥å£ï¼Œå®ç°æœ€å°heapã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-10
@@ -24,20 +24,20 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxHeap
-@brief Í¨¹ıSTLµÄHEAP ½Ó¿Ú£¬ÊµÏÖ×îĞ¡heapÄ£°åÀà£»<br>
-TYPEÎªÅÅĞòµÄ¶ÔÏóÀàĞÍ£¬CMPÎªTYPEµÄ±È½Ïº¯Êı¶ÔÏó¡£<br>
-¶ÔÓÚCMP(T1,T2)µÄ±È½Ï·µ»ØÖµÀ´Ëµ£¬¶¨ÒåÈçÏÂ,È±Ê¡Îªstl::less
-T1<T2£º·µ»Øtrue
-T1>=T2£º·µ»Øfalse
+@brief é€šè¿‡STLçš„HEAP æ¥å£ï¼Œå®ç°æœ€å°heapæ¨¡æ¿ç±»ï¼›<br>
+TYPEä¸ºæ’åºçš„å¯¹è±¡ç±»å‹ï¼ŒCMPä¸ºTYPEçš„æ¯”è¾ƒå‡½æ•°å¯¹è±¡ã€‚<br>
+å¯¹äºCMP(T1,T2)çš„æ¯”è¾ƒè¿”å›å€¼æ¥è¯´ï¼Œå®šä¹‰å¦‚ä¸‹,ç¼ºçœä¸ºstl::less
+T1<T2ï¼šè¿”å›true
+T1>=T2ï¼šè¿”å›false
 */
 template <class TYPE, class CMP=less<TYPE> >
 class CWX_API CwxHeap
 {
 public:
     /**
-    @brief ¹¹Ôìº¯Êı
-    @param [in] num heapÖĞ×î¶àµÄÔªËØÊıÁ¿
-    @param [in] cmp ±È½Ïº¯Êı
+    @brief æ„é€ å‡½æ•°
+    @param [in] num heapä¸­æœ€å¤šçš„å…ƒç´ æ•°é‡
+    @param [in] cmp æ¯”è¾ƒå‡½æ•°
     */
     CwxHeap(CWX_UINT32 num, CMP const& cmp=less<TYPE>()):m_cmp(cmp)
     {
@@ -46,15 +46,15 @@ public:
         m_pElement = NULL;
         m_bHeap = true;
     }
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxHeap()
     {
         if (m_pElement) delete [] m_pElement;
     }
 public:
     /**
-    @brief ³õÊ¼»¯HEAP
-    @return -1£ºÊ§°Ü£»0£º³É¹¦
+    @brief åˆå§‹åŒ–HEAP
+    @return -1ï¼šå¤±è´¥ï¼›0ï¼šæˆåŠŸ
     */
     int init()
     {
@@ -65,10 +65,10 @@ public:
         return 0;
     }
     /**
-    @brief ÍùHEAPÖĞÌí¼ÓÒ»¸öÔªËØ£¬ÈôHEAPÒÔÂú£¬ÔòÒç³ö×îĞ¡µÄÒ»¸öÔªËØ
-    @param [in] in Ìí¼ÓµÄÔªËØ
-    @param [out] out ÈôHEAPÒÑÂú£¬ÔòÒç³ö×îĞ¡µÄÔªËØ
-    @return true£ºÒç³öÁË×îĞ¡µÄÔªËØ£»false£ºÃ»ÓĞÔªËØ´ÓHEAPÖĞÒç³ö
+    @brief å¾€HEAPä¸­æ·»åŠ ä¸€ä¸ªå…ƒç´ ï¼Œè‹¥HEAPä»¥æ»¡ï¼Œåˆ™æº¢å‡ºæœ€å°çš„ä¸€ä¸ªå…ƒç´ 
+    @param [in] in æ·»åŠ çš„å…ƒç´ 
+    @param [out] out è‹¥HEAPå·²æ»¡ï¼Œåˆ™æº¢å‡ºæœ€å°çš„å…ƒç´ 
+    @return trueï¼šæº¢å‡ºäº†æœ€å°çš„å…ƒç´ ï¼›falseï¼šæ²¡æœ‰å…ƒç´ ä»HEAPä¸­æº¢å‡º
     */
     bool push(TYPE const& in, TYPE& out)
     {
@@ -92,9 +92,9 @@ public:
         return false;
     }
     /**
-    @brief Ö÷¶¯µÄ´ÓHEAPÖĞPOPÒ»¸ö×îĞ¡µÄÔªËØ
-    @param [out] out pop³öµÄ×îĞ¡µÄÔªËØ
-    @return true£ºpop³öÁËÒ»¸ö×îĞ¡µÄÔªËØ£»false£ºheapÒÑ¿Õ
+    @brief ä¸»åŠ¨çš„ä»HEAPä¸­POPä¸€ä¸ªæœ€å°çš„å…ƒç´ 
+    @param [out] out popå‡ºçš„æœ€å°çš„å…ƒç´ 
+    @return trueï¼špopå‡ºäº†ä¸€ä¸ªæœ€å°çš„å…ƒç´ ï¼›falseï¼šheapå·²ç©º
     */
     bool pop(TYPE& out)
     {
@@ -105,34 +105,34 @@ public:
         out = m_pElement[m_uiCurNum];
         return true;
     }
-    ///¶ÔHEAP°´ÕÕCMP¶ÔÏóµÄÅÅĞò¹æÔò£¬°´ÉıĞò½øĞĞÅÅĞò
+    ///å¯¹HEAPæŒ‰ç…§CMPå¯¹è±¡çš„æ’åºè§„åˆ™ï¼ŒæŒ‰å‡åºè¿›è¡Œæ’åº
     void sort()
     {
         sort_heap(m_pElement, m_pElement+m_uiCurNum, m_cmp);
         m_bHeap = false;
     }
-    ///»ñÈ¡HEAPÖĞµÄµÚindex¸öÔªËØ£¬Èô·µ»ØNULL£¬±íÊ¾ÔªËØ²»´æÔÚ
+    ///è·å–HEAPä¸­çš„ç¬¬indexä¸ªå…ƒç´ ï¼Œè‹¥è¿”å›NULLï¼Œè¡¨ç¤ºå…ƒç´ ä¸å­˜åœ¨
     TYPE const* operator[](CWX_UINT32 index) const
     {
         if (index<m_uiCurNum) return m_pElement + index;
         return NULL;
     }
-    ///»ñÈ¡HEAPÖĞÔªËØµÄÊıÁ¿
+    ///è·å–HEAPä¸­å…ƒç´ çš„æ•°é‡
     CWX_UINT32 count() const
     { 
         return m_uiCurNum;
     }
-    ///true£ºHEAPÖĞµÄÔªËØÊÇHEAPµÄ´ÎĞò£»false£ºHEAPÖĞµÄÔªËØ²»ÊÇHEAPµÄ´ÎĞò¡£
+    ///trueï¼šHEAPä¸­çš„å…ƒç´ æ˜¯HEAPçš„æ¬¡åºï¼›falseï¼šHEAPä¸­çš„å…ƒç´ ä¸æ˜¯HEAPçš„æ¬¡åºã€‚
     bool isHeap() const 
     { 
         return m_bHeap;
     }
 private:
-    CWX_UINT32  m_uiNum;///<heapµÄÈİÁ¿
-    CWX_UINT32  m_uiCurNum;///<heapÖĞÔªËØµÄÊıÁ¿
-    TYPE*   m_pElement;///<heapµÄÊı×é£¬´óĞ¡Îªm_uiNum¸ö
-    bool    m_bHeap;///<m_pElementÖĞµÄÊı¾İ£¬ÊÇ·ñÊÇHEAPµÄ´ÎĞò
-    CMP     m_cmp;///<±È½Ïº¯Êı¶ÔÏó
+    CWX_UINT32  m_uiNum;///<heapçš„å®¹é‡
+    CWX_UINT32  m_uiCurNum;///<heapä¸­å…ƒç´ çš„æ•°é‡
+    TYPE*   m_pElement;///<heapçš„æ•°ç»„ï¼Œå¤§å°ä¸ºm_uiNumä¸ª
+    bool    m_bHeap;///<m_pElementä¸­çš„æ•°æ®ï¼Œæ˜¯å¦æ˜¯HEAPçš„æ¬¡åº
+    CMP     m_cmp;///<æ¯”è¾ƒå‡½æ•°å¯¹è±¡
 };
 
 CWINUX_END_NAMESPACE

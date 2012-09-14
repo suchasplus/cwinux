@@ -1,4 +1,4 @@
-#include "CwxAppHandler4Channel.h"
+ï»¿#include "CwxAppHandler4Channel.h"
 #include "CwxAppChannel.h"
 #include "CwxSockIo.h"
 
@@ -16,7 +16,7 @@ CwxAppHandler4Channel::CwxAppHandler4Channel(CwxAppChannel *channel)
     m_bRedo = false;
 }
 
-///Îö¹¹º¯Êý
+///æžæž„å‡½æ•°
 CwxAppHandler4Channel::~CwxAppHandler4Channel()
 {
     clear();
@@ -30,7 +30,7 @@ CwxAppHandler4Channel::~CwxAppHandler4Channel()
 
 int CwxAppHandler4Channel::open (void * )
 {
-    //ÉèÖÃÁ¬½ÓÎª·Ç×èÈû×´Ì¬
+    //è®¾ç½®è¿žæŽ¥ä¸ºéžé˜»å¡žçŠ¶æ€
     if	(CwxSockIo::setNonblock(getHandle(), true) == -1)
     {
         CWX_ERROR(("Failure to set the connection for NONBLOCK.conn[%d]",
@@ -92,9 +92,9 @@ int CwxAppHandler4Channel::close(CWX_HANDLE)
 
 
 /**
-@brief ½ÓÊÜÁ¬½ÓÉÏµÄµ½´ïÊý¾Ý
-@param [in] handle Á¬½ÓµÄhandle
-@return -1£º¹Ø±ÕµÄÁ¬½Ó£» 0£º½ÓÊÕÊý¾Ý³É¹¦
+@brief æŽ¥å—è¿žæŽ¥ä¸Šçš„åˆ°è¾¾æ•°æ®
+@param [in] handle è¿žæŽ¥çš„handle
+@return -1ï¼šå…³é—­çš„è¿žæŽ¥ï¼› 0ï¼šæŽ¥æ”¶æ•°æ®æˆåŠŸ
 */
 int CwxAppHandler4Channel::handle_event(int event, CWX_HANDLE)
 {
@@ -223,15 +223,15 @@ int CwxAppHandler4Channel::onRedo()
     return 0;
 }
 
-//return -1£ºÈ¡ÏûÏûÏ¢µÄ·¢ËÍ¡£ 0£º·¢ËÍÏûÏ¢¡£
+//return -1ï¼šå–æ¶ˆæ¶ˆæ¯çš„å‘é€ã€‚ 0ï¼šå‘é€æ¶ˆæ¯ã€‚
 int CwxAppHandler4Channel::onStartSendMsg(CwxMsgBlock* )
 {
     return 0;
 }
 /*return 
-CwxMsgSendCtrl::UNDO_CONN£º²»ÐÞ¸ÄÁ¬½ÓµÄ½ÓÊÕ×´Ì¬
-CwxMsgSendCtrl::RESUME_CONN£ºÈÃÁ¬½Ó´Ósuspend×´Ì¬±äÎªÊý¾Ý½ÓÊÕ×´Ì¬¡£
-CwxMsgSendCtrl::SUSPEND_CONN£ºÈÃÁ¬½Ó´ÓÊý¾Ý½ÓÊÕ×´Ì¬±äÎªsuspend×´Ì¬
+CwxMsgSendCtrl::UNDO_CONNï¼šä¸ä¿®æ”¹è¿žæŽ¥çš„æŽ¥æ”¶çŠ¶æ€
+CwxMsgSendCtrl::RESUME_CONNï¼šè®©è¿žæŽ¥ä»ŽsuspendçŠ¶æ€å˜ä¸ºæ•°æ®æŽ¥æ”¶çŠ¶æ€ã€‚
+CwxMsgSendCtrl::SUSPEND_CONNï¼šè®©è¿žæŽ¥ä»Žæ•°æ®æŽ¥æ”¶çŠ¶æ€å˜ä¸ºsuspendçŠ¶æ€
 */
 CWX_UINT32 CwxAppHandler4Channel::onEndSendMsg(CwxMsgBlock*& )
 {
@@ -243,14 +243,14 @@ void CwxAppHandler4Channel::onFailSendMsg(CwxMsgBlock*&)
 
 
 }
-//return ¶ÔÓÚÖ÷¶¯Á¬½Ó£¬1£º²»´ÓengineÖÐÒÆ³ý×¢²á£»0£º²»´ÓengineÖÐÒÆ³ý×¢²áµ«²»É¾³ýhandler£»-1£º´ÓengineÖÐ½«handleÒÆ³ý²¢É¾³ý¡£
+//return å¯¹äºŽä¸»åŠ¨è¿žæŽ¥ï¼Œ1ï¼šä¸ä»Žengineä¸­ç§»é™¤æ³¨å†Œï¼›0ï¼šä¸ä»Žengineä¸­ç§»é™¤æ³¨å†Œä½†ä¸åˆ é™¤handlerï¼›-1ï¼šä»Žengineä¸­å°†handleç§»é™¤å¹¶åˆ é™¤ã€‚
 int CwxAppHandler4Channel::onConnClosed()
 {
     return -1;
 }
 
 
-///ÓÉÓÚÃ»ÓÐÏûÏ¢·¢ËÍ£¬Ê¹Á¬½ÓµÄ·¢ËÍ¼à²âÐÝÃß.·µ»ØÖµ£¬ -1: failure, 0: success
+///ç”±äºŽæ²¡æœ‰æ¶ˆæ¯å‘é€ï¼Œä½¿è¿žæŽ¥çš„å‘é€ç›‘æµ‹ä¼‘çœ .è¿”å›žå€¼ï¼Œ -1: failure, 0: success
 int CwxAppHandler4Channel::cancelWakeup()
 {
     if(-1 == channel()->suspendHandler(this, CwxAppHandler4Base::WRITE_MASK)){
@@ -260,7 +260,7 @@ int CwxAppHandler4Channel::cancelWakeup()
     return 0;
 }
 
-///»½ÐÑÁ¬½ÓµÄ¿ÉÐ´¼à¿Ø£¬ÒÔ·¢ËÍÎ´·¢ËÍÍê±ÏµÄÊý¾Ý.·µ»ØÖµ£¬ -1:failure£» 0:success¡£
+///å”¤é†’è¿žæŽ¥çš„å¯å†™ç›‘æŽ§ï¼Œä»¥å‘é€æœªå‘é€å®Œæ¯•çš„æ•°æ®.è¿”å›žå€¼ï¼Œ -1:failureï¼› 0:successã€‚
 int CwxAppHandler4Channel::wakeUp()
 {
     if(-1 == channel()->resumeHandler(this, CwxAppHandler4Base::WRITE_MASK)){

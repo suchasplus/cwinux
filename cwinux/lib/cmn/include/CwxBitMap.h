@@ -1,15 +1,15 @@
-#ifndef __CWX_BIT_MAP_H__
+ï»¿#ifndef __CWX_BIT_MAP_H__
 #define __CWX_BIT_MAP_H__
 
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼þ×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜Žï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxBitMap.h
-@brief ¶¨ÒåÁËCwxBitMapÀà£¬Æä¹¦ÄÜÊÇÊµÏÖ×î´ó2^32¸öÎ»µÄÉèÖÃ¡¢¼ì²é²Ù×÷
+@brief å®šä¹‰äº†CwxBitMapç±»ï¼Œå…¶åŠŸèƒ½æ˜¯å®žçŽ°æœ€å¤§2^32ä¸ªä½çš„è®¾ç½®ã€æ£€æŸ¥æ“ä½œ
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-10
@@ -23,25 +23,25 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxBitMap
-@brief ¶Ô×î¶à2^32¸öÎ»½øÐÐÉèÖÃ¡¢¼ì²éµÄ²Ù×÷£¬ËùÓÐ²Ù×÷Îª¾²Ì¬µÄinline²Ù×÷¡£
+@brief å¯¹æœ€å¤š2^32ä¸ªä½è¿›è¡Œè®¾ç½®ã€æ£€æŸ¥çš„æ“ä½œï¼Œæ‰€æœ‰æ“ä½œä¸ºé™æ€çš„inlineæ“ä½œã€‚
 */
 class CWX_API CwxBitMap
 {
 public:
     /**
-    @brief ¼ì²ébitMapÖ¸ÏòµÄÄÚ´æÖÐ£¬µÚbitÎ»ÊÇ·ñÉèÖÃÎª1¡£
-    @param [in] bitMap Òª¼ì²éµÄÎ»ËùÔÚµÄÄÚ´æ
-    @param [in] bit Òª¼ì²éµÄÎ»
-    @return true£ºÉèÖÃÎª1£»false£ºÃ»ÓÐÉèÖÃÎª1
+    @brief æ£€æŸ¥bitMapæŒ‡å‘çš„å†…å­˜ä¸­ï¼Œç¬¬bitä½æ˜¯å¦è®¾ç½®ä¸º1ã€‚
+    @param [in] bitMap è¦æ£€æŸ¥çš„ä½æ‰€åœ¨çš„å†…å­˜
+    @param [in] bit è¦æ£€æŸ¥çš„ä½
+    @return trueï¼šè®¾ç½®ä¸º1ï¼›falseï¼šæ²¡æœ‰è®¾ç½®ä¸º1
     */
     inline static bool isEnable(void* bitMap, CWX_UINT32 bit)
     {
         return ((((char*)bitMap)[bit>>3]) & (1<<(bit&0x07))) != 0;
     }
     /**
-    @brief ½«bitMapÖ¸ÏòµÄÄÚ´æµÄµÚbitÎ»ÉèÖÃÎª1¡£
-    @param [in] bitMap ÒªÉèÖÃµÄÎ»ËùÔÚµÄÄÚ´æ
-    @param [in] bit ÒªÉèÖÃµÄÎ»
+    @brief å°†bitMapæŒ‡å‘çš„å†…å­˜çš„ç¬¬bitä½è®¾ç½®ä¸º1ã€‚
+    @param [in] bitMap è¦è®¾ç½®çš„ä½æ‰€åœ¨çš„å†…å­˜
+    @param [in] bit è¦è®¾ç½®çš„ä½
     @return void
     */
     inline static void setBit(void* bitMap, CWX_UINT32 bit)
@@ -49,9 +49,9 @@ public:
         (((char*)bitMap)[bit>>3]) |= (1<<(bit&0x07));
     }
     /**
-    @brief ½«bitMapÖ¸ÏòµÄÄÚ´æµÄµÚbitÎ»Çå¿ÕÎª0¡£
-    @param [in] bitMap ÒªÉèÖÃµÄÎ»ËùÔÚµÄÄÚ´æ
-    @param [in] bit ÒªÇå¿ÕµÄÎ»
+    @brief å°†bitMapæŒ‡å‘çš„å†…å­˜çš„ç¬¬bitä½æ¸…ç©ºä¸º0ã€‚
+    @param [in] bitMap è¦è®¾ç½®çš„ä½æ‰€åœ¨çš„å†…å­˜
+    @param [in] bit è¦æ¸…ç©ºçš„ä½
     @return void
     */
     inline static void clrBit(void* bitMap, CWX_UINT32 bit)
@@ -59,9 +59,9 @@ public:
         (((char*)bitMap)[bit>>3]) &=~(1<<(bit&0x07));
     }
 private:
-    ///Ë½ÓÐ¹¹Ôìº¯Êý£¬½ûÖ¹ÊµÀý»¯
+    ///ç§æœ‰æž„é€ å‡½æ•°ï¼Œç¦æ­¢å®žä¾‹åŒ–
     CwxBitMap(){}
-    ///Ë½ÓÐÎö¹¹º¯Êý
+    ///ç§æœ‰æžæž„å‡½æ•°
     ~CwxBitMap(){}
 };
 

@@ -1,4 +1,4 @@
-#include "CwxMsgQueue.h"
+ï»¿#include "CwxMsgQueue.h"
 
 CWINUX_BEGIN_NAMESPACE
 
@@ -22,7 +22,7 @@ CwxMsgQueue::~CwxMsgQueue()
     }
 }
 
-///½«Ò»¸öÏûÏ¢·Åµ½¶ÓÁĞµÄÍ·²¿¡£-1£ºÊ§°Ü£»>=0£º¶ÓÁĞÖĞµÄÏûÏ¢ÊıÁ¿
+///å°†ä¸€ä¸ªæ¶ˆæ¯æ”¾åˆ°é˜Ÿåˆ—çš„å¤´éƒ¨ã€‚-1ï¼šå¤±è´¥ï¼›>=0ï¼šé˜Ÿåˆ—ä¸­çš„æ¶ˆæ¯æ•°é‡
 int CwxMsgQueue::enqueue (CwxMsgBlock *msg,
                              CwxTimeValue *timeout)
 {
@@ -53,7 +53,7 @@ int CwxMsgQueue::enqueue (CwxMsgBlock *msg,
 }
 
 
-///½«Ò»¸öÏûÏ¢·Åµ½¶ÓÁĞµÄÎ²²¿¡£-1£ºÊ§°Ü£»>=0£º¶ÓÁĞÖĞµÄÏûÏ¢ÊıÁ¿
+///å°†ä¸€ä¸ªæ¶ˆæ¯æ”¾åˆ°é˜Ÿåˆ—çš„å°¾éƒ¨ã€‚-1ï¼šå¤±è´¥ï¼›>=0ï¼šé˜Ÿåˆ—ä¸­çš„æ¶ˆæ¯æ•°é‡
 int CwxMsgQueue::enqueue_tail(CwxMsgBlock * msg,
                   CwxTimeValue *timeout)
 {
@@ -92,7 +92,7 @@ int CwxMsgQueue::enqueue_tail(CwxMsgBlock * msg,
 }
 
 
-///´Ó¶ÓÁĞµÄÍ·²¿»ñÈ¡Ò»¸öÏûÏ¢¡£-1£ºÊ§°Ü£»>=0£º¶ÓÁĞÖĞµÄÏûÏ¢ÊıÁ¿
+///ä»é˜Ÿåˆ—çš„å¤´éƒ¨è·å–ä¸€ä¸ªæ¶ˆæ¯ã€‚-1ï¼šå¤±è´¥ï¼›>=0ï¼šé˜Ÿåˆ—ä¸­çš„æ¶ˆæ¯æ•°é‡
 int CwxMsgQueue::dequeue (CwxMsgBlock *&msg,
                   CwxTimeValue *timeout)
 {

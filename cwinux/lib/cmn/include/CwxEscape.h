@@ -1,14 +1,14 @@
-#ifndef __CWX_ESCAPE_H__
+ï»¿#ifndef __CWX_ESCAPE_H__
 #define __CWX_ESCAPE_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxEscape.h
-@brief escape½Ó¿ÚµÄ¶¨Òå£¬ÊµÏÖ¸÷ÖÖ×Ö·û±ä»»¡£
+@brief escapeæ¥å£çš„å®šä¹‰ï¼Œå®ç°å„ç§å­—ç¬¦å˜æ¢ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-11-10
@@ -24,23 +24,23 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxEscape
-@brief ¶¨Òå×Ö·ûµÄ±àÂë¡¢½âÂë²Ù×÷£¬Ä¬ÈÏÊ²Ã´¶¼²»×ö
+@brief å®šä¹‰å­—ç¬¦çš„ç¼–ç ã€è§£ç æ“ä½œï¼Œé»˜è®¤ä»€ä¹ˆéƒ½ä¸åš
 */
 class CWX_API CwxEscape
 {
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxEscape(){}
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     virtual ~CwxEscape(){}
 public:
     /**
-    @brief ¶ÔszSrcµÄ×Ö·û´®½øĞĞ±àÂë£¬±àÂëºóµÄ×Ö·û´æ·ÅÔÚszOutÖĞ¡£
-    @param [in] szSrc ĞèÒª½øĞĞ±àÂëµÄ×Ö·û´®
-    @param [in] uiSrcLen Ô´×Ö·û´®µÄ³¤¶È
-    @param [out] szOut ±àÂëºóµÄ×Ö·û´®£¬ĞÎ³É×Ö·û´®ÒÔ\\0½áÊø¡£
-    @param [in,out] uiOutLen ÊäÈëszOutµÄ¿Õ¼ä´óĞ¡£¬Êä³ö±àÂëºóµÄ³¤¶È
-    @return true£º³É¹¦£»false:szOutµÄ¿Õ¼ä²»×ã¡£
+    @brief å¯¹szSrcçš„å­—ç¬¦ä¸²è¿›è¡Œç¼–ç ï¼Œç¼–ç åçš„å­—ç¬¦å­˜æ”¾åœ¨szOutä¸­ã€‚
+    @param [in] szSrc éœ€è¦è¿›è¡Œç¼–ç çš„å­—ç¬¦ä¸²
+    @param [in] uiSrcLen æºå­—ç¬¦ä¸²çš„é•¿åº¦
+    @param [out] szOut ç¼–ç åçš„å­—ç¬¦ä¸²ï¼Œå½¢æˆå­—ç¬¦ä¸²ä»¥\\0ç»“æŸã€‚
+    @param [in,out] uiOutLen è¾“å…¥szOutçš„ç©ºé—´å¤§å°ï¼Œè¾“å‡ºç¼–ç åçš„é•¿åº¦
+    @return trueï¼šæˆåŠŸï¼›false:szOutçš„ç©ºé—´ä¸è¶³ã€‚
     */
     virtual bool encode(char const* szSrc, CWX_UINT32 uiSrcLen, char* szOut, CWX_UINT32& uiOutLen) const
     {
@@ -51,12 +51,12 @@ public:
         return true;
     }
     /**
-    @brief ¶ÔszSrcµÄ×Ö·û´®½øĞĞ½âÂë£¬½âÂëºóµÄ×Ö·û´æ·ÅÔÚszOutÖĞ¡£
-    @param [in] szSrc ĞèÒª½øĞĞ½âÂëµÄ×Ö·û´®
-    @param [in] uiSrcLen Ô´×Ö·û´®µÄ³¤¶È
-    @param [out] szOut ½âÂëºóµÄ×Ö·û´®£¬ĞÎ³É×Ö·û´®ÒÔ\\0½áÊø¡£
-    @param [in,out] uiOutLen ÊäÈëszOutµÄ¿Õ¼ä´óĞ¡£¬Êä³ö±àÂëºóµÄ³¤¶È
-    @return true£º³É¹¦£»false:szOutµÄ¿Õ¼ä²»×ã¡£
+    @brief å¯¹szSrcçš„å­—ç¬¦ä¸²è¿›è¡Œè§£ç ï¼Œè§£ç åçš„å­—ç¬¦å­˜æ”¾åœ¨szOutä¸­ã€‚
+    @param [in] szSrc éœ€è¦è¿›è¡Œè§£ç çš„å­—ç¬¦ä¸²
+    @param [in] uiSrcLen æºå­—ç¬¦ä¸²çš„é•¿åº¦
+    @param [out] szOut è§£ç åçš„å­—ç¬¦ä¸²ï¼Œå½¢æˆå­—ç¬¦ä¸²ä»¥\\0ç»“æŸã€‚
+    @param [in,out] uiOutLen è¾“å…¥szOutçš„ç©ºé—´å¤§å°ï¼Œè¾“å‡ºç¼–ç åçš„é•¿åº¦
+    @return trueï¼šæˆåŠŸï¼›false:szOutçš„ç©ºé—´ä¸è¶³ã€‚
     */
     virtual bool decode(char const* szSrc, CWX_UINT32 uiSrcLen, char* szOut, CWX_UINT32& uiOutLen) const
     {

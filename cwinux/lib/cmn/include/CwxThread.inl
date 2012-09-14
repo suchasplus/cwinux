@@ -1,15 +1,15 @@
-
+ï»¿
 CWINUX_BEGIN_NAMESPACE
 
-///»ñÈ¡Ïß³ÌµÄÏûÏ¢¶ÓÁĞÅÅ¶ÓÏûÏ¢Êı
+///è·å–çº¿ç¨‹çš„æ¶ˆæ¯é˜Ÿåˆ—æ’é˜Ÿæ¶ˆæ¯æ•°
 inline size_t CwxThread::getQueuedMsgNum()
 {
     return m_msgQueue->getMsgCount();
 }
 /**
-@brief ÍùÏß³ÌµÄÏûÏ¢¶ÓÁĞÌí¼ÓÒ»¸öĞÂÏûÏ¢¡£
-@param [in] pMsg appendµÄÏûÏ¢
-@return -1£ºÊ§°Ü£»>=0¶ÓÁĞÖĞÅÅ¶ÓµÄÏûÏ¢ÊıÁ¿
+@brief å¾€çº¿ç¨‹çš„æ¶ˆæ¯é˜Ÿåˆ—æ·»åŠ ä¸€ä¸ªæ–°æ¶ˆæ¯ã€‚
+@param [in] pMsg appendçš„æ¶ˆæ¯
+@return -1ï¼šå¤±è´¥ï¼›>=0é˜Ÿåˆ—ä¸­æ’é˜Ÿçš„æ¶ˆæ¯æ•°é‡
 */
 inline int  CwxThread::append(CwxMsgBlock* pMsg)
 {
@@ -22,9 +22,9 @@ inline int  CwxThread::appendHead(CwxMsgBlock* pMsg)
 }
 
 /**
-@brief ´ÓÏß³ÌµÄÏûÏ¢¶ÓÁĞ»ñÈ¡Ò»¸öÅÅ¶ÓÏûÏ¢£¬Èô¶ÓÁĞÎª¿Õ£¬Ôò×èÈû¡£
-@param [out] pMsg popµÄÏûÏ¢¡£
-@return -1£ºÊ§°Ü£»>=0¶ÓÁĞÖĞÅÅ¶ÓµÄÏûÏ¢ÊıÁ¿
+@brief ä»çº¿ç¨‹çš„æ¶ˆæ¯é˜Ÿåˆ—è·å–ä¸€ä¸ªæ’é˜Ÿæ¶ˆæ¯ï¼Œè‹¥é˜Ÿåˆ—ä¸ºç©ºï¼Œåˆ™é˜»å¡ã€‚
+@param [out] pMsg popçš„æ¶ˆæ¯ã€‚
+@return -1ï¼šå¤±è´¥ï¼›>=0é˜Ÿåˆ—ä¸­æ’é˜Ÿçš„æ¶ˆæ¯æ•°é‡
 */
 inline int CwxThread::pop(CwxMsgBlock*& pMsg)
 {
@@ -32,12 +32,12 @@ inline int CwxThread::pop(CwxMsgBlock*& pMsg)
 }
 
 
-///»ñÈ¡Ïß³ÌµÄgroup id
+///è·å–çº¿ç¨‹çš„group id
 inline CWX_UINT16 CwxThread::getThreadId() const
 {
     return m_unThreadId;
 }
-///»ñÈ¡ÏÖÔÚÔÚÏß³Ì×éÖĞµÄĞòºÅ
+///è·å–ç°åœ¨åœ¨çº¿ç¨‹ç»„ä¸­çš„åºå·
 inline CWX_UINT16 CwxThread::getGroupId() const 
 { 
     return m_unGroupId;

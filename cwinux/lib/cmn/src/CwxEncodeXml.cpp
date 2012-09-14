@@ -1,4 +1,4 @@
-#include "CwxEncodeXml.h"
+﻿#include "CwxEncodeXml.h"
 
 CWINUX_BEGIN_NAMESPACE
 

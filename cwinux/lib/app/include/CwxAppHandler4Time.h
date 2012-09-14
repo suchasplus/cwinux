@@ -1,9 +1,9 @@
-#ifndef __CWX_APP_HANDLER_4_TIME_H__
+ï»¿#ifndef __CWX_APP_HANDLER_4_TIME_H__
 #define __CWX_APP_HANDLER_4_TIME_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
@@ -33,28 +33,28 @@ class CwxAppFramework;
 class CWX_API CwxAppHandler4Time:public CwxAppHandler4Base
 {
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxAppHandler4Time(CwxAppFramework* pApp, CwxAppReactor* reactor, CwxTimeValue const& internal);
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxAppHandler4Time();
 public:
     /**
-    @brief handler open¡£ÍùreactorµÄ×¢²á¡£
-    @param [in] arg  ÎŞĞ§²ÎÊı
-    @return -1£ºÊ§°Ü£» 0£º³É¹¦
+    @brief handler openã€‚å¾€reactorçš„æ³¨å†Œã€‚
+    @param [in] arg  æ— æ•ˆå‚æ•°
+    @return -1ï¼šå¤±è´¥ï¼› 0ï¼šæˆåŠŸ
     */
     virtual int open (void * arg= 0);
     /**
-    @brief ½ÓÊÜTimeoutµÄÊÂ¼ş
-    @param [in] event timeout ÊÂ¼ş
-    @param [in] handle ÎŞĞ§
-    @return -1£º´¦ÀíÊ§°Ü£» 0£º´¦Àí³É¹¦
+    @brief æ¥å—Timeoutçš„äº‹ä»¶
+    @param [in] event timeout äº‹ä»¶
+    @param [in] handle æ— æ•ˆ
+    @return -1ï¼šå¤„ç†å¤±è´¥ï¼› 0ï¼šå¤„ç†æˆåŠŸ
     */
     virtual int handle_event(int event, CWX_HANDLE handle=CWX_INVALID_HANDLE);
     ///handle close
     virtual int close(CWX_HANDLE handle=CWX_INVALID_HANDLE);
 public:
-    ///»ñÈ¡app
+    ///è·å–app
     CwxAppFramework* getApp()
     {
         return m_pApp;

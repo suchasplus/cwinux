@@ -1,4 +1,4 @@
-#include "CwxAppListenMgr.h"
+﻿#include "CwxAppListenMgr.h"
 #include "CwxAppFramework.h"
 
 CWINUX_BEGIN_NAMESPACE

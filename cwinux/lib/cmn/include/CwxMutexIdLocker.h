@@ -1,18 +1,18 @@
-#ifndef __CWX_MUTEX_ID_LOCKER_H__
+ï»¿#ifndef __CWX_MUTEX_ID_LOCKER_H__
 #define __CWX_MUTEX_ID_LOCKER_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 *@file  CwxMutexIdLocker.h
-*@brief ÊµÏÖ»ùÓÚIdµÄÅÅËûËø¶ÔÏó£¬Íê³É¶ÔÒ»¸ö64Î»Êı×ÖµÄ¼ÓËø
+*@brief å®ç°åŸºäºIdçš„æ’ä»–é”å¯¹è±¡ï¼Œå®Œæˆå¯¹ä¸€ä¸ª64ä½æ•°å­—çš„åŠ é”
 *@author cwinux@gmail.com
 *@version 0.1
 *@date  2009-05-30
-*@warning  ÎŞ.
+*@warning  æ— .
 */
 #include "CwxPre.h"
 #include "CwxGlobalMacro.h"
@@ -28,16 +28,16 @@ CWINUX_BEGIN_NAMESPACE
 /**
 * @class CwxMutexIdLockMgr
 *
-* @brief 64Î»Êı×ÖµÄÅÅËûIDËø¹ÜÀíÆ÷¶ÔÏó¡£
+* @brief 64ä½æ•°å­—çš„æ’ä»–IDé”ç®¡ç†å™¨å¯¹è±¡ã€‚
 */
 class CWX_API CwxMutexIdLockMgr : public CwxSingleton
 {
 public:
     enum{
-        MAX_FREE_MUTEX_NUM = 32,///<×î¶à¿ÕÏĞËøµÄÊıÁ¿
-        HASH_BUCKET_SIZE = 2048///<ËøHASHµÄ´óĞ¡
+        MAX_FREE_MUTEX_NUM = 32,///<æœ€å¤šç©ºé—²é”çš„æ•°é‡
+        HASH_BUCKET_SIZE = 2048///<é”HASHçš„å¤§å°
     };
-    ///ID¶ÁĞ´Ëø¶ÔÏó
+    ///IDè¯»å†™é”å¯¹è±¡
     class CwxMutexObj
     {
     public:
@@ -50,58 +50,58 @@ public:
 
         }
     public:
-        CwxMutexLock        m_lock;///<¶ÁĞ´Ëø
-        CWX_UINT16       m_unNum;///<µÈ´ı¶ÁĞ´ËøµÄÏß³ÌÊıÁ¿
+        CwxMutexLock        m_lock;///<è¯»å†™é”
+        CWX_UINT16       m_unNum;///<ç­‰å¾…è¯»å†™é”çš„çº¿ç¨‹æ•°é‡
     };
 public:
 public:
-    ///´´½¨signleton CwxRwIdLockMgr ¶ÔÏó
+    ///åˆ›å»ºsignleton CwxRwIdLockMgr å¯¹è±¡
     static CwxMutexIdLockMgr* instance();
 public:
-    ///¶ÔID¼ÓÅÅËûËø, 0£º³É¹¦£» -1£ºÊ§°Ü
+    ///å¯¹IDåŠ æ’ä»–é”, 0ï¼šæˆåŠŸï¼› -1ï¼šå¤±è´¥
     int lock(CWX_UINT64  id);
-    ///¶ÔID½âËø, 0£º³É¹¦£» -1£ºÊ§°Ü
+    ///å¯¹IDè§£é”, 0ï¼šæˆåŠŸï¼› -1ï¼šå¤±è´¥
     int unlock(CWX_UINT64 id);
 private:
-    ///IDÅÅËûËøµÄ³õÊ¼»¯
+    ///IDæ’ä»–é”çš„åˆå§‹åŒ–
     void  init();
-    ///½ûÖ¹Íâ²¿´´½¨¶ÔÏóÊµÀı
+    ///ç¦æ­¢å¤–éƒ¨åˆ›å»ºå¯¹è±¡å®ä¾‹
     CwxMutexIdLockMgr();
-    ///½ûÖ¹Íâ²¿É¾³ı¶ÔÏó
+    ///ç¦æ­¢å¤–éƒ¨åˆ é™¤å¯¹è±¡
     virtual ~CwxMutexIdLockMgr();
 
 private:
-    static CwxMutexIdLockMgr* m_pInstance; ///<µ¥ÊµÀı¾ä±ú
-    static CwxMutexLock   m_lock;///<µ¥ÊµÀıµÄ±£»¤Ëø
-    CWX_UINT16        m_unFreeMutexNum;///<¿ÕÏĞËøµÄÊıÁ¿
-    list<CwxMutexObj*>*  m_pListLocks;///<¿ÕÏĞËøµÄÁĞ±í
-    CwxMutexLock      m_mutex;///<È«¾ÖĞÅÏ¢²Ù×÷µÄÍ¬²½Ëø
-    hash_map<CWX_UINT64, CwxMutexObj* /*lock*/, CwxNumHash<CWX_UINT64> >*   m_pLockMap;///<ËøµÄhash
+    static CwxMutexIdLockMgr* m_pInstance; ///<å•å®ä¾‹å¥æŸ„
+    static CwxMutexLock   m_lock;///<å•å®ä¾‹çš„ä¿æŠ¤é”
+    CWX_UINT16        m_unFreeMutexNum;///<ç©ºé—²é”çš„æ•°é‡
+    list<CwxMutexObj*>*  m_pListLocks;///<ç©ºé—²é”çš„åˆ—è¡¨
+    CwxMutexLock      m_mutex;///<å…¨å±€ä¿¡æ¯æ“ä½œçš„åŒæ­¥é”
+    hash_map<CWX_UINT64, CwxMutexObj* /*lock*/, CwxNumHash<CWX_UINT64> >*   m_pLockMap;///<é”çš„hash
 };
 
 
 /**
 * @class CwxMutexIdLocker
 *
-* @brief ¶ÔÒ»¸ö64Î»Êı×Ö£¬¼ÓÅÅËûËø¡£
+* @brief å¯¹ä¸€ä¸ª64ä½æ•°å­—ï¼ŒåŠ æ’ä»–é”ã€‚
 */
 class CWX_API CwxMutexIdLocker
 {
 public:
 public:
-    ///¶Ôid¼ÓÅÅËûËø
+    ///å¯¹idåŠ æ’ä»–é”
     CwxMutexIdLocker(CWX_UINT64 id)
     {
         m_ullLockID = id;
         CwxMutexIdLockMgr::instance()->lock(m_ullLockID);
     }
-    ///Í¨¹ıÎö¹¹º¯Êı£¬Íê³É¶ÔIDÅÅËûËøµÄÊÍ·Å.
+    ///é€šè¿‡ææ„å‡½æ•°ï¼Œå®Œæˆå¯¹IDæ’ä»–é”çš„é‡Šæ”¾.
     ~CwxMutexIdLocker()
     {
         CwxMutexIdLockMgr::instance()->unlock(m_ullLockID);
     }
 private:
-    CWX_UINT64              m_ullLockID;///<±»ËøµÄID
+    CWX_UINT64              m_ullLockID;///<è¢«é”çš„ID
 };
 
 CWINUX_END_NAMESPACE

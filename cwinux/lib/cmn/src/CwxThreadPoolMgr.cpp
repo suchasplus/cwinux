@@ -1,4 +1,4 @@
-#include "CwxThreadPoolMgr.h"
+﻿#include "CwxThreadPoolMgr.h"
 
 CWINUX_BEGIN_NAMESPACE
 CwxThreadPoolMgr::CwxThreadPoolMgr()

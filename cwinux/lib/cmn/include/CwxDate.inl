@@ -1,4 +1,4 @@
-CWINUX_BEGIN_NAMESPACE
+﻿CWINUX_BEGIN_NAMESPACE
 
 inline string& CwxDate::format(time_t tt, char const* format, string& datetime)
 {

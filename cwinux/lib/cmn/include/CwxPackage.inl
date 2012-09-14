@@ -1,6 +1,6 @@
-/**
+ï»¿/**
 *@file CwxPackage.inl
-*@brief CwxPackageÀàµÄInlineÊµÏÖ
+*@brief CwxPackageç±»çš„Inlineå®ç°
 *@author cwinux@gmail.com
 *@version 1.0
 *@date  2009-06-05
@@ -9,7 +9,7 @@
 */
 CWINUX_BEGIN_NAMESPACE
 
-//-1£º°üµÄ¸ñÊ½·Ç·¨£»0:²»´æÔÚ£»>0£ºKey/ValueµÄ³¤¶È¡£
+//-1ï¼šåŒ…çš„æ ¼å¼éæ³•ï¼›0:ä¸å­˜åœ¨ï¼›>0ï¼šKey/Valueçš„é•¿åº¦ã€‚
 inline int CwxPackage::getKeyByIndex(char const *szMsg, CWX_UINT32 uiMsgLen, CWX_UINT32 uiIndex, CwxKeyValueItem& item)
 {
     CWX_UINT32 uiPos = 0;
@@ -25,7 +25,7 @@ inline int CwxPackage::getKeyByIndex(char const *szMsg, CWX_UINT32 uiMsgLen, CWX
     return len;
 }
 
-//-1£º°üµÄ¸ñÊ½·Ç·¨£»0:²»´æÔÚ£»>0£ºKey/ValueµÄ³¤¶È¡£
+//-1ï¼šåŒ…çš„æ ¼å¼éæ³•ï¼›0:ä¸å­˜åœ¨ï¼›>0ï¼šKey/Valueçš„é•¿åº¦ã€‚
 inline int CwxPackage::getKeyByName(char const *szMsg, CWX_UINT32 uiMsgLen, char const* szKey, CwxKeyValueItem& item, bool bCaseSensive)
 {
     CWX_UINT32 uiPos = 0;
@@ -48,7 +48,7 @@ inline int CwxPackage::getKeyByName(char const *szMsg, CWX_UINT32 uiMsgLen, char
     return 0;
 }
 
-//-1£ºÎŞĞ§µÄpackage£¬0£ºÃ»ÓĞ·¢ÏÖ£¬1£ºÉ¾³ıÁËÒ»¸öKEY
+//-1ï¼šæ— æ•ˆçš„packageï¼Œ0ï¼šæ²¡æœ‰å‘ç°ï¼Œ1ï¼šåˆ é™¤äº†ä¸€ä¸ªKEY
 inline int CwxPackage::removeKey(char *szMsg, CWX_UINT32& uiMsgLen, CWX_UINT16 unIndex)
 {
     CWX_UINT32 i;
@@ -75,7 +75,7 @@ inline int CwxPackage::dump(char const* szMsg, CWX_UINT32 uiMsgLen, char* szOutB
     return len;
 }
 
-//true:ÓĞĞ§µÄ°ü£»false£ºÎŞĞ§µÄ°ü.
+//true:æœ‰æ•ˆçš„åŒ…ï¼›falseï¼šæ— æ•ˆçš„åŒ….
 inline bool CwxPackage::isValidPackage(char const *szMsg, CWX_UINT32 uiMsgLen)
 {
     CWX_UINT32 uiPos = 0;
@@ -91,7 +91,7 @@ inline bool CwxPackage::isValidPackage(char const *szMsg, CWX_UINT32 uiMsgLen)
     return true;
 }
 
-///»ñÈ¡packageµÄkeyµÄÊıÁ¿
+///è·å–packageçš„keyçš„æ•°é‡
 inline int CwxPackage::getKeyValueNum(char const* szMsg, CWX_UINT32 uiMsgLen)
 {
     int iKeyNum = 0;
@@ -111,19 +111,19 @@ inline int CwxPackage::getKeyValueNum(char const* szMsg, CWX_UINT32 uiMsgLen)
 
 
 
-///Í¨¹ıKeyµÄ³¤¶È¼°dataµÄ³¤¶È£¬»ñÈ¡´ò°üºóµÄKey/value³¤¶È¡£
+///é€šè¿‡Keyçš„é•¿åº¦åŠdataçš„é•¿åº¦ï¼Œè·å–æ‰“åŒ…åçš„Key/valueé•¿åº¦ã€‚
 inline CWX_UINT32 CwxPackage::getKvLen(CWX_UINT16 unKeyLen, CWX_UINT32 uiDataLen)
 {
     return 8 + unKeyLen + uiDataLen ;
 }
 
-///Í¨¹ıkey/valueµÄ³¤¶È¼°keyµÄ³¤¶È£¬»ñÈ¡dataµÄ³¤¶È
+///é€šè¿‡key/valueçš„é•¿åº¦åŠkeyçš„é•¿åº¦ï¼Œè·å–dataçš„é•¿åº¦
 inline CWX_UINT32 CwxPackage::getDataLen(CWX_UINT32 uiKeyValueLen, CWX_UINT16 unKeyLen)
 {
     return uiKeyValueLen - unKeyLen - 8;
 }
 
-///·µ»ØkeyÔÚkey/valueÖĞµÄÆ«ÒÆ
+///è¿”å›keyåœ¨key/valueä¸­çš„åç§»
 inline CWX_UINT16 CwxPackage::getKeyOffset()
 {
     return 6;

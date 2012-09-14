@@ -1,14 +1,14 @@
-#ifndef __CWX_APP_HANDLER_4_TCP_CONN_H__
+ï»¿#ifndef __CWX_APP_HANDLER_4_TCP_CONN_H__
 #define __CWX_APP_HANDLER_4_TCP_CONN_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxAppHandler4TcpConn.h
-@brief ¶¨ÒåTCP£¬PIPE¡¢¼°ÆäËûIOÍ¨ĞÅ¡¢¹ÜÀíµÄHandle¶ÔÏó£ºCwxAppHandler4TcpConn
+@brief å®šä¹‰TCPï¼ŒPIPEã€åŠå…¶ä»–IOé€šä¿¡ã€ç®¡ç†çš„Handleå¯¹è±¡ï¼šCwxAppHandler4TcpConn
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-07-20
@@ -31,7 +31,7 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxAppHandler4TcpConn
-@brief TCP£¬PIPE¡¢¼°ÆäËûIOÍ¨ĞÅ¡¢×´Ì¬¹ÜÀíµÄHandle¶ÔÏó
+@brief TCPï¼ŒPIPEã€åŠå…¶ä»–IOé€šä¿¡ã€çŠ¶æ€ç®¡ç†çš„Handleå¯¹è±¡
 */
 
 class CwxAppFramework;
@@ -41,53 +41,53 @@ class CwxAppTcpAcceptor;
 class CWX_API CwxAppHandler4TcpConn:public CwxAppHandler4Msg
 {
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxAppHandler4TcpConn(CwxAppFramework* pApp, CwxAppReactor *reactor);
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxAppHandler4TcpConn();
 public:
     /**
-    @brief ³õÊ¼»¯½¨Á¢µÄÁ¬½Ó£¬²¢ÍùReactor×¢²áÁ¬½Ó
-    @param [in] arg ½¨Á¢Á¬½ÓµÄacceptor»òÎªNULL
-    @return -1£º·ÅÆú½¨Á¢µÄÁ¬½Ó£» 0£ºÁ¬½Ó½¨Á¢³É¹¦
+    @brief åˆå§‹åŒ–å»ºç«‹çš„è¿æ¥ï¼Œå¹¶å¾€Reactoræ³¨å†Œè¿æ¥
+    @param [in] arg å»ºç«‹è¿æ¥çš„acceptoræˆ–ä¸ºNULL
+    @return -1ï¼šæ”¾å¼ƒå»ºç«‹çš„è¿æ¥ï¼› 0ï¼šè¿æ¥å»ºç«‹æˆåŠŸ
     */
     virtual int open (void * arg= 0);
     ///handle close
     virtual int close(CWX_HANDLE handle=CWX_INVALID_HANDLE);
-    ///³¬Ê±
+    ///è¶…æ—¶
     virtual void handle_timeout();
     /**
-    @brief »ñÈ¡Á¬½ÓµÄ¶Ô¶ËµØÖ·£¬Ö»¶ÔSTREAM_TYPE_TCPºÍSTREAM_TYPE_UNIXÓĞĞ§
-    @param [in,out] szBuf ·µ»ØµØÖ·µÄbuf,»ñÈ¡³É¹¦ºóÒÔ\\0½áÊø¡£
-    @param [in] unSize szBufµÄ´óĞ¡¡£
-    @return ·µ»ØszBuf
+    @brief è·å–è¿æ¥çš„å¯¹ç«¯åœ°å€ï¼Œåªå¯¹STREAM_TYPE_TCPå’ŒSTREAM_TYPE_UNIXæœ‰æ•ˆ
+    @param [in,out] szBuf è¿”å›åœ°å€çš„buf,è·å–æˆåŠŸåä»¥\\0ç»“æŸã€‚
+    @param [in] unSize szBufçš„å¤§å°ã€‚
+    @return è¿”å›szBuf
     */
     virtual char* getRemoteAddr(char* szBuf, CWX_UINT16 unSize);
     /**
-    @brief »ñÈ¡Á¬½ÓµÄ¶Ô¶Ëport£¬Ö»¶ÔSTREAM_TYPE_TCPÓĞĞ§
-    @return Á¬½Ó¶Ô¶ËµÄport
+    @brief è·å–è¿æ¥çš„å¯¹ç«¯portï¼Œåªå¯¹STREAM_TYPE_TCPæœ‰æ•ˆ
+    @return è¿æ¥å¯¹ç«¯çš„port
     */
     virtual CWX_UINT16 getRemotePort();
     /**
-    @brief »ñÈ¡Á¬½Ó±¾¶ËµÄµØÖ·£¬Ö»¶ÔSTREAM_TYPE_TCPºÍSTREAM_TYPE_UNIXÓĞĞ§
-    @param [in,out] szBuf ·µ»ØµØÖ·µÄbuf,»ñÈ¡³É¹¦ºóÒÔ\\0½áÊø¡£
-    @param [in] unSize szBufµÄ´óĞ¡¡£
-    @return ·µ»ØszBuf
+    @brief è·å–è¿æ¥æœ¬ç«¯çš„åœ°å€ï¼Œåªå¯¹STREAM_TYPE_TCPå’ŒSTREAM_TYPE_UNIXæœ‰æ•ˆ
+    @param [in,out] szBuf è¿”å›åœ°å€çš„buf,è·å–æˆåŠŸåä»¥\\0ç»“æŸã€‚
+    @param [in] unSize szBufçš„å¤§å°ã€‚
+    @return è¿”å›szBuf
     */
     virtual char* getLocalAddr(char* szBuf, CWX_UINT16 unSize);
     /**
-    @brief »ñÈ¡Á¬½ÓµÄ±¾¶Ëport£¬Ö»¶ÔSTREAM_TYPE_TCPÓĞĞ§
-    @return Á¬½Ó¶Ô¶ËµÄport
+    @brief è·å–è¿æ¥çš„æœ¬ç«¯portï¼Œåªå¯¹STREAM_TYPE_TCPæœ‰æ•ˆ
+    @return è¿æ¥å¯¹ç«¯çš„port
     */
     virtual inline CWX_UINT16 getLocalPort();
 public:
-    ///ÉèÖÃÖ÷¶¯Á¬½ÓµÄÁ¬½ÓµØÖ·
+    ///è®¾ç½®ä¸»åŠ¨è¿æ¥çš„è¿æ¥åœ°å€
     inline void setConnectAddr(char const* szAddr);
-    ///»ñÈ¡Ö÷¶¯Á¬½ÓµÄÁ¬½ÓµØÖ·
+    ///è·å–ä¸»åŠ¨è¿æ¥çš„è¿æ¥åœ°å€
     inline string const& getConnectAddr() const;
-    ///ÉèÖÃÖ÷¶¯Á¬½ÓµÄÁ¬½Ó¶Ë¿Ú
+    ///è®¾ç½®ä¸»åŠ¨è¿æ¥çš„è¿æ¥ç«¯å£
     inline void setConnectPort(CWX_UINT16 unPort);
-    ///»ñÈ¡Ö÷¶¯Á¬½ÓµÄÁ¬½Ó¶Ë¿Ú
+    ///è·å–ä¸»åŠ¨è¿æ¥çš„è¿æ¥ç«¯å£
     inline CWX_UINT16 getConnectPort() const;
 public:
     CwxAppHandler4TcpConn*    m_next; ///<next connection

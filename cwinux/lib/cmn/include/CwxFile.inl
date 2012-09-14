@@ -1,4 +1,4 @@
-CWINUX_BEGIN_NAMESPACE
+﻿CWINUX_BEGIN_NAMESPACE
 inline bool CwxFile::createMissDir(char const* path, int mode)
 {
     if (false == isDir(path))

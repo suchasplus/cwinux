@@ -1,15 +1,15 @@
-#ifndef __CWX_CHAR_POOL_H__
+ï»¿#ifndef __CWX_CHAR_POOL_H__
 #define __CWX_CHAR_POOL_H__
 
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxCharPool.h
-@brief Ö»·ÖÅä£¬²»ÊÍ·ÅµÄchar pool£¬ÆäÄ¿µÄÊÇ·ÀÖ¹ÄÚ´æµÄËéÆ¬¡£
+@brief åªåˆ†é…ï¼Œä¸é‡Šæ”¾çš„char poolï¼Œå…¶ç›®çš„æ˜¯é˜²æ­¢å†…å­˜çš„ç¢ç‰‡ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-10
@@ -24,23 +24,23 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxCharPool
-@brief Ö»·ÖÅä£¬²»ÊÍ·ÅµÄchar pool£¬ÆäÄ¿µÄÊÇ·ÀÖ¹ÄÚ´æµÄËéÆ¬¡£
+@brief åªåˆ†é…ï¼Œä¸é‡Šæ”¾çš„char poolï¼Œå…¶ç›®çš„æ˜¯é˜²æ­¢å†…å­˜çš„ç¢ç‰‡ã€‚
 */
 class CWX_API CwxCharPool
 {
 public:
     enum{
-        DEF_MEM_TRUNK_SIZE = 4096,///<È±Ê¡ÄÚ´æ¿éµÄ´óĞ¡
-        DEF_KEEP_MEM_SIZE = 16 * DEF_MEM_TRUNK_SIZE,///<µ±resetµÄÊ±ºò£¬³ÖÓĞµÄÄÚ´æ´óĞ¡
-        MEM_ALIGN_SIZE = 1024,///<ÄÚ´æ¿éµÄ¶ÔÆë´óĞ¡
-        POINTER_SIZE = sizeof(void*),///<Ö¸ÕëµÄ×Ö½ÚÊı
-        TRUNK_HEAD_SIZE = POINTER_SIZE + sizeof(CWX_UINT32)///<ÄÚ´æ¿éÍ·µÄ´óĞ¡
+        DEF_MEM_TRUNK_SIZE = 4096,///<ç¼ºçœå†…å­˜å—çš„å¤§å°
+        DEF_KEEP_MEM_SIZE = 16 * DEF_MEM_TRUNK_SIZE,///<å½“resetçš„æ—¶å€™ï¼ŒæŒæœ‰çš„å†…å­˜å¤§å°
+        MEM_ALIGN_SIZE = 1024,///<å†…å­˜å—çš„å¯¹é½å¤§å°
+        POINTER_SIZE = sizeof(void*),///<æŒ‡é’ˆçš„å­—èŠ‚æ•°
+        TRUNK_HEAD_SIZE = POINTER_SIZE + sizeof(CWX_UINT32)///<å†…å­˜å—å¤´çš„å¤§å°
     };
 public:
     /**
-    @brief ¹¹Ôìº¯Êı¡£
-    @param [in] uiMemTrunkPoolSize ÄÚ´æ¿éµÄ´óĞ¡
-    @param [in] uiKeepMemSize µ±resetµÄÊ±ºò£¬³ÖÓĞµÄÄÚ´æ´óĞ¡
+    @brief æ„é€ å‡½æ•°ã€‚
+    @param [in] uiMemTrunkPoolSize å†…å­˜å—çš„å¤§å°
+    @param [in] uiKeepMemSize å½“resetçš„æ—¶å€™ï¼ŒæŒæœ‰çš„å†…å­˜å¤§å°
     */
     CwxCharPool(CWX_UINT32 uiMemTrunkPoolSize=DEF_MEM_TRUNK_SIZE, CWX_UINT32 uiKeepMemSize = DEF_KEEP_MEM_SIZE)
     {
@@ -55,19 +55,19 @@ public:
         m_uiTotalSize = 0;
         m_uiFreeSize = 0;
     }
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxCharPool()
     {
         free();
     }
-    ///·ÖÅäuiNum´óĞ¡µÄÄÚ´æ
+    ///åˆ†é…uiNumå¤§å°çš„å†…å­˜
     char* malloc(CWX_UINT32 uiNum);
-    ///ÊÇ·ñÄÚ´æ³ØÖĞ¶àÓàµÄÄÚ´æ¿é
+    ///æ˜¯å¦å†…å­˜æ± ä¸­å¤šä½™çš„å†…å­˜å—
     void reset();
-    ///ÊÍ·ÅËùÓĞµÄÄÚ´æ¿é
+    ///é‡Šæ”¾æ‰€æœ‰çš„å†…å­˜å—
     void free();
 private:
-    ///ÊÍ·ÅÄÚ´æ¿éÁ´±í
+    ///é‡Šæ”¾å†…å­˜å—é“¾è¡¨
     inline void free(char* pChain) const
     {
         char* pNext = pChain;
@@ -78,41 +78,41 @@ private:
             pNext = pChain;
         }
     }
-    ///»ñÈ¡ÄÚ´æ¿éÁ´±íµÄÍ·ÄÚ´æ¿é
+    ///è·å–å†…å­˜å—é“¾è¡¨çš„å¤´å†…å­˜å—
     inline char* getNext(char const* pTrunk) const
     {
         char* pNext = NULL;
         memcpy(&pNext, pTrunk, POINTER_SIZE);
         return pNext;
     }
-    ///½«Ò»¸öÄÚ´æ¿é·Åµ½ÄÚ´æ¿éÁ´±íµÄÍ·²¿
+    ///å°†ä¸€ä¸ªå†…å­˜å—æ”¾åˆ°å†…å­˜å—é“¾è¡¨çš„å¤´éƒ¨
     inline void setNext(char* pTrunk, char const* pNext) const
     {
         memcpy(pTrunk, &pNext, POINTER_SIZE);
     }
-    ///»ñÈ¡¼ÇÂ¼ÔÚÄÚ´æ¿éµÄÍ·µÄÄÚ´æ´óĞ¡ĞÅÏ¢
+    ///è·å–è®°å½•åœ¨å†…å­˜å—çš„å¤´çš„å†…å­˜å¤§å°ä¿¡æ¯
     inline CWX_UINT32 getSize(char const* pTrunk) const
     {
         CWX_UINT32 uiSize = 0;
         memcpy(&uiSize, pTrunk + POINTER_SIZE, sizeof(uiSize));
         return uiSize;
     }
-    ///ÉèÖÃ¼ÇÂ¼ÔÚÄÚ´æ¿éÍ·µÄÄÚ´æ´óĞ¡ĞÅÏ¢
+    ///è®¾ç½®è®°å½•åœ¨å†…å­˜å—å¤´çš„å†…å­˜å¤§å°ä¿¡æ¯
     inline void setSize(char* pTrunk, CWX_UINT32 uiSize) const
     {
         memcpy(pTrunk + POINTER_SIZE, &uiSize, sizeof(uiSize));
     }
 
 private:
-    CWX_UINT32       m_uiMemTrunkSize;///<×îĞ¡µÄÄÚ´æ¿é´óĞ¡
-    CWX_UINT32       m_uiKeepMemSize;///<µ±resetµÄÊ±ºò³ÖÓĞµÄÄÚ´æ´óĞ¡
-    CWX_UINT32       m_uiMemTrunkDataSize;///<ÄÚ´æ¿éÖĞÊı¾İ²¿·ÖµÄ´óĞ¡
-    char*           m_pUsedHead;///<Ê¹ÓÃµÄÄÚ´æ¿éµÄÁ´±íÍ·
-    char*           m_pUsedTail;///<Ê¹ÓÃµÄÄÚ´æ¿éµÄÁ´±íÎ²
-    char*           m_pFreeHead;///<¿ÕÏĞµÄÄÚ´æ¿éÁ´±íµÄÍ·
-    CWX_UINT32      m_uiTailLeft;///<µ±Ç°ÄÚ´æ¿éµÄ¿ÕÏĞÄÚ´æ´óĞ¡
-    CWX_UINT32      m_uiTotalSize;///<·ÖÅäµÄÄÚ´æ¿éµÄÄÚ´æ×ÜÁ¿
-    CWX_UINT32      m_uiFreeSize;///<¿ÕÏĞµÄÄÚ´æ¿éµÄÄÚ´æ´óĞ¡
+    CWX_UINT32       m_uiMemTrunkSize;///<æœ€å°çš„å†…å­˜å—å¤§å°
+    CWX_UINT32       m_uiKeepMemSize;///<å½“resetçš„æ—¶å€™æŒæœ‰çš„å†…å­˜å¤§å°
+    CWX_UINT32       m_uiMemTrunkDataSize;///<å†…å­˜å—ä¸­æ•°æ®éƒ¨åˆ†çš„å¤§å°
+    char*           m_pUsedHead;///<ä½¿ç”¨çš„å†…å­˜å—çš„é“¾è¡¨å¤´
+    char*           m_pUsedTail;///<ä½¿ç”¨çš„å†…å­˜å—çš„é“¾è¡¨å°¾
+    char*           m_pFreeHead;///<ç©ºé—²çš„å†…å­˜å—é“¾è¡¨çš„å¤´
+    CWX_UINT32      m_uiTailLeft;///<å½“å‰å†…å­˜å—çš„ç©ºé—²å†…å­˜å¤§å°
+    CWX_UINT32      m_uiTotalSize;///<åˆ†é…çš„å†…å­˜å—çš„å†…å­˜æ€»é‡
+    CWX_UINT32      m_uiFreeSize;///<ç©ºé—²çš„å†…å­˜å—çš„å†…å­˜å¤§å°
 };
 
 CWINUX_END_NAMESPACE

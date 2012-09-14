@@ -1,4 +1,4 @@
-#include "CwxSockBase.h"
+﻿#include "CwxSockBase.h"
 CWINUX_BEGIN_NAMESPACE
 
 int CwxSockBase::getLocalAddr (CwxAddr &sa) const

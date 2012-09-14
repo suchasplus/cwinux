@@ -1,14 +1,14 @@
-#ifndef __CWX_TRIE_TREE_H__
+ï»¿#ifndef __CWX_TRIE_TREE_H__
 #define __CWX_TRIE_TREE_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxTrieTree.h
-@brief Ö§³Ö¶à×Ö·û¼¯µÄÄ£°åtrieÊ÷µÄ¶¨Òå¡£
+@brief æ”¯æŒå¤šå­—ç¬¦é›†çš„æ¨¡æ¿trieæ ‘çš„å®šä¹‰ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-10
@@ -26,160 +26,160 @@ template<typename CHARSET, typename DATA>
 class CwxTrieTree;
 /**
 @class CwxTrieNode
-@brief Trie Ê÷½ÚµãµÄÄ£°åÀà¡£Ä©½ÚµãÉÏµÄÉèÖÃµÄÊı¾İÀàĞÍÍ¨¹ıÄ£°å²ÎÊıDATA¶¨Òå¡£
+@brief Trie æ ‘èŠ‚ç‚¹çš„æ¨¡æ¿ç±»ã€‚æœ«èŠ‚ç‚¹ä¸Šçš„è®¾ç½®çš„æ•°æ®ç±»å‹é€šè¿‡æ¨¡æ¿å‚æ•°DATAå®šä¹‰ã€‚
 */
 template<typename DATA>
 class CwxTrieNode
 {
 public:
     enum{
-        SIGN_WORD_END_BIT = 0,///<½ÚµãÊÇÒ»¸ö×Ö·ûµÄÄ©½Úµã
-        SIGN_KEY_END_BIT = 1,///<½ÚµãÊÇtrie Ê÷µÄ×Ö·û´®µÄÄ©½Úµã
+        SIGN_WORD_END_BIT = 0,///<èŠ‚ç‚¹æ˜¯ä¸€ä¸ªå­—ç¬¦çš„æœ«èŠ‚ç‚¹
+        SIGN_KEY_END_BIT = 1,///<èŠ‚ç‚¹æ˜¯trie æ ‘çš„å­—ç¬¦ä¸²çš„æœ«èŠ‚ç‚¹
     };
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxTrieNode()
     {
         memset(this, 0x00, sizeof(CwxTrieNode));
     }
 public:
     /**
-    @brief ÒÔ±¾½ÚµãÎª¸¸½Úµã£¬Ôö¼ÓszWord´ú±íµÄÂ·¾¶ÉÏµÄ½Úµã¡£
-    @param [in] szWord Ôö¼ÓµÄ½Úµã¶ÔÓ¦µÄ×Ö·û´®
-    @param [in] uiWordLen ×Ö·û´®µÄ³¤¶È
-    @param [in] pool ÈôĞèÒªÔö¼ÓĞÂ½Úµã£¬ÔòĞÂ½ÚµãÓĞpool½øĞĞ·ÖÅä
-    @return NULL£ºÌí¼ÓÊ§°Ü£»·ñÔò£¬ÎªszWord×Ö·û´®µÄÄ©½Úµã¡£
+    @brief ä»¥æœ¬èŠ‚ç‚¹ä¸ºçˆ¶èŠ‚ç‚¹ï¼Œå¢åŠ szWordä»£è¡¨çš„è·¯å¾„ä¸Šçš„èŠ‚ç‚¹ã€‚
+    @param [in] szWord å¢åŠ çš„èŠ‚ç‚¹å¯¹åº”çš„å­—ç¬¦ä¸²
+    @param [in] uiWordLen å­—ç¬¦ä¸²çš„é•¿åº¦
+    @param [in] pool è‹¥éœ€è¦å¢åŠ æ–°èŠ‚ç‚¹ï¼Œåˆ™æ–°èŠ‚ç‚¹æœ‰poolè¿›è¡Œåˆ†é…
+    @return NULLï¼šæ·»åŠ å¤±è´¥ï¼›å¦åˆ™ï¼Œä¸ºszWordå­—ç¬¦ä¸²çš„æœ«èŠ‚ç‚¹ã€‚
     */
     inline CwxTrieNode<DATA>* add(char const* szWord, CWX_UINT32 uiWordLen, CwxTypePoolEx<CwxTrieNode<DATA> >& pool);
-    ///ÉèÖÃ±¾½ÚµãÎªÒ»¸ö×Ö·û´®µÄÄ©½Úµã
+    ///è®¾ç½®æœ¬èŠ‚ç‚¹ä¸ºä¸€ä¸ªå­—ç¬¦ä¸²çš„æœ«èŠ‚ç‚¹
     inline CwxTrieNode<DATA>* endKey();
     /**
-    @brief ·µ»ØszWord×Ö·û¶ÔÓ¦µÄº¢×Ó½áµã¡£
-    @param [in] szWord º¢×Ó½áµã¶ÔÓ¦µÄword
-    @param [in] uiWordLen wordµÄ³¤¶È
-    @return NULL£º½Úµã²»´æÔÚ»ò²»ÊÇword½Úµã£»·ñÔò£¬ÎªszWord¶ÔÓ¦µÄ½Úµã¡£
+    @brief è¿”å›szWordå­—ç¬¦å¯¹åº”çš„å­©å­ç»“ç‚¹ã€‚
+    @param [in] szWord å­©å­ç»“ç‚¹å¯¹åº”çš„word
+    @param [in] uiWordLen wordçš„é•¿åº¦
+    @return NULLï¼šèŠ‚ç‚¹ä¸å­˜åœ¨æˆ–ä¸æ˜¯wordèŠ‚ç‚¹ï¼›å¦åˆ™ï¼Œä¸ºszWordå¯¹åº”çš„èŠ‚ç‚¹ã€‚
     */
     inline CwxTrieNode<DATA> const* word(char const* szWord, CWX_UINT32 uiWordLen) const;
     /**
-    @brief ·µ»ØÒÔszKeyÎªÂ·¾¶µÄµÚÒ»¸ö×Ö·û´®½Úµã£¬Îª×îĞ¡Æ¥Åä¡£
-    @param [in] szKey ½ÚµãµÄÂ·¾¶
-    @param [in] uiKeyLen keyµÄ³¤¶È
-    @return NULL£º½Úµã²»´æÔÚ£»·ñÔò£¬ÎªÒÔszKeyÎªÂ·¾¶µÄµÚÒ»¸ö×Ö·û´®½Úµã¡£
+    @brief è¿”å›ä»¥szKeyä¸ºè·¯å¾„çš„ç¬¬ä¸€ä¸ªå­—ç¬¦ä¸²èŠ‚ç‚¹ï¼Œä¸ºæœ€å°åŒ¹é…ã€‚
+    @param [in] szKey èŠ‚ç‚¹çš„è·¯å¾„
+    @param [in] uiKeyLen keyçš„é•¿åº¦
+    @return NULLï¼šèŠ‚ç‚¹ä¸å­˜åœ¨ï¼›å¦åˆ™ï¼Œä¸ºä»¥szKeyä¸ºè·¯å¾„çš„ç¬¬ä¸€ä¸ªå­—ç¬¦ä¸²èŠ‚ç‚¹ã€‚
     */
     inline CwxTrieNode<DATA> const* firstKey(char const* szKey, CWX_UINT32& uiKeyLen) const;
     /**
-    @brief ·µ»ØÒÔszKeyÎªÂ·¾¶µÄ×îºóÒ»¸ö×Ö·û´®½Úµã£¬Îª×î´óÆ¥Åä
-    @param [in] szKey ½ÚµãµÄÂ·¾¶
-    @param [in] uiKeyLen keyµÄ³¤¶È
-    @return NULL£º½Úµã²»´æÔÚ£»·ñÔò£¬ÎªÒÔszKeyÎªÂ·¾¶µÄ×îºóÒ»¸ö×Ö·û´®½Úµã¡£
+    @brief è¿”å›ä»¥szKeyä¸ºè·¯å¾„çš„æœ€åä¸€ä¸ªå­—ç¬¦ä¸²èŠ‚ç‚¹ï¼Œä¸ºæœ€å¤§åŒ¹é…
+    @param [in] szKey èŠ‚ç‚¹çš„è·¯å¾„
+    @param [in] uiKeyLen keyçš„é•¿åº¦
+    @return NULLï¼šèŠ‚ç‚¹ä¸å­˜åœ¨ï¼›å¦åˆ™ï¼Œä¸ºä»¥szKeyä¸ºè·¯å¾„çš„æœ€åä¸€ä¸ªå­—ç¬¦ä¸²èŠ‚ç‚¹ã€‚
     */
     inline CwxTrieNode<DATA> const* lastKey(char const* szKey, CWX_UINT32& uiKeyLen) const;
 public:
-    ///»ñÈ¡½ÚµãµÄ¸¸½Úµã
+    ///è·å–èŠ‚ç‚¹çš„çˆ¶èŠ‚ç‚¹
     inline CwxTrieNode<DATA> const* getParent() const{ return m_parent;}
-    ///ÉèÖÃ½ÚµãµÄ¸¸½Úµã
+    ///è®¾ç½®èŠ‚ç‚¹çš„çˆ¶èŠ‚ç‚¹
     inline void setParent(CwxTrieNode<DATA>* parent) { m_parent = parent;}
-    ///»ñÈ¡½ÚµãµÄDATAÀàĞÍµÄÊı¾İµØÖ·
+    ///è·å–èŠ‚ç‚¹çš„DATAç±»å‹çš„æ•°æ®åœ°å€
     DATA* getData() const { return m_data;}
-    ///ÉèÖÃ½ÚµãµÄDATAÀàĞÍµÄÊı¾İµØÖ·
+    ///è®¾ç½®èŠ‚ç‚¹çš„DATAç±»å‹çš„æ•°æ®åœ°å€
     void setData(DATA* data) { m_data = data;}
-    ///»ñÈ¡½ÚµãµÄÓÃ»§ÊôĞÔ¡£
+    ///è·å–èŠ‚ç‚¹çš„ç”¨æˆ·å±æ€§ã€‚
     CWX_UINT8 getAttr() const { return m_ucAttr;}
-    ///ÉèÖÃ½ÚµãµÄÓÃ»§ÊôĞÔ
+    ///è®¾ç½®èŠ‚ç‚¹çš„ç”¨æˆ·å±æ€§
     void setAttr(CWX_UINT8 ucAttr) { m_ucAttr = ucAttr;}
-    ///ÅĞ¶Ï½ÚµãÊÇ·ñÎªÒ»¸öword½Úµã
+    ///åˆ¤æ–­èŠ‚ç‚¹æ˜¯å¦ä¸ºä¸€ä¸ªwordèŠ‚ç‚¹
     bool isWordEnd() const { return CWX_CHECK_BIT(m_ucSign, SIGN_WORD_END_BIT);}
-    ///ÅĞ¶Ï½ÚµãÊÇ·ñÎªÒ»¸ö×Ö·û´®½Úµã
+    ///åˆ¤æ–­èŠ‚ç‚¹æ˜¯å¦ä¸ºä¸€ä¸ªå­—ç¬¦ä¸²èŠ‚ç‚¹
     bool isKeyEnd() const { return CWX_CHECK_BIT(m_ucSign, SIGN_KEY_END_BIT);}
-    ///Çå³ıKEY±ê¼ÇSIGN_KEY_END_BIT
+    ///æ¸…é™¤KEYæ ‡è®°SIGN_KEY_END_BIT
     void clrKeyEnd() { CWX_CLR_BIT(m_ucSign, SIGN_KEY_END_BIT);}
 private:
     template <class A1,class A2>  friend class CwxTrieTree;
 private:
-    CwxTrieNode<DATA>*      m_child[16];///<½ÚµãµÄº¢×Ó½áµã
-    CwxTrieNode<DATA>*      m_parent;///<½ÚµãµÄ¸¸½Úµã
-    DATA*                  m_data;///<½ÚµãÉÏµÄÊı¾İ
-    CWX_UINT8              m_ucAttr;///<½ÚµãµÄÓÃ»§ÊôĞÔ
-    CWX_UINT8              m_ucSign;///<½ÚµãµÄÀàĞÍ
+    CwxTrieNode<DATA>*      m_child[16];///<èŠ‚ç‚¹çš„å­©å­ç»“ç‚¹
+    CwxTrieNode<DATA>*      m_parent;///<èŠ‚ç‚¹çš„çˆ¶èŠ‚ç‚¹
+    DATA*                  m_data;///<èŠ‚ç‚¹ä¸Šçš„æ•°æ®
+    CWX_UINT8              m_ucAttr;///<èŠ‚ç‚¹çš„ç”¨æˆ·å±æ€§
+    CWX_UINT8              m_ucSign;///<èŠ‚ç‚¹çš„ç±»å‹
 };
 
 
 /**
 @class CwxTrieTree
-@brief Trie Ê÷µÄÄ£°åÀà¡£×Ö·û¼¯ÓÉCHARSET¶¨Òå£¬Ä©½ÚµãÉÏµÄÉèÖÃµÄÊı¾İÀàĞÍÍ¨¹ıÄ£°å²ÎÊıDATA¶¨Òå¡£<br>
-       Trie Ê÷Ö§³Ö×Ö·û´®ÊÇ·ñ´óĞ¡Ğ´Ãô¸Ğ£¬Ò»¸ö¶ÔÏóÊµÀıÒªÃ´´óĞ¡Ğ´Ãô¸Ğ£¬ÒªÃ´´óĞ¡Ğ´²»Ãô¸Ğ¡£
+@brief Trie æ ‘çš„æ¨¡æ¿ç±»ã€‚å­—ç¬¦é›†ç”±CHARSETå®šä¹‰ï¼Œæœ«èŠ‚ç‚¹ä¸Šçš„è®¾ç½®çš„æ•°æ®ç±»å‹é€šè¿‡æ¨¡æ¿å‚æ•°DATAå®šä¹‰ã€‚<br>
+       Trie æ ‘æ”¯æŒå­—ç¬¦ä¸²æ˜¯å¦å¤§å°å†™æ•æ„Ÿï¼Œä¸€ä¸ªå¯¹è±¡å®ä¾‹è¦ä¹ˆå¤§å°å†™æ•æ„Ÿï¼Œè¦ä¹ˆå¤§å°å†™ä¸æ•æ„Ÿã€‚
 */
 template<typename CHARSET, typename DATA>
 class CwxTrieTree
 {
 public:
     /**
-    @brief ¹¹Ôìº¯Êı¡£
-    @param [in] uiNodePerPool Ê÷½áµãµÄÄÚ´æ³ØµÄÃ¿¸ötrunkµÄ½ÚµãÊ÷
+    @brief æ„é€ å‡½æ•°ã€‚
+    @param [in] uiNodePerPool æ ‘ç»“ç‚¹çš„å†…å­˜æ± çš„æ¯ä¸ªtrunkçš„èŠ‚ç‚¹æ ‘
     */
     CwxTrieTree(CWX_UINT32 uiNodePerPool):m_pool(uiNodePerPool), m_uiDataNum(0){}
 public:
     /**
-    @brief ÍùTrie TreeÌí¼ÓszKeyword£¬´ËÎª´óĞ¡Ğ´Ãô¸Ğ¡£
-    @param [in] szKey Ìí¼ÓµÄ×Ö·û´®
-    @param [in] uiKeyLen ×Ö·û´®µÄ³¤¶È
-    @return NULL£ºÌí¼ÓÊ§°Ü£»·ñÔò£¬ÎªszKey×Ö·û´®µÄÄ©½Úµã¡£
+    @brief å¾€Trie Treeæ·»åŠ szKeywordï¼Œæ­¤ä¸ºå¤§å°å†™æ•æ„Ÿã€‚
+    @param [in] szKey æ·»åŠ çš„å­—ç¬¦ä¸²
+    @param [in] uiKeyLen å­—ç¬¦ä¸²çš„é•¿åº¦
+    @return NULLï¼šæ·»åŠ å¤±è´¥ï¼›å¦åˆ™ï¼Œä¸ºszKeyå­—ç¬¦ä¸²çš„æœ«èŠ‚ç‚¹ã€‚
     */
     inline CwxTrieNode<DATA>* addKey(char const* szKey, CWX_UINT32 uiKeyLen);
     /**
-    @brief ÍùTrie TreeÌí¼ÓszKeyword£¬´ËÎª´óĞ¡Ğ´²»Ãô¸Ğ¡£
-    @param [in] szKey Ìí¼ÓµÄ×Ö·û´®
-    @param [in] uiKeyLen ×Ö·û´®µÄ³¤¶È
-    @return NULL£ºÌí¼ÓÊ§°Ü£»·ñÔò£¬ÎªszKey×Ö·û´®µÄÄ©½Úµã¡£
+    @brief å¾€Trie Treeæ·»åŠ szKeywordï¼Œæ­¤ä¸ºå¤§å°å†™ä¸æ•æ„Ÿã€‚
+    @param [in] szKey æ·»åŠ çš„å­—ç¬¦ä¸²
+    @param [in] uiKeyLen å­—ç¬¦ä¸²çš„é•¿åº¦
+    @return NULLï¼šæ·»åŠ å¤±è´¥ï¼›å¦åˆ™ï¼Œä¸ºszKeyå­—ç¬¦ä¸²çš„æœ«èŠ‚ç‚¹ã€‚
     */
     inline CwxTrieNode<DATA>* addCaseKey(char const* szKey, CWX_UINT32 uiKeyLen);
     /**
-    @brief É¾³ıÖ¸¶¨µÄKey½Úµã£¬´Ë½Úµã±ØĞëÎªÒ»¸öSIGN_KEY_END_BIT½Úµã£¬Èô»¹ÓĞº¢×Ó£¬ÔòÖ»É¾³ıSIGN_KEY_END_BIT±ê¼Ç¡£
-           Èôº¢×ÓÎª¿Õ£¬Ôò´Ó´Ë½ÚµãÒ»Ö±Íùparent±éÀú£¬É¾³ıËùÓĞµÄ¸¸½ÚµãÖ±µ½·¢ÏÖÁËÒ»ÏÂµÄ½Úµã£º
-           1¡¢SIGN_KEY_END_BIT½Úµã£¬´ËÒâÎ¶×ÅÁíÍâµÄÒ»¸ökeyword£¬»ò
-           2¡¢Ò»¸ö½ÚµãÓĞº¢×Ó¡£
-    @param [in] pNode ÒªÉ¾³ıµÄnode
-    @return true£º³É¹¦É¾³ı£»false£ºÎŞĞ§µÄ½Úµã£¬´ËÊ±£¬½Úµã²»ÊÇSIGN_KEY_END_BIT½Úµã¡£
+    @brief åˆ é™¤æŒ‡å®šçš„KeyèŠ‚ç‚¹ï¼Œæ­¤èŠ‚ç‚¹å¿…é¡»ä¸ºä¸€ä¸ªSIGN_KEY_END_BITèŠ‚ç‚¹ï¼Œè‹¥è¿˜æœ‰å­©å­ï¼Œåˆ™åªåˆ é™¤SIGN_KEY_END_BITæ ‡è®°ã€‚
+           è‹¥å­©å­ä¸ºç©ºï¼Œåˆ™ä»æ­¤èŠ‚ç‚¹ä¸€ç›´å¾€parentéå†ï¼Œåˆ é™¤æ‰€æœ‰çš„çˆ¶èŠ‚ç‚¹ç›´åˆ°å‘ç°äº†ä¸€ä¸‹çš„èŠ‚ç‚¹ï¼š
+           1ã€SIGN_KEY_END_BITèŠ‚ç‚¹ï¼Œæ­¤æ„å‘³ç€å¦å¤–çš„ä¸€ä¸ªkeywordï¼Œæˆ–
+           2ã€ä¸€ä¸ªèŠ‚ç‚¹æœ‰å­©å­ã€‚
+    @param [in] pNode è¦åˆ é™¤çš„node
+    @return trueï¼šæˆåŠŸåˆ é™¤ï¼›falseï¼šæ— æ•ˆçš„èŠ‚ç‚¹ï¼Œæ­¤æ—¶ï¼ŒèŠ‚ç‚¹ä¸æ˜¯SIGN_KEY_END_BITèŠ‚ç‚¹ã€‚
     */
     inline bool eraseNode(CwxTrieNode<DATA>* pNode);
     /**
-    @brief ·µ»ØÒÔszKeyÎªÂ·¾¶µÄµÚÒ»¸ö×Ö·û´®½Úµã£¬Îª×îĞ¡Æ¥Åä¡£´ËÎª´óĞ¡Ğ´Ãô¸Ğ¡£
-    @param [in] szKey ½ÚµãµÄÂ·¾¶
-    @param [in,out] uiKeyLen ´«ÈëkeyµÄ³¤¶È£¬·µ»ØÔÚÄÇ¸öÎ»ÖÃ·¢ÏÖÁËµÚÒ»¸ö×Ö·û´®½Úµã
-    @return NULL£º½Úµã²»´æÔÚ£»·ñÔò£¬ÎªÒÔszKeyÎªÂ·¾¶µÄµÚÒ»¸ö×Ö·û´®½Úµã¡£
+    @brief è¿”å›ä»¥szKeyä¸ºè·¯å¾„çš„ç¬¬ä¸€ä¸ªå­—ç¬¦ä¸²èŠ‚ç‚¹ï¼Œä¸ºæœ€å°åŒ¹é…ã€‚æ­¤ä¸ºå¤§å°å†™æ•æ„Ÿã€‚
+    @param [in] szKey èŠ‚ç‚¹çš„è·¯å¾„
+    @param [in,out] uiKeyLen ä¼ å…¥keyçš„é•¿åº¦ï¼Œè¿”å›åœ¨é‚£ä¸ªä½ç½®å‘ç°äº†ç¬¬ä¸€ä¸ªå­—ç¬¦ä¸²èŠ‚ç‚¹
+    @return NULLï¼šèŠ‚ç‚¹ä¸å­˜åœ¨ï¼›å¦åˆ™ï¼Œä¸ºä»¥szKeyä¸ºè·¯å¾„çš„ç¬¬ä¸€ä¸ªå­—ç¬¦ä¸²èŠ‚ç‚¹ã€‚
     */
     inline CwxTrieNode<DATA> const* firstKey(char const* szKey, CWX_UINT32& uiKeyLen) const;
     /**
-    @brief ·µ»ØÒÔszKeyÎªÂ·¾¶µÄµÚÒ»¸ö×Ö·û´®½Úµã£¬Îª×îĞ¡Æ¥Åä¡£´ËÎª´óĞ¡Ğ´²»Ãô¸Ğ¡£
-    @param [in] szKey ½ÚµãµÄÂ·¾¶
-    @param [in,out] uiKeyLen ´«ÈëkeyµÄ³¤¶È£¬·µ»ØÔÚÄÇ¸öÎ»ÖÃ·¢ÏÖÁËµÚÒ»¸ö×Ö·û´®½Úµã
-    @return NULL£º½Úµã²»´æÔÚ£»·ñÔò£¬ÎªÒÔszKeyÎªÂ·¾¶µÄµÚÒ»¸ö×Ö·û´®½Úµã¡£
+    @brief è¿”å›ä»¥szKeyä¸ºè·¯å¾„çš„ç¬¬ä¸€ä¸ªå­—ç¬¦ä¸²èŠ‚ç‚¹ï¼Œä¸ºæœ€å°åŒ¹é…ã€‚æ­¤ä¸ºå¤§å°å†™ä¸æ•æ„Ÿã€‚
+    @param [in] szKey èŠ‚ç‚¹çš„è·¯å¾„
+    @param [in,out] uiKeyLen ä¼ å…¥keyçš„é•¿åº¦ï¼Œè¿”å›åœ¨é‚£ä¸ªä½ç½®å‘ç°äº†ç¬¬ä¸€ä¸ªå­—ç¬¦ä¸²èŠ‚ç‚¹
+    @return NULLï¼šèŠ‚ç‚¹ä¸å­˜åœ¨ï¼›å¦åˆ™ï¼Œä¸ºä»¥szKeyä¸ºè·¯å¾„çš„ç¬¬ä¸€ä¸ªå­—ç¬¦ä¸²èŠ‚ç‚¹ã€‚
     */
     inline CwxTrieNode<DATA> const* firstCaseKey(char const* szKey, CWX_UINT32& uiKeyLen) const;
     /**
-    @brief ·µ»ØÒÔszKeyÎªÂ·¾¶µÄ×îºóÒ»¸ö×Ö·û´®½Úµã£¬Îª×î´óÆ¥Åä¡£´ËÎª´óĞ¡Ğ´Ãô¸Ğ¡£
-    @param [in] szKey ½ÚµãµÄÂ·¾¶
-    @param [in,out] uiKeyLen ´«ÈëkeyµÄ³¤¶È£¬·µ»ØÔÚÄÇ¸öÎ»ÖÃ·¢ÏÖÁË×îºóÒ»¸ö×Ö·û´®½Úµã
-    @return NULL£º½Úµã²»´æÔÚ£»·ñÔò£¬ÎªÒÔszKeyÎªÂ·¾¶µÄ×îºóÒ»¸ö×Ö·û´®½Úµã¡£
+    @brief è¿”å›ä»¥szKeyä¸ºè·¯å¾„çš„æœ€åä¸€ä¸ªå­—ç¬¦ä¸²èŠ‚ç‚¹ï¼Œä¸ºæœ€å¤§åŒ¹é…ã€‚æ­¤ä¸ºå¤§å°å†™æ•æ„Ÿã€‚
+    @param [in] szKey èŠ‚ç‚¹çš„è·¯å¾„
+    @param [in,out] uiKeyLen ä¼ å…¥keyçš„é•¿åº¦ï¼Œè¿”å›åœ¨é‚£ä¸ªä½ç½®å‘ç°äº†æœ€åä¸€ä¸ªå­—ç¬¦ä¸²èŠ‚ç‚¹
+    @return NULLï¼šèŠ‚ç‚¹ä¸å­˜åœ¨ï¼›å¦åˆ™ï¼Œä¸ºä»¥szKeyä¸ºè·¯å¾„çš„æœ€åä¸€ä¸ªå­—ç¬¦ä¸²èŠ‚ç‚¹ã€‚
     */
     inline CwxTrieNode<DATA> const* lastKey(char const* szKey, CWX_UINT32& uiKeyLen) const;
     /**
-    @brief ·µ»ØÒÔszKeyÎªÂ·¾¶µÄ×îºóÒ»¸ö×Ö·û´®½Úµã£¬Îª×î´óÆ¥Åä¡£´ËÎª´óĞ¡Ğ´²»Ãô¸Ğ¡£
-    @param [in] szKey ½ÚµãµÄÂ·¾¶
-    @param [in,out] uiKeyLen ´«ÈëkeyµÄ³¤¶È£¬·µ»ØÔÚÄÇ¸öÎ»ÖÃ·¢ÏÖÁË×îºóÒ»¸ö×Ö·û´®½Úµã
-    @return NULL£º½Úµã²»´æÔÚ£»·ñÔò£¬ÎªÒÔszKeyÎªÂ·¾¶µÄ×îºóÒ»¸ö×Ö·û´®½Úµã¡£
+    @brief è¿”å›ä»¥szKeyä¸ºè·¯å¾„çš„æœ€åä¸€ä¸ªå­—ç¬¦ä¸²èŠ‚ç‚¹ï¼Œä¸ºæœ€å¤§åŒ¹é…ã€‚æ­¤ä¸ºå¤§å°å†™ä¸æ•æ„Ÿã€‚
+    @param [in] szKey èŠ‚ç‚¹çš„è·¯å¾„
+    @param [in,out] uiKeyLen ä¼ å…¥keyçš„é•¿åº¦ï¼Œè¿”å›åœ¨é‚£ä¸ªä½ç½®å‘ç°äº†æœ€åä¸€ä¸ªå­—ç¬¦ä¸²èŠ‚ç‚¹
+    @return NULLï¼šèŠ‚ç‚¹ä¸å­˜åœ¨ï¼›å¦åˆ™ï¼Œä¸ºä»¥szKeyä¸ºè·¯å¾„çš„æœ€åä¸€ä¸ªå­—ç¬¦ä¸²èŠ‚ç‚¹ã€‚
     */
     inline CwxTrieNode<DATA> const* lastCaseKey(char const* szKey, CWX_UINT32& uiKeyLen) const;
-    ///»ñÈ¡Trie TreeµÄ¸ù½Úµã
+    ///è·å–Trie Treeçš„æ ¹èŠ‚ç‚¹
     inline CwxTrieNode<DATA> const* getRoot() const { return &m_root;}
-    ///»ñÈ¡Trie TreeÖĞ×Ö·û´®µÄÊıÁ¿
+    ///è·å–Trie Treeä¸­å­—ç¬¦ä¸²çš„æ•°é‡
     inline CWX_UINT32 getDataNum() const { return m_uiDataNum;}
-    ///Çå¿ÕTrie Tree
+    ///æ¸…ç©ºTrie Tree
     inline void clear();
 private:
-    CwxTrieNode<DATA>  m_root; ///<Trie TreeµÄ¸ù½Úµã
-    CwxTypePoolEx<CwxTrieNode<DATA> > m_pool;///<Trie Tree½Úµã·ÖÅäµÄÄÚ´æ³Ø
-    CWX_UINT32        m_uiDataNum;///<Trie TreeÖĞ×Ö·û´®µÄÊıÁ¿
+    CwxTrieNode<DATA>  m_root; ///<Trie Treeçš„æ ¹èŠ‚ç‚¹
+    CwxTypePoolEx<CwxTrieNode<DATA> > m_pool;///<Trie TreeèŠ‚ç‚¹åˆ†é…çš„å†…å­˜æ± 
+    CWX_UINT32        m_uiDataNum;///<Trie Treeä¸­å­—ç¬¦ä¸²çš„æ•°é‡
 };
 
 CWINUX_END_NAMESPACE

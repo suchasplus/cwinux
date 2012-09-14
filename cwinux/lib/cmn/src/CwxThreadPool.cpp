@@ -1,14 +1,14 @@
-#include "CwxThreadPool.h"
+ï»¿#include "CwxThreadPool.h"
 #include "CwxLogger.h"
 
 CWINUX_BEGIN_NAMESPACE
-///¹¹Ôìº¯Êý
-CwxThreadPool::CwxThreadPool(CWX_UINT16 unGroupId,///<Ïß³Ì³ØµÄthread-group
-                 CWX_UINT16 unThreadNum,///<Ïß³Ì³ØÖÐÏß³ÌµÄÊýÁ¿
-                 CwxThreadPoolMgr* mgr, ///<Ïß³ÌµÄ¹ÜÀí¶ÔÏó
-                 CwxCommander* commander,///<¶ÓÁÐÏûÏ¢Ïû·ÑµÄÈ±Ê¡commander£¬ÈôÖ¸¶¨func¿ÉÒÔ²»Ö¸¶¨
-                 CWX_TSS_THR_FUNC func, ///<ÓÃ»§µÄÏß³Ìmainº¯Êý
-                 void*            arg ///<funcµÄvoid*²ÎÊý
+///æž„é€ å‡½æ•°
+CwxThreadPool::CwxThreadPool(CWX_UINT16 unGroupId,///<çº¿ç¨‹æ± çš„thread-group
+                 CWX_UINT16 unThreadNum,///<çº¿ç¨‹æ± ä¸­çº¿ç¨‹çš„æ•°é‡
+                 CwxThreadPoolMgr* mgr, ///<çº¿ç¨‹çš„ç®¡ç†å¯¹è±¡
+                 CwxCommander* commander,///<é˜Ÿåˆ—æ¶ˆæ¯æ¶ˆè´¹çš„ç¼ºçœcommanderï¼Œè‹¥æŒ‡å®šfuncå¯ä»¥ä¸æŒ‡å®š
+                 CWX_TSS_THR_FUNC func, ///<ç”¨æˆ·çš„çº¿ç¨‹mainå‡½æ•°
+                 void*            arg ///<funcçš„void*å‚æ•°
                  ):CwxTpi(unGroupId, unThreadNum)
 {
     m_arrTssEnv = NULL;
@@ -20,7 +20,7 @@ CwxThreadPool::CwxThreadPool(CWX_UINT16 unGroupId,///<Ïß³Ì³ØµÄthread-group
     m_threadArr =  NULL;
 }
 
-///Îö¹¹º¯Êý
+///æžæž„å‡½æ•°
 CwxThreadPool::~CwxThreadPool()
 {
     if (m_arrTssEnv) delete []m_arrTssEnv;
@@ -53,7 +53,7 @@ int CwxThreadPool::start(CwxTss** pThrEnv, size_t stack_size)
         m_arrTssEnv = new CwxTss*[getThreadNum()];
         memset(m_arrTssEnv, 0x00, sizeof(CwxTss*) * getThreadNum());
     }
-    ///´´½¨Ïß³Ì
+    ///åˆ›å»ºçº¿ç¨‹
     CWX_UINT16 index= 0;
     m_threadArr = new CwxThread*[getThreadNum()];
     for (index=0; index<getThreadNum(); index++)
@@ -91,12 +91,12 @@ CwxTss* CwxThreadPool::getTss(CWX_UINT16 unThreadIndex)
     return m_arrTssEnv[unThreadIndex];
 }
 
-///Ëø×¡Õû¸öÏß³Ì³Ø¡£·µ»ØÖµ0£º³É¹¦£»-1£ºÊ§°Ü
+///é”ä½æ•´ä¸ªçº¿ç¨‹æ± ã€‚è¿”å›žå€¼0ï¼šæˆåŠŸï¼›-1ï¼šå¤±è´¥
 int CwxThreadPool::lock()
 {
     return m_msgQueue->lock().acquire();
 }
-///½âËøÕâ¸öÏß³Ì³Ø¡£·µ»ØÖµ0£º³É¹¦£»-1£ºÊ§°Ü
+///è§£é”è¿™ä¸ªçº¿ç¨‹æ± ã€‚è¿”å›žå€¼0ï¼šæˆåŠŸï¼›-1ï¼šå¤±è´¥
 int CwxThreadPool::unlock()
 {
     return m_msgQueue->lock().release();

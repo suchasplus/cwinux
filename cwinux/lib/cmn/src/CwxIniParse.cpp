@@ -1,10 +1,10 @@
-#include "CwxIniParse.h"
+ï»¿#include "CwxIniParse.h"
 
 CWINUX_BEGIN_NAMESPACE
 /**
-*@brief  ¼ÓÔØÅäÖÃÎÄ¼ş.
-*@param [in] strFile ÅäÖÃÎÄ¼şÃû¡£
-*@return false£ºÊ§°Ü£»true£º³É¹¦.
+*@brief  åŠ è½½é…ç½®æ–‡ä»¶.
+*@param [in] strFile é…ç½®æ–‡ä»¶åã€‚
+*@return falseï¼šå¤±è´¥ï¼›trueï¼šæˆåŠŸ.
 */ 
 bool CwxIniParse::load(string const& strFile){
 	string strConf;
@@ -17,7 +17,7 @@ bool CwxIniParse::load(string const& strFile){
 
 bool CwxIniParse::parse(string const& strConf)
 {
-    //Çå¿ÕÊôĞÔ
+    //æ¸…ç©ºå±æ€§
     {
         map<string, list<pair<string, string> >*>::iterator iter = m_attrs.begin();
         while(iter != m_attrs.end()){
@@ -85,8 +85,8 @@ bool CwxIniParse::parse(string const& strConf)
 }
 
 /**
-*@brief  »ñÈ¡ÅäÖÃÖĞËùÓĞµÄSection¡£
-*@param [out] sections ÅäÖÃÖĞµÄsection¡£
+*@brief  è·å–é…ç½®ä¸­æ‰€æœ‰çš„Sectionã€‚
+*@param [out] sections é…ç½®ä¸­çš„sectionã€‚
 *@return void.
 */ 
 void CwxIniParse::getSections(set<string>& sections) const
@@ -100,10 +100,10 @@ void CwxIniParse::getSections(set<string>& sections) const
 }
 
 /**
-*@brief  »ñÈ¡Ò»¸ösectionÏÂµÄËùÓĞÊôĞÔ
-*@param [in] strSection sectionµÄÃû×Ö¡£
-*@param [out] attrÏÂµÄËùÓĞÊôĞÔ¼°Æävalue¡£
-*@return false£ºsection²»´æÔÚ£»true£ºsection´æÔÚ.
+*@brief  è·å–ä¸€ä¸ªsectionä¸‹çš„æ‰€æœ‰å±æ€§
+*@param [in] strSection sectionçš„åå­—ã€‚
+*@param [out] atträ¸‹çš„æ‰€æœ‰å±æ€§åŠå…¶valueã€‚
+*@return falseï¼šsectionä¸å­˜åœ¨ï¼›trueï¼šsectionå­˜åœ¨.
 */ 
 bool CwxIniParse::getAttr(string const& strSection,
 				 list<pair<string, string> >& attr) const
@@ -115,11 +115,11 @@ bool CwxIniParse::getAttr(string const& strSection,
 	return true;
 }
 /**
-*@brief  »ñÈ¡Ò»¸ö×Ö·û´®ĞÍÊôĞÔÖµ.
-*@param [in] strSection sectionµÄÃû×Ö¡£
-*@param [in] strAttr ÊôĞÔÃû¡£
-*@param [out] strValue ÊôĞÔÖµ¡£
-*@return false£º²»´æÔÚ£»true£º´æÔÚ.
+*@brief  è·å–ä¸€ä¸ªå­—ç¬¦ä¸²å‹å±æ€§å€¼.
+*@param [in] strSection sectionçš„åå­—ã€‚
+*@param [in] strAttr å±æ€§åã€‚
+*@param [out] strValue å±æ€§å€¼ã€‚
+*@return falseï¼šä¸å­˜åœ¨ï¼›trueï¼šå­˜åœ¨.
 */ 
 bool CwxIniParse::getAttr(string const& strSection,
 				 string const& strAttr,

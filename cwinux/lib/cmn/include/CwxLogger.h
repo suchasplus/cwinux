@@ -1,14 +1,14 @@
-#ifndef __CWX_LOGGER_H__
+ï»¿#ifndef __CWX_LOGGER_H__
 #define __CWX_LOGGER_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxLogger.h
-@brief ¼Ü¹¹µÄÔËĞĞÈÕÖ¾¶ÔÏó
+@brief æ¶æ„çš„è¿è¡Œæ—¥å¿—å¯¹è±¡
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-07-20
@@ -31,86 +31,86 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxLogger
-@brief ¼Ü¹¹ÈÕÖ¾¶ÔÏóµÄ¶¨Òå£¬Æä¾ßÓĞÈçÏÂµÄÌØµã£º
-1¡¢ÆäÈÕÖ¾·ÖÎªinfo¡¢debug¡¢warning¡¢errorËÄ¸ö¼¶±ğ¡£¿ÉÒÔÉèÖÃÊä³öÈ«²¿»òÄ³¼¸¸ö¼¶±ğµÄÈÕÖ¾¡£
-2¡¢¿ÉÒÔÉè¼ÆÔËĞĞÈÕÖ¾µÄ´óĞ¡£¬µ±³¬¹ı´Ë´óĞ¡ºó£¬»áÇĞ»»ÏÂÒ»¸öÈÕÖ¾ÎÄ¼ş
-3¡¢¿ÉÒÔÉèÖÃÈÕÖ¾ÎÄ¼şµÄÊıÁ¿£¬ÊµÏÖÈÕÖ¾ÎÄ¼şµÄÑ­»·Ê¹ÓÃ
+@brief æ¶æ„æ—¥å¿—å¯¹è±¡çš„å®šä¹‰ï¼Œå…¶å…·æœ‰å¦‚ä¸‹çš„ç‰¹ç‚¹ï¼š
+1ã€å…¶æ—¥å¿—åˆ†ä¸ºinfoã€debugã€warningã€errorå››ä¸ªçº§åˆ«ã€‚å¯ä»¥è®¾ç½®è¾“å‡ºå…¨éƒ¨æˆ–æŸå‡ ä¸ªçº§åˆ«çš„æ—¥å¿—ã€‚
+2ã€å¯ä»¥è®¾è®¡è¿è¡Œæ—¥å¿—çš„å¤§å°ï¼Œå½“è¶…è¿‡æ­¤å¤§å°åï¼Œä¼šåˆ‡æ¢ä¸‹ä¸€ä¸ªæ—¥å¿—æ–‡ä»¶
+3ã€å¯ä»¥è®¾ç½®æ—¥å¿—æ–‡ä»¶çš„æ•°é‡ï¼Œå®ç°æ—¥å¿—æ–‡ä»¶çš„å¾ªç¯ä½¿ç”¨
 */
 class CWX_API CwxLogger
 {
 public:
-    ///ÈÕÖ¾ÀàĞÍ¶¨Òå
+    ///æ—¥å¿—ç±»å‹å®šä¹‰
     enum{
-        LEVEL_NONE = 0x00, ///<²»ÊäÈëÈÎºÎÈÕÖ¾
-        LEVEL_INFO = 0x01,///<infoÈÕÖ¾
-        LEVEL_DEBUG = 0x02,///<debugÈÕÖ¾
-        LEVEL_WARNING = 0x04,///<warningÈÕÖ¾
-        LEVEL_ERROR = 0x08,///<error ÈÕÖ¾
-        LEVEL_ALL=0xFFFFFFFF ///<Êä³öÈ«²¿ÈÕÖ¾
+        LEVEL_NONE = 0x00, ///<ä¸è¾“å…¥ä»»ä½•æ—¥å¿—
+        LEVEL_INFO = 0x01,///<infoæ—¥å¿—
+        LEVEL_DEBUG = 0x02,///<debugæ—¥å¿—
+        LEVEL_WARNING = 0x04,///<warningæ—¥å¿—
+        LEVEL_ERROR = 0x08,///<error æ—¥å¿—
+        LEVEL_ALL=0xFFFFFFFF ///<è¾“å‡ºå…¨éƒ¨æ—¥å¿—
     };
-    ///ÈÕÖ¾ÎÄ¼şÊıÁ¿¶¨Òå
+    ///æ—¥å¿—æ–‡ä»¶æ•°é‡å®šä¹‰
     enum{
-       MAX_LOG_FILE_NUM = 99,///<×î¶àµÄÈÕÖ¾ÎÄ¼şÊıÁ¿
-       MIN_LOG_FILE_NUM = 4///<×îÉÙµÄÈÕÖ¾ÎÄ¼şÊıÁ¿
+       MAX_LOG_FILE_NUM = 99,///<æœ€å¤šçš„æ—¥å¿—æ–‡ä»¶æ•°é‡
+       MIN_LOG_FILE_NUM = 4///<æœ€å°‘çš„æ—¥å¿—æ–‡ä»¶æ•°é‡
     };
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxLogger()
     {
         closeLog();
     }
 public:
-    ///µ¥ÊµÀı»ñÈ¡
+    ///å•å®ä¾‹è·å–
     static CwxLogger* instance();
-    ///¹Ø±ÕÈÕÖ¾
+    ///å…³é—­æ—¥å¿—
     static void close();
     /**
-    @brief ÈÕÖ¾¶ÔÏó³õÊ¼»¯
-    @param [in] base_name ÈÕÖ¾µÄÖ÷ÎÄ¼şÃû×Ö£¬°üÀ¨Â·¾¶Ãû
-    @param [in] num ÈÕÖ¾ÎÄ¼şµÄÊıÁ¿
-    @param [in] max_size Ã¿¸öÈÕÖ¾ÎÄ¼şµÄ´óĞ¡£¬µ¥Î»Îª×Ö½Ú
-    @param [in] bAppend ÊÇ·ñÇå¿Õµ±Ç°Ê¹ÓÃµÄÈÕÖ¾ÎÄ¼ş
-    @return -1£ºÊ§°Ü£» 0£º³É¹¦
+    @brief æ—¥å¿—å¯¹è±¡åˆå§‹åŒ–
+    @param [in] base_name æ—¥å¿—çš„ä¸»æ–‡ä»¶åå­—ï¼ŒåŒ…æ‹¬è·¯å¾„å
+    @param [in] num æ—¥å¿—æ–‡ä»¶çš„æ•°é‡
+    @param [in] max_size æ¯ä¸ªæ—¥å¿—æ–‡ä»¶çš„å¤§å°ï¼Œå•ä½ä¸ºå­—èŠ‚
+    @param [in] bAppend æ˜¯å¦æ¸…ç©ºå½“å‰ä½¿ç”¨çš„æ—¥å¿—æ–‡ä»¶
+    @return -1ï¼šå¤±è´¥ï¼› 0ï¼šæˆåŠŸ
     */
     int  init(const char* base_name,
         CWX_UINT16 num,
         CWX_UINT32 max_size,
         bool bAppend);
     /**
-    @brief ÇĞ»»ÏÂÒ»¸öÈÕÖ¾ÎÄ¼ş
-    @param [in] bAppend true£º²»Çå¿ÕÏÂÒ»¸öÈÕÖ¾ÎÄ¼ş£¬²ÉÓÃappend·½Ê½¼ÇÂ¼ÈÕÖ¾£»·ñÔò¼ÇÂ¼ÈÕÖ¾Ç°Çå¿Õ
-    @param [in] unFileNo ÏÂÒ»¸öÈÕÖ¾µÄÎÄ¼şºÅ£¬´Ó0¿ªÊ¼¡£ÈôÎª0£¬ÔòÎªµ±Ç°ÈÕÖ¾ÏµÍ³µÄÏÂÒ»¸öÈÕÖ¾ÎÄ¼ş
-    @return -1£ºÊ§°Ü£» 0£º³É¹¦
+    @brief åˆ‡æ¢ä¸‹ä¸€ä¸ªæ—¥å¿—æ–‡ä»¶
+    @param [in] bAppend trueï¼šä¸æ¸…ç©ºä¸‹ä¸€ä¸ªæ—¥å¿—æ–‡ä»¶ï¼Œé‡‡ç”¨appendæ–¹å¼è®°å½•æ—¥å¿—ï¼›å¦åˆ™è®°å½•æ—¥å¿—å‰æ¸…ç©º
+    @param [in] unFileNo ä¸‹ä¸€ä¸ªæ—¥å¿—çš„æ–‡ä»¶å·ï¼Œä»0å¼€å§‹ã€‚è‹¥ä¸º0ï¼Œåˆ™ä¸ºå½“å‰æ—¥å¿—ç³»ç»Ÿçš„ä¸‹ä¸€ä¸ªæ—¥å¿—æ–‡ä»¶
+    @return -1ï¼šå¤±è´¥ï¼› 0ï¼šæˆåŠŸ
     */
     int  nextLog(bool bAppend, CWX_UINT16 unFileNo=0);
     /**
-    @brief ¼ÇÂ¼infoÀàĞÍµÄÈÕÖ¾£¬´ËÀàĞÍµÄÈÕÖ¾²»¼ÇÂ¼ÎÄ¼şÃû¼°ĞĞºÅ
-    @param [in] format ¼ÇÂ¼µÄÈÕÖ¾ÄÚÈİ
+    @brief è®°å½•infoç±»å‹çš„æ—¥å¿—ï¼Œæ­¤ç±»å‹çš„æ—¥å¿—ä¸è®°å½•æ–‡ä»¶ååŠè¡Œå·
+    @param [in] format è®°å½•çš„æ—¥å¿—å†…å®¹
     @return void
     */
     void info(char const* format, ...);
     /**
-    @brief ¼ÇÂ¼debugÀàĞÍµÄÈÕÖ¾£¬´ËÀàĞÍµÄÈÕÖ¾¼ÇÂ¼ÎÄ¼şÃû¼°ĞĞºÅ
-    @param [in] format ¼ÇÂ¼µÄÈÕÖ¾ÄÚÈİ
+    @brief è®°å½•debugç±»å‹çš„æ—¥å¿—ï¼Œæ­¤ç±»å‹çš„æ—¥å¿—è®°å½•æ–‡ä»¶ååŠè¡Œå·
+    @param [in] format è®°å½•çš„æ—¥å¿—å†…å®¹
     @return void
     */
     void debug(char const* format, ...);
     /**
-    @brief ¼ÇÂ¼warningÀàĞÍµÄÈÕÖ¾£¬´ËÀàĞÍµÄÈÕÖ¾¼ÇÂ¼ÎÄ¼şÃû¼°ĞĞºÅ
-    @param [in] format ¼ÇÂ¼µÄÈÕÖ¾ÄÚÈİ
+    @brief è®°å½•warningç±»å‹çš„æ—¥å¿—ï¼Œæ­¤ç±»å‹çš„æ—¥å¿—è®°å½•æ–‡ä»¶ååŠè¡Œå·
+    @param [in] format è®°å½•çš„æ—¥å¿—å†…å®¹
     @return void
     */
     void warning(char const* format, ...);
     /**
-    @brief ¼ÇÂ¼errorÀàĞÍµÄÈÕÖ¾£¬´ËÀàĞÍµÄÈÕÖ¾¼ÇÂ¼ÎÄ¼şÃû¼°ĞĞºÅ
-    @param [in] format ¼ÇÂ¼µÄÈÕÖ¾ÄÚÈİ
+    @brief è®°å½•errorç±»å‹çš„æ—¥å¿—ï¼Œæ­¤ç±»å‹çš„æ—¥å¿—è®°å½•æ–‡ä»¶ååŠè¡Œå·
+    @param [in] format è®°å½•çš„æ—¥å¿—å†…å®¹
     @return void
     */
     void error(char const* format, ...);
-    ///½«szMsgµÄÊı¾İlogµ½ÎÄ¼şÖĞ
+    ///å°†szMsgçš„æ•°æ®logåˆ°æ–‡ä»¶ä¸­
     void log(char const* szMsg);
     /**
-    @brief ´ò¿ªuiLevelÀàĞÍµÄÈÕÖ¾Êä³ö£¬¿ÉÒÔÎª¶à¸öÀàĞÍµÄ»ò
-    @param [in] uiLevel ´ò¿ªµÄÈÕÖ¾ÀàĞÍ
+    @brief æ‰“å¼€uiLevelç±»å‹çš„æ—¥å¿—è¾“å‡ºï¼Œå¯ä»¥ä¸ºå¤šä¸ªç±»å‹çš„æˆ–
+    @param [in] uiLevel æ‰“å¼€çš„æ—¥å¿—ç±»å‹
     @return void
     */
     inline void enableLog(CWX_UINT32 uiLevel)
@@ -118,8 +118,8 @@ public:
         m_uiLevel |= uiLevel;
     }
     /**
-    @brief ¹Ø±ÕuiLevelÀàĞÍµÄÈÕÖ¾Êä³ö£¬¿ÉÒÔÎª¶à¸öÀàĞÍµÄ»ò
-    @param [in] uiLevel ¹Ø±ÕµÄÈÕÖ¾ÀàĞÍ
+    @brief å…³é—­uiLevelç±»å‹çš„æ—¥å¿—è¾“å‡ºï¼Œå¯ä»¥ä¸ºå¤šä¸ªç±»å‹çš„æˆ–
+    @param [in] uiLevel å…³é—­çš„æ—¥å¿—ç±»å‹
     @return void
     */
     inline void disableLog(CWX_UINT32 uiLevel)
@@ -127,51 +127,51 @@ public:
         m_uiLevel &=~uiLevel;
     }
     /**
-    @brief ¼ì²éuiLevelÀàĞÍµÄÈÕÖ¾Êä³öÊÇ·ñ´ò¿ª£¬¿ÉÒÔÎª¶à¸öÀàĞÍµÄ»ò
-    @param [in] uiLevel ¼ì²éµÄÈÕÖ¾ÀàĞÍ
-    @return true£º´ò¿ª£»false£ºÃ»ÓĞ´ò¿ª
+    @brief æ£€æŸ¥uiLevelç±»å‹çš„æ—¥å¿—è¾“å‡ºæ˜¯å¦æ‰“å¼€ï¼Œå¯ä»¥ä¸ºå¤šä¸ªç±»å‹çš„æˆ–
+    @param [in] uiLevel æ£€æŸ¥çš„æ—¥å¿—ç±»å‹
+    @return trueï¼šæ‰“å¼€ï¼›falseï¼šæ²¡æœ‰æ‰“å¼€
     */
     inline bool isEnableLog(CWX_UINT32 uiLevel) const
     {
         return (m_uiLevel&(uiLevel))!=0;
     }
-    ///»ñÈ¡µ±ÆÚµÄÈÕÖ¾Êä³ö¼¶±ğ
+    ///è·å–å½“æœŸçš„æ—¥å¿—è¾“å‡ºçº§åˆ«
     inline CWX_UINT32 getLevel() const 
     {
         return m_uiLevel;
     }
-    ///ÉèÖÃµ±Ç°µÄÈÕÖ¾Êä³ö¼¶±ğ
+    ///è®¾ç½®å½“å‰çš„æ—¥å¿—è¾“å‡ºçº§åˆ«
     inline void setLevel(CWX_UINT32 uiLevel)
     {
         m_uiLevel = uiLevel;
     }
-    ///»ñÈ¡µ±Ç°Ê¹ÓÃµÄÈÕÖ¾ÎÄ¼şµÄ´óĞ¡£¬ -1:±íÊ¾»ñÈ¡Ê§°Ü
+    ///è·å–å½“å‰ä½¿ç”¨çš„æ—¥å¿—æ–‡ä»¶çš„å¤§å°ï¼Œ -1:è¡¨ç¤ºè·å–å¤±è´¥
     inline off_t getLogFileSize() const
     {
         return m_curLogFd?CwxFile::getFileSize(m_strCurLogFileName.c_str()):0;
     }
-    ///»ñÈ¡ÉèÖÃµÄÈÕÖ¾ÎÄ¼şµÄÊıÁ¿
+    ///è·å–è®¾ç½®çš„æ—¥å¿—æ–‡ä»¶çš„æ•°é‡
     inline CWX_UINT16 getLogFileNum() const
     {
         return this->m_unLogFileNum;
     }
-    ///»ñÈ¡µ±Ç°ÈÕÖ¾ÎÄ¼şµÄĞòºÅ
+    ///è·å–å½“å‰æ—¥å¿—æ–‡ä»¶çš„åºå·
     inline CWX_UINT16 getCurLogFileNum() const 
     {
         return this->m_unCurLogFileNum;
     }
-    ///»ñÈ¡ÉèÖÃµÄÈÕÖ¾ÎÄ¼şµÄ´óĞ¡
+    ///è·å–è®¾ç½®çš„æ—¥å¿—æ–‡ä»¶çš„å¤§å°
     inline CWX_UINT32 getMaxLogFileSize() const
     {
         return this->m_uiMaxFileSize;
     }
-    ///»ñÈ¡µ±Ç°ÈÕÖ¾ÎÄ¼şµÄFILE handle
+    ///è·å–å½“å‰æ—¥å¿—æ–‡ä»¶çš„FILE handle
     inline FILE* getCurLogFileHandle() const
     {
         return this->m_curLogFd;
     }
 private:
-    ///¹¹Ôìº¯Êı£¬Ö»ÓĞinstance()²ÅÄÜ´´½¨ÈÕÖ¾¶ÔÏó£¬±£Ö¤ÁËµ¥ÊµÀı¡£
+    ///æ„é€ å‡½æ•°ï¼Œåªæœ‰instance()æ‰èƒ½åˆ›å»ºæ—¥å¿—å¯¹è±¡ï¼Œä¿è¯äº†å•å®ä¾‹ã€‚
     CwxLogger()
     {
         this->m_uiLevel = 0xFFFFFFFF;
@@ -182,55 +182,55 @@ private:
         this->m_prevLogFd = NULL;
         this->m_bInit = false;
     }
-    ///¹Ø±ÕÈÕÖ¾¶ÔÏó£¬·µ»ØÖµ£º0:success, -1:failure
+    ///å…³é—­æ—¥å¿—å¯¹è±¡ï¼Œè¿”å›å€¼ï¼š0:success, -1:failure
     int closeLog();
-    ///ÉèÖÃÏÂÒ»¸öÈÕÖ¾ÎÄ¼şµÄ»·¾³ĞÅÏ¢
+    ///è®¾ç½®ä¸‹ä¸€ä¸ªæ—¥å¿—æ–‡ä»¶çš„ç¯å¢ƒä¿¡æ¯
     void _nextLogFile();
-    ///»ñÈ¡ĞòºÅÎªseqµÄÈÕÖ¾ÎÄ¼şµÄÃû×Ö
+    ///è·å–åºå·ä¸ºseqçš„æ—¥å¿—æ–‡ä»¶çš„åå­—
     void _logFileName(int seq, std::string& strLog);
-    ///Æô¶¯Ê±£¬¸ù¾İÈÕÖ¾ÎÄ¼şµÄÈÕÖ¾£¬»ñÈ¡¿ªÊ¼Ê¹ÓÃµÄÈÕÖ¾ÎÄ¼şĞòºÅ¡£-1:´Ó0¿ªÊ¼, otherwize, log's id
+    ///å¯åŠ¨æ—¶ï¼Œæ ¹æ®æ—¥å¿—æ–‡ä»¶çš„æ—¥å¿—ï¼Œè·å–å¼€å§‹ä½¿ç”¨çš„æ—¥å¿—æ–‡ä»¶åºå·ã€‚-1:ä»0å¼€å§‹, otherwize, log's id
     int  _getStartLogNo();
-    ///ÇĞ»»µ½ÏÂÒ»¸öÈÕÖ¾ÎÄ¼ş¡£·µ»ØÖµ£º0:success, -1:failure
+    ///åˆ‡æ¢åˆ°ä¸‹ä¸€ä¸ªæ—¥å¿—æ–‡ä»¶ã€‚è¿”å›å€¼ï¼š0:success, -1:failure
     int _nextLog(bool append=true, CWX_UINT16 unFileNo=0);
-    ///»ñÈ¡msg header
+    ///è·å–msg header
     int _log_header(char const* szFile, int line, char* szBuf, CWX_UINT32 uiBufLen);
 
 private:
-    CWX_UINT32         m_uiLevel;///<ÈÕÖ¾Êä³öµÄLEVEL
-    CWX_UINT32         m_uiMaxFileSize;///<ÉèÖÃµÄÈÕÖ¾ÎÄ¼ş³ß´ç
-    CWX_UINT16         m_unLogFileNum;///<ÉèÖÃµÄÈÕÖ¾ÎÄ¼şÊıÁ¿
-    CWX_UINT16         m_unCurLogFileNum;///<µ±Ç°Ê¹ÓÃµÄÈÕÖ¾ÎÄ¼şºÅ
-    CwxMutexLock     m_mutex;///<±£»¤ÈÕÖ¾ÎÄ¼şÇĞ»»µÄËø
-    string             m_strBaseName;///<ÈÕÖ¾ÎÄ¼şµÄÖ÷ÎÄ¼şÃû
-    string             m_strCurLogFileName;///<µ±ÆÚÈÕÖ¾ÎÄ¼şµÄÎÄ¼şÃû
-    FILE *             m_curLogFd;///<µ±Ç°ÈÕÖ¾ÎÄ¼şµÄfd
-    FILE *             m_prevLogFd;///<ÆğÒ»¸öÈÕÖ¾ÎÄ¼şµÄfd
-    bool               m_bInit;///<ÈÕÖ¾¶ÔÏóÊÇ·ñ³õÊ¼»¯³É¹¦
-    static CwxLogger* m_pInstance;///<ÈÕÖ¾¶ÔÏóµÄµ¥ÊµÀı¶ÔÏó¡£
+    CWX_UINT32         m_uiLevel;///<æ—¥å¿—è¾“å‡ºçš„LEVEL
+    CWX_UINT32         m_uiMaxFileSize;///<è®¾ç½®çš„æ—¥å¿—æ–‡ä»¶å°ºå¯¸
+    CWX_UINT16         m_unLogFileNum;///<è®¾ç½®çš„æ—¥å¿—æ–‡ä»¶æ•°é‡
+    CWX_UINT16         m_unCurLogFileNum;///<å½“å‰ä½¿ç”¨çš„æ—¥å¿—æ–‡ä»¶å·
+    CwxMutexLock     m_mutex;///<ä¿æŠ¤æ—¥å¿—æ–‡ä»¶åˆ‡æ¢çš„é”
+    string             m_strBaseName;///<æ—¥å¿—æ–‡ä»¶çš„ä¸»æ–‡ä»¶å
+    string             m_strCurLogFileName;///<å½“æœŸæ—¥å¿—æ–‡ä»¶çš„æ–‡ä»¶å
+    FILE *             m_curLogFd;///<å½“å‰æ—¥å¿—æ–‡ä»¶çš„fd
+    FILE *             m_prevLogFd;///<èµ·ä¸€ä¸ªæ—¥å¿—æ–‡ä»¶çš„fd
+    bool               m_bInit;///<æ—¥å¿—å¯¹è±¡æ˜¯å¦åˆå§‹åŒ–æˆåŠŸ
+    static CwxLogger* m_pInstance;///<æ—¥å¿—å¯¹è±¡çš„å•å®ä¾‹å¯¹è±¡ã€‚
 };
 
 CWINUX_END_NAMESPACE
-///Êä³öÒ»¸ö´íÎóÏûÏ¢
+///è¾“å‡ºä¸€ä¸ªé”™è¯¯æ¶ˆæ¯
 #define CWX_ERROR(msg) do {\
     CWX_TSS_FILE_NO = __LINE__;\
     CWX_TSS_FILE_NAME = __FILE__;\
     CwxLogger::instance()->error msg;} while(0)
-///Êä³öÒ»¸ö¾¯¸æĞÅÏ¢
+///è¾“å‡ºä¸€ä¸ªè­¦å‘Šä¿¡æ¯
 #define CWX_WARNING(msg) do {\
     CWX_TSS_FILE_NO = __LINE__;\
     CWX_TSS_FILE_NAME = __FILE__;\
     CwxLogger::instance()->warning msg;} while(0)
-///Êä³öÒ»¸öµ÷ÊÔĞÅÏ¢
+///è¾“å‡ºä¸€ä¸ªè°ƒè¯•ä¿¡æ¯
 #define CWX_DEBUG(msg) do {\
     CWX_TSS_FILE_NO = __LINE__;\
     CWX_TSS_FILE_NAME = __FILE__;\
     CwxLogger::instance()->debug msg;} while(0)
-///Êä³öÒ»¸öinfoĞÅÏ¢
+///è¾“å‡ºä¸€ä¸ªinfoä¿¡æ¯
 #define CWX_INFO(msg) do {\
     CWX_TSS_FILE_NO = 0;\
     CWX_TSS_FILE_NAME = NULL;\
     CwxLogger::instance()->info msg;} while(0)
-///Êä³öÒ»¸öinfoĞÅÏ¢
+///è¾“å‡ºä¸€ä¸ªinfoä¿¡æ¯
 #define CWX_LOG(msg) do {\
     CwxLogger::instance()->log(msg);} while(0)
 #include "CwxPost.h"

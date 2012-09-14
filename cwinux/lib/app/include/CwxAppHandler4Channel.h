@@ -1,14 +1,14 @@
-#ifndef __CWX_APP_HANDLER_4_CHANNEL_H__
+ï»¿#ifndef __CWX_APP_HANDLER_4_CHANNEL_H__
 #define __CWX_APP_HANDLER_4_CHANNEL_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxAppHandler4Channel.h
-@brief ChannelµÄioÍ¨ĞÅ»ùÀà¡£
+@brief Channelçš„ioé€šä¿¡åŸºç±»ã€‚
 @author cwinux@gmail.com
 @version 1.0
 @date 2011-04-17
@@ -31,7 +31,7 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxAppHandler4Channel
-@brief ChannelµÄioÍ¨ĞÅ»ùÀà
+@brief Channelçš„ioé€šä¿¡åŸºç±»
 */
 
 class CwxAppChannel;
@@ -39,91 +39,91 @@ class CwxAppChannel;
 class CWX_API CwxAppHandler4Channel:public CwxAppHandler4Base
 {
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxAppHandler4Channel(CwxAppChannel *channel);
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     virtual ~CwxAppHandler4Channel();
 public:
     /**
-    @brief ³õÊ¼»¯½¨Á¢µÄÁ¬½Ó£¬²¢ÍùReactor×¢²áÁ¬½Ó
-    @param [in] arg ½¨Á¢Á¬½ÓµÄacceptor»òÎªNULL
-    @return -1£º·ÅÆú½¨Á¢µÄÁ¬½Ó£» 0£ºÁ¬½Ó½¨Á¢³É¹¦
+    @brief åˆå§‹åŒ–å»ºç«‹çš„è¿æ¥ï¼Œå¹¶å¾€Reactoræ³¨å†Œè¿æ¥
+    @param [in] arg å»ºç«‹è¿æ¥çš„acceptoræˆ–ä¸ºNULL
+    @return -1ï¼šæ”¾å¼ƒå»ºç«‹çš„è¿æ¥ï¼› 0ï¼šè¿æ¥å»ºç«‹æˆåŠŸ
     */
     virtual int open (void * arg= 0);
     /**
-    @brief Á¬½Ó¿ÉĞ´ÊÂ¼ş£¬·µ»Ø-1£¬close()»á±»µ÷ÓÃ
-    @return -1£º´¦ÀíÊ§°Ü£¬»áµ÷ÓÃclose()£» 0£º´¦Àí³É¹¦
+    @brief è¿æ¥å¯å†™äº‹ä»¶ï¼Œè¿”å›-1ï¼Œclose()ä¼šè¢«è°ƒç”¨
+    @return -1ï¼šå¤„ç†å¤±è´¥ï¼Œä¼šè°ƒç”¨close()ï¼› 0ï¼šå¤„ç†æˆåŠŸ
     */
     virtual int onOutput();
     /**
-    @brief Á¬½Ó¿É¶ÁÊÂ¼ş£¬·µ»Ø-1£¬close()»á±»µ÷ÓÃ
-    @return -1£º´¦ÀíÊ§°Ü£¬»áµ÷ÓÃclose()£» 0£º´¦Àí³É¹¦
+    @brief è¿æ¥å¯è¯»äº‹ä»¶ï¼Œè¿”å›-1ï¼Œclose()ä¼šè¢«è°ƒç”¨
+    @return -1ï¼šå¤„ç†å¤±è´¥ï¼Œä¼šè°ƒç”¨close()ï¼› 0ï¼šå¤„ç†æˆåŠŸ
     */
     virtual int onInput();
     /**
-    @brief Á¬½Ó³¬Ê±ÊÂ¼ş£¬·µ»Ø-1£¬close()»á±»µ÷ÓÃ
-    @return -1£º´¦ÀíÊ§°Ü£¬»áµ÷ÓÃclose()£» 0£º´¦Àí³É¹¦
+    @brief è¿æ¥è¶…æ—¶äº‹ä»¶ï¼Œè¿”å›-1ï¼Œclose()ä¼šè¢«è°ƒç”¨
+    @return -1ï¼šå¤„ç†å¤±è´¥ï¼Œä¼šè°ƒç”¨close()ï¼› 0ï¼šå¤„ç†æˆåŠŸ
     */
     virtual int onTimeout(CwxTimeValue const& current);
     /**
-    @brief HandlerµÄredoÊÂ¼ş£¬ÔÚÃ¿´ÎdispatchÊ±Ö´ĞĞ¡£
-    @return -1£º´¦ÀíÊ§°Ü£¬»áµ÷ÓÃclose()£» 0£º´¦Àí³É¹¦
+    @brief Handlerçš„redoäº‹ä»¶ï¼Œåœ¨æ¯æ¬¡dispatchæ—¶æ‰§è¡Œã€‚
+    @return -1ï¼šå¤„ç†å¤±è´¥ï¼Œä¼šè°ƒç”¨close()ï¼› 0ï¼šå¤„ç†æˆåŠŸ
     */
     virtual int onRedo();
     /**
-    @brief Á¬½Ó¹Ø±Õ
-    @param [in] handle  Á¬½Óhandle¡£
-    @return -1£º´¦ÀíÊ§°Ü£» 0£º´¦Àí³É¹¦
+    @brief è¿æ¥å…³é—­
+    @param [in] handle  è¿æ¥handleã€‚
+    @return -1ï¼šå¤„ç†å¤±è´¥ï¼› 0ï¼šå¤„ç†æˆåŠŸ
     */
     virtual int close(CWX_HANDLE handle=CWX_INVALID_HANDLE);
     /**
-    @brief Í¨ÖªÁ¬½Ó¿ªÊ¼·¢ËÍÒ»¸öÏûÏ¢¡£<br>
-    Ö»ÓĞÔÚMSGÖ¸¶¨BEGIN_NOTICEµÄÊ±ºò²Åµ÷ÓÃ.
-    @param [in] msg Òª·¢ËÍµÄÏûÏ¢¡£
-    @return -1£ºÈ¡ÏûÏûÏ¢µÄ·¢ËÍ¡£ 0£º·¢ËÍÏûÏ¢¡£
+    @brief é€šçŸ¥è¿æ¥å¼€å§‹å‘é€ä¸€ä¸ªæ¶ˆæ¯ã€‚<br>
+    åªæœ‰åœ¨MSGæŒ‡å®šBEGIN_NOTICEçš„æ—¶å€™æ‰è°ƒç”¨.
+    @param [in] msg è¦å‘é€çš„æ¶ˆæ¯ã€‚
+    @return -1ï¼šå–æ¶ˆæ¶ˆæ¯çš„å‘é€ã€‚ 0ï¼šå‘é€æ¶ˆæ¯ã€‚
     */
     virtual int onStartSendMsg(CwxMsgBlock* msg);
     /**
-    @brief Í¨ÖªÁ¬½ÓÍê³ÉÒ»¸öÏûÏ¢µÄ·¢ËÍ¡£<br>
-    Ö»ÓĞÔÚMsgÖ¸¶¨FINISH_NOTICEµÄÊ±ºò²Åµ÷ÓÃ.
-    @param [in,out] msg ´«Èë·¢ËÍÍê±ÏµÄÏûÏ¢£¬Èô·µ»ØNULL£¬ÔòmsgÓĞÉÏ²ãÊÍ·Å£¬·ñÔòµ×²ãÊÍ·Å¡£
+    @brief é€šçŸ¥è¿æ¥å®Œæˆä¸€ä¸ªæ¶ˆæ¯çš„å‘é€ã€‚<br>
+    åªæœ‰åœ¨MsgæŒ‡å®šFINISH_NOTICEçš„æ—¶å€™æ‰è°ƒç”¨.
+    @param [in,out] msg ä¼ å…¥å‘é€å®Œæ¯•çš„æ¶ˆæ¯ï¼Œè‹¥è¿”å›NULLï¼Œåˆ™msgæœ‰ä¸Šå±‚é‡Šæ”¾ï¼Œå¦åˆ™åº•å±‚é‡Šæ”¾ã€‚
     @return 
-    CwxMsgSendCtrl::UNDO_CONN£º²»ĞŞ¸ÄÁ¬½ÓµÄ½ÓÊÕ×´Ì¬
-    CwxMsgSendCtrl::RESUME_CONN£ºÈÃÁ¬½Ó´Ósuspend×´Ì¬±äÎªÊı¾İ½ÓÊÕ×´Ì¬¡£
-    CwxMsgSendCtrl::SUSPEND_CONN£ºÈÃÁ¬½Ó´ÓÊı¾İ½ÓÊÕ×´Ì¬±äÎªsuspend×´Ì¬
+    CwxMsgSendCtrl::UNDO_CONNï¼šä¸ä¿®æ”¹è¿æ¥çš„æ¥æ”¶çŠ¶æ€
+    CwxMsgSendCtrl::RESUME_CONNï¼šè®©è¿æ¥ä»suspendçŠ¶æ€å˜ä¸ºæ•°æ®æ¥æ”¶çŠ¶æ€ã€‚
+    CwxMsgSendCtrl::SUSPEND_CONNï¼šè®©è¿æ¥ä»æ•°æ®æ¥æ”¶çŠ¶æ€å˜ä¸ºsuspendçŠ¶æ€
     */
     virtual CWX_UINT32 onEndSendMsg(CwxMsgBlock*& msg);
 
     /**
-    @brief Í¨ÖªÁ¬½ÓÉÏ£¬Ò»¸öÏûÏ¢·¢ËÍÊ§°Ü¡£<br>
-    Ö»ÓĞÔÚMsgÖ¸¶¨FAIL_NOTICEµÄÊ±ºò²Åµ÷ÓÃ.
-    @param [in,out] msg ·¢ËÍÊ§°ÜµÄÏûÏ¢£¬Èô·µ»ØNULL£¬ÔòmsgÓĞÉÏ²ãÊÍ·Å£¬·ñÔòµ×²ãÊÍ·Å¡£
-    @return void¡£
+    @brief é€šçŸ¥è¿æ¥ä¸Šï¼Œä¸€ä¸ªæ¶ˆæ¯å‘é€å¤±è´¥ã€‚<br>
+    åªæœ‰åœ¨MsgæŒ‡å®šFAIL_NOTICEçš„æ—¶å€™æ‰è°ƒç”¨.
+    @param [in,out] msg å‘é€å¤±è´¥çš„æ¶ˆæ¯ï¼Œè‹¥è¿”å›NULLï¼Œåˆ™msgæœ‰ä¸Šå±‚é‡Šæ”¾ï¼Œå¦åˆ™åº•å±‚é‡Šæ”¾ã€‚
+    @return voidã€‚
     */
     virtual void onFailSendMsg(CwxMsgBlock*& msg);
     /**
-    @brief Í¨ÖªÁ¬½Ó¹Ø±Õ¡£
-    @return 1£º²»´ÓengineÖĞÒÆ³ı×¢²á£»0£º´ÓengineÖĞÒÆ³ı×¢²áµ«²»É¾³ıhandler£»-1£º´ÓengineÖĞ½«handleÒÆ³ı²¢É¾³ı¡£
+    @brief é€šçŸ¥è¿æ¥å…³é—­ã€‚
+    @return 1ï¼šä¸ä»engineä¸­ç§»é™¤æ³¨å†Œï¼›0ï¼šä»engineä¸­ç§»é™¤æ³¨å†Œä½†ä¸åˆ é™¤handlerï¼›-1ï¼šä»engineä¸­å°†handleç§»é™¤å¹¶åˆ é™¤ã€‚
     */
     virtual int onConnClosed();
 
 public:
-    ///Çå¿Õ¶ÔÏó
+    ///æ¸…ç©ºå¯¹è±¡
     void clear();
-    ///»ñÈ¡ÏÂÒ»¸ö´ı·¢ËÍµÄÏûÏ¢£¬·µ»ØÖµ£º0£¬Ã»ÓĞ´ı·¢ËÍĞÅÏ¢£»1,»ñµÃÁËÒ»¸ö´ı·¢ËÍÏûÏ¢
+    ///è·å–ä¸‹ä¸€ä¸ªå¾…å‘é€çš„æ¶ˆæ¯ï¼Œè¿”å›å€¼ï¼š0ï¼Œæ²¡æœ‰å¾…å‘é€ä¿¡æ¯ï¼›1,è·å¾—äº†ä¸€ä¸ªå¾…å‘é€æ¶ˆæ¯
     inline int getNextMsg();
-    ///¶ÔÒª·¢ËÍµÄÏûÏ¢ÅÅ¶Ó£¬·µ»ØÖµ£ºtrue£º³É¹¦£»false£ºÊ§°Ü£¬Ê§°ÜÊ±ÒòÎª¶ÓÁĞÒÑÂú
+    ///å¯¹è¦å‘é€çš„æ¶ˆæ¯æ’é˜Ÿï¼Œè¿”å›å€¼ï¼štrueï¼šæˆåŠŸï¼›falseï¼šå¤±è´¥ï¼Œå¤±è´¥æ—¶å› ä¸ºé˜Ÿåˆ—å·²æ»¡
     inline bool putMsg(CwxMsgBlock* msg);
-    ///ÓÉÓÚÃ»ÓĞÏûÏ¢·¢ËÍ£¬Ê¹Á¬½ÓµÄ·¢ËÍ¼à²âĞİÃß.·µ»ØÖµ£¬ -1: failure, 0: success
+    ///ç”±äºæ²¡æœ‰æ¶ˆæ¯å‘é€ï¼Œä½¿è¿æ¥çš„å‘é€ç›‘æµ‹ä¼‘çœ .è¿”å›å€¼ï¼Œ -1: failure, 0: success
     int cancelWakeup();
-    ///»½ĞÑÁ¬½ÓµÄ¿ÉĞ´¼à¿Ø£¬ÒÔ·¢ËÍÎ´·¢ËÍÍê±ÏµÄÊı¾İ.·µ»ØÖµ£¬ -1:failure£» 0:success¡£
+    ///å”¤é†’è¿æ¥çš„å¯å†™ç›‘æ§ï¼Œä»¥å‘é€æœªå‘é€å®Œæ¯•çš„æ•°æ®.è¿”å›å€¼ï¼Œ -1:failureï¼› 0:successã€‚
     int wakeUp();
-    ///ÊÇ·ñÓĞ¿É·¢ËÍµÄÊı¾İ°ü
+    ///æ˜¯å¦æœ‰å¯å‘é€çš„æ•°æ®åŒ…
     bool isEmpty() const;
-    ///»ñÈ¡channel
+    ///è·å–channel
     CwxAppChannel* channel();
 public:
-    ///·µ»ØÖµ£º-1£º¶ÁÈ¡Ê§°Ü£»0£ºÊı¾İ°üÃ»ÓĞ¶ÁÍê£»1£º¶ÁÈ¡ÁËÒ»¸öÊı¾İ°ü
+    ///è¿”å›å€¼ï¼š-1ï¼šè¯»å–å¤±è´¥ï¼›0ï¼šæ•°æ®åŒ…æ²¡æœ‰è¯»å®Œï¼›1ï¼šè¯»å–äº†ä¸€ä¸ªæ•°æ®åŒ…
     static int recvPackage(CWX_HANDLE handle, 
         CWX_UINT32& uiRecvHeadLen,
         CWX_UINT32& uiRecvDataLen,
@@ -132,14 +132,14 @@ public:
         CwxMsgBlock*& msg);
 protected:
     /**
-    @brief ½ÓÊÜÁ¬½ÓÉÏµÄÊÂ¼ş
-    @param [in] event Á¬½ÓµÄhandleÉÏµÄÊÂ¼ş
-    @param [in] handle  ·¢ÉúµÄÊÂ¼şµÄhandle¡£
-    @return -1£º´¦ÀíÊ§°Ü£» 0£º´¦Àí³É¹¦
+    @brief æ¥å—è¿æ¥ä¸Šçš„äº‹ä»¶
+    @param [in] event è¿æ¥çš„handleä¸Šçš„äº‹ä»¶
+    @param [in] handle  å‘ç”Ÿçš„äº‹ä»¶çš„handleã€‚
+    @return -1ï¼šå¤„ç†å¤±è´¥ï¼› 0ï¼šå¤„ç†æˆåŠŸ
     */
     virtual int handle_event(int event, CWX_HANDLE handle=CWX_INVALID_HANDLE);
 private:
-    ///ÒÔ·Ç×èÈûµÄ·½Ê½£¬·¢ËÍÏûÏ¢¡£·µ»ØÖµ,-1: failure; 0: not send all;1:send a msg
+    ///ä»¥éé˜»å¡çš„æ–¹å¼ï¼Œå‘é€æ¶ˆæ¯ã€‚è¿”å›å€¼,-1: failure; 0: not send all;1:send a msg
     inline int nonBlockSend();
     friend class CwxAppChannel;
 protected:

@@ -1,11 +1,11 @@
-#include "CwxSockConnector.h"
+ï»¿#include "CwxSockConnector.h"
 CWINUX_BEGIN_NAMESPACE
-///Ä¬ÈÏ¹¹Ôìº¯Êı
+///é»˜è®¤æ„é€ å‡½æ•°
 CwxSockConnector::CwxSockConnector()
 {
 
 }
-///Îö¹¹º¯Êı.
+///ææ„å‡½æ•°.
 CwxSockConnector::~CwxSockConnector(void)
 {
 

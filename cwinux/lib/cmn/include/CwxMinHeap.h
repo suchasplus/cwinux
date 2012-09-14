@@ -1,11 +1,11 @@
-#ifndef __CWX_MIN_HEAP_H__
+ï»¿#ifndef __CWX_MIN_HEAP_H__
 #define __CWX_MIN_HEAP_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰
 */
 /************************************************************************
-* ±¾´úÂëCopy×ÔLibevent£¬min_heap.h£¬ÎÒÖ»ÊÇ½«Æä·­Òë³ÉÁËÄ£°åÀà£¬Ò»ÏÂÊÇÆälicenseÉùÃ÷¡£
+* æœ¬ä»£ç Copyè‡ªLibeventï¼Œmin_heap.hï¼Œæˆ‘åªæ˜¯å°†å…¶ç¿»è¯‘æˆäº†æ¨¡æ¿ç±»ï¼Œä¸€ä¸‹æ˜¯å…¶licenseå£°æ˜ã€‚
 * Copyright (c) 2006 Maxim Yegorushkin <maxim.yegorushkin@gmail.com>
 * All rights reserved.
 *
@@ -34,7 +34,7 @@
 ************************************************************************/
 /**
 @file CwxMinHeap.h
-@brief Min heapµÄÊµÏÖ£¬¿ÉÒÔ¶¯Ì¬µÄÔöÉ¾ÔªËØ¡£
+@brief Min heapçš„å®ç°ï¼Œå¯ä»¥åŠ¨æ€çš„å¢åˆ å…ƒç´ ã€‚
 @author cwinux@gmail.com
 @version 1.0
 @date 2011-03-02
@@ -48,21 +48,21 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxMinHeap
-@brief ¿ÉÒÔÔö¼ÓÔªËØµÄmin heap£»
-       TYPE¶ÔÏó±ØĞëÓĞindex(),index(CWX_INT32 index)µÄ·½·¨£¬ÒÔÉèÖÃÔÚheap arrayÖĞµÄindex¡£
-       CMPÎªTYPE¶ÔÏóµÄ±È½Ïº¯Êı£¬È±Ê¡Îªstl::less£¬
-       ¶ÔÓÚCMP(T1,T2)µÄ±È½Ï·µ»ØÖµÀ´Ëµ£¬¶¨ÒåÈçÏÂ£º
-       T1<T2£º·µ»Øtrue
-       T1>=T2£º·µ»Øfalse
+@brief å¯ä»¥å¢åŠ å…ƒç´ çš„min heapï¼›
+       TYPEå¯¹è±¡å¿…é¡»æœ‰index(),index(CWX_INT32 index)çš„æ–¹æ³•ï¼Œä»¥è®¾ç½®åœ¨heap arrayä¸­çš„indexã€‚
+       CMPä¸ºTYPEå¯¹è±¡çš„æ¯”è¾ƒå‡½æ•°ï¼Œç¼ºçœä¸ºstl::lessï¼Œ
+       å¯¹äºCMP(T1,T2)çš„æ¯”è¾ƒè¿”å›å€¼æ¥è¯´ï¼Œå®šä¹‰å¦‚ä¸‹ï¼š
+       T1<T2ï¼šè¿”å›true
+       T1>=T2ï¼šè¿”å›false
 */
 template <class TYPE, class CMP=greater<TYPE> >
 class CWX_API CwxMinHeap
 {
 public:
     /**
-    @brief ¹¹Ôìº¯Êı
-    @param [in] num heapÖĞ×î¶àµÄÔªËØÊıÁ¿
-    @param [in] cmp ±È½Ïº¯Êı
+    @brief æ„é€ å‡½æ•°
+    @param [in] num heapä¸­æœ€å¤šçš„å…ƒç´ æ•°é‡
+    @param [in] cmp æ¯”è¾ƒå‡½æ•°
     */
     CwxMinHeap(CWX_UINT32 num, CMP const& cmp=greater<TYPE>()):m_cmp(cmp)
     {
@@ -70,15 +70,15 @@ public:
         m_uiCount = 0;
         m_pElement = NULL;
     }
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxMinHeap()
     {
         if (m_pElement) free(m_pElement);
     }
 public:
     /**
-    @brief ³õÊ¼»¯HEAP
-    @return -1£ºÊ§°Ü£»0£º³É¹¦
+    @brief åˆå§‹åŒ–HEAP
+    @return -1ï¼šå¤±è´¥ï¼›0ï¼šæˆåŠŸ
     */
     int init()
     {
@@ -88,9 +88,9 @@ public:
         return 0;
     }
     /**
-    @brief ÍùHEAPÖĞÌí¼ÓÒ»¸öÔªËØ
-    @param [in] e Ìí¼ÓµÄÔªËØ
-    @return true£º³É¹¦£»false£ºÄÚ´æ²»¹»¶øÊ§°Ü
+    @brief å¾€HEAPä¸­æ·»åŠ ä¸€ä¸ªå…ƒç´ 
+    @param [in] e æ·»åŠ çš„å…ƒç´ 
+    @return trueï¼šæˆåŠŸï¼›falseï¼šå†…å­˜ä¸å¤Ÿè€Œå¤±è´¥
     */
     bool push(TYPE* const& e)
     {
@@ -101,8 +101,8 @@ public:
         return true;
     }
     /**
-    @brief Ö÷¶¯µÄ´ÓHEAPÖĞPOPÒ»¸ö×îĞ¡µÄÔªËØ
-    @return NULL£ºheap¿Õ£»·ñÔòpop³ö×îĞ¡µÄÔªËØ
+    @brief ä¸»åŠ¨çš„ä»HEAPä¸­POPä¸€ä¸ªæœ€å°çš„å…ƒç´ 
+    @return NULLï¼šheapç©ºï¼›å¦åˆ™popå‡ºæœ€å°çš„å…ƒç´ 
     */
     TYPE* pop()
     {
@@ -116,9 +116,9 @@ public:
         return NULL;
     }
     /**
-    @brief ´ÓheapÖĞÉ¾³ıÒ»¸öÔªËØ
-    @param [in] e É¾³ıµÄÔªËØ
-    @return true£º³É¹¦£»false£ºÊ§°Ü
+    @brief ä»heapä¸­åˆ é™¤ä¸€ä¸ªå…ƒç´ 
+    @param [in] e åˆ é™¤çš„å…ƒç´ 
+    @return trueï¼šæˆåŠŸï¼›falseï¼šå¤±è´¥
     */
     bool erase(TYPE* e)
     {
@@ -140,18 +140,18 @@ public:
         }
         return -1;
     }
-    ///·µ»ØtopµÄÔªËØ
+    ///è¿”å›topçš„å…ƒç´ 
     inline TYPE const* top() const
     {
         return m_uiCount?m_pElement[0]:NULL;
     }
 
-    ///»ñÈ¡HEAPÖĞÔªËØµÄÊıÁ¿
+    ///è·å–HEAPä¸­å…ƒç´ çš„æ•°é‡
     inline CWX_UINT32 count() const
     { 
         return m_uiCount;
     }
-    ///true£ºheapÎª¿Õ£»false£ºheap²»Îª¿Õ¡£
+    ///trueï¼šheapä¸ºç©ºï¼›falseï¼šheapä¸ä¸ºç©ºã€‚
     inline bool isEmpty() const 
     { 
         return 0==m_uiCount;
@@ -205,10 +205,10 @@ private:
         shift_up(index,  e);
     }
 private:
-    CWX_UINT32        m_uiAll;///<heapÖĞÔªËØ¿Õ¼äµÄ×ÜÁ¿
-    CWX_UINT32        m_uiCount;///<heapÖĞÔªËØµÄÊıÁ¿
-    TYPE**            m_pElement;///<heapµÄÊı×é£¬´óĞ¡Îªm_uiAll¸ö
-    CMP               m_cmp;///<±È½Ïº¯Êı¶ÔÏó
+    CWX_UINT32        m_uiAll;///<heapä¸­å…ƒç´ ç©ºé—´çš„æ€»é‡
+    CWX_UINT32        m_uiCount;///<heapä¸­å…ƒç´ çš„æ•°é‡
+    TYPE**            m_pElement;///<heapçš„æ•°ç»„ï¼Œå¤§å°ä¸ºm_uiAllä¸ª
+    CMP               m_cmp;///<æ¯”è¾ƒå‡½æ•°å¯¹è±¡
 };
 
 CWINUX_END_NAMESPACE

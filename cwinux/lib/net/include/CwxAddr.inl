@@ -1,4 +1,4 @@
-CWINUX_BEGIN_NAMESPACE
+﻿CWINUX_BEGIN_NAMESPACE
 
 inline bool CwxAddr::operator == (const CwxAddr &sap) const
 {

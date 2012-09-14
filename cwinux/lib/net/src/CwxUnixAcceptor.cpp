@@ -1,7 +1,7 @@
-#include "CwxUnixAcceptor.h"
+ï»¿#include "CwxUnixAcceptor.h"
 
 CWINUX_BEGIN_NAMESPACE
-///Ä¬ÈÏ¹¹Ôìº¯Êı
+///é»˜è®¤æ„é€ å‡½æ•°
 CwxUnixAcceptor::CwxUnixAcceptor()
 {
 
@@ -17,7 +17,7 @@ CwxUnixAcceptor::CwxUnixAcceptor(CwxAddr const& addr,
     listen(addr, reuse, backlog, domain, protocol, fn, fnArg);
 }
 
-///Îö¹¹º¯Êı.
+///ææ„å‡½æ•°.
 CwxUnixAcceptor::~CwxUnixAcceptor(void)
 {
 

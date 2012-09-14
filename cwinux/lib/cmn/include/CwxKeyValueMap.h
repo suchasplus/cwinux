@@ -1,14 +1,14 @@
-#ifndef __CWX_KEY_VALUE_MAP_H__
+ï»¿#ifndef __CWX_KEY_VALUE_MAP_H__
 #define __CWX_KEY_VALUE_MAP_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxKeyValueMap.h
-@brief ·â×°STLµÄmultimapÊµÏÖKeyÓëValue¶¼ÊÇstringÀàĞÍµÄmap¡£¶øÇÒKey¿ÉÑ¡ÔñÊÇ·ñ´óĞ¡Ğ´Ãô¸Ğ
+@brief å°è£…STLçš„multimapå®ç°Keyä¸Valueéƒ½æ˜¯stringç±»å‹çš„mapã€‚è€Œä¸”Keyå¯é€‰æ‹©æ˜¯å¦å¤§å°å†™æ•æ„Ÿ
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-17
@@ -24,7 +24,7 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxKeyValueMap
-@brief ·â×°STLµÄMAPÊµÏÖKeyÓëValue¶¼ÊÇstringÀàĞÍµÄmap¡£¶øÇÒKey¿ÉÑ¡ÔñÊÇ·ñ´óĞ¡Ğ´Ãô¸Ğ
+@brief å°è£…STLçš„MAPå®ç°Keyä¸Valueéƒ½æ˜¯stringç±»å‹çš„mapã€‚è€Œä¸”Keyå¯é€‰æ‹©æ˜¯å¦å¤§å°å†™æ•æ„Ÿ
 */
 class CWX_API CwxKeyValueMap
 {
@@ -33,25 +33,25 @@ public:
     typedef MAP::iterator iterator;
     typedef MAP::const_iterator const_iterator;
     /**
-    @brief ¹¹Ôìº¯Êı
-    @param [in] bCaseSensive keyÊÇ·ñ´óĞ¡Ğ´Ãô¸Ğ¡£true£ºÊÇ£»·ñÔò²»ÊÇ¡£
+    @brief æ„é€ å‡½æ•°
+    @param [in] bCaseSensive keyæ˜¯å¦å¤§å°å†™æ•æ„Ÿã€‚trueï¼šæ˜¯ï¼›å¦åˆ™ä¸æ˜¯ã€‚
     */
     CwxKeyValueMap(bool bCaseSensive)
         :m_bCaseSensive(bCaseSensive)
     {
         m_index = new MAP(CwxCaseStringLess2(bCaseSensive));
     }
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxKeyValueMap()
     {
         if (m_index) delete m_index;
     }
-    ///¿½±´¹¹Ôì
+    ///æ‹·è´æ„é€ 
     CwxKeyValueMap(CwxKeyValueMap const& obj);
-    ///¸³Öµ²Ù×÷
+    ///èµ‹å€¼æ“ä½œ
     CwxKeyValueMap& operator=(CwxKeyValueMap const& obj);
 public:
-    ///¶ÔÁ½¸ömapµÄkey/value½øĞĞ½»»»
+    ///å¯¹ä¸¤ä¸ªmapçš„key/valueè¿›è¡Œäº¤æ¢
     void swap(CwxKeyValueMap& obj);
     MAP& map();
     bool isCaseSensive() const;

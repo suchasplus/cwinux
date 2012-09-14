@@ -1,12 +1,12 @@
-CWINUX_BEGIN_NAMESPACE
+ï»¿CWINUX_BEGIN_NAMESPACE
 
-///¹¹Ôìº¯Êı£¬´´½¨Ò»¸öÏß³ÌÅÅËûËø
+///æ„é€ å‡½æ•°ï¼Œåˆ›å»ºä¸€ä¸ªçº¿ç¨‹æ’ä»–é”
 inline CwxCondition::CwxCondition(CwxMutexLock &lock, pthread_condattr_t * attr):m_lock(lock)
 {
     m_cond = (pthread_cond_t*)malloc(sizeof (pthread_cond_t));
     pthread_cond_init(this->m_cond, attr);
 }
-///Îö¹¹º¯Êı
+///ææ„å‡½æ•°
 inline CwxCondition::~CwxCondition()
 {
     pthread_cond_destroy(this->m_cond);
@@ -57,7 +57,7 @@ inline int CwxCondition::broadcast(void)
     }
     return ret;
 }
-///»ñÈ¡Ëø¾ä±ú
+///è·å–é”å¥æŸ„
 inline CwxMutexLock  &CwxCondition::lock() 
 {
     return m_lock;

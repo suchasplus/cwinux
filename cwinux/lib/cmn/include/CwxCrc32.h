@@ -1,9 +1,9 @@
-#ifndef __CWX_CRC32_H__
+ï»¿#ifndef __CWX_CRC32_H__
 #define __CWX_CRC32_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 
@@ -17,11 +17,11 @@
 #include "CwxType.h"
 /**
 *@file  CwxMd5.h
-*@brief  ´ËÎÄ¼ş¶¨ÒåÁËCwxCrc32µÄÀà£¬ÊµÏÖCRC32µÄÇ©Ãû
+*@brief  æ­¤æ–‡ä»¶å®šä¹‰äº†CwxCrc32çš„ç±»ï¼Œå®ç°CRC32çš„ç­¾å
 *@author cwinux@gmail.com
 *@version 0.1
 *@date    2011-05-16
-*@warning ÎŞ
+*@warning æ— 
 *@bug   
 */
 CWINUX_BEGIN_NAMESPACE

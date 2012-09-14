@@ -1,14 +1,14 @@
-#ifndef __CWX_INET_ADDR_H__
+ï»¿#ifndef __CWX_INET_ADDR_H__
 #define __CWX_INET_ADDR_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxINetAddr.h
-@brief ÍøÂçµÄµØÖ·¶ÔÏóµÄ¶¨ÒåÎÄ¼ş¡£
+@brief ç½‘ç»œçš„åœ°å€å¯¹è±¡çš„å®šä¹‰æ–‡ä»¶ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-10
@@ -25,7 +25,7 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxINetAddr
-@brief ÍøÂçµØÖ·¶ÔÏó¡£
+@brief ç½‘ç»œåœ°å€å¯¹è±¡ã€‚
 */
 class CWX_API CwxINetAddr:public CwxAddr
 {
@@ -169,7 +169,7 @@ public:
 
     /// Return the port number, converting it into host byte-order.
     CWX_UINT16 getPort(void) const;
-    ///»ñÈ¡µØÖ·µÄÀàĞÍ
+    ///è·å–åœ°å€çš„ç±»å‹
     int getAddrType() const;
 
     /**

@@ -1,14 +1,14 @@
-#ifndef __CWX_ZLIB_H__
+ï»¿#ifndef __CWX_ZLIB_H__
 #define __CWX_ZLIB_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 *@file CwxZlib.h
-*@brief ZLIBµÄ¼òµ¥·â×°£¬ÓÃÓÚÊµÏÖCWINUXÆ½Ì¨µÄÑ¹Ëõ
+*@brief ZLIBçš„ç®€å•å°è£…ï¼Œç”¨äºå®ç°CWINUXå¹³å°çš„å‹ç¼©
 *@author cwinux@gmail.com
 *@version 1.0
 *@date  2009-10-25
@@ -23,19 +23,19 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 *@class  CwxZlib
-*@brief  zlib¿âµÄ¼ò»¯·â×°£¬ÊµÏÖCWXINUXµÄÊı¾İÑ¹Ëõ¡¢½âÑ¹¹¦ÄÜ¡£
+*@brief  zlibåº“çš„ç®€åŒ–å°è£…ï¼Œå®ç°CWXINUXçš„æ•°æ®å‹ç¼©ã€è§£å‹åŠŸèƒ½ã€‚
 *
 */
 class CwxZlib
 {
 public:
     /**
-    *@brief ¶ÔszSrc½øĞĞÑ¹Ëõ£¬²¢½«Ñ¹ËõºóµÄÊı¾İ±£´æÓÚszDest¡£
-    *@param [out] szDest Ñ¹ËõºóµÄÊı¾İ.
-    *@param [in, out] ulDestLen ´«ÈëszDestµÄ³¤¶È£¬´«³öÑ¹ËõºóÊı¾İµÄ³¤¶È.
-    *@param [in] szSrc Ñ¹ËõÇ°µÄÊı¾İ.
-    *@param [in] ulSrcLen Ñ¹ËõÇ°Êı¾İµÄ³¤¶È.
-    *@param [in] ucLevel Ñ¹ËõµÄ¼¶±ğ£¬0~9£¬0±íÊ¾²»Ñ¹Ëõ,Êı×ÖÔ½Ğ¡£¬Ñ¹ËõÂÊÔ½µÍ£¬ËÙ¶ÈÔ½¿ì£¬Z_DEFAULT_COMPRESSIONÎªÈ±Ê¡¡£
+    *@brief å¯¹szSrcè¿›è¡Œå‹ç¼©ï¼Œå¹¶å°†å‹ç¼©åçš„æ•°æ®ä¿å­˜äºszDestã€‚
+    *@param [out] szDest å‹ç¼©åçš„æ•°æ®.
+    *@param [in, out] ulDestLen ä¼ å…¥szDestçš„é•¿åº¦ï¼Œä¼ å‡ºå‹ç¼©åæ•°æ®çš„é•¿åº¦.
+    *@param [in] szSrc å‹ç¼©å‰çš„æ•°æ®.
+    *@param [in] ulSrcLen å‹ç¼©å‰æ•°æ®çš„é•¿åº¦.
+    *@param [in] ucLevel å‹ç¼©çš„çº§åˆ«ï¼Œ0~9ï¼Œ0è¡¨ç¤ºä¸å‹ç¼©,æ•°å­—è¶Šå°ï¼Œå‹ç¼©ç‡è¶Šä½ï¼Œé€Ÿåº¦è¶Šå¿«ï¼ŒZ_DEFAULT_COMPRESSIONä¸ºç¼ºçœã€‚
     *@return true:success; false:failure.
     */
     static inline bool zip(unsigned char* szDest,
@@ -48,11 +48,11 @@ public:
         return Z_OK == ret;
     }
     /**
-    *@brief ¶ÔÑ¹ËõµÄÊı¾İ½âÑ¹
-    *@param [out] szDest ½âÑ¹ºóµÄÊı¾İ.
-    *@param [in, out] ulDestLen ´«ÈëszDestµÄ³¤¶È£¬·µ»Ø½âÑ¹ºóÊı¾İµÄ³¤¶È.
-    *@param [in] szSrc ½âÑ¹Ç°µÄÊı¾İ.
-    *@param [in] ulSrcLen ½âÑ¹Ç°Êı¾İµÄ³¤¶È.
+    *@brief å¯¹å‹ç¼©çš„æ•°æ®è§£å‹
+    *@param [out] szDest è§£å‹åçš„æ•°æ®.
+    *@param [in, out] ulDestLen ä¼ å…¥szDestçš„é•¿åº¦ï¼Œè¿”å›è§£å‹åæ•°æ®çš„é•¿åº¦.
+    *@param [in] szSrc è§£å‹å‰çš„æ•°æ®.
+    *@param [in] ulSrcLen è§£å‹å‰æ•°æ®çš„é•¿åº¦.
     *@return true:success; false:failure.
     */
     static inline bool unzip(unsigned char* szDest,

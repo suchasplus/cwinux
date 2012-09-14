@@ -1,14 +1,14 @@
-#ifndef __CWX_SOCK_BASE_H__
+ï»¿#ifndef __CWX_SOCK_BASE_H__
 #define __CWX_SOCK_BASE_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxSockBase.h
-@brief CwxSockBaseÀàµÄ¶¨Òå¡£
+@brief CwxSockBaseç±»çš„å®šä¹‰ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-10
@@ -27,7 +27,7 @@ CWINUX_BEGIN_NAMESPACE
 /**
 * @class CwxSockBase
 *
-* @brief ·â×°socket handleÏà¹Ø·½·¨µÄÀà£¬´ËÀà²»ÄÜ´´½¨ÊµÀı¡£
+* @brief å°è£…socket handleç›¸å…³æ–¹æ³•çš„ç±»ï¼Œæ­¤ç±»ä¸èƒ½åˆ›å»ºå®ä¾‹ã€‚
 * 
 */
 class CWX_API CwxSockBase : public CwxIpcSap

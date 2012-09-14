@@ -1,4 +1,4 @@
-#include "CwxFile.h"
+﻿#include "CwxFile.h"
 CWINUX_BEGIN_NAMESPACE
 bool CwxFile::getDirFile(const string& strPath, list<string>& files)
 {

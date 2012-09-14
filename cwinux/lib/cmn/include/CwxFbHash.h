@@ -1,4 +1,4 @@
-#ifndef __CWX_FB_HASH_H__
+ï»¿#ifndef __CWX_FB_HASH_H__
 #define __CWX_FB_HASH_H__
 
 /*
@@ -19,7 +19,7 @@
 
 /**
 @file CwxFbHash.h
-@brief FacebookµÄfolly¿âÖĞµÄhashÊµÏÖ¡£
+@brief Facebookçš„follyåº“ä¸­çš„hashå®ç°ã€‚
 @version 0.1
 @date 2012-16-12
 @warning
@@ -196,14 +196,14 @@ inline CWX_UINT32 cwx_fb_hash_hsieh_hash32_buf(const void* buf, int len) {
 
 /**
 @class CwxFbHash
-@brief FacebookµÄhashÀÛ
+@brief Facebookçš„hashç´¯
 */
 class CWX_API CwxFbHash
 {
 private:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxFbHash(){}
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxFbHash(){}
 public:
 

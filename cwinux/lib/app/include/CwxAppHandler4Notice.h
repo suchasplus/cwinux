@@ -1,18 +1,18 @@
-#ifndef __CWX_APP_HANDLER_4_NOTICE_H__
+ï»¿#ifndef __CWX_APP_HANDLER_4_NOTICE_H__
 #define __CWX_APP_HANDLER_4_NOTICE_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 *@file  CwxAppHandler4Notice.h
-*@brief ¼Ü¹¹NoticeÊÂ¼ş¡¢ĞÅºÅ¡¢Ê±ÖÓµÄ´¦ÀíHanlde¶ÔÏó¶¨Òå
+*@brief æ¶æ„Noticeäº‹ä»¶ã€ä¿¡å·ã€æ—¶é’Ÿçš„å¤„ç†Hanldeå¯¹è±¡å®šä¹‰
 *@author cwinux@gmail.com
 *@version 0.1
 *@date  2009-05-30
-*@warning  ÎŞ.
+*@warning  æ— .
 */
 #include "CwxPre.h"
 #include "CwxGlobalMacro.h"
@@ -27,33 +27,33 @@ CWINUX_BEGIN_NAMESPACE
 class CwxAppFramework;
 /**
 *@class  CwxAppHandler4Notice
-*@brief  ½ÓÊÜNoticeÊÂ¼ş¡¢ĞÅºÅ¡¢Ê±ÖÓ
+*@brief  æ¥å—Noticeäº‹ä»¶ã€ä¿¡å·ã€æ—¶é’Ÿ
 */
 class CWX_API CwxAppHandler4Notice : public CwxAppHandler4Base
 {
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxAppHandler4Notice(CwxAppFramework* app, CwxAppReactor *reactor);
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxAppHandler4Notice();
 public:
     /**
-    @brief handler open¡£ÍùreactorµÄ×¢²á¡£
-    @param [in] arg  ÎŞĞ§²ÎÊı
-    @return -1£ºÊ§°Ü£» 0£º³É¹¦
+    @brief handler openã€‚å¾€reactorçš„æ³¨å†Œã€‚
+    @param [in] arg  æ— æ•ˆå‚æ•°
+    @return -1ï¼šå¤±è´¥ï¼› 0ï¼šæˆåŠŸ
     */
     virtual int open (void * arg= 0);
     /**
-    @brief Á¬½ÓÉÏÓĞÊÂ¼ş·¢Éú¡£
-    @param [in] event Á¬½ÓÉÏµÄÊÂ¼ş
-    @param [in] handle  ·¢ÉúµÄÊÂ¼şµÄhandle¡£
-    @return -1£º´¦ÀíÊ§°Ü£» 0£º´¦Àí³É¹¦
+    @brief è¿æ¥ä¸Šæœ‰äº‹ä»¶å‘ç”Ÿã€‚
+    @param [in] event è¿æ¥ä¸Šçš„äº‹ä»¶
+    @param [in] handle  å‘ç”Ÿçš„äº‹ä»¶çš„handleã€‚
+    @return -1ï¼šå¤„ç†å¤±è´¥ï¼› 0ï¼šå¤„ç†æˆåŠŸ
     */
     virtual int handle_event(int event, CWX_HANDLE handle=CWX_INVALID_HANDLE);
     ///handle close
     virtual int close(CWX_HANDLE handle=CWX_INVALID_HANDLE);
 public:
-    ///»ñÈ¡app
+    ///è·å–app
     CwxAppFramework* getApp()
     {
         return m_pApp;

@@ -1,14 +1,14 @@
-#ifndef __CWX_TYPE_POOL_EX_H__
+ï»¿#ifndef __CWX_TYPE_POOL_EX_H__
 #define __CWX_TYPE_POOL_EX_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxTypePoolEx.h
-@brief ¶¨Òå¿ÉÖĞÍ¾ÊÍ·ÅµÄÄÚ´æ³Ø¶ÔÏóÄ£°å£ºCwxTypePoolEx¡£
+@brief å®šä¹‰å¯ä¸­é€”é‡Šæ”¾çš„å†…å­˜æ± å¯¹è±¡æ¨¡æ¿ï¼šCwxTypePoolExã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-10
@@ -25,17 +25,17 @@ CWINUX_BEGIN_NAMESPACE
 
 /**
 @class CwxTypePoolEx
-@brief ¿É·ÖÅä¡¢¿ÉÊÍ·ÅµÄÄÚ´æ³ØÄ£°åÀà¡£
+@brief å¯åˆ†é…ã€å¯é‡Šæ”¾çš„å†…å­˜æ± æ¨¡æ¿ç±»ã€‚
 */
 template <typename T > 
 class CwxTypePoolEx
 {
 private:
-    ///ÄÚÖÃÊı¾İÀàĞÍ£¬ÎªÀàĞÍTµÄ¶ÔÏóÔö¼ÓÒ»¸öCwxTypePoolExItem*µÄÖ¸Õëm_next
+    ///å†…ç½®æ•°æ®ç±»å‹ï¼Œä¸ºç±»å‹Tçš„å¯¹è±¡å¢åŠ ä¸€ä¸ªCwxTypePoolExItem*çš„æŒ‡é’ˆm_next
     class CwxTypePoolExItem
     {
     private:
-        ///ÓÀ²»´´½¨µÄ¶ÔÏó
+        ///æ°¸ä¸åˆ›å»ºçš„å¯¹è±¡
         CwxTypePoolExItem()
             :m_next(NULL)
         {
@@ -50,16 +50,16 @@ private:
         CwxTypePoolExItem*     m_next;
     };
     enum{
-        MIN_POOL_OBJECT_NUM = 64///<Ã¿¸öÄÚ´æ¿éÖĞ×îĞ¡µÄ¶ÔÏóµÄÊıÁ¿
+        MIN_POOL_OBJECT_NUM = 64///<æ¯ä¸ªå†…å­˜å—ä¸­æœ€å°çš„å¯¹è±¡çš„æ•°é‡
     };
 private:
-    vector<char*> m_vector;///<ÄÚ´æ¿éµÄvector
-    CWX_UINT32    m_uiSize;///<·ÖÅäµÄ¶ÔÏóµÄÊıÁ¿
-    CWX_UINT32    m_uiCapacity;///<·ÖÅäµÄÄÚ´æ¿éµÄ×Ü¶ÔÏóÊıÁ¿
-    CWX_UINT32     m_uiPoolSize;///<Ã¿¸öÄÚ´æ¿éµÄ´óĞ¡
-    CwxTypePoolExItem*  m_freeList;///<¿ÕÏĞ¶ÔÏóÁĞ±í
+    vector<char*> m_vector;///<å†…å­˜å—çš„vector
+    CWX_UINT32    m_uiSize;///<åˆ†é…çš„å¯¹è±¡çš„æ•°é‡
+    CWX_UINT32    m_uiCapacity;///<åˆ†é…çš„å†…å­˜å—çš„æ€»å¯¹è±¡æ•°é‡
+    CWX_UINT32     m_uiPoolSize;///<æ¯ä¸ªå†…å­˜å—çš„å¤§å°
+    CwxTypePoolExItem*  m_freeList;///<ç©ºé—²å¯¹è±¡åˆ—è¡¨
 public:
-    ///¹¹Ôìº¯Êı²¢ÉèÖÃÃ¿¸öÄÚ´æ¿éµÄ¶ÔÏóÊıÁ¿
+    ///æ„é€ å‡½æ•°å¹¶è®¾ç½®æ¯ä¸ªå†…å­˜å—çš„å¯¹è±¡æ•°é‡
     CwxTypePoolEx(CWX_UINT32 uiPoolSize=MIN_POOL_OBJECT_NUM)
     {
         m_uiSize = 0;
@@ -68,13 +68,13 @@ public:
         if (m_uiPoolSize < MIN_POOL_OBJECT_NUM) m_uiPoolSize = MIN_POOL_OBJECT_NUM;
         m_freeList = NULL;
     }
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxTypePoolEx()
     {
         clear();
     }
 public:
-    ///´ÓÄÚ´æ³ØÖĞ·ÖÅäÒ»¸ö¶ÔÏó
+    ///ä»å†…å­˜æ± ä¸­åˆ†é…ä¸€ä¸ªå¯¹è±¡
     T* malloc()
     {
         CwxTypePoolExItem* obj = NULL;
@@ -86,7 +86,7 @@ public:
         m_uiSize++;
         return new(obj) T();
     }
-    ///´ÓÄÚ´æ³ØÖĞ·ÖÅäÒ»¸ö¶ÔÏó£¬²¢ÉèÖÃÆä³õÊ¼Öµ¡£´ËÊ±µÄ¶ÔÏó±ØĞë¶¨Òå¿½±´¹¹Ôì
+    ///ä»å†…å­˜æ± ä¸­åˆ†é…ä¸€ä¸ªå¯¹è±¡ï¼Œå¹¶è®¾ç½®å…¶åˆå§‹å€¼ã€‚æ­¤æ—¶çš„å¯¹è±¡å¿…é¡»å®šä¹‰æ‹·è´æ„é€ 
     T* malloc(T const& item)
     {
         CwxTypePoolExItem* obj = NULL;
@@ -98,7 +98,7 @@ public:
         m_uiSize++;
         return new(obj) T(item);
     }
-    ///ÊÍ·ÅÒ»¸ö¶ÔÏó
+    ///é‡Šæ”¾ä¸€ä¸ªå¯¹è±¡
     void free(T* obj)
     {
         obj->~T();
@@ -107,22 +107,22 @@ public:
         m_freeList = pItem;
         m_uiSize--;
     }
-    ///»ñÈ¡·ÖÅäµÄ¶ÔÏóµÄÊıÁ¿
+    ///è·å–åˆ†é…çš„å¯¹è±¡çš„æ•°é‡
     CWX_UINT32 size() const
     {
         return m_uiSize;
     }
-    ///»ñÈ¡¿ÕÏĞ¶ÔÏóµÄÊıÁ¿
+    ///è·å–ç©ºé—²å¯¹è±¡çš„æ•°é‡
     unsigned int freeSize() const
     {
         return m_uiCapacity - m_uiSize;
     }
-    ///»ñÈ¡ÄÚ´æ³Øµ±Ç°µÄ¶ÔÏóÈİÁ¿
+    ///è·å–å†…å­˜æ± å½“å‰çš„å¯¹è±¡å®¹é‡
     unsigned int capacity() const
     {
         return m_uiCapacity;
     }
-    ///ÊÍ·ÅËùÓĞÄÚ´æ³ØµÄÄÚ´æ
+    ///é‡Šæ”¾æ‰€æœ‰å†…å­˜æ± çš„å†…å­˜
     void clear()
     {
         CwxTypePoolExItem* pObj = NULL;
@@ -143,7 +143,7 @@ public:
         m_freeList = NULL;
     }
 private:
-    ///´´½¨ĞÂµÄ¶ÔÏóÄÚ´æ¿é
+    ///åˆ›å»ºæ–°çš„å¯¹è±¡å†…å­˜å—
     void createFreeObj()
     {
         char* szTrunk = (char*)::malloc(sizeof(CwxTypePoolExItem) * m_uiPoolSize);

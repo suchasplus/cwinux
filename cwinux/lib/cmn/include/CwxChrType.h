@@ -1,15 +1,15 @@
-#ifndef __CWX_CHR_TYPE_H__
+ï»¿#ifndef __CWX_CHR_TYPE_H__
 #define __CWX_CHR_TYPE_H__
 
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxChrType.h
-@brief ×Ö·û·ÖÀàÊ¶±ğ¶ÔÏóµÄ¶¨Òå¡£
+@brief å­—ç¬¦åˆ†ç±»è¯†åˆ«å¯¹è±¡çš„å®šä¹‰ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-02
@@ -25,39 +25,39 @@ CWINUX_BEGIN_NAMESPACE
 
 /**
 @class CwxChrType
-@brief ÊµÏÖÁË×Ö·ûÀàĞÍÊ¶±ğµÄ¾²Ì¬·½·¨¡£
+@brief å®ç°äº†å­—ç¬¦ç±»å‹è¯†åˆ«çš„é™æ€æ–¹æ³•ã€‚
 */
 class CWX_API CwxChrType
 {
 public:
-    ///¼ì²é×Ö·ûcÊÇ·ñÎª×Ö·û»òÊı×Ö£¬µÈĞ§ÓÚisAlpha()||isDigit()¡£
+    ///æ£€æŸ¥å­—ç¬¦cæ˜¯å¦ä¸ºå­—ç¬¦æˆ–æ•°å­—ï¼Œç­‰æ•ˆäºisAlpha()||isDigit()ã€‚
     inline static bool isAlnum(int c);
-    ///¼ì²é×Ö·ûcÊÇ·ñÎª×Ö·û£¬¶ÔÓÚ"C" locale£¬µÈĞ§ÓÚisUpper()||isLower()
+    ///æ£€æŸ¥å­—ç¬¦cæ˜¯å¦ä¸ºå­—ç¬¦ï¼Œå¯¹äº"C" localeï¼Œç­‰æ•ˆäºisUpper()||isLower()
     inline static bool  isAlpha(int c);
-    ///¼ì²é×Ö·ûcÊÇ·ñ¡¾7-bit unsigned char¡¿
+    ///æ£€æŸ¥å­—ç¬¦cæ˜¯å¦ã€7-bit unsigned charã€‘
     inline static bool  isAscii(int c);
-    ///¼ì²é×Ö·ûcÊÇ·ñÊÇ¿Õ¸ñ»òtab
+    ///æ£€æŸ¥å­—ç¬¦cæ˜¯å¦æ˜¯ç©ºæ ¼æˆ–tab
     inline static bool  isBlank(int c);
-    ///¼ì²ézifucÊÇ·ñÎª¿ØÖÆ×Ö·û
+    ///æ£€æŸ¥zifucæ˜¯å¦ä¸ºæ§åˆ¶å­—ç¬¦
     inline static bool  isCntrl(int c);
-    ///¼ì²é×Ö·ûcÊÇ·ñÎª0~9µÄÊı×Ö
+    ///æ£€æŸ¥å­—ç¬¦cæ˜¯å¦ä¸º0~9çš„æ•°å­—
     inline static bool  isDigit(int c);
-    ///¼ì²é×Ö·ûcÊÇ·ñÎª¿É´òÓ¡×Ö·û£¬µ«¿Õ¸ñ³ıÍâ
+    ///æ£€æŸ¥å­—ç¬¦cæ˜¯å¦ä¸ºå¯æ‰“å°å­—ç¬¦ï¼Œä½†ç©ºæ ¼é™¤å¤–
     inline static bool  isGraph(int c);
-    ///¼ì²é×Ö·ûcÊÇ·ñÎªĞ¡Ğ´
+    ///æ£€æŸ¥å­—ç¬¦cæ˜¯å¦ä¸ºå°å†™
     inline static bool  isLower(int c);
-    ///¼ì²é×Ö·ûcÊÇ·ñÎª¿É´òÓ¡×Ö·û£¬°üÀ¨¿Õ¸ñ
+    ///æ£€æŸ¥å­—ç¬¦cæ˜¯å¦ä¸ºå¯æ‰“å°å­—ç¬¦ï¼ŒåŒ…æ‹¬ç©ºæ ¼
     inline static bool  isPrint(int c);
-    ///¼ì²é×Ö·ûcÊÇ·ñÎª³ı¿Õ¸ñ¡¢Êı×Ö¡¢×Ö·ûÍâµÄ¿É´òÓ¡×Ö·û
+    ///æ£€æŸ¥å­—ç¬¦cæ˜¯å¦ä¸ºé™¤ç©ºæ ¼ã€æ•°å­—ã€å­—ç¬¦å¤–çš„å¯æ‰“å°å­—ç¬¦
     inline static bool  isPunct(int c);
-    ///¼ì²é×Ö·ûcÊÇ·ñÎª¿Õ¸ñ£¬¶ÔÓÚ¡°C"Óë"POSIX¡±µÄlocale£¬³ıÁË¿Õ¸ñÍâ£¬\\f \\n \\r \\t \\v¶¼·ûºÏ
+    ///æ£€æŸ¥å­—ç¬¦cæ˜¯å¦ä¸ºç©ºæ ¼ï¼Œå¯¹äºâ€œC"ä¸"POSIXâ€çš„localeï¼Œé™¤äº†ç©ºæ ¼å¤–ï¼Œ\\f \\n \\r \\t \\véƒ½ç¬¦åˆ
     inline static bool  isSpace(int c);
-    ///¼ì²é×Ö·ûcÊÇ·ñÎª´óĞ´
+    ///æ£€æŸ¥å­—ç¬¦cæ˜¯å¦ä¸ºå¤§å†™
     inline static bool  isUpper(int c);
-    ///¼ì²é×Ö·ûcÊÇ·ñ16½øÖÆµÄ×Ö·û
+    ///æ£€æŸ¥å­—ç¬¦cæ˜¯å¦16è¿›åˆ¶çš„å­—ç¬¦
     inline static bool  isXdigit(int c);
 private:
-    ///½ûÖ¹´´½¨¶ÔÏó
+    ///ç¦æ­¢åˆ›å»ºå¯¹è±¡
     CwxChrType(){}
     ~CwxChrType(){}
 };

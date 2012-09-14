@@ -1,14 +1,14 @@
-#ifndef __CWX_COMMON_H__
+ï»¿#ifndef __CWX_COMMON_H__
 #define __CWX_COMMON_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxCommon.h
-@brief ¶¨ÒåÁËCwxCommonÀà£¬´ËÀà¶¨ÒåÁËÒ»¸ö³£ÓÃµÄ¹«¹²¾²Ì¬API¡£
+@brief å®šä¹‰äº†CwxCommonç±»ï¼Œæ­¤ç±»å®šä¹‰äº†ä¸€ä¸ªå¸¸ç”¨çš„å…¬å…±é™æ€APIã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-10
@@ -26,183 +26,183 @@ CWINUX_BEGIN_NAMESPACE
 
 /**
 @class CwxCommon
-@brief ÊµÏÖÁËÒ»Ğ©¹«¹²µÄ¡¢²»¿É¹éÀàµÄ³£ÓÃAPI¡£
+@brief å®ç°äº†ä¸€äº›å…¬å…±çš„ã€ä¸å¯å½’ç±»çš„å¸¸ç”¨APIã€‚
 */
 class CWX_API CwxCommon
 {
 public:
     /**
-    @brief ½«srcµÄÄÚÈİ¿½±´µ½destÖĞ£¬¿½±´µÄ³¤¶È²»ÄÜ³¬¹ılen,destµÄ×Ö·û´®ÒÔ\\0½áÊø¡£
-    @param [in,out] dest ¿½±´µÄÄ¿±êbuf
-    @param [in] src Ô´×Ö·û´®
-    @param [in] len ¿½±´µÄ×î´ó³¤¶È
-    @return ·µ»ØdestÖĞ×Ö·û´®µÄ³¤¶È
+    @brief å°†srcçš„å†…å®¹æ‹·è´åˆ°destä¸­ï¼Œæ‹·è´çš„é•¿åº¦ä¸èƒ½è¶…è¿‡len,destçš„å­—ç¬¦ä¸²ä»¥\\0ç»“æŸã€‚
+    @param [in,out] dest æ‹·è´çš„ç›®æ ‡buf
+    @param [in] src æºå­—ç¬¦ä¸²
+    @param [in] len æ‹·è´çš„æœ€å¤§é•¿åº¦
+    @return è¿”å›destä¸­å­—ç¬¦ä¸²çš„é•¿åº¦
     */
     static size_t copyStr(char* dest, char const* src, size_t len);
     /**
-    @brief ½«srcµÄÇ°src_len¸ö×Ö·û£¬¿½±´µ½destÖĞ£¬µ«£¬²»ÄÜ³¬¹ıdest_lenµÄ³¤¶È£¬destµÄ×Ö·û´®ÒÔ\\0½áÊø¡£
-    @param [in,out] dest ¿½±´µÄÄ¿±êbuf
-    @param [in] dest_len destµÄbufferÄÜ½ÓÊÜµÄ×î¶à×Ö·ûÊı¡£
-    @param [in] src Ô´×Ö·û´®
-    @param [in] src_len ¿½±´srcµÄÇ°src_len¸ö×Ö·û
-    @return ·µ»ØdestÖĞ×Ö·û´®µÄ³¤¶È
+    @brief å°†srcçš„å‰src_lenä¸ªå­—ç¬¦ï¼Œæ‹·è´åˆ°destä¸­ï¼Œä½†ï¼Œä¸èƒ½è¶…è¿‡dest_lençš„é•¿åº¦ï¼Œdestçš„å­—ç¬¦ä¸²ä»¥\\0ç»“æŸã€‚
+    @param [in,out] dest æ‹·è´çš„ç›®æ ‡buf
+    @param [in] dest_len destçš„bufferèƒ½æ¥å—çš„æœ€å¤šå­—ç¬¦æ•°ã€‚
+    @param [in] src æºå­—ç¬¦ä¸²
+    @param [in] src_len æ‹·è´srcçš„å‰src_lenä¸ªå­—ç¬¦
+    @return è¿”å›destä¸­å­—ç¬¦ä¸²çš„é•¿åº¦
     */
     static size_t copyStr(char* dest, size_t dest_len, char const* src, size_t src_len);
     /**
-    @brief ½«¡¾key=value¡¿¸ñÊ½µÄsrc×Ö·û´®£¬²ğÎªkeyºÍvalueÁ½²¿·Ö£¬´æÔÚ·µ»ØµÄkvµÄpair±äÁ¿ÖĞ¡£
-    @param [in] src ¡¾key=value¡¿¸ñÊ½µÄ×Ö·û´®
-    @param [out] kv Êä³öµÄkey/value¶Ô
-    @return false£ºsrc²»ÊÇÓĞĞ§µÄkey/value¶Ô£»true£º³É¹¦²ğ³Ékey/value¶Ô
+    @brief å°†ã€key=valueã€‘æ ¼å¼çš„srcå­—ç¬¦ä¸²ï¼Œæ‹†ä¸ºkeyå’Œvalueä¸¤éƒ¨åˆ†ï¼Œå­˜åœ¨è¿”å›çš„kvçš„pairå˜é‡ä¸­ã€‚
+    @param [in] src ã€key=valueã€‘æ ¼å¼çš„å­—ç¬¦ä¸²
+    @param [out] kv è¾“å‡ºçš„key/valueå¯¹
+    @return falseï¼šsrcä¸æ˜¯æœ‰æ•ˆçš„key/valueå¯¹ï¼›trueï¼šæˆåŠŸæ‹†æˆkey/valueå¯¹
     */
     static bool keyValue(string const& src, pair<string, string>& kv);
     /**
-    @brief ½«ÒÔÄ³¸ö·Ö¸ô·û½øĞĞ·Ö¸îµÄ×Ö·û´®£¬°´ÕÕ·Ö¸ô·û²ğ³É×Ö¶Î£¬Ä¬ÈÏ·Ö¸ô·ûÎª'|¡¯¡£
-    @param [in] src ĞèÒª·Ö¸îµÄ×Ö·û´®
-    @param [out] value °´ÕÕ·Ö¸ô·û²ğ³ÉµÄ×Ö¶ÎÁĞ±í£¬ÈôÄ³¸ö×Ö¶ÎÎª¿Õ£¬±íÊ¾Á½¸ö·Ö¸ô·ûÏàÁ¬»ò·Ö¸ô·ûÎ»ÓÚÍ·²¿»òÎ²²¿
-    @param [in] ch ·Ö¸ô·û£¬Ä¬ÈÏÎª'|'
-    @return ·Ö¸î³ÉµÄ×Ö¶ÎÊıÁ¿
+    @brief å°†ä»¥æŸä¸ªåˆ†éš”ç¬¦è¿›è¡Œåˆ†å‰²çš„å­—ç¬¦ä¸²ï¼ŒæŒ‰ç…§åˆ†éš”ç¬¦æ‹†æˆå­—æ®µï¼Œé»˜è®¤åˆ†éš”ç¬¦ä¸º'|â€™ã€‚
+    @param [in] src éœ€è¦åˆ†å‰²çš„å­—ç¬¦ä¸²
+    @param [out] value æŒ‰ç…§åˆ†éš”ç¬¦æ‹†æˆçš„å­—æ®µåˆ—è¡¨ï¼Œè‹¥æŸä¸ªå­—æ®µä¸ºç©ºï¼Œè¡¨ç¤ºä¸¤ä¸ªåˆ†éš”ç¬¦ç›¸è¿æˆ–åˆ†éš”ç¬¦ä½äºå¤´éƒ¨æˆ–å°¾éƒ¨
+    @param [in] ch åˆ†éš”ç¬¦ï¼Œé»˜è®¤ä¸º'|'
+    @return åˆ†å‰²æˆçš„å­—æ®µæ•°é‡
     */
     static int split(string const& src, list<string>& value, char ch='|');
     /**
-    @brief ½«ÒÔÄ³¸ö·Ö¸ô·û½øĞĞ·Ö¸îµÄKEY/VALUE¶Ô×Ö·û´®£¬°´ÕÕ·Ö¸ô·û²ğ³ÉKEY/VALUE¶ÔµÄÁĞ±í£¬Ä¬ÈÏ·Ö¸ô·ûÎª'|¡¯¡£
-    @param [in] src ĞèÒª·Ö¸îµÄKEY/VALUE¶Ô×Ö·û´®
-    @param [out] value °´ÕÕ·Ö¸ô·û²ğ³ÉµÄKEY/VALUE¶Ô£¬ÈôÄ³¸öÓò²»ÊÇKEY/VALUE¶Ô£¬ÔòºöÂÔ
-    @param [in] ch ·Ö¸ô·û£¬Ä¬ÈÏÎª'|'
-    @return ·Ö¸î³ÉµÄKEY/VALUE¶ÔµÄÊıÁ¿
+    @brief å°†ä»¥æŸä¸ªåˆ†éš”ç¬¦è¿›è¡Œåˆ†å‰²çš„KEY/VALUEå¯¹å­—ç¬¦ä¸²ï¼ŒæŒ‰ç…§åˆ†éš”ç¬¦æ‹†æˆKEY/VALUEå¯¹çš„åˆ—è¡¨ï¼Œé»˜è®¤åˆ†éš”ç¬¦ä¸º'|â€™ã€‚
+    @param [in] src éœ€è¦åˆ†å‰²çš„KEY/VALUEå¯¹å­—ç¬¦ä¸²
+    @param [out] value æŒ‰ç…§åˆ†éš”ç¬¦æ‹†æˆçš„KEY/VALUEå¯¹ï¼Œè‹¥æŸä¸ªåŸŸä¸æ˜¯KEY/VALUEå¯¹ï¼Œåˆ™å¿½ç•¥
+    @param [in] ch åˆ†éš”ç¬¦ï¼Œé»˜è®¤ä¸º'|'
+    @return åˆ†å‰²æˆçš„KEY/VALUEå¯¹çš„æ•°é‡
     */
     static int split(string const& src, list< pair<string, string> >& value, char ch='|');
     /**
-    @brief ÔÚÒ»¸öKEY/VALUE¶ÔµÄLISTÖĞ£¬²éÕÒKEYÎªnameµÄkey/value¶Ô¡£´ËAPIµÄnameÎª´óĞ¡Ğ´Ãô¸Ğ±È½Ï
-    @param [in] values KEY/VALUE¶ÔÁĞ±í
-    @param [in] name Òª²éÕÒµÄKeyµÄÃû×Ö
-    @param [out] item ·µ»ØÕÒµ½µÄµÚÒ»¸öKey/value¶Ô¡£
-    @return true£ºÕÒµ½£»false£ºÃ»ÓĞÕÒµ½
+    @brief åœ¨ä¸€ä¸ªKEY/VALUEå¯¹çš„LISTä¸­ï¼ŒæŸ¥æ‰¾KEYä¸ºnameçš„key/valueå¯¹ã€‚æ­¤APIçš„nameä¸ºå¤§å°å†™æ•æ„Ÿæ¯”è¾ƒ
+    @param [in] values KEY/VALUEå¯¹åˆ—è¡¨
+    @param [in] name è¦æŸ¥æ‰¾çš„Keyçš„åå­—
+    @param [out] item è¿”å›æ‰¾åˆ°çš„ç¬¬ä¸€ä¸ªKey/valueå¯¹ã€‚
+    @return trueï¼šæ‰¾åˆ°ï¼›falseï¼šæ²¡æœ‰æ‰¾åˆ°
     */
     static bool findKey(list< pair<string, string> > const & values, string const& name, pair<string, string>& item);
     /**
-    @brief ÔÚÒ»¸öKEY/VALUE¶ÔµÄLISTÖĞ£¬²éÕÒKEYÎªnameµÄkey/value¶Ô¡£´ËAPIµÄnameÎª´óĞ¡Ğ´²»Ãô¸Ğ±È½Ï
-    @param [in] values KEY/VALUE¶ÔÁĞ±í
-    @param [in] name Òª²éÕÒµÄKeyµÄÃû×Ö
-    @param [out] item ·µ»ØÕÒµ½µÄµÚÒ»¸öKey/value¶Ô¡£
-    @return true£ºÕÒµ½£»false£ºÃ»ÓĞÕÒµ½
+    @brief åœ¨ä¸€ä¸ªKEY/VALUEå¯¹çš„LISTä¸­ï¼ŒæŸ¥æ‰¾KEYä¸ºnameçš„key/valueå¯¹ã€‚æ­¤APIçš„nameä¸ºå¤§å°å†™ä¸æ•æ„Ÿæ¯”è¾ƒ
+    @param [in] values KEY/VALUEå¯¹åˆ—è¡¨
+    @param [in] name è¦æŸ¥æ‰¾çš„Keyçš„åå­—
+    @param [out] item è¿”å›æ‰¾åˆ°çš„ç¬¬ä¸€ä¸ªKey/valueå¯¹ã€‚
+    @return trueï¼šæ‰¾åˆ°ï¼›falseï¼šæ²¡æœ‰æ‰¾åˆ°
     */
     static bool findCaseKey(list< pair<string, string> > const & values, string const& name, pair<string, string>& item);
     /**
-    @brief ÔÚÒ»¸öKEY/VALUE¶ÔµÄLISTÖĞ£¬²éÕÒKEYÎªnameµÄkey/value¶Ô¡£´ËAPIµÄnameÎª´óĞ¡Ğ´Ãô¸Ğ±È½Ï
-    @param [in] values KEY/VALUE¶ÔÁĞ±í
-    @param [in] name Òª²éÕÒµÄKeyµÄÃû×Ö
-    @param [out] item ·µ»ØÕÒµ½µÄµÚÒ»¸öKey/value¶Ô¡£
-    @return true£ºÕÒµ½£»false£ºÃ»ÓĞÕÒµ½
+    @brief åœ¨ä¸€ä¸ªKEY/VALUEå¯¹çš„LISTä¸­ï¼ŒæŸ¥æ‰¾KEYä¸ºnameçš„key/valueå¯¹ã€‚æ­¤APIçš„nameä¸ºå¤§å°å†™æ•æ„Ÿæ¯”è¾ƒ
+    @param [in] values KEY/VALUEå¯¹åˆ—è¡¨
+    @param [in] name è¦æŸ¥æ‰¾çš„Keyçš„åå­—
+    @param [out] item è¿”å›æ‰¾åˆ°çš„ç¬¬ä¸€ä¸ªKey/valueå¯¹ã€‚
+    @return trueï¼šæ‰¾åˆ°ï¼›falseï¼šæ²¡æœ‰æ‰¾åˆ°
     */
     static bool findKey(list< pair<char*, char*> > const & values, char const* name, pair<char*, char*>& item);
     /**
-    @brief ÔÚÒ»¸öKEY/VALUE¶ÔµÄLISTÖĞ£¬²éÕÒKEYÎªnameµÄkey/value¶Ô¡£´ËAPIµÄnameÎª´óĞ¡Ğ´Ãô¸Ğ±È½Ï
-    @param [in] values KEY/VALUE¶ÔÁĞ±í
-    @param [in] name Òª²éÕÒµÄKeyµÄÃû×Ö
-    @param [out] item ·µ»ØÕÒµ½µÄµÚÒ»¸öKey/value¶Ô¡£
-    @return true£ºÕÒµ½£»false£ºÃ»ÓĞÕÒµ½
+    @brief åœ¨ä¸€ä¸ªKEY/VALUEå¯¹çš„LISTä¸­ï¼ŒæŸ¥æ‰¾KEYä¸ºnameçš„key/valueå¯¹ã€‚æ­¤APIçš„nameä¸ºå¤§å°å†™æ•æ„Ÿæ¯”è¾ƒ
+    @param [in] values KEY/VALUEå¯¹åˆ—è¡¨
+    @param [in] name è¦æŸ¥æ‰¾çš„Keyçš„åå­—
+    @param [out] item è¿”å›æ‰¾åˆ°çš„ç¬¬ä¸€ä¸ªKey/valueå¯¹ã€‚
+    @return trueï¼šæ‰¾åˆ°ï¼›falseï¼šæ²¡æœ‰æ‰¾åˆ°
     */
     static bool findCaseKey(list< pair<char*, char*> > const & values, char const* name, pair<char*, char*>& item);
     /**
-    @brief ÔÚÒ»¿éÄÚ´æÖĞ½«src¿ªÊ¼µÄ×Ö·ûÒÆ¶¯µ½destµÄÎ»ÖÃ£¬ÒÆ¶¯µÄ³¤¶ÈÎªn
-    @param [in] dest ÒªÒÆµ½µÄÎ»ÖÃ
-    @param [in] src ÒªÒÆ¶¯µÄ×Ö·ûµÄ¿ªÊ¼Î»ÖÃ
-    @param [in] n ÒÆ¶¯µÄ×Ö·û³¤¶È¡£
-    @return ·µ»Ødest
+    @brief åœ¨ä¸€å—å†…å­˜ä¸­å°†srcå¼€å§‹çš„å­—ç¬¦ç§»åŠ¨åˆ°destçš„ä½ç½®ï¼Œç§»åŠ¨çš„é•¿åº¦ä¸ºn
+    @param [in] dest è¦ç§»åˆ°çš„ä½ç½®
+    @param [in] src è¦ç§»åŠ¨çš„å­—ç¬¦çš„å¼€å§‹ä½ç½®
+    @param [in] n ç§»åŠ¨çš„å­—ç¬¦é•¿åº¦ã€‚
+    @return è¿”å›dest
     */
     static char* memMove(char *dest, char const *src, size_t n);
     /**
-    @brief È¥µôvalueµÄ×Ö·û´®¿ªÍ·¼°½áÎ²µÄ¿Õ¸ñ£¬Èôchrs²»Îª¿Õ£¬ÔòchrsÖĞ°üº¬µÄ×Ö·ûÒ²ÔÚÒÆ³ı·¶Î§ÄÚ¡£
-    @param [in] value ±»TRIMµÄ×Ö·û´®
-    @param [in] chrs ³ı¿Õ¸ñÍâ£¬chrs°üº¬µÄ×Ö·ûÒ²ÔÚÒÆ³ıµÄ·¶Î§ÄÚ¡£
-    @return ·µ»Øvalue
+    @brief å»æ‰valueçš„å­—ç¬¦ä¸²å¼€å¤´åŠç»“å°¾çš„ç©ºæ ¼ï¼Œè‹¥chrsä¸ä¸ºç©ºï¼Œåˆ™chrsä¸­åŒ…å«çš„å­—ç¬¦ä¹Ÿåœ¨ç§»é™¤èŒƒå›´å†…ã€‚
+    @param [in] value è¢«TRIMçš„å­—ç¬¦ä¸²
+    @param [in] chrs é™¤ç©ºæ ¼å¤–ï¼ŒchrsåŒ…å«çš„å­—ç¬¦ä¹Ÿåœ¨ç§»é™¤çš„èŒƒå›´å†…ã€‚
+    @return è¿”å›value
     */
     static string& trim(string& value, char const* chrs=NULL);
     /**
-    @brief È¥µôvalueµÄ×Ö·û´®½áÎ²µÄ¿Õ¸ñ£¬Èôchrs²»Îª¿Õ£¬ÔòchrsÖĞ°üº¬µÄ×Ö·ûÒ²ÔÚÒÆ³ı·¶Î§ÄÚ¡£
-    @param [in] value ±»rtrimµÄ×Ö·û´®
-    @param [in] chrs ³ı¿Õ¸ñÍâ£¬chrs°üº¬µÄ×Ö·ûÒ²ÔÚÒÆ³ıµÄ·¶Î§ÄÚ¡£
-    @return ·µ»Øvalue
+    @brief å»æ‰valueçš„å­—ç¬¦ä¸²ç»“å°¾çš„ç©ºæ ¼ï¼Œè‹¥chrsä¸ä¸ºç©ºï¼Œåˆ™chrsä¸­åŒ…å«çš„å­—ç¬¦ä¹Ÿåœ¨ç§»é™¤èŒƒå›´å†…ã€‚
+    @param [in] value è¢«rtrimçš„å­—ç¬¦ä¸²
+    @param [in] chrs é™¤ç©ºæ ¼å¤–ï¼ŒchrsåŒ…å«çš„å­—ç¬¦ä¹Ÿåœ¨ç§»é™¤çš„èŒƒå›´å†…ã€‚
+    @return è¿”å›value
     */
     static string& rtrim(string& value, char const* chrs=NULL);
     /**
-    @brief È¥µôvalueµÄ×Ö·û´®¿ªÍ·µÄ¿Õ¸ñ£¬Èôchrs²»Îª¿Õ£¬ÔòchrsÖĞ°üº¬µÄ×Ö·ûÒ²ÔÚÒÆ³ı·¶Î§ÄÚ¡£
-    @param [in] value ±»ltrimµÄ×Ö·û´®
-    @param [in] chrs ³ı¿Õ¸ñÍâ£¬chrs°üº¬µÄ×Ö·ûÒ²ÔÚÒÆ³ıµÄ·¶Î§ÄÚ¡£
-    @return ·µ»Øvalue
+    @brief å»æ‰valueçš„å­—ç¬¦ä¸²å¼€å¤´çš„ç©ºæ ¼ï¼Œè‹¥chrsä¸ä¸ºç©ºï¼Œåˆ™chrsä¸­åŒ…å«çš„å­—ç¬¦ä¹Ÿåœ¨ç§»é™¤èŒƒå›´å†…ã€‚
+    @param [in] value è¢«ltrimçš„å­—ç¬¦ä¸²
+    @param [in] chrs é™¤ç©ºæ ¼å¤–ï¼ŒchrsåŒ…å«çš„å­—ç¬¦ä¹Ÿåœ¨ç§»é™¤çš„èŒƒå›´å†…ã€‚
+    @return è¿”å›value
     */
     static string& ltrim(string& value, char const* chrs=NULL);
     /**
-    @brief È¥µôvalueµÄ×Ö·û´®¿ªÍ·¼°½áÎ²µÄ¿Õ¸ñ£¬Èôchrs²»Îª¿Õ£¬ÔòchrsÖĞ°üº¬µÄ×Ö·ûÒ²ÔÚÒÆ³ı·¶Î§ÄÚ¡£
-    @param [in] value ±»TRIMµÄ×Ö·û´®
-    @param [in] chrs ³ı¿Õ¸ñÍâ£¬chrs°üº¬µÄ×Ö·ûÒ²ÔÚÒÆ³ıµÄ·¶Î§ÄÚ¡£
-    @return ·µ»Øvalue
+    @brief å»æ‰valueçš„å­—ç¬¦ä¸²å¼€å¤´åŠç»“å°¾çš„ç©ºæ ¼ï¼Œè‹¥chrsä¸ä¸ºç©ºï¼Œåˆ™chrsä¸­åŒ…å«çš„å­—ç¬¦ä¹Ÿåœ¨ç§»é™¤èŒƒå›´å†…ã€‚
+    @param [in] value è¢«TRIMçš„å­—ç¬¦ä¸²
+    @param [in] chrs é™¤ç©ºæ ¼å¤–ï¼ŒchrsåŒ…å«çš„å­—ç¬¦ä¹Ÿåœ¨ç§»é™¤çš„èŒƒå›´å†…ã€‚
+    @return è¿”å›value
     */
     static char* trim(char* value, char const* chrs=NULL);
     /**
-    @brief È¥µôvalueµÄ×Ö·û´®½áÎ²µÄ¿Õ¸ñ£¬Èôchrs²»Îª¿Õ£¬ÔòchrsÖĞ°üº¬µÄ×Ö·ûÒ²ÔÚÒÆ³ı·¶Î§ÄÚ¡£
-    @param [in] value ±»rtrimµÄ×Ö·û´®
-    @param [in] chrs ³ı¿Õ¸ñÍâ£¬chrs°üº¬µÄ×Ö·ûÒ²ÔÚÒÆ³ıµÄ·¶Î§ÄÚ¡£
-    @return ·µ»Øvalue
+    @brief å»æ‰valueçš„å­—ç¬¦ä¸²ç»“å°¾çš„ç©ºæ ¼ï¼Œè‹¥chrsä¸ä¸ºç©ºï¼Œåˆ™chrsä¸­åŒ…å«çš„å­—ç¬¦ä¹Ÿåœ¨ç§»é™¤èŒƒå›´å†…ã€‚
+    @param [in] value è¢«rtrimçš„å­—ç¬¦ä¸²
+    @param [in] chrs é™¤ç©ºæ ¼å¤–ï¼ŒchrsåŒ…å«çš„å­—ç¬¦ä¹Ÿåœ¨ç§»é™¤çš„èŒƒå›´å†…ã€‚
+    @return è¿”å›value
     */
     static char* rtrim(char* value, char const* chrs=NULL);
     /**
-    @brief È¥µôvalueµÄ×Ö·û´®¿ªÍ·µÄ¿Õ¸ñ£¬Èôchrs²»Îª¿Õ£¬ÔòchrsÖĞ°üº¬µÄ×Ö·ûÒ²ÔÚÒÆ³ı·¶Î§ÄÚ¡£
-    @param [in] value ±»ltrimµÄ×Ö·û´®
-    @param [in] chrs ³ı¿Õ¸ñÍâ£¬chrs°üº¬µÄ×Ö·ûÒ²ÔÚÒÆ³ıµÄ·¶Î§ÄÚ¡£
-    @return ·µ»Øvalue
+    @brief å»æ‰valueçš„å­—ç¬¦ä¸²å¼€å¤´çš„ç©ºæ ¼ï¼Œè‹¥chrsä¸ä¸ºç©ºï¼Œåˆ™chrsä¸­åŒ…å«çš„å­—ç¬¦ä¹Ÿåœ¨ç§»é™¤èŒƒå›´å†…ã€‚
+    @param [in] value è¢«ltrimçš„å­—ç¬¦ä¸²
+    @param [in] chrs é™¤ç©ºæ ¼å¤–ï¼ŒchrsåŒ…å«çš„å­—ç¬¦ä¹Ÿåœ¨ç§»é™¤çš„èŒƒå›´å†…ã€‚
+    @return è¿”å›value
     */
     static char* ltrim(char* value, char const* chrs=NULL);
     /**
-    @brief ½«strSrcÖĞ³öÏÖµÄstr1×Ö·û´®Ìæ»»Îªstr2×Ö·û´®¡£
-    @param [in] strSrc Ö´ĞĞÖÃ»»µÄ×Ö·û´®
-    @param [in] str1 ±»Ìæ»»µÄ×Ö·û´®¡£
-    @param [in] str2 Ìæ»»³ÉµÄ×Ö·û´®¡£
-    @return ·µ»ØstrSrc
+    @brief å°†strSrcä¸­å‡ºç°çš„str1å­—ç¬¦ä¸²æ›¿æ¢ä¸ºstr2å­—ç¬¦ä¸²ã€‚
+    @param [in] strSrc æ‰§è¡Œç½®æ¢çš„å­—ç¬¦ä¸²
+    @param [in] str1 è¢«æ›¿æ¢çš„å­—ç¬¦ä¸²ã€‚
+    @param [in] str2 æ›¿æ¢æˆçš„å­—ç¬¦ä¸²ã€‚
+    @return è¿”å›strSrc
     */
     static string& replaceAll(string& strSrc, string const& str1, string const& str2);
     /**
-    @brief ½«srcÖĞ³öÏÖµÄfrom×Ö·û´®Ìæ»»Îªto×Ö·û´®£¬Ìæ»»ºóµÄ×Ö·û´®·Åµ½destµÄbufÖĞ£¬destÒÔ\\0½áÊø¡£
-    @param [in] src Ö´ĞĞÖÃ»»µÄ×Ö·û´®
-    @param [in] dest ĞÎ³ÉµÄÌæ»»ºó×Ö·û´®
-    @param [in,out] dest_len ´«ÈëdestµÄbuffer´óĞ¡£¬Êä³öÌæ»»ºóµÄ×Ö·û³¤¶È
-    @param [in] from ±»Ìæ»»µÄ×Ö·û´®¡£
-    @param [in] to Ìæ»»³ÉµÄ×Ö·û´®¡£
-    @return ·µ»Ødest
+    @brief å°†srcä¸­å‡ºç°çš„fromå­—ç¬¦ä¸²æ›¿æ¢ä¸ºtoå­—ç¬¦ä¸²ï¼Œæ›¿æ¢åçš„å­—ç¬¦ä¸²æ”¾åˆ°destçš„bufä¸­ï¼Œdestä»¥\\0ç»“æŸã€‚
+    @param [in] src æ‰§è¡Œç½®æ¢çš„å­—ç¬¦ä¸²
+    @param [in] dest å½¢æˆçš„æ›¿æ¢åå­—ç¬¦ä¸²
+    @param [in,out] dest_len ä¼ å…¥destçš„bufferå¤§å°ï¼Œè¾“å‡ºæ›¿æ¢åçš„å­—ç¬¦é•¿åº¦
+    @param [in] from è¢«æ›¿æ¢çš„å­—ç¬¦ä¸²ã€‚
+    @param [in] to æ›¿æ¢æˆçš„å­—ç¬¦ä¸²ã€‚
+    @return è¿”å›dest
     */
     static char* replaceAll(char const* src, char* dest, size_t& dest_len, char const* from, char const* to);
     /**
-    @brief ½«AF12BC¸ñÊ½µÄ16½øÖÆ×Ö·û´®£¬±äÎªÕı³£µÄ×Ö·û´®¡£destÒÔ\\0½áÊø¡£
-    @param [in] src 16½øÖÆ×Ö·û´®
-    @param [in] dest ĞÎ³ÉµÄ×Ö·û´®
-    @param [in,out] dest_len ´«ÈëdestµÄbuffer´óĞ¡£¬Êä³öÌæ»»ºóµÄ×Ö·û³¤¶È
-    @return ·µ»Ødest
+    @brief å°†AF12BCæ ¼å¼çš„16è¿›åˆ¶å­—ç¬¦ä¸²ï¼Œå˜ä¸ºæ­£å¸¸çš„å­—ç¬¦ä¸²ã€‚destä»¥\\0ç»“æŸã€‚
+    @param [in] src 16è¿›åˆ¶å­—ç¬¦ä¸²
+    @param [in] dest å½¢æˆçš„å­—ç¬¦ä¸²
+    @param [in,out] dest_len ä¼ å…¥destçš„bufferå¤§å°ï¼Œè¾“å‡ºæ›¿æ¢åçš„å­—ç¬¦é•¿åº¦
+    @return è¿”å›dest
     */
     static char* hexToString(char const* src, char* dest, size_t& dest_len);
     /**
-    @brief ½«srcÖĞµÄ´óĞ´×Ö·û±äÎªĞ¡Ğ´×Ö·û¡£
-    @param [in,out] src ±äÎªĞ¡Ğ´µÄ×Ö·û´®
-    @return ·µ»Øsrc
+    @brief å°†srcä¸­çš„å¤§å†™å­—ç¬¦å˜ä¸ºå°å†™å­—ç¬¦ã€‚
+    @param [in,out] src å˜ä¸ºå°å†™çš„å­—ç¬¦ä¸²
+    @return è¿”å›src
     */
     static char* lower(char* src);
     /**
-    @brief ½«srcÖĞµÄĞ¡Ğ´×Ö·û±äÎª´óĞ´×Ö·û¡£
-    @param [in,out] src ±äÎª´óĞ´µÄ×Ö·û´®
-    @return ·µ»Øsrc
+    @brief å°†srcä¸­çš„å°å†™å­—ç¬¦å˜ä¸ºå¤§å†™å­—ç¬¦ã€‚
+    @param [in,out] src å˜ä¸ºå¤§å†™çš„å­—ç¬¦ä¸²
+    @return è¿”å›src
     */
     static char* upper(char* src);
-    ///½«szIPµÄµã¸ñÊ½µÄÍøÂçµØÖ·±äÎªÍøÂç×Ö½ÚĞòµÄÕûÊı
+    ///å°†szIPçš„ç‚¹æ ¼å¼çš„ç½‘ç»œåœ°å€å˜ä¸ºç½‘ç»œå­—èŠ‚åºçš„æ•´æ•°
     static CWX_UINT32 ipDot2Int(char const* szIp);
-    ///½«ÍøÂç×Ö½ÚĞòµÄÕûÊı±äÎªµã¸ñÊ½µÄµØÖ·×Ö·û´®
+    ///å°†ç½‘ç»œå­—èŠ‚åºçš„æ•´æ•°å˜ä¸ºç‚¹æ ¼å¼çš„åœ°å€å­—ç¬¦ä¸²
     static char* ipInt2Doc(CWX_UINT32 ip, char* szIp);
-    ///ÊµÏÖsnprintf,ÊµÏÖwindowÓëunixÆ½Ì¨µÄÍ³Ò»
+    ///å®ç°snprintf,å®ç°windowä¸unixå¹³å°çš„ç»Ÿä¸€
     static int snprintf(char *buf, size_t maxlen, const char *format, ...);
-    ///Êä³ölong long unsignedÊıÖµµÄ×Ö·û´®, baseÎª½øÖÆ£¬Ö§³Ö16½øÖÆbase=16£»10½øÖÆbase£¡=16
+    ///è¾“å‡ºlong long unsignedæ•°å€¼çš„å­—ç¬¦ä¸², baseä¸ºè¿›åˆ¶ï¼Œæ”¯æŒ16è¿›åˆ¶base=16ï¼›10è¿›åˆ¶baseï¼=16
     static char const* toString(CWX_UINT64 ullNum, char* szBuf, int base=0);
-    ///Êä³ölong longÊıÖµµÄ×Ö·û´®, baseÎª½øÖÆ£¬Ö§³Ö16½øÖÆbase=16£»10½øÖÆbase£¡=16
+    ///è¾“å‡ºlong longæ•°å€¼çš„å­—ç¬¦ä¸², baseä¸ºè¿›åˆ¶ï¼Œæ”¯æŒ16è¿›åˆ¶base=16ï¼›10è¿›åˆ¶baseï¼=16
     static char const* toString(CWX_INT64 llNum, char* szBuf, int base=0);
 private:
-    ///½ûÖ¹ÊµÀı»¯
+    ///ç¦æ­¢å®ä¾‹åŒ–
     CwxCommon(){};
 };
 

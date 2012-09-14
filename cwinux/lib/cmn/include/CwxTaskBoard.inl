@@ -1,4 +1,4 @@
-CWINUX_BEGIN_NAMESPACE
+ï»¿CWINUX_BEGIN_NAMESPACE
 
 inline CwxTaskBoardConnInfo::CwxTaskBoardConnInfo(CWX_UINT32 uiSvrId,
                                                         CWX_UINT32 uiHostId,
@@ -37,7 +37,7 @@ inline void CwxTaskBoardConnInfo::setMsg(CwxMsgBlock* msg)
     m_msg = msg;
 }
 
-///¹¹Ôìº¯Êı
+///æ„é€ å‡½æ•°
 inline CwxTaskBoardTask::CwxTaskBoardTask(CwxTaskBoard* pTaskBoard)
 :m_pTaskBoard(pTaskBoard)
 {
@@ -141,7 +141,7 @@ inline void CwxTaskBoardTask::clearBase()
     }
     m_sendCloseConnList.clear();
 }
-///»ñÈ¡Task»º´æµÄÊÂ¼ş
+///è·å–Taskç¼“å­˜çš„äº‹ä»¶
 inline void CwxTaskBoardTask::fetchWaitingMsg(bool& bTimeout,
                                                  list<CwxMsgBlock*>& failSendMsgs, 
                                                  list<CwxMsgBlock*>& recvMsgs,
@@ -161,22 +161,22 @@ inline void CwxTaskBoardTask::fetchWaitingMsg(bool& bTimeout,
     endclosedConnList = m_sendCloseConnList;
     m_sendCloseConnList.clear();
 }
-///»º´æÒ»¸ö·¢ËÍµÄÊı¾İ°üÍ¨¹ıÁ¬½Ó·¢ËÍÍê±ÏµÄÊÂ¼ş
+///ç¼“å­˜ä¸€ä¸ªå‘é€çš„æ•°æ®åŒ…é€šè¿‡è¿æ¥å‘é€å®Œæ¯•çš„äº‹ä»¶
 inline void CwxTaskBoardTask::addEndSendMsgEvent(CwxMsgBlock* msg)
 {
     m_sendCloseConnList.push_back(new CwxTaskBoardConnInfo(0, 0, 0, msg));
 }
-///»º´æÒ»¸öÊı¾İ°ü·¢ËÍÊ§°ÜµÄÊÂ¼ş
+///ç¼“å­˜ä¸€ä¸ªæ•°æ®åŒ…å‘é€å¤±è´¥çš„äº‹ä»¶
 inline void CwxTaskBoardTask::addFailSendMsgEvent(CwxMsgBlock* msg)
 {
     m_failSendMsgList.push_back(msg);
 }
-///»º´æÊÕµ½Ò»¸öÊı¾İ°üµÄÊÂ¼ş
+///ç¼“å­˜æ”¶åˆ°ä¸€ä¸ªæ•°æ®åŒ…çš„äº‹ä»¶
 inline void CwxTaskBoardTask::addRecvMsgEvent(CwxMsgBlock* msg)
 {
     m_recvMsgList.push_back(msg);
 }
-///»º´æµÈ´ı½ÓÊÜÊı¾İµÄÒ»ÌõÁ¬½Ó¹Ø±ÕµÄµÄÊÂ¼ş
+///ç¼“å­˜ç­‰å¾…æ¥å—æ•°æ®çš„ä¸€æ¡è¿æ¥å…³é—­çš„çš„äº‹ä»¶
 inline void CwxTaskBoardTask::addClosedConnEvent(CWX_UINT32 uiSvrId,
                                                     CWX_UINT32 uiHostId,
                                                     CWX_UINT32 uiConnId)
@@ -226,7 +226,7 @@ inline bool CwxTaskBoardConnTasks::operator==(CwxTaskBoardConnTasks const& item)
 
 
 
-///¹¹Ôìº¯Êı
+///æ„é€ å‡½æ•°
 inline CwxTaskBoardTaskConns::CwxTaskBoardTaskConns(CWX_UINT32 uiTaskId, CWX_UINT32 uiConnId)
 :m_uiTaskId(uiTaskId), m_uiConnId(uiConnId)
 {
@@ -257,7 +257,7 @@ inline bool CwxTaskBoardTaskConns::operator<(CwxTaskBoardTaskConns const& item) 
     if (m_uiTaskId > item.m_uiTaskId) return false;
     return m_uiConnId<item.m_uiConnId;
 }
-///µÈÓÚ²Ù×÷·û
+///ç­‰äºæ“ä½œç¬¦
 inline bool CwxTaskBoardTaskConns::operator==(CwxTaskBoardTaskConns const& item) const
 {
     return (m_uiTaskId == item.m_uiTaskId)&&(m_uiConnId == item.m_uiConnId);
@@ -273,28 +273,28 @@ inline CwxTaskBoard::CwxTaskBoard(CWX_UINT32 uiMaxTaskNum)
     m_uiTaskId = 0;
 
 }
-///Îö¹¹º¯Êı
+///ææ„å‡½æ•°
 inline CwxTaskBoard::~CwxTaskBoard()
 {
     reset();
 }
 
-///»ñÈ¡Taskboard¹ÜÀíµÄÈÎÎñÊıÁ¿
+///è·å–Taskboardç®¡ç†çš„ä»»åŠ¡æ•°é‡
 inline CWX_UINT32 CwxTaskBoard::getTaskNum() const
 {
     return m_pTaskMap->size();
 }
-///»ñÈ¡taskboardÖĞconn-tasksµÄmapÖĞÔªËØÊıÄ¿£¬ÎªÁËµ÷ÊÔ
+///è·å–taskboardä¸­conn-tasksçš„mapä¸­å…ƒç´ æ•°ç›®ï¼Œä¸ºäº†è°ƒè¯•
 inline int CwxTaskBoard::getConnTasksMapSize() const 
 {
     return m_connTaskMap.size();
 }
-///»ñÈ¡taskboardÖĞtask-connsµÄsetÖĞÔªËØÊıÄ¿£¬ÎªÁËµ÷ÊÔ
+///è·å–taskboardä¸­task-connsçš„setä¸­å…ƒç´ æ•°ç›®ï¼Œä¸ºäº†è°ƒè¯•
 inline int CwxTaskBoard::getTaskConnsMapSize() const 
 {
     return m_taskConnSet.size();
 }
-///Çå¿ÕTaskboard
+///æ¸…ç©ºTaskboard
 inline void CwxTaskBoard::reset()
 {
     CwxTaskBoardTask* pTmp = m_pTaskHead;
@@ -312,12 +312,12 @@ inline void CwxTaskBoard::reset()
     m_taskConnSet.clear();
 }
 
-///²»´øËøµÄÅĞ¶ÏÒ»¸öÈÎÎñÊÇ·ñ´æÔÚ
+///ä¸å¸¦é”çš„åˆ¤æ–­ä¸€ä¸ªä»»åŠ¡æ˜¯å¦å­˜åœ¨
 inline bool CwxTaskBoard::_isExist(CWX_UINT32 uiTaskId)
 {
     return m_pTaskMap->find(uiTaskId) != m_pTaskMap->end();
 }
-///²»´øËøÍùTaskboardÌí¼ÓÒ»¸öTask
+///ä¸å¸¦é”å¾€Taskboardæ·»åŠ ä¸€ä¸ªTask
 inline bool CwxTaskBoard::_addTask(CwxTaskBoardTask* pTask)
 {
     if (_isExist(pTask->getTaskId())) return false;
@@ -331,26 +331,26 @@ inline bool CwxTaskBoard::_addTask(CwxTaskBoardTask* pTask)
     if (!m_pTaskTail) m_pTaskTail = m_pTaskHead;
     return true;
 }
-///²»´øËø¸ù¾İTaskId»ñÈ¡¶ÔÓ¦µÄTask
+///ä¸å¸¦é”æ ¹æ®TaskIdè·å–å¯¹åº”çš„Task
 inline CwxTaskBoardTask* CwxTaskBoard::_getTask(CWX_UINT32 uiTaskId)
 {
     CWX_APP_TASK_MAP::iterator iter = m_pTaskMap->find(uiTaskId);
     if (iter != m_pTaskMap->end()) return iter->second;
     return NULL;
 }
-///²»´øËø£¬Ìí¼ÓÁ¬½ÓµÄÒ»¸öTask
+///ä¸å¸¦é”ï¼Œæ·»åŠ è¿æ¥çš„ä¸€ä¸ªTask
 inline void CwxTaskBoard::_addConnTask(CWX_UINT32 uiConnId, CwxTaskBoardTask* pTask)
 {
     m_connTaskMap[CwxTaskBoardConnTasks(uiConnId, pTask->getTaskId())] = pTask;
     m_taskConnSet.insert(CwxTaskBoardTaskConns(pTask->getTaskId(), uiConnId));
 }
-///²»´øËø£¬É¾³ıÁ¬½ÓµÄÒ»¸öTask
+///ä¸å¸¦é”ï¼Œåˆ é™¤è¿æ¥çš„ä¸€ä¸ªTask
 inline void CwxTaskBoard::_removeConnTask(CWX_UINT32 uiConnId, CWX_UINT32 uiTaskId)
 {
     m_connTaskMap.erase(CwxTaskBoardConnTasks(uiConnId, uiTaskId));
     m_taskConnSet.erase(CwxTaskBoardTaskConns(uiTaskId, uiConnId));
 }
-///²»´øËø£¬É¾³ıÒ»ÌõÁ¬½ÓÉÏµÄËùÓĞTask
+///ä¸å¸¦é”ï¼Œåˆ é™¤ä¸€æ¡è¿æ¥ä¸Šçš„æ‰€æœ‰Task
 inline void CwxTaskBoard::_removeConnTask(CWX_UINT32 uiConnId)
 {
     CwxTaskBoardConnTasks connTask(uiConnId, 0);

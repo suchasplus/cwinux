@@ -1,4 +1,4 @@
-#include "CwxUnixStream.h"
+﻿#include "CwxUnixStream.h"
 
 CWINUX_BEGIN_NAMESPACE
 

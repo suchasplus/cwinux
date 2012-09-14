@@ -1,14 +1,14 @@
-#ifndef __CWX_HOST_INFO_H__
+ï»¿#ifndef __CWX_HOST_INFO_H__
 #define __CWX_HOST_INFO_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxHostInfo.h
-@brief ¶¨Òåcwinux¼Ü¹¹Host¶ÔÏó¶¨Òå
+@brief å®šä¹‰cwinuxæ¶æ„Hostå¯¹è±¡å®šä¹‰
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-10
@@ -25,7 +25,7 @@ CWINUX_BEGIN_NAMESPACE
 
 /**
 @class CwxHostInfo
-@brief HostÊı¾İ¶ÔÏó£¬¶¨ÒåHOSTµÄ³£ÓÃĞÅÏ¢
+@brief Hostæ•°æ®å¯¹è±¡ï¼Œå®šä¹‰HOSTçš„å¸¸ç”¨ä¿¡æ¯
 */
 class CWX_API CwxHostInfo
 {
@@ -36,12 +36,12 @@ public:
         DEF_RAW_DATA_LEN = 2048
     };
 public:
-    ///¹¹ÔìÄ¬ÈÏº¯Êı
+    ///æ„é€ é»˜è®¤å‡½æ•°
     CwxHostInfo()
     {
         reset();
     }
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxHostInfo(string const& strHost,        
         string const& strUser,
         CWX_UINT16 unPort)
@@ -55,7 +55,7 @@ public:
         m_unMinInternal = DEF_MIN_INTERNAL;
         m_unMaxInternal = DEF_MAX_INTERNAL;
     }
-    ///¿½±´¹¹Ôìº¯Êı
+    ///æ‹·è´æ„é€ å‡½æ•°
     CwxHostInfo(const CwxHostInfo& obj)
     {
         m_strHost = obj.m_strHost;
@@ -72,7 +72,7 @@ public:
         m_unMinInternal = obj.m_unMinInternal;
         m_unMaxInternal = obj.m_unMaxInternal;
     }
-    ///¸³Öµ²Ù×÷
+    ///èµ‹å€¼æ“ä½œ
     CwxHostInfo& operator=(const CwxHostInfo& obj) 
     {
         if(this != & obj)
@@ -93,7 +93,7 @@ public:
         }
         return *this;
     }
-    ///Çå¿ÕÖ÷»úĞÅÏ¢
+    ///æ¸…ç©ºä¸»æœºä¿¡æ¯
     void reset()
     {
         m_strHost.erase();
@@ -112,161 +112,161 @@ public:
     }
 
 public:
-    ///»ñÈ¡Ö÷»úµÄÃû×Ö»òunix-domain file
+    ///è·å–ä¸»æœºçš„åå­—æˆ–unix-domain file
     string const& getHostName() const
     {
         return m_strHost;
     }
-    ///ÉèÖÃÖ÷»úµÄÃû×Ö»òunix-domain file
+    ///è®¾ç½®ä¸»æœºçš„åå­—æˆ–unix-domain file
     void setHostName(string const& strHost)
     { 
         m_strHost = strHost; 
     }
-    ///»ñÈ¡unix domain path file
+    ///è·å–unix domain path file
     string const& getUnixDomain() const 
     { 
         return m_strUnixPathFile;
     }
-    ///ÉèÖÃunix domain path file
+    ///è®¾ç½®unix domain path file
     void setUnixDomain(string const& strPathFile) 
     { 
         m_strUnixPathFile = strPathFile;
     }
-    ///»ñÈ¡Ö÷»úµÄÓÃ»§Ãû
+    ///è·å–ä¸»æœºçš„ç”¨æˆ·å
     string const& getUser() const 
     {
         return m_strUser;
     }
-    ///ÉèÖÃÖ÷»úµÄÓÃ»§Ãû
+    ///è®¾ç½®ä¸»æœºçš„ç”¨æˆ·å
     void setUser(string const& strUser)
     {
         m_strUser = strUser;
     }
-    ///»ñÈ¡Ö÷»úµÄ¿ÚÁî
+    ///è·å–ä¸»æœºçš„å£ä»¤
     string const& getPasswd() const
     {
         return m_strPasswd;
     }
-    ///ÉèÖÃÖ÷»úµÄ¿ÚÁî
+    ///è®¾ç½®ä¸»æœºçš„å£ä»¤
     void setPassword(string const& strPasswd)
     {
         m_strPasswd = strPasswd;
     }
-    ///»ñÈ¡Ö÷»úµÄ¶Ë¿ÚºÅ
+    ///è·å–ä¸»æœºçš„ç«¯å£å·
     CWX_UINT16 getPort() const 
     { 
         return m_unPort;
     }
-    ///ÉèÖÃÖ÷»úµÄ¶Ë¿ÚºÅ
+    ///è®¾ç½®ä¸»æœºçš„ç«¯å£å·
     void setPort(CWX_UINT16 unPort)
     { 
         m_unPort = unPort;
     }
-    ///»ñÈ¡Ö÷»úµÄ·Ö×éID
+    ///è·å–ä¸»æœºçš„åˆ†ç»„ID
     CWX_UINT16 getGroupId() const 
     { 
         return m_unGroupId;
     }
-    ///ÉèÖÃÖ÷»úµÄ·Ö×éID
+    ///è®¾ç½®ä¸»æœºçš„åˆ†ç»„ID
     void setGroupId(CWX_UINT16 unGroupId) 
     { 
         m_unGroupId = unGroupId;
     }
-    ///»ñÈ¡Ö÷»úµÄ·şÎñID
+    ///è·å–ä¸»æœºçš„æœåŠ¡ID
     CWX_UINT32 getSvrId() const 
     { 
         return m_uiSvrId;
     }
-    ///ÉèÖÃÖ÷»úµÄ·şÎñID
+    ///è®¾ç½®ä¸»æœºçš„æœåŠ¡ID
     void setSvrId(CWX_UINT32 uiSvrId) 
     {
         m_uiSvrId = uiSvrId;
     }
-    ///»ñÈ¡Ö÷»úµÄHOST ID
+    ///è·å–ä¸»æœºçš„HOST ID
     CWX_UINT32 getHostId() const 
     { 
         return m_uiHostId;
     }
-    ///ÉèÖÃÖ÷»úµÄHost ID
+    ///è®¾ç½®ä¸»æœºçš„Host ID
     void setHostId(CWX_UINT32 uiHostId) 
     {
         m_uiHostId = uiHostId;
     }
-    ///»ñÈ¡Ö÷»úµÄÁ¬½ÓID
+    ///è·å–ä¸»æœºçš„è¿æ¥ID
     CWX_UINT32 getConnId() const 
     {
         return m_uiConnId;
     }
-    ///ÉèÖÃÖ÷»úµÄÁ¬½ÓID
+    ///è®¾ç½®ä¸»æœºçš„è¿æ¥ID
     void setConnID(CWX_UINT32 uiConnId) 
     {
         m_uiConnId = uiConnId;
     }
-    ///»ñÈ¡ÊÇ·ñÖ´ĞĞkeep-alive
+    ///è·å–æ˜¯å¦æ‰§è¡Œkeep-alive
     bool isKeepAlive() const 
     {
         return m_bKeepAlive;
     }
-    ///ÉèÖÃÊÇ·ñÖ´ĞĞkeep-alive
+    ///è®¾ç½®æ˜¯å¦æ‰§è¡Œkeep-alive
     void setKeepAlive(bool bKeepAlive) 
     { 
         m_bKeepAlive = bKeepAlive;
     }
-    ///»ñÈ¡ÊÇ·ñ²ÉÓÃrawÊı¾İµÄ¸ñÊ½Í¨ĞÅ
+    ///è·å–æ˜¯å¦é‡‡ç”¨rawæ•°æ®çš„æ ¼å¼é€šä¿¡
     bool isRawData() const 
     {
         return m_bRawData;
     }
-    ///ÉèÖÃÊÇ·ñ²ÉÓÃrawÊı¾İµÄ¸ñÊ½Í¨ĞÅ
+    ///è®¾ç½®æ˜¯å¦é‡‡ç”¨rawæ•°æ®çš„æ ¼å¼é€šä¿¡
     void setRawData(bool bRawData)
     {
         m_bRawData = bRawData;
     }
-    ///»ñÈ¡rawÊı¾İµÄÃ¿´Î×î´ó½ÓÊÕ³¤¶È
+    ///è·å–rawæ•°æ®çš„æ¯æ¬¡æœ€å¤§æ¥æ”¶é•¿åº¦
     CWX_UINT32 getRawDataLen() const 
     {
         return m_uiRawDataLen;
     }
-    ///ÉèÖÃrawÊı¾İµÄÃ¿´Î×î´ó½ÓÊÕ³¤¶È
+    ///è®¾ç½®rawæ•°æ®çš„æ¯æ¬¡æœ€å¤§æ¥æ”¶é•¿åº¦
     void setRawDataLen(CWX_UINT32 uiLen) 
     {
         m_uiRawDataLen = uiLen;
     }
-    ///»ñÈ¡Ö÷¶¯Á¬½ÓÊ§Ğ§Ê±µÄ×îĞ¡ÖØÁ¬¼ä¸ô
+    ///è·å–ä¸»åŠ¨è¿æ¥å¤±æ•ˆæ—¶çš„æœ€å°é‡è¿é—´éš”
     CWX_UINT16 getMinInternal() const 
     {
         return m_unMinInternal;
     }
-    ///ÉèÖÃÖ÷¶¯Á¬½ÓÊ§Ğ§Ê±µÄ×îĞ¡ÖØÁ¬¼ä¸ô
+    ///è®¾ç½®ä¸»åŠ¨è¿æ¥å¤±æ•ˆæ—¶çš„æœ€å°é‡è¿é—´éš”
     void setMinInternal(CWX_UINT16 unInternal) 
     {
         m_unMinInternal = unInternal;
     }
-    ///»ñÈ¡Ö÷¶¯Á¬½ÓÊ§Ğ§Ê±µÄ×î´óÖØÁ¬¼ä¸ô
+    ///è·å–ä¸»åŠ¨è¿æ¥å¤±æ•ˆæ—¶çš„æœ€å¤§é‡è¿é—´éš”
     CWX_UINT16 getMaxInternal() const 
     {
         return m_unMaxInternal;
     }
-    ///ÉèÖÃÖ÷¶¯Á¬½ÓÊ§Ğ§Ê±µÄ×î´óÖØÁ¬¼ä¸ô
+    ///è®¾ç½®ä¸»åŠ¨è¿æ¥å¤±æ•ˆæ—¶çš„æœ€å¤§é‡è¿é—´éš”
     void setMaxInternal(CWX_UINT16 unInternal)
     {
         m_unMaxInternal = unInternal;
     }
 private:
-    string			    m_strHost;///<Ö÷»úµÄIP
+    string			    m_strHost;///<ä¸»æœºçš„IP
     string             m_strUnixPathFile; ///<unix-domain file
-    string			    m_strUser;///<Ö÷»úµÄÓÃ»§Ãû
-    string              m_strPasswd; ///<Ö÷»úÓÃ»§µÄ¿ÚÁî
-    CWX_UINT16         m_unPort;///<Ö÷»úµÄÖ÷¶Ë¿ÚºÅ
-    CWX_UINT16         m_unGroupId;///<Ö÷»úËùÊôµÄ·Ö×éID
-    CWX_UINT32         m_uiSvrId;///<Ö÷»úËùÊôµÄ·şÎñÀàĞÍID
-    CWX_UINT32         m_uiHostId;///<Ö÷»úµÄhost ID
-    CWX_UINT32         m_uiConnId;///<Ö÷»úµÄÁ´½ÓID
-    bool               m_bKeepAlive; ///<ÊÇ·ñkeep-alive
-    bool               m_bRawData; ///<ÊÇ·ñÊÇRawÊı¾İ
-    CWX_UINT32         m_uiRawDataLen; ///<raw Êı¾İµÄ×î´ó½ÓÊÕ³¤¶È
-    CWX_UINT16         m_unMinInternal; ///<×îĞ¡µÄÖØÁ¬¼ä¸ô
-    CWX_UINT16         m_unMaxInternal; ///<×î´óµÄÖØÁ¬¼ä¸ô
+    string			    m_strUser;///<ä¸»æœºçš„ç”¨æˆ·å
+    string              m_strPasswd; ///<ä¸»æœºç”¨æˆ·çš„å£ä»¤
+    CWX_UINT16         m_unPort;///<ä¸»æœºçš„ä¸»ç«¯å£å·
+    CWX_UINT16         m_unGroupId;///<ä¸»æœºæ‰€å±çš„åˆ†ç»„ID
+    CWX_UINT32         m_uiSvrId;///<ä¸»æœºæ‰€å±çš„æœåŠ¡ç±»å‹ID
+    CWX_UINT32         m_uiHostId;///<ä¸»æœºçš„host ID
+    CWX_UINT32         m_uiConnId;///<ä¸»æœºçš„é“¾æ¥ID
+    bool               m_bKeepAlive; ///<æ˜¯å¦keep-alive
+    bool               m_bRawData; ///<æ˜¯å¦æ˜¯Rawæ•°æ®
+    CWX_UINT32         m_uiRawDataLen; ///<raw æ•°æ®çš„æœ€å¤§æ¥æ”¶é•¿åº¦
+    CWX_UINT16         m_unMinInternal; ///<æœ€å°çš„é‡è¿é—´éš”
+    CWX_UINT16         m_unMaxInternal; ///<æœ€å¤§çš„é‡è¿é—´éš”
 };
 
 

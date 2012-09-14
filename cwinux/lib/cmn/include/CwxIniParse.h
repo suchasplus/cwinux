@@ -1,14 +1,14 @@
-#ifndef __CWX_INI_PARSE_H__
+ï»¿#ifndef __CWX_INI_PARSE_H__
 #define __CWX_INI_PARSE_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxIniParse.h
-@brief ÊµÏÖÀàËÆwin.ini¸ñÊ½ÎÄ¼şÅäÖÃĞÅÏ¢µÄ¼ÓÔØ¡£
+@brief å®ç°ç±»ä¼¼win.iniæ ¼å¼æ–‡ä»¶é…ç½®ä¿¡æ¯çš„åŠ è½½ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2011-09-13
@@ -16,12 +16,12 @@
 @bug
 */
 /***
-1¡¢ÎÄ¼şÒÔ[xxxx]±êÊ¾ÅäÖÃSection¿é£¬ËùÓĞµÄkey=valueµÄÅäÖÃ£¬¶¼±ØĞëÎ»ÓÚÄ³¸ö[xxxx]µÄÅäÖÃSection¿éÏÂ¡£
-2¡¢²ÎÊıÍ¨¹Økey=valueµÄ¸ñÊ½¶¨Òå¡£Æä±ØĞëÎ»ÓÚÄ³¸öÅäÖÃ¿éÏÂ¡£
-3¡¢ÒÔ#¿ªÍ·µÄĞĞ£¨ÎŞÂÛÈ«Ãæ¶¼¶àÉÙ¿Õ¸ñ£©£¬ÈÏÎªÊÇ×¢ÊÍĞĞ£¬»á±»ºöÂÔ¡£
-4¡¢¿ÕĞĞ±»ºöÂÔ¡£
-5¡¢key=valueÖĞ£¬keyµÄÇ°ÖÃ¡¢ºóÖÃ¿Õ¸ñ»á±»ºöÂÔ¡£key²»ÄÜ°üº¬[=]£»
-   valueµÄÇ°ÖÃ¡¢ºóÖÃ¿Õ¸ñ»á±»ºöÂÔ£¨\rÓë\nÒ²»á±»ºöÂÔ£©
+1ã€æ–‡ä»¶ä»¥[xxxx]æ ‡ç¤ºé…ç½®Sectionå—ï¼Œæ‰€æœ‰çš„key=valueçš„é…ç½®ï¼Œéƒ½å¿…é¡»ä½äºæŸä¸ª[xxxx]çš„é…ç½®Sectionå—ä¸‹ã€‚
+2ã€å‚æ•°é€šå…³key=valueçš„æ ¼å¼å®šä¹‰ã€‚å…¶å¿…é¡»ä½äºæŸä¸ªé…ç½®å—ä¸‹ã€‚
+3ã€ä»¥#å¼€å¤´çš„è¡Œï¼ˆæ— è®ºå…¨é¢éƒ½å¤šå°‘ç©ºæ ¼ï¼‰ï¼Œè®¤ä¸ºæ˜¯æ³¨é‡Šè¡Œï¼Œä¼šè¢«å¿½ç•¥ã€‚
+4ã€ç©ºè¡Œè¢«å¿½ç•¥ã€‚
+5ã€key=valueä¸­ï¼Œkeyçš„å‰ç½®ã€åç½®ç©ºæ ¼ä¼šè¢«å¿½ç•¥ã€‚keyä¸èƒ½åŒ…å«[=]ï¼›
+   valueçš„å‰ç½®ã€åç½®ç©ºæ ¼ä¼šè¢«å¿½ç•¥ï¼ˆ\rä¸\nä¹Ÿä¼šè¢«å¿½ç•¥ï¼‰
 ***/
 #include "CwxPre.h"
 #include "CwxType.h"
@@ -33,16 +33,16 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxIniParse
-@brief win.ini¸ñÊ½µÄÅäÖÃÎÄ¼şĞÅÏ¢µÄ½âÎöÓë¼ÓÔØ¡£
+@brief win.iniæ ¼å¼çš„é…ç½®æ–‡ä»¶ä¿¡æ¯çš„è§£æä¸åŠ è½½ã€‚
 */
 class CWX_API CwxIniParse
 {
 public:
-    ///¹¹Ôìº¯Êı£¬²ÎÊıÎªXMLµÄencodeÌæ»»Æ÷£¬ÓĞÍâ²¿½øĞĞ¹ÜÀí
+    ///æ„é€ å‡½æ•°ï¼Œå‚æ•°ä¸ºXMLçš„encodeæ›¿æ¢å™¨ï¼Œæœ‰å¤–éƒ¨è¿›è¡Œç®¡ç†
     CwxIniParse(){
         memset(m_szErrMsg, 0x00, 512);
     }
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxIniParse(){
 		map<string, list<pair<string, string> >*>::iterator iter = m_attrs.begin();
 		while(iter != m_attrs.end()){
@@ -52,56 +52,56 @@ public:
 	}
 public:
     /**
-    *@brief  ¼ÓÔØÅäÖÃÎÄ¼ş.
-    *@param [in] strFile ÅäÖÃÎÄ¼şÃû¡£
-    *@return false£ºÊ§°Ü£»true£º³É¹¦.
+    *@brief  åŠ è½½é…ç½®æ–‡ä»¶.
+    *@param [in] strFile é…ç½®æ–‡ä»¶åã€‚
+    *@return falseï¼šå¤±è´¥ï¼›trueï¼šæˆåŠŸ.
     */ 
     bool load(string const& strFile);
     /**
-    *@brief  ½âÎöÅäÖÃ.
-    *@param [in] strConf ÅäÖÃĞÅÏ¢¡£
-    *@return false£ºÊ§°Ü£»true£º³É¹¦.
+    *@brief  è§£æé…ç½®.
+    *@param [in] strConf é…ç½®ä¿¡æ¯ã€‚
+    *@return falseï¼šå¤±è´¥ï¼›trueï¼šæˆåŠŸ.
     */
     bool parse(string const& strConf);
     /**
-    *@brief  »ñÈ¡ÅäÖÃÖĞËùÓĞµÄSection¡£
-    *@param [out] sections ÅäÖÃÖĞµÄsection¡£
+    *@brief  è·å–é…ç½®ä¸­æ‰€æœ‰çš„Sectionã€‚
+    *@param [out] sections é…ç½®ä¸­çš„sectionã€‚
     *@return void.
     */ 
     void getSections(set<string>& sections) const;
     /**
-    *@brief  »ñÈ¡Ò»¸ösectionÏÂµÄËùÓĞÊôĞÔ
-    *@param [in] strSection sectionµÄÃû×Ö¡£
-    *@param [out] attrÏÂµÄËùÓĞÊôĞÔ¼°Æävalue¡£
-    *@return false£ºsection²»´æÔÚ£»true£ºsection´æÔÚ.
+    *@brief  è·å–ä¸€ä¸ªsectionä¸‹çš„æ‰€æœ‰å±æ€§
+    *@param [in] strSection sectionçš„åå­—ã€‚
+    *@param [out] atträ¸‹çš„æ‰€æœ‰å±æ€§åŠå…¶valueã€‚
+    *@return falseï¼šsectionä¸å­˜åœ¨ï¼›trueï¼šsectionå­˜åœ¨.
     */ 
     bool getAttr(string const& strSection,
 		list<pair<string, string> >& attr) const;
     /**
-    *@brief  »ñÈ¡Ò»¸ö×Ö·û´®ĞÍÊôĞÔÖµ.
-	*@param [in] strSection sectionµÄÃû×Ö¡£
-	*@param [in] strAttr ÊôĞÔÃû¡£
-    *@param [out] strValue ÊôĞÔÖµ¡£
-    *@return false£º²»´æÔÚ£»true£º´æÔÚ.
+    *@brief  è·å–ä¸€ä¸ªå­—ç¬¦ä¸²å‹å±æ€§å€¼.
+	*@param [in] strSection sectionçš„åå­—ã€‚
+	*@param [in] strAttr å±æ€§åã€‚
+    *@param [out] strValue å±æ€§å€¼ã€‚
+    *@return falseï¼šä¸å­˜åœ¨ï¼›trueï¼šå­˜åœ¨.
     */ 
     bool getAttr(string const& strSection,
         string const& strAttr,
 		string& strValue) const;
 	/**
-	*@brief  ÊÇ·ñ´æÔÚÖ¸¶¨µÄSection¡£
-	*@param [int] strSection sectionµÄÃû×Ö¡£
-	*@return true£º´æÔÚ£»false£º²»´æÔÚ.
+	*@brief  æ˜¯å¦å­˜åœ¨æŒ‡å®šçš„Sectionã€‚
+	*@param [int] strSection sectionçš„åå­—ã€‚
+	*@return trueï¼šå­˜åœ¨ï¼›falseï¼šä¸å­˜åœ¨.
 	*/ 
 	bool isExistSection(string const& strSection){
 		return m_attrs.find(strSection) != m_attrs.end();
 	}
 
-    ///·µ»Ø´íÎóĞÅÏ¢
+    ///è¿”å›é”™è¯¯ä¿¡æ¯
     char const* getErrMsg() const{ return m_szErrMsg;}
 private:
-	string							   m_strFile; ///<ÅäÖÃÎÄ¼ş
-	map<string, list<pair<string, string> >*>  m_attrs; ///<ÅäÖÃÊôĞÔ
-    char m_szErrMsg[512];///<´íÎóbuf
+	string							   m_strFile; ///<é…ç½®æ–‡ä»¶
+	map<string, list<pair<string, string> >*>  m_attrs; ///<é…ç½®å±æ€§
+    char m_szErrMsg[512];///<é”™è¯¯buf
 };
 
 CWINUX_END_NAMESPACE

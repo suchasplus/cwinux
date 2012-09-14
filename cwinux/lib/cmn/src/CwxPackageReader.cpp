@@ -1,8 +1,8 @@
-#include "CwxPackageReader.h"
+ï»¿#include "CwxPackageReader.h"
 
 CWINUX_BEGIN_NAMESPACE
 
-///¹¹Ôìº¯Êı£¬
+///æ„é€ å‡½æ•°ï¼Œ
 CwxPackageReader::CwxPackageReader(bool bCaseSensive)
 :m_bCaseSensive(bCaseSensive)
 {
@@ -15,7 +15,7 @@ CwxPackageReader::CwxPackageReader(bool bCaseSensive)
     m_bIndex = false;
     memset(m_szErr, 0x00, ERR_MSG_LEN+1);
 }
-///Îö¹¹
+///ææ„
 CwxPackageReader::~CwxPackageReader()
 {
     if (m_pKeyIndex) delete m_pKeyIndex;
@@ -83,7 +83,7 @@ void CwxPackageReader::reset()
 }
 
 
-//false:´íÎó£»true:½â°üÕıÈ·¡£Í¨¹ıGetError()»ñÈ¡Ê§°ÜµÄÔ­Òò¡£
+//false:é”™è¯¯ï¼›true:è§£åŒ…æ­£ç¡®ã€‚é€šè¿‡GetError()è·å–å¤±è´¥çš„åŸå› ã€‚
 bool CwxPackageReader::unpack(char const* szMsg, CWX_UINT32 uiMsgLen, bool bIndex, bool bCaseSensive)
 {
     int  iRet = 0;

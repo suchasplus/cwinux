@@ -1,7 +1,7 @@
-
+ï»¿
 CWINUX_BEGIN_NAMESPACE
 
-///×¢²áIOÊÂ¼ş´¦Àíhandle
+///æ³¨å†ŒIOäº‹ä»¶å¤„ç†handle
 inline int CwxAppReactor::registerHandler (CWX_HANDLE io_handle,
                                     CwxAppHandler4Base *event_handler,
                                     int mask,
@@ -22,7 +22,7 @@ inline int CwxAppReactor::registerHandler (CWX_HANDLE io_handle,
     }
     return _registerHandler(io_handle, event_handler, mask, uiConnId, uiMillSecond);
 }
-///É¾³ıioÊÂ¼ş´¦Àíhandle
+///åˆ é™¤ioäº‹ä»¶å¤„ç†handle
 inline int CwxAppReactor::removeHandler (CwxAppHandler4Base *event_handler, bool bRemoveConnId)
 {
     if (!CwxThread::equal(m_owner, CwxThread::self()))
@@ -40,7 +40,7 @@ inline int CwxAppReactor::removeHandler (CwxAppHandler4Base *event_handler, bool
     return _removeHandler(event_handler, bRemoveConnId);
 }
 
-///×¢²áIOÊÂ¼ş´¦Àíhandle
+///æ³¨å†ŒIOäº‹ä»¶å¤„ç†handle
 inline int CwxAppReactor::suspendHandler (CwxAppHandler4Base *event_handler, int suspend_mask)
 {
     if (!CwxThread::equal(m_owner, CwxThread::self()))
@@ -57,7 +57,7 @@ inline int CwxAppReactor::suspendHandler (CwxAppHandler4Base *event_handler, int
     }
     return _suspendHandler(event_handler, suspend_mask);
 }
-///É¾³ıioÊÂ¼ş´¦Àíhandle
+///åˆ é™¤ioäº‹ä»¶å¤„ç†handle
 inline int CwxAppReactor::resumeHandler (CwxAppHandler4Base *event_handler, int resume_mask)
 {
     if (!CwxThread::equal(m_owner, CwxThread::self()))
@@ -184,11 +184,11 @@ inline int CwxAppReactor::resumeHandlerByConnId (CWX_UINT32 uiConnId,
     return _resumeHandlerByConnId(uiConnId, resume_mask);
 }
 
-///´ÓConn mapÉ¾³ıÖ¸¶¨µÄHandler£¬´ËÊ±£¬Á¬½Ó±ØĞëÃ»ÓĞ×¢²á¡£
+///ä»Conn mapåˆ é™¤æŒ‡å®šçš„Handlerï¼Œæ­¤æ—¶ï¼Œè¿æ¥å¿…é¡»æ²¡æœ‰æ³¨å†Œã€‚
 inline CwxAppHandler4Base* CwxAppReactor::removeFromConnMap(CWX_UINT32 uiConnId)
 {
     CwxMutexGuard<CwxMutexLock> lock(&m_connMapMutex);
-    hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*Á¬½Ó*/>::iterator iter = m_connMap.find(uiConnId);
+    hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*è¿æ¥*/>::iterator iter = m_connMap.find(uiConnId);
     if (iter == m_connMap.end())
     {
         CWX_DEBUG(("ConnId[%u]'s handler doesn't exist in conn-map", uiConnId));
@@ -209,7 +209,7 @@ inline CwxAppHandler4Base* CwxAppReactor::removeFromConnMap(CWX_UINT32 uiConnId)
     return handler;
 }
 
-///×¢²ásignalÊÂ¼ş´¦Àíhandle
+///æ³¨å†Œsignaläº‹ä»¶å¤„ç†handle
 inline int CwxAppReactor::registerSignal(int signum,
                                   CwxAppHandler4Base *event_handler
                                   )
@@ -229,7 +229,7 @@ inline int CwxAppReactor::registerSignal(int signum,
     return _registerSignal(signum, event_handler);
 }
 
-///É¾³ısignalÊÂ¼ş´¦Àíhandle
+///åˆ é™¤signaläº‹ä»¶å¤„ç†handle
 inline int CwxAppReactor::removeSignal(CwxAppHandler4Base *event_handler)
 {
     if (!CwxThread::equal(m_owner, CwxThread::self()))
@@ -264,7 +264,7 @@ inline CwxAppHandler4Base* CwxAppReactor::removeSignal(int sig)
     return _removeSignal(sig);
 }
 
-///ÉèÖÃ¶¨Ê±´¦Àíhandle
+///è®¾ç½®å®šæ—¶å¤„ç†handle
 inline int CwxAppReactor::scheduleTimer (CwxAppHandler4Base *event_handler,
                                    CwxTimeValue const&interval)
 {
@@ -283,7 +283,7 @@ inline int CwxAppReactor::scheduleTimer (CwxAppHandler4Base *event_handler,
     return _scheduleTimer(event_handler, interval);
 }
 
-///È¡Ïû¶¨Ê±´¦Àíhandle
+///å–æ¶ˆå®šæ—¶å¤„ç†handle
 inline int CwxAppReactor::cancelTimer (CwxAppHandler4Base *event_handler)
 {
     if (!CwxThread::equal(m_owner, CwxThread::self()))
@@ -338,8 +338,8 @@ inline CWX_UINT32 CwxAppReactor::getNextConnId()
 }
 
 /**
-@brief ¼ì²éÖ¸¶¨IOµÄhandleÊÇ·ñÒÑ¾­×¢²á¡£
-@return true£º×¢²á£»false£ºÃ»ÓĞ×¢²á
+@brief æ£€æŸ¥æŒ‡å®šIOçš„handleæ˜¯å¦å·²ç»æ³¨å†Œã€‚
+@return trueï¼šæ³¨å†Œï¼›falseï¼šæ²¡æœ‰æ³¨å†Œ
 */
 inline bool CwxAppReactor::isRegIoHandle(CWX_HANDLE handle)
 {
@@ -347,7 +347,7 @@ inline bool CwxAppReactor::isRegIoHandle(CWX_HANDLE handle)
 }
 
 
-///¸ù¾İconn id»ñÈ¡¶ÔÓ¦µÄhandler
+///æ ¹æ®conn idè·å–å¯¹åº”çš„handler
 inline CwxAppHandler4Base* CwxAppReactor::getHandlerByConnId(CWX_UINT32 uiConnId)
 {
     CWX_ASSERT(CwxThread::equal(m_owner, CwxThread::self()));
@@ -365,16 +365,16 @@ inline CwxAppHandler4Base* CwxAppReactor::getHandlerByConnId(CWX_UINT32 uiConnId
 }
 
 /**
-@brief ¼ì²éÖ¸¶¨sigµÄhandleÊÇ·ñÒÑ¾­×¢²á¡£
-@return true£º×¢²á£»false£ºÃ»ÓĞ×¢²á
+@brief æ£€æŸ¥æŒ‡å®šsigçš„handleæ˜¯å¦å·²ç»æ³¨å†Œã€‚
+@return trueï¼šæ³¨å†Œï¼›falseï¼šæ²¡æœ‰æ³¨å†Œ
 */
 inline bool CwxAppReactor::isRegSigHandle(int sig)
 {
     return _isRegSigHandle(sig);
 }
 /**
-@brief »ñÈ¡Ö¸¶¨sig¶ÔÓ¦µÄevent handler¡£
-@return ·µ»Øhandle¶ÔÓ¦µÄevent handler£»NULL±íÊ¾²»´æÔÚ
+@brief è·å–æŒ‡å®šsigå¯¹åº”çš„event handlerã€‚
+@return è¿”å›handleå¯¹åº”çš„event handlerï¼›NULLè¡¨ç¤ºä¸å­˜åœ¨
 */
 inline CwxAppHandler4Base* CwxAppReactor::getSigHandler(int sig)
 {
@@ -385,26 +385,26 @@ inline pthread_t CwxAppReactor::getOwner() const
 {
     return m_owner;
 }
-///ÊÇ·ñstop
+///æ˜¯å¦stop
 inline bool CwxAppReactor::isStop()
 {
     return m_bStop;
 }
 
-///»ñÈ¡µ±Ç°µÄÊ±¼ä
+///è·å–å½“å‰çš„æ—¶é—´
 inline CwxTimeValue const& CwxAppReactor::getCurTime() const
 {
     return m_engine->getCurTime();
 }
 
-///io handleÊÇ·ñÉèÖÃÖ¸¶¨µÄmask
+///io handleæ˜¯å¦è®¾ç½®æŒ‡å®šçš„mask
 inline bool CwxAppReactor::isMask(CWX_HANDLE handle, int mask)
 {
     return CWX_CHECK_ATTR(m_engine->m_eHandler[handle].m_mask, mask);
 }
 
 
-///×¢²áIOÊÂ¼ş´¦Àíhandle
+///æ³¨å†ŒIOäº‹ä»¶å¤„ç†handle
 inline int CwxAppReactor::_registerHandler (CWX_HANDLE io_handle,
                                     CwxAppHandler4Base *event_handler,
                                     int mask,
@@ -426,7 +426,7 @@ inline int CwxAppReactor::_registerHandler (CWX_HANDLE io_handle,
 
     event_handler->setRegType(REG_TYPE_IO);
     event_handler->setHandle(io_handle);
-    mask &=CwxAppHandler4Base::IO_MASK; ///Ö»Ö§³ÖREAD¡¢WRITE¡¢PERSIST¡¢TIMEOUTËÄÖÖÑÚÂë
+    mask &=CwxAppHandler4Base::IO_MASK; ///åªæ”¯æŒREADã€WRITEã€PERSISTã€TIMEOUTå››ç§æ©ç 
     ret = m_engine->registerHandler(io_handle,
         event_handler,
         mask,
@@ -449,13 +449,13 @@ inline int CwxAppReactor::_registerHandler (CWX_HANDLE io_handle,
     return ret==0?0:-1;
 }
 
-///É¾³ıioÊÂ¼ş´¦Àíhandle
+///åˆ é™¤ioäº‹ä»¶å¤„ç†handle
 inline int CwxAppReactor::_removeHandler (CwxAppHandler4Base *event_handler, bool bRemoveConnId)
 {
     return _removeHandler(event_handler->getHandle(), bRemoveConnId)?0:-1;
 }
 
-///×¢²áIOÊÂ¼ş´¦Àíhandle
+///æ³¨å†ŒIOäº‹ä»¶å¤„ç†handle
 inline int CwxAppReactor::_suspendHandler (CwxAppHandler4Base *event_handler, int suspend_mask)
 {
     int ret=0;
@@ -482,7 +482,7 @@ inline int CwxAppReactor::_suspendHandler (CwxAppHandler4Base *event_handler, in
     return 0;
 }
 
-///É¾³ıioÊÂ¼ş´¦Àíhandle
+///åˆ é™¤ioäº‹ä»¶å¤„ç†handle
 inline int CwxAppReactor::_resumeHandler (CwxAppHandler4Base *event_handler, int resume_mask)
 {
     int ret = 0;
@@ -511,7 +511,7 @@ inline int CwxAppReactor::_resumeHandler (CwxAppHandler4Base *event_handler, int
 }
 
 
-///É¾³ıioÊÂ¼ş´¦Àíhandle¡£
+///åˆ é™¤ioäº‹ä»¶å¤„ç†handleã€‚
 inline CwxAppHandler4Base* CwxAppReactor::_removeHandler (CWX_HANDLE handle, bool bRemoveConnId)
 {
     if (handle >= CWX_APP_MAX_IO_NUM)
@@ -537,7 +537,7 @@ inline CwxAppHandler4Base* CwxAppReactor::_removeHandler (CWX_HANDLE handle, boo
     return handler;
 }
 
-///suspend ioÊÂ¼ş´¦Àíhandle¡£
+///suspend ioäº‹ä»¶å¤„ç†handleã€‚
 inline int CwxAppReactor::_suspendHandler (CWX_HANDLE handle,
                      int suspend_mask)
 {
@@ -551,7 +551,7 @@ inline int CwxAppReactor::_suspendHandler (CWX_HANDLE handle,
     return m_engine->suspendHandler(handle, suspend_mask);
 }
 
-///resume ioÊÂ¼ş´¦Àíhandle¡£
+///resume ioäº‹ä»¶å¤„ç†handleã€‚
 inline int CwxAppReactor::_resumeHandler (CWX_HANDLE handle,
                     int resume_mask)
 {
@@ -565,11 +565,11 @@ inline int CwxAppReactor::_resumeHandler (CWX_HANDLE handle,
     return m_engine->resumeHandler(handle, resume_mask);
 }
 
-///É¾³ıioÊÂ¼ş´¦Àíhandle¡£
+///åˆ é™¤ioäº‹ä»¶å¤„ç†handleã€‚
 inline CwxAppHandler4Base* CwxAppReactor::_removeHandlerByConnId (CWX_UINT32 uiConnId,
                                                                   bool bRemoveConnId)
 {
-    hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*Á¬½Ó¶ÔÏó*/>::iterator iter = m_connMap.find(uiConnId);
+    hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*è¿æ¥å¯¹è±¡*/>::iterator iter = m_connMap.find(uiConnId);
     if (iter == m_connMap.end())
     {
         CWX_DEBUG(("ConnId[%u] doesn't exist", uiConnId));
@@ -580,11 +580,11 @@ inline CwxAppHandler4Base* CwxAppReactor::_removeHandlerByConnId (CWX_UINT32 uiC
     return handler;
 }
 
-///suspend ioÊÂ¼ş´¦Àíhandle¡£
+///suspend ioäº‹ä»¶å¤„ç†handleã€‚
 inline int CwxAppReactor::_suspendHandlerByConnId (CWX_UINT32 uiConnId,
                              int suspend_mask)
 {
-    hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*Á¬½Ó¶ÔÏó*/>::iterator iter = m_connMap.find(uiConnId);
+    hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*è¿æ¥å¯¹è±¡*/>::iterator iter = m_connMap.find(uiConnId);
     if (iter == m_connMap.end())
     {
         CWX_DEBUG(("ConnId[%u] doesn't exist", uiConnId));
@@ -594,11 +594,11 @@ inline int CwxAppReactor::_suspendHandlerByConnId (CWX_UINT32 uiConnId,
     return _suspendHandler(handler, suspend_mask);
 }
 
-/// resume ioÊÂ¼ş´¦Àíhandle¡£
+/// resume ioäº‹ä»¶å¤„ç†handleã€‚
 inline int CwxAppReactor::_resumeHandlerByConnId (CWX_UINT32 uiConnId,
                             int resume_mask)
 {
-    hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*Á¬½Ó¶ÔÏó*/>::iterator iter = m_connMap.find(uiConnId);
+    hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*è¿æ¥å¯¹è±¡*/>::iterator iter = m_connMap.find(uiConnId);
     if (iter == m_connMap.end())
     {
         CWX_DEBUG(("ConnId[%u] doesn't exist", uiConnId));
@@ -609,7 +609,7 @@ inline int CwxAppReactor::_resumeHandlerByConnId (CWX_UINT32 uiConnId,
 }
 
 
-///×¢²ásignalÊÂ¼ş´¦Àíhandle
+///æ³¨å†Œsignaläº‹ä»¶å¤„ç†handle
 inline int CwxAppReactor::_registerSignal(int signum,
                                   CwxAppHandler4Base *event_handler
                                   )
@@ -632,7 +632,7 @@ inline int CwxAppReactor::_registerSignal(int signum,
     return 0;
 }
 
-///É¾³ısignalÊÂ¼ş´¦Àíhandle
+///åˆ é™¤signaläº‹ä»¶å¤„ç†handle
 inline int CwxAppReactor::_removeSignal(CwxAppHandler4Base *event_handler)
 {
     int signum = event_handler->getHandle();
@@ -671,7 +671,7 @@ inline CwxAppHandler4Base* CwxAppReactor::_removeSignal(int sig)
 }
 
 
-///ÉèÖÃ¶¨Ê±´¦Àíhandle
+///è®¾ç½®å®šæ—¶å¤„ç†handle
 inline int CwxAppReactor::_scheduleTimer (CwxAppHandler4Base *event_handler,
                                    CwxTimeValue const&interval)
 {
@@ -685,7 +685,7 @@ inline int CwxAppReactor::_scheduleTimer (CwxAppHandler4Base *event_handler,
     return 0;
 
 }
-///È¡Ïû¶¨Ê±´¦Àíhandle
+///å–æ¶ˆå®šæ—¶å¤„ç†handle
 inline int CwxAppReactor::_cancelTimer (CwxAppHandler4Base *event_handler)
 {
 
@@ -713,8 +713,8 @@ inline bool CwxAppReactor::_isRegIoHandle(CwxAppHandler4Base* handler)
 
 
 /**
-@brief Í£Ö¹¼Ü¹¹ÊÂ¼şµÄÑ­»·´¦Àí¡£
-@return -1£ºÊ§°Ü£»0£ºÕı³£ÍË³ö
+@brief åœæ­¢æ¶æ„äº‹ä»¶çš„å¾ªç¯å¤„ç†ã€‚
+@return -1ï¼šå¤±è´¥ï¼›0ï¼šæ­£å¸¸é€€å‡º
 */
 inline int CwxAppReactor::_stop()
 {
@@ -724,9 +724,9 @@ inline int CwxAppReactor::_stop()
 
 
 /**
-@brief »ñÈ¡Ö¸¶¨handle¶ÔÓ¦µÄevent handler¡£
-@param bLock  true£ºapiÄÚ²¿lock£»false£ºÍâ²¿¼ÓËø
-@return ·µ»Øhandle¶ÔÓ¦µÄevent handler£»NULL±íÊ¾²»´æÔÚ
+@brief è·å–æŒ‡å®šhandleå¯¹åº”çš„event handlerã€‚
+@param bLock  trueï¼šapiå†…éƒ¨lockï¼›falseï¼šå¤–éƒ¨åŠ é”
+@return è¿”å›handleå¯¹åº”çš„event handlerï¼›NULLè¡¨ç¤ºä¸å­˜åœ¨
 */
 inline CwxAppHandler4Base* CwxAppReactor::_getIoHandler(CWX_HANDLE handle)
 {
@@ -734,8 +734,8 @@ inline CwxAppHandler4Base* CwxAppReactor::_getIoHandler(CWX_HANDLE handle)
     return m_engine->m_eHandler[handle].m_handler;
 }
 /**
-@brief ¼ì²éÖ¸¶¨sigµÄhandleÊÇ·ñÒÑ¾­×¢²á¡£
-@return true£º×¢²á£»false£ºÃ»ÓĞ×¢²á
+@brief æ£€æŸ¥æŒ‡å®šsigçš„handleæ˜¯å¦å·²ç»æ³¨å†Œã€‚
+@return trueï¼šæ³¨å†Œï¼›falseï¼šæ²¡æœ‰æ³¨å†Œ
 */
 inline bool CwxAppReactor::_isRegSigHandle(int sig)
 {
@@ -743,8 +743,8 @@ inline bool CwxAppReactor::_isRegSigHandle(int sig)
     return m_engine->m_sHandler[sig] != NULL;
 }
 /**
-@brief ¼ì²éÖ¸¶¨IOµÄhandleÊÇ·ñÒÑ¾­×¢²á¡£
-@return true£º×¢²á£»false£ºÃ»ÓĞ×¢²á
+@brief æ£€æŸ¥æŒ‡å®šIOçš„handleæ˜¯å¦å·²ç»æ³¨å†Œã€‚
+@return trueï¼šæ³¨å†Œï¼›falseï¼šæ²¡æœ‰æ³¨å†Œ
 */
 inline bool CwxAppReactor::_isRegSigHandle(CwxAppHandler4Base* handler)
 {
@@ -752,8 +752,8 @@ inline bool CwxAppReactor::_isRegSigHandle(CwxAppHandler4Base* handler)
     return m_engine->m_sHandler[handler->getHandle()] == handler;
 }
 /**
-@brief »ñÈ¡Ö¸¶¨sig¶ÔÓ¦µÄevent handler¡£
-@return ·µ»Øhandle¶ÔÓ¦µÄevent handler£»NULL±íÊ¾²»´æÔÚ
+@brief è·å–æŒ‡å®šsigå¯¹åº”çš„event handlerã€‚
+@return è¿”å›handleå¯¹åº”çš„event handlerï¼›NULLè¡¨ç¤ºä¸å­˜åœ¨
 */
 inline CwxAppHandler4Base* CwxAppReactor::_getSigHandler(int sig)
 {
@@ -768,7 +768,7 @@ inline bool CwxAppReactor::enableRegConnMap(CWX_UINT32 uiConnId, CwxAppHandler4B
     CWX_ASSERT(uiConnId != CWX_APP_INVALID_CONN_ID);
     {
         CwxMutexGuard<CwxMutexLock> lock(&m_connMapMutex);
-        hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*Á¬½Ó*/>::iterator iter = m_connMap.find(uiConnId);
+        hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*è¿æ¥*/>::iterator iter = m_connMap.find(uiConnId);
         return ((iter==m_connMap.end())||(iter->second == handler))?true:false;
     }
 }
@@ -785,7 +785,7 @@ inline CwxAppHandler4Base* CwxAppReactor::removeRegConnMap(CWX_UINT32 uiConnId)
 {
     CwxMutexGuard<CwxMutexLock> lock(&m_connMapMutex);
     CwxAppHandler4Base* handler = NULL;
-    hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*Á¬½Ó¶ÔÏó*/>::iterator iter = m_connMap.find(uiConnId);
+    hash_map<CWX_UINT32/*conn id*/, CwxAppHandler4Base*/*è¿æ¥å¯¹è±¡*/>::iterator iter = m_connMap.find(uiConnId);
     if (iter != m_connMap.end())
     {
         handler = iter->second;

@@ -1,4 +1,4 @@
-
+ï»¿
 CWINUX_BEGIN_NAMESPACE
 
 inline CWX_UINT32 CwxAppConnInfo::getSvrId() const 
@@ -11,7 +11,7 @@ inline void CwxAppConnInfo::setSvrId(CWX_UINT32 uiSvrId)
     m_uiSvrId = uiSvrId;
 }
 
-///»ñÈ¡Á¬½ÓµÄHOST-ID
+///è·å–è¿æ¥çš„HOST-ID
 inline CWX_UINT32 CwxAppConnInfo::getHostId() const 
 {
     return m_uiHostId;
@@ -21,27 +21,27 @@ inline void CwxAppConnInfo::setHostId(CWX_UINT32 uiHostId)
 {
     m_uiHostId = uiHostId;
 }
-///»ñÈ¡Á¬½ÓµÄÁ¬½ÓID
+///è·å–è¿æ¥çš„è¿æ¥ID
 inline CWX_UINT32 CwxAppConnInfo::getConnId() const 
 {
     return m_uiConnId;
 }
-///ÉèÖÃÁ¬½ÓµÄÁ¬½ÓID
+///è®¾ç½®è¿æ¥çš„è¿æ¥ID
 inline void CwxAppConnInfo::setConnId(CWX_UINT32 uiConnId)
 {
     m_uiConnId = uiConnId;
 }
-///ÉèÖÃ±»¶¯Á¬½ÓµÄListen ID
+///è®¾ç½®è¢«åŠ¨è¿æ¥çš„Listen ID
 inline CWX_UINT32 CwxAppConnInfo::getListenId() const 
 {
     return m_uiListenId;
 }
-///»ñÈ¡Á¬½Ó³¬Ê±Ê±¼ä
+///è·å–è¿æ¥è¶…æ—¶æ—¶é—´
 inline CWX_UINT32 CwxAppConnInfo::getConnectTimeout() const
 {
 	return m_uiConnectTimeout;
 }
-///ÉèÖÃÁ¬½Ó³¬Ê±Ê±¼ä
+///è®¾ç½®è¿æ¥è¶…æ—¶æ—¶é—´
 inline void CwxAppConnInfo::setConnectTimeout(CWX_UINT32 uiTimeout)
 {
 	m_uiConnectTimeout = uiTimeout;
@@ -53,7 +53,7 @@ inline void CwxAppConnInfo::setListenId(CWX_UINT32 uiListenId)
 }
 
 
-///»ñÈ¡Á¬½ÓµÄ×´Ì¬
+///è·å–è¿æ¥çš„çŠ¶æ€
 inline CWX_UINT16 CwxAppConnInfo::getState() const
 {
     return m_unState;
@@ -63,7 +63,7 @@ inline void CwxAppConnInfo::setState(CWX_UINT16 unState)
     m_unState = unState;
 }
 
-///»ñÈ¡Á¬½ÓµÄ´´½¨Ê±¼ä
+///è·å–è¿æ¥çš„åˆ›å»ºæ—¶é—´
 inline time_t CwxAppConnInfo::getCreateTime() const 
 {
     return m_ttCreateTime;
@@ -73,24 +73,24 @@ inline void CwxAppConnInfo::setCreateTime(time_t ttTime)
     m_ttCreateTime = ttTime;
 }
 
-///»ñÈ¡Á¬ĞøÁ¬½ÓÊ§°ÜµÄ´ÎÊı
+///è·å–è¿ç»­è¿æ¥å¤±è´¥çš„æ¬¡æ•°
 inline CWX_UINT32 CwxAppConnInfo::getFailConnNum() const
 {
     return m_uiFailConnNum;
 }
-///ÉèÖÃÁ¬½ÓÊ§°ÜÁ¬½Ó´ÎÊı
+///è®¾ç½®è¿æ¥å¤±è´¥è¿æ¥æ¬¡æ•°
 inline void CwxAppConnInfo::setFailConnNum(CWX_UINT32 uiNum)
 {
     m_uiFailConnNum = uiNum;
 }
-///Ôö¼ÓÁ¬½ÓÊ§°ÜÁ¬½Ó´ÎÊı
+///å¢åŠ è¿æ¥å¤±è´¥è¿æ¥æ¬¡æ•°
 inline CWX_UINT32 CwxAppConnInfo::incFailConnNum()
 {
     m_uiFailConnNum++;
     return m_uiFailConnNum;
 }
 
-///»ñÈ¡Ê§Ğ§Ö÷¶¯Á¬½Ó×îĞ¡ÖØÁ¬½ÓÊ±¼ä¼ä¸ô
+///è·å–å¤±æ•ˆä¸»åŠ¨è¿æ¥æœ€å°é‡è¿æ¥æ—¶é—´é—´éš”
 inline CWX_UINT16 CwxAppConnInfo::getMinRetryInternal() const 
 {
     return m_unMinRetryInternal;
@@ -100,7 +100,7 @@ inline void CwxAppConnInfo::setMinRetryInternal(CWX_UINT16 unInternal)
     m_unMinRetryInternal = unInternal;
 }
 
-///»ñÈ¡Ê§Ğ§Ö÷¶¯Á¬½Ó×î´óÖØÁ¬½ÓÊ±¼ä¼ä¸ô
+///è·å–å¤±æ•ˆä¸»åŠ¨è¿æ¥æœ€å¤§é‡è¿æ¥æ—¶é—´é—´éš”
 inline CWX_UINT16 CwxAppConnInfo::getMaxRetryInternal() const 
 {
     return m_unMaxRetryInternal;
@@ -110,7 +110,7 @@ inline void CwxAppConnInfo::setMaxRetryInternal(CWX_UINT16 unInternal)
     m_unMaxRetryInternal = unInternal;
 }
 
-///»ñÈ¡Á¬½ÓÊÇ·ñÎªÖ÷¶¯Á¬½Ó
+///è·å–è¿æ¥æ˜¯å¦ä¸ºä¸»åŠ¨è¿æ¥
 inline bool CwxAppConnInfo::isActiveConn() const 
 {
     return m_bActiveConn;
@@ -120,7 +120,7 @@ inline void CwxAppConnInfo::setActiveConn(bool bActive)
     m_bActiveConn = bActive;
 }
 
-///»ñÈ¡Á¬½ÓÊÇ·ñÖ÷¶¯¹Ø±Õ
+///è·å–è¿æ¥æ˜¯å¦ä¸»åŠ¨å…³é—­
 inline bool CwxAppConnInfo::isActiveClose() const 
 {
     return m_bActiveClose;
@@ -131,7 +131,7 @@ inline void CwxAppConnInfo::setActiveClose(bool bActive)
 }
 
 
-///»ñÈ¡Á¬½ÓµÄÊı¾İ°üÊÇ·ñÓĞ°üÍ·
+///è·å–è¿æ¥çš„æ•°æ®åŒ…æ˜¯å¦æœ‰åŒ…å¤´
 inline bool CwxAppConnInfo::isRawData() const 
 {
     return m_bRawData;
@@ -143,7 +143,7 @@ inline void CwxAppConnInfo::setRawData(bool bRaw)
 
 
 
-///»ñÈ¡Á¬½Ó×îĞÂÊÕµ½ÏûÏ¢µÄÊ±¼ä
+///è·å–è¿æ¥æœ€æ–°æ”¶åˆ°æ¶ˆæ¯çš„æ—¶é—´
 inline time_t  CwxAppConnInfo::getLastRecvMsgTime() const 
 {
     return m_ttLastRecvMsgTime;
@@ -153,7 +153,7 @@ inline void CwxAppConnInfo::setLastRecvMsgTime(time_t ttTime)
     m_ttLastRecvMsgTime = ttTime;
 }
 
-///»ñÈ¡Á¬½Ó×îĞÂ·¢ËÍÏûÏ¢µÄÊ±¼ä
+///è·å–è¿æ¥æœ€æ–°å‘é€æ¶ˆæ¯çš„æ—¶é—´
 inline time_t  CwxAppConnInfo::getLastSendMsgTime() const 
 {
     return m_ttLastSendMsgTime;
@@ -164,58 +164,58 @@ inline void CwxAppConnInfo::setLastSendMsgTime(time_t ttTime)
 }
 
 
-///»ñÈ¡Á¬½ÓµÄÓÃ»§Êı¾İ
+///è·å–è¿æ¥çš„ç”¨æˆ·æ•°æ®
 inline void*  CwxAppConnInfo::getUserData() const
 {
     return  m_pUserData;
 }
-///ÉèÖÃÁ¬½ÓµÄÓÃ»§Êı¾İ
+///è®¾ç½®è¿æ¥çš„ç”¨æˆ·æ•°æ®
 inline void CwxAppConnInfo::setUserData(void* userData)
 {
     m_pUserData = userData;
 }
 
-///»ñÈ¡Á¬½ÓµÈ´ı·¢ËÍµÄ×î´óÏûÏ¢µÄÊıÁ¿£¬0±íÊ¾Ã»ÓĞÏŞÖÆ
+///è·å–è¿æ¥ç­‰å¾…å‘é€çš„æœ€å¤§æ¶ˆæ¯çš„æ•°é‡ï¼Œ0è¡¨ç¤ºæ²¡æœ‰é™åˆ¶
 inline CWX_UINT32 CwxAppConnInfo::getMaxWaitingMsgNum() const
 {
     return m_uiMaxWaitingMsgNum;
 }
-///ÉèÖÃÁ¬½Ó×î´óµÄµÈ´ı·¢ËÍµÄÏûÏ¢ÊıÁ¿£¬Ä¬ÈÏ0±íÊ¾Ã»ÓĞÏŞÖÆ
+///è®¾ç½®è¿æ¥æœ€å¤§çš„ç­‰å¾…å‘é€çš„æ¶ˆæ¯æ•°é‡ï¼Œé»˜è®¤0è¡¨ç¤ºæ²¡æœ‰é™åˆ¶
 inline void CwxAppConnInfo::setMaxWaitingMsgNum(CWX_UINT32 uiNum)
 {
     m_uiMaxWaitingMsgNum = uiNum;
 }
-///ÅĞ¶ÏÊÇ·ñÁ¬½Ó´ı·¢ËÍ¶ÓÁĞÒÑÂú
+///åˆ¤æ–­æ˜¯å¦è¿æ¥å¾…å‘é€é˜Ÿåˆ—å·²æ»¡
 inline bool CwxAppConnInfo::isWaitingMsgQueueFull() const
 {
     return m_uiMaxWaitingMsgNum && (m_uiMaxWaitingMsgNum <= m_uiWaitingMsgNum);
 }
 
 
-///»ñÈ¡Á¬½ÓµÈ´ı·¢ËÍµÄÏûÏ¢µÄÊıÁ¿
+///è·å–è¿æ¥ç­‰å¾…å‘é€çš„æ¶ˆæ¯çš„æ•°é‡
 inline CWX_UINT32 CwxAppConnInfo::getWaitingMsgNum() const
 {
     return m_uiWaitingMsgNum;
 }
-///ÉèÖÃÁ¬½ÓµÈ´ı·¢ËÍµÄÏûÏ¢µÄÊıÁ¿
+///è®¾ç½®è¿æ¥ç­‰å¾…å‘é€çš„æ¶ˆæ¯çš„æ•°é‡
 inline void CwxAppConnInfo::setWaitingMsgNum(CWX_UINT32 uiNum)
 {
     m_uiWaitingMsgNum = uiNum;
 }
-///Ôö¼ÓÁ¬½ÓµÈ´ı·¢ËÍµÄÏûÏ¢µÄÊıÁ¿
+///å¢åŠ è¿æ¥ç­‰å¾…å‘é€çš„æ¶ˆæ¯çš„æ•°é‡
 inline CWX_UINT32 CwxAppConnInfo::incWaitingMsgNum()
 {
     m_uiWaitingMsgNum++;
     return m_uiWaitingMsgNum;
 }
-///¼õÉÙÁ¬½ÓµÈ´ı·¢ËÍµÄÏûÏ¢µÄÊıÁ¿
+///å‡å°‘è¿æ¥ç­‰å¾…å‘é€çš„æ¶ˆæ¯çš„æ•°é‡
 inline CWX_UINT32 CwxAppConnInfo::decWaitingMsgNum()
 {
     if (m_uiWaitingMsgNum) m_uiWaitingMsgNum--;
     return m_uiWaitingMsgNum;
 }
 
-///»ñÈ¡Á¬½ÓÒÑ¾­Á¬Ğø½ÓÊÕµ½µÄÏûÏ¢°üµÄÊıÁ¿
+///è·å–è¿æ¥å·²ç»è¿ç»­æ¥æ”¶åˆ°çš„æ¶ˆæ¯åŒ…çš„æ•°é‡
 inline CWX_UINT32 CwxAppConnInfo::getContinueRecvNum() const
 {
     return m_uiContinueRecvNum;
@@ -224,74 +224,74 @@ inline void CwxAppConnInfo::setContinueRecvNum(CWX_UINT32 uiNum)
 {
     m_uiContinueRecvNum = uiNum;
 }
-///»ñÈ¡Á¬Ğø·¢ËÍµÄÏûÏ¢ÊıÁ¿
+///è·å–è¿ç»­å‘é€çš„æ¶ˆæ¯æ•°é‡
 inline CWX_UINT32 CwxAppConnInfo::getContinueSendNum() const
 {
     return m_uiContinueSendNum;
 }
-///ÉèÖÃÁ¬Ğø·¢ËÍµÄÏûÏ¢ÊıÁ¿
+///è®¾ç½®è¿ç»­å‘é€çš„æ¶ˆæ¯æ•°é‡
 inline void CwxAppConnInfo::setContinueSendNum(CWX_UINT32 uiNum)
 {
     m_uiContinueSendNum = uiNum;
 }
 
 
-///ÅĞ¶Ï¶Ï¿ªµÄÁ¬½ÓÊÇ·ñĞèÒªÖØÁ¬
+///åˆ¤æ–­æ–­å¼€çš„è¿æ¥æ˜¯å¦éœ€è¦é‡è¿
 inline bool CwxAppConnInfo::isNeedReconnect() const 
 {
     return !m_bActiveClose && m_bActiveConn;
 }
 
 
-///ÊÇ·ñµ÷ÓÃCwxAppFramework::onCreate
+///æ˜¯å¦è°ƒç”¨CwxAppFramework::onCreate
 inline bool CwxAppConnInfo::isInvokeCreate() const
 {
     return m_bInvokeCreate;
 }
-///ÉèÖÃÊÇ·ñµ÷ÓÃCwxAppFramework::onCreate
+///è®¾ç½®æ˜¯å¦è°ƒç”¨CwxAppFramework::onCreate
 inline void CwxAppConnInfo::setInvokeCreate(bool bInvoke)
 {
     m_bInvokeCreate = bInvoke;
 }
 
-///ÊÇ·ñÖØĞÂÁ¬½Ó
+///æ˜¯å¦é‡æ–°è¿æ¥
 inline bool CwxAppConnInfo::isReconn() const
 {
     return m_bReconn;
 }
-///ÉèÖÃÊÇ·ñÖØÁ¬
+///è®¾ç½®æ˜¯å¦é‡è¿
 inline void CwxAppConnInfo::setReconn(bool bReconnect)
 {
     m_bReconn = bReconnect;
 }
-///»ñÈ¡ÖØĞÂÁ¬½ÓÑÓÊ±µÄºÁÃëÊı
+///è·å–é‡æ–°è¿æ¥å»¶æ—¶çš„æ¯«ç§’æ•°
 inline CWX_UINT32 CwxAppConnInfo::getReconnDelay() const
 {
     return m_uiReconnDelay;
 }
-///ÉèÖÃÖØĞÂÁ¬½ÓÑÓÊ±µÄºÁÃëÊı
+///è®¾ç½®é‡æ–°è¿æ¥å»¶æ—¶çš„æ¯«ç§’æ•°
 inline void CwxAppConnInfo::setReconnDelay(CWX_UINT32 uiDelay)
 {
     m_uiReconnDelay = uiDelay;
 }
 
-///»ñÈ¡socketÉèÖÃµÄfunction
+///è·å–socketè®¾ç½®çš„function
 inline CWX_NET_SOCKET_ATTR_FUNC CwxAppConnInfo::getSockFunc() const
 {
     return m_fn;
 }
-///ÉèÖÃsocketÉèÖÃµÄfunction
+///è®¾ç½®socketè®¾ç½®çš„function
 inline void CwxAppConnInfo::setSockFunc(CWX_NET_SOCKET_ATTR_FUNC fn)
 {
     m_fn = fn;
 }
 
-///»ñÈ¡socketÉèÖÃfunctionµÄarg
+///è·å–socketè®¾ç½®functionçš„arg
 inline void* CwxAppConnInfo::getSockFuncArg() const
 {
     return m_fnArg;
 }
-///ÉèÖÃsocketÉèÖÃfunctionµÄarg
+///è®¾ç½®socketè®¾ç½®functionçš„arg
 inline void CwxAppConnInfo::setSockFuncArg(void* arg)
 {
     m_fnArg = arg;
@@ -300,12 +300,12 @@ inline void CwxAppConnInfo::setSockFuncArg(void* arg)
 
 
 
-///»ñÈ¡Á¬½Ó¶ÔÓ¦µÄhandler
+///è·å–è¿æ¥å¯¹åº”çš„handler
 inline CwxAppHandler4Msg* CwxAppConnInfo::getHandler()
 {
     return m_pHandler;
 }
-///ÉèÖÃÁ¬½Ó¶ÔÓ¦µÄhandler
+///è®¾ç½®è¿æ¥å¯¹åº”çš„handler
 inline void CwxAppConnInfo::setHandler(CwxAppHandler4Msg*  pHandler)
 {
     m_pHandler = pHandler;

@@ -1,14 +1,14 @@
-#ifndef __CWX_SOCK_DGRAM_H__
+ï»¿#ifndef __CWX_SOCK_DGRAM_H__
 #define __CWX_SOCK_DGRAM_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxSockDgram.h
-@brief UDP°üÊı¾İÍ¨ĞÅ¶ÔÏóµÄ¶¨Òå¡£
+@brief UDPåŒ…æ•°æ®é€šä¿¡å¯¹è±¡çš„å®šä¹‰ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-11
@@ -25,36 +25,36 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxSockDgram
-@brief ÃæÏò°üµÄUDPÍ¨ĞÅ¶ÔÏó¡£
+@brief é¢å‘åŒ…çš„UDPé€šä¿¡å¯¹è±¡ã€‚
 */
 class CWX_API CwxSockDgram : public CwxSockBase
 {
 public:
-    ///Ä¬ÈÏ¹¹Ôìº¯Êı
+    ///é»˜è®¤æ„é€ å‡½æ•°
     CwxSockDgram();
-    ///¹¹Ôìº¯Êı£¬´´½¨¶ÔÏó²¢Éè¶¨Á¬½Óhandle
+    ///æ„é€ å‡½æ•°ï¼Œåˆ›å»ºå¯¹è±¡å¹¶è®¾å®šè¿æ¥handle
     CwxSockDgram(CWX_HANDLE handle);
-    ///Îö¹¹º¯Êı.
+    ///ææ„å‡½æ•°.
     ~CwxSockDgram(void);
 public:
     /**
-    @brief ÔÚÏŞ¶¨µÄÊ±¼äÄÚ£¬·¢ËÍlen×Ö½ÚµÄÊı¾İ¡£
-    @param [in] buf ·¢ËÍÊı¾İµÄbuf¡£
-    @param [in] len ·¢ËÍÊı¾İµÄ×Ö½ÚÊı¡£
-    @param [in] addr ·¢ËÍµÄµØÖ·¡£
-    @param [in] flags sendto()µÄÏµÍ³OS apiµÄflags²ÎÊı¡£
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£º·¢ËÍ´íÎó»ò³¬Ê±(errno==ETIME£©£»·ñÔòÎª·¢ËÍµÄ×Ö½ÚÊı£¬µÈÓÚlen
+    @brief åœ¨é™å®šçš„æ—¶é—´å†…ï¼Œå‘é€lenå­—èŠ‚çš„æ•°æ®ã€‚
+    @param [in] buf å‘é€æ•°æ®çš„bufã€‚
+    @param [in] len å‘é€æ•°æ®çš„å­—èŠ‚æ•°ã€‚
+    @param [in] addr å‘é€çš„åœ°å€ã€‚
+    @param [in] flags sendto()çš„ç³»ç»ŸOS apiçš„flagså‚æ•°ã€‚
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @return -1ï¼šå‘é€é”™è¯¯æˆ–è¶…æ—¶(errno==ETIMEï¼‰ï¼›å¦åˆ™ä¸ºå‘é€çš„å­—èŠ‚æ•°ï¼Œç­‰äºlen
     */
     ssize_t send(const void *buf,  size_t len,  const CwxAddr &addr, int flags, CwxTimeouter  *timeout=0) const;
     /**
-    @brief ÔÚÏŞ¶¨µÄÊ±¼äÄÚ£¬½ÓÊÕÒ»¸öÊı¾İ°ü¡£
-    @param [in] buf ½ÓÊÕÊı¾İµÄbuf¡£
-    @param [in] len ½ÓÊÕBUFµÄ´óĞ¡¡£
-    @param [in] addr Êı¾İµÄÀ´Ô´µÄµØÖ·¡£
-    @param [in] flags recvfrom()µÄÏµÍ³OS apiµÄflags²ÎÊı¡£
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£º½ÓÊÕ´íÎó»ò³¬Ê±(errno==ETIME£©£»·ñÔòÎª½ÓÊÕµÄ×Ö½ÚÊı
+    @brief åœ¨é™å®šçš„æ—¶é—´å†…ï¼Œæ¥æ”¶ä¸€ä¸ªæ•°æ®åŒ…ã€‚
+    @param [in] buf æ¥æ”¶æ•°æ®çš„bufã€‚
+    @param [in] len æ¥æ”¶BUFçš„å¤§å°ã€‚
+    @param [in] addr æ•°æ®çš„æ¥æºçš„åœ°å€ã€‚
+    @param [in] flags recvfrom()çš„ç³»ç»ŸOS apiçš„flagså‚æ•°ã€‚
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @return -1ï¼šæ¥æ”¶é”™è¯¯æˆ–è¶…æ—¶(errno==ETIMEï¼‰ï¼›å¦åˆ™ä¸ºæ¥æ”¶çš„å­—èŠ‚æ•°
     */
     ssize_t recv (void *buf,  size_t len,  CwxAddr &addr, int flags, CwxTimeouter  *timeout=0) const;
 private:

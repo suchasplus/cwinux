@@ -1,14 +1,14 @@
-#ifndef __CWX_CHARSET_H__
+ï»¿#ifndef __CWX_CHARSET_H__
 #define __CWX_CHARSET_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxCharset.h
-@brief ¶ÔÓëÖĞÎÄÏà¹ØµÄUTF8¡¢GBK£¨°üº¬GB3212£©¡¢UTF16ÈıÖÖ×Ö·û¼¯£¬¶¨ÒåÒ»ÖÂµÄ²Ù×÷½Ó¿Ú
+@brief å¯¹ä¸ä¸­æ–‡ç›¸å…³çš„UTF8ã€GBKï¼ˆåŒ…å«GB3212ï¼‰ã€UTF16ä¸‰ç§å­—ç¬¦é›†ï¼Œå®šä¹‰ä¸€è‡´çš„æ“ä½œæ¥å£
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-10
@@ -25,43 +25,43 @@ CWINUX_BEGIN_NAMESPACE
 
 /**
 @class CwxMultiString
-@brief ×Ö·û´®µÄ½á¹¹£¬´æÔÚ×Ö·û´®µÄÄÚÈİ¼°×Ö·û´®µÄ³¤¶È£¬ÓÃÓÚ×Ö·ûÌæ»»¼°×Ö·û¹ıÂËÏà¹ØµÄÀà
+@brief å­—ç¬¦ä¸²çš„ç»“æ„ï¼Œå­˜åœ¨å­—ç¬¦ä¸²çš„å†…å®¹åŠå­—ç¬¦ä¸²çš„é•¿åº¦ï¼Œç”¨äºå­—ç¬¦æ›¿æ¢åŠå­—ç¬¦è¿‡æ»¤ç›¸å…³çš„ç±»
 */
 struct CwxMultiString
 {
-    CWX_UINT32    m_uiLength;///<m_szStrµÄ×Ö·û´®µÄ³¤¶È
-    char      m_szStr[0];///<×Ö·û´®
+    CWX_UINT32    m_uiLength;///<m_szStrçš„å­—ç¬¦ä¸²çš„é•¿åº¦
+    char      m_szStr[0];///<å­—ç¬¦ä¸²
 };
 
 /**
 @class CwxCharsetGbk
-@brief GBK×Ö·û¼¯µÄ½Ó¿Ú¶¨Òå£¬È«²¿Îª¾²Ì¬½Ó¿Ú£¬½ûÖ¹ÊµÀı»¯
+@brief GBKå­—ç¬¦é›†çš„æ¥å£å®šä¹‰ï¼Œå…¨éƒ¨ä¸ºé™æ€æ¥å£ï¼Œç¦æ­¢å®ä¾‹åŒ–
 */
 class CWX_API CwxCharsetGbk
 {
 public:
     /**
-    @brief »ñÈ¡¶ÔÏóËù¶¨ÒåµÄ×Ö·û¼¯µÄÃû×Ö¡£
-    @return ·µ»Ø¡°gbk¡±µÄ×Ö·û´®
+    @brief è·å–å¯¹è±¡æ‰€å®šä¹‰çš„å­—ç¬¦é›†çš„åå­—ã€‚
+    @return è¿”å›â€œgbkâ€çš„å­—ç¬¦ä¸²
     */
     inline static char const* charset()
     {
         return "gbk";
     }
     /**
-    @brief ÅĞ¶ÏÒ»¸ö×Ö·û¼¯µÄÌØÕ÷ÊÇ·ñ·ûºÏCwxCharsetGbkÀàµÄ½Ó¿ÚÃèÊö¡£
-    @param [in] szCharset ±»¼ì²éµÄ×Ö·û¼¯µÄÃû×Ö
-    @return ¶ÔÓÚ"gbk"Óë"gb2312"£¬·µ»Øtrue£»·ñÔò·µ»Øfalse
+    @brief åˆ¤æ–­ä¸€ä¸ªå­—ç¬¦é›†çš„ç‰¹å¾æ˜¯å¦ç¬¦åˆCwxCharsetGbkç±»çš„æ¥å£æè¿°ã€‚
+    @param [in] szCharset è¢«æ£€æŸ¥çš„å­—ç¬¦é›†çš„åå­—
+    @return å¯¹äº"gbk"ä¸"gb2312"ï¼Œè¿”å›trueï¼›å¦åˆ™è¿”å›false
     */
     inline static bool charset(char const* szCharset) 
     {
         return ((strcasecmp("gbk", szCharset)==0) || (strcasecmp("gb2312", szCharset)==0))?true:false;
     }
     /**
-    @brief ÅĞ¶ÏszGbkBufÖĞµÄµÚÒ»¸ö×Ö·ûµÄ×Ö½ÚÊı£¬0±íÊ¾ÎŞĞ§µÄ×Ö·û»ò½áÊø¡£
-    @param [in] szGbkBuf Òª¼ì²éµÄ×Ö·ûµÄbuffer
-    @param [in] uiBufLen szGbkBufµÄ×Ö½Ú³¤¶È
-    @return 0±íÊ¾ÎŞĞ§µÄ×Ö·û»ò½áÊø£»´óÓÚ0±íÊ¾szGbkBufÖĞµÚÒ»¸ö×Ö·ûµÄ×Ö½Ú³¤¶È
+    @brief åˆ¤æ–­szGbkBufä¸­çš„ç¬¬ä¸€ä¸ªå­—ç¬¦çš„å­—èŠ‚æ•°ï¼Œ0è¡¨ç¤ºæ— æ•ˆçš„å­—ç¬¦æˆ–ç»“æŸã€‚
+    @param [in] szGbkBuf è¦æ£€æŸ¥çš„å­—ç¬¦çš„buffer
+    @param [in] uiBufLen szGbkBufçš„å­—èŠ‚é•¿åº¦
+    @return 0è¡¨ç¤ºæ— æ•ˆçš„å­—ç¬¦æˆ–ç»“æŸï¼›å¤§äº0è¡¨ç¤ºszGbkBufä¸­ç¬¬ä¸€ä¸ªå­—ç¬¦çš„å­—èŠ‚é•¿åº¦
     */
     inline static CWX_UINT32 nextChrLen(char const* szGbkBuf, CWX_UINT32 uiBufLen)
     {
@@ -76,11 +76,11 @@ public:
         return 0;
     }
     /**
-    @brief ½«szGbkBufÖĞµÄµÚÒ»¸ö×Ö·ûÍ¨¹ıszUpperµÄÍâ²¿BUF·µ»Ø£¬ÈôÊÇĞ¡Ğ´Ôò±äÎª´óĞ´¡£
-    @param [in] szGbkBuf ×Ö·û´®µÄbuffer
-    @param [in] uiBufLen szGbkBufµÄ×Ö½Ú³¤¶È
-    @param [out] szUpper szGbkBufÖĞµÄµÚÒ»¸ö×Ö·û£¬ÈôÊÇĞ¡Ğ´£¬Ôò±ä»»Îª´óĞ´·µ»Ø
-    @return 0±íÊ¾ÎŞĞ§µÄ×Ö·û»ò½áÊø£»´óÓÚ0±íÊ¾szUpperÖĞ·µ»ØµÄµÚÒ»¸ö×Ö·ûµÄ³¤¶È
+    @brief å°†szGbkBufä¸­çš„ç¬¬ä¸€ä¸ªå­—ç¬¦é€šè¿‡szUpperçš„å¤–éƒ¨BUFè¿”å›ï¼Œè‹¥æ˜¯å°å†™åˆ™å˜ä¸ºå¤§å†™ã€‚
+    @param [in] szGbkBuf å­—ç¬¦ä¸²çš„buffer
+    @param [in] uiBufLen szGbkBufçš„å­—èŠ‚é•¿åº¦
+    @param [out] szUpper szGbkBufä¸­çš„ç¬¬ä¸€ä¸ªå­—ç¬¦ï¼Œè‹¥æ˜¯å°å†™ï¼Œåˆ™å˜æ¢ä¸ºå¤§å†™è¿”å›
+    @return 0è¡¨ç¤ºæ— æ•ˆçš„å­—ç¬¦æˆ–ç»“æŸï¼›å¤§äº0è¡¨ç¤ºszUpperä¸­è¿”å›çš„ç¬¬ä¸€ä¸ªå­—ç¬¦çš„é•¿åº¦
     */
     inline static  CWX_UINT32 upperChr(char const* szGbkBuf, CWX_UINT32 uiBufLen, char* szUpper)
     {
@@ -104,11 +104,11 @@ public:
     }
 
     /**
-    @brief ½«szGbkBufÖĞµÄµÚÒ»¸ö×Ö·ûÍ¨¹ıszLowerµÄÍâ²¿BUF·µ»Ø£¬ÈôÊÇ´óĞ´Ôò±äÎªĞ¡Ğ´¡£
-    @param [in] szGbkBuf ×Ö·û´®µÄbuffer
-    @param [in] uiBufLen szGbkBufµÄ×Ö½Ú³¤¶È
-    @param [out] szLower szGbkBufÖĞµÄµÚÒ»¸ö×Ö·û£¬ÈôÊÇ´óĞ´£¬Ôò±ä»»ÎªĞ¡Ğ´·µ»Ø
-    @return 0±íÊ¾ÎŞĞ§µÄ×Ö·û»ò½áÊø£»´óÓÚ0±íÊ¾szLowerÖĞ·µ»ØµÄµÚÒ»¸ö×Ö·ûµÄ³¤¶È
+    @brief å°†szGbkBufä¸­çš„ç¬¬ä¸€ä¸ªå­—ç¬¦é€šè¿‡szLowerçš„å¤–éƒ¨BUFè¿”å›ï¼Œè‹¥æ˜¯å¤§å†™åˆ™å˜ä¸ºå°å†™ã€‚
+    @param [in] szGbkBuf å­—ç¬¦ä¸²çš„buffer
+    @param [in] uiBufLen szGbkBufçš„å­—èŠ‚é•¿åº¦
+    @param [out] szLower szGbkBufä¸­çš„ç¬¬ä¸€ä¸ªå­—ç¬¦ï¼Œè‹¥æ˜¯å¤§å†™ï¼Œåˆ™å˜æ¢ä¸ºå°å†™è¿”å›
+    @return 0è¡¨ç¤ºæ— æ•ˆçš„å­—ç¬¦æˆ–ç»“æŸï¼›å¤§äº0è¡¨ç¤ºszLowerä¸­è¿”å›çš„ç¬¬ä¸€ä¸ªå­—ç¬¦çš„é•¿åº¦
     */
     inline static  CWX_UINT32 lowerChr(char const* szGbkBuf, CWX_UINT32 uiBufLen, char* szLower)
     {
@@ -132,10 +132,10 @@ public:
     }
 
     /**
-    @brief ¼ì²észGbkBufÖĞµÄµÚÒ»¸ö×Ö·û£¬ÊÇ·ñÒ»¸öÕæÕıµÄË«×Ö½ÚGBK×Ö·û¡£
-    @param [in] szGbkBuf ×Ö·û´®µÄbuffer
-    @param [in] uiBufLen szGbkBufµÄ×Ö½Ú³¤¶È
-    @return true£ºÊÇ£»false£º²»ÊÇ
+    @brief æ£€æŸ¥szGbkBufä¸­çš„ç¬¬ä¸€ä¸ªå­—ç¬¦ï¼Œæ˜¯å¦ä¸€ä¸ªçœŸæ­£çš„åŒå­—èŠ‚GBKå­—ç¬¦ã€‚
+    @param [in] szGbkBuf å­—ç¬¦ä¸²çš„buffer
+    @param [in] uiBufLen szGbkBufçš„å­—èŠ‚é•¿åº¦
+    @return trueï¼šæ˜¯ï¼›falseï¼šä¸æ˜¯
     */
     inline static  bool isCharset(char const* szGbkBuf, CWX_UINT32 uiBufLen)
     {
@@ -150,10 +150,10 @@ public:
     }
 
     /**
-    @brief ¼ì²észGbkBufÖĞ×Ö·û£¬ÊÇ·ñÎªGBK×Ö·û¼¯Ö§³ÖµÄ×Ö·û¡£
-    @param [in] szGbkBuf ×Ö·û´®µÄbuffer
-    @param [in] uiBufLen szGbkBufµÄ×Ö½Ú³¤¶È
-    @return true£ºÊÇGBK×Ö·û´®£»false£º²»ÊÇGBK×Ö·û´®
+    @brief æ£€æŸ¥szGbkBufä¸­å­—ç¬¦ï¼Œæ˜¯å¦ä¸ºGBKå­—ç¬¦é›†æ”¯æŒçš„å­—ç¬¦ã€‚
+    @param [in] szGbkBuf å­—ç¬¦ä¸²çš„buffer
+    @param [in] uiBufLen szGbkBufçš„å­—èŠ‚é•¿åº¦
+    @return trueï¼šæ˜¯GBKå­—ç¬¦ä¸²ï¼›falseï¼šä¸æ˜¯GBKå­—ç¬¦ä¸²
     */
     inline static  bool isValid(char const * szGbkBuf, CWX_UINT32 uiBufLen)
     {
@@ -173,10 +173,10 @@ public:
     }
 
     /**
-    @brief »ñÈ¡szGbkBufÖĞµÄ×Ö·û¸öÊı
-    @param [in] szGbkBuf ×Ö·û´®µÄbuffer
-    @param [in] uiBufLen szGbkBufµÄ×Ö½Ú³¤¶È
-    @return szGbkBufÖĞ×Ö·ûµÄ¸öÊı
+    @brief è·å–szGbkBufä¸­çš„å­—ç¬¦ä¸ªæ•°
+    @param [in] szGbkBuf å­—ç¬¦ä¸²çš„buffer
+    @param [in] uiBufLen szGbkBufçš„å­—èŠ‚é•¿åº¦
+    @return szGbkBufä¸­å­—ç¬¦çš„ä¸ªæ•°
     */
     inline static  CWX_UINT32 chrlen(char const* szGbkBuf, CWX_UINT32 uiBufLen)
     {
@@ -194,11 +194,11 @@ public:
     }
 
     /**
-    @brief ÔÚ²»¶Ô×Ö·û½Ø¶ÏµÄÇé¿öÏÂ£¬¼ÆËã´ÓszGbkBufÖĞ½ØÈ¡uiFetchLen¸ö×Ö½ÚµÄ×Ö½Ú½áÊøÎ»ÖÃ¡£
-    @param [in] szGbkBuf ×Ö·û´®µÄbuffer
-    @param [in] uiBufLen szGbkBufµÄ×Ö½Ú³¤¶È
-    @param [in] uiFetchLen Òª»ñÈ¡µÄ×î´ó×Ö½ÚÊıÁ¿
-    @return ·µ»Ø½ØÈ¡µÄ×Ö½ÚÎ»ÖÃ
+    @brief åœ¨ä¸å¯¹å­—ç¬¦æˆªæ–­çš„æƒ…å†µä¸‹ï¼Œè®¡ç®—ä»szGbkBufä¸­æˆªå–uiFetchLenä¸ªå­—èŠ‚çš„å­—èŠ‚ç»“æŸä½ç½®ã€‚
+    @param [in] szGbkBuf å­—ç¬¦ä¸²çš„buffer
+    @param [in] uiBufLen szGbkBufçš„å­—èŠ‚é•¿åº¦
+    @param [in] uiFetchLen è¦è·å–çš„æœ€å¤§å­—èŠ‚æ•°é‡
+    @return è¿”å›æˆªå–çš„å­—èŠ‚ä½ç½®
     */
     inline static  CWX_UINT32 getPosByByteLen(char const* szGbkBuf, CWX_UINT32 uiBufLen, CWX_UINT32 uiFetchLen)
     {
@@ -213,11 +213,11 @@ public:
         return pos;
     }
     /**
-    @brief ÔÚ²»¶Ô×Ö·û½Ø¶ÏµÄÇé¿öÏÂ£¬¼ÆËã´ÓszGbkBufÖĞ½ØÈ¡uiFetchNum¸ö×Ö·ûµÄ×Ö½Ú½áÊøÎ»ÖÃ¡£
-    @param [in] szGbkBuf ×Ö·û´®µÄbuffer
-    @param [in] uiBufLen szGbkBufµÄ×Ö½Ú³¤¶È
-    @param [in] uiFetchNum Òª»ñÈ¡µÄ×î´ó×Ö·ûÊıÁ¿
-    @return ·µ»Ø½ØÈ¡µÄ×Ö½ÚÎ»ÖÃ
+    @brief åœ¨ä¸å¯¹å­—ç¬¦æˆªæ–­çš„æƒ…å†µä¸‹ï¼Œè®¡ç®—ä»szGbkBufä¸­æˆªå–uiFetchNumä¸ªå­—ç¬¦çš„å­—èŠ‚ç»“æŸä½ç½®ã€‚
+    @param [in] szGbkBuf å­—ç¬¦ä¸²çš„buffer
+    @param [in] uiBufLen szGbkBufçš„å­—èŠ‚é•¿åº¦
+    @param [in] uiFetchNum è¦è·å–çš„æœ€å¤§å­—ç¬¦æ•°é‡
+    @return è¿”å›æˆªå–çš„å­—èŠ‚ä½ç½®
     */
     inline static  CWX_UINT32 getPosByChrLen(char const* szGbkBuf, CWX_UINT32 uiBufLen, CWX_UINT32 uiFetchNum)
     {
@@ -234,42 +234,42 @@ public:
         return pos;
     }
 private:
-    ///Ë½ÓĞ»¯¹¹Ôìº¯Êı£¬½ûÖ¹ÊµÀı»¯
+    ///ç§æœ‰åŒ–æ„é€ å‡½æ•°ï¼Œç¦æ­¢å®ä¾‹åŒ–
     CwxCharsetGbk() {};
-    ///Ë½ÓĞ»¯Îö¹¹º¯Êı£¬½ûÖ¹ÊµÀı»¯
+    ///ç§æœ‰åŒ–ææ„å‡½æ•°ï¼Œç¦æ­¢å®ä¾‹åŒ–
     ~CwxCharsetGbk() {};
 };
 
 
 /**
 @class CwxCharsetUtf8
-@brief UTF8×Ö·û¼¯µÄ½Ó¿Ú¶¨Òå£¬È«²¿Îª¾²Ì¬½Ó¿Ú£¬½ûÖ¹ÊµÀı»¯
+@brief UTF8å­—ç¬¦é›†çš„æ¥å£å®šä¹‰ï¼Œå…¨éƒ¨ä¸ºé™æ€æ¥å£ï¼Œç¦æ­¢å®ä¾‹åŒ–
 */
 class CWX_API CwxCharsetUtf8
 {
 public:
     /**
-    @brief »ñÈ¡¶ÔÏóËù¶¨ÒåµÄ×Ö·û¼¯µÄÃû×Ö¡£
-    @return ·µ»Ø¡°utf-8¡±µÄ×Ö·û´®
+    @brief è·å–å¯¹è±¡æ‰€å®šä¹‰çš„å­—ç¬¦é›†çš„åå­—ã€‚
+    @return è¿”å›â€œutf-8â€çš„å­—ç¬¦ä¸²
     */
     inline static char const* charset()
     {
         return "utf-8";
     }
     /**
-    @brief ÅĞ¶ÏÒ»¸ö×Ö·û¼¯µÄÌØÕ÷ÊÇ·ñ·ûºÏCwxCharsetUtf8ÀàµÄ½Ó¿ÚÃèÊö¡£
-    @param [in] szCharset ±»¼ì²éµÄ×Ö·û¼¯µÄÃû×Ö
-    @return ¶ÔÓÚ"utf-8"£¬·µ»Øtrue£»·ñÔò·µ»Øfalse
+    @brief åˆ¤æ–­ä¸€ä¸ªå­—ç¬¦é›†çš„ç‰¹å¾æ˜¯å¦ç¬¦åˆCwxCharsetUtf8ç±»çš„æ¥å£æè¿°ã€‚
+    @param [in] szCharset è¢«æ£€æŸ¥çš„å­—ç¬¦é›†çš„åå­—
+    @return å¯¹äº"utf-8"ï¼Œè¿”å›trueï¼›å¦åˆ™è¿”å›false
     */
     inline static bool charset(char const* szCharset)
     {
         return strcasecmp("utf-8", szCharset)==0?true:false;
     }
     /**
-    @brief ÅĞ¶ÏszUtf8BufÖĞµÄµÚÒ»¸ö×Ö·ûµÄ×Ö½ÚÊı£¬0±íÊ¾ÎŞĞ§µÄ×Ö·û»ò½áÊø¡£
-    @param [in] szUtf8Buf Òª¼ì²éµÄ×Ö·ûµÄbuffer
-    @param [in] uiBufLen szUtf8BufµÄ×Ö½Ú³¤¶È
-    @return 0±íÊ¾ÎŞĞ§µÄ×Ö·û»ò½áÊø£»´óÓÚ0±íÊ¾szUtf8BufÖĞµÚÒ»¸ö×Ö·ûµÄ×Ö½Ú³¤¶È
+    @brief åˆ¤æ–­szUtf8Bufä¸­çš„ç¬¬ä¸€ä¸ªå­—ç¬¦çš„å­—èŠ‚æ•°ï¼Œ0è¡¨ç¤ºæ— æ•ˆçš„å­—ç¬¦æˆ–ç»“æŸã€‚
+    @param [in] szUtf8Buf è¦æ£€æŸ¥çš„å­—ç¬¦çš„buffer
+    @param [in] uiBufLen szUtf8Bufçš„å­—èŠ‚é•¿åº¦
+    @return 0è¡¨ç¤ºæ— æ•ˆçš„å­—ç¬¦æˆ–ç»“æŸï¼›å¤§äº0è¡¨ç¤ºszUtf8Bufä¸­ç¬¬ä¸€ä¸ªå­—ç¬¦çš„å­—èŠ‚é•¿åº¦
     */
     inline static  CWX_UINT32 nextChrLen(char const* szUtf8Buf, CWX_UINT32 uiBufLen)
     {
@@ -289,11 +289,11 @@ public:
         return 0;
     }
     /**
-    @brief ½«szUtf8BufÖĞµÄµÚÒ»¸ö×Ö·ûÍ¨¹ıszUpperµÄÍâ²¿BUF·µ»Ø£¬ÈôÊÇĞ¡Ğ´Ôò±äÎª´óĞ´¡£
-    @param [in] szUtf8Buf ×Ö·û´®µÄbuffer
-    @param [in] uiBufLen szUtf8BufµÄ×Ö½Ú³¤¶È
-    @param [out] szUpper szUtf8BufÖĞµÄµÚÒ»¸ö×Ö·û£¬ÈôÊÇĞ¡Ğ´£¬Ôò±ä»»Îª´óĞ´·µ»Ø
-    @return 0±íÊ¾ÎŞĞ§µÄ×Ö·û»ò½áÊø£»´óÓÚ0±íÊ¾szUpperÖĞ·µ»ØµÄµÚÒ»¸ö×Ö·ûµÄ³¤¶È
+    @brief å°†szUtf8Bufä¸­çš„ç¬¬ä¸€ä¸ªå­—ç¬¦é€šè¿‡szUpperçš„å¤–éƒ¨BUFè¿”å›ï¼Œè‹¥æ˜¯å°å†™åˆ™å˜ä¸ºå¤§å†™ã€‚
+    @param [in] szUtf8Buf å­—ç¬¦ä¸²çš„buffer
+    @param [in] uiBufLen szUtf8Bufçš„å­—èŠ‚é•¿åº¦
+    @param [out] szUpper szUtf8Bufä¸­çš„ç¬¬ä¸€ä¸ªå­—ç¬¦ï¼Œè‹¥æ˜¯å°å†™ï¼Œåˆ™å˜æ¢ä¸ºå¤§å†™è¿”å›
+    @return 0è¡¨ç¤ºæ— æ•ˆçš„å­—ç¬¦æˆ–ç»“æŸï¼›å¤§äº0è¡¨ç¤ºszUpperä¸­è¿”å›çš„ç¬¬ä¸€ä¸ªå­—ç¬¦çš„é•¿åº¦
     */
     inline static  CWX_UINT32 upperChr(char const* szUtf8Buf, CWX_UINT32 uiBufLen, char* szUpper)
     {
@@ -317,11 +317,11 @@ public:
     }
 
     /**
-    @brief ½«szUtf8BufÖĞµÄµÚÒ»¸ö×Ö·ûÍ¨¹ıszLowerµÄÍâ²¿BUF·µ»Ø£¬ÈôÊÇ´óĞ´Ôò±äÎªĞ¡Ğ´¡£
-    @param [in] szUtf8Buf ×Ö·û´®µÄbuffer
-    @param [in] uiBufLen szUtf8BufµÄ×Ö½Ú³¤¶È
-    @param [out] szLower szUtf8BufÖĞµÄµÚÒ»¸ö×Ö·û£¬ÈôÊÇ´óĞ´£¬Ôò±ä»»ÎªĞ¡Ğ´·µ»Ø
-    @return 0±íÊ¾ÎŞĞ§µÄ×Ö·û»ò½áÊø£»´óÓÚ0±íÊ¾szLowerÖĞ·µ»ØµÄµÚÒ»¸ö×Ö·ûµÄ³¤¶È
+    @brief å°†szUtf8Bufä¸­çš„ç¬¬ä¸€ä¸ªå­—ç¬¦é€šè¿‡szLowerçš„å¤–éƒ¨BUFè¿”å›ï¼Œè‹¥æ˜¯å¤§å†™åˆ™å˜ä¸ºå°å†™ã€‚
+    @param [in] szUtf8Buf å­—ç¬¦ä¸²çš„buffer
+    @param [in] uiBufLen szUtf8Bufçš„å­—èŠ‚é•¿åº¦
+    @param [out] szLower szUtf8Bufä¸­çš„ç¬¬ä¸€ä¸ªå­—ç¬¦ï¼Œè‹¥æ˜¯å¤§å†™ï¼Œåˆ™å˜æ¢ä¸ºå°å†™è¿”å›
+    @return 0è¡¨ç¤ºæ— æ•ˆçš„å­—ç¬¦æˆ–ç»“æŸï¼›å¤§äº0è¡¨ç¤ºszLowerä¸­è¿”å›çš„ç¬¬ä¸€ä¸ªå­—ç¬¦çš„é•¿åº¦
     */
     inline static  CWX_UINT32 lowerChr(char const* szUtf8Buf, CWX_UINT32 uiBufLen, char* szLower)
     {
@@ -345,10 +345,10 @@ public:
     }
 
     /**
-    @brief ¼ì²észUtf8BufÖĞµÄµÚÒ»¸ö×Ö·û£¬ÊÇ·ñÒ»¸öUTF8×Ö·û¡£
-    @param [in] szUtf8Buf ×Ö·û´®µÄbuffer
-    @param [in] uiBufLen szUtf8BufµÄ×Ö½Ú³¤¶È
-    @return true£ºÊÇ£»false£º²»ÊÇ
+    @brief æ£€æŸ¥szUtf8Bufä¸­çš„ç¬¬ä¸€ä¸ªå­—ç¬¦ï¼Œæ˜¯å¦ä¸€ä¸ªUTF8å­—ç¬¦ã€‚
+    @param [in] szUtf8Buf å­—ç¬¦ä¸²çš„buffer
+    @param [in] uiBufLen szUtf8Bufçš„å­—èŠ‚é•¿åº¦
+    @return trueï¼šæ˜¯ï¼›falseï¼šä¸æ˜¯
     */
     inline static  bool isCharset(char const* szUtf8Buf, CWX_UINT32 uiBufLen)
     {
@@ -356,10 +356,10 @@ public:
         return ret==0?false:true;
     }
     /**
-    @brief ¼ì²észUtf8BufÖĞ×Ö·û£¬ÊÇ·ñÎªUTF8×Ö·û¼¯Ö§³ÖµÄ×Ö·û¡£
-    @param [in] szUtf8Buf ×Ö·û´®µÄbuffer
-    @param [in] uiBufLen szUtf8BufµÄ×Ö½Ú³¤¶È
-    @return true£ºÊÇUTF8×Ö·û´®£»false£º²»ÊÇUTF8×Ö·û´®
+    @brief æ£€æŸ¥szUtf8Bufä¸­å­—ç¬¦ï¼Œæ˜¯å¦ä¸ºUTF8å­—ç¬¦é›†æ”¯æŒçš„å­—ç¬¦ã€‚
+    @param [in] szUtf8Buf å­—ç¬¦ä¸²çš„buffer
+    @param [in] uiBufLen szUtf8Bufçš„å­—èŠ‚é•¿åº¦
+    @return trueï¼šæ˜¯UTF8å­—ç¬¦ä¸²ï¼›falseï¼šä¸æ˜¯UTF8å­—ç¬¦ä¸²
     */
     inline static bool isValid(char const * szUtf8Buf, CWX_UINT32 uiBufLen)
     {
@@ -378,10 +378,10 @@ public:
         return true;
     }
     /**
-    @brief »ñÈ¡szUtf8BufÖĞµÄ×Ö·û¸öÊı
-    @param [in] szUtf8Buf ×Ö·û´®µÄbuffer
-    @param [in] uiBufLen szUtf8BufµÄ×Ö½Ú³¤¶È
-    @return szUtf8BufÖĞ×Ö·ûµÄ¸öÊı
+    @brief è·å–szUtf8Bufä¸­çš„å­—ç¬¦ä¸ªæ•°
+    @param [in] szUtf8Buf å­—ç¬¦ä¸²çš„buffer
+    @param [in] uiBufLen szUtf8Bufçš„å­—èŠ‚é•¿åº¦
+    @return szUtf8Bufä¸­å­—ç¬¦çš„ä¸ªæ•°
     */
     inline static CWX_UINT32 chrlen(char const* szUtf8Buf, CWX_UINT32 uiBufLen)
     {
@@ -399,11 +399,11 @@ public:
     }
 
     /**
-    @brief ÔÚ²»¶Ô×Ö·û½Ø¶ÏµÄÇé¿öÏÂ£¬¼ÆËã´ÓszUtf8BufÖĞ½ØÈ¡uiFetchLen¸ö×Ö½ÚµÄ×Ö½Ú½áÊøÎ»ÖÃ¡£
-    @param [in] szUtf8Buf ×Ö·û´®µÄbuffer
-    @param [in] uiBufLen szUtf8BufµÄ×Ö½Ú³¤¶È
-    @param [in] uiFetchLen Òª»ñÈ¡µÄ×î´ó×Ö½ÚÊıÁ¿
-    @return ·µ»Ø½ØÈ¡µÄ×Ö½ÚÎ»ÖÃ
+    @brief åœ¨ä¸å¯¹å­—ç¬¦æˆªæ–­çš„æƒ…å†µä¸‹ï¼Œè®¡ç®—ä»szUtf8Bufä¸­æˆªå–uiFetchLenä¸ªå­—èŠ‚çš„å­—èŠ‚ç»“æŸä½ç½®ã€‚
+    @param [in] szUtf8Buf å­—ç¬¦ä¸²çš„buffer
+    @param [in] uiBufLen szUtf8Bufçš„å­—èŠ‚é•¿åº¦
+    @param [in] uiFetchLen è¦è·å–çš„æœ€å¤§å­—èŠ‚æ•°é‡
+    @return è¿”å›æˆªå–çš„å­—èŠ‚ä½ç½®
     */
     inline static  CWX_UINT32 getPosByByteLen(char const* szUtf8Buf, CWX_UINT32 uiBufLen, CWX_UINT32 uiFetchLen)
     {
@@ -419,11 +419,11 @@ public:
     }
 
     /**
-    @brief ÔÚ²»¶Ô×Ö·û½Ø¶ÏµÄÇé¿öÏÂ£¬¼ÆËã´ÓszUtf8BufÖĞ½ØÈ¡uiFetchNum¸ö×Ö·ûµÄ×Ö½Ú½áÊøÎ»ÖÃ¡£
-    @param [in] szUtf8Buf ×Ö·û´®µÄbuffer
-    @param [in] uiBufLen szUtf8BufµÄ×Ö½Ú³¤¶È
-    @param [in] uiFetchNum Òª»ñÈ¡µÄ×î´ó×Ö·ûÊıÁ¿
-    @return ·µ»Ø½ØÈ¡µÄ×Ö½ÚÎ»ÖÃ
+    @brief åœ¨ä¸å¯¹å­—ç¬¦æˆªæ–­çš„æƒ…å†µä¸‹ï¼Œè®¡ç®—ä»szUtf8Bufä¸­æˆªå–uiFetchNumä¸ªå­—ç¬¦çš„å­—èŠ‚ç»“æŸä½ç½®ã€‚
+    @param [in] szUtf8Buf å­—ç¬¦ä¸²çš„buffer
+    @param [in] uiBufLen szUtf8Bufçš„å­—èŠ‚é•¿åº¦
+    @param [in] uiFetchNum è¦è·å–çš„æœ€å¤§å­—ç¬¦æ•°é‡
+    @return è¿”å›æˆªå–çš„å­—èŠ‚ä½ç½®
     */
     inline static  CWX_UINT32 getPosByChrLen(char const* szUtf8Buf, CWX_UINT32 uiBufLen, CWX_UINT32 uiFetchNum)
     {
@@ -440,53 +440,53 @@ public:
         return pos;
     }
 private:
-    ///Ë½ÓĞ»¯¹¹Ôìº¯Êı£¬½ûÖ¹ÊµÀı»¯
+    ///ç§æœ‰åŒ–æ„é€ å‡½æ•°ï¼Œç¦æ­¢å®ä¾‹åŒ–
     CwxCharsetUtf8(){}
-    ///Ë½ÓĞ»¯Îö¹¹º¯Êı£¬½ûÖ¹ÊµÀı»¯
+    ///ç§æœ‰åŒ–ææ„å‡½æ•°ï¼Œç¦æ­¢å®ä¾‹åŒ–
     ~CwxCharsetUtf8(){}
 
 };
 
 /**
 @class CwxCharsetUtf16
-@brief UTF16×Ö·û¼¯µÄ½Ó¿Ú¶¨Òå£¬È«²¿Îª¾²Ì¬½Ó¿Ú£¬½ûÖ¹ÊµÀı»¯
+@brief UTF16å­—ç¬¦é›†çš„æ¥å£å®šä¹‰ï¼Œå…¨éƒ¨ä¸ºé™æ€æ¥å£ï¼Œç¦æ­¢å®ä¾‹åŒ–
 */
 class CWX_API CwxCharsetUtf16
 {
 public:
     /**
-    @brief »ñÈ¡¶ÔÏóËù¶¨ÒåµÄ×Ö·û¼¯µÄÃû×Ö¡£
-    @return ·µ»Ø¡°utf-16¡±µÄ×Ö·û´®
+    @brief è·å–å¯¹è±¡æ‰€å®šä¹‰çš„å­—ç¬¦é›†çš„åå­—ã€‚
+    @return è¿”å›â€œutf-16â€çš„å­—ç¬¦ä¸²
     */
     inline static char const* charset()
     { 
         return "utf-16";
     }
     /**
-    @brief ÅĞ¶ÏÒ»¸ö×Ö·û¼¯µÄÌØÕ÷ÊÇ·ñ·ûºÏCwxCharsetUtf8ÀàµÄ½Ó¿ÚÃèÊö¡£
-    @param [in] szCharset ±»¼ì²éµÄ×Ö·û¼¯µÄÃû×Ö
-    @return ¶ÔÓÚ"utf-16"£¬·µ»Øtrue£»·ñÔò·µ»Øfalse
+    @brief åˆ¤æ–­ä¸€ä¸ªå­—ç¬¦é›†çš„ç‰¹å¾æ˜¯å¦ç¬¦åˆCwxCharsetUtf8ç±»çš„æ¥å£æè¿°ã€‚
+    @param [in] szCharset è¢«æ£€æŸ¥çš„å­—ç¬¦é›†çš„åå­—
+    @return å¯¹äº"utf-16"ï¼Œè¿”å›trueï¼›å¦åˆ™è¿”å›false
     */
     inline static bool charset(char const* szCharset)
     {
         return strcasecmp("utf-16", szCharset)==0?true:false;
     }
     /**
-    @brief ÅĞ¶ÏszUtf16BufÖĞµÄµÚÒ»¸ö×Ö·ûµÄ×Ö½ÚÊı£¬0±íÊ¾ÎŞĞ§µÄ×Ö·û»ò½áÊø¡£
-    @param [in] szUtf16Buf Òª¼ì²éµÄ×Ö·ûµÄbuffer
-    @param [in] uiBufLen szUtf16BufµÄ×Ö½Ú³¤¶È
-    @return 0±íÊ¾ÎŞĞ§µÄ×Ö·û»ò½áÊø£»´óÓÚ0±íÊ¾szUtf16BufÖĞµÚÒ»¸ö×Ö·ûµÄ×Ö½Ú³¤¶È
+    @brief åˆ¤æ–­szUtf16Bufä¸­çš„ç¬¬ä¸€ä¸ªå­—ç¬¦çš„å­—èŠ‚æ•°ï¼Œ0è¡¨ç¤ºæ— æ•ˆçš„å­—ç¬¦æˆ–ç»“æŸã€‚
+    @param [in] szUtf16Buf è¦æ£€æŸ¥çš„å­—ç¬¦çš„buffer
+    @param [in] uiBufLen szUtf16Bufçš„å­—èŠ‚é•¿åº¦
+    @return 0è¡¨ç¤ºæ— æ•ˆçš„å­—ç¬¦æˆ–ç»“æŸï¼›å¤§äº0è¡¨ç¤ºszUtf16Bufä¸­ç¬¬ä¸€ä¸ªå­—ç¬¦çš„å­—èŠ‚é•¿åº¦
     */
     inline static  CWX_UINT32 nextChrLen(char const* szUtf16Buf, CWX_UINT32 uiBufLen)
     {
         return szUtf16Buf?(uiBufLen>=2?2:0):0;
     }
     /**
-    @brief ½«szUtf16BufÖĞµÄµÚÒ»¸ö×Ö·ûÍ¨¹ıszUpperµÄÍâ²¿BUF·µ»Ø£¬ÈôÊÇĞ¡Ğ´Ôò±äÎª´óĞ´¡£
-    @param [in] szUtf16Buf ×Ö·û´®µÄbuffer
-    @param [in] uiBufLen szUtf16BufµÄ×Ö½Ú³¤¶È
-    @param [out] szUpper szUtf16BufÖĞµÄµÚÒ»¸ö×Ö·û£¬ÈôÊÇĞ¡Ğ´£¬Ôò±ä»»Îª´óĞ´·µ»Ø
-    @return 0±íÊ¾ÎŞĞ§µÄ×Ö·û»ò½áÊø£»´óÓÚ0±íÊ¾szUpperÖĞ·µ»ØµÄµÚÒ»¸ö×Ö·ûµÄ³¤¶È
+    @brief å°†szUtf16Bufä¸­çš„ç¬¬ä¸€ä¸ªå­—ç¬¦é€šè¿‡szUpperçš„å¤–éƒ¨BUFè¿”å›ï¼Œè‹¥æ˜¯å°å†™åˆ™å˜ä¸ºå¤§å†™ã€‚
+    @param [in] szUtf16Buf å­—ç¬¦ä¸²çš„buffer
+    @param [in] uiBufLen szUtf16Bufçš„å­—èŠ‚é•¿åº¦
+    @param [out] szUpper szUtf16Bufä¸­çš„ç¬¬ä¸€ä¸ªå­—ç¬¦ï¼Œè‹¥æ˜¯å°å†™ï¼Œåˆ™å˜æ¢ä¸ºå¤§å†™è¿”å›
+    @return 0è¡¨ç¤ºæ— æ•ˆçš„å­—ç¬¦æˆ–ç»“æŸï¼›å¤§äº0è¡¨ç¤ºszUpperä¸­è¿”å›çš„ç¬¬ä¸€ä¸ªå­—ç¬¦çš„é•¿åº¦
     */
     inline static  CWX_UINT32 upperChr(char const* szUtf16Buf, CWX_UINT32 uiBufLen, char* szUpper)
     {
@@ -515,11 +515,11 @@ public:
     }
 
     /**
-    @brief ½«szUtf16BufÖĞµÄµÚÒ»¸ö×Ö·ûÍ¨¹ıszLowerµÄÍâ²¿BUF·µ»Ø£¬ÈôÊÇ´óĞ´Ôò±äÎªĞ¡Ğ´¡£
-    @param [in] szUtf16Buf ×Ö·û´®µÄbuffer
-    @param [in] uiBufLen szUtf16BufµÄ×Ö½Ú³¤¶È
-    @param [out] szLower szUtf16BufÖĞµÄµÚÒ»¸ö×Ö·û£¬ÈôÊÇ´óĞ´£¬Ôò±ä»»ÎªĞ¡Ğ´·µ»Ø
-    @return 0±íÊ¾ÎŞĞ§µÄ×Ö·û»ò½áÊø£»´óÓÚ0±íÊ¾szLowerÖĞ·µ»ØµÄµÚÒ»¸ö×Ö·ûµÄ³¤¶È
+    @brief å°†szUtf16Bufä¸­çš„ç¬¬ä¸€ä¸ªå­—ç¬¦é€šè¿‡szLowerçš„å¤–éƒ¨BUFè¿”å›ï¼Œè‹¥æ˜¯å¤§å†™åˆ™å˜ä¸ºå°å†™ã€‚
+    @param [in] szUtf16Buf å­—ç¬¦ä¸²çš„buffer
+    @param [in] uiBufLen szUtf16Bufçš„å­—èŠ‚é•¿åº¦
+    @param [out] szLower szUtf16Bufä¸­çš„ç¬¬ä¸€ä¸ªå­—ç¬¦ï¼Œè‹¥æ˜¯å¤§å†™ï¼Œåˆ™å˜æ¢ä¸ºå°å†™è¿”å›
+    @return 0è¡¨ç¤ºæ— æ•ˆçš„å­—ç¬¦æˆ–ç»“æŸï¼›å¤§äº0è¡¨ç¤ºszLowerä¸­è¿”å›çš„ç¬¬ä¸€ä¸ªå­—ç¬¦çš„é•¿åº¦
     */
     inline static  CWX_UINT32 lowerChr(char const* szUtf16Buf, CWX_UINT32 uiBufLen, char* szLower)
     {
@@ -547,30 +547,30 @@ public:
         return uiNextLen;
     }
     /**
-    @brief ¼ì²észUtf16BufÖĞµÄµÚÒ»¸ö×Ö·û£¬ÊÇ·ñÒ»¸öszUtf16Buf×Ö·û¡£
-    @param [in] szUtf16Buf ×Ö·û´®µÄbuffer
-    @param [in] uiBufLen szUtf16BufµÄ×Ö½Ú³¤¶È
-    @return true£ºÊÇ£»false£º²»ÊÇ
+    @brief æ£€æŸ¥szUtf16Bufä¸­çš„ç¬¬ä¸€ä¸ªå­—ç¬¦ï¼Œæ˜¯å¦ä¸€ä¸ªszUtf16Bufå­—ç¬¦ã€‚
+    @param [in] szUtf16Buf å­—ç¬¦ä¸²çš„buffer
+    @param [in] uiBufLen szUtf16Bufçš„å­—èŠ‚é•¿åº¦
+    @return trueï¼šæ˜¯ï¼›falseï¼šä¸æ˜¯
     */
     inline static  bool isCharset(char const* szUtf16Buf, CWX_UINT32 uiBufLen)
     {
         return szUtf16Buf?(uiBufLen>=2?true:false):false;
     }
     /**
-    @brief ¼ì²észUtf16BufÖĞ×Ö·û£¬ÊÇ·ñÎªUTF16×Ö·û¼¯Ö§³ÖµÄ×Ö·û¡£
-    @param [in] szUtf16Buf ×Ö·û´®µÄbuffer
-    @param [in] uiBufLen szUtf16BufµÄ×Ö½Ú³¤¶È
-    @return true£ºÊÇUTF16×Ö·û´®£»false£º²»ÊÇUTF16×Ö·û´®
+    @brief æ£€æŸ¥szUtf16Bufä¸­å­—ç¬¦ï¼Œæ˜¯å¦ä¸ºUTF16å­—ç¬¦é›†æ”¯æŒçš„å­—ç¬¦ã€‚
+    @param [in] szUtf16Buf å­—ç¬¦ä¸²çš„buffer
+    @param [in] uiBufLen szUtf16Bufçš„å­—èŠ‚é•¿åº¦
+    @return trueï¼šæ˜¯UTF16å­—ç¬¦ä¸²ï¼›falseï¼šä¸æ˜¯UTF16å­—ç¬¦ä¸²
     */
     inline static  bool isValid(char const * szUtf16Buf, CWX_UINT32 uiBufLen)
     {
         return szUtf16Buf?(uiBufLen%2?false:true):true;
     }
     /**
-    @brief »ñÈ¡szUtf16BufÖĞµÄ×Ö·û¸öÊı
-    @param [in] szUtf16Buf ×Ö·û´®µÄbuffer
-    @param [in] uiBufLen szUtf16BufµÄ×Ö½Ú³¤¶È
-    @return szUtf16BufÖĞ×Ö·ûµÄ¸öÊı
+    @brief è·å–szUtf16Bufä¸­çš„å­—ç¬¦ä¸ªæ•°
+    @param [in] szUtf16Buf å­—ç¬¦ä¸²çš„buffer
+    @param [in] uiBufLen szUtf16Bufçš„å­—èŠ‚é•¿åº¦
+    @return szUtf16Bufä¸­å­—ç¬¦çš„ä¸ªæ•°
     */
     inline static CWX_UINT32 chrlen(char const* szUtf16Buf, CWX_UINT32 uiBufLen)
     {
@@ -578,11 +578,11 @@ public:
         return 0;
     }
     /**
-    @brief ÔÚ²»¶Ô×Ö·û½Ø¶ÏµÄÇé¿öÏÂ£¬¼ÆËã´ÓszUtf16BufÖĞ½ØÈ¡uiFetchLen¸ö×Ö½ÚµÄ×Ö½Ú½áÊøÎ»ÖÃ¡£
-    @param [in] szUtf16Buf ×Ö·û´®µÄbuffer
-    @param [in] uiBufLen szUtf16BufµÄ×Ö½Ú³¤¶È
-    @param [in] uiFetchLen Òª»ñÈ¡µÄ×î´ó×Ö½ÚÊıÁ¿
-    @return ·µ»Ø½ØÈ¡µÄ×Ö½ÚÎ»ÖÃ
+    @brief åœ¨ä¸å¯¹å­—ç¬¦æˆªæ–­çš„æƒ…å†µä¸‹ï¼Œè®¡ç®—ä»szUtf16Bufä¸­æˆªå–uiFetchLenä¸ªå­—èŠ‚çš„å­—èŠ‚ç»“æŸä½ç½®ã€‚
+    @param [in] szUtf16Buf å­—ç¬¦ä¸²çš„buffer
+    @param [in] uiBufLen szUtf16Bufçš„å­—èŠ‚é•¿åº¦
+    @param [in] uiFetchLen è¦è·å–çš„æœ€å¤§å­—èŠ‚æ•°é‡
+    @return è¿”å›æˆªå–çš„å­—èŠ‚ä½ç½®
     */
     inline static  CWX_UINT32 getPosByByteLen(char const* szUtf16Buf, CWX_UINT32 uiBufLen, CWX_UINT32 uiFetchLen)
     {
@@ -591,11 +591,11 @@ public:
     }
 
     /**
-    @brief ÔÚ²»¶Ô×Ö·û½Ø¶ÏµÄÇé¿öÏÂ£¬¼ÆËã´ÓszUtf16BufÖĞ½ØÈ¡uiFetchNum¸ö×Ö·ûµÄ×Ö½Ú½áÊøÎ»ÖÃ¡£
-    @param [in] szUtf16Buf ×Ö·û´®µÄbuffer
-    @param [in] uiBufLen szUtf16BufµÄ×Ö½Ú³¤¶È
-    @param [in] uiFetchNum Òª»ñÈ¡µÄ×î´ó×Ö·ûÊıÁ¿
-    @return ·µ»Ø½ØÈ¡µÄ×Ö½ÚÎ»ÖÃ
+    @brief åœ¨ä¸å¯¹å­—ç¬¦æˆªæ–­çš„æƒ…å†µä¸‹ï¼Œè®¡ç®—ä»szUtf16Bufä¸­æˆªå–uiFetchNumä¸ªå­—ç¬¦çš„å­—èŠ‚ç»“æŸä½ç½®ã€‚
+    @param [in] szUtf16Buf å­—ç¬¦ä¸²çš„buffer
+    @param [in] uiBufLen szUtf16Bufçš„å­—èŠ‚é•¿åº¦
+    @param [in] uiFetchNum è¦è·å–çš„æœ€å¤§å­—ç¬¦æ•°é‡
+    @return è¿”å›æˆªå–çš„å­—èŠ‚ä½ç½®
     */
     inline static  CWX_UINT32 getPosByChrLen(char const* szUtf16Buf, CWX_UINT32 uiBufLen, CWX_UINT32 uiFetchNum)
     {
@@ -603,9 +603,9 @@ public:
         return 0;
     }
 private:
-    ///Ë½ÓĞ»¯¹¹Ôìº¯Êı£¬½ûÖ¹ÊµÀı»¯
+    ///ç§æœ‰åŒ–æ„é€ å‡½æ•°ï¼Œç¦æ­¢å®ä¾‹åŒ–
     CwxCharsetUtf16() {}
-    ///Ë½ÓĞ»¯Îö¹¹º¯Êı£¬½ûÖ¹ÊµÀı»¯
+    ///ç§æœ‰åŒ–ææ„å‡½æ•°ï¼Œç¦æ­¢å®ä¾‹åŒ–
     ~CwxCharsetUtf16() {}
 };
 

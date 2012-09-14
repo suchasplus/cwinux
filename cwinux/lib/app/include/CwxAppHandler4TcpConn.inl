@@ -1,27 +1,27 @@
-
+ï»¿
 CWINUX_BEGIN_NAMESPACE
 
 
 
-///ÉèÖÃÖ÷¶¯Á¬½ÓµÄÁ¬½ÓµØÖ·
+///è®¾ç½®ä¸»åŠ¨è¿æ¥çš„è¿æ¥åœ°å€
 inline void CwxAppHandler4TcpConn::setConnectAddr(char const* szAddr)
 {
     m_strConnectAddr = szAddr;
 }
 
-///»ñÈ¡Ö÷¶¯Á¬½ÓµÄÁ¬½ÓµØÖ·
+///è·å–ä¸»åŠ¨è¿æ¥çš„è¿æ¥åœ°å€
 inline string const& CwxAppHandler4TcpConn::getConnectAddr() const
 {
     return m_strConnectAddr;
 }
 
-///ÉèÖÃÖ÷¶¯Á¬½ÓµÄÁ¬½Ó¶Ë¿Ú
+///è®¾ç½®ä¸»åŠ¨è¿æ¥çš„è¿æ¥ç«¯å£
 inline void CwxAppHandler4TcpConn::setConnectPort(CWX_UINT16 unPort)
 {
     m_unConnectPort = unPort;
 }
 
-///»ñÈ¡Ö÷¶¯Á¬½ÓµÄÁ¬½Ó¶Ë¿Ú
+///è·å–ä¸»åŠ¨è¿æ¥çš„è¿æ¥ç«¯å£
 inline CWX_UINT16 CwxAppHandler4TcpConn::getConnectPort() const 
 {
     return m_unConnectPort;

@@ -1,14 +1,14 @@
-#ifndef __CWX_SOCK_STREAM_H__
+ï»¿#ifndef __CWX_SOCK_STREAM_H__
 #define __CWX_SOCK_STREAM_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼þ×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜Žï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxSockStream.h
-@brief TCPÁ÷Êý¾ÝÍ¨ÐÅÁ¬½Ó¶ÔÏóµÄ¶¨Òå¡£
+@brief TCPæµæ•°æ®é€šä¿¡è¿žæŽ¥å¯¹è±¡çš„å®šä¹‰ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-10
@@ -26,115 +26,115 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxSockStream
-@brief ÃæÏòÁ÷µÄTCPÁ¬½Ó¶ÔÏó¡£
+@brief é¢å‘æµçš„TCPè¿žæŽ¥å¯¹è±¡ã€‚
 */
 class CWX_API CwxSockStream:public CwxSockIo
 {
 public:
-    ///Ä¬ÈÏ¹¹Ôìº¯Êý
+    ///é»˜è®¤æž„é€ å‡½æ•°
     CwxSockStream();
-    ///¹¹Ôìº¯Êý£¬´´½¨¶ÔÏó²¢Éè¶¨Á¬½Óhandle
+    ///æž„é€ å‡½æ•°ï¼Œåˆ›å»ºå¯¹è±¡å¹¶è®¾å®šè¿žæŽ¥handle
     CwxSockStream(CWX_HANDLE handle);
-    ///Îö¹¹º¯Êý.
+    ///æžæž„å‡½æ•°.
     ~CwxSockStream(void);
 public:
     /**
-    @brief ½ÓÊÕlen×Ö½ÚµÄÊý¾Ý¡£
-    @param [out] buf ½ÓÊÕÊý¾ÝµÄbuf¡£
-    @param [in] len ½ÓÊÕÊý¾ÝµÄ×Ö½ÚÊý¡£
-    @param [in] flags recv()µÄÏµÍ³OS apiµÄflags²ÎÊý¡£
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @param [out] bytes_transferred Èô²»Îª0£¬Ôò·µ»ØÊµ¼ÊÒÑ¾­½ÓÊÕµÄÊý¾ÝÊýÁ¿£¬¼´±ãÔÚÊ§°ÜµÄÇé¿öÏÂ¡£
-    @return -1£º½ÓÊÕ´íÎó£»0£ºÁ¬½Ó¹Ø±Õ£»>0£ºÓ¦¸ÃµÈÓÚlen£¬±íÊ¾³É¹¦½ÓÊÕÁËlen³¤¶ÈµÄ×Ö½ÚÁ÷¡£
+    @brief æŽ¥æ”¶lenå­—èŠ‚çš„æ•°æ®ã€‚
+    @param [out] buf æŽ¥æ”¶æ•°æ®çš„bufã€‚
+    @param [in] len æŽ¥æ”¶æ•°æ®çš„å­—èŠ‚æ•°ã€‚
+    @param [in] flags recv()çš„ç³»ç»ŸOS apiçš„flagså‚æ•°ã€‚
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡žã€‚
+    @param [out] bytes_transferred è‹¥ä¸ä¸º0ï¼Œåˆ™è¿”å›žå®žé™…å·²ç»æŽ¥æ”¶çš„æ•°æ®æ•°é‡ï¼Œå³ä¾¿åœ¨å¤±è´¥çš„æƒ…å†µä¸‹ã€‚
+    @return -1ï¼šæŽ¥æ”¶é”™è¯¯ï¼›0ï¼šè¿žæŽ¥å…³é—­ï¼›>0ï¼šåº”è¯¥ç­‰äºŽlenï¼Œè¡¨ç¤ºæˆåŠŸæŽ¥æ”¶äº†lené•¿åº¦çš„å­—èŠ‚æµã€‚
     */
     ssize_t recv_n (void *buf, size_t len, int flags, CwxTimeouter  *timeout = 0, size_t* bytes_transferred = 0) const;
     /**
-    @brief ½ÓÊÕlen×Ö½ÚµÄÊý¾Ý¡£
-    @param [out] buf ½ÓÊÕÊý¾ÝµÄbuf¡£
-    @param [in] len ½ÓÊÕÊý¾ÝµÄ×Ö½ÚÊý¡£
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @param [out] bytes_transferred Èô²»Îª0£¬Ôò·µ»ØÊµ¼ÊÒÑ¾­½ÓÊÕµÄÊý¾ÝÊýÁ¿£¬¼´±ãÔÚÊ§°ÜµÄÇé¿öÏÂ¡£
-    @return -1£º½ÓÊÕ´íÎó£»0£ºÁ¬½Ó¹Ø±Õ£»>0£ºÓ¦¸ÃµÈÓÚlen£¬±íÊ¾³É¹¦½ÓÊÕÁËlen³¤¶ÈµÄ×Ö½ÚÁ÷¡£
+    @brief æŽ¥æ”¶lenå­—èŠ‚çš„æ•°æ®ã€‚
+    @param [out] buf æŽ¥æ”¶æ•°æ®çš„bufã€‚
+    @param [in] len æŽ¥æ”¶æ•°æ®çš„å­—èŠ‚æ•°ã€‚
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡žã€‚
+    @param [out] bytes_transferred è‹¥ä¸ä¸º0ï¼Œåˆ™è¿”å›žå®žé™…å·²ç»æŽ¥æ”¶çš„æ•°æ®æ•°é‡ï¼Œå³ä¾¿åœ¨å¤±è´¥çš„æƒ…å†µä¸‹ã€‚
+    @return -1ï¼šæŽ¥æ”¶é”™è¯¯ï¼›0ï¼šè¿žæŽ¥å…³é—­ï¼›>0ï¼šåº”è¯¥ç­‰äºŽlenï¼Œè¡¨ç¤ºæˆåŠŸæŽ¥æ”¶äº†lené•¿åº¦çš„å­—èŠ‚æµã€‚
     */
     ssize_t recv_n (void *buf, size_t len, CwxTimeouter  *timeout = 0, size_t *bytes_transferred = 0) const;
 
     /**
-    @brief ½ÓÊÕlen×Ö½ÚµÄÊý¾Ý¡£
-    @param [out] buf ½ÓÊÕÊý¾ÝµÄbuf¡£
-    @param [in] len ½ÓÊÕÊý¾ÝµÄ×Ö½ÚÊý¡£
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @param [out] bytes_transferred Èô²»Îª0£¬Ôò·µ»ØÊµ¼ÊÒÑ¾­½ÓÊÕµÄÊý¾ÝÊýÁ¿£¬¼´±ãÔÚÊ§°ÜµÄÇé¿öÏÂ¡£
-    @return -1£º½ÓÊÕ´íÎó£»0£ºÁ¬½Ó¹Ø±Õ£»>0£ºÓ¦¸ÃµÈÓÚlen£¬±íÊ¾³É¹¦½ÓÊÕÁËlen³¤¶ÈµÄ×Ö½ÚÁ÷¡£
+    @brief æŽ¥æ”¶lenå­—èŠ‚çš„æ•°æ®ã€‚
+    @param [out] buf æŽ¥æ”¶æ•°æ®çš„bufã€‚
+    @param [in] len æŽ¥æ”¶æ•°æ®çš„å­—èŠ‚æ•°ã€‚
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡žã€‚
+    @param [out] bytes_transferred è‹¥ä¸ä¸º0ï¼Œåˆ™è¿”å›žå®žé™…å·²ç»æŽ¥æ”¶çš„æ•°æ®æ•°é‡ï¼Œå³ä¾¿åœ¨å¤±è´¥çš„æƒ…å†µä¸‹ã€‚
+    @return -1ï¼šæŽ¥æ”¶é”™è¯¯ï¼›0ï¼šè¿žæŽ¥å…³é—­ï¼›>0ï¼šåº”è¯¥ç­‰äºŽlenï¼Œè¡¨ç¤ºæˆåŠŸæŽ¥æ”¶äº†lené•¿åº¦çš„å­—èŠ‚æµã€‚
     */
     ssize_t read_n (void *buf, size_t len, CwxTimeouter  *timeout = 0, size_t *bytes_transferred = 0) const;
 
     /**
-    @brief Ò»¸öcwinuxµÄÊý¾Ý°ü¡£
-    @param [out] head Êý¾Ý°üµÄ°üÍ·¡£
-    @param [out] msg ½ÓÊÕµÄÊý¾Ý°ü£¬ÈôÊ§°Ü£¬Ôò·µ»ØNULL¡£
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£º½ÓÊÕ´íÎó£»0£ºÁ¬½Ó¹Ø±Õ£»>0£ºÓ¦¸ÃµÈÓÚlen£¬±íÊ¾³É¹¦½ÓÊÕÁËlen³¤¶ÈµÄ×Ö½ÚÁ÷¡£
+    @brief ä¸€ä¸ªcwinuxçš„æ•°æ®åŒ…ã€‚
+    @param [out] head æ•°æ®åŒ…çš„åŒ…å¤´ã€‚
+    @param [out] msg æŽ¥æ”¶çš„æ•°æ®åŒ…ï¼Œè‹¥å¤±è´¥ï¼Œåˆ™è¿”å›žNULLã€‚
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡žã€‚
+    @return -1ï¼šæŽ¥æ”¶é”™è¯¯ï¼›0ï¼šè¿žæŽ¥å…³é—­ï¼›>0ï¼šåº”è¯¥ç­‰äºŽlenï¼Œè¡¨ç¤ºæˆåŠŸæŽ¥æ”¶äº†lené•¿åº¦çš„å­—èŠ‚æµã€‚
     */
     ssize_t read (CwxMsgHead& head, CwxMsgBlock*& msg, CwxTimeouter  *timeout = 0) const;
     /**
-    @brief Ò»¸öcwinuxµÄÊý¾Ý°ü¡£
-    @param [out] head Êý¾Ý°üµÄ°üÍ·¡£
-    @param [out] msg ½ÓÊÕµÄÊý¾Ý°ü£¬ÈôÊ§°Ü£¬Ôò·µ»ØNULL¡£
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£º½ÓÊÕ´íÎó£»0£ºÁ¬½Ó¹Ø±Õ£»>0£ºÓ¦¸ÃµÈÓÚlen£¬±íÊ¾³É¹¦½ÓÊÕÁËlen³¤¶ÈµÄ×Ö½ÚÁ÷¡£
+    @brief ä¸€ä¸ªcwinuxçš„æ•°æ®åŒ…ã€‚
+    @param [out] head æ•°æ®åŒ…çš„åŒ…å¤´ã€‚
+    @param [out] msg æŽ¥æ”¶çš„æ•°æ®åŒ…ï¼Œè‹¥å¤±è´¥ï¼Œåˆ™è¿”å›žNULLã€‚
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡žã€‚
+    @return -1ï¼šæŽ¥æ”¶é”™è¯¯ï¼›0ï¼šè¿žæŽ¥å…³é—­ï¼›>0ï¼šåº”è¯¥ç­‰äºŽlenï¼Œè¡¨ç¤ºæˆåŠŸæŽ¥æ”¶äº†lené•¿åº¦çš„å­—èŠ‚æµã€‚
     */
     ssize_t recv (CwxMsgHead& head, CwxMsgBlock*& msg, CwxTimeouter  *timeout = 0) const;
 
 
     /**
-    @brief ·¢ËÍlen×Ö½ÚµÄÊý¾Ý¡£
-    @param [in] buf ·¢ËÍÊý¾ÝµÄbuf¡£
-    @param [in] len ·¢ËÍÊý¾ÝµÄ×Ö½ÚÊý¡£
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @param [out] bytes_transferred Èô²»Îª0£¬Ôò·µ»ØÊµ¼ÊÒÑ¾­·¢ËÍµÄÊý¾ÝÊýÁ¿£¬¼´±ãÔÚÊ§°ÜµÄÇé¿öÏÂ¡£
-    @return -1£º·¢ËÍ´íÎó£»>0£ºÓ¦¸ÃµÈÓÚlen£¬±íÊ¾³É¹¦·¢ËÍÁËlen³¤¶ÈµÄ×Ö½ÚÁ÷¡£
+    @brief å‘é€lenå­—èŠ‚çš„æ•°æ®ã€‚
+    @param [in] buf å‘é€æ•°æ®çš„bufã€‚
+    @param [in] len å‘é€æ•°æ®çš„å­—èŠ‚æ•°ã€‚
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡žã€‚
+    @param [out] bytes_transferred è‹¥ä¸ä¸º0ï¼Œåˆ™è¿”å›žå®žé™…å·²ç»å‘é€çš„æ•°æ®æ•°é‡ï¼Œå³ä¾¿åœ¨å¤±è´¥çš„æƒ…å†µä¸‹ã€‚
+    @return -1ï¼šå‘é€é”™è¯¯ï¼›>0ï¼šåº”è¯¥ç­‰äºŽlenï¼Œè¡¨ç¤ºæˆåŠŸå‘é€äº†lené•¿åº¦çš„å­—èŠ‚æµã€‚
     */
     ssize_t write_n (const void *buf, size_t len, CwxTimeouter  *timeout = 0, size_t *bytes_transferred = 0) const;
 
     /**
-    @brief ·¢ËÍlen×Ö½ÚµÄÊý¾Ý¡£
-    @param [in] buf ·¢ËÍÊý¾ÝµÄbuf¡£
-    @param [in] len ·¢ËÍÊý¾ÝµÄ×Ö½ÚÊý¡£
-    @param [in] flags send()µÄÏµÍ³OS apiµÄflags²ÎÊý¡£
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @param [out] bytes_transferred Èô²»Îª0£¬Ôò·µ»ØÊµ¼ÊÒÑ¾­·¢ËÍµÄÊý¾ÝÊýÁ¿£¬¼´±ãÔÚÊ§°ÜµÄÇé¿öÏÂ¡£
-    @return -1£º·¢ËÍ´íÎó£»>0£ºÓ¦¸ÃµÈÓÚlen£¬±íÊ¾³É¹¦·¢ËÍÁËlen³¤¶ÈµÄ×Ö½ÚÁ÷¡£
+    @brief å‘é€lenå­—èŠ‚çš„æ•°æ®ã€‚
+    @param [in] buf å‘é€æ•°æ®çš„bufã€‚
+    @param [in] len å‘é€æ•°æ®çš„å­—èŠ‚æ•°ã€‚
+    @param [in] flags send()çš„ç³»ç»ŸOS apiçš„flagså‚æ•°ã€‚
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡žã€‚
+    @param [out] bytes_transferred è‹¥ä¸ä¸º0ï¼Œåˆ™è¿”å›žå®žé™…å·²ç»å‘é€çš„æ•°æ®æ•°é‡ï¼Œå³ä¾¿åœ¨å¤±è´¥çš„æƒ…å†µä¸‹ã€‚
+    @return -1ï¼šå‘é€é”™è¯¯ï¼›>0ï¼šåº”è¯¥ç­‰äºŽlenï¼Œè¡¨ç¤ºæˆåŠŸå‘é€äº†lené•¿åº¦çš„å­—èŠ‚æµã€‚
     */
     ssize_t send_n (const void *buf, size_t len, int flags, CwxTimeouter  *timeout = 0, size_t *bytes_transferred = 0) const;
 
     /**
-    @brief ·¢ËÍlen×Ö½ÚµÄÊý¾Ý¡£
-    @param [in] buf ·¢ËÍÊý¾ÝµÄbuf¡£
-    @param [in] len ·¢ËÍÊý¾ÝµÄ×Ö½ÚÊý¡£
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @param [out] bytes_transferred Èô²»Îª0£¬Ôò·µ»ØÊµ¼ÊÒÑ¾­·¢ËÍµÄÊý¾ÝÊýÁ¿£¬¼´±ãÔÚÊ§°ÜµÄÇé¿öÏÂ¡£
-    @return -1£º·¢ËÍ´íÎó£»>0£ºÓ¦¸ÃµÈÓÚlen£¬±íÊ¾³É¹¦·¢ËÍÁËlen³¤¶ÈµÄ×Ö½ÚÁ÷¡£
+    @brief å‘é€lenå­—èŠ‚çš„æ•°æ®ã€‚
+    @param [in] buf å‘é€æ•°æ®çš„bufã€‚
+    @param [in] len å‘é€æ•°æ®çš„å­—èŠ‚æ•°ã€‚
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡žã€‚
+    @param [out] bytes_transferred è‹¥ä¸ä¸º0ï¼Œåˆ™è¿”å›žå®žé™…å·²ç»å‘é€çš„æ•°æ®æ•°é‡ï¼Œå³ä¾¿åœ¨å¤±è´¥çš„æƒ…å†µä¸‹ã€‚
+    @return -1ï¼šå‘é€é”™è¯¯ï¼›>0ï¼šåº”è¯¥ç­‰äºŽlenï¼Œè¡¨ç¤ºæˆåŠŸå‘é€äº†lené•¿åº¦çš„å­—èŠ‚æµã€‚
     */
     ssize_t send_n (const void *buf, size_t len, CwxTimeouter  *timeout = 0,  size_t *bytes_transferred = 0) const;
     /**
-    @brief ·¢ËÍurgentÊý¾Ý¡£
-    @param [out] ptr Òª·¢ËÍµÄurgentÊý¾Ý¡£
-    @param [in] len urgentÊý¾ÝµÄ³¤¶È¡£
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£º·¢ËÍ´íÎó£»>0£ºµÈÓÚlen¡£
+    @brief å‘é€urgentæ•°æ®ã€‚
+    @param [out] ptr è¦å‘é€çš„urgentæ•°æ®ã€‚
+    @param [in] len urgentæ•°æ®çš„é•¿åº¦ã€‚
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡žã€‚
+    @return -1ï¼šå‘é€é”™è¯¯ï¼›>0ï¼šç­‰äºŽlenã€‚
     */
     ssize_t send_urg (const void *ptr, size_t len = sizeof (char), CwxTimeouter  *timeout = 0) const;
     /**
-    @brief ½ÓÊÕurgentÊý¾Ý¡£
-    @param [out] ptr ½ÓÊÕurgentÊý¾ÝµÄbuf¡£
-    @param [in] len ½ÓÊÕurgentÊý¾ÝµÄ³¤¶È¡£
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£º½ÓÊÕ´íÎó£»0£ºÁ¬½Ó¹Ø±Õ£»>0£ºµÈÓÚlen¡£
+    @brief æŽ¥æ”¶urgentæ•°æ®ã€‚
+    @param [out] ptr æŽ¥æ”¶urgentæ•°æ®çš„bufã€‚
+    @param [in] len æŽ¥æ”¶urgentæ•°æ®çš„é•¿åº¦ã€‚
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡žã€‚
+    @return -1ï¼šæŽ¥æ”¶é”™è¯¯ï¼›0ï¼šè¿žæŽ¥å…³é—­ï¼›>0ï¼šç­‰äºŽlenã€‚
     */
     ssize_t recv_urg (void *ptr, size_t len = sizeof (char), CwxTimeouter  *timeout = 0) const;
-    /// ¹Ø±ÕÁ¬½ÓµÄ¶Á¡£·µ»ØÖµ£¬0£º³É¹¦£»-1£ºÊ§°Ü¡£
+    /// å…³é—­è¿žæŽ¥çš„è¯»ã€‚è¿”å›žå€¼ï¼Œ0ï¼šæˆåŠŸï¼›-1ï¼šå¤±è´¥ã€‚
     int close_reader (void);
-    /// ¹Ø±ÕÁ¬½ÓÐ´¡£·µ»ØÖµ£¬0£º³É¹¦£»-1£ºÊ§°Ü¡£
+    /// å…³é—­è¿žæŽ¥å†™ã€‚è¿”å›žå€¼ï¼Œ0ï¼šæˆåŠŸï¼›-1ï¼šå¤±è´¥ã€‚
     int close_writer (void);
 private:
 };

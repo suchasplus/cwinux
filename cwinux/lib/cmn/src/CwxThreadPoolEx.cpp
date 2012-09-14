@@ -1,13 +1,13 @@
-#include "CwxThreadPoolEx.h"
+ï»¿#include "CwxThreadPoolEx.h"
 
 CWINUX_BEGIN_NAMESPACE
-///¹¹Ôìº¯Êý
-CwxThreadPoolEx::CwxThreadPoolEx(CWX_UINT16 unGroupId,///<Ïß³Ì³ØµÄthread-group
-                 CWX_UINT16 unThreadNum,///<Ïß³Ì³ØÖÐÏß³ÌµÄÊýÁ¿
-                 CwxThreadPoolMgr* mgr, ///<Ïß³ÌµÄ¹ÜÀí¶ÔÏó
-                 CwxCommander* commander,///<¶ÓÁÐÏûÏ¢Ïû·ÑµÄÈ±Ê¡commander£¬ÈôÖ¸¶¨func¿ÉÒÔ²»Ö¸¶¨
-                 CWX_TSS_THR_FUNC func, ///<ÓÃ»§µÄÏß³Ìmainº¯Êý
-                 void*            arg ///<funcµÄvoid*²ÎÊý
+///æž„é€ å‡½æ•°
+CwxThreadPoolEx::CwxThreadPoolEx(CWX_UINT16 unGroupId,///<çº¿ç¨‹æ± çš„thread-group
+                 CWX_UINT16 unThreadNum,///<çº¿ç¨‹æ± ä¸­çº¿ç¨‹çš„æ•°é‡
+                 CwxThreadPoolMgr* mgr, ///<çº¿ç¨‹çš„ç®¡ç†å¯¹è±¡
+                 CwxCommander* commander,///<é˜Ÿåˆ—æ¶ˆæ¯æ¶ˆè´¹çš„ç¼ºçœcommanderï¼Œè‹¥æŒ‡å®šfuncå¯ä»¥ä¸æŒ‡å®š
+                 CWX_TSS_THR_FUNC func, ///<ç”¨æˆ·çš„çº¿ç¨‹mainå‡½æ•°
+                 void*            arg ///<funcçš„void*å‚æ•°
                    ): CwxTpi(unGroupId, unThreadNum)
 {
     m_commander = commander;
@@ -17,7 +17,7 @@ CwxThreadPoolEx::CwxThreadPoolEx(CWX_UINT16 unGroupId,///<Ïß³Ì³ØµÄthread-group
     m_threadArr =  NULL;
 }
 
-///Îö¹¹º¯Êý
+///æžæž„å‡½æ•°
 CwxThreadPoolEx::~CwxThreadPoolEx()
 {
 //    stop();
@@ -86,7 +86,7 @@ CwxTss* CwxThreadPoolEx::getTss(CWX_UINT16 unThreadIndex)
     }
     return NULL;
 }
-///Ëø×¡Õû¸öÏß³Ì³Ø¡£·µ»ØÖµ0£º³É¹¦£»-1£ºÊ§°Ü
+///é”ä½æ•´ä¸ªçº¿ç¨‹æ± ã€‚è¿”å›žå€¼0ï¼šæˆåŠŸï¼›-1ï¼šå¤±è´¥
 int CwxThreadPoolEx::lock()
 {
     for (CWX_UINT16 i=0; i<getThreadNum(); i++)
@@ -105,7 +105,7 @@ int CwxThreadPoolEx::lock()
     }
     return 0;
 }
-///½âËøÕâ¸öÏß³Ì³Ø¡£·µ»ØÖµ0£º³É¹¦£»-1£ºÊ§°Ü
+///è§£é”è¿™ä¸ªçº¿ç¨‹æ± ã€‚è¿”å›žå€¼0ï¼šæˆåŠŸï¼›-1ï¼šå¤±è´¥
 int CwxThreadPoolEx::unlock()
 {
     for (CWX_UINT16 i=0; i<getThreadNum(); i++)

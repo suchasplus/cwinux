@@ -1,4 +1,4 @@
-#include "CwxAddr.h"
+﻿#include "CwxAddr.h"
 
 CWINUX_BEGIN_NAMESPACE
 

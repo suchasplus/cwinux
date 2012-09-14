@@ -1,14 +1,14 @@
-#ifndef  __CWX_PACKAGE_READER_EX_H__
+ï»¿#ifndef  __CWX_PACKAGE_READER_EX_H__
 #define  __CWX_PACKAGE_READER_EX_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 *@file CwxPackageReaderEx.h
-*@brief CwxPackageReaderEx¶¨Òå
+*@brief CwxPackageReaderExå®šä¹‰
 *@author cwinux@gmail.com
 *@version 0.1
 *@date  2012-05-29
@@ -24,7 +24,7 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxPackageReaderEx
-@brief Key/Value¸ñÊ½µÄPackageµÄ¶ÁÈ¡Àà
+@brief Key/Valueæ ¼å¼çš„Packageçš„è¯»å–ç±»
 */
 
 class CWX_API CwxPackageReaderEx
@@ -37,20 +37,20 @@ public:
         KEY_VALUE_ALIGN = 16,
         ERR_MSG_LEN=511 ///< ERR bug size
     };
-    ///¹¹Ôìº¯Êı£¬bCaseSensive±íÊ¾keyÊÇ·ñÎª´óĞ¡Ğ´Ãô¸Ğ¡£È±Ê¡ÎªÃô¸Ğ
+    ///æ„é€ å‡½æ•°ï¼ŒbCaseSensiveè¡¨ç¤ºkeyæ˜¯å¦ä¸ºå¤§å°å†™æ•æ„Ÿã€‚ç¼ºçœä¸ºæ•æ„Ÿ
     CwxPackageReaderEx(bool bCaseSensive=true);
-    ///Îö¹¹
+    ///ææ„
     ~CwxPackageReaderEx();
 public:
-    ///¶Ô³¤¶ÈÎªuiMsgLenµÄpackage½â°ü¡£
+    ///å¯¹é•¿åº¦ä¸ºuiMsgLençš„packageè§£åŒ…ã€‚
     /**
-    * Æä½«»á¼ì²észMsgÊÇ·ñÊÇÒ»¸öÓĞĞ§µÄpackage¡£ÈôbIndex=true£¬Æä»á¶ÔpackageµÄKey½¨Á¢Ë÷Òı¡£<br>
-    * szMsg¿ÉÒÔÎªÒ»¸ö¿Õ°ü£¬¿Õ°üÊÇÒ»¸öÓĞĞ§µÄpackage¡£
-    *@param [in] szMsg ĞèÒª½â°üµÄpackage¡£
-    *@param [in] uiMsgLen packageµÄ³¤¶È¡£
-    *@param [in] bIndex ÊÇ·ñ¶ÔpackageµÄKey½¨Á¢Ë÷Òı¡£
-    *@param [in] bCaseSensive keyµÄÃû×ÖÊÇ·ñ´óĞ¡Ğ´Ãô¸Ğ¡£true£ºÊÇ£»false£º²»ÊÇ¡£
-    *@return false:´íÎó£»true:½â°üÕıÈ·¡£Í¨¹ıGetError()»ñÈ¡Ê§°ÜµÄÔ­Òò¡£
+    * å…¶å°†ä¼šæ£€æŸ¥szMsgæ˜¯å¦æ˜¯ä¸€ä¸ªæœ‰æ•ˆçš„packageã€‚è‹¥bIndex=trueï¼Œå…¶ä¼šå¯¹packageçš„Keyå»ºç«‹ç´¢å¼•ã€‚<br>
+    * szMsgå¯ä»¥ä¸ºä¸€ä¸ªç©ºåŒ…ï¼Œç©ºåŒ…æ˜¯ä¸€ä¸ªæœ‰æ•ˆçš„packageã€‚
+    *@param [in] szMsg éœ€è¦è§£åŒ…çš„packageã€‚
+    *@param [in] uiMsgLen packageçš„é•¿åº¦ã€‚
+    *@param [in] bIndex æ˜¯å¦å¯¹packageçš„Keyå»ºç«‹ç´¢å¼•ã€‚
+    *@param [in] bCaseSensive keyçš„åå­—æ˜¯å¦å¤§å°å†™æ•æ„Ÿã€‚trueï¼šæ˜¯ï¼›falseï¼šä¸æ˜¯ã€‚
+    *@return false:é”™è¯¯ï¼›true:è§£åŒ…æ­£ç¡®ã€‚é€šè¿‡GetError()è·å–å¤±è´¥çš„åŸå› ã€‚
     */
     bool  unpack(char const* szMsg, CWX_UINT32 uiMsgLen, bool bIndex = true, bool bCaseSensive=true);
     ///Get key for name [szKey]. null if not exists.
@@ -75,7 +75,7 @@ public:
     bool getKey(char const* szKey, CWX_INT64& value, bool bSubKey=false) const ;
     ///Get data by key for UINT64. false:not exist, true:get one. 
     bool getKey(char const* szKey, CWX_UINT64& value, bool bSubKey=false) const ;
-    ///»ñÈ¡µ±Ç°packageµÄKeyµÄÊıÁ¿¡£
+    ///è·å–å½“å‰packageçš„Keyçš„æ•°é‡ã€‚
     CWX_UINT32 getKeyNum() const ;
     ///return msg's size
     CWX_UINT32 getMsgSize() const ;
@@ -86,7 +86,7 @@ public:
     ///return case-sensive sign
     bool isCaseSensive() const;
 private:
-    ///Çå¿Õpack/unpackµÄºÛ¼£
+    ///æ¸…ç©ºpack/unpackçš„ç—•è¿¹
     void reset();
 private:
     CwxKeyValueItemEx*        m_pKeyValue; ///<key/value's vector
@@ -95,10 +95,10 @@ private:
     CWX_UINT32             m_uiKeyNum; ///<package's key number
     char const*            m_szPackMsg; ///<package's dat
     CWX_UINT32             m_uiPackBufLen;///<package's buf length
-    bool                  m_bIndex;///<ÊÇ·ñ½¨Á¢packageµÄË÷Òı
+    bool                  m_bIndex;///<æ˜¯å¦å»ºç«‹packageçš„ç´¢å¼•
     bool                  m_bCaseSensive;
-    mutable CwxKeyValueItemEx       m_tmpKey; ///<ÁÙÊ±key;
-    char                  m_szErr[ERR_MSG_LEN + 1];///<´íÎóÄÚÈİ
+    mutable CwxKeyValueItemEx       m_tmpKey; ///<ä¸´æ—¶key;
+    char                  m_szErr[ERR_MSG_LEN + 1];///<é”™è¯¯å†…å®¹
 };
 
 

@@ -1,14 +1,14 @@
-#ifndef __CWX_APP_HANDLER_4_MSG_H__
+ï»¿#ifndef __CWX_APP_HANDLER_4_MSG_H__
 #define __CWX_APP_HANDLER_4_MSG_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxAppHandler4Msg.h
-@brief ¶¨Òå»ùÓÚmsgÊÕ·¢µÄTCP£¬PIPE¡¢¼°ÆäËûIOÍ¨ĞÅ¡¢¹ÜÀíµÄHandle¶ÔÏóCwxAppHandler4Msg¡£
+@brief å®šä¹‰åŸºäºmsgæ”¶å‘çš„TCPï¼ŒPIPEã€åŠå…¶ä»–IOé€šä¿¡ã€ç®¡ç†çš„Handleå¯¹è±¡CwxAppHandler4Msgã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-07-20
@@ -31,7 +31,7 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxAppHandler4Msg
-@brief TCP£¬PIPE¡¢¼°ÆäËûIOÍ¨ĞÅ¡¢×´Ì¬¹ÜÀíµÄHandle¶ÔÏó
+@brief TCPï¼ŒPIPEã€åŠå…¶ä»–IOé€šä¿¡ã€çŠ¶æ€ç®¡ç†çš„Handleå¯¹è±¡
 */
 class CwxAppFramework;
 class CwxAppReactor;
@@ -39,87 +39,87 @@ class CwxAppReactor;
 class CWX_API CwxAppHandler4Msg:public CwxAppHandler4Base
 {
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxAppHandler4Msg(CwxAppFramework* pApp,
         CwxAppReactor *reactor);
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxAppHandler4Msg();
 public:
     /**
-    @brief ³õÊ¼»¯½¨Á¢µÄÁ¬½Ó£¬²¢ÍùReactor×¢²áÁ¬½Ó
-    @param [in] arg ½¨Á¢Á¬½ÓµÄacceptor»òÎªNULL
-    @return -1£º·ÅÆú½¨Á¢µÄÁ¬½Ó£» 0£ºÁ¬½Ó½¨Á¢³É¹¦
+    @brief åˆå§‹åŒ–å»ºç«‹çš„è¿æ¥ï¼Œå¹¶å¾€Reactoræ³¨å†Œè¿æ¥
+    @param [in] arg å»ºç«‹è¿æ¥çš„acceptoræˆ–ä¸ºNULL
+    @return -1ï¼šæ”¾å¼ƒå»ºç«‹çš„è¿æ¥ï¼› 0ï¼šè¿æ¥å»ºç«‹æˆåŠŸ
     */
     virtual int open (void * arg= 0);
     /**
-    @brief ½ÓÊÜÁ¬½ÓÉÏµÄÊÂ¼ş
-    @param [in] event Á¬½ÓµÄhandleÉÏµÄÊÂ¼ş
-    @param [in] handle  ·¢ÉúµÄÊÂ¼şµÄhandle¡£
-    @return -1£º´¦ÀíÊ§°Ü£» 0£º´¦Àí³É¹¦
+    @brief æ¥å—è¿æ¥ä¸Šçš„äº‹ä»¶
+    @param [in] event è¿æ¥çš„handleä¸Šçš„äº‹ä»¶
+    @param [in] handle  å‘ç”Ÿçš„äº‹ä»¶çš„handleã€‚
+    @return -1ï¼šå¤„ç†å¤±è´¥ï¼› 0ï¼šå¤„ç†æˆåŠŸ
     */
     virtual int handle_event(int event, CWX_HANDLE handle=CWX_INVALID_HANDLE);
     ///handle close
     virtual int close(CWX_HANDLE handle=CWX_INVALID_HANDLE);
     /**
-    @brief »ñÈ¡Á¬½ÓµÄ¶Ô¶ËµØÖ·
-    @param [in,out] szBuf ·µ»ØµØÖ·µÄbuf,»ñÈ¡³É¹¦ºóÒÔ\\0½áÊø¡£
-    @param [in] unSize szBufµÄ´óĞ¡¡£
-    @return ·µ»ØszBuf
+    @brief è·å–è¿æ¥çš„å¯¹ç«¯åœ°å€
+    @param [in,out] szBuf è¿”å›åœ°å€çš„buf,è·å–æˆåŠŸåä»¥\\0ç»“æŸã€‚
+    @param [in] unSize szBufçš„å¤§å°ã€‚
+    @return è¿”å›szBuf
     */
     virtual char* getRemoteAddr(char* szBuf, CWX_UINT16 unSize);
     /**
-    @brief »ñÈ¡Á¬½ÓµÄ¶Ô¶Ëport
-    @return Á¬½Ó¶Ô¶ËµÄport
+    @brief è·å–è¿æ¥çš„å¯¹ç«¯port
+    @return è¿æ¥å¯¹ç«¯çš„port
     */
     virtual CWX_UINT16 getRemotePort();
     /**
-    @brief »ñÈ¡Á¬½Ó±¾¶ËµÄµØÖ·
-    @param [in,out] szBuf ·µ»ØµØÖ·µÄbuf,»ñÈ¡³É¹¦ºóÒÔ\\0½áÊø¡£
-    @param [in] unSize szBufµÄ´óĞ¡¡£
-    @return ·µ»ØszBuf
+    @brief è·å–è¿æ¥æœ¬ç«¯çš„åœ°å€
+    @param [in,out] szBuf è¿”å›åœ°å€çš„buf,è·å–æˆåŠŸåä»¥\\0ç»“æŸã€‚
+    @param [in] unSize szBufçš„å¤§å°ã€‚
+    @return è¿”å›szBuf
     */
     virtual char* getLocalAddr(char* szBuf, CWX_UINT16 unSize);
     /**
-    @brief »ñÈ¡Á¬½ÓµÄ±¾¶Ëport
-    @return Á¬½Ó¶Ô¶ËµÄport
+    @brief è·å–è¿æ¥çš„æœ¬ç«¯port
+    @return è¿æ¥å¯¹ç«¯çš„port
     */
     virtual CWX_UINT16 getLocalPort();
-    ///·¢ËÍÏûÏ¢
+    ///å‘é€æ¶ˆæ¯
     virtual int handle_output();
-    ///½ÓÊÕÏûÏ¢
+    ///æ¥æ”¶æ¶ˆæ¯
     virtual int handle_input();
-    ///³¬Ê±
+    ///è¶…æ—¶
     virtual void handle_timeout();
 public:
-    ///»ñÈ¡Á¬½ÓµÄĞÅÏ¢¶ÔÏó
+    ///è·å–è¿æ¥çš„ä¿¡æ¯å¯¹è±¡
     CwxAppConnInfo& getConnInfo();
-    ///»ñÈ¡Á¬½ÓµÄĞÅÏ¢¶ÔÏó
+    ///è·å–è¿æ¥çš„ä¿¡æ¯å¯¹è±¡
     CwxAppConnInfo const& getConnInfo() const;
-    ///Çå¿Õ¶ÔÏó
+    ///æ¸…ç©ºå¯¹è±¡
     void clear();
-    ///»ñÈ¡ÏÂÒ»¸ö´ı·¢ËÍµÄÏûÏ¢£¬·µ»ØÖµ£º0£¬Ã»ÓĞ´ı·¢ËÍĞÅÏ¢£»1,»ñµÃÁËÒ»¸ö´ı·¢ËÍÏûÏ¢
+    ///è·å–ä¸‹ä¸€ä¸ªå¾…å‘é€çš„æ¶ˆæ¯ï¼Œè¿”å›å€¼ï¼š0ï¼Œæ²¡æœ‰å¾…å‘é€ä¿¡æ¯ï¼›1,è·å¾—äº†ä¸€ä¸ªå¾…å‘é€æ¶ˆæ¯
     inline int getNextMsg();
-    ///¶ÔÒª·¢ËÍµÄÏûÏ¢ÅÅ¶Ó£¬·µ»ØÖµ£ºtrue£º³É¹¦£»false£ºÊ§°Ü£¬Ê§°ÜÊ±ÒòÎª¶ÓÁĞÒÑÂú
+    ///å¯¹è¦å‘é€çš„æ¶ˆæ¯æ’é˜Ÿï¼Œè¿”å›å€¼ï¼štrueï¼šæˆåŠŸï¼›falseï¼šå¤±è´¥ï¼Œå¤±è´¥æ—¶å› ä¸ºé˜Ÿåˆ—å·²æ»¡
     inline bool putMsg(CwxMsgBlock* msg);
-    ///ÓÉÓÚÃ»ÓĞÏûÏ¢·¢ËÍ£¬Ê¹Á¬½ÓµÄ·¢ËÍ¼à²âĞİÃß.·µ»ØÖµ£¬ -1: failure, 0: success
+    ///ç”±äºæ²¡æœ‰æ¶ˆæ¯å‘é€ï¼Œä½¿è¿æ¥çš„å‘é€ç›‘æµ‹ä¼‘çœ .è¿”å›å€¼ï¼Œ -1: failure, 0: success
     inline int cancelWakeup();
-    ///»½ĞÑÁ¬½ÓµÄ¿ÉĞ´¼à¿Ø£¬ÒÔ·¢ËÍÎ´·¢ËÍÍê±ÏµÄÊı¾İ.·µ»ØÖµ£¬ -1:failure£» 0:success¡£
+    ///å”¤é†’è¿æ¥çš„å¯å†™ç›‘æ§ï¼Œä»¥å‘é€æœªå‘é€å®Œæ¯•çš„æ•°æ®.è¿”å›å€¼ï¼Œ -1:failureï¼› 0:successã€‚
     inline int wakeUp();
-    ///¼ì²éÊÇ·ñsuspendÁ¬½ÓµÄ¿É¶Á¡¢¿ÉĞ´¼à²â
+    ///æ£€æŸ¥æ˜¯å¦suspendè¿æ¥çš„å¯è¯»ã€å¯å†™ç›‘æµ‹
     bool isStopListen() const;
-    ///ÉèÖÃstop listen
+    ///è®¾ç½®stop listen
     void setStopListen(bool bStop);
-    ///ÊÇ·ñÓĞ¿É·¢ËÍµÄÊı¾İ°ü
+    ///æ˜¯å¦æœ‰å¯å‘é€çš„æ•°æ®åŒ…
     bool isEmpty() const;
-    ///»ñÈ¡Á¬½ÓÊ±µÄ´íÎó´úÂë
+    ///è·å–è¿æ¥æ—¶çš„é”™è¯¯ä»£ç 
     int getConnErrNo() const;
-    ///»ñÈ¡app
+    ///è·å–app
     CwxAppFramework* getApp()
     {
         return m_pApp;
     }
 private:
-    ///ÒÔ·Ç×èÈûµÄ·½Ê½£¬·¢ËÍÏûÏ¢¡£·µ»ØÖµ,-1: failure; 0: not send all;1:send a msg
+    ///ä»¥éé˜»å¡çš„æ–¹å¼ï¼Œå‘é€æ¶ˆæ¯ã€‚è¿”å›å€¼,-1: failure; 0: not send all;1:send a msg
     inline int nonBlockSend();
 protected:
     CwxAppFramework* m_pApp;

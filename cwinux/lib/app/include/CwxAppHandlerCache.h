@@ -1,14 +1,14 @@
-#ifndef __CWX_APP_HANDLER_CACHE_H__
+ï»¿#ifndef __CWX_APP_HANDLER_CACHE_H__
 #define __CWX_APP_HANDLER_CACHE_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxAppHandlerCache.h
-@brief ¹Ø±ÕµÄTCP/Unix-domainµÄÁ¬½Ó¾ä±úµÄCACHE¶ÔÏó£¬ÊµÏÖ¾ä±úµÄÖØÓÃ
+@brief å…³é—­çš„TCP/Unix-domainçš„è¿æ¥å¥æŸ„çš„CACHEå¯¹è±¡ï¼Œå®ç°å¥æŸ„çš„é‡ç”¨
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-07-20
@@ -27,49 +27,49 @@ CWINUX_BEGIN_NAMESPACE
 
 /**
 @class CwxAppHandlerCache
-@brief ¹Ø±ÕµÄTCP/Unix-domainµÄÁ¬½Ó¶ÔÏóµÄCACHE£¬ÊµÏÖÁ¬½Ó¶ÔÏóµÄÖØÓÃ
+@brief å…³é—­çš„TCP/Unix-domainçš„è¿æ¥å¯¹è±¡çš„CACHEï¼Œå®ç°è¿æ¥å¯¹è±¡çš„é‡ç”¨
 */
 class CWX_API CwxAppHandlerCache
 {
 public:
     enum{
-        MAX_FREE_HANDLE_NUM = 64///<cacheµÄ¹Ø±ÕÁ¬½Ó¶ÔÏóµÄÊıÁ¿
+        MAX_FREE_HANDLE_NUM = 64///<cacheçš„å…³é—­è¿æ¥å¯¹è±¡çš„æ•°é‡
     };
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxAppHandlerCache();
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxAppHandlerCache();
 public:
-    ///»ñÈ¡Ò»¸öTCPÀàĞÍµÄÁ¬½Ó¶ÔÏó£¬·µ»ØNULL±íÊ¾Ã»ÓĞCACHEµÄÁ¬½Ó¶ÔÏó
+    ///è·å–ä¸€ä¸ªTCPç±»å‹çš„è¿æ¥å¯¹è±¡ï¼Œè¿”å›NULLè¡¨ç¤ºæ²¡æœ‰CACHEçš„è¿æ¥å¯¹è±¡
     inline CwxAppHandler4TcpConn* fetchTcpHandle();
-    ///CacheÒ»¸ö¹Ø±ÕµÄTCPÀàĞÍµÄÁ¬½Ó¶ÔÏó
+    ///Cacheä¸€ä¸ªå…³é—­çš„TCPç±»å‹çš„è¿æ¥å¯¹è±¡
     inline void cacheTcpHandle(CwxAppHandler4TcpConn* pHandle);
-    ///»ñÈ¡Ò»¸öUNIX-domainÀàĞÍµÄÁ¬½Ó¶ÔÏó£¬·µ»ØNULL±íÊ¾Ã»ÓĞCACHEµÄÁ¬½Ó¶ÔÏó
+    ///è·å–ä¸€ä¸ªUNIX-domainç±»å‹çš„è¿æ¥å¯¹è±¡ï¼Œè¿”å›NULLè¡¨ç¤ºæ²¡æœ‰CACHEçš„è¿æ¥å¯¹è±¡
     inline CwxAppHandler4UnixConn* fetchUnixHandle();
-    ///CacheÒ»¸ö¹Ø±ÕµÄUNIX-domainÀàĞÍµÄÁ¬½Ó¶ÔÏó
+    ///Cacheä¸€ä¸ªå…³é—­çš„UNIX-domainç±»å‹çš„è¿æ¥å¯¹è±¡
     inline void cacheUnixHandle(CwxAppHandler4UnixConn* pHandle);
-    ///»ñÈ¡Ò»¸öIO MSGÀàĞÍµÄÁ¬½Ó¶ÔÏó£¬·µ»ØNULL±íÊ¾Ã»ÓĞCACHEµÄÁ¬½Ó¶ÔÏó
+    ///è·å–ä¸€ä¸ªIO MSGç±»å‹çš„è¿æ¥å¯¹è±¡ï¼Œè¿”å›NULLè¡¨ç¤ºæ²¡æœ‰CACHEçš„è¿æ¥å¯¹è±¡
     inline CwxAppHandler4IoMsg* fetchIoMsgHandle();
-    ///CacheÒ»¸ö¹Ø±ÕµÄIo msgÀàĞÍµÄÁ¬½Ó¶ÔÏó
+    ///Cacheä¸€ä¸ªå…³é—­çš„Io msgç±»å‹çš„è¿æ¥å¯¹è±¡
     inline void cacheIoMsgHandle(CwxAppHandler4IoMsg* pHandle);
-    ///»ñÈ¡Ò»¸öio event handlerÀàĞÍµÄÁ¬½Ó¶ÔÏó£¬·µ»ØNULL±íÊ¾Ã»ÓĞCACHEµÄÁ¬½Ó¶ÔÏó
+    ///è·å–ä¸€ä¸ªio event handlerç±»å‹çš„è¿æ¥å¯¹è±¡ï¼Œè¿”å›NULLè¡¨ç¤ºæ²¡æœ‰CACHEçš„è¿æ¥å¯¹è±¡
     inline CwxAppHandler4IoEvent* fetchIoEventHandle();
-    ///CacheÒ»¸ö¹Ø±ÕµÄio event handlerÀàĞÍµÄÁ¬½Ó¶ÔÏó
+    ///Cacheä¸€ä¸ªå…³é—­çš„io event handlerç±»å‹çš„è¿æ¥å¯¹è±¡
     inline void cacheIoEventHandle(CwxAppHandler4IoEvent* pHandle);
 private:
-    ///ÊÍ·ÅËùÓĞcacheµÄÁ¬½Ó¶ÔÏó
+    ///é‡Šæ”¾æ‰€æœ‰cacheçš„è¿æ¥å¯¹è±¡
     void destroy();
 private:
-    CwxMutexLock                 m_lock;///<CacheµÄËø
-    CWX_UINT32                   m_uiFreeTcpHandleNum;///<cacheµÄTCPÁ¬½Ó¶ÔÏóÊıÁ¿
-    CWX_UINT32                   m_uiFreeUnixHandleNum;///<cacheµÄUNIX-DOMAINÁ¬½Ó¶ÔÏóÊıÁ¿
-    CWX_UINT32                   m_uiFreeIoMsgHandleNum; ///<cache msg handleÁ¬½Ó¶ÔÏóÊıÁ¿
-    CWX_UINT32                   m_uiFreeIoEventHandleNum; ///<cache io eventÁ¬½Ó¶ÔÏóÊıÁ¿
-    CwxAppHandler4TcpConn*        m_freeTcpHandles;///<cacheµÄTCPÁ¬½Ó¶ÔÏóµÄÁ´±í
-    CwxAppHandler4UnixConn*       m_freeUnixHandles;///<cacheµÄUNIX-DOMAINÁ¬½Ó¶ÔÏóÁ´±í
-    CwxAppHandler4IoMsg*          m_freeIoMsgHandles; ///<cache msg handleÁ¬½Ó¶ÔÏóµÄÁ´±í
-    CwxAppHandler4IoEvent*        m_freeIoEventHandles;///<cacheµÄIo eventÁ¬½Ó¶ÔÏóµÄÁ´±í
+    CwxMutexLock                 m_lock;///<Cacheçš„é”
+    CWX_UINT32                   m_uiFreeTcpHandleNum;///<cacheçš„TCPè¿æ¥å¯¹è±¡æ•°é‡
+    CWX_UINT32                   m_uiFreeUnixHandleNum;///<cacheçš„UNIX-DOMAINè¿æ¥å¯¹è±¡æ•°é‡
+    CWX_UINT32                   m_uiFreeIoMsgHandleNum; ///<cache msg handleè¿æ¥å¯¹è±¡æ•°é‡
+    CWX_UINT32                   m_uiFreeIoEventHandleNum; ///<cache io eventè¿æ¥å¯¹è±¡æ•°é‡
+    CwxAppHandler4TcpConn*        m_freeTcpHandles;///<cacheçš„TCPè¿æ¥å¯¹è±¡çš„é“¾è¡¨
+    CwxAppHandler4UnixConn*       m_freeUnixHandles;///<cacheçš„UNIX-DOMAINè¿æ¥å¯¹è±¡é“¾è¡¨
+    CwxAppHandler4IoMsg*          m_freeIoMsgHandles; ///<cache msg handleè¿æ¥å¯¹è±¡çš„é“¾è¡¨
+    CwxAppHandler4IoEvent*        m_freeIoEventHandles;///<cacheçš„Io eventè¿æ¥å¯¹è±¡çš„é“¾è¡¨
 };
 
 CWINUX_END_NAMESPACE

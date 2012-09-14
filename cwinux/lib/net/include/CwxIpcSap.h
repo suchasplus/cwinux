@@ -1,14 +1,14 @@
-#ifndef __CWX_IPC_SAP_H__
+ï»¿#ifndef __CWX_IPC_SAP_H__
 #define __CWX_IPC_SAP_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxIpcSap.h
-@brief ½ø³Ì¼äÍ¨ĞÅhandle¶ÔÏóµÄ»ùÀà¡£
+@brief è¿›ç¨‹é—´é€šä¿¡handleå¯¹è±¡çš„åŸºç±»ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-10
@@ -30,48 +30,48 @@ CWINUX_BEGIN_NAMESPACE
 class CWX_API CwxIpcSap
 {
 public:
-    ///enable»òdisable asynchronous¡£·µ»ØÖµ£¬0³É¹¦£»-1£ºÊ§°Ü¡£
+    ///enableæˆ–disable asynchronousã€‚è¿”å›å€¼ï¼Œ0æˆåŠŸï¼›-1ï¼šå¤±è´¥ã€‚
     int setSigio(bool enable=true) const;
-    ///enable»òdisable  non-blocking I/O¡£·µ»ØÖµ£¬0³É¹¦£»-1£ºÊ§°Ü¡£
+    ///enableæˆ–disable  non-blocking I/Oã€‚è¿”å›å€¼ï¼Œ0æˆåŠŸï¼›-1ï¼šå¤±è´¥ã€‚
     int setNonblock(bool enable=true) const;
-    ///enable»òdisable   close-on-exec¡£·µ»ØÖµ£¬0³É¹¦£»-1£ºÊ§°Ü¡£
+    ///enableæˆ–disable   close-on-execã€‚è¿”å›å€¼ï¼Œ0æˆåŠŸï¼›-1ï¼šå¤±è´¥ã€‚
     int setCloexec (bool enable=true) const;
-    ///enable»òdisable   sigurg¡£·µ»ØÖµ£¬0³É¹¦£»-1£ºÊ§°Ü¡£
+    ///enableæˆ–disable   sigurgã€‚è¿”å›å€¼ï¼Œ0æˆåŠŸï¼›-1ï¼šå¤±è´¥ã€‚
     int setSigurg (bool enable=true) const;
-    ///ÊÇ·ñÉèÖÃÁËsigio, -1£ºÊ§°Ü£¬0£ºÃ»ÓĞ£¬1£ºÉèÖÃ
+    ///æ˜¯å¦è®¾ç½®äº†sigio, -1ï¼šå¤±è´¥ï¼Œ0ï¼šæ²¡æœ‰ï¼Œ1ï¼šè®¾ç½®
     int  isSigio() const;
-    ///ÊÇ·ñÉèÖÃÁËnonblock, -1£ºÊ§°Ü£¬0£ºÃ»ÓĞ£¬1£ºÉèÖÃ
+    ///æ˜¯å¦è®¾ç½®äº†nonblock, -1ï¼šå¤±è´¥ï¼Œ0ï¼šæ²¡æœ‰ï¼Œ1ï¼šè®¾ç½®
     int  isNonBlock() const;
-    ///ÊÇ·ñÉèÖÃÁËCloexec, -1£ºÊ§°Ü£¬0£ºÃ»ÓĞ£¬1£ºÉèÖÃ
+    ///æ˜¯å¦è®¾ç½®äº†Cloexec, -1ï¼šå¤±è´¥ï¼Œ0ï¼šæ²¡æœ‰ï¼Œ1ï¼šè®¾ç½®
     int  isCloexec() const;
-    ///ÊÇ·ñÉèÖÃÁËSigurg, -1£ºÊ§°Ü£¬0£ºÃ»ÓĞ£¬1£ºÉèÖÃ
+    ///æ˜¯å¦è®¾ç½®äº†Sigurg, -1ï¼šå¤±è´¥ï¼Œ0ï¼šæ²¡æœ‰ï¼Œ1ï¼šè®¾ç½®
     int  isSigurg() const;
     /// Get the underlying handle.
     CWX_HANDLE getHandle (void) const;
     /// Set the underlying handle.
     void setHandle (CWX_HANDLE handle);
 public:
-    ///Í¨¹ıfcntlÉèÖÃF_SETFL×´Ì¬£¬·µ»ØÖµ£¬0³É¹¦£»-1£ºÊ§°Ü¡£
+    ///é€šè¿‡fcntlè®¾ç½®F_SETFLçŠ¶æ€ï¼Œè¿”å›å€¼ï¼Œ0æˆåŠŸï¼›-1ï¼šå¤±è´¥ã€‚
     static int setFlags (CWX_HANDLE handle, int flags);
-    ///Í¨¹ıfcntlÇå¿ÕF_SETFL×´Ì¬£¬·µ»ØÖµ£¬0³É¹¦£»-1£ºÊ§°Ü¡£
+    ///é€šè¿‡fcntlæ¸…ç©ºF_SETFLçŠ¶æ€ï¼Œè¿”å›å€¼ï¼Œ0æˆåŠŸï¼›-1ï¼šå¤±è´¥ã€‚
     static int clrFlags (CWX_HANDLE handle, int flags);
-    ///ÅĞ¶ÏÊÇ·ñÉèÖÃÁËflag£¬-1£ºÊ§°Ü£¬0£ºÃ»ÓĞ£»1£ºÉèÖÃ
+    ///åˆ¤æ–­æ˜¯å¦è®¾ç½®äº†flagï¼Œ-1ï¼šå¤±è´¥ï¼Œ0ï¼šæ²¡æœ‰ï¼›1ï¼šè®¾ç½®
     static int isFlags(CWX_HANDLE handle, int flags);
-    ///enable»òdisable asynchronous¡£·µ»ØÖµ£¬0³É¹¦£»-1£ºÊ§°Ü¡£
+    ///enableæˆ–disable asynchronousã€‚è¿”å›å€¼ï¼Œ0æˆåŠŸï¼›-1ï¼šå¤±è´¥ã€‚
     static int setSigio(CWX_HANDLE handle, bool enable=true);
-    ///enable»òdisable  non-blocking I/O¡£·µ»ØÖµ£¬0³É¹¦£»-1£ºÊ§°Ü¡£
+    ///enableæˆ–disable  non-blocking I/Oã€‚è¿”å›å€¼ï¼Œ0æˆåŠŸï¼›-1ï¼šå¤±è´¥ã€‚
     static int setNonblock(CWX_HANDLE handle, bool enable=true);
-    ///enable»òdisable   close-on-exec¡£·µ»ØÖµ£¬0³É¹¦£»-1£ºÊ§°Ü¡£
+    ///enableæˆ–disable   close-on-execã€‚è¿”å›å€¼ï¼Œ0æˆåŠŸï¼›-1ï¼šå¤±è´¥ã€‚
     static int setCloexec (CWX_HANDLE handle, bool enable=true);
-    ///enable»òdisable   sigurg¡£·µ»ØÖµ£¬0³É¹¦£»-1£ºÊ§°Ü¡£
+    ///enableæˆ–disable   sigurgã€‚è¿”å›å€¼ï¼Œ0æˆåŠŸï¼›-1ï¼šå¤±è´¥ã€‚
     static int setSigurg (CWX_HANDLE handle, bool enable=true);
-    ///ÊÇ·ñÉèÖÃÁËsigio, -1£ºÊ§°Ü£¬0£ºÃ»ÓĞ£¬1£ºÉèÖÃ
+    ///æ˜¯å¦è®¾ç½®äº†sigio, -1ï¼šå¤±è´¥ï¼Œ0ï¼šæ²¡æœ‰ï¼Œ1ï¼šè®¾ç½®
     int  isSigio(CWX_HANDLE handle) const;
-    ///ÊÇ·ñÉèÖÃÁËnonblock, -1£ºÊ§°Ü£¬0£ºÃ»ÓĞ£¬1£ºÉèÖÃ
+    ///æ˜¯å¦è®¾ç½®äº†nonblock, -1ï¼šå¤±è´¥ï¼Œ0ï¼šæ²¡æœ‰ï¼Œ1ï¼šè®¾ç½®
     int  isNonBlock(CWX_HANDLE handle) const;
-    ///ÊÇ·ñÉèÖÃÁËCloexec, -1£ºÊ§°Ü£¬0£ºÃ»ÓĞ£¬1£ºÉèÖÃ
+    ///æ˜¯å¦è®¾ç½®äº†Cloexec, -1ï¼šå¤±è´¥ï¼Œ0ï¼šæ²¡æœ‰ï¼Œ1ï¼šè®¾ç½®
     int  isCloexec(CWX_HANDLE handle) const;
-    ///ÊÇ·ñÉèÖÃÁËSigurg, -1£ºÊ§°Ü£¬0£ºÃ»ÓĞ£¬1£ºÉèÖÃ
+    ///æ˜¯å¦è®¾ç½®äº†Sigurg, -1ï¼šå¤±è´¥ï¼Œ0ï¼šæ²¡æœ‰ï¼Œ1ï¼šè®¾ç½®
     int  isSigurg(CWX_HANDLE handle) const;
 protected:
     // = Ensure that CwxIpcSap is an abstract base class.

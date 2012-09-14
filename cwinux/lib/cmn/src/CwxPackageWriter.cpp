@@ -1,8 +1,8 @@
-#include "CwxPackageWriter.h"
+ï»¿#include "CwxPackageWriter.h"
 
 CWINUX_BEGIN_NAMESPACE
 
-///¹¹Ôìº¯Êı£¬
+///æ„é€ å‡½æ•°ï¼Œ
 CwxPackageWriter::CwxPackageWriter(CWX_UINT32 uiBufLen)
 {
     m_uiKeyNum = 0;
@@ -11,7 +11,7 @@ CwxPackageWriter::CwxPackageWriter(CWX_UINT32 uiBufLen)
     m_uiCurPackPos = 0;
     memset(m_szErr, 0x00, ERR_MSG_LEN+1);
 }
-///Îö¹¹
+///ææ„
 CwxPackageWriter::~CwxPackageWriter()
 {
     if (m_szPackMsg) delete [] m_szPackMsg;

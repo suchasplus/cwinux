@@ -1,18 +1,18 @@
-#ifndef __CWX_MSG_HEAD_H__
+ï»¿#ifndef __CWX_MSG_HEAD_H__
 #define __CWX_MSG_HEAD_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 *@file  CwxMsgHead.h
-*@brief CWINUXÍ¨ĞÅ½á¹¹µÄĞ­ÒéÍ·¶¨ÒåÎÄ¼ş
+*@brief CWINUXé€šä¿¡ç»“æ„çš„åè®®å¤´å®šä¹‰æ–‡ä»¶
 *@author cwinux@gmail.com
 *@version 0.1
 *@date  2009-05-30
-*@warning  ÎŞ.
+*@warning  æ— .
 */
 #include "CwxPre.h"
 #include "CwxGlobalMacro.h"
@@ -23,14 +23,14 @@ CWINUX_BEGIN_NAMESPACE
 class CwxMsgBlock;
 /**
 *@class  CwxMsgHead
-*@brief  ÏûÏ¢Í·´ò°ü¡¢½â°üÀà
+*@brief  æ¶ˆæ¯å¤´æ‰“åŒ…ã€è§£åŒ…ç±»
 */
 class CWX_API CwxMsgHead
 {
 public:
     enum{
-        ATTR_SYS_MSG = (1<<0), ///<ÏµÍ³ÏûÏ¢, bit0
-        ATTR_COMPRESS = (1<<1) ///<Êı¾İÊÇÑ¹ËõÊı¾İ
+        ATTR_SYS_MSG = (1<<0), ///<ç³»ç»Ÿæ¶ˆæ¯, bit0
+        ATTR_COMPRESS = (1<<1) ///<æ•°æ®æ˜¯å‹ç¼©æ•°æ®
     };
     enum{
         MSG_TYPE_KEEPALIVE = 1, ///<keep alive  msg 
@@ -38,9 +38,9 @@ public:
     };
 public:
     enum{
-        MSG_HEAD_LEN = 14 ///<ÏûÏ¢Í·µÄ³¤¶È
+        MSG_HEAD_LEN = 14 ///<æ¶ˆæ¯å¤´çš„é•¿åº¦
     };    
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxMsgHead()
     {
         memset(this, 0x00, sizeof(CwxMsgHead));
@@ -58,66 +58,66 @@ public:
         m_uiDataLen = uiDateLen;
     }
 
-    ///¿½±´¹¹Ôì
+    ///æ‹·è´æ„é€ 
     CwxMsgHead(CwxMsgHead const& item)
     {
         memcpy(this, &item, sizeof(item));
     }
-    ///¸³Öµ²Ù×÷
+    ///èµ‹å€¼æ“ä½œ
     CwxMsgHead& operator=(CwxMsgHead const& item)
     {
         memcpy(this, &item, sizeof(item));
         return *this;
     }
-    ///½«ÏûÏ¢Í·´ò°ü³ÉÍøÂç×Ö½ÚĞòµÄÊı¾İ°ü·µ»Ø, 
+    ///å°†æ¶ˆæ¯å¤´æ‰“åŒ…æˆç½‘ç»œå­—èŠ‚åºçš„æ•°æ®åŒ…è¿”å›, 
     inline char const* toNet();
-    ///½«ÊÕµ½µÄÏûÏ¢Í·£¬½â³ÉÏûÏ¢Í·¶ÔÏó¡£
+    ///å°†æ”¶åˆ°çš„æ¶ˆæ¯å¤´ï¼Œè§£æˆæ¶ˆæ¯å¤´å¯¹è±¡ã€‚
     /**
-    *@param [in] szHead ÏûÏ¢°üÍ·
-    *@return false:Ğ£ÑéÂë´íÎó£»true:½â°üÕıÈ·
+    *@param [in] szHead æ¶ˆæ¯åŒ…å¤´
+    *@return false:æ ¡éªŒç é”™è¯¯ï¼›true:è§£åŒ…æ­£ç¡®
     */
     inline bool fromNet(char const* szHead);
-    ///ÊÇ·ñkeepaliveÏûÏ¢
+    ///æ˜¯å¦keepaliveæ¶ˆæ¯
     inline bool isKeepAlive(bool bReply) const
     {
         if (bReply) return isAttr(ATTR_SYS_MSG) && (MSG_TYPE_KEEPALIVE_REPLY==m_unMsgType);
         return isAttr(ATTR_SYS_MSG) && (MSG_TYPE_KEEPALIVE==m_unMsgType);
     }
-    ///ÊÇ·ñÊÇÏµÍ³ÏûÏ¢
+    ///æ˜¯å¦æ˜¯ç³»ç»Ÿæ¶ˆæ¯
     inline bool isSysMsg() const
     {
         return isAttr(ATTR_SYS_MSG);
     }
-    ///ĞÎ³ÉKeepAliveÏûÏ¢·µ»Ø
+    ///å½¢æˆKeepAliveæ¶ˆæ¯è¿”å›
     /**
-    *@param [in] bReply false£ºkeepalive²éÑ¯°ü£»true£ºkeepalive»Ø¸´°ü¡£
-    *@return keepaliveµÄÏûÏ¢°ü¡£
+    *@param [in] bReply falseï¼škeepaliveæŸ¥è¯¢åŒ…ï¼›trueï¼škeepaliveå›å¤åŒ…ã€‚
+    *@return keepaliveçš„æ¶ˆæ¯åŒ…ã€‚
     */
     CwxMsgBlock* packKeepalive(bool bReply);
-    ///ĞÎ³ÉÒ»¸öÏµÍ³ÏûÏ¢µÄ·µ»ØÏûÏ¢£¬ÈôÎª¿Õ£¬Ôò²»»Ø¸´
+    ///å½¢æˆä¸€ä¸ªç³»ç»Ÿæ¶ˆæ¯çš„è¿”å›æ¶ˆæ¯ï¼Œè‹¥ä¸ºç©ºï¼Œåˆ™ä¸å›å¤
     /**
-    *@param [in] header ÊÕµ½µÄÏµÍ³ÏûÏ¢µÄÏûÏ¢Í·
-    *@param [in] msg ÊÕµ½µÄÏµÍ³ÏûÏ¢µÄÊı¾İ¡£
-    *@return keepaliveµÄÏûÏ¢°ü¡£
+    *@param [in] header æ”¶åˆ°çš„ç³»ç»Ÿæ¶ˆæ¯çš„æ¶ˆæ¯å¤´
+    *@param [in] msg æ”¶åˆ°çš„ç³»ç»Ÿæ¶ˆæ¯çš„æ•°æ®ã€‚
+    *@return keepaliveçš„æ¶ˆæ¯åŒ…ã€‚
     */
     CwxMsgBlock* packSysMsgReply(CwxMsgHead const& header, CwxMsgBlock* msg);
-    ///Çå¿Õ
+    ///æ¸…ç©º
     inline void reset()
     {
         memset(this, 0x00, sizeof(CwxMsgHead));
     }
 public:
-    ///¼ì²éÊÇ·ñÉèÖÃÁËÖ¸¶¨µÄÊôĞÔ
+    ///æ£€æŸ¥æ˜¯å¦è®¾ç½®äº†æŒ‡å®šçš„å±æ€§
     inline bool isAttr(CWX_UINT8 ucAttr) const
     {
         return 0 != (m_ucAttr&ucAttr);
     }
-    ///ÉèÖÃÖ¸¶¨µÄÊôĞÔ
+    ///è®¾ç½®æŒ‡å®šçš„å±æ€§
     inline void addAttr(CWX_UINT8 ucAttr)
     {
         m_ucAttr |= ucAttr;
     }
-    ///Çå¿ÕÖ¸¶¨µÄÊôĞÔ
+    ///æ¸…ç©ºæŒ‡å®šçš„å±æ€§
     inline void clrAttr(CWX_UINT8 ucAttr)
     {
         m_ucAttr &= ~ucAttr;
@@ -162,26 +162,26 @@ public:
     {
         return m_uiTaskId;
     }
-    ///set data len£¬²»°üÀ¨°üÍ·
+    ///set data lenï¼Œä¸åŒ…æ‹¬åŒ…å¤´
     inline void setDataLen(CWX_UINT32 uiDataLen)
     {
         m_uiDataLen = uiDataLen;
     }
-    ///get data len£¬²»°üÀ¨°üÍ·
+    ///get data lenï¼Œä¸åŒ…æ‹¬åŒ…å¤´
     inline CWX_UINT32 getDataLen() const
     {
         return m_uiDataLen;
     }
-    ///ÉèÖÃpackageµÄ×î´ó´óĞ¡
+    ///è®¾ç½®packageçš„æœ€å¤§å¤§å°
     static void setMaxMsgSize(CWX_UINT32 uiSize);
-    ///»ñÈ¡packageµÄ×î´ó´óĞ¡
+    ///è·å–packageçš„æœ€å¤§å¤§å°
     static CWX_UINT32 getMaxMsgSize();
 private:
-    CWX_UINT8      m_ucVersion;  ///<ÏûÏ¢°æ±¾ºÅ
-    CWX_UINT8      m_ucAttr;     ///<ÏûÏ¢ÊôĞÔ
-    CWX_UINT16     m_unMsgType;  ///<ÏûÏ¢ÀàĞÍ
-    CWX_UINT32     m_uiTaskId;   ///<ÈÎÎñºÅID
-    CWX_UINT32     m_uiDataLen;  ///<·¢ËÍµÄÊı¾İ³¤¶È£¬²»°üÀ¨°üÍ·
+    CWX_UINT8      m_ucVersion;  ///<æ¶ˆæ¯ç‰ˆæœ¬å·
+    CWX_UINT8      m_ucAttr;     ///<æ¶ˆæ¯å±æ€§
+    CWX_UINT16     m_unMsgType;  ///<æ¶ˆæ¯ç±»å‹
+    CWX_UINT32     m_uiTaskId;   ///<ä»»åŠ¡å·ID
+    CWX_UINT32     m_uiDataLen;  ///<å‘é€çš„æ•°æ®é•¿åº¦ï¼Œä¸åŒ…æ‹¬åŒ…å¤´
     char           m_szHead[MSG_HEAD_LEN]; ///< msg's data
     static CWX_UINT32  m_uiMaxMsgSize;
 };

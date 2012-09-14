@@ -1,14 +1,14 @@
-#ifndef __CWX_SOCK_IO_H__
+ï»¿#ifndef __CWX_SOCK_IO_H__
 #define __CWX_SOCK_IO_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxSockIo.h
-@brief CwxSockIoÀàµÄ¶¨Òå¡£
+@brief CwxSockIoç±»çš„å®šä¹‰ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2010-06-10
@@ -24,7 +24,7 @@ CWINUX_BEGIN_NAMESPACE
 /**
 * @class CwxSockIo 
 *
-* @brief  Defines the methods for the  socket wrapper I/O routines¡£
+* @brief  Defines the methods for the  socket wrapper I/O routinesã€‚
 * (e.g., send/recv).
 * 
 */
@@ -42,12 +42,12 @@ public:
     ~CwxSockIo (void);
 
     /**
-    @brief ´ÓÁ¬½ÓÉÏ½ÓÊÜÊı¾İ¡£ÊÇ¶ÔOSµÄrecv½Ó¿ÚµÄ·â×°
-    @param [in] buf ½ÓÊÕÊı¾İµÄbuf
-    @param [in] n bufµÄ³¤¶È
-    @param [in] flags osµÄrecv apiµÄflag
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£ºfailure£¬°üÀ¨³¬Ê±£»0£º¶Ô¶Ë¹Ø±Õ£»>0£º¶ÁÈ¡µÄ×Ö½ÚÊıÁ¿
+    @brief ä»è¿æ¥ä¸Šæ¥å—æ•°æ®ã€‚æ˜¯å¯¹OSçš„recvæ¥å£çš„å°è£…
+    @param [in] buf æ¥æ”¶æ•°æ®çš„buf
+    @param [in] n bufçš„é•¿åº¦
+    @param [in] flags osçš„recv apiçš„flag
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @return -1ï¼šfailureï¼ŒåŒ…æ‹¬è¶…æ—¶ï¼›0ï¼šå¯¹ç«¯å…³é—­ï¼›>0ï¼šè¯»å–çš„å­—èŠ‚æ•°é‡
     */
     ssize_t recv (void *buf,
         size_t n,
@@ -55,51 +55,51 @@ public:
         CwxTimeouter *timeout = 0) const;
 
     /**
-    @brief ´ÓÁ¬½ÓÉÏ½ÓÊÜÊı¾İ¡£ÊÇ¶ÔOSµÄread½Ó¿ÚµÄ·â×°
-    @param [in] buf ½ÓÊÕÊı¾İµÄbuf
-    @param [in] n bufµÄ³¤¶È
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£ºfailure£¬°üÀ¨³¬Ê±£»0£º¶Ô¶Ë¹Ø±Õ£»>0£º¶ÁÈ¡µÄ×Ö½ÚÊıÁ¿
+    @brief ä»è¿æ¥ä¸Šæ¥å—æ•°æ®ã€‚æ˜¯å¯¹OSçš„readæ¥å£çš„å°è£…
+    @param [in] buf æ¥æ”¶æ•°æ®çš„buf
+    @param [in] n bufçš„é•¿åº¦
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @return -1ï¼šfailureï¼ŒåŒ…æ‹¬è¶…æ—¶ï¼›0ï¼šå¯¹ç«¯å…³é—­ï¼›>0ï¼šè¯»å–çš„å­—èŠ‚æ•°é‡
     */
     ssize_t recv (void *buf,
         size_t n,
         CwxTimeouter *timeout = 0) const;
 
     /**
-    @brief ´ÓÁ¬½ÓÉÏ½ÓÊÜÊı¾İ¡£ÊÇ¶ÔOSµÄreadv½Ó¿ÚµÄ·â×°
-    @param [in] iov ½ÓÊÕÊı¾İµÄ¿Õ¼äµÄÊı×é
-    @param [in] n Êı×éµÄ´óĞ¡
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£ºfailure£¬°üÀ¨³¬Ê±£»0£º¶Ô¶Ë¹Ø±Õ£»>0£º¶ÁÈ¡µÄ×Ö½ÚÊıÁ¿
+    @brief ä»è¿æ¥ä¸Šæ¥å—æ•°æ®ã€‚æ˜¯å¯¹OSçš„readvæ¥å£çš„å°è£…
+    @param [in] iov æ¥æ”¶æ•°æ®çš„ç©ºé—´çš„æ•°ç»„
+    @param [in] n æ•°ç»„çš„å¤§å°
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @return -1ï¼šfailureï¼ŒåŒ…æ‹¬è¶…æ—¶ï¼›0ï¼šå¯¹ç«¯å…³é—­ï¼›>0ï¼šè¯»å–çš„å­—èŠ‚æ•°é‡
     */
     ssize_t recvv (iovec iov[],
         int n,
         CwxTimeouter  *timeout = 0) const;
     /**
-    @brief ×î¶à½ÓÊÕlen×Ö½ÚµÄÊı¾İ¡£
-    @param [out] buf ½ÓÊÕÊı¾İµÄbuf¡£
-    @param [in] len ½ÓÊÕÊı¾İµÄ×Ö½ÚÊı¡£
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£ºfailure£¬°üÀ¨³¬Ê±£»0£º¶Ô¶Ë¹Ø±Õ£»>0£º¶ÁÈ¡µÄ×Ö½ÚÊıÁ¿
+    @brief æœ€å¤šæ¥æ”¶lenå­—èŠ‚çš„æ•°æ®ã€‚
+    @param [out] buf æ¥æ”¶æ•°æ®çš„bufã€‚
+    @param [in] len æ¥æ”¶æ•°æ®çš„å­—èŠ‚æ•°ã€‚
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @return -1ï¼šfailureï¼ŒåŒ…æ‹¬è¶…æ—¶ï¼›0ï¼šå¯¹ç«¯å…³é—­ï¼›>0ï¼šè¯»å–çš„å­—èŠ‚æ•°é‡
     */
     ssize_t read (void *buf, size_t len, CwxTimeouter  *timeout = 0) const;
 
     /**
-    @brief ×î¶à·¢ËÍlen×Ö½ÚµÄÊı¾İ¡£
-    @param [in] buf ·¢ËÍÊı¾İµÄbuf¡£
-    @param [in] len ·¢ËÍÊı¾İµÄ×Ö½ÚÊı¡£
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£ºfailure£¬°üÀ¨³¬Ê±£»·ñÔò£¬Îª·¢ËÍµÄ×Ö½ÚÊıÁ¿
+    @brief æœ€å¤šå‘é€lenå­—èŠ‚çš„æ•°æ®ã€‚
+    @param [in] buf å‘é€æ•°æ®çš„bufã€‚
+    @param [in] len å‘é€æ•°æ®çš„å­—èŠ‚æ•°ã€‚
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @return -1ï¼šfailureï¼ŒåŒ…æ‹¬è¶…æ—¶ï¼›å¦åˆ™ï¼Œä¸ºå‘é€çš„å­—èŠ‚æ•°é‡
     */
     ssize_t write (const void *buf, size_t len, CwxTimeouter  *timeout = 0) const;
 
     /**
-    @brief ÍùÁ¬½ÓÉÏ·¢ËÍÊı¾İ¡£ÊÇ¶ÔOSµÄsend½Ó¿ÚµÄ·â×°
-    @param [in] buf Êı¾İµÄbuf
-    @param [in] n Êı¾İµÄ³¤¶È
-    @param [in] flags osµÄsend apiµÄflag
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£ºfailure£¬°üÀ¨³¬Ê±£»·ñÔò£¬Îª·¢ËÍµÄ×Ö½ÚÊıÁ¿
+    @brief å¾€è¿æ¥ä¸Šå‘é€æ•°æ®ã€‚æ˜¯å¯¹OSçš„sendæ¥å£çš„å°è£…
+    @param [in] buf æ•°æ®çš„buf
+    @param [in] n æ•°æ®çš„é•¿åº¦
+    @param [in] flags osçš„send apiçš„flag
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @return -1ï¼šfailureï¼ŒåŒ…æ‹¬è¶…æ—¶ï¼›å¦åˆ™ï¼Œä¸ºå‘é€çš„å­—èŠ‚æ•°é‡
     */
     ssize_t send (const void *buf,
         size_t n,
@@ -107,22 +107,22 @@ public:
         CwxTimeouter  *timeout = 0) const;
 
     /**
-    @brief ÍùÁ¬½ÓÉÏ·¢ËÍÊı¾İ¡£ÊÇ¶ÔOSµÄwrite½Ó¿ÚµÄ·â×°
-    @param [in] buf ·¢ËÍÊı¾İµÄbuf
-    @param [in] n ·¢ËÍÊı¾İµÄ³¤¶È
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£ºfailure£¬°üÀ¨³¬Ê±£»·ñÔòÎªĞ´×Ö½ÚµÄÊıÁ¿
+    @brief å¾€è¿æ¥ä¸Šå‘é€æ•°æ®ã€‚æ˜¯å¯¹OSçš„writeæ¥å£çš„å°è£…
+    @param [in] buf å‘é€æ•°æ®çš„buf
+    @param [in] n å‘é€æ•°æ®çš„é•¿åº¦
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @return -1ï¼šfailureï¼ŒåŒ…æ‹¬è¶…æ—¶ï¼›å¦åˆ™ä¸ºå†™å­—èŠ‚çš„æ•°é‡
     */
     ssize_t send (const void *buf,
         size_t n,
         CwxTimeouter  *timeout = 0) const;
 
     /**
-    @brief ÍùÁ¬½ÓÉÏ·¢ËÍÊı¾İ¡£ÊÇ¶ÔOSµÄwritev½Ó¿ÚµÄ·â×°
-    @param [in] iov Êı¾İµÄbufÊı×é
-    @param [in] n Êı×éµÄ´óĞ¡
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£ºfailure£¬°üÀ¨³¬Ê±£»·ñÔòÎª·¢ËÍµÄ×Ö½ÚÊıÁ¿
+    @brief å¾€è¿æ¥ä¸Šå‘é€æ•°æ®ã€‚æ˜¯å¯¹OSçš„writevæ¥å£çš„å°è£…
+    @param [in] iov æ•°æ®çš„bufæ•°ç»„
+    @param [in] n æ•°ç»„çš„å¤§å°
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @return -1ï¼šfailureï¼ŒåŒ…æ‹¬è¶…æ—¶ï¼›å¦åˆ™ä¸ºå‘é€çš„å­—èŠ‚æ•°é‡
     */
     ssize_t sendv (const iovec iov[],
         int n,

@@ -1,18 +1,18 @@
-#ifndef __CWX_POST_H__
+ï»¿#ifndef __CWX_POST_H__
 #define __CWX_POST_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 *@file  CwxPost.h
-*@brief Î»ÓÚËùÓĞÍ·ÎÄ¼şµÄ×îºó£¬È¡ÏûÍ³Ò»µÄ±àÒë¹æÔò
+*@brief ä½äºæ‰€æœ‰å¤´æ–‡ä»¶çš„æœ€åï¼Œå–æ¶ˆç»Ÿä¸€çš„ç¼–è¯‘è§„åˆ™
 *@author cwinux@gmail.com
 *@version 0.1
 *@date  2009-06-28
-*@warning  ÎŞ.
+*@warning  æ— .
 */
 
 #endif

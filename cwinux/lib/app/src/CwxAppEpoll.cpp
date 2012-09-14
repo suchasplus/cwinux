@@ -1,12 +1,12 @@
-#include "CwxAppEpoll.h"
+ï»¿#include "CwxAppEpoll.h"
 
 
 
 CWINUX_BEGIN_NAMESPACE
 
-int CwxAppEpoll::m_signalFd[2]={CWX_INVALID_HANDLE,CWX_INVALID_HANDLE}; ///<ĞÅºÅµÄ¶ÁĞ´handle
-sig_atomic_t CwxAppEpoll::m_arrSignals[CWX_APP_MAX_SIGNAL_ID + 1]={0};///<signalµÄÊı×é
-volatile sig_atomic_t  CwxAppEpoll::m_bSignal=0; ///<ÊÇ·ñÓĞĞÅºÅ
+int CwxAppEpoll::m_signalFd[2]={CWX_INVALID_HANDLE,CWX_INVALID_HANDLE}; ///<ä¿¡å·çš„è¯»å†™handle
+sig_atomic_t CwxAppEpoll::m_arrSignals[CWX_APP_MAX_SIGNAL_ID + 1]={0};///<signalçš„æ•°ç»„
+volatile sig_atomic_t  CwxAppEpoll::m_bSignal=0; ///<æ˜¯å¦æœ‰ä¿¡å·
 
 CwxAppEpoll::CwxAppEpoll(bool bEnableSignal):m_timeHeap(4096)
 {
@@ -29,7 +29,7 @@ CwxAppEpoll::CwxAppEpoll(bool bEnableSignal):m_timeHeap(4096)
 
 CwxAppEpoll::~CwxAppEpoll()
 {
-    //É¾³ı¸÷¸öhandler
+    //åˆ é™¤å„ä¸ªhandler
     int i=0;
     for (i=0; i<CWX_APP_MAX_IO_NUM; i++)
     {
@@ -41,13 +41,13 @@ CwxAppEpoll::~CwxAppEpoll()
     }
     if (m_bEnableSignal)
     {
-        //É¾³ısignal handler
+        //åˆ é™¤signal handler
         for (i=0; i<CWX_APP_MAX_SIGNAL_ID; i++)
         {
             if (m_sHandler[i]) m_sHandler[i]->close(m_sHandler[i]->getHandle());
         }
     }
-    //É¾³ıtimeout handler
+    //åˆ é™¤timeout handler
     CwxAppHandler4Base* handler;
     while((handler=m_timeHeap.pop()))
     {
@@ -70,7 +70,7 @@ CwxAppEpoll::~CwxAppEpoll()
     }
 }
 
-///³õÊ¼»¯epoll
+///åˆå§‹åŒ–epoll
 int CwxAppEpoll::init()
 {
     if (CWX_INVALID_HANDLE != m_epfd)
@@ -97,7 +97,7 @@ int CwxAppEpoll::init()
 
     if (m_bEnableSignal)
     {
-        //´´½¨signalµÄhandle
+        //åˆ›å»ºsignalçš„handle
         if (0 != pipe(m_signalFd))
         {
             CWX_ERROR(("Failure to invokde pipe to create signal fd, errno=%d", errno));
@@ -123,7 +123,7 @@ int CwxAppEpoll::init()
             CWX_ERROR(("Failure to set signal handle[1]'s noblock sign, errno=%d", errno));
             return -1;
         }
-        //×¢²áĞÅºÅfdµÄ¶Á
+        //æ³¨å†Œä¿¡å·fdçš„è¯»
         m_sigHandler->setHandle(m_signalFd[0]);
         if (0 != registerHandler(m_signalFd[0], m_sigHandler, CwxAppHandler4Base::PREAD_MASK))
         {
@@ -144,14 +144,14 @@ int CwxAppEpoll::registerHandler(CWX_HANDLE handle,
         CWX_ERROR(("Invalid io handle id[%d], range[0,%d]", handle, CWX_APP_MAX_IO_NUM));
         return -1;
     }
-    ///ÈôhandleÏàµÈ£¬ÊÇforkºóµÄÖØĞÂÌí¼Ó
+    ///è‹¥handleç›¸ç­‰ï¼Œæ˜¯forkåçš„é‡æ–°æ·»åŠ 
     if (m_eHandler[handle].m_handler)
     {
         CWX_ERROR(("handler is registered, handle[%d]", (int)handle));
         return -1;
     }
 
-    mask &=CwxAppHandler4Base::IO_MASK; ///Ö»Ö§³ÖREAD¡¢WRITE¡¢PERSIST¡¢TIMEOUTËÄÖÖÑÚÂë
+    mask &=CwxAppHandler4Base::IO_MASK; ///åªæ”¯æŒREADã€WRITEã€PERSISTã€TIMEOUTå››ç§æ©ç 
     if (uiMillSecond) mask |= CwxAppHandler4Base::TIMEOUT_MASK;
 
     if (uiMillSecond)
@@ -166,12 +166,12 @@ int CwxAppEpoll::registerHandler(CWX_HANDLE handle,
         }
     }
 
-    if (mask&CwxAppHandler4Base::RW_MASK) ///Èç¹û´æÔÚREAD¡¢WRITEµÄÑÚÂë£¬Ôò×¢²á
+    if (mask&CwxAppHandler4Base::RW_MASK) ///å¦‚æœå­˜åœ¨READã€WRITEçš„æ©ç ï¼Œåˆ™æ³¨å†Œ
     {
         if (0 != addEvent(handle, mask))
         {
             if (uiMillSecond) 
-                m_timeHeap.erase(event_handler); ///É¾³ıtimeout
+                m_timeHeap.erase(event_handler); ///åˆ é™¤timeout
             return -1;
         }
     }
@@ -375,7 +375,7 @@ int CwxAppEpoll::forkReinit()
     }
     if (m_bEnableSignal)
     {
-        //´´½¨signalµÄhandle
+        //åˆ›å»ºsignalçš„handle
         if (0 != pipe(m_signalFd))
         {
             CWX_ERROR(("Failure to invokde socketpair to create signal fd, errno=%d", errno));
@@ -402,7 +402,7 @@ int CwxAppEpoll::forkReinit()
             return -1;
         }
     }
-    //»Ö¸´handle
+    //æ¢å¤handle
     {
         EventHandle eHandler[CWX_APP_MAX_IO_NUM];
         memcpy(eHandler, m_eHandler, sizeof(m_eHandler));
@@ -411,15 +411,15 @@ int CwxAppEpoll::forkReinit()
             m_eHandler[i].m_mask = 0;
             m_eHandler[i].m_handler = NULL;
         }
-        //Çå³ısignalµÄhandler
+        //æ¸…é™¤signalçš„handler
         eHandler[old_sigFd].m_mask = 0;
         eHandler[old_sigFd].m_handler = 0;
-        //Ìí¼Óhandler
+        //æ·»åŠ handler
         for (i=0; i<CWX_APP_MAX_IO_NUM; i++)
         {
             if (eHandler[i].m_handler)
             {
-                if (eHandler[i].m_mask&CwxAppHandler4Base::RW_MASK) ///Èç¹û´æÔÚREAD¡¢WRITEµÄÑÚÂë£¬Ôò×¢²á
+                if (eHandler[i].m_mask&CwxAppHandler4Base::RW_MASK) ///å¦‚æœå­˜åœ¨READã€WRITEçš„æ©ç ï¼Œåˆ™æ³¨å†Œ
                 {
                     if (0 != addEvent(eHandler[i].m_handler->getHandle(), eHandler[i].m_mask))
                     {
@@ -442,7 +442,7 @@ int CwxAppEpoll::forkReinit()
     }
     if (m_bEnableSignal)
     {
-        //»Ø¸´ĞÅºÅ,signalµÄÆÁ±Î×´Ì¬»á´Ó¸¸½ø³Ì´«µİ
+        //å›å¤ä¿¡å·,signalçš„å±è”½çŠ¶æ€ä¼šä»çˆ¶è¿›ç¨‹ä¼ é€’
         for (i=0; i<CWX_APP_MAX_SIGNAL_ID; i++)
         {
             m_arrSignals[i] = 0;
@@ -468,7 +468,7 @@ int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg, CWX_UINT32 uiMiliTim
     m_current.now();
     ullNow = m_current.to_usec();
     
-    if (ullLastTime > ullNow + 1000000){ ///¶àÓà1Ãë
+    if (ullLastTime > ullNow + 1000000){ ///å¤šä½™1ç§’
         ullLastTime = ullNow;
         bClockChange = true;
     }else{
@@ -476,7 +476,7 @@ int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg, CWX_UINT32 uiMiliTim
         ullLastTime = ullNow;
     }
 
-    ///¼ÆËã³¬Ê±Ê±¼ä
+    ///è®¡ç®—è¶…æ—¶æ—¶é—´
     timeout(ullTimeout);
     if (ullTimeout){
         if (ullTimeout < ullNow){
@@ -507,9 +507,9 @@ int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg, CWX_UINT32 uiMiliTim
             if (event->events & EPOLLIN) mask |= CwxAppHandler4Base::READ_MASK;
             if (event->events & EPOLLOUT) mask |= CwxAppHandler4Base::WRITE_MASK;
             handler = m_eHandler[event->data.fd].m_handler;
-            //¼ì²âtimeout
+            //æ£€æµ‹timeout
             if (m_eHandler[event->data.fd].m_handler->index()>=0)
-            {//´ÓheapÖĞÉ¾³ı
+            {//ä»heapä¸­åˆ é™¤
                 if (0 != cancelTimer(m_eHandler[event->data.fd].m_handler))
                 {
                     CWX_ERROR(("Failure to cancel hander's timer, fd[%d]", event->data.fd));
@@ -530,7 +530,7 @@ int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg, CWX_UINT32 uiMiliTim
                 arg);
         }
     }
-    //¼ì²âsignal
+    //æ£€æµ‹signal
     if (m_bSignal && m_bEnableSignal)
     {
         if (m_bStop) return 0;
@@ -548,7 +548,7 @@ int CwxAppEpoll::poll(REACTOR_CALLBACK callback, void* arg, CWX_UINT32 uiMiliTim
             }
         }
     }
-    //¼ì²â³¬Ê±
+    //æ£€æµ‹è¶…æ—¶
     if (bClockChange){
         list<CwxAppHandler4Base*> handles;
         while(!m_timeHeap.isEmpty()){

@@ -1,14 +1,14 @@
-#ifndef __CWX_APP_HANDLER_4_IO_MSG_H__
+ï»¿#ifndef __CWX_APP_HANDLER_4_IO_MSG_H__
 #define __CWX_APP_HANDLER_4_IO_MSG_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxAppHandler4IoMsg.h
-@brief ¶¨Òå»ùÓÚmsgÊÕ·¢µÄIOÍ¨ĞÅ¡¢¹ÜÀíµÄHandle¶ÔÏóCwxAppHandler4IoMsg¡£
+@brief å®šä¹‰åŸºäºmsgæ”¶å‘çš„IOé€šä¿¡ã€ç®¡ç†çš„Handleå¯¹è±¡CwxAppHandler4IoMsgã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-07-20
@@ -28,17 +28,17 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxAppHandler4IoMsg
-@brief PIPE¡¢¼°ÆäËûIOÍ¨ĞÅ¡¢×´Ì¬¹ÜÀíµÄHandle¶ÔÏó
+@brief PIPEã€åŠå…¶ä»–IOé€šä¿¡ã€çŠ¶æ€ç®¡ç†çš„Handleå¯¹è±¡
 */
 class CwxAppFramework;
 
 class CWX_API CwxAppHandler4IoMsg:public CwxAppHandler4Msg
 {
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxAppHandler4IoMsg(CwxAppFramework* pApp,
         CwxAppReactor *reactor);
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxAppHandler4IoMsg();
 public:
     ///handle close

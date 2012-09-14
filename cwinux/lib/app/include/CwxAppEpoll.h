@@ -1,15 +1,15 @@
-#ifndef __CWX_APP_EPOLL_H__
+ï»¿#ifndef __CWX_APP_EPOLL_H__
 #define __CWX_APP_EPOLL_H__
 
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxAppEpoll.h
-@brief ¼Ü¹¹µÄepollÊÂ¼şÒıÇæ¶ÔÏó
+@brief æ¶æ„çš„epolläº‹ä»¶å¼•æ“å¯¹è±¡
 @author cwinux@gmail.com
 @version 0.1
 @date 2011-04-13
@@ -39,7 +39,7 @@ class CwxAppChannel;
 
 /**
 @class CwxAppEpoll
-@brief ¼Ü¹¹µÄepollÊÂ¼şÒıÇæ
+@brief æ¶æ„çš„epolläº‹ä»¶å¼•æ“
 */
 typedef void (*REACTOR_CALLBACK)(CwxAppHandler4Base* handler, int mask, bool bPersist, void *arg);
 
@@ -51,104 +51,104 @@ public:
         CWX_EPOLL_INIT_HANDLE = 81920
     };
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxAppEpoll(bool bEnableSignal=true);
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxAppEpoll();
 public:
     /**
-    @brief ³õÊ¼»¯epollÒıÇæ¡£
-    @return -1£ºÊ§°Ü£»0£º³É¹¦
+    @brief åˆå§‹åŒ–epollå¼•æ“ã€‚
+    @return -1ï¼šå¤±è´¥ï¼›0ï¼šæˆåŠŸ
     */
     int init();
     /**
-    @brief ×¢²áIOÊÂ¼ş´¦Àíhandle¡£
-    @param [in] handle ¼à²âµÄIO handle
-    @param [in] event_handler io handle¶ÔÓ¦µÄevent handler¡£
-    @param [in] mask ×¢²áµÄÊÂ¼şÑÚÂë£¬ÎªREAD_MASK¡¢WRITE_MASK¡¢PERSIST_MASK¡¢TIMEOUT_MASK×éºÏ
-    @param [in] uiMillSecond ¶àÉÙºÁÃë³¬Ê±¡£0±íÊ¾Ã»ÓĞ³¬Ê±ÉèÖÃ¡£
-    @param [in] bForkAdd ÊÇ·ñÊÇforkºóÖØĞÂÌí¼Ó¡£
-    @return -1£ºÊ§°Ü£»0£º³É¹¦£»
+    @brief æ³¨å†ŒIOäº‹ä»¶å¤„ç†handleã€‚
+    @param [in] handle ç›‘æµ‹çš„IO handle
+    @param [in] event_handler io handleå¯¹åº”çš„event handlerã€‚
+    @param [in] mask æ³¨å†Œçš„äº‹ä»¶æ©ç ï¼Œä¸ºREAD_MASKã€WRITE_MASKã€PERSIST_MASKã€TIMEOUT_MASKç»„åˆ
+    @param [in] uiMillSecond å¤šå°‘æ¯«ç§’è¶…æ—¶ã€‚0è¡¨ç¤ºæ²¡æœ‰è¶…æ—¶è®¾ç½®ã€‚
+    @param [in] bForkAdd æ˜¯å¦æ˜¯forkåé‡æ–°æ·»åŠ ã€‚
+    @return -1ï¼šå¤±è´¥ï¼›0ï¼šæˆåŠŸï¼›
     */
     int registerHandler(CWX_HANDLE handle,
         CwxAppHandler4Base *event_handler,
         int mask,
         CWX_UINT32 uiMillSecond = 0);
     /**
-    @brief É¾³ıioÊÂ¼ş´¦Àíhandle¡£
-    @param [in] handle ÒÆ³ıµÄ io handle
-    @return NULL£º²»´æÔÚ£»·ñÔò£º³É¹¦£»
+    @brief åˆ é™¤ioäº‹ä»¶å¤„ç†handleã€‚
+    @param [in] handle ç§»é™¤çš„ io handle
+    @return NULLï¼šä¸å­˜åœ¨ï¼›å¦åˆ™ï¼šæˆåŠŸï¼›
     */
     CwxAppHandler4Base* removeHandler (CWX_HANDLE handle);
     /**
-    @brief suspend ioÊÂ¼ş´¦Àíhandle¡£
+    @brief suspend ioäº‹ä»¶å¤„ç†handleã€‚
     @param [in] handle suspend io handle
-    @param [in] suspend_mask suspendµÄÊÂ¼ş,ÎªREAD_MASK¡¢WRITE_MASK×éºÏ
-    @return -1£ºÊ§°Ü£»0£º³É¹¦
+    @param [in] suspend_mask suspendçš„äº‹ä»¶,ä¸ºREAD_MASKã€WRITE_MASKç»„åˆ
+    @return -1ï¼šå¤±è´¥ï¼›0ï¼šæˆåŠŸ
     */
     int suspendHandler (CWX_HANDLE handle,
         int suspend_mask);
     /**
-    @brief resume ioÊÂ¼ş´¦Àíhandle¡£
+    @brief resume ioäº‹ä»¶å¤„ç†handleã€‚
     @param [in] handle resume io handle
-    @param [in] resume_mask resumeµÄÊÂ¼ş,ÎªREAD_MASK¡¢WRITE_MASK×éºÏ
-    @return -1£ºÊ§°Ü£»0£º³É¹¦£»
+    @param [in] resume_mask resumeçš„äº‹ä»¶,ä¸ºREAD_MASKã€WRITE_MASKç»„åˆ
+    @return -1ï¼šå¤±è´¥ï¼›0ï¼šæˆåŠŸï¼›
     */
     int resumeHandler (CWX_HANDLE handle,
         int resume_mask);
     /**
-    @brief ×¢²ásignalÊÂ¼ş´¦Àíhandle£¬ĞÅºÅ¾ßÓĞPERSISTÊôĞÔ¡£
-    @param [in] signum ĞÅºÅ
-    @param [in] event_handler signalµÄevent handler
-    @return -1£ºÊ§°Ü£» 0£º³É¹¦£»
+    @brief æ³¨å†Œsignaläº‹ä»¶å¤„ç†handleï¼Œä¿¡å·å…·æœ‰PERSISTå±æ€§ã€‚
+    @param [in] signum ä¿¡å·
+    @param [in] event_handler signalçš„event handler
+    @return -1ï¼šå¤±è´¥ï¼› 0ï¼šæˆåŠŸï¼›
     */
     int registerSignal(int signum,
         CwxAppHandler4Base *event_handler);
     /**
-    @brief É¾³ısignalÊÂ¼ş´¦Àíhandle¡£
-    @param [in] event_handler signalµÄevent handler
-    @return -1£ºÊ§°Ü£»0£º³É¹¦£»
+    @brief åˆ é™¤signaläº‹ä»¶å¤„ç†handleã€‚
+    @param [in] event_handler signalçš„event handler
+    @return -1ï¼šå¤±è´¥ï¼›0ï¼šæˆåŠŸï¼›
     */
     int removeSignal(CwxAppHandler4Base *event_handler);
     /**
-    @brief É¾³ısignalÊÂ¼ş´¦Àíhandle¡£¶àÏß³Ì°²È«£¬ÈÎÒâÏß³Ì¶¼¿ÉÒÔµ÷ÓÃ¡£
+    @brief åˆ é™¤signaläº‹ä»¶å¤„ç†handleã€‚å¤šçº¿ç¨‹å®‰å…¨ï¼Œä»»æ„çº¿ç¨‹éƒ½å¯ä»¥è°ƒç”¨ã€‚
     @param [in] sig signal
-    @return NULL£º²»´æÔÚ£»·ñÔò·µ»ØsignalµÄhandler
+    @return NULLï¼šä¸å­˜åœ¨ï¼›å¦åˆ™è¿”å›signalçš„handler
     */
     CwxAppHandler4Base* removeSignal(int sig);
 
     /**
-    @brief ÉèÖÃ¶¨Ê±´¦Àíhandle£¬timeout²»¾ßÓĞpersistÌØĞÔ¡£
-    @param [in] event_handler timerµÄevent handler
-    @param [in] interval ¶¨Ê±µÄ¼ä¸ô
-    @return -1£ºÊ§°Ü£»0£º³É¹¦£»
+    @brief è®¾ç½®å®šæ—¶å¤„ç†handleï¼Œtimeoutä¸å…·æœ‰persistç‰¹æ€§ã€‚
+    @param [in] event_handler timerçš„event handler
+    @param [in] interval å®šæ—¶çš„é—´éš”
+    @return -1ï¼šå¤±è´¥ï¼›0ï¼šæˆåŠŸï¼›
     */
     int scheduleTimer (CwxAppHandler4Base *event_handler,
         CwxTimeValue const &interval);
-    ///È¡Ïû¶¨Ê±´¦Àíhandle¡£
+    ///å–æ¶ˆå®šæ—¶å¤„ç†handleã€‚
     int cancelTimer (CwxAppHandler4Base *event_handler);
-    ///forkµÄre-init·½·¨£¬·µ»ØÖµ£¬0£º³É¹¦£»-1£ºÊ§°Ü
+    ///forkçš„re-initæ–¹æ³•ï¼Œè¿”å›å€¼ï¼Œ0ï¼šæˆåŠŸï¼›-1ï¼šå¤±è´¥
     int forkReinit();
     /**
-    @brief ¼ì²âÊÂ¼ş¡£
-    @param [in] callback ÊÂ¼şµÄ»Øµ÷º¯Êı
-    @param [in] arg »Øµ÷º¯ÊıµÄ²ÎÊı
-    @param [in] uiMiliTimeout ³¬Ê±µÄºÁÃëÊı£¬0±íÊ¾Ò»Ö±×èÈûµ½ÊÂ¼ş·¢Éú¡£
-    @return -1£ºÊ§°Ü£»0£º³É¹¦
+    @brief æ£€æµ‹äº‹ä»¶ã€‚
+    @param [in] callback äº‹ä»¶çš„å›è°ƒå‡½æ•°
+    @param [in] arg å›è°ƒå‡½æ•°çš„å‚æ•°
+    @param [in] uiMiliTimeout è¶…æ—¶çš„æ¯«ç§’æ•°ï¼Œ0è¡¨ç¤ºä¸€ç›´é˜»å¡åˆ°äº‹ä»¶å‘ç”Ÿã€‚
+    @return -1ï¼šå¤±è´¥ï¼›0ï¼šæˆåŠŸ
     */
     int poll(REACTOR_CALLBACK callback, void* arg, CWX_UINT32 uiMiliTimeout=0);
-    ///Í£Ö¹ÔËĞĞ
+    ///åœæ­¢è¿è¡Œ
     void stop();
-    ///»ñÈ¡µ±Ç°µÄÊ±¼ä
+    ///è·å–å½“å‰çš„æ—¶é—´
     CwxTimeValue const& getCurTime() const;
 private:
-    ///»ñÈ¡ÏÂÒ»¸öµÄepollµÄ³¬Ê±Ê±¼ä
+    ///è·å–ä¸‹ä¸€ä¸ªçš„epollçš„è¶…æ—¶æ—¶é—´
     void timeout(CWX_UINT64& ullTime);
-    ///Ìí¼Ó epoll¼ì²â,maskÎªREAD_MASK¡¢WRITE_MASKµÄ×éºÏ¡£
+    ///æ·»åŠ  epollæ£€æµ‹,maskä¸ºREAD_MASKã€WRITE_MASKçš„ç»„åˆã€‚
     int addEvent(int fd, int mask);
-    ///É¾³ı´æÔÚµÄmask£¬maskÎªREAD_MASK¡¢WRITE_MASKµÄ×éºÏ¡£
+    ///åˆ é™¤å­˜åœ¨çš„maskï¼Œmaskä¸ºREAD_MASKã€WRITE_MASKçš„ç»„åˆã€‚
     int delEvent(int fd, int mask);
-    ///ĞÅºÅhandle
+    ///ä¿¡å·handle
     static void sigAction(int , siginfo_t *info, void *);
 private:
     class EventHandle
@@ -185,18 +185,18 @@ private:
     friend class CwxAppReactor;
     friend class CwxAppChannel;
 private:
-    int                             m_epfd;     ///<epollµÄfd
-    struct epoll_event              m_events[CWX_APP_MAX_IO_NUM]; ///<epollµÄevent Êı×é
-    EventHandle                     m_eHandler[CWX_APP_MAX_IO_NUM]; ///<epollµÄevent handler
-    static int                      m_signalFd[2]; ///<ĞÅºÅµÄ¶ÁĞ´handle
-    static sig_atomic_t             m_arrSignals[CWX_APP_MAX_SIGNAL_ID + 1];///<signalµÄÊı×é
-    static volatile sig_atomic_t    m_bSignal; ///<ÊÇ·ñÓĞĞÅºÅ
-    bool                            m_bEnableSignal; ///<ÊÇ·ñÖ§³Ösignal
-    CwxAppHandler4Base*             m_sHandler[CWX_APP_MAX_SIGNAL_ID + 1];///<signal handlerµÄÊı×é
-    CwxMinHeap<CwxAppHandler4Base>  m_timeHeap; ///<Ê±¼ä¶Ñ
-    SignalHanlder*                  m_sigHandler; ///<¶ÁÈ¡signalÊÂ¼şµÄhandle
-    bool                            m_bStop; ///<ÊÇ·ñÍ£Ö¹
-    CwxTimeValue                    m_current; ///<µ±Ç°µÄÊ±¼ä
+    int                             m_epfd;     ///<epollçš„fd
+    struct epoll_event              m_events[CWX_APP_MAX_IO_NUM]; ///<epollçš„event æ•°ç»„
+    EventHandle                     m_eHandler[CWX_APP_MAX_IO_NUM]; ///<epollçš„event handler
+    static int                      m_signalFd[2]; ///<ä¿¡å·çš„è¯»å†™handle
+    static sig_atomic_t             m_arrSignals[CWX_APP_MAX_SIGNAL_ID + 1];///<signalçš„æ•°ç»„
+    static volatile sig_atomic_t    m_bSignal; ///<æ˜¯å¦æœ‰ä¿¡å·
+    bool                            m_bEnableSignal; ///<æ˜¯å¦æ”¯æŒsignal
+    CwxAppHandler4Base*             m_sHandler[CWX_APP_MAX_SIGNAL_ID + 1];///<signal handlerçš„æ•°ç»„
+    CwxMinHeap<CwxAppHandler4Base>  m_timeHeap; ///<æ—¶é—´å †
+    SignalHanlder*                  m_sigHandler; ///<è¯»å–signaläº‹ä»¶çš„handle
+    bool                            m_bStop; ///<æ˜¯å¦åœæ­¢
+    CwxTimeValue                    m_current; ///<å½“å‰çš„æ—¶é—´
 };
 
 

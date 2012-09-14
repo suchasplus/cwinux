@@ -1,14 +1,14 @@
-#ifndef __CWX_SINGLETON_MGR_H__
+ï»¿#ifndef __CWX_SINGLETON_MGR_H__
 #define __CWX_SINGLETON_MGR_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxSingletonMgr.h
-@brief µ¥ÊµÀı¶ÔÏóµÄ¹ÜÀíÀàµÄ¶¨Òå£¬ÓÃÓÚ¹ÜÀíÄÇĞ©ĞèÒªÊÍ·ÅµÄµ¥ÊµÀı¶ÔÏó¡£
+@brief å•å®ä¾‹å¯¹è±¡çš„ç®¡ç†ç±»çš„å®šä¹‰ï¼Œç”¨äºç®¡ç†é‚£äº›éœ€è¦é‡Šæ”¾çš„å•å®ä¾‹å¯¹è±¡ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-02
@@ -25,29 +25,29 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxSingletonMgr
-@brief µ¥ÊµÀı¶ÔÏóµÄ¹ÜÀíÀà£¬ÓÃÓÚ¹ÜÀíÄÇĞ©ĞèÒªÊÍ·ÅµÄµ¥ÊµÀı¶ÔÏó¡£
-       CwxSingletonMgrÍ¬ÑùÒ²ÊÇsingleton¶ÔÏó¡£
+@brief å•å®ä¾‹å¯¹è±¡çš„ç®¡ç†ç±»ï¼Œç”¨äºç®¡ç†é‚£äº›éœ€è¦é‡Šæ”¾çš„å•å®ä¾‹å¯¹è±¡ã€‚
+       CwxSingletonMgråŒæ ·ä¹Ÿæ˜¯singletonå¯¹è±¡ã€‚
 */
 
 class CWX_API CwxSingletonMgr
 {
 public:
-    ///»ñÈ¡CwxSingletonMgr¶ÔÏóµÄÊµÀı£¬ÈôÃ»ÓĞ´´½¨Ôò´´½¨
+    ///è·å–CwxSingletonMgrå¯¹è±¡çš„å®ä¾‹ï¼Œè‹¥æ²¡æœ‰åˆ›å»ºåˆ™åˆ›å»º
     static CwxSingletonMgr* instance();
-    ///ÊÍ·ÅCwxSignletonMgrµÄSingleton¶ÔÏó¡£´ËAPI±»×¢²áÔÚosµÄatexit¡£
+    ///é‡Šæ”¾CwxSignletonMgrçš„Singletonå¯¹è±¡ã€‚æ­¤APIè¢«æ³¨å†Œåœ¨osçš„atexitã€‚
     static void destroy();
 public:
-    ///×¢²áĞèÒªÊÍ·ÅµÄsingleton¶ÔÏó
+    ///æ³¨å†Œéœ€è¦é‡Šæ”¾çš„singletonå¯¹è±¡
     void  reg(CwxSingleton* pObj);
 private:
-    ///¹¹Ôìº¯Êı£¬±£Ö¤Ö»ÄÜÓĞinstance() API´´½¨¡£
+    ///æ„é€ å‡½æ•°ï¼Œä¿è¯åªèƒ½æœ‰instance() APIåˆ›å»ºã€‚
     CwxSingletonMgr();
-    ///Îö¹¹º¯Êı£¬±£Ö¤Ö»ÄÜÓĞdestroy() APIÊÍ·Å´´½¨¡£
+    ///ææ„å‡½æ•°ï¼Œä¿è¯åªèƒ½æœ‰destroy() APIé‡Šæ”¾åˆ›å»ºã€‚
     ~CwxSingletonMgr();
 private:
-    static CwxSingletonMgr*    m_pInstance;///<MgrµÄsingleton¶ÔÏó
-    static CwxMutexLock        m_lock;///<singleton¶ÔÏóµÄ±£»¤Ëø
-    CwxSingleton*      m_pObjs;///<×¢²áµÄsingleton¶ÔÏóµÄÁ´±í
+    static CwxSingletonMgr*    m_pInstance;///<Mgrçš„singletonå¯¹è±¡
+    static CwxMutexLock        m_lock;///<singletonå¯¹è±¡çš„ä¿æŠ¤é”
+    CwxSingleton*      m_pObjs;///<æ³¨å†Œçš„singletonå¯¹è±¡çš„é“¾è¡¨
 };
 
 CWINUX_END_NAMESPACE

@@ -1,14 +1,14 @@
-#ifndef  __CWX_PACKAGE_WRITER_H__
+ï»¿#ifndef  __CWX_PACKAGE_WRITER_H__
 #define  __CWX_PACKAGE_WRITER_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 *@file CwxPackageWriter.h
-*@brief CwxPackageWrite¶¨Òå
+*@brief CwxPackageWriteå®šä¹‰
 *@author cwinux@gmail.com
 *@version 0.1
 *@date  2009-06-05
@@ -25,7 +25,7 @@ CWINUX_BEGIN_NAMESPACE
 
 /**
 @class CwxPackageWriter
-@brief ĞÎ³ÉKEY/VALUEµÄPACKAGEµÄwriterÀà¡£
+@brief å½¢æˆKEY/VALUEçš„PACKAGEçš„writerç±»ã€‚
 */
 
 class  CWX_API CwxPackageWriter
@@ -36,12 +36,12 @@ public:
         ERR_MSG_LEN=511, ///< ERR bug size
         DEF_BUF_LEN=32*1024 ///<def buf len
     };
-    ///¹¹Ôìº¯Êı£¬
+    ///æ„é€ å‡½æ•°ï¼Œ
     CwxPackageWriter(CWX_UINT32 uiBufLen=DEF_BUF_LEN);
-    ///Îö¹¹
+    ///ææ„
     ~CwxPackageWriter();
 public:
-    ///½¨Á¢Ò»¸öĞÂpackage
+    ///å»ºç«‹ä¸€ä¸ªæ–°package
     void beginPack();
     ///Add a new key.true: success; false:failure, get err-msg by GetError().
     bool addKeyValue(char const* szKey, char const* szData, CWX_UINT32 uiDataLen, bool bKeyValue = false);
@@ -88,7 +88,7 @@ public:
 
     ///Package msg . true: success; false:failure, get err-msg by GetError().
     bool pack();
-    ///»ñÈ¡µ±Ç°packageµÄKeyµÄÊıÁ¿¡£
+    ///è·å–å½“å‰packageçš„Keyçš„æ•°é‡ã€‚
     CWX_UINT32 getKeyNum() const ;
     ///return package's buf size
     CWX_UINT32 getBufSize() const;
@@ -99,14 +99,14 @@ public:
     ///return the errmsg
     char const* getErrMsg() const;
 private:
-    ///Çå¿Õpack/unpackµÄºÛ¼£
+    ///æ¸…ç©ºpack/unpackçš„ç—•è¿¹
     void reset();
 private:
     CWX_UINT32            m_uiKeyNum; ///<package's key number
     char*                 m_szPackMsg; ///<package's dat
     CWX_UINT32            m_uiPackBufLen;///<package's buf length
     CWX_UINT32            m_uiCurPackPos;///<package's size
-    char                  m_szErr[ERR_MSG_LEN + 1];///<´íÎóÄÚÈİ
+    char                  m_szErr[ERR_MSG_LEN + 1];///<é”™è¯¯å†…å®¹
 };
 
 

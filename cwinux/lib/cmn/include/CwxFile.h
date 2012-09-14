@@ -1,14 +1,14 @@
-#ifndef __CWX_FILE_H__
+ï»¿#ifndef __CWX_FILE_H__
 #define __CWX_FILE_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxFile.h
-@brief ¶¨ÒåÎÄ¼şÏµÍ³²Ù×÷Ïà¹ØµÄÀà£ºCwxFile
+@brief å®šä¹‰æ–‡ä»¶ç³»ç»Ÿæ“ä½œç›¸å…³çš„ç±»ï¼šCwxFile
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-10
@@ -30,117 +30,117 @@ CWINUX_BEGIN_NAMESPACE
 
 /**
 @class CwxFile
-@brief ÊµÏÖÁËÎÄ¼şÏµÍ³µÄ³£ÓÃ²Ù×÷£¬¶ÔÏóµÄ·½·¨È«²¿Îª¾²Ì¬·½·¨£¬¶ÔÏó²»ÄÜÊµÀı»¯
+@brief å®ç°äº†æ–‡ä»¶ç³»ç»Ÿçš„å¸¸ç”¨æ“ä½œï¼Œå¯¹è±¡çš„æ–¹æ³•å…¨éƒ¨ä¸ºé™æ€æ–¹æ³•ï¼Œå¯¹è±¡ä¸èƒ½å®ä¾‹åŒ–
 */
 class CWX_API CwxFile
 {
 public:
     /**
-    @brief Èç¹ûpathÖ¸¶¨µÄ×îºóÒ»¼¶ÎÄ¼şÄ¿Â¼²»´æÔÚ£¬Ôò´´½¨¡£
-    @param [in] path ÎÄ¼şÄ¿Â¼
-    @param [in] mode ÎÄ¼şµÄÈ¨ÏŞÄ£Ê½
-    @return true£ºÄ¿Â¼ÒÑ¾­´æÔÚ»ò´´½¨³É¹¦£»false£ºÄ¿Â¼´´½¨Ê§°Ü»òÖ¸¶¨µÄÂ·¾¶ÒÔ´æÔÚµ«²»ÊÇÄ¿Â¼¡£
+    @brief å¦‚æœpathæŒ‡å®šçš„æœ€åä¸€çº§æ–‡ä»¶ç›®å½•ä¸å­˜åœ¨ï¼Œåˆ™åˆ›å»ºã€‚
+    @param [in] path æ–‡ä»¶ç›®å½•
+    @param [in] mode æ–‡ä»¶çš„æƒé™æ¨¡å¼
+    @return trueï¼šç›®å½•å·²ç»å­˜åœ¨æˆ–åˆ›å»ºæˆåŠŸï¼›falseï¼šç›®å½•åˆ›å»ºå¤±è´¥æˆ–æŒ‡å®šçš„è·¯å¾„ä»¥å­˜åœ¨ä½†ä¸æ˜¯ç›®å½•ã€‚
     */
     static bool createMissDir(char const* path, int mode=S_IRUSR|S_IWUSR|S_IXUSR|S_IRGRP|S_IWGRP|S_IXGRP);
     /**
-    @brief ´´½¨pathÖ¸¶¨µÄÄ¿Â¼£¬Ä¿Â¼±ØĞë²»´æÔÚ¡£
-    @param [in] path ÎÄ¼şÄ¿Â¼
-    @param [in] mode ÎÄ¼şµÄÈ¨ÏŞÄ£Ê½
-    @return true£º´´½¨³É¹¦£»false£º´´½¨Ê§°Ü¡£
+    @brief åˆ›å»ºpathæŒ‡å®šçš„ç›®å½•ï¼Œç›®å½•å¿…é¡»ä¸å­˜åœ¨ã€‚
+    @param [in] path æ–‡ä»¶ç›®å½•
+    @param [in] mode æ–‡ä»¶çš„æƒé™æ¨¡å¼
+    @return trueï¼šåˆ›å»ºæˆåŠŸï¼›falseï¼šåˆ›å»ºå¤±è´¥ã€‚
     */
     static bool createDir(char const* path, int mode=S_IRUSR|S_IWUSR|S_IXUSR|S_IRGRP|S_IWGRP|S_IXGRP);
     /**
-    @brief ÅĞ¶Ïpath¶ÔÓ¦µÄÂ·¾¶ÊÇ·ñÎªÒ»¸öÎÄ¼ş¡£
-    @param [in] path ÒªÅĞ¶ÏµÄÂ·¾¶Ãû
-    @return true£ºÊÇÎÄ¼ş£»false£º²»ÊÇÎÄ¼ş»òÂ·¾¶²»´æÔÚ¡£
+    @brief åˆ¤æ–­pathå¯¹åº”çš„è·¯å¾„æ˜¯å¦ä¸ºä¸€ä¸ªæ–‡ä»¶ã€‚
+    @param [in] path è¦åˆ¤æ–­çš„è·¯å¾„å
+    @return trueï¼šæ˜¯æ–‡ä»¶ï¼›falseï¼šä¸æ˜¯æ–‡ä»¶æˆ–è·¯å¾„ä¸å­˜åœ¨ã€‚
     */
     static bool isFile(char const* path);
     /**
-    @brief ÅĞ¶Ïpath¶ÔÓ¦µÄÂ·¾¶ÊÇ·ñÎªÒ»¸öÄ¿Â¼¡£
-    @param [in] path ÒªÅĞ¶ÏµÄÂ·¾¶Ãû
-    @return true£ºÊÇÄ¿Â¼£»false£º²»ÊÇÄ¿Â¼»òÂ·¾¶²»´æÔÚ¡£
+    @brief åˆ¤æ–­pathå¯¹åº”çš„è·¯å¾„æ˜¯å¦ä¸ºä¸€ä¸ªç›®å½•ã€‚
+    @param [in] path è¦åˆ¤æ–­çš„è·¯å¾„å
+    @return trueï¼šæ˜¯ç›®å½•ï¼›falseï¼šä¸æ˜¯ç›®å½•æˆ–è·¯å¾„ä¸å­˜åœ¨ã€‚
     */
     static bool isDir(char const* path);
     /**
-    @brief »ñÈ¡strFile¶ÔÓ¦µÄÎÄ¼şµÄ´óĞ¡¡£
-    @param [in] strFile ÎÄ¼şÃû
-    @return -1£º»ñÈ¡Ê§°Ü£»·ñÔòÎªÎÄ¼şµÄ´óĞ¡¡£
+    @brief è·å–strFileå¯¹åº”çš„æ–‡ä»¶çš„å¤§å°ã€‚
+    @param [in] strFile æ–‡ä»¶å
+    @return -1ï¼šè·å–å¤±è´¥ï¼›å¦åˆ™ä¸ºæ–‡ä»¶çš„å¤§å°ã€‚
     */
     static off_t getFileSize(char const* strFile);
     /**
-    @brief »ñÈ¡ÎÄ¼şµÄ×îºóĞŞ¸ÄÊ±¼ä¡£
-    @param [in] strFile ÎÄ¼şÃû
-    @return 0£º»ñÈ¡Ê§°Ü£»·ñÔòÎªÎÄ¼şµÄ×îºóĞŞ¸ÄÊ±¼ä¡£
+    @brief è·å–æ–‡ä»¶çš„æœ€åä¿®æ”¹æ—¶é—´ã€‚
+    @param [in] strFile æ–‡ä»¶å
+    @return 0ï¼šè·å–å¤±è´¥ï¼›å¦åˆ™ä¸ºæ–‡ä»¶çš„æœ€åä¿®æ”¹æ—¶é—´ã€‚
     */
     static time_t getFileMTime(char const* strFile);
     /**
-    @brief ½«srcÖ¸¶¨µÄÎÄ¼ş£¬ÒÆµ½destµÄÂ·¾¶£¬destÖĞ°üº¬ÎÄ¼şÃû¡£
-    @param [in] src Òª±»°áÒÆµÄÎÄ¼ş
-    @param [in] dest ĞÂµÄÎÄ¼şÃû
-    @return true£º³É¹¦£»false£ºÊ§°Ü¡£
+    @brief å°†srcæŒ‡å®šçš„æ–‡ä»¶ï¼Œç§»åˆ°destçš„è·¯å¾„ï¼Œdestä¸­åŒ…å«æ–‡ä»¶åã€‚
+    @param [in] src è¦è¢«æ¬ç§»çš„æ–‡ä»¶
+    @param [in] dest æ–°çš„æ–‡ä»¶å
+    @return trueï¼šæˆåŠŸï¼›falseï¼šå¤±è´¥ã€‚
     */
     static bool moveFile(char const*  src, char const*  dest);
     /**
-    @brief É¾³ıstrFile¶ÔÓ¦µÄÎÄ¼ş¡£
-    @param [in] strFile ÒªÉ¾³ıµÄÎÄ¼şÃû
-    @return true£º³É¹¦£»false£ºÊ§°Ü¡£
+    @brief åˆ é™¤strFileå¯¹åº”çš„æ–‡ä»¶ã€‚
+    @param [in] strFile è¦åˆ é™¤çš„æ–‡ä»¶å
+    @return trueï¼šæˆåŠŸï¼›falseï¼šå¤±è´¥ã€‚
     */
     static bool rmFile(char const*  strFile);
     /**
-    @brief É¾³ıstrPath¶ÔÓ¦µÄÄ¿Â¼¡£
-    @param [in] strPath ÒªÉ¾³ıµÄÄ¿Â¼
-    @return true£º³É¹¦£»false£ºÊ§°Ü¡£
+    @brief åˆ é™¤strPathå¯¹åº”çš„ç›®å½•ã€‚
+    @param [in] strPath è¦åˆ é™¤çš„ç›®å½•
+    @return trueï¼šæˆåŠŸï¼›falseï¼šå¤±è´¥ã€‚
     */
     static bool rmDir(char const*  strPath);
     /**
-    @brief ÇĞ»»µ±Ç°½ø³ÌµÄÄ¿Â¼¡£
-    @param [in] strPath ÒªÇĞ»»µ½µÄÄ¿Â¼Ãû
-    @return true£º³É¹¦£»false£ºÊ§°Ü¡£
+    @brief åˆ‡æ¢å½“å‰è¿›ç¨‹çš„ç›®å½•ã€‚
+    @param [in] strPath è¦åˆ‡æ¢åˆ°çš„ç›®å½•å
+    @return trueï¼šæˆåŠŸï¼›falseï¼šå¤±è´¥ã€‚
     */
     static bool changeDir(char const* strPath);
     /**
-    @brief »ñÈ¡strPathÄ¿Â¼ÏÂµÄËùÓĞÖ±½ÓÎÄ¼ş£¬²»°üÀ¨×ÓÄ¿Â¼¡£
-    @param [in] strPath Òª»ñÈ¡ÎÄ¼şµÄÄ¿Â¼Ãû
-    @param [out] files ÎÄ¼şµÄÁĞ±í£¬ÁĞ±íÖĞµÄÎÄ¼ş²»°üÀ¨Â·¾¶Ãû
-    @return true£º³É¹¦£»false£ºÊ§°Ü¡£
+    @brief è·å–strPathç›®å½•ä¸‹çš„æ‰€æœ‰ç›´æ¥æ–‡ä»¶ï¼Œä¸åŒ…æ‹¬å­ç›®å½•ã€‚
+    @param [in] strPath è¦è·å–æ–‡ä»¶çš„ç›®å½•å
+    @param [out] files æ–‡ä»¶çš„åˆ—è¡¨ï¼Œåˆ—è¡¨ä¸­çš„æ–‡ä»¶ä¸åŒ…æ‹¬è·¯å¾„å
+    @return trueï¼šæˆåŠŸï¼›falseï¼šå¤±è´¥ã€‚
     */
     static bool getDirFile(const string& strPath, list<string>& files);
     /**
-    @brief »ñÈ¡/xxx/yyyy/zzzz¸ñÊ½×îºóÒ»¼¶µÄÃû×Ö£¬¼´zzzz
-    @param [in] strPath Òª»ñÈ¡×îºóÒ»¼¶Ãû×ÖµÄÄ¿Â¼Ãû
-    @param [out] strLast ×îºóÒ»¼¶µÄÃû×Ö
-    @return ·µ»Ø×îºóÒ»¼¶µÄÃû×Ö£¬¼´strLast¡£
+    @brief è·å–/xxx/yyyy/zzzzæ ¼å¼æœ€åä¸€çº§çš„åå­—ï¼Œå³zzzz
+    @param [in] strPath è¦è·å–æœ€åä¸€çº§åå­—çš„ç›®å½•å
+    @param [out] strLast æœ€åä¸€çº§çš„åå­—
+    @return è¿”å›æœ€åä¸€çº§çš„åå­—ï¼Œå³strLastã€‚
     */
     static string& getLastDirName(const string& strPath, string& strLast);
     /**
-    @brief ´Ófd¶ÔÓ¦µÄÎÄ±¾ÎÄ¼şÖĞµÄµ±Ç°ÎÄ¼şÖ¸ÕëÎ»ÖÃ£¬¶ÁÒ»ĞĞÊı¾İ¡£
-    @param [in] fd ÎÄ±¾ÎÄ¼şµÄÎÄ¼ş¾ä±ú
-    @param [out] strLine ¶ÁÈ¡µÄĞĞ£¬Èô·µ»Ø³É¹¦¶østrLine.empty()==true£¬Ôò±íÊ¾µ½ÁËÎÄ¼şÎ²
-    @return true£º³É¹¦£»false£ºÊ§°Ü¡£
+    @brief ä»fdå¯¹åº”çš„æ–‡æœ¬æ–‡ä»¶ä¸­çš„å½“å‰æ–‡ä»¶æŒ‡é’ˆä½ç½®ï¼Œè¯»ä¸€è¡Œæ•°æ®ã€‚
+    @param [in] fd æ–‡æœ¬æ–‡ä»¶çš„æ–‡ä»¶å¥æŸ„
+    @param [out] strLine è¯»å–çš„è¡Œï¼Œè‹¥è¿”å›æˆåŠŸè€ŒstrLine.empty()==trueï¼Œåˆ™è¡¨ç¤ºåˆ°äº†æ–‡ä»¶å°¾
+    @return trueï¼šæˆåŠŸï¼›falseï¼šå¤±è´¥ã€‚
     */
     static bool readTxtLine(FILE* fd, string& strLine);
     /**
-    @brief ¶ÁÈ¡Õû¸öÎÄ±¾ÎÄ¼şµÄÄÚÈİ¡£
-    @param [in] strFileName Òª¶ÁÈ¡µÄÎÄ±¾ÎÄ¼şµÄÃû×Ö
-    @param [out] strData ÎÄ±¾ÎÄ¼şµÄÄÚÈİ
-    @return true£º³É¹¦£»false£ºÊ§°Ü¡£
+    @brief è¯»å–æ•´ä¸ªæ–‡æœ¬æ–‡ä»¶çš„å†…å®¹ã€‚
+    @param [in] strFileName è¦è¯»å–çš„æ–‡æœ¬æ–‡ä»¶çš„åå­—
+    @param [out] strData æ–‡æœ¬æ–‡ä»¶çš„å†…å®¹
+    @return trueï¼šæˆåŠŸï¼›falseï¼šå¤±è´¥ã€‚
     */
     static bool readTxtFile(string const& strFileName, string& strData);
     /**
-    @brief ¶ÔÒ»¸öÎÄ¼ş¼ÓÈ«¾ÖµÄĞ´Ëø¡£
-    @param [in] fd ¾ßÓĞĞ´È¨ÏŞµÄÎÄ¼şhandle
-    @return true£º³É¹¦£»false£ºÊ§°Ü£¬errno±£´æ´íÎóµÄÔ­Òò¡£
+    @brief å¯¹ä¸€ä¸ªæ–‡ä»¶åŠ å…¨å±€çš„å†™é”ã€‚
+    @param [in] fd å…·æœ‰å†™æƒé™çš„æ–‡ä»¶handle
+    @return trueï¼šæˆåŠŸï¼›falseï¼šå¤±è´¥ï¼Œerrnoä¿å­˜é”™è¯¯çš„åŸå› ã€‚
     */
     static bool lock(int fd);
     /**
-    @brief ½âËøÒ»¸öÎÄ¼şÉÏ¼ÓµÄÈ«¾ÖĞ´Ëø¡£
-    @param [in] fd ¼ÏËøµÄÎÄ¼şhandle
-    @return true£º³É¹¦£»false£ºÊ§°Ü£¬errno±£´æ´íÎóµÄÔ­Òò¡£
+    @brief è§£é”ä¸€ä¸ªæ–‡ä»¶ä¸ŠåŠ çš„å…¨å±€å†™é”ã€‚
+    @param [in] fd æ·é”çš„æ–‡ä»¶handle
+    @return trueï¼šæˆåŠŸï¼›falseï¼šå¤±è´¥ï¼Œerrnoä¿å­˜é”™è¯¯çš„åŸå› ã€‚
     */
     static bool unlock(int fd);
 
 private:
-    ///Ë½ÓĞ»¯µÄ¹¹Ôìº¯Êı£¬½ûÖ¹ÊµÀı»¯
+    ///ç§æœ‰åŒ–çš„æ„é€ å‡½æ•°ï¼Œç¦æ­¢å®ä¾‹åŒ–
     CwxFile(){}
 };
 CWINUX_END_NAMESPACE

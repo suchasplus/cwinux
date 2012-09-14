@@ -1,4 +1,4 @@
-
+ï»¿
 CWINUX_BEGIN_NAMESPACE
 
 inline CwxAppHandler4TcpConn* CwxAppHandlerCache::fetchTcpHandle()
@@ -45,7 +45,7 @@ inline void CwxAppHandlerCache::cacheUnixHandle(CwxAppHandler4UnixConn* pHandle)
     }
 }
 
-///»ñÈ¡Ò»¸öIO MSGÀàĞÍµÄÁ¬½Ó¶ÔÏó£¬·µ»ØNULL±íÊ¾Ã»ÓĞCACHEµÄÁ¬½Ó¶ÔÏó
+///è·å–ä¸€ä¸ªIO MSGç±»å‹çš„è¿æ¥å¯¹è±¡ï¼Œè¿”å›NULLè¡¨ç¤ºæ²¡æœ‰CACHEçš„è¿æ¥å¯¹è±¡
 inline CwxAppHandler4IoMsg* CwxAppHandlerCache::fetchIoMsgHandle()
 {
     CwxMutexGuard<CwxMutexLock> lock(&m_lock);
@@ -55,7 +55,7 @@ inline CwxAppHandler4IoMsg* CwxAppHandlerCache::fetchIoMsgHandle()
     m_uiFreeIoMsgHandleNum--;
     return pHandle;
 }
-///CacheÒ»¸ö¹Ø±ÕµÄIo msgÀàĞÍµÄÁ¬½Ó¶ÔÏó
+///Cacheä¸€ä¸ªå…³é—­çš„Io msgç±»å‹çš„è¿æ¥å¯¹è±¡
 inline void CwxAppHandlerCache::cacheIoMsgHandle(CwxAppHandler4IoMsg* pHandle)
 {
     CwxMutexGuard<CwxMutexLock> lock(&m_lock);
@@ -71,7 +71,7 @@ inline void CwxAppHandlerCache::cacheIoMsgHandle(CwxAppHandler4IoMsg* pHandle)
 
 
 
-///»ñÈ¡Ò»¸öio event handlerÀàĞÍµÄÁ¬½Ó¶ÔÏó£¬·µ»ØNULL±íÊ¾Ã»ÓĞCACHEµÄÁ¬½Ó¶ÔÏó
+///è·å–ä¸€ä¸ªio event handlerç±»å‹çš„è¿æ¥å¯¹è±¡ï¼Œè¿”å›NULLè¡¨ç¤ºæ²¡æœ‰CACHEçš„è¿æ¥å¯¹è±¡
 inline CwxAppHandler4IoEvent* CwxAppHandlerCache::fetchIoEventHandle()
 {
     CwxMutexGuard<CwxMutexLock> lock(&m_lock);
@@ -82,7 +82,7 @@ inline CwxAppHandler4IoEvent* CwxAppHandlerCache::fetchIoEventHandle()
     return pHandle;
 
 }
-///CacheÒ»¸ö¹Ø±ÕµÄio event handlerÀàĞÍµÄÁ¬½Ó¶ÔÏó
+///Cacheä¸€ä¸ªå…³é—­çš„io event handlerç±»å‹çš„è¿æ¥å¯¹è±¡
 inline void CwxAppHandlerCache::cacheIoEventHandle(CwxAppHandler4IoEvent* pHandle)
 {
     CwxMutexGuard<CwxMutexLock> lock(&m_lock);

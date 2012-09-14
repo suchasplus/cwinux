@@ -1,14 +1,14 @@
-#ifndef __CWX_SOCKET_H__
+ï»¿#ifndef __CWX_SOCKET_H__
 #define __CWX_SOCKET_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxSocket.h
-@brief »ù´¡socket APIµÄ·â×°Àà¡£
+@brief åŸºç¡€socket APIçš„å°è£…ç±»ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2010-5-10
@@ -27,19 +27,19 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxSocket
-@brief Socket APIµÄ·â×°Àà¡£
+@brief Socket APIçš„å°è£…ç±»ã€‚
 */
 class CWX_API CwxSocket
 {
 public:
     /**
-    @brief ·â×°ÁËsetsockopt api£¬ÉèÖÃsocket handleµÄ²ÎÊı¡£
-    @param [in] handle socket µÄhandle¡£
-    @param [in] level setsockoptµÄlevel
-    @param [in] option setsockoptµÄoption
-    @param [in] optval setsockoptµÄoptval
-    @param [in] optlen setsockoptµÄoptlen¡£
-    @return -1£ºfailure£»0£º³É¹¦¡£ÓësetsockoptÒ»ÖÂ
+    @brief å°è£…äº†setsockopt apiï¼Œè®¾ç½®socket handleçš„å‚æ•°ã€‚
+    @param [in] handle socket çš„handleã€‚
+    @param [in] level setsockoptçš„level
+    @param [in] option setsockoptçš„option
+    @param [in] optval setsockoptçš„optval
+    @param [in] optlen setsockoptçš„optlenã€‚
+    @return -1ï¼šfailureï¼›0ï¼šæˆåŠŸã€‚ä¸setsockoptä¸€è‡´
     */
     static int setOption (CWX_HANDLE handle, int level,
         int option,
@@ -47,13 +47,13 @@ public:
         socklen_t optlen);
 
     /**
-    @brief ´ò¿ª¡¢¹Ø±ÕÁ¬½ÓµÄkeep-alive¿ª¹Ø¡£
-    @param [in] handle socket µÄhandle¡£
-    @param [in] bKeepalive ´ò¿ªkeep-alive
-    @param [in] idle ¿ªÊ¼Ê×´ÎKeepAliveÌ½²âÇ°µÄTCP¿Õ±ÕÊ±¼ä(second£©
-    @param [in] inter Á½´ÎKeepAliveÌ½²â¼äµÄÊ±¼ä¼ä¸ô(second)
-    @param [in] count ÅĞ¶¨¶Ï¿ªÇ°µÄKeepAliveÌ½²â´ÎÊı¡£
-    @return -1£ºfailure£»0£º³É¹¦¡£ÓësetsockoptÒ»ÖÂ
+    @brief æ‰“å¼€ã€å…³é—­è¿æ¥çš„keep-aliveå¼€å…³ã€‚
+    @param [in] handle socket çš„handleã€‚
+    @param [in] bKeepalive æ‰“å¼€keep-alive
+    @param [in] idle å¼€å§‹é¦–æ¬¡KeepAliveæ¢æµ‹å‰çš„TCPç©ºé—­æ—¶é—´(secondï¼‰
+    @param [in] inter ä¸¤æ¬¡KeepAliveæ¢æµ‹é—´çš„æ—¶é—´é—´éš”(second)
+    @param [in] count åˆ¤å®šæ–­å¼€å‰çš„KeepAliveæ¢æµ‹æ¬¡æ•°ã€‚
+    @return -1ï¼šfailureï¼›0ï¼šæˆåŠŸã€‚ä¸setsockoptä¸€è‡´
     */
     static int setKeepalive(CWX_HANDLE handle,
         bool bKeepalive,
@@ -62,13 +62,13 @@ public:
         int count);
 
     /**
-    @brief ·â×°ÁËgetsockopt api£¬»ñÈ¡socket handleµÄ²ÎÊı¡£
-    @param [in] handle socket µÄhandle¡£
-    @param [in] level setsockoptµÄlevel
-    @param [in] option setsockoptµÄoption
-    @param [in] optval setsockoptµÄoptval
-    @param [in] optlen setsockoptµÄoptlen¡£
-    @return -1£ºfailure£»0£º³É¹¦¡£ÓëgetsockoptÒ»ÖÂ
+    @brief å°è£…äº†getsockopt apiï¼Œè·å–socket handleçš„å‚æ•°ã€‚
+    @param [in] handle socket çš„handleã€‚
+    @param [in] level setsockoptçš„level
+    @param [in] option setsockoptçš„option
+    @param [in] optval setsockoptçš„optval
+    @param [in] optlen setsockoptçš„optlenã€‚
+    @return -1ï¼šfailureï¼›0ï¼šæˆåŠŸã€‚ä¸getsockoptä¸€è‡´
     */
     static int getOption (CWX_HANDLE handle, int level,
         int option,
@@ -76,14 +76,14 @@ public:
         socklen_t *optlen);
 
     /**
-    @brief ¼à²â¶ÁĞ´ÊÂ¼şÊÇ·ñ·¢Éú¡£¶ÔselectµÄ·â×°¡£
-    @param [in] width ×î´óµÄhandle+1¡£
-    @param [in] rfds ¶ÁµÄhandle¼¯ºÏ
-    @param [in] wfds Ğ´µÄhandle¼¯ºÏ
-    @param [in] efds exeptionµÄhandle¼¯ºÏ
-    @param [in] timeout timeoutµÄ¶¨Ê±Æ÷£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @param [in] bRestart ÈôÔÚµÈ´ı¹ı³ÌÖĞ±»ĞÅºÅÖĞ¶Ï£¬ÊÇ·ñ¼ÌĞøµÈ´ı¡£true£º¼ÌĞøµÈ´ı£»false£º²»µÈ´ı¡£
-    @return -1£ºfailure£»0£º³¬Ê±£»>0£ºreadyµÄhandleÊıÁ¿¡£ÓëselectÒ»ÖÂ¡£
+    @brief ç›‘æµ‹è¯»å†™äº‹ä»¶æ˜¯å¦å‘ç”Ÿã€‚å¯¹selectçš„å°è£…ã€‚
+    @param [in] width æœ€å¤§çš„handle+1ã€‚
+    @param [in] rfds è¯»çš„handleé›†åˆ
+    @param [in] wfds å†™çš„handleé›†åˆ
+    @param [in] efds exeptionçš„handleé›†åˆ
+    @param [in] timeout timeoutçš„å®šæ—¶å™¨ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @param [in] bRestart è‹¥åœ¨ç­‰å¾…è¿‡ç¨‹ä¸­è¢«ä¿¡å·ä¸­æ–­ï¼Œæ˜¯å¦ç»§ç»­ç­‰å¾…ã€‚trueï¼šç»§ç»­ç­‰å¾…ï¼›falseï¼šä¸ç­‰å¾…ã€‚
+    @return -1ï¼šfailureï¼›0ï¼šè¶…æ—¶ï¼›>0ï¼šreadyçš„handleæ•°é‡ã€‚ä¸selectä¸€è‡´ã€‚
     */
     static int select (int width,
         fd_set *rfds,
@@ -93,12 +93,12 @@ public:
         bool bRestart = true
         );
     /**
-    @brief ´ÓÁ¬½ÓÉÏ½ÓÊÜÊı¾İ¡£ÊÇ¶ÔOSµÄread½Ó¿ÚµÄ·â×°
-    @param [in] handle ¶ÁµÄ¾ä±ú¡£
-    @param [in] buf ½ÓÊÕÊı¾İµÄbuf
-    @param [in] len bufµÄ³¤¶È
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£ºfailure£¬°üÀ¨³¬Ê±£»0£º¶Ô¶Ë¹Ø±Õ£»>0£º¶ÁÈ¡µÄ×Ö½ÚÊıÁ¿
+    @brief ä»è¿æ¥ä¸Šæ¥å—æ•°æ®ã€‚æ˜¯å¯¹OSçš„readæ¥å£çš„å°è£…
+    @param [in] handle è¯»çš„å¥æŸ„ã€‚
+    @param [in] buf æ¥æ”¶æ•°æ®çš„buf
+    @param [in] len bufçš„é•¿åº¦
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @return -1ï¼šfailureï¼ŒåŒ…æ‹¬è¶…æ—¶ï¼›0ï¼šå¯¹ç«¯å…³é—­ï¼›>0ï¼šè¯»å–çš„å­—èŠ‚æ•°é‡
     */
     static ssize_t read (CWX_HANDLE handle,
         void *buf,
@@ -106,13 +106,13 @@ public:
         CwxTimeouter *timeout = NULL);
 
     /**
-    @brief ´ÓÁ¬½ÓÉÏ½ÓÊÜÊı¾İ¡£ÊÇ¶ÔOSµÄrecv½Ó¿ÚµÄ·â×°
-    @param [in] handle ¶ÁµÄ¾ä±ú¡£
-    @param [in] buf ½ÓÊÕÊı¾İµÄbuf
-    @param [in] len bufµÄ³¤¶È
-    @param [in] flags osµÄrecv apiµÄflag
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£ºfailure£¬°üÀ¨³¬Ê±£»0£º¶Ô¶Ë¹Ø±Õ£»>0£º¶ÁÈ¡µÄ×Ö½ÚÊıÁ¿
+    @brief ä»è¿æ¥ä¸Šæ¥å—æ•°æ®ã€‚æ˜¯å¯¹OSçš„recvæ¥å£çš„å°è£…
+    @param [in] handle è¯»çš„å¥æŸ„ã€‚
+    @param [in] buf æ¥æ”¶æ•°æ®çš„buf
+    @param [in] len bufçš„é•¿åº¦
+    @param [in] flags osçš„recv apiçš„flag
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @return -1ï¼šfailureï¼ŒåŒ…æ‹¬è¶…æ—¶ï¼›0ï¼šå¯¹ç«¯å…³é—­ï¼›>0ï¼šè¯»å–çš„å­—èŠ‚æ•°é‡
     */
     static ssize_t recv (CWX_HANDLE handle,
         void *buf,
@@ -120,25 +120,25 @@ public:
         int flags,
         CwxTimeouter *timeout = NULL);
     /**
-    @brief ´ÓÁ¬½ÓÉÏ½ÓÊÜÊı¾İ¡£ÊÇ¶ÔOSµÄread½Ó¿ÚµÄ·â×°
-    @param [in] handle ¶ÁµÄ¾ä±ú¡£
-    @param [in] buf ½ÓÊÕÊı¾İµÄbuf
-    @param [in] len bufµÄ³¤¶È
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£ºfailure£¬°üÀ¨³¬Ê±£»0£º¶Ô¶Ë¹Ø±Õ£»>0£º¶ÁÈ¡µÄ×Ö½ÚÊıÁ¿
+    @brief ä»è¿æ¥ä¸Šæ¥å—æ•°æ®ã€‚æ˜¯å¯¹OSçš„readæ¥å£çš„å°è£…
+    @param [in] handle è¯»çš„å¥æŸ„ã€‚
+    @param [in] buf æ¥æ”¶æ•°æ®çš„buf
+    @param [in] len bufçš„é•¿åº¦
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @return -1ï¼šfailureï¼ŒåŒ…æ‹¬è¶…æ—¶ï¼›0ï¼šå¯¹ç«¯å…³é—­ï¼›>0ï¼šè¯»å–çš„å­—èŠ‚æ•°é‡
     */
     static ssize_t recv (CWX_HANDLE handle,
         void *buf,
         size_t len,
         CwxTimeouter *timeout = NULL);
     /**
-    @brief ´ÓÁ¬½ÓÉÏ½ÓÊÜn¸ö×Ö½Ú¡£ÊÇ¶ÔOSµÄread½Ó¿ÚµÄ·â×°
-    @param [in] handle ¶ÁµÄ¾ä±ú¡£
-    @param [in] buf ½ÓÊÕÊı¾İµÄbuf
-    @param [in] len bufµÄ³¤¶È
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @param [out] accepted Ê§°ÜÊ±¶ÁÈ¡µÄ×Ö½ÚµÄÊıÁ¿¡£
-    @return -1£ºfailure£¬°üÀ¨³¬Ê±£»0£º¶Ô¶Ë¹Ø±Õ£»>0£º¶ÁÈ¡µÄ×Ö½ÚÊıÁ¿
+    @brief ä»è¿æ¥ä¸Šæ¥å—nä¸ªå­—èŠ‚ã€‚æ˜¯å¯¹OSçš„readæ¥å£çš„å°è£…
+    @param [in] handle è¯»çš„å¥æŸ„ã€‚
+    @param [in] buf æ¥æ”¶æ•°æ®çš„buf
+    @param [in] len bufçš„é•¿åº¦
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @param [out] accepted å¤±è´¥æ—¶è¯»å–çš„å­—èŠ‚çš„æ•°é‡ã€‚
+    @return -1ï¼šfailureï¼ŒåŒ…æ‹¬è¶…æ—¶ï¼›0ï¼šå¯¹ç«¯å…³é—­ï¼›>0ï¼šè¯»å–çš„å­—èŠ‚æ•°é‡
     */
     static ssize_t read_n (CWX_HANDLE handle,
         void *buf,
@@ -147,14 +147,14 @@ public:
         size_t* accepted=NULL);
 
     /**
-    @brief ¶Álen¸ö×Ö½Ú¡£ÊÇ¶ÔOSµÄrecv½Ó¿ÚµÄ·â×°
-    @param [in] handle ¶ÁµÄ¾ä±ú¡£
-    @param [in] buf ½ÓÊÕÊı¾İµÄbuf
-    @param [in] len ¶ÁÈ¡Êı¾İµÄ³¤¶È
-    @param [in] flags osµÄrecv apiµÄflag
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @param [out] accepted Ê§°ÜÊ±¶ÁÈ¡µÄ×Ö½ÚµÄÊıÁ¿¡£
-    @return -1£ºfailure£¬°üÀ¨³¬Ê±£»0£º¶Ô¶Ë¹Ø±Õ£»>0£º¶ÁÈ¡µÄ×Ö½ÚÊıÁ¿
+    @brief è¯»lenä¸ªå­—èŠ‚ã€‚æ˜¯å¯¹OSçš„recvæ¥å£çš„å°è£…
+    @param [in] handle è¯»çš„å¥æŸ„ã€‚
+    @param [in] buf æ¥æ”¶æ•°æ®çš„buf
+    @param [in] len è¯»å–æ•°æ®çš„é•¿åº¦
+    @param [in] flags osçš„recv apiçš„flag
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @param [out] accepted å¤±è´¥æ—¶è¯»å–çš„å­—èŠ‚çš„æ•°é‡ã€‚
+    @return -1ï¼šfailureï¼ŒåŒ…æ‹¬è¶…æ—¶ï¼›0ï¼šå¯¹ç«¯å…³é—­ï¼›>0ï¼šè¯»å–çš„å­—èŠ‚æ•°é‡
     */
     static ssize_t recv_n (CWX_HANDLE handle,
         void *buf,
@@ -164,13 +164,13 @@ public:
         size_t* accepted=NULL);
 
     /**
-    @brief ¶Álen¸ö×Ö½Ú¡£ÊÇ¶ÔOSµÄread½Ó¿ÚµÄ·â×°
-    @param [in] handle ¶ÁµÄ¾ä±ú¡£
-    @param [in] buf ½ÓÊÕÊı¾İµÄbuf
-    @param [in] len ¶ÁÈ¡Êı¾İµÄ³¤¶È
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @param [out] accepted Ê§°ÜÊ±¶ÁÈ¡µÄ×Ö½ÚµÄÊıÁ¿¡£
-    @return -1£ºfailure£¬°üÀ¨³¬Ê±£»0£º¶Ô¶Ë¹Ø±Õ£»>0£º¶ÁÈ¡µÄ×Ö½ÚÊıÁ¿
+    @brief è¯»lenä¸ªå­—èŠ‚ã€‚æ˜¯å¯¹OSçš„readæ¥å£çš„å°è£…
+    @param [in] handle è¯»çš„å¥æŸ„ã€‚
+    @param [in] buf æ¥æ”¶æ•°æ®çš„buf
+    @param [in] len è¯»å–æ•°æ®çš„é•¿åº¦
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @param [out] accepted å¤±è´¥æ—¶è¯»å–çš„å­—èŠ‚çš„æ•°é‡ã€‚
+    @return -1ï¼šfailureï¼ŒåŒ…æ‹¬è¶…æ—¶ï¼›0ï¼šå¯¹ç«¯å…³é—­ï¼›>0ï¼šè¯»å–çš„å­—èŠ‚æ•°é‡
     */
     static ssize_t recv_n (CWX_HANDLE handle,
         void *buf,
@@ -178,36 +178,36 @@ public:
         CwxTimeouter *timeout = NULL,
         size_t* accepted=NULL);
     /**
-    @brief Ò»¸öcwinuxµÄÊı¾İ°ü¡£
-    @param [in] handle ¶ÁµÄ¾ä±ú¡£
-    @param [out] head Êı¾İ°üµÄ°üÍ·¡£
-    @param [out] msg ½ÓÊÕµÄÊı¾İ°ü£¬ÈôÊ§°Ü£¬Ôò·µ»ØNULL¡£
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£º½ÓÊÕ´íÎó£»0£ºÁ¬½Ó¹Ø±Õ£»>0£ºÓ¦¸ÃµÈÓÚlen£¬±íÊ¾³É¹¦½ÓÊÕÁËlen³¤¶ÈµÄ×Ö½ÚÁ÷¡£
+    @brief ä¸€ä¸ªcwinuxçš„æ•°æ®åŒ…ã€‚
+    @param [in] handle è¯»çš„å¥æŸ„ã€‚
+    @param [out] head æ•°æ®åŒ…çš„åŒ…å¤´ã€‚
+    @param [out] msg æ¥æ”¶çš„æ•°æ®åŒ…ï¼Œè‹¥å¤±è´¥ï¼Œåˆ™è¿”å›NULLã€‚
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @return -1ï¼šæ¥æ”¶é”™è¯¯ï¼›0ï¼šè¿æ¥å…³é—­ï¼›>0ï¼šåº”è¯¥ç­‰äºlenï¼Œè¡¨ç¤ºæˆåŠŸæ¥æ”¶äº†lené•¿åº¦çš„å­—èŠ‚æµã€‚
     */
     static ssize_t read (CWX_HANDLE handle,
         CwxMsgHead& head,
         CwxMsgBlock*& msg,
         CwxTimeouter  *timeout = 0) ;
     /**
-    @brief Ò»¸öcwinuxµÄÊı¾İ°ü¡£
-    @param [in] handle ¶ÁµÄ¾ä±ú¡£
-    @param [out] head Êı¾İ°üµÄ°üÍ·¡£
-    @param [out] msg ½ÓÊÕµÄÊı¾İ°ü£¬ÈôÊ§°Ü£¬Ôò·µ»ØNULL¡£
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£º½ÓÊÕ´íÎó£»0£ºÁ¬½Ó¹Ø±Õ£»>0£ºÓ¦¸ÃµÈÓÚlen£¬±íÊ¾³É¹¦½ÓÊÕÁËlen³¤¶ÈµÄ×Ö½ÚÁ÷¡£
+    @brief ä¸€ä¸ªcwinuxçš„æ•°æ®åŒ…ã€‚
+    @param [in] handle è¯»çš„å¥æŸ„ã€‚
+    @param [out] head æ•°æ®åŒ…çš„åŒ…å¤´ã€‚
+    @param [out] msg æ¥æ”¶çš„æ•°æ®åŒ…ï¼Œè‹¥å¤±è´¥ï¼Œåˆ™è¿”å›NULLã€‚
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @return -1ï¼šæ¥æ”¶é”™è¯¯ï¼›0ï¼šè¿æ¥å…³é—­ï¼›>0ï¼šåº”è¯¥ç­‰äºlenï¼Œè¡¨ç¤ºæˆåŠŸæ¥æ”¶äº†lené•¿åº¦çš„å­—èŠ‚æµã€‚
     */
     static ssize_t recv (CWX_HANDLE handle,
         CwxMsgHead& head,
         CwxMsgBlock*& msg,
         CwxTimeouter  *timeout = 0) ;
     /**
-    @brief ´ÓÁ¬½ÓÉÏ½ÓÊÜÒ»¸ömsg£¬¿ÉÎª·ÇÃæÏòÁ¬½ÓµÄ¡£ÊÇ¶ÔOSµÄrecvmsg½Ó¿ÚµÄ·â×°
-    @param [in] handle ¶ÁµÄ¾ä±ú¡£
-    @param [in] msg ½ÓÊÕÊı¾İµÄbuf
-    @param [in] flags recvmsgµÄflag
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£ºfailure£¬°üÀ¨³¬Ê±£»0£º¶Ô¶Ë¹Ø±Õ£»>0£º¶ÁÈ¡µÄ×Ö½ÚÊıÁ¿
+    @brief ä»è¿æ¥ä¸Šæ¥å—ä¸€ä¸ªmsgï¼Œå¯ä¸ºéé¢å‘è¿æ¥çš„ã€‚æ˜¯å¯¹OSçš„recvmsgæ¥å£çš„å°è£…
+    @param [in] handle è¯»çš„å¥æŸ„ã€‚
+    @param [in] msg æ¥æ”¶æ•°æ®çš„buf
+    @param [in] flags recvmsgçš„flag
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @return -1ï¼šfailureï¼ŒåŒ…æ‹¬è¶…æ—¶ï¼›0ï¼šå¯¹ç«¯å…³é—­ï¼›>0ï¼šè¯»å–çš„å­—èŠ‚æ•°é‡
     */
     static ssize_t recvmsg(CWX_HANDLE handle,
         struct msghdr *msg,
@@ -215,15 +215,15 @@ public:
         CwxTimeouter *timeout = NULL);
 
     /**
-    @brief ´ÓÁ¬½ÓÉÏ½ÓÊÜÒ»¸ömsg£¬¿ÉÎª·ÇÃæÏòÁ¬½ÓµÄ¡£ÊÇ¶ÔOSµÄrecvfrom½Ó¿ÚµÄ·â×°
-    @param [in] handle ¶ÁµÄ¾ä±ú¡£
-    @param [in] buf ½ÓÊÕÊı¾İµÄbuf
-    @param [in] len bufµÄ¿Õ¼ä
-    @param [in] flags recvfromµÄflag
-    @param [out] from ÏûÏ¢µÄÀ´Ô´µØÖ·
-    @param [out] fromlen À´Ô´µØÖ·µÄ³¤¶È
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£ºfailure£¬°üÀ¨³¬Ê±£»0£º¶Ô¶Ë¹Ø±Õ£»>0£º¶ÁÈ¡µÄ×Ö½ÚÊıÁ¿
+    @brief ä»è¿æ¥ä¸Šæ¥å—ä¸€ä¸ªmsgï¼Œå¯ä¸ºéé¢å‘è¿æ¥çš„ã€‚æ˜¯å¯¹OSçš„recvfromæ¥å£çš„å°è£…
+    @param [in] handle è¯»çš„å¥æŸ„ã€‚
+    @param [in] buf æ¥æ”¶æ•°æ®çš„buf
+    @param [in] len bufçš„ç©ºé—´
+    @param [in] flags recvfromçš„flag
+    @param [out] from æ¶ˆæ¯çš„æ¥æºåœ°å€
+    @param [out] fromlen æ¥æºåœ°å€çš„é•¿åº¦
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @return -1ï¼šfailureï¼ŒåŒ…æ‹¬è¶…æ—¶ï¼›0ï¼šå¯¹ç«¯å…³é—­ï¼›>0ï¼šè¯»å–çš„å­—èŠ‚æ•°é‡
     */
     static ssize_t recvfrom (CWX_HANDLE handle,
         char *buf,
@@ -234,12 +234,12 @@ public:
         CwxTimeouter *timeout = NULL);
 
     /**
-    @brief ´ÓÁ¬½ÓÉÏ½ÓÊÜÊı¾İ¡£ÊÇ¶ÔOSµÄreadv½Ó¿ÚµÄ·â×°
-    @param [in] handle ¶ÁµÄ¾ä±ú¡£
-    @param [in] iov ½ÓÊÕÊı¾İµÄ¿Õ¼äµÄÊı×é
-    @param [in] iovcnt Êı×éµÄ´óĞ¡
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£ºfailure£¬°üÀ¨³¬Ê±£»0£º¶Ô¶Ë¹Ø±Õ£»>0£º¶ÁÈ¡µÄ×Ö½ÚÊıÁ¿
+    @brief ä»è¿æ¥ä¸Šæ¥å—æ•°æ®ã€‚æ˜¯å¯¹OSçš„readvæ¥å£çš„å°è£…
+    @param [in] handle è¯»çš„å¥æŸ„ã€‚
+    @param [in] iov æ¥æ”¶æ•°æ®çš„ç©ºé—´çš„æ•°ç»„
+    @param [in] iovcnt æ•°ç»„çš„å¤§å°
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @return -1ï¼šfailureï¼ŒåŒ…æ‹¬è¶…æ—¶ï¼›0ï¼šå¯¹ç«¯å…³é—­ï¼›>0ï¼šè¯»å–çš„å­—èŠ‚æ•°é‡
     */
     static ssize_t recvv (CWX_HANDLE handle,
         iovec *iov,
@@ -247,12 +247,12 @@ public:
         CwxTimeouter *timeout = NULL);
 
     /**
-    @brief ÍùÁ¬½ÓÉÏ·¢ËÍÊı¾İ¡£ÊÇ¶ÔOSµÄwrite½Ó¿ÚµÄ·â×°
-    @param [in] handle Ğ´µÄ¾ä±ú¡£
-    @param [in] buf Êı¾İµÄbuf
-    @param [in] len Êı¾İµÄ³¤¶È
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£ºfailure£¬°üÀ¨³¬Ê±£»·ñÔò£¬Îª·¢ËÍµÄ×Ö½ÚÊıÁ¿
+    @brief å¾€è¿æ¥ä¸Šå‘é€æ•°æ®ã€‚æ˜¯å¯¹OSçš„writeæ¥å£çš„å°è£…
+    @param [in] handle å†™çš„å¥æŸ„ã€‚
+    @param [in] buf æ•°æ®çš„buf
+    @param [in] len æ•°æ®çš„é•¿åº¦
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @return -1ï¼šfailureï¼ŒåŒ…æ‹¬è¶…æ—¶ï¼›å¦åˆ™ï¼Œä¸ºå‘é€çš„å­—èŠ‚æ•°é‡
     */
     static ssize_t write (CWX_HANDLE handle,
         void const *buf,
@@ -260,13 +260,13 @@ public:
         CwxTimeouter *timeout = NULL);
 
     /**
-    @brief ÍùÁ¬½ÓÉÏ·¢ËÍÊı¾İ¡£ÊÇ¶ÔOSµÄsend½Ó¿ÚµÄ·â×°
-    @param [in] handle Ğ´µÄ¾ä±ú¡£
-    @param [in] buf Êı¾İµÄbuf
-    @param [in] len Êı¾İµÄ³¤¶È
-    @param [in] flags osµÄsend apiµÄflag
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£ºfailure£¬°üÀ¨³¬Ê±£»·ñÔò£¬Îª·¢ËÍµÄ×Ö½ÚÊıÁ¿
+    @brief å¾€è¿æ¥ä¸Šå‘é€æ•°æ®ã€‚æ˜¯å¯¹OSçš„sendæ¥å£çš„å°è£…
+    @param [in] handle å†™çš„å¥æŸ„ã€‚
+    @param [in] buf æ•°æ®çš„buf
+    @param [in] len æ•°æ®çš„é•¿åº¦
+    @param [in] flags osçš„send apiçš„flag
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @return -1ï¼šfailureï¼ŒåŒ…æ‹¬è¶…æ—¶ï¼›å¦åˆ™ï¼Œä¸ºå‘é€çš„å­—èŠ‚æ•°é‡
     */
     static ssize_t send (CWX_HANDLE handle,
         void const *buf,
@@ -274,25 +274,25 @@ public:
         int flags,
         CwxTimeouter *timeout = NULL);
     /**
-    @brief ÍùÁ¬½ÓÉÏ·¢ËÍÊı¾İ¡£ÊÇ¶ÔOSµÄwrite½Ó¿ÚµÄ·â×°
-    @param [in] handle Ğ´µÄ¾ä±ú¡£
-    @param [in] buf ·¢ËÍÊı¾İµÄbuf
-    @param [in] len ·¢ËÍÊı¾İµÄ³¤¶È
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£ºfailure£¬°üÀ¨³¬Ê±£»·ñÔòÎªĞ´×Ö½ÚµÄÊıÁ¿
+    @brief å¾€è¿æ¥ä¸Šå‘é€æ•°æ®ã€‚æ˜¯å¯¹OSçš„writeæ¥å£çš„å°è£…
+    @param [in] handle å†™çš„å¥æŸ„ã€‚
+    @param [in] buf å‘é€æ•°æ®çš„buf
+    @param [in] len å‘é€æ•°æ®çš„é•¿åº¦
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @return -1ï¼šfailureï¼ŒåŒ…æ‹¬è¶…æ—¶ï¼›å¦åˆ™ä¸ºå†™å­—èŠ‚çš„æ•°é‡
     */
     static ssize_t send (CWX_HANDLE handle,
         void const *buf,
         size_t len,
         CwxTimeouter *timeout = NULL);
     /**
-    @brief ·¢ËÍlen¸ö×Ö½Ú¡£ÊÇ¶ÔOSµÄwrite½Ó¿ÚµÄ·â×°
-    @param [in] handle Ğ´µÄ¾ä±ú¡£
-    @param [in] buf Êı¾İµÄbuf
-    @param [in] len Êı¾İµÄ³¤¶È
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @param [out] sent Ê§°ÜÊ±·¢ËÍµÄ×Ö½ÚµÄÊıÁ¿¡£
-    @return -1£ºfailure£¬°üÀ¨³¬Ê±£»·ñÔòÎª·¢ËÍµÄ×Ö½ÚÊıÁ¿
+    @brief å‘é€lenä¸ªå­—èŠ‚ã€‚æ˜¯å¯¹OSçš„writeæ¥å£çš„å°è£…
+    @param [in] handle å†™çš„å¥æŸ„ã€‚
+    @param [in] buf æ•°æ®çš„buf
+    @param [in] len æ•°æ®çš„é•¿åº¦
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @param [out] sent å¤±è´¥æ—¶å‘é€çš„å­—èŠ‚çš„æ•°é‡ã€‚
+    @return -1ï¼šfailureï¼ŒåŒ…æ‹¬è¶…æ—¶ï¼›å¦åˆ™ä¸ºå‘é€çš„å­—èŠ‚æ•°é‡
     */
     static ssize_t write_n (CWX_HANDLE handle,
         void const*buf,
@@ -300,14 +300,14 @@ public:
         CwxTimeouter *timeout = NULL,
         size_t* sent=NULL);
     /**
-    @brief ·¢ËÍlen¸ö×Ö½Ú¡£ÊÇ¶ÔOSµÄsend½Ó¿ÚµÄ·â×°
-    @param [in] handle Ğ´µÄ¾ä±ú¡£
-    @param [in] buf Êı¾İµÄbuf
-    @param [in] len Êı¾İµÄ³¤¶È
-    @param [in] flags osµÄsend apiµÄflag
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @param [out] sent Ê§°ÜÊ±·¢ËÍµÄ×Ö½ÚµÄÊıÁ¿¡£
-    @return -1£ºfailure£¬°üÀ¨³¬Ê±£»·ñÔòÎª·¢ËÍµÄ×Ö½ÚÊıÁ¿
+    @brief å‘é€lenä¸ªå­—èŠ‚ã€‚æ˜¯å¯¹OSçš„sendæ¥å£çš„å°è£…
+    @param [in] handle å†™çš„å¥æŸ„ã€‚
+    @param [in] buf æ•°æ®çš„buf
+    @param [in] len æ•°æ®çš„é•¿åº¦
+    @param [in] flags osçš„send apiçš„flag
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @param [out] sent å¤±è´¥æ—¶å‘é€çš„å­—èŠ‚çš„æ•°é‡ã€‚
+    @return -1ï¼šfailureï¼ŒåŒ…æ‹¬è¶…æ—¶ï¼›å¦åˆ™ä¸ºå‘é€çš„å­—èŠ‚æ•°é‡
     */
     static ssize_t send_n (CWX_HANDLE handle,
         void const*buf,
@@ -317,13 +317,13 @@ public:
         size_t* sent=NULL);
 
     /**
-    @brief ·¢ËÍlen¸ö×Ö½Ú¡£ÊÇ¶ÔOSµÄwrite½Ó¿ÚµÄ·â×°
-    @param [in] handle Ğ´µÄ¾ä±ú¡£
-    @param [in] buf Êı¾İµÄbuf
-    @param [in] len Êı¾İµÄ³¤¶È
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @param [out] accepted Ê§°ÜÊ±·¢ËÍµÄ×Ö½ÚµÄÊıÁ¿¡£
-    @return -1£ºfailure£¬°üÀ¨³¬Ê±£»·ñÔòÎª·¢ËÍµÄ×Ö½ÚÊıÁ¿
+    @brief å‘é€lenä¸ªå­—èŠ‚ã€‚æ˜¯å¯¹OSçš„writeæ¥å£çš„å°è£…
+    @param [in] handle å†™çš„å¥æŸ„ã€‚
+    @param [in] buf æ•°æ®çš„buf
+    @param [in] len æ•°æ®çš„é•¿åº¦
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @param [out] accepted å¤±è´¥æ—¶å‘é€çš„å­—èŠ‚çš„æ•°é‡ã€‚
+    @return -1ï¼šfailureï¼ŒåŒ…æ‹¬è¶…æ—¶ï¼›å¦åˆ™ä¸ºå‘é€çš„å­—èŠ‚æ•°é‡
     */
     static ssize_t send_n (CWX_HANDLE handle,
         void const*buf,
@@ -332,12 +332,12 @@ public:
         size_t* accepted=NULL);
 
     /**
-    @brief ÍùÁ¬½ÓÉÏ·¢ËÍÒ»¸ömsg£¬¿ÉÎª·ÇÃæÏòÁ¬½ÓµÄ¡£ÊÇ¶ÔOSµÄsendmsg½Ó¿ÚµÄ·â×°
-    @param [in] handle Ğ´¾ä±ú¡£
-    @param [in] msg Êı¾İµÄbuf
-    @param [in] flags sendmsgµÄflag
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£ºfailure£¬°üÀ¨³¬Ê±£»·ñÔòÎª·¢ËÍµÄ×Ö½ÚÊıÁ¿
+    @brief å¾€è¿æ¥ä¸Šå‘é€ä¸€ä¸ªmsgï¼Œå¯ä¸ºéé¢å‘è¿æ¥çš„ã€‚æ˜¯å¯¹OSçš„sendmsgæ¥å£çš„å°è£…
+    @param [in] handle å†™å¥æŸ„ã€‚
+    @param [in] msg æ•°æ®çš„buf
+    @param [in] flags sendmsgçš„flag
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @return -1ï¼šfailureï¼ŒåŒ…æ‹¬è¶…æ—¶ï¼›å¦åˆ™ä¸ºå‘é€çš„å­—èŠ‚æ•°é‡
     */
     static ssize_t sendmsg(CWX_HANDLE handle,
         struct msghdr const *msg,
@@ -345,15 +345,15 @@ public:
         CwxTimeouter *timeout = NULL);
 
     /**
-    @brief ÍùÁ¬½ÓÉÏ·¢ËÍÊı¾İ£¬¿ÉÎª·ÇÃæÏòÁ¬½ÓµÄ¡£ÊÇ¶ÔOSµÄsendto½Ó¿ÚµÄ·â×°
-    @param [in] handle Ğ´¾ä±ú¡£
-    @param [in] buf Êı¾İµÄbuf
-    @param [in] len Êı¾İµÄlen
-    @param [in] flags sendtoµÄflag
-    @param [in] to sendtoµÄµØÖ·
-    @param [in] tolen sendtoµÄµØÖ·µÄ³¤¶È
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£ºfailure£¬°üÀ¨³¬Ê±£»·ñÔòÎª·¢ËÍµÄ×Ö½ÚÊıÁ¿
+    @brief å¾€è¿æ¥ä¸Šå‘é€æ•°æ®ï¼Œå¯ä¸ºéé¢å‘è¿æ¥çš„ã€‚æ˜¯å¯¹OSçš„sendtoæ¥å£çš„å°è£…
+    @param [in] handle å†™å¥æŸ„ã€‚
+    @param [in] buf æ•°æ®çš„buf
+    @param [in] len æ•°æ®çš„len
+    @param [in] flags sendtoçš„flag
+    @param [in] to sendtoçš„åœ°å€
+    @param [in] tolen sendtoçš„åœ°å€çš„é•¿åº¦
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @return -1ï¼šfailureï¼ŒåŒ…æ‹¬è¶…æ—¶ï¼›å¦åˆ™ä¸ºå‘é€çš„å­—èŠ‚æ•°é‡
     */
     static ssize_t sendto (CWX_HANDLE handle,
         char const *buf,
@@ -364,12 +364,12 @@ public:
         CwxTimeouter *timeout = NULL);
 
     /**
-    @brief ÍùÁ¬½ÓÉÏ·¢ËÍÊı¾İ¡£ÊÇ¶ÔOSµÄwritev½Ó¿ÚµÄ·â×°
-    @param [in] handle Ğ´¾ä±ú¡£
-    @param [in] iov Êı¾İµÄbufÊı×é
-    @param [in] iovcnt Êı×éµÄ´óĞ¡
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @return -1£ºfailure£¬°üÀ¨³¬Ê±£»·ñÔòÎª·¢ËÍµÄ×Ö½ÚÊıÁ¿
+    @brief å¾€è¿æ¥ä¸Šå‘é€æ•°æ®ã€‚æ˜¯å¯¹OSçš„writevæ¥å£çš„å°è£…
+    @param [in] handle å†™å¥æŸ„ã€‚
+    @param [in] iov æ•°æ®çš„bufæ•°ç»„
+    @param [in] iovcnt æ•°ç»„çš„å¤§å°
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @return -1ï¼šfailureï¼ŒåŒ…æ‹¬è¶…æ—¶ï¼›å¦åˆ™ä¸ºå‘é€çš„å­—èŠ‚æ•°é‡
     */
     static ssize_t sendv (CWX_HANDLE handle,
         iovec const*iov,
@@ -378,14 +378,14 @@ public:
 
 
     /**
-    @brief ¼à²âÒ»¸öio handleÊÇ·ñ¶Á¡¢Ğ´¡¢ÀıÍâready£¬
-    @param [in] handle ¼à²âµÄ¾ä±ú¡£
-    @param [in] timeout timeoutµÄÖµ£¬ÈôÎªNULL±íÊ¾×èÈû¡£
-    @param [in] bRead ÊÇ·ñ¼à²â¶Á
-    @param [in] bWrite ÊÇ·ñ¼à²âĞ´
-    @param [in] bException ÊÇ·ñ¼à²âÀıÍâ
-    @param [in] bRestart ÈôÔÚµÈ´ı¹ı³ÌÖĞ±»ĞÅºÅÖĞ¶Ï£¬ÊÇ·ñ¼ÌĞøµÈ´ı¡£true£º¼ÌĞøµÈ´ı£»false£º²»µÈ´ı¡£
-    @return -1£ºfailure£»0£º³¬Ê±£»>0£ºhandle readyµÄÊÂ¼şÊıÁ¿
+    @brief ç›‘æµ‹ä¸€ä¸ªio handleæ˜¯å¦è¯»ã€å†™ã€ä¾‹å¤–readyï¼Œ
+    @param [in] handle ç›‘æµ‹çš„å¥æŸ„ã€‚
+    @param [in] timeout timeoutçš„å€¼ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºé˜»å¡ã€‚
+    @param [in] bRead æ˜¯å¦ç›‘æµ‹è¯»
+    @param [in] bWrite æ˜¯å¦ç›‘æµ‹å†™
+    @param [in] bException æ˜¯å¦ç›‘æµ‹ä¾‹å¤–
+    @param [in] bRestart è‹¥åœ¨ç­‰å¾…è¿‡ç¨‹ä¸­è¢«ä¿¡å·ä¸­æ–­ï¼Œæ˜¯å¦ç»§ç»­ç­‰å¾…ã€‚trueï¼šç»§ç»­ç­‰å¾…ï¼›falseï¼šä¸ç­‰å¾…ã€‚
+    @return -1ï¼šfailureï¼›0ï¼šè¶…æ—¶ï¼›>0ï¼šhandle readyçš„äº‹ä»¶æ•°é‡
     */
     static int handleReady (CWX_HANDLE handle,
         CwxTimeouter  *timeout = NULL,
@@ -396,22 +396,22 @@ public:
 
 
 
-    ///ÊÇ·ñÖ§³ÖIPV6
+    ///æ˜¯å¦æ”¯æŒIPV6
     static bool isEnableIpv6(void);
-    ///ÊÇ·ñÖ§³ÖIPV4
+    ///æ˜¯å¦æ”¯æŒIPV4
     static bool isEnableIpv4(void);
-    ///»ñÈ¡·şÎñµÄ¶Ë¿ÚºÅ, -1Ê§°Ü¡£
+    ///è·å–æœåŠ¡çš„ç«¯å£å·, -1å¤±è´¥ã€‚
     static int getSvrPort(char const* szSvrName, char const* szProtocol);
 private:
     //forbiden new instance
     CwxSocket();
 #if (CWX_HAS_IPV6)
-    //¼ì²éÊÇ·ñÖ§³ÖÖ¸¶¨µÄĞ­Òé×å
+    //æ£€æŸ¥æ˜¯å¦æ”¯æŒæŒ‡å®šçš„åè®®æ—
     static int ipvn_check(int &ipvn_enabled, int pf);
 #endif
 private:
-    static int  m_enableIpv6; ///<ipv6Ö§³ÖµÄ±êÖ¾, -1:Î´¼ì²é£»0£º²»Ö§³Ö£»1:Ö§³Ö
-    static int  m_enableIpv4; ///<ipv4Ö§³ÖµÄ±êÖ¾, -1:Î´¼ì²é£»0£º²»Ö§³Ö£»1£ºÖ§³Ö
+    static int  m_enableIpv6; ///<ipv6æ”¯æŒçš„æ ‡å¿—, -1:æœªæ£€æŸ¥ï¼›0ï¼šä¸æ”¯æŒï¼›1:æ”¯æŒ
+    static int  m_enableIpv4; ///<ipv4æ”¯æŒçš„æ ‡å¿—, -1:æœªæ£€æŸ¥ï¼›0ï¼šä¸æ”¯æŒï¼›1ï¼šæ”¯æŒ
 };
 
 CWINUX_END_NAMESPACE

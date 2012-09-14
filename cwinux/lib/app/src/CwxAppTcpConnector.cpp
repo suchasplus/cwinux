@@ -1,13 +1,13 @@
-#include "CwxAppFramework.h"
+ï»¿#include "CwxAppFramework.h"
 CWINUX_BEGIN_NAMESPACE
 
-///¹¹Ôìº¯Êı
+///æ„é€ å‡½æ•°
 CwxAppTcpConnector::CwxAppTcpConnector (CwxAppFramework* pApp, CwxAppReactor *reactor)
 :m_pApp(pApp), m_reactor(reactor)
 {
 
 }
-///Îö¹¹º¯Êı
+///ææ„å‡½æ•°
 CwxAppTcpConnector::~CwxAppTcpConnector()
 {
 

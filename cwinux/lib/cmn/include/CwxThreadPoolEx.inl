@@ -1,4 +1,4 @@
-
+ï»¿
 CWINUX_BEGIN_NAMESPACE
 
 inline size_t CwxThreadPoolEx::getQueuedMsgNum()
@@ -11,7 +11,7 @@ inline size_t CwxThreadPoolEx::getQueuedMsgNum()
     }
     return num;
 }
-///»ñÈ¡Ïß³ÌµÄÏûÏ¢¶ÓÁĞÅÅ¶ÓÏûÏ¢Êı
+///è·å–çº¿ç¨‹çš„æ¶ˆæ¯é˜Ÿåˆ—æ’é˜Ÿæ¶ˆæ¯æ•°
 inline size_t CwxThreadPoolEx::getQueuedMsgNum(CWX_UINT16 unThreadIndex)
 {
     if (!m_threadArr || (unThreadIndex >= getThreadNum())) return 0;
@@ -19,10 +19,10 @@ inline size_t CwxThreadPoolEx::getQueuedMsgNum(CWX_UINT16 unThreadIndex)
 }
 
 /**
-@brief ÍùÏß³ÌµÄÏûÏ¢¶ÓÁĞÌí¼ÓÒ»¸öĞÂÏûÏ¢¡£
-@param [in] pMsg appendµÄÏûÏ¢
-@param [in] uiThread ÏûÏ¢µÄÏß³Ì¶ÓÁĞ£¬ÄÚ²¿»á¸ù¾İThreadµÄÊıÁ¿£¬¼ÆËã³öËùÊôµÄÏß³Ì¡£
-@return -1£ºÊ§°Ü£»>=0Îª¶ÔÓ¦Ïß³ÌµÄ¶ÓÁĞÖĞÅÅ¶ÓµÄÏûÏ¢ÊıÁ¿
+@brief å¾€çº¿ç¨‹çš„æ¶ˆæ¯é˜Ÿåˆ—æ·»åŠ ä¸€ä¸ªæ–°æ¶ˆæ¯ã€‚
+@param [in] pMsg appendçš„æ¶ˆæ¯
+@param [in] uiThread æ¶ˆæ¯çš„çº¿ç¨‹é˜Ÿåˆ—ï¼Œå†…éƒ¨ä¼šæ ¹æ®Threadçš„æ•°é‡ï¼Œè®¡ç®—å‡ºæ‰€å±çš„çº¿ç¨‹ã€‚
+@return -1ï¼šå¤±è´¥ï¼›>=0ä¸ºå¯¹åº”çº¿ç¨‹çš„é˜Ÿåˆ—ä¸­æ’é˜Ÿçš„æ¶ˆæ¯æ•°é‡
 */
 inline int CwxThreadPoolEx::append(CwxMsgBlock* pMsg, CWX_UINT32 uiThread)
 {

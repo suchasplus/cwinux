@@ -1,14 +1,14 @@
-#ifndef __CWX_LRU_CACHE_H__
+ï»¿#ifndef __CWX_LRU_CACHE_H__
 #define __CWX_LRU_CACHE_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxLruCache.h
-@brief LRU CacheµÄÄ£°åÀà¡£
+@brief LRU Cacheçš„æ¨¡æ¿ç±»ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-10
@@ -27,7 +27,7 @@ CWINUX_BEGIN_NAMESPACE
 
 /**
 @class CwxLruCacheKeyData
-@brief LRU cacheµÄÊı¾İ¶ÔÏó¶¨Òå¡£
+@brief LRU cacheçš„æ•°æ®å¯¹è±¡å®šä¹‰ã€‚
 */
 template<typename KEY, typename DATA>
 class CwxLruCacheKeyData
@@ -38,67 +38,67 @@ public:
     {
     }
 public:
-    CwxLruCacheKeyData<KEY, DATA>*     m_prev;///<ÓÃÓÚLRU cacheÁ´±íµÄÇ°ÏòÖ¸Õë
-    CwxLruCacheKeyData<KEY, DATA>*     m_next;///<ÓÃÓÚLRU cacheÁ´±íµÄºóÏòÖ¸Õë
-    KEY                              m_key; ///<LRU cacheµÄKEY
-    DATA                             m_data;///<LRU cacheµÄDATA
+    CwxLruCacheKeyData<KEY, DATA>*     m_prev;///<ç”¨äºLRU cacheé“¾è¡¨çš„å‰å‘æŒ‡é’ˆ
+    CwxLruCacheKeyData<KEY, DATA>*     m_next;///<ç”¨äºLRU cacheé“¾è¡¨çš„åå‘æŒ‡é’ˆ
+    KEY                              m_key; ///<LRU cacheçš„KEY
+    DATA                             m_data;///<LRU cacheçš„DATA
 };
 
 /**
 @class CwxLruCacheKeyMethod
-@brief ÊµÏÖLRU cacheµÄKEYµÄhash, equal¼°Êı¾İ´óĞ¡¼ÆËãµÄº¯Êı¶ÔÏó¡£
+@brief å®ç°LRU cacheçš„KEYçš„hash, equalåŠæ•°æ®å¤§å°è®¡ç®—çš„å‡½æ•°å¯¹è±¡ã€‚
 */
 template <typename KEY, typename DAT, typename HASH, typename EQUAL, typename KSIZE, typename DSIZE>
 class CwxLruCacheKeyMethod
 {
 public:
-    ///KEYµÄhash¶ÔÏó·½·¨
+    ///KEYçš„hashå¯¹è±¡æ–¹æ³•
     size_t operator()(KEY const* item) const 
     {
         return m_hash(*item);
     }
-    ///KEYµÄequal¶ÔÏó·½·¨
+    ///KEYçš„equalå¯¹è±¡æ–¹æ³•
     bool operator()(KEY const* item1, KEY const* item2) const
     {
         return m_equal(*item1, *item2);
     }
-    ///keyÓëdataµÄsizeof·½·¨
+    ///keyä¸dataçš„sizeofæ–¹æ³•
     size_t size(CwxLruCacheKeyData<KEY, DATA> const& item) const
     {
         return m_ksize(item.m_key) + m_dsize(item.m_data) + 2 * sizeof(void*);
     }
-    ///keyÓëdataµÄsizeof·½·¨
+    ///keyä¸dataçš„sizeofæ–¹æ³•
     size_t size(KEY const& key, DATA const& data) const
     {
         return m_ksize(key) + m_dsize(data) + 2 * sizeof(void*);
     }
 private:
-    HASH  m_hash;///<keyµÄhash¶ÔÏóº¯Êı
-    EQUAL m_equal;///<keyµÄequal¶ÔÏóº¯Êı
-    KSIZE m_ksize;///<keyµÄsizeof¶ÔÏóº¯Êı
-    DSIZE m_dsize;///<dataµÄsizeof¶ÔÏóº¯Êı
+    HASH  m_hash;///<keyçš„hashå¯¹è±¡å‡½æ•°
+    EQUAL m_equal;///<keyçš„equalå¯¹è±¡å‡½æ•°
+    KSIZE m_ksize;///<keyçš„sizeofå¯¹è±¡å‡½æ•°
+    DSIZE m_dsize;///<dataçš„sizeofå¯¹è±¡å‡½æ•°
 };
 
 
 /**
 @class CwxLruCache
-@brief LRU cacheµÄÄ£°åÀà¡£¸÷¸öÄ£°å²ÎÊıµÄº¬ÒåÈçÏÂ£º
-KEY: lru cacheµÄKeyÀàĞÍ
-DATA£ºlru cacheµÄDataÊı¾İÀàĞÍ
-HASH£ºKEY hash-code¼ÆËãµÄ·½·¨¶ÔÏó£¬Ä¬ÈÏÎªhash\<KEY\>
-EQUAL£º KEY ÏàµÈ±È½ÏµÄ·½·¨¶ÔÏó£¬Ä¬ÈÏÎªequal_to\<KEY\>
-KSIZE£ºkeyµÄÄÚ´æ´óĞ¡µÄ¼ÆËã·½·¨¶ÔÏó£¬Ä¬ÈÏÎªCwxSize(KEY)
-DSIZE£ºdataµÄÄÚ´æ´óĞ¡µÄ¼ÆËã·½·¨¶ÔÏó£¬Ä¬ÈÏÎªCwxSize(KEY)
+@brief LRU cacheçš„æ¨¡æ¿ç±»ã€‚å„ä¸ªæ¨¡æ¿å‚æ•°çš„å«ä¹‰å¦‚ä¸‹ï¼š
+KEY: lru cacheçš„Keyç±»å‹
+DATAï¼šlru cacheçš„Dataæ•°æ®ç±»å‹
+HASHï¼šKEY hash-codeè®¡ç®—çš„æ–¹æ³•å¯¹è±¡ï¼Œé»˜è®¤ä¸ºhash\<KEY\>
+EQUALï¼š KEY ç›¸ç­‰æ¯”è¾ƒçš„æ–¹æ³•å¯¹è±¡ï¼Œé»˜è®¤ä¸ºequal_to\<KEY\>
+KSIZEï¼škeyçš„å†…å­˜å¤§å°çš„è®¡ç®—æ–¹æ³•å¯¹è±¡ï¼Œé»˜è®¤ä¸ºCwxSize(KEY)
+DSIZEï¼šdataçš„å†…å­˜å¤§å°çš„è®¡ç®—æ–¹æ³•å¯¹è±¡ï¼Œé»˜è®¤ä¸ºCwxSize(KEY)
 */
 
 template<typename KEY, typename DATA, typename HASH=hash<KEY>, typename EQUAL=equal_to<KEY>, typename KSIZE=CwxSize<KEY>, typename DSIZE=CwxSize<DATA> >
 class CwxLruCache
 {
 public:
-    typedef CwxLruCacheKeyData<KEY, DATA>  _CACHE_DATA; ///< cacheÊı¾İÀàĞÍ
-    typedef CwxLruCacheKeyMethod<KEY, DATA, HASH, EQUAL, KSIZE, DSIZE> _FUNC; ///<·½·¨ÀàĞÍ
-    typedef hash_map<KEY const*, _CACHE_DATA*, _FUNC, _FUNC> _MAP;///<keyµÄË÷ÒıÀàĞÍ
-    typedef typename _MAP::iterator _MAP_ITERATOR;///<keyµÄË÷Òıiterator
+    typedef CwxLruCacheKeyData<KEY, DATA>  _CACHE_DATA; ///< cacheæ•°æ®ç±»å‹
+    typedef CwxLruCacheKeyMethod<KEY, DATA, HASH, EQUAL, KSIZE, DSIZE> _FUNC; ///<æ–¹æ³•ç±»å‹
+    typedef hash_map<KEY const*, _CACHE_DATA*, _FUNC, _FUNC> _MAP;///<keyçš„ç´¢å¼•ç±»å‹
+    typedef typename _MAP::iterator _MAP_ITERATOR;///<keyçš„ç´¢å¼•iterator
 private:
     _CACHE_DATA*    m_chain_head; ///<lru key's chain head
     _CACHE_DATA*    m_chain_tail;///<lru key's chain tail
@@ -112,10 +112,10 @@ private:
 
 public:
     /**
-    @brief ¹¹Ôìº¯Êı£¬ÉèÖÃLRU CACHEµÄÄÚ´æ¼°KEYµÄ¿ÉÄÜ×î´óÊıÁ¿¡£
-    @param [in] size LRU CACHEµÄÄÚ´æ×ÜÁ¿
-    @param [in] count LRU CACHEµÄKEYµÄ¿ÉÄÜ×î´óÖµ
-    @param [in] bLock ÊÇ·ñ¶àÏß³Ì°²È«£¬ÄÚ²¿½øĞĞËøÍ¬²½
+    @brief æ„é€ å‡½æ•°ï¼Œè®¾ç½®LRU CACHEçš„å†…å­˜åŠKEYçš„å¯èƒ½æœ€å¤§æ•°é‡ã€‚
+    @param [in] size LRU CACHEçš„å†…å­˜æ€»é‡
+    @param [in] count LRU CACHEçš„KEYçš„å¯èƒ½æœ€å¤§å€¼
+    @param [in] bLock æ˜¯å¦å¤šçº¿ç¨‹å®‰å…¨ï¼Œå†…éƒ¨è¿›è¡Œé”åŒæ­¥
     */
     CwxLruCache(unsigned long int size, CWX_UINT32 count, bool bLock=true)
         :m_max_size( size ), m_kv_pool(count/20), m_index(count * 1.2)
@@ -133,7 +133,7 @@ public:
             m_lock = NULL;
         }
     }
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxLruCache()
     {
         this->clear();
@@ -141,37 +141,37 @@ public:
         m_lock = NULL;
     }
 public:
-    ///»ñÈ¡ÄÚ´æÊ¹ÓÃÁ¿
+    ///è·å–å†…å­˜ä½¿ç”¨é‡
     inline unsigned long int size( void ) const
     {
         CwxMutexGuard lock(m_lock);
         return m_size; 
     }
-    ///»ñÈ¡cacheµÄkeyµÄÊıÁ¿
+    ///è·å–cacheçš„keyçš„æ•°é‡
     inline CWX_UINT32 count( void ) const
     {
         CwxMutexGuard lock(this->m_lock);
         return m_count; 
     }
-    ///»ñÈ¡ÄÚ´æ³ØÖĞ¶ÔÏóµÄÊıÁ¿
+    ///è·å–å†…å­˜æ± ä¸­å¯¹è±¡çš„æ•°é‡
     inline CWX_UINT32 poolCount() const
     {
         CwxMutexGuard lock(this->m_lock);
         return m_kv_pool.size(); 
     }
-    ///»ñÈ¡Ë÷ÒıÖĞ¶ÔÏóµÄÊıÁ¿
+    ///è·å–ç´¢å¼•ä¸­å¯¹è±¡çš„æ•°é‡
     inline CWX_UINT32 long mapSize()
     {
         CwxMutexGuard lock(this->m_lock);
         return m_index.size(); 
     }
-    ///»ñÈ¡×î´ó¿ÉÊ¹ÓÃÄÚ´æµÄÊıÁ¿
+    ///è·å–æœ€å¤§å¯ä½¿ç”¨å†…å­˜çš„æ•°é‡
     inline unsigned long int maxSize( void ) const 
     {
         CwxMutexGuard lock(this->m_lock);
         return m_max_size;
     }
-    ///Çå¿ÕCACHE    
+    ///æ¸…ç©ºCACHE    
     void clear( void )
     {
         CwxMutexGuard lock(this->m_lock);
@@ -182,13 +182,13 @@ public:
         m_size = 0;
         m_count =0;
     }
-    ///¼ì²ékeyÔÚCACHEÖĞÊÇ·ñ´æÔÚ
+    ///æ£€æŸ¥keyåœ¨CACHEä¸­æ˜¯å¦å­˜åœ¨
     inline bool exist(KEY const&key ) const 
     {
         CwxMutexGuard lock(this->m_lock);
         return m_index.find( &key ) != m_index.end();
     }
-    ///½«keyÒÆµ½LRU cacheµÄ¿ªÊ¼Î»ÖÃ£¬·ÀÖ¹»»³ö
+    ///å°†keyç§»åˆ°LRU cacheçš„å¼€å§‹ä½ç½®ï¼Œé˜²æ­¢æ¢å‡º
     inline void touch(KEY const &key )
     {
         CwxMutexGuard lock(this->m_lock);
@@ -197,10 +197,10 @@ public:
         _touch(miter->second);
     }
     /**
-    @brief »ñÈ¡Ò»¸öKEYµÄdata¡£
-    @param [in] key Òª»ñÈ¡DATAµÄKEY
-    @param [in] bTouch ÈôKEY´æÔÚ£¬ÊÇ·ñ½«´ËKEYµÄÒÆµ½LRU CACHEµÄÍ·¡£
-    @return NULL£ºKEY²»´æÔÚ£»·ñÔòÎªKEYµÄdata
+    @brief è·å–ä¸€ä¸ªKEYçš„dataã€‚
+    @param [in] key è¦è·å–DATAçš„KEY
+    @param [in] bTouch è‹¥KEYå­˜åœ¨ï¼Œæ˜¯å¦å°†æ­¤KEYçš„ç§»åˆ°LRU CACHEçš„å¤´ã€‚
+    @return NULLï¼šKEYä¸å­˜åœ¨ï¼›å¦åˆ™ä¸ºKEYçš„data
     */
     inline DATA* fetch(KEY const &key, bool bTouch = true )
     {
@@ -211,9 +211,9 @@ public:
         return miter->second;
     }    
     /**
-    @brief ÍùLRU CACHEÖĞ²åÈëÒ»¸öKEY¡£
-    @param [in] key Òª²åÈëµÄKEY
-    @param [in] data Òª²åÈëKeyµÄdata¡£
+    @brief å¾€LRU CACHEä¸­æ’å…¥ä¸€ä¸ªKEYã€‚
+    @param [in] key è¦æ’å…¥çš„KEY
+    @param [in] data è¦æ’å…¥Keyçš„dataã€‚
     @return void
     */
     inline void insert(KEY const &key, DATA &data )
@@ -260,7 +260,7 @@ public:
         //add to map
         this->m_index[&pData->m_key] = pData;
     }
-    ///´ÓLRU cacheÖĞÉ¾³ıÒ»¸öKEY
+    ///ä»LRU cacheä¸­åˆ é™¤ä¸€ä¸ªKEY
     inline void remove( KEY const &key )
     {
         CwxMutexGuard lock(this->m_lock);
@@ -271,7 +271,7 @@ public:
         m_kv_pool.free(pData);
     }
 private:
-    ///²»´øËøµÄtouch²Ù×÷
+    ///ä¸å¸¦é”çš„touchæ“ä½œ
     inline void _touch(_CACHE_DATA* data )
     {
         if (data->m_prev == NULL) //the head
@@ -291,7 +291,7 @@ private:
         m_chain_head->m_prev = data;
         m_chain_head = data;
     }
-    ///²»´øËøµÄremove²Ù×÷
+    ///ä¸å¸¦é”çš„removeæ“ä½œ
     inline void _remove(_MAP_ITERATOR& miter )
     {
         size_t size = 0;

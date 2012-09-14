@@ -1,16 +1,16 @@
-#ifndef __CWX_TSS_H__
+ï»¿#ifndef __CWX_TSS_H__
 #define __CWX_TSS_H__
 
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 
 /**
 @file CwxTss.h
-@brief Ïß³ÌTSS¶¨Òå
+@brief çº¿ç¨‹TSSå®šä¹‰
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-07-20
@@ -26,12 +26,12 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxTssInfo
-@brief Ïß³ÌµÄ»ù±¾ĞÅÏ¢£¬ÈôĞèÒª¸ü¶àµÄĞÅÏ¢£¬ÔòĞèÒªÖØÔØÕâ¸ö¶ÔÏó£¬´Ë¶ÔÏóÖ»Ó¦°üº¬»ù±¾Êı¾İ³ÉÔ±¡£
+@brief çº¿ç¨‹çš„åŸºæœ¬ä¿¡æ¯ï¼Œè‹¥éœ€è¦æ›´å¤šçš„ä¿¡æ¯ï¼Œåˆ™éœ€è¦é‡è½½è¿™ä¸ªå¯¹è±¡ï¼Œæ­¤å¯¹è±¡åªåº”åŒ…å«åŸºæœ¬æ•°æ®æˆå‘˜ã€‚
 */
 class CWX_API CwxTssInfo
 {
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxTssInfo()
     {
         m_unThreadGroup = 0;
@@ -45,162 +45,162 @@ public:
         m_llRecvMsgNum = 0;
     }
 public:
-    ///ÉèÖÃÏß³ÌµÄgroup id
+    ///è®¾ç½®çº¿ç¨‹çš„group id
     inline void setThreadGroup(CWX_UINT16 unGroup)
     {
         m_unThreadGroup = unGroup;
     }
-    ///»ñÈ¡Ïß³ÌµÄgroup id
+    ///è·å–çº¿ç¨‹çš„group id
     inline CWX_UINT16 getThreadGroup() const 
     {
         return m_unThreadGroup;
     }
-    ///ÉèÖÃÏß³ÌµÄthread id
+    ///è®¾ç½®çº¿ç¨‹çš„thread id
     inline void setThreadNo(CWX_UINT16 unThreadNo)
     {
         m_unThreadNo = unThreadNo;
     }
-    ///»ñÈ¡Ïß³ÌµÄthread id
+    ///è·å–çº¿ç¨‹çš„thread id
     inline CWX_UINT16 getThreadNo() const 
     {
         return m_unThreadNo;
     }
-    ///ÉèÖÃÏß³ÌµÄOS thread id
+    ///è®¾ç½®çº¿ç¨‹çš„OS thread id
     inline void setThreadId(pthread_t const& id)
     {
         m_threadId = id;
     }
-    ///»ñÈ¡Ïß³ÌµÄOS thread id
+    ///è·å–çº¿ç¨‹çš„OS thread id
     inline pthread_t const& getThreadId() const 
     {
         return m_threadId;
     }
-    ///¼ì²éÏß³ÌÊÇ·ñÍ£Ö¹
+    ///æ£€æŸ¥çº¿ç¨‹æ˜¯å¦åœæ­¢
     inline bool isStopped() const 
     {
         return m_bStopped;
     }
-    ///ÉèÖÃÏß³ÌÍ£Ö¹
+    ///è®¾ç½®çº¿ç¨‹åœæ­¢
     inline void setStopped(bool bStopped) 
     {
         m_bStopped = bStopped;
     }
-    ///»ñÈ¡Ïß³ÌÊÇ·ñÔÚµÈ´ıËø
+    ///è·å–çº¿ç¨‹æ˜¯å¦åœ¨ç­‰å¾…é”
     inline bool isBlocked() const 
     {
         return m_bBlocked;
     }
-    ///ÉèÖÃÏß³ÌÔÚµÈ´ıËø
+    ///è®¾ç½®çº¿ç¨‹åœ¨ç­‰å¾…é”
     inline void setBlocked(bool bBlocked) 
     {
         m_bBlocked = bBlocked;
     }
-    ///»ñÈ¡¶ÓÁĞÖĞÏûÏ¢ÊıÁ¿
+    ///è·å–é˜Ÿåˆ—ä¸­æ¶ˆæ¯æ•°é‡
     inline CWX_UINT32 getQueuedMsgNum() const
     {
         return m_uiQueuedMsg;
     }
-    ///ÉèÖÃ¶ÓÁĞÖĞÏûÏ¢ÊıÁ¿
+    ///è®¾ç½®é˜Ÿåˆ—ä¸­æ¶ˆæ¯æ•°é‡
     inline void setQueuedMsgNum(CWX_UINT32 uiNum)
     {
         m_uiQueuedMsg = uiNum;
     }
-    ///ÉèÖÃÏß³ÌµÄÆô¶¯Ê±¼ä
+    ///è®¾ç½®çº¿ç¨‹çš„å¯åŠ¨æ—¶é—´
     inline void setStartTime(time_t ttTime)
     {
         m_ttStartTime = ttTime;
     }
-    ///»ñÈ¡Ïß³ÌµÄÆô¶¯Ê±¼ä
+    ///è·å–çº¿ç¨‹çš„å¯åŠ¨æ—¶é—´
     inline time_t getStartTime() const
     {
         return m_ttStartTime;
     }
-    ///¸üĞÂÏß³ÌµÄ×ïĞĞÊ±¼ä
+    ///æ›´æ–°çº¿ç¨‹çš„ç½ªè¡Œæ—¶é—´
     inline void setUpdateTime(time_t ttTime)
     {
         m_ttUpdateTime = ttTime;
     }
-    ///»ñÈ¡Ïß³ÌµÄ×îĞÂ¸üĞÂÊ±¼ä
+    ///è·å–çº¿ç¨‹çš„æœ€æ–°æ›´æ–°æ—¶é—´
     inline time_t getUpdateTime() const
     {
         return m_ttUpdateTime;
     }
-    ///ÉèÖÃÏß³Ì´¦ÀíµÄÏûÏ¢ÈÎÎñµÄÊıÁ¿
+    ///è®¾ç½®çº¿ç¨‹å¤„ç†çš„æ¶ˆæ¯ä»»åŠ¡çš„æ•°é‡
     inline void setRecvMsgNum(CWX_UINT64 ullMsgNum)
     {
         m_llRecvMsgNum = ullMsgNum;
     }
-    ///»ñÈ¡Ïß³Ì´¦ÀíµÄÏûÏ¢ÈÎÎñµÄÊıÁ¿
+    ///è·å–çº¿ç¨‹å¤„ç†çš„æ¶ˆæ¯ä»»åŠ¡çš„æ•°é‡
     inline CWX_UINT64 getRecvMsgNum() const
     {
         return m_llRecvMsgNum;
     }
-    ///µİÔöÏß³Ì´¦ÀíµÄÏûÏ¢ÈÎÎñµÄÊıÁ¿
+    ///é€’å¢çº¿ç¨‹å¤„ç†çš„æ¶ˆæ¯ä»»åŠ¡çš„æ•°é‡
     inline void incRecvMsgNum()
     {
         m_llRecvMsgNum++;
     }
 private:
-    CWX_UINT16      m_unThreadGroup;///<Ïß³ÌµÄgroup
-    CWX_UINT16      m_unThreadNo;///<Ïß³ÌµÄid
-    pthread_t       m_threadId;///<Ïß³ÌµÄOS id
-    bool           m_bStopped;///<Ïß³ÌÊÇ·ñÍ£Ö¹
-    bool           m_bBlocked;///<Ïß³ÌÊÇ·ñÔÚµÈ´ıËø
-    CWX_UINT32      m_uiQueuedMsg; ///<¶ÓÁĞÖĞÏûÏ¢ÊıÁ¿
-    time_t          m_ttStartTime;///<Ïß³ÌµÄÆô¶¯Ê±¼ä
-    time_t          m_ttUpdateTime;///<Ïß³ÌµÄ×îĞÂ¸üĞÂÊ±¼ä
-    CWX_UINT64      m_llRecvMsgNum;///<Ïß³Ì´¦ÀíµÄÏûÏ¢µÄÊıÁ¿
+    CWX_UINT16      m_unThreadGroup;///<çº¿ç¨‹çš„group
+    CWX_UINT16      m_unThreadNo;///<çº¿ç¨‹çš„id
+    pthread_t       m_threadId;///<çº¿ç¨‹çš„OS id
+    bool           m_bStopped;///<çº¿ç¨‹æ˜¯å¦åœæ­¢
+    bool           m_bBlocked;///<çº¿ç¨‹æ˜¯å¦åœ¨ç­‰å¾…é”
+    CWX_UINT32      m_uiQueuedMsg; ///<é˜Ÿåˆ—ä¸­æ¶ˆæ¯æ•°é‡
+    time_t          m_ttStartTime;///<çº¿ç¨‹çš„å¯åŠ¨æ—¶é—´
+    time_t          m_ttUpdateTime;///<çº¿ç¨‹çš„æœ€æ–°æ›´æ–°æ—¶é—´
+    CWX_UINT64      m_llRecvMsgNum;///<çº¿ç¨‹å¤„ç†çš„æ¶ˆæ¯çš„æ•°é‡
 };
 
 class CwxLogger;
 
 /**
 @class CwxTss
-@brief Ïß³ÌµÄTSS¶ÔÏó£¬ÓÃ»§´æ·ÅÔÚÕû¸öÏß³ÌÉùÃ÷ÖÜÆÚÄÚÒ»Ö±ÓĞĞ§µÄ¶ÔÏó¡£¡£
+@brief çº¿ç¨‹çš„TSSå¯¹è±¡ï¼Œç”¨æˆ·å­˜æ”¾åœ¨æ•´ä¸ªçº¿ç¨‹å£°æ˜å‘¨æœŸå†…ä¸€ç›´æœ‰æ•ˆçš„å¯¹è±¡ã€‚ã€‚
 */
 class CWX_API CwxTss
 {
 public:
     enum{
-        TSS_2K_BUF = 2048,///<error-bufferµÄ´óĞ¡
+        TSS_2K_BUF = 2048,///<error-bufferçš„å¤§å°
         TSS_ERR_BUF = 1024 * 16  ///<16K
     };
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxTss()
     {
         m_fileNo = 0;
         m_fileName = NULL;
     }
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     virtual ~CwxTss()
     {
     }
 public:
-    ///»ñÈ¡TssµÄthread infoĞÅÏ¢
+    ///è·å–Tssçš„thread infoä¿¡æ¯
     CwxTssInfo& getThreadInfo()
     {
         return m_threadInfo;
     }
 public:
-    ///³õÊ¼»¯¶ÔÏóµÄ¾²Ì¬Êı¾İ
+    ///åˆå§‹åŒ–å¯¹è±¡çš„é™æ€æ•°æ®
     static int initTss();
-    ///½«pThrEnv×¢²áÎªµ÷ÓÃ´ËAPIµÄtss
+    ///å°†pThrEnvæ³¨å†Œä¸ºè°ƒç”¨æ­¤APIçš„tss
     static int regTss(CwxTss* pThrEnv);
-    ///unregÏß³ÌµÄtss
+    ///unregçº¿ç¨‹çš„tss
     static int unRegTss();
-    ///µ«ÊµÀı»¯Ä£Ê½£¬»ñÈ¡´ËÀàµÄÊµÀı
+    ///ä½†å®ä¾‹åŒ–æ¨¡å¼ï¼Œè·å–æ­¤ç±»çš„å®ä¾‹
     static CwxTss* instance();
 public:
-    char                     m_szBuf2K[TSS_2K_BUF + 1];///´íÎóÏûÏ¢ÃèÊö
+    char                     m_szBuf2K[TSS_2K_BUF + 1];///é”™è¯¯æ¶ˆæ¯æè¿°
     int                      m_fileNo;
     char const*              m_fileName;
 private:
     friend class CwxLogger;
-    char                     m_szErrMsg[TSS_ERR_BUF + 1];///´íÎóÏûÏ¢ÃèÊö
-    CwxTssInfo               m_threadInfo;///<µ±Ç°TSSµÄÏß³Ìinfo
-    static bool              m_bInit;///<¶ÔÏóÊÇ·ñÒÑ¾­Ö´ĞĞÁËinit²Ù×÷
-    static pthread_key_t     m_tssKey;///<Ïß³ÌµÄtss¶ÔÏó
+    char                     m_szErrMsg[TSS_ERR_BUF + 1];///é”™è¯¯æ¶ˆæ¯æè¿°
+    CwxTssInfo               m_threadInfo;///<å½“å‰TSSçš„çº¿ç¨‹info
+    static bool              m_bInit;///<å¯¹è±¡æ˜¯å¦å·²ç»æ‰§è¡Œäº†initæ“ä½œ
+    static pthread_key_t     m_tssKey;///<çº¿ç¨‹çš„tsså¯¹è±¡
 };
 
 #define  CWX_TSS(type) (type*)CwxTss::instance()

@@ -1,14 +1,14 @@
-#ifndef __CWX_UNIX_STREAM_H__
+ï»¿#ifndef __CWX_UNIX_STREAM_H__
 #define __CWX_UNIX_STREAM_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxUnixStream.h
-@brief UNix domainÁ÷Êı¾İÍ¨ĞÅÁ¬½Ó¶ÔÏóµÄ¶¨Òå¡£
+@brief UNix domainæµæ•°æ®é€šä¿¡è¿æ¥å¯¹è±¡çš„å®šä¹‰ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-12
@@ -24,16 +24,16 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxUnixStream
-@brief ÃæÏòÁ÷µÄUnix domainÁ¬½Ó¶ÔÏó¡£
+@brief é¢å‘æµçš„Unix domainè¿æ¥å¯¹è±¡ã€‚
 */
 class CWX_API CwxUnixStream:public CwxSockStream
 {
 public:
-    ///Ä¬ÈÏ¹¹Ôìº¯Êı
+    ///é»˜è®¤æ„é€ å‡½æ•°
     CwxUnixStream();
-    ///¹¹Ôìº¯Êı£¬´´½¨¶ÔÏó²¢Éè¶¨Á¬½Óhandle
+    ///æ„é€ å‡½æ•°ï¼Œåˆ›å»ºå¯¹è±¡å¹¶è®¾å®šè¿æ¥handle
     CwxUnixStream(CWX_HANDLE handle);
-    ///Îö¹¹º¯Êı.
+    ///ææ„å‡½æ•°.
     ~CwxUnixStream(void);
 public:
     /**

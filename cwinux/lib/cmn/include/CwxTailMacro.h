@@ -1,14 +1,14 @@
-#ifndef __CWX_TAIL_MACRO_H__
+ï»¿#ifndef __CWX_TAIL_MACRO_H__
 #define __CWX_TAIL_MACRO_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxTailMacro.h
-@brief ¶¨ÒåÁ´±í²Ù×÷µÄºê¶¨Òå
+@brief å®šä¹‰é“¾è¡¨æ“ä½œçš„å®å®šä¹‰
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-10
@@ -17,21 +17,21 @@
 */
 #include "CwxPre.h"
 
-///¶¨ÒåË«ÏòÁ´±íµÄÈë¿Ú
+///å®šä¹‰åŒå‘é“¾è¡¨çš„å…¥å£
 #define CWINUX_DTAIL_ENTRY(type)  \
 type     *m_next;	/*<next item*/\
 type     *m_prev	/*< previous next element */
 
-///Ë«ÏòÁ´±í±äÁ¿Çå¿Õ²Ù×÷
+///åŒå‘é“¾è¡¨å˜é‡æ¸…ç©ºæ“ä½œ
 #define CWINUX_DTAIL_RESET()\
     m_next = NULL;\
     m_prev = NULL
 
-///¶¨ÒåÇ°ÏòÁ´±íµÄÈë¿Ú
+///å®šä¹‰å‰å‘é“¾è¡¨çš„å…¥å£
 #define CWINUX_STAIL_ENTRY(type)  \
 type     *m_next	/*<next item*/
 
-///Ç°ÏòÁ´±í±äÁ¿µÄÇå¿Õ²Ù×÷
+///å‰å‘é“¾è¡¨å˜é‡çš„æ¸…ç©ºæ“ä½œ
 #define CWINUX_STAIL_RESET()  \
     m_next = NULL	/*<next item*/
 

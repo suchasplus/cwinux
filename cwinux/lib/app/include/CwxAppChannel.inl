@@ -1,7 +1,7 @@
-
+ï»¿
 CWINUX_BEGIN_NAMESPACE
 
-///×¢²áIOÊÂ¼ş´¦Àíhandle
+///æ³¨å†ŒIOäº‹ä»¶å¤„ç†handle
 inline int CwxAppChannel::registerHandler (CWX_HANDLE io_handle,
                                            CwxAppHandler4Channel *event_handler,
                                            int mask,
@@ -21,7 +21,7 @@ inline int CwxAppChannel::registerHandler (CWX_HANDLE io_handle,
     }
     return _registerHandler(io_handle, event_handler, mask, uiMillSecond);
 }
-///É¾³ıioÊÂ¼ş´¦Àíhandle
+///åˆ é™¤ioäº‹ä»¶å¤„ç†handle
 inline int CwxAppChannel::removeHandler (CwxAppHandler4Channel *event_handler)
 {
     if (!CwxThread::equal(m_owner, CwxThread::self()))
@@ -39,7 +39,7 @@ inline int CwxAppChannel::removeHandler (CwxAppHandler4Channel *event_handler)
     return _removeHandler(event_handler);
 }
 
-///×¢²áIOÊÂ¼ş´¦Àíhandle
+///æ³¨å†ŒIOäº‹ä»¶å¤„ç†handle
 inline int CwxAppChannel::suspendHandler (CwxAppHandler4Channel *event_handler, int suspend_mask)
 {
     if (!CwxThread::equal(m_owner, CwxThread::self()))
@@ -56,7 +56,7 @@ inline int CwxAppChannel::suspendHandler (CwxAppHandler4Channel *event_handler, 
     }
     return _suspendHandler(event_handler, suspend_mask);
 }
-///É¾³ıioÊÂ¼ş´¦Àíhandle
+///åˆ é™¤ioäº‹ä»¶å¤„ç†handle
 inline int CwxAppChannel::resumeHandler (CwxAppHandler4Channel *event_handler, int resume_mask)
 {
     if (!CwxThread::equal(m_owner, CwxThread::self()))
@@ -129,7 +129,7 @@ inline int CwxAppChannel::resumeHandler (CWX_HANDLE handle,
 
 }
 
-///ÉèÖÃ¶¨Ê±´¦Àíhandle
+///è®¾ç½®å®šæ—¶å¤„ç†handle
 inline int CwxAppChannel::scheduleTimer (CwxAppHandler4Channel *event_handler,
                                          CwxTimeValue const&interval)
 {
@@ -148,7 +148,7 @@ inline int CwxAppChannel::scheduleTimer (CwxAppHandler4Channel *event_handler,
     return _scheduleTimer(event_handler, interval);
 }
 
-///È¡Ïû¶¨Ê±´¦Àíhandle
+///å–æ¶ˆå®šæ—¶å¤„ç†handle
 inline int CwxAppChannel::cancelTimer (CwxAppHandler4Channel *event_handler)
 {
     if (!CwxThread::equal(m_owner, CwxThread::self()))
@@ -183,9 +183,9 @@ inline bool CwxAppChannel::regRedoHander(CwxAppHandler4Channel* event_handler)
     return _regRedoHander(event_handler);
 }
 /**
-@brief É¾³ıredo handler¡£¶àÏß³Ì°²È«£¬ÈÎÒâÏß³Ì¶¼¿ÉÒÔµ÷ÓÃ¡£
-@param [in] event_handler redoµÄevent handler
-@return true£º³É¹¦£»false£º²»´æÔÚ£»
+@brief åˆ é™¤redo handlerã€‚å¤šçº¿ç¨‹å®‰å…¨ï¼Œä»»æ„çº¿ç¨‹éƒ½å¯ä»¥è°ƒç”¨ã€‚
+@param [in] event_handler redoçš„event handler
+@return trueï¼šæˆåŠŸï¼›falseï¼šä¸å­˜åœ¨ï¼›
 */
 inline bool CwxAppChannel::eraseRedoHander(CwxAppHandler4Channel* event_handler)
 {
@@ -214,8 +214,8 @@ inline int CwxAppChannel::notice()
 
 
 /**
-@brief ¼ì²éÖ¸¶¨IOµÄhandleÊÇ·ñÒÑ¾­×¢²á¡£
-@return true£º×¢²á£»false£ºÃ»ÓĞ×¢²á
+@brief æ£€æŸ¥æŒ‡å®šIOçš„handleæ˜¯å¦å·²ç»æ³¨å†Œã€‚
+@return trueï¼šæ³¨å†Œï¼›falseï¼šæ²¡æœ‰æ³¨å†Œ
 */
 inline bool CwxAppChannel::isRegIoHandle(CWX_HANDLE handle)
 {
@@ -228,26 +228,26 @@ inline pthread_t CwxAppChannel::getOwner() const
 {
     return m_owner;
 }
-///ÊÇ·ñstop
+///æ˜¯å¦stop
 inline bool CwxAppChannel::isStop()
 {
     return m_bStop;
 }
 
-///»ñÈ¡µ±Ç°µÄÊ±¼ä
+///è·å–å½“å‰çš„æ—¶é—´
 inline CwxTimeValue const& CwxAppChannel::getCurTime() const
 {
     return m_engine->getCurTime();
 }
 
-///io handleÊÇ·ñÉèÖÃÖ¸¶¨µÄmask
+///io handleæ˜¯å¦è®¾ç½®æŒ‡å®šçš„mask
 inline bool CwxAppChannel::isMask(CWX_HANDLE handle, int mask)
 {
     return CWX_CHECK_ATTR(m_engine->m_eHandler[handle].m_mask, mask);
 }
 
 
-///×¢²áIOÊÂ¼ş´¦Àíhandle
+///æ³¨å†ŒIOäº‹ä»¶å¤„ç†handle
 inline int CwxAppChannel::_registerHandler (CWX_HANDLE io_handle,
                                             CwxAppHandler4Channel *event_handler,
                                             int mask,
@@ -260,7 +260,7 @@ inline int CwxAppChannel::_registerHandler (CWX_HANDLE io_handle,
         return -1;
     }
     event_handler->setHandle(io_handle);
-    mask &=CwxAppHandler4Base::IO_MASK; ///Ö»Ö§³ÖREAD¡¢WRITE¡¢PERSIST¡¢TIMEOUTËÄÖÖÑÚÂë
+    mask &=CwxAppHandler4Base::IO_MASK; ///åªæ”¯æŒREADã€WRITEã€PERSISTã€TIMEOUTå››ç§æ©ç 
     ret = m_engine->registerHandler(io_handle,
         event_handler,
         mask,
@@ -274,13 +274,13 @@ inline int CwxAppChannel::_registerHandler (CWX_HANDLE io_handle,
     return ret==0?0:-1;
 }
 
-///É¾³ıioÊÂ¼ş´¦Àíhandle
+///åˆ é™¤ioäº‹ä»¶å¤„ç†handle
 inline int CwxAppChannel::_removeHandler (CwxAppHandler4Channel *event_handler)
 {
     return _removeHandler(event_handler->getHandle())?0:-1;
 }
 
-///×¢²áIOÊÂ¼ş´¦Àíhandle
+///æ³¨å†ŒIOäº‹ä»¶å¤„ç†handle
 inline int CwxAppChannel::_suspendHandler (CwxAppHandler4Channel *event_handler, int suspend_mask)
 {
     int ret=0;
@@ -300,7 +300,7 @@ inline int CwxAppChannel::_suspendHandler (CwxAppHandler4Channel *event_handler,
     return 0;
 }
 
-///É¾³ıioÊÂ¼ş´¦Àíhandle
+///åˆ é™¤ioäº‹ä»¶å¤„ç†handle
 inline int CwxAppChannel::_resumeHandler (CwxAppHandler4Channel *event_handler, int resume_mask)
 {
     int ret = 0;
@@ -321,7 +321,7 @@ inline int CwxAppChannel::_resumeHandler (CwxAppHandler4Channel *event_handler, 
 }
 
 
-///É¾³ıioÊÂ¼ş´¦Àíhandle¡£
+///åˆ é™¤ioäº‹ä»¶å¤„ç†handleã€‚
 inline CwxAppHandler4Channel* CwxAppChannel::_removeHandler (CWX_HANDLE handle)
 {
     if (handle >= CWX_APP_MAX_IO_NUM)
@@ -340,7 +340,7 @@ inline CwxAppHandler4Channel* CwxAppChannel::_removeHandler (CWX_HANDLE handle)
     return handler;
 }
 
-///suspend ioÊÂ¼ş´¦Àíhandle¡£
+///suspend ioäº‹ä»¶å¤„ç†handleã€‚
 inline int CwxAppChannel::_suspendHandler (CWX_HANDLE handle,
                                            int suspend_mask)
 {
@@ -354,7 +354,7 @@ inline int CwxAppChannel::_suspendHandler (CWX_HANDLE handle,
     return m_engine->suspendHandler(handle, suspend_mask);
 }
 
-///resume ioÊÂ¼ş´¦Àíhandle¡£
+///resume ioäº‹ä»¶å¤„ç†handleã€‚
 inline int CwxAppChannel::_resumeHandler (CWX_HANDLE handle,
                                           int resume_mask)
 {
@@ -370,7 +370,7 @@ inline int CwxAppChannel::_resumeHandler (CWX_HANDLE handle,
 
 
 
-///ÉèÖÃ¶¨Ê±´¦Àíhandle
+///è®¾ç½®å®šæ—¶å¤„ç†handle
 inline int CwxAppChannel::_scheduleTimer (CwxAppHandler4Channel *event_handler,
                                           CwxTimeValue const&interval)
 {
@@ -384,7 +384,7 @@ inline int CwxAppChannel::_scheduleTimer (CwxAppHandler4Channel *event_handler,
     return 0;
 
 }
-///È¡Ïû¶¨Ê±´¦Àíhandle
+///å–æ¶ˆå®šæ—¶å¤„ç†handle
 inline int CwxAppChannel::_cancelTimer (CwxAppHandler4Channel *event_handler)
 {
 
@@ -398,7 +398,7 @@ inline int CwxAppChannel::_cancelTimer (CwxAppHandler4Channel *event_handler)
     return 0;
 }
 
-///Ìí¼Óredo handler
+///æ·»åŠ redo handler
 inline bool CwxAppChannel::_regRedoHander(CwxAppHandler4Channel* event_handler)
 {
     if (!event_handler->m_bRedo)
@@ -409,7 +409,7 @@ inline bool CwxAppChannel::_regRedoHander(CwxAppHandler4Channel* event_handler)
     }
     return false;
 }
-///É¾³ıredo handler¡£
+///åˆ é™¤redo handlerã€‚
 inline bool CwxAppChannel::_eraseRedoHander(CwxAppHandler4Channel* event_handler)
 {
     if (event_handler->m_bRedo)
@@ -440,8 +440,8 @@ inline bool CwxAppChannel::_isRegIoHandle(CwxAppHandler4Channel* handler)
 
 
 /**
-@brief Í£Ö¹¼Ü¹¹ÊÂ¼şµÄÑ­»·´¦Àí¡£
-@return -1£ºÊ§°Ü£»0£ºÕı³£ÍË³ö
+@brief åœæ­¢æ¶æ„äº‹ä»¶çš„å¾ªç¯å¤„ç†ã€‚
+@return -1ï¼šå¤±è´¥ï¼›0ï¼šæ­£å¸¸é€€å‡º
 */
 inline int CwxAppChannel::_stop()
 {
@@ -451,9 +451,9 @@ inline int CwxAppChannel::_stop()
 
 
 /**
-@brief »ñÈ¡Ö¸¶¨handle¶ÔÓ¦µÄevent handler¡£
-@param bLock  true£ºapiÄÚ²¿lock£»false£ºÍâ²¿¼ÓËø
-@return ·µ»Øhandle¶ÔÓ¦µÄevent handler£»NULL±íÊ¾²»´æÔÚ
+@brief è·å–æŒ‡å®šhandleå¯¹åº”çš„event handlerã€‚
+@param bLock  trueï¼šapiå†…éƒ¨lockï¼›falseï¼šå¤–éƒ¨åŠ é”
+@return è¿”å›handleå¯¹åº”çš„event handlerï¼›NULLè¡¨ç¤ºä¸å­˜åœ¨
 */
 inline CwxAppHandler4Channel* CwxAppChannel::_getIoHandler(CWX_HANDLE handle)
 {

@@ -1,4 +1,4 @@
-#include "CwxGbkUnicodeMap.h"
+﻿#include "CwxGbkUnicodeMap.h"
 
 CWINUX_BEGIN_NAMESPACE
 unsigned short CwxGbkUnicodeMap::m_gbkUtf16Map[65536]=

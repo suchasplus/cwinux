@@ -1,4 +1,4 @@
-#include "CwxTimeValue.h"
+﻿#include "CwxTimeValue.h"
 
 CWINUX_BEGIN_NAMESPACE
 /// Constant "0".

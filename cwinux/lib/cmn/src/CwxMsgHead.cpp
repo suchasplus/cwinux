@@ -1,14 +1,14 @@
-#include "CwxMsgHead.h"
+ï»¿#include "CwxMsgHead.h"
 #include "CwxMsgBlock.h"
 
 CWINUX_BEGIN_NAMESPACE
 CWX_UINT32 CwxMsgHead::m_uiMaxMsgSize = CWX_MSG_SIZE_MAX;
-///ÉèÖÃpackageµÄ×î´ó´óĞ¡
+///è®¾ç½®packageçš„æœ€å¤§å¤§å°
 void CwxMsgHead::setMaxMsgSize(CWX_UINT32 uiSize){
     m_uiMaxMsgSize = uiSize;
     if (m_uiMaxMsgSize < 1024) m_uiMaxMsgSize = 1024;
 }
-///»ñÈ¡packageµÄ×î´ó´óĞ¡
+///è·å–packageçš„æœ€å¤§å¤§å°
 CWX_UINT32 CwxMsgHead::getMaxMsgSize(){
     return m_uiMaxMsgSize;
 }

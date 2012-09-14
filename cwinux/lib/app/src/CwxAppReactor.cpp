@@ -1,4 +1,4 @@
-#include "CwxAppReactor.h"
+ï»¿#include "CwxAppReactor.h"
 
 CWINUX_BEGIN_NAMESPACE
 
@@ -8,11 +8,11 @@ CwxAppReactor::CwxAppReactor(bool bEnableSig)
     m_bEnableSig = bEnableSig;
     m_owner = CwxThread::self();
     m_bStop = true;
-    ///³õÊ¼»¯IO handlerµÄÊı×é
+    ///åˆå§‹åŒ–IO handlerçš„æ•°ç»„
     memset(m_connId, 0x00, sizeof(m_connId));
-    ///´´½¨notice pipe¶ÔÏó
+    ///åˆ›å»ºnotice pipeå¯¹è±¡
     m_pNoticePipe = NULL;
-    //ÊÂ¼şÇı¶¯
+    //äº‹ä»¶é©±åŠ¨
     m_engine= NULL;
 }
 
@@ -22,7 +22,7 @@ CwxAppReactor::~CwxAppReactor()
     close();
 }
 
-///forkµÄre-init·½·¨£¬·µ»ØÖµ£¬0£º³É¹¦£»-1£ºÊ§°Ü
+///forkçš„re-initæ–¹æ³•ï¼Œè¿”å›å€¼ï¼Œ0ï¼šæˆåŠŸï¼›-1ï¼šå¤±è´¥
 int CwxAppReactor::forkReinit()
 {
     if (m_engine)
@@ -40,7 +40,7 @@ int CwxAppReactor::forkReinit()
     return -1;
 }
 
-///´ò¿ªreactor£¬return -1£ºÊ§°Ü£»0£º³É¹¦
+///æ‰“å¼€reactorï¼Œreturn -1ï¼šå¤±è´¥ï¼›0ï¼šæˆåŠŸ
 int CwxAppReactor::open(CwxAppHandler4Base* noticeHandler)
 {
     if (!m_bStop)
@@ -49,13 +49,13 @@ int CwxAppReactor::open(CwxAppHandler4Base* noticeHandler)
         return -1;
     }
     m_bStop = false;
-    ///ÉèÖÃreactorµÄowner
+    ///è®¾ç½®reactorçš„owner
     m_owner = CwxThread::self();
-    ///ÇåÀíreactor
+    ///æ¸…ç†reactor
     this->close();
-    ///´´½¨notice pipe¶ÔÏó
+    ///åˆ›å»ºnotice pipeå¯¹è±¡
     m_pNoticePipe = new CwxAppNoticePipe();
-    ///´´½¨engine
+    ///åˆ›å»ºengine
     if (m_engine)
     {
         delete m_engine;
@@ -68,7 +68,7 @@ int CwxAppReactor::open(CwxAppHandler4Base* noticeHandler)
         CWX_ERROR(("Failure to invoke CwxAppNoticePipe::init()"));
         return -1;
     }
-    ///×¢²ánotice handler
+    ///æ³¨å†Œnotice handler
     noticeHandler->setHandle(m_pNoticePipe->getPipeReader());
     if (0 != this->registerHandler(m_pNoticePipe->getPipeReader(),
         noticeHandler,
@@ -81,7 +81,7 @@ int CwxAppReactor::open(CwxAppHandler4Base* noticeHandler)
     return 0;
 }
 
-///¹Ø±Õreactor£¬return -1£ºÊ§°Ü£»0£º³É¹¦
+///å…³é—­reactorï¼Œreturn -1ï¼šå¤±è´¥ï¼›0ï¼šæˆåŠŸ
 int CwxAppReactor::close()
 {
     if (!CwxThread::equal(m_owner, CwxThread::self()))
@@ -104,8 +104,8 @@ int CwxAppReactor::close()
 }
 
 /**
-@brief ¼Ü¹¹ÊÂ¼şµÄÑ­»·´¦ÀíAPI£¬ÊµÏÖÏûÏ¢µÄ·Ö·¢¡£
-@return -1£ºÊ§°Ü£»0£ºÕı³£ÍË³ö
+@brief æ¶æ„äº‹ä»¶çš„å¾ªç¯å¤„ç†APIï¼Œå®ç°æ¶ˆæ¯çš„åˆ†å‘ã€‚
+@return -1ï¼šå¤±è´¥ï¼›0ï¼šæ­£å¸¸é€€å‡º
 */
 int CwxAppReactor::run(REACTOR_EVENT_HOOK hook,
                        void* arg,
@@ -127,7 +127,7 @@ int CwxAppReactor::run(REACTOR_EVENT_HOOK hook,
     do
     {
         {
-            ///´øËøÖ´ĞĞevent-loop
+            ///å¸¦é”æ‰§è¡Œevent-loop
             CwxMutexGuard<CwxMutexLock> lock(&m_lock);
             ret = m_engine->poll(CwxAppReactor::callback, this, uiMiliTimeout);
         }
@@ -144,7 +144,7 @@ int CwxAppReactor::run(REACTOR_EVENT_HOOK hook,
                 break;
             }
         }
-        ///µ÷ÓÃhook
+        ///è°ƒç”¨hook
         if (hook)
         {
             if (0 != hook(arg))
@@ -153,7 +153,7 @@ int CwxAppReactor::run(REACTOR_EVENT_HOOK hook,
                 break;
             }
         }
-        ///µÈ´ıÆäËûµÄÏß³ÌÖ´ĞĞ¸÷ÖÖ²Ù×÷¡£
+        ///ç­‰å¾…å…¶ä»–çš„çº¿ç¨‹æ‰§è¡Œå„ç§æ“ä½œã€‚
         m_rwLock.acquire_write();
         m_rwLock.release();
     }
@@ -162,8 +162,8 @@ int CwxAppReactor::run(REACTOR_EVENT_HOOK hook,
 }
 
 /**
-@brief Í£Ö¹¼Ü¹¹ÊÂ¼şµÄÑ­»·´¦Àí¡£
-@return -1£ºÊ§°Ü£»0£ºÕı³£ÍË³ö
+@brief åœæ­¢æ¶æ„äº‹ä»¶çš„å¾ªç¯å¤„ç†ã€‚
+@return -1ï¼šå¤±è´¥ï¼›0ï¼šæ­£å¸¸é€€å‡º
 */
 int CwxAppReactor::stop()
 {

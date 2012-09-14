@@ -1,4 +1,4 @@
-#include "CwxSockIo.h"
+﻿#include "CwxSockIo.h"
 CWINUX_BEGIN_NAMESPACE
 
 /// Constructor.

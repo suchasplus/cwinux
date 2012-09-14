@@ -1,14 +1,14 @@
-#ifndef __CWX_ADDR_H__
+ï»¿#ifndef __CWX_ADDR_H__
 #define __CWX_ADDR_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxAddr.h
-@brief ÍøÂçµÄµØÖ·¶ÔÏóµÄ¶¨ÒåÎÄ¼ş¡£
+@brief ç½‘ç»œçš„åœ°å€å¯¹è±¡çš„å®šä¹‰æ–‡ä»¶ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-10
@@ -31,25 +31,25 @@ CWINUX_BEGIN_NAMESPACE
 class CWX_API CwxAddr
 {
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxAddr (CWX_INT32 iType = -1, CWX_INT32 iSize = -1);
-    /// Îö¹¹
+    /// ææ„
     virtual ~CwxAddr (void);
-    ///»ñÈ¡µØÖ·µÄsize
+    ///è·å–åœ°å€çš„size
     CWX_INT32 getSize(void) const;
-    ///ÉèÖÃµØÖ·µÄsize.
+    ///è®¾ç½®åœ°å€çš„size.
     void setSize (CWX_INT32 iSize);
-    ///»ñÈ¡µØÖ·ÀàĞÍ
+    ///è·å–åœ°å€ç±»å‹
     CWX_INT32 getType (void) const;
-    /// ÉèÖÃµØÖ·ÀàĞÍ
+    /// è®¾ç½®åœ°å€ç±»å‹
     void setType (CWX_INT32 iType);
-    ///·µ»ØµØÖ·¶ÔÏó.
+    ///è¿”å›åœ°å€å¯¹è±¡.
     virtual void * getAddr (void) const;
-    ///ÉèÖÃµØÖ·¶ÔÏó.
+    ///è®¾ç½®åœ°å€å¯¹è±¡.
     virtual void setAddr (void *, CWX_INT32 iLen);
-    ///¼ì²éµØÖ·ÊÇ·ñÏàµÈ.
+    ///æ£€æŸ¥åœ°å€æ˜¯å¦ç›¸ç­‰.
     bool operator == (const CwxAddr &sap) const;
-    ///¼ì²éµØÖ·ÊÇ·ñ²»ÏàµÈ.
+    ///æ£€æŸ¥åœ°å€æ˜¯å¦ä¸ç›¸ç­‰.
     bool operator != (const CwxAddr &sap) const;
     ///Initializes instance variables.
     void baseSet(CWX_INT32 iType, CWX_INT32 iSize);

@@ -1,4 +1,4 @@
-CWINUX_BEGIN_NAMESPACE
+ï»¿CWINUX_BEGIN_NAMESPACE
 
 /// Initializes the CwxTimeValue from seconds and useconds.
 inline void CwxTimeValue::set (time_t sec, suseconds_t usecs)
@@ -203,7 +203,7 @@ inline bool CwxTimeouter::timeout()
     return false;
 }
 
-///Ê£ÓàÊ±¼ä
+///å‰©ä½™æ—¶é—´
 inline CwxTimeValue const* CwxTimeouter::left() const
 {
     return timeout_?&left_:NULL;

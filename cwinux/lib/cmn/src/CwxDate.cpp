@@ -1,4 +1,4 @@
-
+﻿
 #include "CwxDate.h"
 
 CWINUX_BEGIN_NAMESPACE

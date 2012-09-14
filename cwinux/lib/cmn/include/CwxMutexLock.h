@@ -1,14 +1,14 @@
-#ifndef __CWX_MUTEX_LOCK_H__
+ï»¿#ifndef __CWX_MUTEX_LOCK_H__
 #define __CWX_MUTEX_LOCK_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxMutexLock.h
-@brief ÊµÏÖÁËÅÅËûËøµÄ½Ó¿Ú¡£
+@brief å®ç°äº†æ’ä»–é”çš„æ¥å£ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-10
@@ -25,37 +25,37 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxMutexLock
-@brief ÅÅËûËø¶ÔÏó£¬Ö§³ÖÏß³ÌÅÅËûËøÓë½ø³ÌÅÅËûËø¡£
+@brief æ’ä»–é”å¯¹è±¡ï¼Œæ”¯æŒçº¿ç¨‹æ’ä»–é”ä¸è¿›ç¨‹æ’ä»–é”ã€‚
 */
 class CWX_API CwxMutexLock
 {
 public:
-    ///¹¹Ôìº¯Êı£¬´´½¨Ò»¸öÏß³ÌÅÅËûËø
+    ///æ„é€ å‡½æ•°ï¼Œåˆ›å»ºä¸€ä¸ªçº¿ç¨‹æ’ä»–é”
     CwxMutexLock(pthread_mutexattr_t *arg = 0);
-    ///¹¹Ôìº¯Êı£¬´´½¨Ò»¸ö½ø³ÌÅÅËûËø
+    ///æ„é€ å‡½æ•°ï¼Œåˆ›å»ºä¸€ä¸ªè¿›ç¨‹æ’ä»–é”
 //    CwxMutexLock(char const* path, pthread_mutexattr_t *arg = 0);
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxMutexLock();
 public:
-    ///»ñÈ¡ÅÅËûËø£¬0£º³É¹¦£¬-1£ºÊ§°Ü
+    ///è·å–æ’ä»–é”ï¼Œ0ï¼šæˆåŠŸï¼Œ-1ï¼šå¤±è´¥
     int acquire();
-    ///¼ì²éÅÅËûËøÊÇ·ñ¿ÕÏĞ£¬0£º¿ÕÏĞ£¬-1£ºÃ¦
+    ///æ£€æŸ¥æ’ä»–é”æ˜¯å¦ç©ºé—²ï¼Œ0ï¼šç©ºé—²ï¼Œ-1ï¼šå¿™
     int tryacquire();
-    ///ÊÍ·ÅËø£¬0£º³É¹¦£¬-1£ºÊ§°Ü
+    ///é‡Šæ”¾é”ï¼Œ0ï¼šæˆåŠŸï¼Œ-1ï¼šå¤±è´¥
     int release();
-    ///»ñÈ¡ÅÅËûËø£¬0£º³É¹¦£¬-1£ºÊ§°Ü
+    ///è·å–æ’ä»–é”ï¼Œ0ï¼šæˆåŠŸï¼Œ-1ï¼šå¤±è´¥
     int acquire_read();
-    ///»ñÈ¡ÅÅËûËø£¬0£º³É¹¦£¬-1£ºÊ§°Ü
+    ///è·å–æ’ä»–é”ï¼Œ0ï¼šæˆåŠŸï¼Œ-1ï¼šå¤±è´¥
     int acquire_write();
-    ///¼ì²éÅÅËûËøÊÇ·ñ¿ÕÏĞ£¬0£º¿ÕÏĞ£¬-1£ºÃ¦
+    ///æ£€æŸ¥æ’ä»–é”æ˜¯å¦ç©ºé—²ï¼Œ0ï¼šç©ºé—²ï¼Œ-1ï¼šå¿™
     int tryacquire_read();
-    ///¼ì²éÅÅËûËøÊÇ·ñ¿ÕÏĞ£¬0£º¿ÕÏĞ£¬-1£ºÃ¦
+    ///æ£€æŸ¥æ’ä»–é”æ˜¯å¦ç©ºé—²ï¼Œ0ï¼šç©ºé—²ï¼Œ-1ï¼šå¿™
     int tryacquire_write();
-    ///»ñÈ¡Ëø¾ä±ú£¬ÎªOS¼¶µÄÅÅËûËø¾ä±ú
+    ///è·å–é”å¥æŸ„ï¼Œä¸ºOSçº§çš„æ’ä»–é”å¥æŸ„
     pthread_mutex_t &lock() ;
 private:
-    pthread_mutex_t*  m_mutex;///<Ëø¶ÔÏó
-    int              m_shm;///<¹²ÏíËøµÄshm fd
+    pthread_mutex_t*  m_mutex;///<é”å¯¹è±¡
+    int              m_shm;///<å…±äº«é”çš„shm fd
 
 };
 

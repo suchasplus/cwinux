@@ -1,8 +1,8 @@
-#include "CwxAppHandler4Stdio.h"
+ï»¿#include "CwxAppHandler4Stdio.h"
 #include "CwxAppFramework.h"
 
 CWINUX_BEGIN_NAMESPACE
-///¹¹Ôìº¯Êý
+///æž„é€ å‡½æ•°
 CwxAppHandler4StdIo::CwxAppHandler4StdIo(CwxAppFramework* pApp,
                                          CwxAppReactor* reactor)
 :CwxAppHandler4Base(reactor)

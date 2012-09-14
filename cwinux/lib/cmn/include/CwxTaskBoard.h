@@ -1,14 +1,14 @@
-#ifndef __CWX_TASK_BOARD_H__
+ï»¿#ifndef __CWX_TASK_BOARD_H__
 #define __CWX_TASK_BOARD_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxTaskBoard.h
-@brief Òì²½ÈÎÎñÏûÏ¢¹ÜÀí¶ÔÏó¶¨Òå
+@brief å¼‚æ­¥ä»»åŠ¡æ¶ˆæ¯ç®¡ç†å¯¹è±¡å®šä¹‰
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-07-20
@@ -29,95 +29,95 @@ CWINUX_BEGIN_NAMESPACE
 class CwxTaskBoard;
 /**
 @class CwxTaskBoardConnInfo
-@brief TaskµÄÁ¬½Ó¹Ø±Õ¼°ÏûÏ¢·¢ËÍÍê±ÏÊÂ¼şµÄ·â×°¶ÔÏó£¬ÊµÏÖÒÔÉÏÁ½¸öÏûÏ¢µÄ»º´æ¡£
+@brief Taskçš„è¿æ¥å…³é—­åŠæ¶ˆæ¯å‘é€å®Œæ¯•äº‹ä»¶çš„å°è£…å¯¹è±¡ï¼Œå®ç°ä»¥ä¸Šä¸¤ä¸ªæ¶ˆæ¯çš„ç¼“å­˜ã€‚
 */
 class CWX_API CwxTaskBoardConnInfo
 {
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxTaskBoardConnInfo(CWX_UINT32 uiSvrId,
         CWX_UINT32 uiHostId,
         CWX_UINT32 uiConnId,
         CwxMsgBlock* msg);
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxTaskBoardConnInfo();
 public:
-    ///»ñÈ¡·â×°ÊÂ¼şµÄsvr-id
+    ///è·å–å°è£…äº‹ä»¶çš„svr-id
     inline CWX_UINT32 getSvrId() const;
-    ///»ñÈ¡·â×°ÊÂ¼şµÄhost-id
+    ///è·å–å°è£…äº‹ä»¶çš„host-id
     inline CWX_UINT32 getHostId() const;
-    ///»ñÈ¡·â×°ÊÂ¼şµÄconn-id
+    ///è·å–å°è£…äº‹ä»¶çš„conn-id
     inline CWX_UINT32 getConnId() const;
-    ///»ñÈ¡·â×°ÊÂ¼şµÄmsg
+    ///è·å–å°è£…äº‹ä»¶çš„msg
     inline CwxMsgBlock* getMsg();
-    ///ÉèÖÃ·â×°ÊÂ¼şµÄmsg
+    ///è®¾ç½®å°è£…äº‹ä»¶çš„msg
     inline void setMsg(CwxMsgBlock* msg);
 private:
-    CWX_UINT32     m_uiSvrId;///<ÊÂ¼şµÄsvr-id
-    CWX_UINT32     m_uiHostId;///<ÊÂ¼şµÄhost-id
-    CWX_UINT32     m_uiConnId;///<ÊÂ¼şµÄconn-id
-    CwxMsgBlock*   m_msg;///<ÊÂ¼şµÄmsg
+    CWX_UINT32     m_uiSvrId;///<äº‹ä»¶çš„svr-id
+    CWX_UINT32     m_uiHostId;///<äº‹ä»¶çš„host-id
+    CWX_UINT32     m_uiConnId;///<äº‹ä»¶çš„conn-id
+    CwxMsgBlock*   m_msg;///<äº‹ä»¶çš„msg
 
 };
 
 /**
 @class CwxTaskBoardTask
-@brief Òì²½ÈÎÎñµÄTask¶ÔÏóµÄ»ùÀà£¬ÊµÏÖTaskµÄÊı¾İ¼°ÊÂ¼şµÄ´¦Àí,¿ØÖÆTaskµÄ×´Ì¬×ªÒÆ
+@brief å¼‚æ­¥ä»»åŠ¡çš„Taskå¯¹è±¡çš„åŸºç±»ï¼Œå®ç°Taskçš„æ•°æ®åŠäº‹ä»¶çš„å¤„ç†,æ§åˆ¶Taskçš„çŠ¶æ€è½¬ç§»
 */
 class CWX_API CwxTaskBoardTask
 {
 public:
-    ///ÈÎÎñµÄ×´Ì¬£¬ÆäËûµÄ×´Ì¬ÓÃ»§×Ô¼º¶¨Òå
+    ///ä»»åŠ¡çš„çŠ¶æ€ï¼Œå…¶ä»–çš„çŠ¶æ€ç”¨æˆ·è‡ªå·±å®šä¹‰
     enum{
-        TASK_STATE_INIT = 0,///<³õÊ¼»¯×´Ì¬
-        TASK_STATE_FINISH = 1,///<Íê³É×´Ì¬
-        TASK_STATE_USER = 2 ///<ÓÃ»§µÄTask×´Ì¬µÄ¿ªÊ¼Öµ
+        TASK_STATE_INIT = 0,///<åˆå§‹åŒ–çŠ¶æ€
+        TASK_STATE_FINISH = 1,///<å®ŒæˆçŠ¶æ€
+        TASK_STATE_USER = 2 ///<ç”¨æˆ·çš„TaskçŠ¶æ€çš„å¼€å§‹å€¼
     };
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxTaskBoardTask(CwxTaskBoard* pTaskBoard);
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     virtual ~CwxTaskBoardTask();
 public:
     /**
-    @brief Í¨ÖªTaskÒÑ¾­³¬Ê±
-    @param [in] pThrEnv µ÷ÓÃÏß³ÌµÄThread-env
+    @brief é€šçŸ¥Taskå·²ç»è¶…æ—¶
+    @param [in] pThrEnv è°ƒç”¨çº¿ç¨‹çš„Thread-env
     @return void
     */
     virtual void noticeTimeout(CwxTss* pThrEnv) = 0;
     /**
-    @brief Í¨ÖªTaskµÄÊÕµ½Ò»¸öÊı¾İ°ü¡£
-    @param [in] msg ÊÕµ½µÄÏûÏ¢
-    @param [in] pThrEnv µ÷ÓÃÏß³ÌµÄThread-env
-    @param [out] bConnAppendMsg ÊÕµ½ÏûÏ¢µÄÁ¬½ÓÉÏ£¬ÊÇ·ñ»¹ÓĞ´ı½ÓÊÕµÄÆäËûÏûÏ¢¡£true£ºÊÇ£»false£ºÃ»ÓĞ,Ä¬ÈÏÎªfalse¡£
+    @brief é€šçŸ¥Taskçš„æ”¶åˆ°ä¸€ä¸ªæ•°æ®åŒ…ã€‚
+    @param [in] msg æ”¶åˆ°çš„æ¶ˆæ¯
+    @param [in] pThrEnv è°ƒç”¨çº¿ç¨‹çš„Thread-env
+    @param [out] bConnAppendMsg æ”¶åˆ°æ¶ˆæ¯çš„è¿æ¥ä¸Šï¼Œæ˜¯å¦è¿˜æœ‰å¾…æ¥æ”¶çš„å…¶ä»–æ¶ˆæ¯ã€‚trueï¼šæ˜¯ï¼›falseï¼šæ²¡æœ‰,é»˜è®¤ä¸ºfalseã€‚
     @return void
     */
     virtual void noticeRecvMsg(CwxMsgBlock*& msg,
         CwxTss* pThrEnv,
         bool& bConnAppendMsg) = 0;
     /**
-    @brief Í¨ÖªTaskÍùÍâ·¢ËÍµÄÒ»¸öÊı¾İ°ü·¢ËÍÊ§°Ü¡£
-    @param [in] msg ÊÕµ½µÄÏûÏ¢
-    @param [in] pThrEnv µ÷ÓÃÏß³ÌµÄThread-env
+    @brief é€šçŸ¥Taskå¾€å¤–å‘é€çš„ä¸€ä¸ªæ•°æ®åŒ…å‘é€å¤±è´¥ã€‚
+    @param [in] msg æ”¶åˆ°çš„æ¶ˆæ¯
+    @param [in] pThrEnv è°ƒç”¨çº¿ç¨‹çš„Thread-env
     @return void
     */
     virtual void noticeFailSendMsg(CwxMsgBlock*& msg, CwxTss* pThrEnv) = 0;
     /**
-    @brief Í¨ÖªTaskÍ¨¹ıÄ³ÌõÁ¬½Ó£¬·¢ËÍÁËÒ»¸öÊı¾İ°ü¡£
-    @param [in] msg ·¢ËÍµÄÊı¾İ°üµÄĞÅÏ¢
-    @param [in] pThrEnv µ÷ÓÃÏß³ÌµÄThread-env
-    @param [out] bConnAppendMsg ·¢ËÍÏûÏ¢µÄÁ¬½ÓÉÏ£¬ÊÇ·ñÓĞµÈ´ı»Ø¸´µÄÏûÏ¢¡£true£ºÊÇ£»false£ºÃ»ÓĞ£¬Ä¬ÈÏÎªtrue¡£
+    @brief é€šçŸ¥Taské€šè¿‡æŸæ¡è¿æ¥ï¼Œå‘é€äº†ä¸€ä¸ªæ•°æ®åŒ…ã€‚
+    @param [in] msg å‘é€çš„æ•°æ®åŒ…çš„ä¿¡æ¯
+    @param [in] pThrEnv è°ƒç”¨çº¿ç¨‹çš„Thread-env
+    @param [out] bConnAppendMsg å‘é€æ¶ˆæ¯çš„è¿æ¥ä¸Šï¼Œæ˜¯å¦æœ‰ç­‰å¾…å›å¤çš„æ¶ˆæ¯ã€‚trueï¼šæ˜¯ï¼›falseï¼šæ²¡æœ‰ï¼Œé»˜è®¤ä¸ºtrueã€‚
     @return void
     */
     virtual void noticeEndSendMsg(CwxMsgBlock*& msg,
         CwxTss* pThrEnv,
         bool& bConnAppendMsg) = 0;
     /**
-    @brief Í¨ÖªTaskµÈ´ı»Ø¸´ÏûÏ¢µÄÒ»ÌõÁ¬½Ó¹Ø±Õ¡£
-    @param [in] uiSvrId ¹Ø±ÕÁ¬½ÓµÄSVR-ID
-    @param [in] uiHostId ¹Ø±ÕÁ¬½ÓµÄHOST-ID
-    @param [in] uiConnId ¹Ø±ÕÁ¬½ÓµÄCONN-ID
-    @param [in] pThrEnv µ÷ÓÃÏß³ÌµÄThread-env
+    @brief é€šçŸ¥Taskç­‰å¾…å›å¤æ¶ˆæ¯çš„ä¸€æ¡è¿æ¥å…³é—­ã€‚
+    @param [in] uiSvrId å…³é—­è¿æ¥çš„SVR-ID
+    @param [in] uiHostId å…³é—­è¿æ¥çš„HOST-ID
+    @param [in] uiConnId å…³é—­è¿æ¥çš„CONN-ID
+    @param [in] pThrEnv è°ƒç”¨çº¿ç¨‹çš„Thread-env
     @return void
     */
     virtual void noticeConnClosed(CWX_UINT32 uiSvrId,
@@ -125,18 +125,18 @@ public:
         CWX_UINT32 uiConnId,
         CwxTss* pThrEnv) = 0;
     /**
-    @brief ¼¤»îTask¡£ÔÚTaskÆô¶¯Ç°£¬TaskÓĞTaskµÄ´´½¨Ïß³ÌËùÓµÓĞ¡£
-           ÔÚÆô¶¯Ç°£¬Task¿ÉÒÔ½ÓÊÜ×Ô¼ºµÄÒì²½ÏûÏ¢£¬µ«²»ÄÜ´¦Àí¡£
-           ´ËÊ±ÓĞTaskboardµÄnoticeActiveTask()½Ó¿Úµ÷ÓÃµÄ¡£
-    @param [in] pThrEnv µ÷ÓÃÏß³ÌµÄThread-env
-    @return 0:³É¹¦£»-1£ºÊ§°Ü£¬ÔÚÊ§°ÜµÄÊ±ºò£¬Task´ÓTaskboardÖĞÒÆ³ı²¢ÉèÖÃÎªÍê³É×´Ì¬¡£
+    @brief æ¿€æ´»Taskã€‚åœ¨Taskå¯åŠ¨å‰ï¼ŒTaskæœ‰Taskçš„åˆ›å»ºçº¿ç¨‹æ‰€æ‹¥æœ‰ã€‚
+           åœ¨å¯åŠ¨å‰ï¼ŒTaskå¯ä»¥æ¥å—è‡ªå·±çš„å¼‚æ­¥æ¶ˆæ¯ï¼Œä½†ä¸èƒ½å¤„ç†ã€‚
+           æ­¤æ—¶æœ‰Taskboardçš„noticeActiveTask()æ¥å£è°ƒç”¨çš„ã€‚
+    @param [in] pThrEnv è°ƒç”¨çº¿ç¨‹çš„Thread-env
+    @return 0:æˆåŠŸï¼›-1ï¼šå¤±è´¥ï¼Œåœ¨å¤±è´¥çš„æ—¶å€™ï¼ŒTaskä»Taskboardä¸­ç§»é™¤å¹¶è®¾ç½®ä¸ºå®ŒæˆçŠ¶æ€ã€‚
     */
     virtual int noticeActive(CwxTss* pThrEnv)=0;
     /**
-    @brief Ö´ĞĞTask¡£ÔÚµ÷ÓÃ´ËAPIÇ°£¬TaskÔÚTaskboardÖĞ²»´æÔÚ£¬Ò²¾ÍÊÇËµ¶Ô±ğµÄÏß³Ì²»¿É¼û¡£
-           TaskÒªÃ´ÊÇ¸Õ´´½¨×´Ì¬£¬ÒªÃ´ÊÇÍê³ÉÁËÇ°Ò»¸ö½×¶ÎµÄ´¦Àí£¬´¦ÓÚÍê³É×´Ì¬¡£
-           Í¨¹ı´Ë½Ó¿Ú£¬ÓÉTask×Ô¼º¿ØÖÆ×Ô¼ºµÄstepµÄÌø×ª¶øÍâ½çÎŞĞè¹ØÏµTaskµÄÀàĞÍ¼°´¦Àí¹ı³Ì¡£
-    @param [in] pThrEnv µ÷ÓÃÏß³ÌµÄThread-env
+    @brief æ‰§è¡ŒTaskã€‚åœ¨è°ƒç”¨æ­¤APIå‰ï¼ŒTaskåœ¨Taskboardä¸­ä¸å­˜åœ¨ï¼Œä¹Ÿå°±æ˜¯è¯´å¯¹åˆ«çš„çº¿ç¨‹ä¸å¯è§ã€‚
+           Taskè¦ä¹ˆæ˜¯åˆšåˆ›å»ºçŠ¶æ€ï¼Œè¦ä¹ˆæ˜¯å®Œæˆäº†å‰ä¸€ä¸ªé˜¶æ®µçš„å¤„ç†ï¼Œå¤„äºå®ŒæˆçŠ¶æ€ã€‚
+           é€šè¿‡æ­¤æ¥å£ï¼Œç”±Taskè‡ªå·±æ§åˆ¶è‡ªå·±çš„stepçš„è·³è½¬è€Œå¤–ç•Œæ— éœ€å…³ç³»Taskçš„ç±»å‹åŠå¤„ç†è¿‡ç¨‹ã€‚
+    @param [in] pThrEnv è°ƒç”¨çº¿ç¨‹çš„Thread-env
     @return void
     */
     virtual void execute(CwxTss* pThrEnv)
@@ -144,275 +144,275 @@ public:
         pThrEnv = NULL;
     }
 public:
-    ///»ñÈ¡TaskµÄTaskboard
+    ///è·å–Taskçš„Taskboard
     inline CwxTaskBoard* getTaskBoard()
     {
         return m_pTaskBoard;
     }
-    ///»ñÈ¡TaskµÄtask id
+    ///è·å–Taskçš„task id
     inline CWX_UINT32 getTaskId() const;
-    ///ÉèÖÃTaskµÄtask id
+    ///è®¾ç½®Taskçš„task id
     inline void setTaskId(CWX_UINT32 id);
-    ///»ñÈ¡Task³¬Ê±µÄÊ±¼äµã
+    ///è·å–Taskè¶…æ—¶çš„æ—¶é—´ç‚¹
     inline CWX_UINT64 const& getTimeoutValue() const;
-    ///ÉèÖÃTask³¬Ê±µÄÊ±¼äµã
+    ///è®¾ç½®Taskè¶…æ—¶çš„æ—¶é—´ç‚¹
     inline void setTimeoutValue(CWX_UINT64 ullTimestamp);
-    ///»ñÈ¡TaskµÄ×´Ì¬
+    ///è·å–Taskçš„çŠ¶æ€
     inline CWX_UINT8 getTaskState() const;
-    ///ÉèÖÃTaskµÄ×´Ì¬
+    ///è®¾ç½®Taskçš„çŠ¶æ€
     inline void setTaskState(CWX_UINT8 state);
-    ///Check TaskÊÇ·ñÍê³É£¬ÈôÍê³É£¬ÔòĞèÒªÍÑÀëTaskboardµÄ¹ÜÀí
+    ///Check Taskæ˜¯å¦å®Œæˆï¼Œè‹¥å®Œæˆï¼Œåˆ™éœ€è¦è„±ç¦»Taskboardçš„ç®¡ç†
     inline bool isFinish() const;
-    ///Check TaskÊÇ·ñ³¬Ê±£¬³¬Ê±Ò²ÒâÎ¶×ÅÍê³É¡£Èô³¬Ê±£¬ÔòĞèÒªÍÑÀëTaskboardµÄ¹ÜÀí¡£
+    ///Check Taskæ˜¯å¦è¶…æ—¶ï¼Œè¶…æ—¶ä¹Ÿæ„å‘³ç€å®Œæˆã€‚è‹¥è¶…æ—¶ï¼Œåˆ™éœ€è¦è„±ç¦»Taskboardçš„ç®¡ç†ã€‚
     inline bool isTimeout() const;
-    ///¼ì²é TaskÊÇ·ñÔÚÒÆ³ı×´Ì¬£¬´ËÊÇÓĞTaskboardµÄremove APIÉèÖÃµÄ¡£Èô´¦ÓÚÒÆ³ı×´Ì¬£¬ÔòĞèÒªÍÑÀëTaskboardµÄ¹ÜÀí¡£
+    ///æ£€æŸ¥ Taskæ˜¯å¦åœ¨ç§»é™¤çŠ¶æ€ï¼Œæ­¤æ˜¯æœ‰Taskboardçš„remove APIè®¾ç½®çš„ã€‚è‹¥å¤„äºç§»é™¤çŠ¶æ€ï¼Œåˆ™éœ€è¦è„±ç¦»Taskboardçš„ç®¡ç†ã€‚
     inline bool isWaitingRemove() const;
 private:
-    ///¸ù¾İullNowµÄÊ±¼äµã£¬¼ì²éÈÎÎñÊÇ·ñ³¬Ê±¡£Èç³¬Ê±£¬ÔòÉèÖÃ³¬Ê±×´Ì¬¡£Èô³¬Ê±×´Ì¬ÒÑ¾­ÉèÖÃ£¬ÔòÎŞÂÛullNow,¶¼ÊÇ³¬Ê±¡£
+    ///æ ¹æ®ullNowçš„æ—¶é—´ç‚¹ï¼Œæ£€æŸ¥ä»»åŠ¡æ˜¯å¦è¶…æ—¶ã€‚å¦‚è¶…æ—¶ï¼Œåˆ™è®¾ç½®è¶…æ—¶çŠ¶æ€ã€‚è‹¥è¶…æ—¶çŠ¶æ€å·²ç»è®¾ç½®ï¼Œåˆ™æ— è®ºullNow,éƒ½æ˜¯è¶…æ—¶ã€‚
     inline bool checkTimeout(CWX_UINT64 const& ullNow);
-    ///TaskÊÇ·ñ±»lock¡£Èô±»lockµÄ»°£¬ËµÃ÷ÓĞ±ğµÄÏß³ÌÕıÔÚ´¦Àí´ËTask¡£
+    ///Taskæ˜¯å¦è¢«lockã€‚è‹¥è¢«lockçš„è¯ï¼Œè¯´æ˜æœ‰åˆ«çš„çº¿ç¨‹æ­£åœ¨å¤„ç†æ­¤Taskã€‚
     inline bool isLocked() const;
-    ///Çå¿ÕTask×´Ì¬¡¢»º´æµÄÊÂ¼şµÈĞÅÏ¢
+    ///æ¸…ç©ºTaskçŠ¶æ€ã€ç¼“å­˜çš„äº‹ä»¶ç­‰ä¿¡æ¯
     inline void clearBase();
-    ///»ñÈ¡Task»º´æµÄÊÂ¼ş
+    ///è·å–Taskç¼“å­˜çš„äº‹ä»¶
     inline void fetchWaitingMsg(bool& bTimeout,
         list<CwxMsgBlock*>& failSendMsgs,
         list<CwxMsgBlock*>& recvMsgs,
         list<CwxTaskBoardConnInfo*>& endclosedConnList);
-    ///»º´æÒ»¸ö·¢ËÍµÄÊı¾İ°üÍ¨¹ıÁ¬½Ó·¢ËÍÍê±ÏµÄÊÂ¼ş
+    ///ç¼“å­˜ä¸€ä¸ªå‘é€çš„æ•°æ®åŒ…é€šè¿‡è¿æ¥å‘é€å®Œæ¯•çš„äº‹ä»¶
     inline void addEndSendMsgEvent(CwxMsgBlock* msg);
-    ///»º´æÒ»¸öÊı¾İ°ü·¢ËÍÊ§°ÜµÄÊÂ¼ş
+    ///ç¼“å­˜ä¸€ä¸ªæ•°æ®åŒ…å‘é€å¤±è´¥çš„äº‹ä»¶
     inline void addFailSendMsgEvent(CwxMsgBlock* msg);
-    ///»º´æÊÕµ½Ò»¸öÊı¾İ°üµÄÊÂ¼ş
+    ///ç¼“å­˜æ”¶åˆ°ä¸€ä¸ªæ•°æ®åŒ…çš„äº‹ä»¶
     inline void addRecvMsgEvent(CwxMsgBlock* msg);
-    ///»º´æµÈ´ı½ÓÊÜÊı¾İµÄÒ»ÌõÁ¬½Ó¹Ø±ÕµÄµÄÊÂ¼ş
+    ///ç¼“å­˜ç­‰å¾…æ¥å—æ•°æ®çš„ä¸€æ¡è¿æ¥å…³é—­çš„çš„äº‹ä»¶
     inline void addClosedConnEvent(CWX_UINT32 uiSvrId,
         CWX_UINT32 uiHostId,
         CWX_UINT32 uiConnId);
     friend class CwxTaskBoard;
 private:
-    CWX_UINT32            m_uiTaskId; ///<TaskµÄID
-    CWX_UINT64            m_ullTimeoutStamp;///<Task³¬Ê±µÄÊ±¼äµã
-    CWX_UINT8             m_ucTaskState;///<TaskµÄ×´Ì¬
-    CwxTaskBoardTask*   m_next;///<TaskµÄÏÂÒ»¸öTask
-    CwxTaskBoardTask*   m_prev;///<TaskµÄÇ°Ò»¸öTask
-    bool                  m_bLooked;///<TaskÊÇ·ñ´¦ÓÚËø×´Ì¬£¬½ûÖ¹²Ù×÷
-    bool                  m_bWaitingRemove;///<TaskÊÇ·ñ´¦ÓÚ´ÓTaskboardÒÆ³ı×´Ì¬
-    bool                  m_bTimeout;///<TaskÊÇ·ñÒÑ¾­³¬Ê±
-    list<CwxMsgBlock*>      m_failSendMsgList;///<ÏûÏ¢Í¨¹ıÁ¬½Ó·¢ËÍ¡¢·¢ËÍÊ§°ÜµÄÊÂ¼ş»º´æ¶ÓÁĞ
-    list<CwxMsgBlock*>      m_recvMsgList;///<½ÓÊÕµ½µÄÊı¾İµÄ»º´æ¶ÓÁĞ
-    list<CwxTaskBoardConnInfo*> m_sendCloseConnList;///<Á¬½Ó¹Ø±ÕµÄ»º´æ¶ÓÁĞ
+    CWX_UINT32            m_uiTaskId; ///<Taskçš„ID
+    CWX_UINT64            m_ullTimeoutStamp;///<Taskè¶…æ—¶çš„æ—¶é—´ç‚¹
+    CWX_UINT8             m_ucTaskState;///<Taskçš„çŠ¶æ€
+    CwxTaskBoardTask*   m_next;///<Taskçš„ä¸‹ä¸€ä¸ªTask
+    CwxTaskBoardTask*   m_prev;///<Taskçš„å‰ä¸€ä¸ªTask
+    bool                  m_bLooked;///<Taskæ˜¯å¦å¤„äºé”çŠ¶æ€ï¼Œç¦æ­¢æ“ä½œ
+    bool                  m_bWaitingRemove;///<Taskæ˜¯å¦å¤„äºä»Taskboardç§»é™¤çŠ¶æ€
+    bool                  m_bTimeout;///<Taskæ˜¯å¦å·²ç»è¶…æ—¶
+    list<CwxMsgBlock*>      m_failSendMsgList;///<æ¶ˆæ¯é€šè¿‡è¿æ¥å‘é€ã€å‘é€å¤±è´¥çš„äº‹ä»¶ç¼“å­˜é˜Ÿåˆ—
+    list<CwxMsgBlock*>      m_recvMsgList;///<æ¥æ”¶åˆ°çš„æ•°æ®çš„ç¼“å­˜é˜Ÿåˆ—
+    list<CwxTaskBoardConnInfo*> m_sendCloseConnList;///<è¿æ¥å…³é—­çš„ç¼“å­˜é˜Ÿåˆ—
     CwxTaskBoard*       m_pTaskBoard;
 };
 
 
 /**
 @class CwxTaskBoardConnTasks
-@brief Ò»ÌõÁ¬½ÓÓëTask¹ØÏµµÄ¶ÔÏó£¬ÓÃÓÚÊµÏÖ¹ÜÀíÒ»ÌõÁ¬½ÓÓëÄÇĞ©TaskÏà¹Ø¡£
-       µ±Á¬½Ó¹Ø±ÕµÄÊ±ºò£¬»áÓ°ÏìÕâĞ©Task
+@brief ä¸€æ¡è¿æ¥ä¸Taskå…³ç³»çš„å¯¹è±¡ï¼Œç”¨äºå®ç°ç®¡ç†ä¸€æ¡è¿æ¥ä¸é‚£äº›Taskç›¸å…³ã€‚
+       å½“è¿æ¥å…³é—­çš„æ—¶å€™ï¼Œä¼šå½±å“è¿™äº›Task
 */
 class CwxTaskBoardConnTasks
 {
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxTaskBoardConnTasks(CWX_UINT32 uiConnId, CWX_UINT32 uiTaskId);
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxTaskBoardConnTasks();
-    ///¿½±´¹¹Ôì
+    ///æ‹·è´æ„é€ 
     CwxTaskBoardConnTasks(CwxTaskBoardConnTasks const& item);
-    ///¸³Öµ²Ù×÷
+    ///èµ‹å€¼æ“ä½œ
     CwxTaskBoardConnTasks& operator=(CwxTaskBoardConnTasks const& item);
-    ///¶ÔÏóµÄĞ¡ÓÚ±È½Ï²Ù×÷·û
+    ///å¯¹è±¡çš„å°äºæ¯”è¾ƒæ“ä½œç¬¦
     inline bool operator<(CwxTaskBoardConnTasks const& item) const;
-    ///¶ÔÏóµÄµÈÓÚ²Ù×÷·û
+    ///å¯¹è±¡çš„ç­‰äºæ“ä½œç¬¦
     inline bool operator==(CwxTaskBoardConnTasks const& item) const;
 private:
     friend class CwxTaskBoard;
 private:
-    CWX_UINT32      m_uiConnId;///<Á¬½ÓID
-    CWX_UINT32      m_uiTaskId;///<ÓëÁ¬½ÓÏà¹ØµÄTask ID
+    CWX_UINT32      m_uiConnId;///<è¿æ¥ID
+    CWX_UINT32      m_uiTaskId;///<ä¸è¿æ¥ç›¸å…³çš„Task ID
 };
 
 /**
 @class CwxTaskBoardTaskConns
-@brief Ò»¸öTaskÓëÁ¬½Ó¹ØÏµµÄ¶ÔÏó£¬ÓÃÓÚÊµÏÖ¹ÜÀíÒ»¸öTaskÓëÄÄĞ©Á¬½ÓÏà¹Ø¡£
-µ±Ò»¸öTaskÍê³ÉµÄÊ±ºò£¬»áÇåÀíÄÇĞ©Á¬½ÓÉÏµÄTask
+@brief ä¸€ä¸ªTaskä¸è¿æ¥å…³ç³»çš„å¯¹è±¡ï¼Œç”¨äºå®ç°ç®¡ç†ä¸€ä¸ªTaskä¸å“ªäº›è¿æ¥ç›¸å…³ã€‚
+å½“ä¸€ä¸ªTaskå®Œæˆçš„æ—¶å€™ï¼Œä¼šæ¸…ç†é‚£äº›è¿æ¥ä¸Šçš„Task
 */
 class CwxTaskBoardTaskConns
 {
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxTaskBoardTaskConns(CWX_UINT32 uiTaskId, CWX_UINT32 uiConnId);
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxTaskBoardTaskConns();
-    ///¿½±´¹¹Ôì
+    ///æ‹·è´æ„é€ 
     CwxTaskBoardTaskConns(CwxTaskBoardTaskConns const& item);
-    ///¸³Öµ²Ù×÷
+    ///èµ‹å€¼æ“ä½œ
     CwxTaskBoardTaskConns& operator=(CwxTaskBoardTaskConns const& item);
-    ///Ğ¡ÓÚ²Ù×÷·û
+    ///å°äºæ“ä½œç¬¦
     inline bool operator<(CwxTaskBoardTaskConns const& item) const;
-    ///µÈÓÚ²Ù×÷·û
+    ///ç­‰äºæ“ä½œç¬¦
     inline bool operator==(CwxTaskBoardTaskConns const& item) const;
 private:
     friend class CwxTaskBoard;
 private:
     CWX_UINT32      m_uiTaskId; ///<Task id
-    CWX_UINT32      m_uiConnId; ///<ÓëTaskÏà¹ØµÄÁ¬½ÓID
+    CWX_UINT32      m_uiConnId; ///<ä¸Taskç›¸å…³çš„è¿æ¥ID
 };
 
 /**
 @class CwxTaskBoard
-@brief TaskµÄ¹ÜÀí¶ÔÏó£¬ÊµÏÖTaskÈÎÎñÓëÆäµÈ´ıµÄÏûÏ¢µÄ¹ØÁª¡£°ïÖúTaskÍê³É×´Ì¬×ªÒå¡£
-       TaskÊÇÍ¨¹ınoticeActiveTask()½Ó¿Ú¼ÓÈëµ½TaskboardÖĞµÄ¡£µ±TaskÍê³ÉÊ±£¬
-       »á×Ô¶¯ÍÑÀëTaskboard¡£
+@brief Taskçš„ç®¡ç†å¯¹è±¡ï¼Œå®ç°Taskä»»åŠ¡ä¸å…¶ç­‰å¾…çš„æ¶ˆæ¯çš„å…³è”ã€‚å¸®åŠ©Taskå®ŒæˆçŠ¶æ€è½¬ä¹‰ã€‚
+       Taskæ˜¯é€šè¿‡noticeActiveTask()æ¥å£åŠ å…¥åˆ°Taskboardä¸­çš„ã€‚å½“Taskå®Œæˆæ—¶ï¼Œ
+       ä¼šè‡ªåŠ¨è„±ç¦»Taskboardã€‚
 */
 class CWX_API CwxTaskBoard
 {
 public:
-    ///TaskµÄhash-mapÀàĞÍ¶¨Òå
+    ///Taskçš„hash-mapç±»å‹å®šä¹‰
     typedef hash_map<CWX_UINT32/*taskid*/, CwxTaskBoardTask* > CWX_APP_TASK_MAP;
 public:
     /**
-    @brief ¹¹Ôìº¯Êı¡£
-    @param [in] uiMaxTaskNum Taskboard¹ÜÀíµÄ×î´óTaskÊı£¬´ËÓÃ»§¿ØÖÆTask hashµÄ´óĞ¡
+    @brief æ„é€ å‡½æ•°ã€‚
+    @param [in] uiMaxTaskNum Taskboardç®¡ç†çš„æœ€å¤§Taskæ•°ï¼Œæ­¤ç”¨æˆ·æ§åˆ¶Task hashçš„å¤§å°
     */
     CwxTaskBoard(CWX_UINT32 uiMaxTaskNum=1024);
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxTaskBoard();
 
 public:
     /**
-    @brief TaskboardµÄ³õÊ¼»¯¡£
-    @return -1£ºÊ§°Ü£»0£º³É¹¦
+    @brief Taskboardçš„åˆå§‹åŒ–ã€‚
+    @return -1ï¼šå¤±è´¥ï¼›0ï¼šæˆåŠŸ
     */
     int  init();
     /**
-    @brief ¼ì²éÖ¸¶¨TaskidµÄtaskÊÇ·ñ´æÔÚ¡£
-    @return ¿ÉÓÃµÄtask id
+    @brief æ£€æŸ¥æŒ‡å®šTaskidçš„taskæ˜¯å¦å­˜åœ¨ã€‚
+    @return å¯ç”¨çš„task id
     */
     CWX_UINT32 getNextTaskId();
     /**
-    @brief ¼ì²éÖ¸¶¨TaskidµÄtaskÊÇ·ñ´æÔÚ¡£
+    @brief æ£€æŸ¥æŒ‡å®šTaskidçš„taskæ˜¯å¦å­˜åœ¨ã€‚
     @param [in] uiTaskId Task id
-    @return true£º´æÔÚ£»false£º²»´æÔÚ
+    @return trueï¼šå­˜åœ¨ï¼›falseï¼šä¸å­˜åœ¨
     */
     bool isExist(CWX_UINT32 uiTaskId);
     /**
-    @brief ½«Ò»¸öTask´ÓTaskoardÒÆ³ı¡£
-    @param [in] uiTaskId ÒªÒÆ³ıµÄTaskµÄTask id
-    @param [out] pFinishTask ÒÆ³ıTaskµÄ·µ»ØÖ¸Õë¡£
-    @return -1£ºTask²»´æÔÚ£¬pFinishTask·µ»ØNULL£»
-            0£ºTaskÓÉÓÚÕı±»±ğµÄÏß³Ì²Ù×÷£¬´¦ÓÚlock×´Ì¬£¬Ö»ÉèÖÃÁËÒÆ³ı±êÖ¾£¬ÎŞ·¨ÒÆ³ı£¬pFinishTask·µ»ØNULL¡£
-            1£º³É¹¦ÒÆ³ı£¬ÒÆ³ıµÄTaskÍ¨¹ıpFinishTask·µ»Ø¡£
+    @brief å°†ä¸€ä¸ªTaskä»Taskoardç§»é™¤ã€‚
+    @param [in] uiTaskId è¦ç§»é™¤çš„Taskçš„Task id
+    @param [out] pFinishTask ç§»é™¤Taskçš„è¿”å›æŒ‡é’ˆã€‚
+    @return -1ï¼šTaskä¸å­˜åœ¨ï¼ŒpFinishTaskè¿”å›NULLï¼›
+            0ï¼šTaskç”±äºæ­£è¢«åˆ«çš„çº¿ç¨‹æ“ä½œï¼Œå¤„äºlockçŠ¶æ€ï¼Œåªè®¾ç½®äº†ç§»é™¤æ ‡å¿—ï¼Œæ— æ³•ç§»é™¤ï¼ŒpFinishTaskè¿”å›NULLã€‚
+            1ï¼šæˆåŠŸç§»é™¤ï¼Œç§»é™¤çš„Taské€šè¿‡pFinishTaskè¿”å›ã€‚
     */
     int remove(CWX_UINT32 uiTaskId, CwxTaskBoardTask*& pFinishTask);
     /**
-    @brief ÍùTaskboardÖĞÌí¼ÓÒ»¸öTask²¢½«Task¼¤»î¡£
-    @param [in] pTask ÒªÌí¼Ó²¢¼¤»îµÄTask¶ÔÏó¡£
-    @param [in] pThrEnv µ÷ÓÃÏß³ÌµÄThread-Env¡£
-    @return -1£ºTaskboardÖĞ£¬´æÔÚÓëÌí¼ÓTask idÏàÍ¬µÄtask£»
-    0£ºTaskÒÑ¾­ÓÉTaskboard½Ó¹Ü´¦Àí£¬µ÷ÓÃÏß³Ì²»ÄÜÔÙ¶ÔTask½øĞĞÈÎºÎ´¦Àí¡£
-    1£ºTaskÒÑ¾­Íê³É£¬²»ÔÙÓĞTaskboard¹ÜÀí£¬´¦ÓÚµ÷ÓÃÏß³ÌµÄ¿ØÖÆÖ®ÏÂ¡£
+    @brief å¾€Taskboardä¸­æ·»åŠ ä¸€ä¸ªTaskå¹¶å°†Taskæ¿€æ´»ã€‚
+    @param [in] pTask è¦æ·»åŠ å¹¶æ¿€æ´»çš„Taskå¯¹è±¡ã€‚
+    @param [in] pThrEnv è°ƒç”¨çº¿ç¨‹çš„Thread-Envã€‚
+    @return -1ï¼šTaskboardä¸­ï¼Œå­˜åœ¨ä¸æ·»åŠ Task idç›¸åŒçš„taskï¼›
+    0ï¼šTaskå·²ç»ç”±Taskboardæ¥ç®¡å¤„ç†ï¼Œè°ƒç”¨çº¿ç¨‹ä¸èƒ½å†å¯¹Taskè¿›è¡Œä»»ä½•å¤„ç†ã€‚
+    1ï¼šTaskå·²ç»å®Œæˆï¼Œä¸å†æœ‰Taskboardç®¡ç†ï¼Œå¤„äºè°ƒç”¨çº¿ç¨‹çš„æ§åˆ¶ä¹‹ä¸‹ã€‚
     */
     int noticeActiveTask(CwxTaskBoardTask* pTask, CwxTss* pThrEnv);
     /**
-    @brief ¼ì²éTaskboardÖĞµÄ³¬Ê±Task¡£
-    @param [in] pThrEnv µ÷ÓÃÏß³ÌµÄThread-Env¡£
-    @param [out] finishTasks ÒÑ¾­³¬Ê±µÄTaskµÄÁĞ±í¡£
-    @return void¡£
+    @brief æ£€æŸ¥Taskboardä¸­çš„è¶…æ—¶Taskã€‚
+    @param [in] pThrEnv è°ƒç”¨çº¿ç¨‹çš„Thread-Envã€‚
+    @param [out] finishTasks å·²ç»è¶…æ—¶çš„Taskçš„åˆ—è¡¨ã€‚
+    @return voidã€‚
     */
     void noticeCheckTimeout(CwxTss* pThrEnv, list<CwxTaskBoardTask*>& finishTasks);
     /**
-    @brief Í¨ÖªTaskboard£¬uiTaskIdµÄÈÎÎñÊÕµ½Ò»¸öÍ¨ĞÅÊı¾İ°ü£¬´Ë¿ÉÄÜ½«ÊÇ´ËTaskÍê³É¡£
-    @param [in] uiTaskId ÊÕµ½ÏûÏ¢µÄTaskµÄTask Id¡£
-    @param [in] msg ÊÕµ½µÄÏûÏ¢¡£
-    @param [in] pThrEnv µ÷ÓÃÏß³ÌµÄThread-Env¡£
-    @param [out] pFinishTask Èç¹ûÊÕµ½ÏûÏ¢µÄTaskÒòÎª´ËÏûÏ¢¶øÍê³É£¬Ôò·µ»Ø¡£
-    @return -1£ºTask²»´æÔÚ£»
-            0£ºTaskÒÑ¾­½ÓÊÜ´ËÏûÏ¢£¬µ«TaskÃ»ÓĞÍê³É£¬»¹ÔÚµÈ´ı±ğµÄÏûÏ¢¡£
-            1£ºTaskÒÑ¾­Íê³É£¬²»ÔÙÓĞTaskboard¹ÜÀí£¬´¦ÓÚµ÷ÓÃÏß³ÌµÄ¿ØÖÆÖ®ÏÂ¡£
+    @brief é€šçŸ¥Taskboardï¼ŒuiTaskIdçš„ä»»åŠ¡æ”¶åˆ°ä¸€ä¸ªé€šä¿¡æ•°æ®åŒ…ï¼Œæ­¤å¯èƒ½å°†æ˜¯æ­¤Taskå®Œæˆã€‚
+    @param [in] uiTaskId æ”¶åˆ°æ¶ˆæ¯çš„Taskçš„Task Idã€‚
+    @param [in] msg æ”¶åˆ°çš„æ¶ˆæ¯ã€‚
+    @param [in] pThrEnv è°ƒç”¨çº¿ç¨‹çš„Thread-Envã€‚
+    @param [out] pFinishTask å¦‚æœæ”¶åˆ°æ¶ˆæ¯çš„Taskå› ä¸ºæ­¤æ¶ˆæ¯è€Œå®Œæˆï¼Œåˆ™è¿”å›ã€‚
+    @return -1ï¼šTaskä¸å­˜åœ¨ï¼›
+            0ï¼šTaskå·²ç»æ¥å—æ­¤æ¶ˆæ¯ï¼Œä½†Taskæ²¡æœ‰å®Œæˆï¼Œè¿˜åœ¨ç­‰å¾…åˆ«çš„æ¶ˆæ¯ã€‚
+            1ï¼šTaskå·²ç»å®Œæˆï¼Œä¸å†æœ‰Taskboardç®¡ç†ï¼Œå¤„äºè°ƒç”¨çº¿ç¨‹çš„æ§åˆ¶ä¹‹ä¸‹ã€‚
     */
     int noticeRecvMsg(CWX_UINT32 uiTaskId,
         CwxMsgBlock*& msg,
         CwxTss* pThrEnv,
         CwxTaskBoardTask*& pFinishTask);
     /**
-    @brief Í¨ÖªTaskboard£¬uiTaskIdµÄTaskµÄÒ»¸öÏûÏ¢·¢ËÍÊ§°Ü¡£´Ë¿ÉÄÜ½«ÊÇ´ËTaskÍê³É¡£
-    @param [in] uiTaskId ·¢ËÍÏûÏ¢Ê§°ÜµÄTaskµÄTask Id¡£
-    @param [in] msg ·¢ËÍÊ§°ÜµÄÏûÏ¢µÄĞÅÏ¢¡£
-    @param [in] pThrEnv µ÷ÓÃÏß³ÌµÄThread-Env¡£
-    @param [out] pFinishTask Èç¹ûTaskÒòÎª·¢ËÍÊ§°Ü¶øÍê³É£¬Ôò·µ»Ø¡£
-    @return -1£ºTask²»´æÔÚ£»
-            0£ºTaskÒÑ¾­½ÓÊÜ´ËÏûÏ¢£¬µ«TaskÃ»ÓĞÍê³É£¬»¹ÔÚµÈ´ı±ğµÄÏûÏ¢¡£
-            1£ºTaskÒÑ¾­Íê³É£¬²»ÔÙÓĞTaskboard¹ÜÀí£¬´¦ÓÚµ÷ÓÃÏß³ÌµÄ¿ØÖÆÖ®ÏÂ¡£
+    @brief é€šçŸ¥Taskboardï¼ŒuiTaskIdçš„Taskçš„ä¸€ä¸ªæ¶ˆæ¯å‘é€å¤±è´¥ã€‚æ­¤å¯èƒ½å°†æ˜¯æ­¤Taskå®Œæˆã€‚
+    @param [in] uiTaskId å‘é€æ¶ˆæ¯å¤±è´¥çš„Taskçš„Task Idã€‚
+    @param [in] msg å‘é€å¤±è´¥çš„æ¶ˆæ¯çš„ä¿¡æ¯ã€‚
+    @param [in] pThrEnv è°ƒç”¨çº¿ç¨‹çš„Thread-Envã€‚
+    @param [out] pFinishTask å¦‚æœTaskå› ä¸ºå‘é€å¤±è´¥è€Œå®Œæˆï¼Œåˆ™è¿”å›ã€‚
+    @return -1ï¼šTaskä¸å­˜åœ¨ï¼›
+            0ï¼šTaskå·²ç»æ¥å—æ­¤æ¶ˆæ¯ï¼Œä½†Taskæ²¡æœ‰å®Œæˆï¼Œè¿˜åœ¨ç­‰å¾…åˆ«çš„æ¶ˆæ¯ã€‚
+            1ï¼šTaskå·²ç»å®Œæˆï¼Œä¸å†æœ‰Taskboardç®¡ç†ï¼Œå¤„äºè°ƒç”¨çº¿ç¨‹çš„æ§åˆ¶ä¹‹ä¸‹ã€‚
     */
     int noticeFailSendMsg(CWX_UINT32 uiTaskId,
         CwxMsgBlock*& msg,
         CwxTss* pThrEnv,
         CwxTaskBoardTask*& pFinishTask);
     /**
-    @brief Í¨ÖªTaskboard£¬uiTaskIdµÄTaskµÄÒ»¸öÏûÏ¢ÓĞÒ»ÌõÁ¬½Ó·¢ËÍÍê±Ï¡£
-    @param [in] uiTaskId TaskµÄTask Id¡£
-    @param [in] msg ·¢ËÍÁ¬½ÓÏà¹ØµÄĞÅÏ¢¡£
-    @param [in] pThrEnv µ÷ÓÃÏß³ÌµÄThread-Env¡£
-    @param [out] pFinishTask Èç¹ûTaskÍê³É£¬Ôò·µ»Ø¡£
-    @return -1£ºTask²»´æÔÚ£»
-            0£ºTaskÒÑ¾­½ÓÊÜ´ËÏûÏ¢£¬µ«TaskÃ»ÓĞÍê³É£¬»¹ÔÚµÈ´ı±ğµÄÏûÏ¢¡£
-            1£ºTaskÒÑ¾­Íê³É£¬²»ÔÙÓĞTaskboard¹ÜÀí£¬´¦ÓÚµ÷ÓÃÏß³ÌµÄ¿ØÖÆÖ®ÏÂ¡£
+    @brief é€šçŸ¥Taskboardï¼ŒuiTaskIdçš„Taskçš„ä¸€ä¸ªæ¶ˆæ¯æœ‰ä¸€æ¡è¿æ¥å‘é€å®Œæ¯•ã€‚
+    @param [in] uiTaskId Taskçš„Task Idã€‚
+    @param [in] msg å‘é€è¿æ¥ç›¸å…³çš„ä¿¡æ¯ã€‚
+    @param [in] pThrEnv è°ƒç”¨çº¿ç¨‹çš„Thread-Envã€‚
+    @param [out] pFinishTask å¦‚æœTaskå®Œæˆï¼Œåˆ™è¿”å›ã€‚
+    @return -1ï¼šTaskä¸å­˜åœ¨ï¼›
+            0ï¼šTaskå·²ç»æ¥å—æ­¤æ¶ˆæ¯ï¼Œä½†Taskæ²¡æœ‰å®Œæˆï¼Œè¿˜åœ¨ç­‰å¾…åˆ«çš„æ¶ˆæ¯ã€‚
+            1ï¼šTaskå·²ç»å®Œæˆï¼Œä¸å†æœ‰Taskboardç®¡ç†ï¼Œå¤„äºè°ƒç”¨çº¿ç¨‹çš„æ§åˆ¶ä¹‹ä¸‹ã€‚
     */
     int noticeEndSendMsg(CWX_UINT32 uiTaskId,
         CwxMsgBlock*& msg,
         CwxTss* pThrEnv, 
         CwxTaskBoardTask*& pFinishTask);
     /**
-    @brief Í¨ÖªTaskboard£¬Ò»ÌõÁ¬½Ó¹Ø±Õ¡£
-    @param [in] msg ¹Ø±ÕÁ¬½ÓÏà¹ØµÄĞÅÏ¢¡£
-    @param [in] pThrEnv µ÷ÓÃÏß³ÌµÄThread-Env¡£
-    @param [out] finishTasks ÒòÎªÁ¬½Ó¹Ø±Õ¶øÍê³ÉµÄÈÎÎñ¡£
+    @brief é€šçŸ¥Taskboardï¼Œä¸€æ¡è¿æ¥å…³é—­ã€‚
+    @param [in] msg å…³é—­è¿æ¥ç›¸å…³çš„ä¿¡æ¯ã€‚
+    @param [in] pThrEnv è°ƒç”¨çº¿ç¨‹çš„Thread-Envã€‚
+    @param [out] finishTasks å› ä¸ºè¿æ¥å…³é—­è€Œå®Œæˆçš„ä»»åŠ¡ã€‚
     @return void
     */
     void noticeConnClosed(CwxMsgBlock*& msg,
         CwxTss* pThrEnv, 
         list<CwxTaskBoardTask*>& finishTasks);
-    ///»ñÈ¡Taskboard¹ÜÀíµÄÈÎÎñÊıÁ¿
+    ///è·å–Taskboardç®¡ç†çš„ä»»åŠ¡æ•°é‡
     inline CWX_UINT32 getTaskNum() const ;
-    ///»ñÈ¡taskboardÖĞconn-tasksµÄmapÖĞÔªËØÊıÄ¿£¬ÎªÁËµ÷ÊÔ
+    ///è·å–taskboardä¸­conn-tasksçš„mapä¸­å…ƒç´ æ•°ç›®ï¼Œä¸ºäº†è°ƒè¯•
     inline int getConnTasksMapSize() const;
-    ///»ñÈ¡taskboardÖĞtask-connsµÄsetÖĞÔªËØÊıÄ¿£¬ÎªÁËµ÷ÊÔ
+    ///è·å–taskboardä¸­task-connsçš„setä¸­å…ƒç´ æ•°ç›®ï¼Œä¸ºäº†è°ƒè¯•
     inline int getTaskConnsMapSize() const;
-    ///Çå¿ÕTaskboard
+    ///æ¸…ç©ºTaskboard
     void reset();
 private:
     /**
-    @brief ¼ì²éÖ¸¶¨TaskidµÄtaskÊÇ·ñ´æÔÚ¡£
-    @return ¿ÉÓÃµÄtask id
+    @brief æ£€æŸ¥æŒ‡å®šTaskidçš„taskæ˜¯å¦å­˜åœ¨ã€‚
+    @return å¯ç”¨çš„task id
     */
     CWX_UINT32 _getNextTaskId();
-    ///²»´øËøµÄÅĞ¶ÏÒ»¸öÈÎÎñÊÇ·ñ´æÔÚ
+    ///ä¸å¸¦é”çš„åˆ¤æ–­ä¸€ä¸ªä»»åŠ¡æ˜¯å¦å­˜åœ¨
     inline bool _isExist(CWX_UINT32 uiTaskId);
-    ///²»´øËøÍùTaskboardÌí¼ÓÒ»¸öTask
+    ///ä¸å¸¦é”å¾€Taskboardæ·»åŠ ä¸€ä¸ªTask
     bool _addTask(CwxTaskBoardTask* pTask);
-    ///²»´øËø¸ù¾İTaskId»ñÈ¡¶ÔÓ¦µÄTask
+    ///ä¸å¸¦é”æ ¹æ®TaskIdè·å–å¯¹åº”çš„Task
     inline CwxTaskBoardTask* _getTask(CWX_UINT32 uiTaskId);
-    ///²»´øËø´ÓTaskboardÉ¾³ıÒ»¸ötask;
+    ///ä¸å¸¦é”ä»Taskboardåˆ é™¤ä¸€ä¸ªtask;
     CwxTaskBoardTask* _remove(CWX_UINT32 uiTaskId);
-    ///·Ö·¢TaskÉÏ»º´æµÄÏûÏ¢
+    ///åˆ†å‘Taskä¸Šç¼“å­˜çš„æ¶ˆæ¯
     CWX_UINT8 dispatchEvent(CwxTaskBoardTask* pTask, CwxTss* pThrEnv);
-    ///²»´øËø£¬Ìí¼ÓÁ¬½ÓµÄÒ»¸öTask
+    ///ä¸å¸¦é”ï¼Œæ·»åŠ è¿æ¥çš„ä¸€ä¸ªTask
     inline void _addConnTask(CWX_UINT32 uiConnId, CwxTaskBoardTask* pTask);
-    ///²»´øËø£¬É¾³ıÁ¬½ÓµÄÒ»¸öTask
+    ///ä¸å¸¦é”ï¼Œåˆ é™¤è¿æ¥çš„ä¸€ä¸ªTask
     inline void _removeConnTask(CWX_UINT32 uiConnId, CWX_UINT32 uiTaskId);
-    ///²»´øËø£¬É¾³ıÒ»ÌõÁ¬½ÓÉÏµÄËùÓĞTask
+    ///ä¸å¸¦é”ï¼Œåˆ é™¤ä¸€æ¡è¿æ¥ä¸Šçš„æ‰€æœ‰Task
     inline void _removeConnTask(CWX_UINT32 uiConnId);
 private:
-    CwxTaskBoardTask*      m_pTaskHead;///<¹ÜÀíµÄTaskµÄÁ´±íµÄÍ·
-    CwxTaskBoardTask*      m_pTaskTail;///<¹ÜÀíµÄTaskµÄÁ´±íµÄÎ²
-    CWX_APP_TASK_MAP*         m_pTaskMap;///<TaskµÄMapË÷Òı
-    map<CwxTaskBoardConnTasks, CwxTaskBoardTask*> m_connTaskMap;///<Á¬½ÓÓëTaskµÄ¶ÔÓ¦Map
-    set<CwxTaskBoardTaskConns> m_taskConnSet;///<TaskÓëConnµÄ¶ÔÓ¦Map
-	CwxMutexLock        m_lock;///<TaskboardµÄÍ¬²½Ëø
-    CWX_UINT32         m_uiMaxTaskNum;///<¹ÜÀíTaskµÄ×î´óÊıÁ¿
-    CWX_UINT32             m_uiTaskId; ///<µ±Ç°×î´óµÄtask id
+    CwxTaskBoardTask*      m_pTaskHead;///<ç®¡ç†çš„Taskçš„é“¾è¡¨çš„å¤´
+    CwxTaskBoardTask*      m_pTaskTail;///<ç®¡ç†çš„Taskçš„é“¾è¡¨çš„å°¾
+    CWX_APP_TASK_MAP*         m_pTaskMap;///<Taskçš„Mapç´¢å¼•
+    map<CwxTaskBoardConnTasks, CwxTaskBoardTask*> m_connTaskMap;///<è¿æ¥ä¸Taskçš„å¯¹åº”Map
+    set<CwxTaskBoardTaskConns> m_taskConnSet;///<Taskä¸Connçš„å¯¹åº”Map
+	CwxMutexLock        m_lock;///<Taskboardçš„åŒæ­¥é”
+    CWX_UINT32         m_uiMaxTaskNum;///<ç®¡ç†Taskçš„æœ€å¤§æ•°é‡
+    CWX_UINT32             m_uiTaskId; ///<å½“å‰æœ€å¤§çš„task id
 };
 
 CWINUX_END_NAMESPACE

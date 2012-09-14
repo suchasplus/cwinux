@@ -1,4 +1,4 @@
-#include "CwxAppProcessMgr.h"
+ï»¿#include "CwxAppProcessMgr.h"
 #include "CwxFile.h"
 #include <unistd.h>
 #include <signal.h>
@@ -325,7 +325,7 @@ void CwxAppProcessMgr::unlock(FILE* fd)
     unlink(m_strAppLockFile.c_str());
 }
 
-///ÅĞ¶Ï½ø³ÌÊÇ·ñ´æÔÚ¡£-1£ºÊ§°Ü£»0£º²»´æÔÚ£»1£º´æÔÚ
+///åˆ¤æ–­è¿›ç¨‹æ˜¯å¦å­˜åœ¨ã€‚-1ï¼šå¤±è´¥ï¼›0ï¼šä¸å­˜åœ¨ï¼›1ï¼šå­˜åœ¨
 int CwxAppProcessMgr::isExistProc(char const* szProcName, int pid)
 {
     int iRet = 0;
@@ -348,7 +348,7 @@ int CwxAppProcessMgr::isExistProc(char const* szProcName, int pid)
     return iRet;
 }
 
-///»ñÈ¡pidÎÄ¼şÖĞµÄ½ø³Ìid£¬-1£ºÊ§°Ü
+///è·å–pidæ–‡ä»¶ä¸­çš„è¿›ç¨‹idï¼Œ-1ï¼šå¤±è´¥
 int CwxAppProcessMgr::getProcId(char const* szPidFile)
 {
     FILE* fd = fopen(szPidFile, "rb");

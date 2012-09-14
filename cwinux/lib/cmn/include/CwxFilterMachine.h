@@ -1,14 +1,14 @@
-#ifndef __CWX_FILTER_MACHINE_H__
+ï»¿#ifndef __CWX_FILTER_MACHINE_H__
 #define __CWX_FILTER_MACHINE_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxFilterMachine.h
-@brief Í¨¹ıTrieÊ÷£¬ÊµÏÖÁËÒ»¸öÄÚÈİ¹ıÂËÀà£¬Ö§³Östopword£¬Ö§³Ö¶à×Ö·û¼¯(utf8, gbk)¡£
+@brief é€šè¿‡Trieæ ‘ï¼Œå®ç°äº†ä¸€ä¸ªå†…å®¹è¿‡æ»¤ç±»ï¼Œæ”¯æŒstopwordï¼Œæ”¯æŒå¤šå­—ç¬¦é›†(utf8, gbk)ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-10
@@ -24,8 +24,8 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxFilterBase
-@brief ¹ıÂËÀàµÄ»ùÀà£¬¶¨ÒåÁË¹ıÂËÀàµÄAPI¡£Èô¹ıÂËÊÇ´óĞ¡Ğ´Ãô¸ĞµÄ£¬ÔòÊ¹ÓÃ²»´ø¡®Case¡¯µÄAPI£¬<br>
-       ·ñÔò£¬Ê¹ÓÃ´øCaseµÄAPI¡£
+@brief è¿‡æ»¤ç±»çš„åŸºç±»ï¼Œå®šä¹‰äº†è¿‡æ»¤ç±»çš„APIã€‚è‹¥è¿‡æ»¤æ˜¯å¤§å°å†™æ•æ„Ÿçš„ï¼Œåˆ™ä½¿ç”¨ä¸å¸¦â€˜Caseâ€™çš„APIï¼Œ<br>
+       å¦åˆ™ï¼Œä½¿ç”¨å¸¦Caseçš„APIã€‚
 */
 class CWX_API CwxFilterBase
 {
@@ -40,172 +40,172 @@ public:
         ATTR_FILTER_LEVEL7 = 0x40,
         ATTR_FILTER_LEVEL8 = 0x80
     };
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxFilterBase():m_uiFilterNum(0)
     {
 
     }
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     virtual ~CwxFilterBase()
     {
 
     }
 public:
     /**
-    @brief Íù¹ıÂËÆ÷Ìí¼Ó´óĞ¡Ğ´Ãô¸ĞµÄstopword£¬Ö»ÓĞ´óĞ¡Ğ´Ãô¸ĞµÄ¹ıÂËÆ÷²ÅÊ¹ÓÃ´Ë½Ó¿Ú
-    @param [in] szStopWord stopwordµÄ×Ö·û´®
-    @param [in] uiStopWordLen stopword×Ö·û´®µÄ³¤¶È
-    @return true£ºÌí¼Ó³É¹¦£»false£ºÌí¼ÓÊ§°Ü
+    @brief å¾€è¿‡æ»¤å™¨æ·»åŠ å¤§å°å†™æ•æ„Ÿçš„stopwordï¼Œåªæœ‰å¤§å°å†™æ•æ„Ÿçš„è¿‡æ»¤å™¨æ‰ä½¿ç”¨æ­¤æ¥å£
+    @param [in] szStopWord stopwordçš„å­—ç¬¦ä¸²
+    @param [in] uiStopWordLen stopwordå­—ç¬¦ä¸²çš„é•¿åº¦
+    @return trueï¼šæ·»åŠ æˆåŠŸï¼›falseï¼šæ·»åŠ å¤±è´¥
     */
     virtual bool addStopWord(char const* szStopWord, CWX_UINT32 uiStopWordLen)  =0;
     /**
-    @brief Íù¹ıÂËÆ÷Ìí¼Ó´óĞ¡Ğ´²»Ãô¸ĞµÄstopword£¬Ö»ÓĞ´óĞ¡Ğ´²»Ãô¸ĞµÄ¹ıÂËÆ÷²ÅÊ¹ÓÃ´Ë½Ó¿Ú
-    @param [in] szStopWord stopwordµÄ×Ö·û´®
-    @param [in] uiStopWordLen stopword×Ö·û´®µÄ³¤¶È
-    @return true£ºÌí¼Ó³É¹¦£»false£ºÌí¼ÓÊ§°Ü
+    @brief å¾€è¿‡æ»¤å™¨æ·»åŠ å¤§å°å†™ä¸æ•æ„Ÿçš„stopwordï¼Œåªæœ‰å¤§å°å†™ä¸æ•æ„Ÿçš„è¿‡æ»¤å™¨æ‰ä½¿ç”¨æ­¤æ¥å£
+    @param [in] szStopWord stopwordçš„å­—ç¬¦ä¸²
+    @param [in] uiStopWordLen stopwordå­—ç¬¦ä¸²çš„é•¿åº¦
+    @return trueï¼šæ·»åŠ æˆåŠŸï¼›falseï¼šæ·»åŠ å¤±è´¥
     */
     virtual bool addCaseStopWord(char const* szStopWord, CWX_UINT32 uiStopWordLen) = 0;
     /**
-    @brief Íù¹ıÂËÆ÷Ìí¼Ó´óĞ¡Ğ´Ãô¸ĞµÄ¹ıÂË´Ê£¬Ö»ÓĞ´óĞ¡Ğ´Ãô¸ĞµÄ¹ıÂËÆ÷²ÅÊ¹ÓÃ´Ë½Ó¿Ú
-    @param [in] szFilterStr ¹ıÂË´Ê×Ö·û´®
-    @param [in] uiFilterLen ¹ıÂË´Ê×Ö·û´®µÄ³¤¶È
-    @param [in] ucFilterLevel £º¹ıÂËµÄ¼¶±ğ£¬Ò»¸ö´Ê¿ÉÒÔÉèÖÃ¶à¸ö¹ıÂË¼¶±ğ£¬×î¶àÎª8¸ö¡£
-    @return true£ºÌí¼Ó³É¹¦£»false£ºÌí¼ÓÊ§°Ü
+    @brief å¾€è¿‡æ»¤å™¨æ·»åŠ å¤§å°å†™æ•æ„Ÿçš„è¿‡æ»¤è¯ï¼Œåªæœ‰å¤§å°å†™æ•æ„Ÿçš„è¿‡æ»¤å™¨æ‰ä½¿ç”¨æ­¤æ¥å£
+    @param [in] szFilterStr è¿‡æ»¤è¯å­—ç¬¦ä¸²
+    @param [in] uiFilterLen è¿‡æ»¤è¯å­—ç¬¦ä¸²çš„é•¿åº¦
+    @param [in] ucFilterLevel ï¼šè¿‡æ»¤çš„çº§åˆ«ï¼Œä¸€ä¸ªè¯å¯ä»¥è®¾ç½®å¤šä¸ªè¿‡æ»¤çº§åˆ«ï¼Œæœ€å¤šä¸º8ä¸ªã€‚
+    @return trueï¼šæ·»åŠ æˆåŠŸï¼›falseï¼šæ·»åŠ å¤±è´¥
     */
     virtual bool addFilterStr(char const* szFilterStr, CWX_UINT32 uiFilterLen, CWX_UINT8 ucFilterLevel) = 0;
     /**
-    @brief Íù¹ıÂËÆ÷Ìí¼Ó´óĞ¡Ğ´²»Ãô¸ĞµÄ¹ıÂË´Ê£¬Ö»ÓĞ´óĞ¡Ğ´²»Ãô¸ĞµÄ¹ıÂËÆ÷²ÅÊ¹ÓÃ´Ë½Ó¿Ú
-    @param [in] szFilterStr ¹ıÂË´Ê×Ö·û´®
-    @param [in] uiFilterLen ¹ıÂË´Ê×Ö·û´®µÄ³¤¶È
-    @param [in] ucFilterLevel £º¹ıÂËµÄ¼¶±ğ£¬Ò»¸ö´Ê¿ÉÒÔÉèÖÃ¶à¸ö¹ıÂË¼¶±ğ£¬×î¶àÎª8¸ö¡£
-    @return true£ºÌí¼Ó³É¹¦£»false£ºÌí¼ÓÊ§°Ü
+    @brief å¾€è¿‡æ»¤å™¨æ·»åŠ å¤§å°å†™ä¸æ•æ„Ÿçš„è¿‡æ»¤è¯ï¼Œåªæœ‰å¤§å°å†™ä¸æ•æ„Ÿçš„è¿‡æ»¤å™¨æ‰ä½¿ç”¨æ­¤æ¥å£
+    @param [in] szFilterStr è¿‡æ»¤è¯å­—ç¬¦ä¸²
+    @param [in] uiFilterLen è¿‡æ»¤è¯å­—ç¬¦ä¸²çš„é•¿åº¦
+    @param [in] ucFilterLevel ï¼šè¿‡æ»¤çš„çº§åˆ«ï¼Œä¸€ä¸ªè¯å¯ä»¥è®¾ç½®å¤šä¸ªè¿‡æ»¤çº§åˆ«ï¼Œæœ€å¤šä¸º8ä¸ªã€‚
+    @return trueï¼šæ·»åŠ æˆåŠŸï¼›falseï¼šæ·»åŠ å¤±è´¥
     */
     virtual bool addCaseFilterStr(char const* szFilterStr, CWX_UINT32 uiFilterLen, CWX_UINT8 ucFilterLevel) = 0;
     /**
-    @brief °´ÕÕ´óĞ¡Ğ´Ãô¸ĞµÄ·½Ê½£¬¼ì²észContentµÄÄÚÈİÖĞÊÇ·ñ´æÔÚÉèÖÃµÄ¹ıÂË´Ê¡£Ö»ÓĞ´óĞ¡Ğ´Ãô¸ĞµÄ¹ıÂËÆ÷Ê¹ÓÃ´ËAPI¡£
-    @param [in] szContent ±»¼ì²éµÄÄÚÈİ
-    @param [in] uiContentLen ±»¼ì²éµÄÄÚÈİµÄ³¤¶È
-    @param [out] uiStart Èôlevel´óÓÚ0£¬Ôò·µ»Ø¶ÔÓ¦levelµÄ´ÊµÄ¿ªÊ¼Î»ÖÃ
-    @param [out] uiLen Èôlevel´óÓÚ0£¬Ôò·µ»Ø¶ÔÓ¦levelµÄ´ÊµÄ×Ö½Ú³¤¶È
-    @return 0£º²»´æÔÚ¹ıÂË´Ê£»>0£º×î¸ßµÄ¹ıÂËLEVEL
+    @brief æŒ‰ç…§å¤§å°å†™æ•æ„Ÿçš„æ–¹å¼ï¼Œæ£€æŸ¥szContentçš„å†…å®¹ä¸­æ˜¯å¦å­˜åœ¨è®¾ç½®çš„è¿‡æ»¤è¯ã€‚åªæœ‰å¤§å°å†™æ•æ„Ÿçš„è¿‡æ»¤å™¨ä½¿ç”¨æ­¤APIã€‚
+    @param [in] szContent è¢«æ£€æŸ¥çš„å†…å®¹
+    @param [in] uiContentLen è¢«æ£€æŸ¥çš„å†…å®¹çš„é•¿åº¦
+    @param [out] uiStart è‹¥levelå¤§äº0ï¼Œåˆ™è¿”å›å¯¹åº”levelçš„è¯çš„å¼€å§‹ä½ç½®
+    @param [out] uiLen è‹¥levelå¤§äº0ï¼Œåˆ™è¿”å›å¯¹åº”levelçš„è¯çš„å­—èŠ‚é•¿åº¦
+    @return 0ï¼šä¸å­˜åœ¨è¿‡æ»¤è¯ï¼›>0ï¼šæœ€é«˜çš„è¿‡æ»¤LEVEL
     */
     virtual CWX_UINT8 filterStr(char const* szContent, CWX_UINT32 uiContentLen, CWX_UINT32& uiStart, CWX_UINT32& uiLen) const = 0;
     /**
-    @brief °´ÕÕ´óĞ¡Ğ´²»Ãô¸ĞµÄ·½Ê½£¬¼ì²észContentµÄÄÚÈİÖĞÊÇ·ñ´æÔÚÉèÖÃµÄ¹ıÂË´Ê¡£Ö»ÓĞ´óĞ¡Ğ´²»Ãô¸ĞµÄ¹ıÂËÆ÷Ê¹ÓÃ´ËAPI¡£
-    @param [in] szContent ±»¼ì²éµÄÄÚÈİ
-    @param [in] uiContentLen ±»¼ì²éµÄÄÚÈİµÄ³¤¶È
-    @param [out] uiStart Èôlevel´óÓÚ0£¬Ôò·µ»Ø¶ÔÓ¦levelµÄ´ÊµÄ¿ªÊ¼Î»ÖÃ
-    @param [out] uiLen Èôlevel´óÓÚ0£¬Ôò·µ»Ø¶ÔÓ¦levelµÄ´ÊµÄ×Ö½Ú³¤¶È
-    @return 0£º²»´æÔÚ¹ıÂË´Ê£»>0£º×î¸ßµÄ¹ıÂËLEVEL
+    @brief æŒ‰ç…§å¤§å°å†™ä¸æ•æ„Ÿçš„æ–¹å¼ï¼Œæ£€æŸ¥szContentçš„å†…å®¹ä¸­æ˜¯å¦å­˜åœ¨è®¾ç½®çš„è¿‡æ»¤è¯ã€‚åªæœ‰å¤§å°å†™ä¸æ•æ„Ÿçš„è¿‡æ»¤å™¨ä½¿ç”¨æ­¤APIã€‚
+    @param [in] szContent è¢«æ£€æŸ¥çš„å†…å®¹
+    @param [in] uiContentLen è¢«æ£€æŸ¥çš„å†…å®¹çš„é•¿åº¦
+    @param [out] uiStart è‹¥levelå¤§äº0ï¼Œåˆ™è¿”å›å¯¹åº”levelçš„è¯çš„å¼€å§‹ä½ç½®
+    @param [out] uiLen è‹¥levelå¤§äº0ï¼Œåˆ™è¿”å›å¯¹åº”levelçš„è¯çš„å­—èŠ‚é•¿åº¦
+    @return 0ï¼šä¸å­˜åœ¨è¿‡æ»¤è¯ï¼›>0ï¼šæœ€é«˜çš„è¿‡æ»¤LEVEL
     */
     virtual CWX_UINT8 filterCaseStr(char const* szContent, CWX_UINT32 uiContentLen, CWX_UINT32& uiStart, CWX_UINT32& uiLen) const = 0;
-    ///·µ»Ø¹ıÂËÆ÷µÄ×Ö·û¼¯
+    ///è¿”å›è¿‡æ»¤å™¨çš„å­—ç¬¦é›†
     virtual char const* charset() const = 0;
-    ///¸´Î»¹ıÂËÆ÷£¬Çå¿ÕÉèÖÃµÄ¹ıÂË×Ö·û´®Óëstopword
+    ///å¤ä½è¿‡æ»¤å™¨ï¼Œæ¸…ç©ºè®¾ç½®çš„è¿‡æ»¤å­—ç¬¦ä¸²ä¸stopword
     virtual void clear() = 0;
 public:
-    ///»ñÈ¡Ìí¼ÓµÄ¹ıÂË×Ö·û´®µÄÊıÁ¿
+    ///è·å–æ·»åŠ çš„è¿‡æ»¤å­—ç¬¦ä¸²çš„æ•°é‡
     CWX_UINT32 getFilterNum() const 
     {
         return m_uiFilterNum;
     }
-    ///ÉèÖÃÌí¼ÓµÄ¹ıÂË×Ö·û´®µÄÊıÁ¿
+    ///è®¾ç½®æ·»åŠ çš„è¿‡æ»¤å­—ç¬¦ä¸²çš„æ•°é‡
     void setFilterNum(CWX_UINT32 uiNum)
     {
         m_uiFilterNum = uiNum;
     }
-    ///½«¹ıÂË×Ö·û´®µÄÊıÁ¿¼Ó1
+    ///å°†è¿‡æ»¤å­—ç¬¦ä¸²çš„æ•°é‡åŠ 1
     void incFilterNum()
     {
         m_uiFilterNum ++;
     }
 private:
-    CWX_UINT32         m_uiFilterNum;///<¹ıÂË´ÊµÄÊıÁ¿
+    CWX_UINT32         m_uiFilterNum;///<è¿‡æ»¤è¯çš„æ•°é‡
 };
 
 /**
 @class CwxFilterMachine
-@brief Ö§³Ö¶à×Ö·û¼¯µÄ¹ıÂËÆ÷Ä£°åÀà¡£CHARSETµÄÎªCwxCharset.hÖĞ¶¨ÒåµÄ×Ö·û¼¯¶ÔÏó
+@brief æ”¯æŒå¤šå­—ç¬¦é›†çš„è¿‡æ»¤å™¨æ¨¡æ¿ç±»ã€‚CHARSETçš„ä¸ºCwxCharset.hä¸­å®šä¹‰çš„å­—ç¬¦é›†å¯¹è±¡
 */
 template<typename CHARSET>
 class CwxFilterMachine:public CwxFilterBase{
 public:
     /**
-    @brief ¹¹Ôìº¯Êı
-    @param [in] uiMaxFilteNum ¹ıÂË´ÊµÄ×î´óÌõÄ¿
-    @param [in] uiMaxStopword stopwordµÄ×î´óÌõÄ¿
+    @brief æ„é€ å‡½æ•°
+    @param [in] uiMaxFilteNum è¿‡æ»¤è¯çš„æœ€å¤§æ¡ç›®
+    @param [in] uiMaxStopword stopwordçš„æœ€å¤§æ¡ç›®
     */
     CwxFilterMachine(CWX_UINT32 uiMaxFilteNum, CWX_UINT32 uiMaxStopword):
         m_charPool(1024, 2048), m_filterTree(uiMaxFilteNum/4),m_stopwordTree(uiMaxStopword/4){
             m_ucMaxFilterLevel = 0;
     }
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxFilterMachine(){}
 public:
     /**
-    @brief Íù¹ıÂËÆ÷Ìí¼Ó´óĞ¡Ğ´Ãô¸ĞµÄstopword£¬Ö»ÓĞ´óĞ¡Ğ´Ãô¸ĞµÄ¹ıÂËÆ÷²ÅÊ¹ÓÃ´Ë½Ó¿Ú
-    @param [in] szStopWord stopwordµÄ×Ö·û´®
-    @param [in] uiStopWordLen stopword×Ö·û´®µÄ³¤¶È
-    @return true£ºÌí¼Ó³É¹¦£»false£ºÌí¼ÓÊ§°Ü
+    @brief å¾€è¿‡æ»¤å™¨æ·»åŠ å¤§å°å†™æ•æ„Ÿçš„stopwordï¼Œåªæœ‰å¤§å°å†™æ•æ„Ÿçš„è¿‡æ»¤å™¨æ‰ä½¿ç”¨æ­¤æ¥å£
+    @param [in] szStopWord stopwordçš„å­—ç¬¦ä¸²
+    @param [in] uiStopWordLen stopwordå­—ç¬¦ä¸²çš„é•¿åº¦
+    @return trueï¼šæ·»åŠ æˆåŠŸï¼›falseï¼šæ·»åŠ å¤±è´¥
     */
     virtual bool addStopWord(char const* szStopWord, CWX_UINT32 uiStopWordLen);
     /**
-    @brief Íù¹ıÂËÆ÷Ìí¼Ó´óĞ¡Ğ´²»Ãô¸ĞµÄstopword£¬Ö»ÓĞ´óĞ¡Ğ´²»Ãô¸ĞµÄ¹ıÂËÆ÷²ÅÊ¹ÓÃ´Ë½Ó¿Ú
-    @param [in] szStopWord stopwordµÄ×Ö·û´®
-    @param [in] uiStopWordLen stopword×Ö·û´®µÄ³¤¶È
-    @return true£ºÌí¼Ó³É¹¦£»false£ºÌí¼ÓÊ§°Ü
+    @brief å¾€è¿‡æ»¤å™¨æ·»åŠ å¤§å°å†™ä¸æ•æ„Ÿçš„stopwordï¼Œåªæœ‰å¤§å°å†™ä¸æ•æ„Ÿçš„è¿‡æ»¤å™¨æ‰ä½¿ç”¨æ­¤æ¥å£
+    @param [in] szStopWord stopwordçš„å­—ç¬¦ä¸²
+    @param [in] uiStopWordLen stopwordå­—ç¬¦ä¸²çš„é•¿åº¦
+    @return trueï¼šæ·»åŠ æˆåŠŸï¼›falseï¼šæ·»åŠ å¤±è´¥
     */
     virtual bool addCaseStopWord(char const* szStopWord, CWX_UINT32 uiStopWordLen);
     /**
-    @brief Íù¹ıÂËÆ÷Ìí¼Ó´óĞ¡Ğ´Ãô¸ĞµÄ¹ıÂË´Ê£¬Ö»ÓĞ´óĞ¡Ğ´Ãô¸ĞµÄ¹ıÂËÆ÷²ÅÊ¹ÓÃ´Ë½Ó¿Ú
-    @param [in] szFilterStr ¹ıÂË´Ê×Ö·û´®
-    @param [in] uiFilterLen ¹ıÂË´Ê×Ö·û´®µÄ³¤¶È
-    @param [in] ucFilterLevel £º¹ıÂËµÄ¼¶±ğ£¬Ò»¸ö´Ê¿ÉÒÔÉèÖÃ¶à¸ö¹ıÂË¼¶±ğ£¬×î¶àÎª8¸ö¡£
-    @return true£ºÌí¼Ó³É¹¦£»false£ºÌí¼ÓÊ§°Ü
+    @brief å¾€è¿‡æ»¤å™¨æ·»åŠ å¤§å°å†™æ•æ„Ÿçš„è¿‡æ»¤è¯ï¼Œåªæœ‰å¤§å°å†™æ•æ„Ÿçš„è¿‡æ»¤å™¨æ‰ä½¿ç”¨æ­¤æ¥å£
+    @param [in] szFilterStr è¿‡æ»¤è¯å­—ç¬¦ä¸²
+    @param [in] uiFilterLen è¿‡æ»¤è¯å­—ç¬¦ä¸²çš„é•¿åº¦
+    @param [in] ucFilterLevel ï¼šè¿‡æ»¤çš„çº§åˆ«ï¼Œä¸€ä¸ªè¯å¯ä»¥è®¾ç½®å¤šä¸ªè¿‡æ»¤çº§åˆ«ï¼Œæœ€å¤šä¸º8ä¸ªã€‚
+    @return trueï¼šæ·»åŠ æˆåŠŸï¼›falseï¼šæ·»åŠ å¤±è´¥
     */
     virtual bool addFilterStr(char const* szFilterStr, CWX_UINT32 uiFilterLen, CWX_UINT8 ucFilterLevel);
     /**
-    @brief Íù¹ıÂËÆ÷Ìí¼Ó´óĞ¡Ğ´²»Ãô¸ĞµÄ¹ıÂË´Ê£¬Ö»ÓĞ´óĞ¡Ğ´²»Ãô¸ĞµÄ¹ıÂËÆ÷²ÅÊ¹ÓÃ´Ë½Ó¿Ú
-    @param [in] szFilterStr ¹ıÂË´Ê×Ö·û´®
-    @param [in] uiFilterLen ¹ıÂË´Ê×Ö·û´®µÄ³¤¶È
-    @param [in] ucFilterLevel £º¹ıÂËµÄ¼¶±ğ£¬Ò»¸ö´Ê¿ÉÒÔÉèÖÃ¶à¸ö¹ıÂË¼¶±ğ£¬×î¶àÎª8¸ö¡£
-    @return true£ºÌí¼Ó³É¹¦£»false£ºÌí¼ÓÊ§°Ü
+    @brief å¾€è¿‡æ»¤å™¨æ·»åŠ å¤§å°å†™ä¸æ•æ„Ÿçš„è¿‡æ»¤è¯ï¼Œåªæœ‰å¤§å°å†™ä¸æ•æ„Ÿçš„è¿‡æ»¤å™¨æ‰ä½¿ç”¨æ­¤æ¥å£
+    @param [in] szFilterStr è¿‡æ»¤è¯å­—ç¬¦ä¸²
+    @param [in] uiFilterLen è¿‡æ»¤è¯å­—ç¬¦ä¸²çš„é•¿åº¦
+    @param [in] ucFilterLevel ï¼šè¿‡æ»¤çš„çº§åˆ«ï¼Œä¸€ä¸ªè¯å¯ä»¥è®¾ç½®å¤šä¸ªè¿‡æ»¤çº§åˆ«ï¼Œæœ€å¤šä¸º8ä¸ªã€‚
+    @return trueï¼šæ·»åŠ æˆåŠŸï¼›falseï¼šæ·»åŠ å¤±è´¥
     */
     virtual bool addCaseFilterStr(char const* szFilterStr, CWX_UINT32 uiFilterLen, CWX_UINT8 ucFilterLevel);
     /**
-    @brief °´ÕÕ´óĞ¡Ğ´Ãô¸ĞµÄ·½Ê½£¬¼ì²észContentµÄÄÚÈİÖĞÊÇ·ñ´æÔÚÉèÖÃµÄ¹ıÂË´Ê¡£Ö»ÓĞ´óĞ¡Ğ´Ãô¸ĞµÄ¹ıÂËÆ÷Ê¹ÓÃ´ËAPI¡£
-    @param [in] szContent ±»¼ì²éµÄÄÚÈİ
-    @param [in] uiContentLen ±»¼ì²éµÄÄÚÈİµÄ³¤¶È
-    @param [out] uiStart Èôlevel´óÓÚ0£¬Ôò·µ»Ø¶ÔÓ¦levelµÄ´ÊµÄ¿ªÊ¼Î»ÖÃ
-    @param [out] uiLen Èôlevel´óÓÚ0£¬Ôò·µ»Ø¶ÔÓ¦levelµÄ´ÊµÄ×Ö½Ú³¤¶È
-    @return 0£º²»´æÔÚ¹ıÂË´Ê£»>0£º×î¸ßµÄ¹ıÂËLEVEL
+    @brief æŒ‰ç…§å¤§å°å†™æ•æ„Ÿçš„æ–¹å¼ï¼Œæ£€æŸ¥szContentçš„å†…å®¹ä¸­æ˜¯å¦å­˜åœ¨è®¾ç½®çš„è¿‡æ»¤è¯ã€‚åªæœ‰å¤§å°å†™æ•æ„Ÿçš„è¿‡æ»¤å™¨ä½¿ç”¨æ­¤APIã€‚
+    @param [in] szContent è¢«æ£€æŸ¥çš„å†…å®¹
+    @param [in] uiContentLen è¢«æ£€æŸ¥çš„å†…å®¹çš„é•¿åº¦
+    @param [out] uiStart è‹¥levelå¤§äº0ï¼Œåˆ™è¿”å›å¯¹åº”levelçš„è¯çš„å¼€å§‹ä½ç½®
+    @param [out] uiLen è‹¥levelå¤§äº0ï¼Œåˆ™è¿”å›å¯¹åº”levelçš„è¯çš„å­—èŠ‚é•¿åº¦
+    @return 0ï¼šä¸å­˜åœ¨è¿‡æ»¤è¯ï¼›>0ï¼šæœ€é«˜çš„è¿‡æ»¤LEVEL
     */
     virtual CWX_UINT8 filterStr(char const* szContent, CWX_UINT32 uiContentLen, CWX_UINT32& uiStart, CWX_UINT32& uiLen) const;
     /**
-    @brief °´ÕÕ´óĞ¡Ğ´²»Ãô¸ĞµÄ·½Ê½£¬¼ì²észContentµÄÄÚÈİÖĞÊÇ·ñ´æÔÚÉèÖÃµÄ¹ıÂË´Ê¡£Ö»ÓĞ´óĞ¡Ğ´²»Ãô¸ĞµÄ¹ıÂËÆ÷Ê¹ÓÃ´ËAPI¡£
-    @param [in] szContent ±»¼ì²éµÄÄÚÈİ
-    @param [in] uiContentLen ±»¼ì²éµÄÄÚÈİµÄ³¤¶È
-    @param [out] uiStart Èôlevel´óÓÚ0£¬Ôò·µ»Ø¶ÔÓ¦levelµÄ´ÊµÄ¿ªÊ¼Î»ÖÃ
-    @param [out] uiLen Èôlevel´óÓÚ0£¬Ôò·µ»Ø¶ÔÓ¦levelµÄ´ÊµÄ×Ö½Ú³¤¶È
-    @return 0£º²»´æÔÚ¹ıÂË´Ê£»>0£º×î¸ßµÄ¹ıÂËLEVEL
+    @brief æŒ‰ç…§å¤§å°å†™ä¸æ•æ„Ÿçš„æ–¹å¼ï¼Œæ£€æŸ¥szContentçš„å†…å®¹ä¸­æ˜¯å¦å­˜åœ¨è®¾ç½®çš„è¿‡æ»¤è¯ã€‚åªæœ‰å¤§å°å†™ä¸æ•æ„Ÿçš„è¿‡æ»¤å™¨ä½¿ç”¨æ­¤APIã€‚
+    @param [in] szContent è¢«æ£€æŸ¥çš„å†…å®¹
+    @param [in] uiContentLen è¢«æ£€æŸ¥çš„å†…å®¹çš„é•¿åº¦
+    @param [out] uiStart è‹¥levelå¤§äº0ï¼Œåˆ™è¿”å›å¯¹åº”levelçš„è¯çš„å¼€å§‹ä½ç½®
+    @param [out] uiLen è‹¥levelå¤§äº0ï¼Œåˆ™è¿”å›å¯¹åº”levelçš„è¯çš„å­—èŠ‚é•¿åº¦
+    @return 0ï¼šä¸å­˜åœ¨è¿‡æ»¤è¯ï¼›>0ï¼šæœ€é«˜çš„è¿‡æ»¤LEVEL
     */
     virtual CWX_UINT8 filterCaseStr(char const* szContent, CWX_UINT32 uiContentLen, CWX_UINT32& uiStart, CWX_UINT32& uiLen) const;
-    ///·µ»Ø¡¾CHARSET¡¿¶ÔÓ¦µÄ×Ö·û¼¯µÄÃû³Æ
+    ///è¿”å›ã€CHARSETã€‘å¯¹åº”çš„å­—ç¬¦é›†çš„åç§°
     virtual char const* charset() const;
-    ///¸´Î»¹ıÂËÆ÷£¬Çå¿ÕÉèÖÃµÄ¹ıÂË×Ö·û´®Óëstopword
+    ///å¤ä½è¿‡æ»¤å™¨ï¼Œæ¸…ç©ºè®¾ç½®çš„è¿‡æ»¤å­—ç¬¦ä¸²ä¸stopword
     virtual void clear();
 private:
-    ///¼ì²észContentµÄ¿ªÊ¼×Ö·û´®ÊÇ·ñÊÇstopword£¬²¢Í¨¹ıuiContentLen·µ»ØstopwordµÄ³¤¶È
+    ///æ£€æŸ¥szContentçš„å¼€å§‹å­—ç¬¦ä¸²æ˜¯å¦æ˜¯stopwordï¼Œå¹¶é€šè¿‡uiContentLenè¿”å›stopwordçš„é•¿åº¦
     bool isStopWord(char const* szContent, CWX_UINT32& uiContentLen) const;
-    ///¼ì²észContentµÄ¿ªÊ¼×Ö·û´®ÊÇ·ñÊÇstopword£¬²¢Í¨¹ıuiContentLen·µ»ØstopwordµÄ³¤¶È
+    ///æ£€æŸ¥szContentçš„å¼€å§‹å­—ç¬¦ä¸²æ˜¯å¦æ˜¯stopwordï¼Œå¹¶é€šè¿‡uiContentLenè¿”å›stopwordçš„é•¿åº¦
     bool isCaseStopWord(char const* szContent, CWX_UINT32& uiContentLen) const;
-    ///´ÓucLevelÖĞ¼ÆËã³ö×î¸ßµÄlevel
+    ///ä»ucLevelä¸­è®¡ç®—å‡ºæœ€é«˜çš„level
     CWX_UINT8 maxFilterLevel(CWX_UINT8 ucLevel) const;
 private:
-    CwxCharPool        m_charPool;///<×Ö·û´®ÄÚ´æ³Ø
-    CwxTrieTree<CHARSET, char> m_filterTree;///<¹ıÂË´ÊµÄtrieÊ÷
-    CwxTrieTree<CHARSET, char> m_stopwordTree;///<stopwordµÄtrieÊ÷
-    CWX_UINT8          m_ucMaxFilterLevel;///<ÉèÖÃµÄ¹ıÂË´ÊÖĞµÄ×î´ó¹ıÂËLevel
+    CwxCharPool        m_charPool;///<å­—ç¬¦ä¸²å†…å­˜æ± 
+    CwxTrieTree<CHARSET, char> m_filterTree;///<è¿‡æ»¤è¯çš„trieæ ‘
+    CwxTrieTree<CHARSET, char> m_stopwordTree;///<stopwordçš„trieæ ‘
+    CWX_UINT8          m_ucMaxFilterLevel;///<è®¾ç½®çš„è¿‡æ»¤è¯ä¸­çš„æœ€å¤§è¿‡æ»¤Level
 };
 
 CWINUX_END_NAMESPACE

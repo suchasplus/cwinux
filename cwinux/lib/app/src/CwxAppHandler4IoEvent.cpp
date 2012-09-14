@@ -1,9 +1,9 @@
-#include "CwxAppHandler4IoEvent.h"
+ï»¿#include "CwxAppHandler4IoEvent.h"
 #include "CwxAppFramework.h"
 
 CWINUX_BEGIN_NAMESPACE
 
-///¹¹Ôìº¯Êı
+///æ„é€ å‡½æ•°
 CwxAppHandler4IoEvent::CwxAppHandler4IoEvent(CwxAppFramework* app, CwxAppReactor *reactor)
 :CwxAppHandler4Base(reactor)
 {
@@ -14,7 +14,7 @@ CwxAppHandler4IoEvent::CwxAppHandler4IoEvent(CwxAppFramework* app, CwxAppReactor
     m_userData = NULL;
     m_next = NULL;
 }
-///Îö¹¹º¯Êı
+///ææ„å‡½æ•°
 CwxAppHandler4IoEvent::~CwxAppHandler4IoEvent()
 {
     if (getHandle() != CWX_INVALID_HANDLE)
