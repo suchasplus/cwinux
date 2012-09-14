@@ -1,4 +1,4 @@
-#include "cwx_stream.h"
+﻿#include "cwx_stream.h"
 
 CWX_UINT64 cwx_time_of_day(){
     return (CWX_UINT64)apr_time_now();

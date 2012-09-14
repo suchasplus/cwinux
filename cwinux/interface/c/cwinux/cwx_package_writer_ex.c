@@ -1,4 +1,4 @@
-#include "cwx_package_writer_ex.h"
+ï»¿#include "cwx_package_writer_ex.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -12,7 +12,7 @@ struct CWX_PG_WRITER_EX
     char*                 m_szPackMsg; ///<package's dat
     CWX_UINT32            m_uiPackBufLen;///<package's buf length
     CWX_UINT32            m_uiCurPackPos;///<package's size
-    char                  m_szErr[CWX_PG_WRITER_ERR_MSG_LEN + 1];///<´íÎóÄÚÈÝ
+    char                  m_szErr[CWX_PG_WRITER_ERR_MSG_LEN + 1];///<é”™è¯¯å†…å®¹
 };
 
 static void reset(struct CWX_PG_WRITER_EX* writer)
@@ -182,22 +182,22 @@ int cwx_pg_writer_pack_ex(struct CWX_PG_WRITER_EX* writer)
     return 0;
 }
 
-///»ñÈ¡µ±Ç°packageµÄKeyµÄÊýÁ¿¡£
+///èŽ·å–å½“å‰packageçš„Keyçš„æ•°é‡ã€‚
 CWX_UINT32 cwx_pg_writer_get_key_num_ex(struct CWX_PG_WRITER_EX* writer)
 {
     return writer->m_uiKeyNum;
 }
-///»ñÈ¡ÐÎ³ÉµÄpackageµÄsize
+///èŽ·å–å½¢æˆçš„packageçš„size
 CWX_UINT32 cwx_pg_writer_get_msg_size_ex(struct CWX_PG_WRITER_EX* writer)
 {
     return writer->m_uiCurPackPos;
 }
-///»ñÈ¡ÐÎ³ÉµÄpackage
+///èŽ·å–å½¢æˆçš„package
 char const* cwx_pg_writer_get_msg_ex(struct CWX_PG_WRITER_EX* writer)
 {
     return writer->m_szPackMsg;
 }
-///»ñÈ¡´íÎóÏûÏ¢
+///èŽ·å–é”™è¯¯æ¶ˆæ¯
 char const* cwx_pg_writer_get_error_ex(struct CWX_PG_WRITER_EX* writer)
 {
     return writer->m_szErr;

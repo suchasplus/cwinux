@@ -1,15 +1,15 @@
-#ifndef __CWX_CONFIG_H__
+ï»¿#ifndef __CWX_CONFIG_H__
 #define __CWX_CONFIG_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 
 /**
 @file cwx_config.h
-@brief Êı¾İ¶¨Òå
+@brief æ•°æ®å®šä¹‰
 @author cwinux@gmail.com
 @version 0.1
 @date 2010-10-04
@@ -27,35 +27,35 @@
 extern "C" {
 #endif
 
-///CWX_UINT64 Êı¾İÀàĞÍ¶¨Òå
+///CWX_UINT64 æ•°æ®ç±»å‹å®šä¹‰
 #define CWX_UINT64   uint64_t
-///CWX_INT64 Êı¾İÀàĞÍ¶¨Òå
+///CWX_INT64 æ•°æ®ç±»å‹å®šä¹‰
 #define CWX_INT64   int64_t
-///CWX_UINT32 Êı¾İÀàĞÍ¶¨Òå
+///CWX_UINT32 æ•°æ®ç±»å‹å®šä¹‰
 #define CWX_UINT32   uint32_t
-///CWX_INT32 Êı¾İÀàĞÍ¶¨Òå
+///CWX_INT32 æ•°æ®ç±»å‹å®šä¹‰
 #define CWX_INT32   int32_t
-///CWX_UINT16 Êı¾İÀàĞÍ¶¨Òå
+///CWX_UINT16 æ•°æ®ç±»å‹å®šä¹‰
 #define CWX_UINT16   uint16_t
-///CWX_INT16 Êı¾İÀàĞÍ¶¨Òå
+///CWX_INT16 æ•°æ®ç±»å‹å®šä¹‰
 #define CWX_INT16   int16_t
-///CWX_UINT8 Êı¾İÀàĞÍ¶¨Òå
+///CWX_UINT8 æ•°æ®ç±»å‹å®šä¹‰
 #define CWX_UINT8   uint8_t
-///CWX_INT8 Êı¾İÀàĞÍ¶¨Òå
+///CWX_INT8 æ•°æ®ç±»å‹å®šä¹‰
 #define CWX_INT8   int8_t
 
-    ///ÊôĞÔµÄ¼ì²é
+    ///å±æ€§çš„æ£€æŸ¥
 # define CWX_CHECK_ATTR(WORD, ATTR) (((WORD) & (ATTR)) != 0)
-    ///ÊôĞÔµÄÉèÖÃ
+    ///å±æ€§çš„è®¾ç½®
 # define CWX_SET_ATTR(WORD, ATTR) (WORD |= (ATTR))
-    ///ÊôĞÔµÄÇå¿Õ
+    ///å±æ€§çš„æ¸…ç©º
 # define CWX_CLR_ATTR(WORD, ATTR) (WORD &= ~(ATTR))
 
-    ///Î»¼ì²é
+    ///ä½æ£€æŸ¥
 # define CWX_CHECK_BIT(WORD, BIT) (((WORD) & (1<<(BIT))) != 0)
-    ///Î»ÉèÖÃ
+    ///ä½è®¾ç½®
 # define CWX_SET_BIT(WORD, BIT) ((WORD) |= (1<<(BIT)))
-    ///Î»Çå¿Õ
+    ///ä½æ¸…ç©º
 # define CWX_CLR_BIT(WORD, BIT) ((WORD) &= ~((1<<(BIT))))
 
 #ifdef __cplusplus

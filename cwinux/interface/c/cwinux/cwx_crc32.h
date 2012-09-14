@@ -1,4 +1,4 @@
-#ifndef __CWX_CRC32_H__
+ï»¿#ifndef __CWX_CRC32_H__
 #define __CWX_CRC32_H__
 
 
@@ -11,11 +11,11 @@
 
 /**
 *@file  cwx_dd5.h
-*@brief  crc32Ç©Ãû
+*@brief  crc32ç­¾å
 *@author cwinux@gmail.com
 *@version 0.1
 *@date    2011-05-16
-*@warning ÎŞ
+*@warning æ— 
 *@bug   
 */
 #ifdef __cplusplus

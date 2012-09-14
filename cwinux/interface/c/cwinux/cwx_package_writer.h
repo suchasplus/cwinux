@@ -1,14 +1,14 @@
-#ifndef __CWX_PACKAGE_WRITER_H__
+ï»¿#ifndef __CWX_PACKAGE_WRITER_H__
 #define __CWX_PACKAGE_WRITER_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file cwx_package.h
-@brief ¶¨Òåkey/valueÊı¾İ°üµÄ²Ù×÷
+@brief å®šä¹‰key/valueæ•°æ®åŒ…çš„æ“ä½œ
 @author cwinux@gmail.com
 @version 1.0
 @date 2010-10-04
@@ -24,31 +24,31 @@ extern "C" {
 struct CWX_PG_WRITER;
 
 /**
-*@brief ´´½¨package writerµÄ¶ÔÏó¡£
-*@param [in] uiBufLen ³õÊ¼packageµÄbuf¿Õ¼ä¡£
-*@return 0£º´´½¨Ê§°Ü£»·ñÔò£º´´½¨µÄwriter ¶ÔÏó¡£
+*@brief åˆ›å»ºpackage writerçš„å¯¹è±¡ã€‚
+*@param [in] uiBufLen åˆå§‹packageçš„bufç©ºé—´ã€‚
+*@return 0ï¼šåˆ›å»ºå¤±è´¥ï¼›å¦åˆ™ï¼šåˆ›å»ºçš„writer å¯¹è±¡ã€‚
 */
 struct CWX_PG_WRITER* cwx_pg_writer_create(CWX_UINT32 uiBufLen);
 
 /**
-*@brief ÊÍ·Åpackage writerµÄ¶ÔÏó¡£
-*@return void¡£
+*@brief é‡Šæ”¾package writerçš„å¯¹è±¡ã€‚
+*@return voidã€‚
 */
 void cwx_pg_writer_destory(struct CWX_PG_WRITER* writer);
 
 /**
-*@brief ¿ªÊ¼packÒ»¸öpackage¡£
-*@return void¡£
+*@brief å¼€å§‹packä¸€ä¸ªpackageã€‚
+*@return voidã€‚
 */
 void cwx_pg_writer_begin_pack(struct CWX_PG_WRITER* writer);
 /**
-*@brief ÍùpackageÖĞÌí¼ÓÒ»¸öÖµÎªbufµÄkey¡£
-*@param [in] writer packageµÄwriter¡£
-*@param [in] szKey keyµÄÃû×Ö¡£
-*@param [in] szData keyµÄvalue¡£
-*@param [in] uiDataLen dataµÄ³¤¶È£¬¿ÉÒÔÎª0¡£
-*@param [in] bKeyValue dataÊÇ·ñÎªkey/value¡£1£ºÊÇ£»0£º²»ÊÇ¡£
-*@return -1:´íÎó£»0:ÕıÈ·¡£Í¨¹ıcwx_pg_writer_error()»ñÈ¡Ê§°ÜµÄÔ­Òò¡£
+*@brief å¾€packageä¸­æ·»åŠ ä¸€ä¸ªå€¼ä¸ºbufçš„keyã€‚
+*@param [in] writer packageçš„writerã€‚
+*@param [in] szKey keyçš„åå­—ã€‚
+*@param [in] szData keyçš„valueã€‚
+*@param [in] uiDataLen dataçš„é•¿åº¦ï¼Œå¯ä»¥ä¸º0ã€‚
+*@param [in] bKeyValue dataæ˜¯å¦ä¸ºkey/valueã€‚1ï¼šæ˜¯ï¼›0ï¼šä¸æ˜¯ã€‚
+*@return -1:é”™è¯¯ï¼›0:æ­£ç¡®ã€‚é€šè¿‡cwx_pg_writer_error()è·å–å¤±è´¥çš„åŸå› ã€‚
 */
 int cwx_pg_writer_add_key(struct CWX_PG_WRITER* writer,
                            char const* szKey,
@@ -56,110 +56,110 @@ int cwx_pg_writer_add_key(struct CWX_PG_WRITER* writer,
                            CWX_UINT32 uiDataLen,
                            int bKeyValue);
 /**
-*@brief ÍùpackageÖĞÌí¼ÓÒ»¸öÖµÎªstringµÄkey¡£
-*@param [in] writer packageµÄwriter¡£
-*@param [in] szKey keyµÄÃû×Ö¡£
-*@param [in] szData keyµÄvalue¡£
-*@return -1:´íÎó£»0:ÕıÈ·¡£Í¨¹ıcwx_pg_writer_error()»ñÈ¡Ê§°ÜµÄÔ­Òò¡£
+*@brief å¾€packageä¸­æ·»åŠ ä¸€ä¸ªå€¼ä¸ºstringçš„keyã€‚
+*@param [in] writer packageçš„writerã€‚
+*@param [in] szKey keyçš„åå­—ã€‚
+*@param [in] szData keyçš„valueã€‚
+*@return -1:é”™è¯¯ï¼›0:æ­£ç¡®ã€‚é€šè¿‡cwx_pg_writer_error()è·å–å¤±è´¥çš„åŸå› ã€‚
 */
 int cwx_pg_writer_add_key_str(struct CWX_PG_WRITER* writer,
                               char const* szKey,
                               char const* szData);
 /**
-*@brief ÍùpackageÖĞÌí¼ÓÒ»¸öÖµÎªUINT8µÄkey¡£
-*@param [in] writer packageµÄwriter¡£
-*@param [in] szKey keyµÄÃû×Ö¡£
-*@param [in] ucData keyµÄvalue¡£
-*@return -1:´íÎó£»0:ÕıÈ·¡£Í¨¹ıcwx_pg_writer_error()»ñÈ¡Ê§°ÜµÄÔ­Òò¡£
+*@brief å¾€packageä¸­æ·»åŠ ä¸€ä¸ªå€¼ä¸ºUINT8çš„keyã€‚
+*@param [in] writer packageçš„writerã€‚
+*@param [in] szKey keyçš„åå­—ã€‚
+*@param [in] ucData keyçš„valueã€‚
+*@return -1:é”™è¯¯ï¼›0:æ­£ç¡®ã€‚é€šè¿‡cwx_pg_writer_error()è·å–å¤±è´¥çš„åŸå› ã€‚
 */
 int cwx_pg_writer_add_key_uint8(struct CWX_PG_WRITER* writer,
                                 char const* szKey,
                                 CWX_UINT8 ucData);
 /**
-*@brief ÍùpackageÖĞÌí¼ÓÒ»¸öÖµÎªINT8µÄkey¡£
-*@param [in] writer packageµÄwriter¡£
-*@param [in] szKey keyµÄÃû×Ö¡£
-*@param [in] cData keyµÄvalue¡£
-*@return -1:´íÎó£»0:ÕıÈ·¡£Í¨¹ıcwx_pg_writer_error()»ñÈ¡Ê§°ÜµÄÔ­Òò¡£
+*@brief å¾€packageä¸­æ·»åŠ ä¸€ä¸ªå€¼ä¸ºINT8çš„keyã€‚
+*@param [in] writer packageçš„writerã€‚
+*@param [in] szKey keyçš„åå­—ã€‚
+*@param [in] cData keyçš„valueã€‚
+*@return -1:é”™è¯¯ï¼›0:æ­£ç¡®ã€‚é€šè¿‡cwx_pg_writer_error()è·å–å¤±è´¥çš„åŸå› ã€‚
 */
 int cwx_pg_writer_add_key_int8(struct CWX_PG_WRITER* writer,
                              char const* szKey,
                              CWX_INT8 cData);
 /**
-*@brief ÍùpackageÖĞÌí¼ÓÒ»¸öÖµÎªUINT16µÄkey¡£
-*@param [in] writer packageµÄwriter¡£
-*@param [in] szKey keyµÄÃû×Ö¡£
-*@param [in] unData keyµÄvalue¡£
-*@return -1:´íÎó£»0:ÕıÈ·¡£Í¨¹ıcwx_pg_writer_error()»ñÈ¡Ê§°ÜµÄÔ­Òò¡£
+*@brief å¾€packageä¸­æ·»åŠ ä¸€ä¸ªå€¼ä¸ºUINT16çš„keyã€‚
+*@param [in] writer packageçš„writerã€‚
+*@param [in] szKey keyçš„åå­—ã€‚
+*@param [in] unData keyçš„valueã€‚
+*@return -1:é”™è¯¯ï¼›0:æ­£ç¡®ã€‚é€šè¿‡cwx_pg_writer_error()è·å–å¤±è´¥çš„åŸå› ã€‚
 */
 int cwx_pg_writer_add_key_uint16(struct CWX_PG_WRITER* writer,
                                 char const* szKey,
                                 CWX_UINT16 unData);
 /**
-*@brief ÍùpackageÖĞÌí¼ÓÒ»¸öÖµÎªINT16µÄkey¡£
-*@param [in] writer packageµÄwriter¡£
-*@param [in] szKey keyµÄÃû×Ö¡£
-*@param [in] nData keyµÄvalue¡£
-*@return -1:´íÎó£»0:ÕıÈ·¡£Í¨¹ıcwx_pg_writer_error()»ñÈ¡Ê§°ÜµÄÔ­Òò¡£
+*@brief å¾€packageä¸­æ·»åŠ ä¸€ä¸ªå€¼ä¸ºINT16çš„keyã€‚
+*@param [in] writer packageçš„writerã€‚
+*@param [in] szKey keyçš„åå­—ã€‚
+*@param [in] nData keyçš„valueã€‚
+*@return -1:é”™è¯¯ï¼›0:æ­£ç¡®ã€‚é€šè¿‡cwx_pg_writer_error()è·å–å¤±è´¥çš„åŸå› ã€‚
 */
 int cwx_pg_writer_add_key_int16(struct CWX_PG_WRITER* writer,
                                char const* szKey,
                                CWX_INT16 nData);
 
 /**
-*@brief ÍùpackageÖĞÌí¼ÓÒ»¸öÖµÎªUINT32µÄkey¡£
-*@param [in] writer packageµÄwriter¡£
-*@param [in] szKey keyµÄÃû×Ö¡£
-*@param [in] uiData keyµÄvalue¡£
-*@return -1:´íÎó£»0:ÕıÈ·¡£Í¨¹ıcwx_pg_writer_error()»ñÈ¡Ê§°ÜµÄÔ­Òò¡£
+*@brief å¾€packageä¸­æ·»åŠ ä¸€ä¸ªå€¼ä¸ºUINT32çš„keyã€‚
+*@param [in] writer packageçš„writerã€‚
+*@param [in] szKey keyçš„åå­—ã€‚
+*@param [in] uiData keyçš„valueã€‚
+*@return -1:é”™è¯¯ï¼›0:æ­£ç¡®ã€‚é€šè¿‡cwx_pg_writer_error()è·å–å¤±è´¥çš„åŸå› ã€‚
 */
 int cwx_pg_writer_add_key_uint32(struct CWX_PG_WRITER* writer,
                                 char const* szKey,
                                 CWX_UINT32 uiData);
 /**
-*@brief ÍùpackageÖĞÌí¼ÓÒ»¸öÖµÎªINT32µÄkey¡£
-*@param [in] writer packageµÄwriter¡£
-*@param [in] szKey keyµÄÃû×Ö¡£
-*@param [in] iData keyµÄvalue¡£
-*@return -1:´íÎó£»0:ÕıÈ·¡£Í¨¹ıcwx_pg_writer_error()»ñÈ¡Ê§°ÜµÄÔ­Òò¡£
+*@brief å¾€packageä¸­æ·»åŠ ä¸€ä¸ªå€¼ä¸ºINT32çš„keyã€‚
+*@param [in] writer packageçš„writerã€‚
+*@param [in] szKey keyçš„åå­—ã€‚
+*@param [in] iData keyçš„valueã€‚
+*@return -1:é”™è¯¯ï¼›0:æ­£ç¡®ã€‚é€šè¿‡cwx_pg_writer_error()è·å–å¤±è´¥çš„åŸå› ã€‚
 */
 int cwx_pg_writer_add_key_int32(struct CWX_PG_WRITER* writer,
                                char const* szKey,
                                CWX_INT32 iData);
 
 /**
-*@brief ÍùpackageÖĞÌí¼ÓÒ»¸öÖµÎªUINT64µÄkey¡£
-*@param [in] writer packageµÄwriter¡£
-*@param [in] szKey keyµÄÃû×Ö¡£
-*@param [in] ullData keyµÄvalue¡£
-*@return -1:´íÎó£»0:ÕıÈ·¡£Í¨¹ıcwx_pg_writer_error()»ñÈ¡Ê§°ÜµÄÔ­Òò¡£
+*@brief å¾€packageä¸­æ·»åŠ ä¸€ä¸ªå€¼ä¸ºUINT64çš„keyã€‚
+*@param [in] writer packageçš„writerã€‚
+*@param [in] szKey keyçš„åå­—ã€‚
+*@param [in] ullData keyçš„valueã€‚
+*@return -1:é”™è¯¯ï¼›0:æ­£ç¡®ã€‚é€šè¿‡cwx_pg_writer_error()è·å–å¤±è´¥çš„åŸå› ã€‚
 */
 int cwx_pg_writer_add_key_uint64(struct CWX_PG_WRITER* writer,
                                 char const* szKey,
                                 CWX_UINT64 ullData);
 /**
-*@brief ÍùpackageÖĞÌí¼ÓÒ»¸öÖµÎªINT64µÄkey¡£
-*@param [in] writer packageµÄwriter¡£
-*@param [in] szKey keyµÄÃû×Ö¡£
-*@param [in] llData keyµÄvalue¡£
-*@return -1:´íÎó£»0:ÕıÈ·¡£Í¨¹ıcwx_pg_writer_error()»ñÈ¡Ê§°ÜµÄÔ­Òò¡£
+*@brief å¾€packageä¸­æ·»åŠ ä¸€ä¸ªå€¼ä¸ºINT64çš„keyã€‚
+*@param [in] writer packageçš„writerã€‚
+*@param [in] szKey keyçš„åå­—ã€‚
+*@param [in] llData keyçš„valueã€‚
+*@return -1:é”™è¯¯ï¼›0:æ­£ç¡®ã€‚é€šè¿‡cwx_pg_writer_error()è·å–å¤±è´¥çš„åŸå› ã€‚
 */
 int cwx_pg_writer_add_key_int64(struct CWX_PG_WRITER* writer,
                                char const* szKey,
                                CWX_INT64 llData);
 
 /**
-*@brief ĞÎ³Ék/vµÄpackage¡£
-*@return -1:´íÎó£»0:ÕıÈ·¡£Í¨¹ıcwx_pg_writer_error()»ñÈ¡Ê§°ÜµÄÔ­Òò¡£
+*@brief å½¢æˆk/vçš„packageã€‚
+*@return -1:é”™è¯¯ï¼›0:æ­£ç¡®ã€‚é€šè¿‡cwx_pg_writer_error()è·å–å¤±è´¥çš„åŸå› ã€‚
 */
 int cwx_pg_writer_pack(struct CWX_PG_WRITER* writer);
-///»ñÈ¡µ±Ç°packageµÄKeyµÄÊıÁ¿¡£
+///è·å–å½“å‰packageçš„Keyçš„æ•°é‡ã€‚
 CWX_UINT32 cwx_pg_writer_get_key_num(struct CWX_PG_WRITER* writer);
-///»ñÈ¡ĞÎ³ÉµÄpackageµÄsize
+///è·å–å½¢æˆçš„packageçš„size
 CWX_UINT32 cwx_pg_writer_get_msg_size(struct CWX_PG_WRITER* writer);
-///»ñÈ¡ĞÎ³ÉµÄpackage
+///è·å–å½¢æˆçš„package
 char const* cwx_pg_writer_get_msg(struct CWX_PG_WRITER* writer);
-///»ñÈ¡´íÎóÏûÏ¢
+///è·å–é”™è¯¯æ¶ˆæ¯
 char const* cwx_pg_writer_get_error(struct CWX_PG_WRITER* writer);
 
 #ifdef __cplusplus

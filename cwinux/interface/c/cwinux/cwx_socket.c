@@ -1,4 +1,4 @@
-#include "cwx_socket.h"
+ï»¿#include "cwx_socket.h"
 #include <stdarg.h>
 
 static int cwx_snprintf(char *buf, size_t size, const char *format, ...)
@@ -45,7 +45,7 @@ static int cwx_inet_addr(struct sockaddr_in *sin, char const * szHost, char* szE
     return 0;
 }
 
-///»ñÈ¡µ±Ç°µÄÊ±¼ä£¬UINT64
+///è·å–å½“å‰çš„æ—¶é—´ï¼ŒUINT64
 uint64_t cwx_socket_timeofday()
 {
     uint64_t  ttTime = 0;
@@ -84,11 +84,11 @@ int cwx_socket_init(char* szErr1K)
 }
 
 /**
-*@brief tcpÁ¬½Ó¡£
-*@param [in] szIp  Á¬½ÓµÄIPµØÖ·¡£
-*@param [in] unPort  Á¬½ÓµÄ¶Ë¿ÚºÅ¡£
-*@param [in] millisecond Á¬½ÓµÄ³¬Ê±msÊı
-*@return -1£ºÊ§°Ü£»·ñÔòÎªÁ¬½ÓµÄhandle
+*@brief tcpè¿æ¥ã€‚
+*@param [in] szIp  è¿æ¥çš„IPåœ°å€ã€‚
+*@param [in] unPort  è¿æ¥çš„ç«¯å£å·ã€‚
+*@param [in] millisecond è¿æ¥çš„è¶…æ—¶msæ•°
+*@return -1ï¼šå¤±è´¥ï¼›å¦åˆ™ä¸ºè¿æ¥çš„handle
 */
 CWX_SOCKET cwx_socket_tcp_connect(char const* szHost, unsigned short unPort, unsigned int millisecond, char* szErr1K)
 {

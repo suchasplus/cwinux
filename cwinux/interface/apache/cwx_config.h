@@ -1,15 +1,15 @@
-#ifndef __CWX_CONFIG_H__
+ï»¿#ifndef __CWX_CONFIG_H__
 #define __CWX_CONFIG_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 
 /**
 @file cwx_config.h
-@brief apache moduleµÄÊı¾İ¶¨Òå
+@brief apache moduleçš„æ•°æ®å®šä¹‰
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-12
@@ -41,63 +41,63 @@
 #include <netdb.h>
 #include <unistd.h>
 
-///CWX_UINT64 Êı¾İÀàĞÍ¶¨Òå
+///CWX_UINT64 æ•°æ®ç±»å‹å®šä¹‰
 #define CWX_UINT64   uint64_t
 
-///CWX_UINT32 Êı¾İÀàĞÍ¶¨Òå
+///CWX_UINT32 æ•°æ®ç±»å‹å®šä¹‰
 #define CWX_UINT32   uint32_t
 
-///CWX_UINT16 Êı¾İÀàĞÍ¶¨Òå
+///CWX_UINT16 æ•°æ®ç±»å‹å®šä¹‰
 #define CWX_UINT16   uint16_t
-///CWX_UINT8 Êı¾İÀàĞÍ¶¨Òå
+///CWX_UINT8 æ•°æ®ç±»å‹å®šä¹‰
 #define CWX_UINT8   uint8_t
-///¶¨ÒåboolÀàĞÍ
+///å®šä¹‰boolç±»å‹
 #ifndef bool
 #define bool unsigned char
 #endif
-///¶¨Òåtrue
+///å®šä¹‰true
 #ifndef true
 #define true 1
 #endif
-///¶¨Òåfalse
+///å®šä¹‰false
 #ifndef false
 #define false 0
 #endif
 
-///È±Ê¡Êä³örespone
+///ç¼ºçœè¾“å‡ºrespone
 #define CWX_DEF_SHOW 0
-///È±Ê¡Êä³ödelay
+///ç¼ºçœè¾“å‡ºdelay
 #define CWX_DEF_DELAY 1
-///È±Ê¡Îª³Ö¾ÃÁ¬½Ó
+///ç¼ºçœä¸ºæŒä¹…è¿æ¥
 #define CWX_DEF_PERSISTANT 1
-///È±Ê¡µÄ²éÑ¯³¬Ê±Îª10s
+///ç¼ºçœçš„æŸ¥è¯¢è¶…æ—¶ä¸º10s
 #define CWX_DEF_QUERY_TIMEOUT 10000
-///È±Ê¡µÄÁ¬½Ó³¬Ê±Îª1s
+///ç¼ºçœçš„è¿æ¥è¶…æ—¶ä¸º1s
 #define CWX_DEF_CONN_TIMEOUT  1000
-///È±Ê¡µÄ»Ø¸´³¬Ê±Îª9s
+///ç¼ºçœçš„å›å¤è¶…æ—¶ä¸º9s
 #define CWX_DEF_REPLY_TIMEOUT 9000
-///È±Ê¡µÄÊµĞ§Á¬½ÓÖØÊÔ¼ä¸ôÎª2s
+///ç¼ºçœçš„å®æ•ˆè¿æ¥é‡è¯•é—´éš”ä¸º2s
 #define CWX_DEF_RESTORE_TIMEOUT 2000
-///È±Ê¡µÄ×îÉÙ¿ÕÏĞ³Ö¾ÃÁ¬½ÓÊıÎª2
+///ç¼ºçœçš„æœ€å°‘ç©ºé—²æŒä¹…è¿æ¥æ•°ä¸º2
 #define CWX_DEF_MIN_IDLE_CONN 2
-///È±Ê¡µÄ×î¶à¿ÕÏĞ³Ö¾ÃÁ¬½ÓÊıÎª4
+///ç¼ºçœçš„æœ€å¤šç©ºé—²æŒä¹…è¿æ¥æ•°ä¸º4
 #define CWX_DEF_MAX_IDLE_CONN 4
 
-///Èç¹û²»ÊÇ¶àÏß³Ì»·¾³£¬Ôò²»½øĞĞÁÙ½çÇø±£»¤
+///å¦‚æœä¸æ˜¯å¤šçº¿ç¨‹ç¯å¢ƒï¼Œåˆ™ä¸è¿›è¡Œä¸´ç•ŒåŒºä¿æŠ¤
 #if ! APR_HAS_THREADS
-///ËøµÄÊı¾İÀàĞÍ
+///é”çš„æ•°æ®ç±»å‹
 #define apr_thread_mutex_t int
-///´´½¨Ëø
+///åˆ›å»ºé”
 #define apr_thread_mutex_create(a,b,c)
-///»ñÈ¡Ëø
+///è·å–é”
 #define apr_thread_mutex_lock(a)
-///ÊÍ·ÅËø
+///é‡Šæ”¾é”
 #define apr_thread_mutex_unlock(a)
 #endif
 
 #define CWX_VERSION "1.0"
 
-//ÈÕÖ¾Êä³ö
+//æ—¥å¿—è¾“å‡º
 #ifdef _DEBUG
 #define CWX_LOG(x) cwx_log x
 #define CWX_ERR(x) cwx_log x
@@ -112,56 +112,56 @@ struct CWX_SERVICE;
 
 ///key/value item
 typedef struct CWX_KEY_VALUE{
-    char*          m_key; ///<keyµÄÃû×Ö
-    char*          m_lowerkey; ///<keyµÄĞ¡Ğ´
-    char*          m_value; ///<keyµÄÄÚÈİ
-    struct CWX_KEY_VALUE*  m_next; ///<ÏÂÒ»¸ökey
+    char*          m_key; ///<keyçš„åå­—
+    char*          m_lowerkey; ///<keyçš„å°å†™
+    char*          m_value; ///<keyçš„å†…å®¹
+    struct CWX_KEY_VALUE*  m_next; ///<ä¸‹ä¸€ä¸ªkey
 }CWX_KEY_VALUE;
 
-///¸ºÔØ¾ùºâÓëresponse keyµÄÊı¾İ½á¹¹
+///è´Ÿè½½å‡è¡¡ä¸response keyçš„æ•°æ®ç»“æ„
 typedef struct CWX_KEY_ITEM{
-    apr_hash_t*         m_bkey_hash; ///<²ÎÓë¸ºÔØ¾ùºâµÄkeyµÄhash£¬ÈôÎª¿Õ£¬Ôò²ÉÓÃm_ex_bkey_hash
-    apr_hash_t*         m_ex_bkey_hash; ///<²»²ÎÓë¸ºÔØ¾ùºâµÄkeyµÄhash£¬ÈôÓëm_bkey_hash¶¼Îª¿Õ£¬±íÊ¾È«²¿²ÎÓë²ÎÓë¸ºÔØ¾ùºâ¡£
-    CWX_KEY_VALUE*      m_header; ///<http responseµÄkeyÁĞ±í£¬ÈôÎª¿Õ£¬Ôò±íÊ¾Ã»ÓĞÊä³öµÄkey
+    apr_hash_t*         m_bkey_hash; ///<å‚ä¸è´Ÿè½½å‡è¡¡çš„keyçš„hashï¼Œè‹¥ä¸ºç©ºï¼Œåˆ™é‡‡ç”¨m_ex_bkey_hash
+    apr_hash_t*         m_ex_bkey_hash; ///<ä¸å‚ä¸è´Ÿè½½å‡è¡¡çš„keyçš„hashï¼Œè‹¥ä¸m_bkey_hashéƒ½ä¸ºç©ºï¼Œè¡¨ç¤ºå…¨éƒ¨å‚ä¸å‚ä¸è´Ÿè½½å‡è¡¡ã€‚
+    CWX_KEY_VALUE*      m_header; ///<http responseçš„keyåˆ—è¡¨ï¼Œè‹¥ä¸ºç©ºï¼Œåˆ™è¡¨ç¤ºæ²¡æœ‰è¾“å‡ºçš„key
 }CWX_KEY_ITEM;
 
-///·şÎñÀàĞÍ¼°ÏûÏ¢ÀàĞÍµÄÍ·
+///æœåŠ¡ç±»å‹åŠæ¶ˆæ¯ç±»å‹çš„å¤´
 typedef struct CWX_SVR_MSG_KEY{
-    char*               m_svr_name; ///<·şÎñÃû
-    char*               m_msg_type; ///<ÏûÏ¢ÀàĞÍ
+    char*               m_svr_name; ///<æœåŠ¡å
+    char*               m_msg_type; ///<æ¶ˆæ¯ç±»å‹
     bool                m_exclude;
-    CWX_KEY_VALUE*       m_key_value; ///<¶ÔÓ¦µÄkey/valueÖµ
-    struct CWX_SVR_MSG_KEY*     m_next; ///<ÏÂÒ»¸ö
+    CWX_KEY_VALUE*       m_key_value; ///<å¯¹åº”çš„key/valueå€¼
+    struct CWX_SVR_MSG_KEY*     m_next; ///<ä¸‹ä¸€ä¸ª
 }CWX_SVR_MSG_KEY;
 
 
-///ÓÃ»§µÄÅäÖÃĞÅÏ¢Êı¾İ½á¹¹
+///ç”¨æˆ·çš„é…ç½®ä¿¡æ¯æ•°æ®ç»“æ„
 typedef struct CWX_USER_CONFIG{
-    int           m_show; ///<ÊÇ·ñ½«ºóÌ¨·şÎñµÄkey/value¶ÔÍâÊä³ö¡£-1:Ã»ÓĞÉèÖÃ£¬0£ºfalse£»1£ºtrue
-    int           m_delay; ///<ÊÇ·ñÊä³öcwinux-delayµÄheader¡£-1:Ã»ÓĞÉèÖÃ£¬0£ºfalse£»1£ºtrue
-    int           m_persistant; ///<ÊÇ·ñÎª³Ö¾ÃÁ¬½Ó¡£-1:Ã»ÓĞÉèÖÃ£¬0£ºfalse£»1£ºtrue
-    int           m_query_timeout; ///<²éÑ¯µÄ³¬Ê±msÊı¡£-1£ºÃ»ÓĞÉèÖÃ£¬·ñÔòÎªÉèÖÃµÄÊıÖµ¡£
-    int           m_conn_timeout; ///<Á¬½ÓµÄ³¬Ê±msÊı¡£-1£ºÃ»ÓĞÉèÖÃ£¬·ñÔòÎªÉèÖÃµÄÊıÖµ¡£
-    int           m_reply_timeout; ///<»Ø¸´µÄ³¬Ê±msÊı¡£-1£ºÃ»ÓĞÉèÖÃ£¬·ñÔòÎªÉèÖÃµÄÊıÖµ¡£
-    int           m_restore_timeout; ///<»Ö¸´µÄÊ±¼ä¼ä¸ô£¬µ¥Î»Îªms¡£-1£ºÃ»ÓĞÉèÖÃ£¬·ñÔòÎªÉèÖÃµÄÊıÖµ¡£
-    int           m_min_idle_conn; ///<×îÉÙµÄ¿ÕÏĞ³Ö¾ÃÁ¬½ÓÊıÁ¿¡£-1£ºÃ»ÓĞÉèÖÃ£¬·ñÔòÎªÉèÖÃµÄÊıÖµ¡£
-    int           m_max_idle_conn; ///<×î¶àµÄ¿ÕÏĞ³Ö¾ÃÁ¬½ÓÊıÁ¿¡£-1£ºÃ»ÓĞÉèÖÃ£¬·ñÔòÎªÉèÖÃµÄÊıÖµ¡£
+    int           m_show; ///<æ˜¯å¦å°†åå°æœåŠ¡çš„key/valueå¯¹å¤–è¾“å‡ºã€‚-1:æ²¡æœ‰è®¾ç½®ï¼Œ0ï¼šfalseï¼›1ï¼štrue
+    int           m_delay; ///<æ˜¯å¦è¾“å‡ºcwinux-delayçš„headerã€‚-1:æ²¡æœ‰è®¾ç½®ï¼Œ0ï¼šfalseï¼›1ï¼štrue
+    int           m_persistant; ///<æ˜¯å¦ä¸ºæŒä¹…è¿æ¥ã€‚-1:æ²¡æœ‰è®¾ç½®ï¼Œ0ï¼šfalseï¼›1ï¼štrue
+    int           m_query_timeout; ///<æŸ¥è¯¢çš„è¶…æ—¶msæ•°ã€‚-1ï¼šæ²¡æœ‰è®¾ç½®ï¼Œå¦åˆ™ä¸ºè®¾ç½®çš„æ•°å€¼ã€‚
+    int           m_conn_timeout; ///<è¿æ¥çš„è¶…æ—¶msæ•°ã€‚-1ï¼šæ²¡æœ‰è®¾ç½®ï¼Œå¦åˆ™ä¸ºè®¾ç½®çš„æ•°å€¼ã€‚
+    int           m_reply_timeout; ///<å›å¤çš„è¶…æ—¶msæ•°ã€‚-1ï¼šæ²¡æœ‰è®¾ç½®ï¼Œå¦åˆ™ä¸ºè®¾ç½®çš„æ•°å€¼ã€‚
+    int           m_restore_timeout; ///<æ¢å¤çš„æ—¶é—´é—´éš”ï¼Œå•ä½ä¸ºmsã€‚-1ï¼šæ²¡æœ‰è®¾ç½®ï¼Œå¦åˆ™ä¸ºè®¾ç½®çš„æ•°å€¼ã€‚
+    int           m_min_idle_conn; ///<æœ€å°‘çš„ç©ºé—²æŒä¹…è¿æ¥æ•°é‡ã€‚-1ï¼šæ²¡æœ‰è®¾ç½®ï¼Œå¦åˆ™ä¸ºè®¾ç½®çš„æ•°å€¼ã€‚
+    int           m_max_idle_conn; ///<æœ€å¤šçš„ç©ºé—²æŒä¹…è¿æ¥æ•°é‡ã€‚-1ï¼šæ²¡æœ‰è®¾ç½®ï¼Œå¦åˆ™ä¸ºè®¾ç½®çš„æ•°å€¼ã€‚
 }CWX_USER_CONFIG;
 
 typedef struct CWX_SOCKET{
-    int                m_fd;   ///<Á¬½ÓµÄsocket
-    struct CWX_SOCKET*  m_next; ///<ÏÂÒ»¸öÁ¬½Ó
+    int                m_fd;   ///<è¿æ¥çš„socket
+    struct CWX_SOCKET*  m_next; ///<ä¸‹ä¸€ä¸ªè¿æ¥
 }CWX_SOCKET;
 
-///¶¨ÒåÁ´½Ó¶ÔÏóµÄÊı¾İ½á¹¹
+///å®šä¹‰é“¾æ¥å¯¹è±¡çš„æ•°æ®ç»“æ„
 typedef struct CWX_CONNECT{
-    struct CWX_CONFIG*  m_config; ///<moduleµÄconfig
+    struct CWX_CONFIG*  m_config; ///<moduleçš„config
     apr_pool_t*         m_pool; ///<request's pool
-    struct CWX_KEY_ITEM  m_key_item; ///<keyµÄÅäÖÃ
-    struct CWX_HOST*    m_host; ///<Á¬½ÓµÄHOST¶ÔÏó
-    CWX_SOCKET*         m_socket;   ///<Á¬½ÓµÄsocket
-    char*              m_svr_name; ///<·şÎñÃû×Ö
-    char*              m_msg_type; ///<ÏûÏ¢ÀàĞÍ
+    struct CWX_KEY_ITEM  m_key_item; ///<keyçš„é…ç½®
+    struct CWX_HOST*    m_host; ///<è¿æ¥çš„HOSTå¯¹è±¡
+    CWX_SOCKET*         m_socket;   ///<è¿æ¥çš„socket
+    char*              m_svr_name; ///<æœåŠ¡åå­—
+    char*              m_msg_type; ///<æ¶ˆæ¯ç±»å‹
     request_rec*        m_request; ///<http request
     char*              m_args; ///<http request's args
     CWX_KEY_VALUE*      m_args_head; ///<url  args's head
@@ -171,48 +171,48 @@ typedef struct CWX_CONNECT{
     int                m_cur_host_index; ///<current connect's host index
 }CWX_CONNECT;
 
-///Ö÷»úĞÅÏ¢
+///ä¸»æœºä¿¡æ¯
 typedef struct CWX_HOST{
-  char*              m_svr_name;///<hostµÄ·şÎñÃû
-  int                m_index; ///<Ö÷»úµÄË÷Òı
-  char*              m_ip;///<hostµÄip
-  CWX_UINT16         m_port;///<hostµÄ·şÎñµÄport
-  struct CWX_USER_CONFIG     m_user_config;///<hostµÄÓÃ»§ÅäÖÃ£¬½«merge serviceÓëdefaultÖµ¡£
-  bool               m_is_valid; ///<ÊÇ·ñÓĞĞ§
-  CWX_UINT64          m_invalid_time; ///<Ê§Ğ§µÄÊ±¼ä¡£
-  struct in_addr      m_host; ///<Ö÷»úµÄaddr struct
-  apr_thread_mutex_t*  m_lock;  ///<Ö÷»úµÄËø
-  CWX_SOCKET*         m_idle_socket_head; ///<¿ÕÏĞÁ¬½ÓµÄÍ·;
-  int                m_idle_socket_num; ///<¿ÕÏĞÁ¬½ÓµÄÊıÁ¿¡£
-  int                m_used_socket_num; ///<±»Ê¹ÓÃµÄÁ¬½ÓµÄÊıÁ¿
-  struct CWX_SERVICE*  m_service; ///<Ö÷»úËùÊôµÄservice;
-  struct CWX_CONFIG*   m_config; ///< apache moduleµÄconfig
-  struct CWX_HOST*    m_next; ///<ÏÂÒ»¸öÖ÷»ú;
+  char*              m_svr_name;///<hostçš„æœåŠ¡å
+  int                m_index; ///<ä¸»æœºçš„ç´¢å¼•
+  char*              m_ip;///<hostçš„ip
+  CWX_UINT16         m_port;///<hostçš„æœåŠ¡çš„port
+  struct CWX_USER_CONFIG     m_user_config;///<hostçš„ç”¨æˆ·é…ç½®ï¼Œå°†merge serviceä¸defaultå€¼ã€‚
+  bool               m_is_valid; ///<æ˜¯å¦æœ‰æ•ˆ
+  CWX_UINT64          m_invalid_time; ///<å¤±æ•ˆçš„æ—¶é—´ã€‚
+  struct in_addr      m_host; ///<ä¸»æœºçš„addr struct
+  apr_thread_mutex_t*  m_lock;  ///<ä¸»æœºçš„é”
+  CWX_SOCKET*         m_idle_socket_head; ///<ç©ºé—²è¿æ¥çš„å¤´;
+  int                m_idle_socket_num; ///<ç©ºé—²è¿æ¥çš„æ•°é‡ã€‚
+  int                m_used_socket_num; ///<è¢«ä½¿ç”¨çš„è¿æ¥çš„æ•°é‡
+  struct CWX_SERVICE*  m_service; ///<ä¸»æœºæ‰€å±çš„service;
+  struct CWX_CONFIG*   m_config; ///< apache moduleçš„config
+  struct CWX_HOST*    m_next; ///<ä¸‹ä¸€ä¸ªä¸»æœº;
 } CWX_HOST;
 
-///·şÎñÊı¾İ¶ÔÏó
+///æœåŠ¡æ•°æ®å¯¹è±¡
 typedef struct CWX_SERVICE{
-   char*                    m_svr_name;///<·şÎñÃû
-   struct CWX_USER_CONFIG    m_user_config;///<serviceµÄÓÃ»§ÅäÖÃ£¬½«merge defaultÖµ¡£
-   struct CWX_KEY_ITEM       m_key_item; ///<keyµÄÅäÖÃ
+   char*                    m_svr_name;///<æœåŠ¡å
+   struct CWX_USER_CONFIG    m_user_config;///<serviceçš„ç”¨æˆ·é…ç½®ï¼Œå°†merge defaultå€¼ã€‚
+   struct CWX_KEY_ITEM       m_key_item; ///<keyçš„é…ç½®
    struct CWX_HOST**         m_hosts; ///<host array
    int                      m_host_num; ///<host num;
    apr_hash_t*               m_uri_key_hash; ///<url's key config hash
-   struct CWX_CONFIG*        m_config; ///< apache moduleµÄconfig
+   struct CWX_CONFIG*        m_config; ///< apache moduleçš„config
 } CWX_SERVICE;
 
-///apache moduleµÄconfig
+///apache moduleçš„config
 typedef struct CWX_CONFIG {
   apr_pool_t*         m_pool; ///<process mempool
-  apr_thread_mutex_t*  m_lock;  ///<È«¾ÖµÄËø
-  apr_hash_t*          m_svr_hash; ///<svrµÄhash
-  int                 m_svr_num; ///·şÎñµÄÊıÁ¿
-  struct CWX_USER_CONFIG   m_user_config;///<serviceµÄÓÃ»§ÅäÖÃ£¬½«merge defaultÖµ¡£
-  struct CWX_KEY_ITEM     m_key_item; ///<keyµÄÅäÖÃ
+  apr_thread_mutex_t*  m_lock;  ///<å…¨å±€çš„é”
+  apr_hash_t*          m_svr_hash; ///<svrçš„hash
+  int                 m_svr_num; ///æœåŠ¡çš„æ•°é‡
+  struct CWX_USER_CONFIG   m_user_config;///<serviceçš„ç”¨æˆ·é…ç½®ï¼Œå°†merge defaultå€¼ã€‚
+  struct CWX_KEY_ITEM     m_key_item; ///<keyçš„é…ç½®
   struct CWX_HOST*     m_hosts; ///<host chain's head
   int                 m_host_num; ///<host num;
   struct CWX_SVR_MSG_KEY*   m_balance; ///<balance's config
   struct CWX_SVR_MSG_KEY*   m_header; ///<header's config
-  bool                    m_init; ///<ÏµÍ³ÊÇ·ñ³õÊ¼»¯
+  bool                    m_init; ///<ç³»ç»Ÿæ˜¯å¦åˆå§‹åŒ–
 }CWX_CONFIG;
 #endif
