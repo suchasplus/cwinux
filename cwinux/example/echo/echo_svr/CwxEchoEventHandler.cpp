@@ -1,32 +1,32 @@
-#include "CwxEchoEventHandler.h"
+ï»¿#include "CwxEchoEventHandler.h"
 #include "CwxEchoApp.h"
 
-///echoÇëÇóµÄ´¦Àíº¯Êý
+///echoè¯·æ±‚çš„å¤„ç†å‡½æ•°
 int CwxEchoEventHandler::onRecvMsg(CwxMsgBlock*& msg, CwxTss* )
 {
-    ///ÉèÖÃecho»Ø¸´µÄÏûÏ¢ÀàÐÍ£¬ÎªÇëÇóµÄÏûÏ¢ÀàÐÍ+1
+    ///è®¾ç½®echoå›žå¤çš„æ¶ˆæ¯ç±»åž‹ï¼Œä¸ºè¯·æ±‚çš„æ¶ˆæ¯ç±»åž‹+1
     msg->event().getMsgHeader().setMsgType(msg->event().getMsgHeader().getMsgType() + 1);
-    ///ÉèÖÃecho»Ø¸´µÄÊý¾Ý°ü³¤¶È
+    ///è®¾ç½®echoå›žå¤çš„æ•°æ®åŒ…é•¿åº¦
     msg->event().getMsgHeader().setDataLen(msg->length());
-    ///´´½¨»Ø¸´µÄÊý¾Ý°ü
+    ///åˆ›å»ºå›žå¤çš„æ•°æ®åŒ…
     CwxMsgBlock* pBlock = CwxMsgBlockAlloc::malloc(msg->length() + CwxMsgHead::MSG_HEAD_LEN);
-    ///¿½±´Êý¾Ý°üµÄ°üÍ·
+    ///æ‹·è´æ•°æ®åŒ…çš„åŒ…å¤´
     memcpy(pBlock->wr_ptr(), msg->event().getMsgHeader().toNet(), CwxMsgHead::MSG_HEAD_LEN);
-    ///»¬¶¯blockµÄÐ´Ö¸Õë
+    ///æ»‘åŠ¨blockçš„å†™æŒ‡é’ˆ
     pBlock->wr_ptr(CwxMsgHead::MSG_HEAD_LEN);
-    ///¿½±´Êý¾Ý°üµÄÊý¾Ý
+    ///æ‹·è´æ•°æ®åŒ…çš„æ•°æ®
     memcpy(pBlock->wr_ptr(), msg->rd_ptr(), msg->length());
-    ///»¬¶¯blockµÄÐ´Ö¸Õë
+    ///æ»‘åŠ¨blockçš„å†™æŒ‡é’ˆ
     pBlock->wr_ptr(msg->length());
-    ///ÉèÖÃ»Ø¸´ÏûÏ¢µÄ·¢ËÍ¿ØÖÆÐÅÏ¢
+    ///è®¾ç½®å›žå¤æ¶ˆæ¯çš„å‘é€æŽ§åˆ¶ä¿¡æ¯
     pBlock->send_ctrl().reset();
-    ///ÉèÖÃ»Ø¸´ÏûÏ¢¶ÔÓ¦Á¬½ÓµÄsvr-id
+    ///è®¾ç½®å›žå¤æ¶ˆæ¯å¯¹åº”è¿žæŽ¥çš„svr-id
     pBlock->send_ctrl().setSvrId(msg->event().getSvrId());
-    ///ÉèÖÃ»Ø¸´ÏûÏ¢¶ÔÓ¦Á¬½ÓµÄhost-id
+    ///è®¾ç½®å›žå¤æ¶ˆæ¯å¯¹åº”è¿žæŽ¥çš„host-id
     pBlock->send_ctrl().setHostId(msg->event().getHostId());
-    ///ÉèÖÃ»Ø¸´ÏûÏ¢µÄÁ¬½Óid
+    ///è®¾ç½®å›žå¤æ¶ˆæ¯çš„è¿žæŽ¥id
     pBlock->send_ctrl().setConnId(msg->event().getConnId());
-    ///»Ø¸´ÏûÏ¢
+    ///å›žå¤æ¶ˆæ¯
     if (0 != this->m_pApp->sendMsgByConn(pBlock))
     {
         CWX_ERROR(("Failure to send msg"));

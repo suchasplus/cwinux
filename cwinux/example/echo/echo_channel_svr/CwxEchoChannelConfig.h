@@ -1,10 +1,10 @@
-#ifndef __CWX_ECHO_CHANNEL_CONFIG_H__
+ï»¿#ifndef __CWX_ECHO_CHANNEL_CONFIG_H__
 #define __CWX_ECHO_CHANNEL_CONFIG_H__
 
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 #include "CwxGlobalMacro.h"
 #include "CwxHostInfo.h"
@@ -13,7 +13,7 @@
 
 CWINUX_USING_NAMESPACE
 
-///ÅäÖÃÎÄ¼ş¼ÓÔØ¶ÔÏó
+///é…ç½®æ–‡ä»¶åŠ è½½å¯¹è±¡
 class CwxEchoChannelConfig
 {
 public:
@@ -23,18 +23,18 @@ public:
     
     ~CwxEchoChannelConfig(){}
 public:
-    //¼ÓÔØÅäÖÃÎÄ¼ş.-1:failure, 0:success
+    //åŠ è½½é…ç½®æ–‡ä»¶.-1:failure, 0:success
     int loadConfig(string const & strConfFile);
-    //Êä³ö¼ÓÔØµÄÅäÖÃÎÄ¼şĞÅÏ¢
+    //è¾“å‡ºåŠ è½½çš„é…ç½®æ–‡ä»¶ä¿¡æ¯
     void outputConfig(string & strConfig);
-    //»ñÈ¡ÅäÖÃÎÄ¼ş¼ÓÔØµÄÊ§°ÜÔ­Òò
+    //è·å–é…ç½®æ–‡ä»¶åŠ è½½çš„å¤±è´¥åŸå› 
     char const* getError() { return m_szError; };
 public:
-    string              m_strWorkDir;///<¹¤×÷Ä¿Â¼
-    string              m_strUnixPathFile;///<unix domainµÄ¼àÌı path file
-    CWX_UINT16           m_unThreadNum;///<echo·şÎñµÄechoÏß³ÌÊıÁ¿
-    CwxHostInfo       m_listen;///<tcpµÄ¼àÌıip/port
-    char                m_szError[2048];///<´íÎóÏûÏ¢µÄbuf
+    string              m_strWorkDir;///<å·¥ä½œç›®å½•
+    string              m_strUnixPathFile;///<unix domainçš„ç›‘å¬ path file
+    CWX_UINT16           m_unThreadNum;///<echoæœåŠ¡çš„echoçº¿ç¨‹æ•°é‡
+    CwxHostInfo       m_listen;///<tcpçš„ç›‘å¬ip/port
+    char                m_szError[2048];///<é”™è¯¯æ¶ˆæ¯çš„buf
 };
 
 #endif

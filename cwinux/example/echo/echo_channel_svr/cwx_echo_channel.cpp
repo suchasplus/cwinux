@@ -1,12 +1,12 @@
-#include "CwxAppProcessMgr.h"
+ï»¿#include "CwxAppProcessMgr.h"
 #include "CwxEchoChannelApp.h"
 
 int main(int argc, char** argv){
-    //´´½¨ECHOµÄapp¶ÔÏóÊµÀı
+    //åˆ›å»ºECHOçš„appå¯¹è±¡å®ä¾‹
     CwxEchoChannelApp* pApp = new CwxEchoChannelApp();
-    //³õÊ¼»¯Ë«½ø³Ì¹ÜÀíÆ÷
+    //åˆå§‹åŒ–åŒè¿›ç¨‹ç®¡ç†å™¨
     if (0 != CwxAppProcessMgr::init(pApp)) return 1;
-    //Æô¶¯Ë«½ø³Ì£¬Ò»¸öÎª¼à¿Øecho½ø³ÌµÄ¼à¿Ø½ø³Ì£¬Ò»¸öÎªÌá¹©echo·şÎñµÄ¹¤×÷½ø³Ì¡£
+    //å¯åŠ¨åŒè¿›ç¨‹ï¼Œä¸€ä¸ªä¸ºç›‘æ§echoè¿›ç¨‹çš„ç›‘æ§è¿›ç¨‹ï¼Œä¸€ä¸ªä¸ºæä¾›echoæœåŠ¡çš„å·¥ä½œè¿›ç¨‹ã€‚
     CwxAppProcessMgr::start(argc, argv, 200, 300);
     return 0;
 }

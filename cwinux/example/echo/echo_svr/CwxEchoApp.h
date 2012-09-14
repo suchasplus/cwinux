@@ -1,9 +1,9 @@
-#ifndef __CWX_ECHO_APP_H__
+ï»¿#ifndef __CWX_ECHO_APP_H__
 #define __CWX_ECHO_APP_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 #include "CwxAppFramework.h"
 #include "CwxEchoConfig.h"
@@ -13,41 +13,41 @@
 #define ECHO_MODIFY_DATE "2010-08-29"
 
 
-///¶àÏß³ÌµÄecho·şÎñ£¬Ö§³ÖTCPÓëUNIX-DOMAINÁ½ÖÖĞ­Òé
+///å¤šçº¿ç¨‹çš„echoæœåŠ¡ï¼Œæ”¯æŒTCPä¸UNIX-DOMAINä¸¤ç§åè®®
 class CwxEchoApp : public CwxAppFramework{
 public:
     enum{
-        LOG_FILE_SIZE = 30, ///<Ã¿¸ö¿ÉÑ­»·Ê¹ÓÃÈÕÖ¾ÎÄ¼şµÄMByte
-        LOG_FILE_NUM = 7, ///<¿ÉÑ­»·Ê¹ÓÃÈÕÖ¾ÎÄ¼şµÄÊıÁ¿
-        SVR_TYPE_ECHO = CwxAppFramework::SVR_TYPE_USER_START ///<echo·şÎñµÄ·şÎñÀàĞÍ£¬¼°SVR-IDµÄÊıÖµ
+        LOG_FILE_SIZE = 30, ///<æ¯ä¸ªå¯å¾ªç¯ä½¿ç”¨æ—¥å¿—æ–‡ä»¶çš„MByte
+        LOG_FILE_NUM = 7, ///<å¯å¾ªç¯ä½¿ç”¨æ—¥å¿—æ–‡ä»¶çš„æ•°é‡
+        SVR_TYPE_ECHO = CwxAppFramework::SVR_TYPE_USER_START ///<echoæœåŠ¡çš„æœåŠ¡ç±»å‹ï¼ŒåŠSVR-IDçš„æ•°å€¼
     };
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
 	CwxEchoApp();
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
 	virtual ~CwxEchoApp();
-    ///ÖØÔØ³õÊ¼»¯º¯Êı
+    ///é‡è½½åˆå§‹åŒ–å‡½æ•°
     virtual int init(int argc, char** argv);
 public:
-    ///Ê±ÖÓÏìÓ¦º¯Êı
+    ///æ—¶é’Ÿå“åº”å‡½æ•°
     virtual void onTime(CwxTimeValue const& current);
-    ///signalÏìÓ¦º¯Êı
+    ///signalå“åº”å‡½æ•°
     virtual void onSignal(int signum);
-    ///ÊÕµ½echoÏûÏ¢µÄÏìÓ¦º¯Êı
-    virtual int onRecvMsg(CwxMsgBlock* msg,///<ÊÕµ½µÄechoÇëÇóÊı¾İ°ü
-                        CwxAppHandler4Msg& conn,///<ÊÕµ½echoÇëÇóµÄÁ¬½Ó¶ÔÏó
-                        CwxMsgHead const& header, ///<ÊÕµ½echoÇëÇóµÄÏûÏ¢Í·
-                        bool& bSuspendConn///<true£ºÍ£Ö¹´ËÁ¬½Ó¼ÌĞø½ÓÊÜÉÔÏ¢£¬false£º´ËÁ¬½Ó¿ÉÒÔ¼ÌĞø½ÓÊÜÏûÏ¢
+    ///æ”¶åˆ°echoæ¶ˆæ¯çš„å“åº”å‡½æ•°
+    virtual int onRecvMsg(CwxMsgBlock* msg,///<æ”¶åˆ°çš„echoè¯·æ±‚æ•°æ®åŒ…
+                        CwxAppHandler4Msg& conn,///<æ”¶åˆ°echoè¯·æ±‚çš„è¿æ¥å¯¹è±¡
+                        CwxMsgHead const& header, ///<æ”¶åˆ°echoè¯·æ±‚çš„æ¶ˆæ¯å¤´
+                        bool& bSuspendConn///<trueï¼šåœæ­¢æ­¤è¿æ¥ç»§ç»­æ¥å—ç¨æ¯ï¼Œfalseï¼šæ­¤è¿æ¥å¯ä»¥ç»§ç»­æ¥å—æ¶ˆæ¯
                         );
 protected:
     static int setSockAttr(CWX_HANDLE handle, void* arg);
 
-    ///ÖØÔØÔËĞĞ»·¾³ÉèÖÃAPI
+    ///é‡è½½è¿è¡Œç¯å¢ƒè®¾ç½®API
 	virtual int initRunEnv();
     virtual void destroy();
 private:
-    CwxEchoEventHandler*         m_eventHandler;///<echoÇëÇó´¦ÀíµÄcommander handle
-    CwxThreadPool*               m_threadPool;///<Ïß³Ì³Ø¶ÔÏó
-    CwxEchoConfig               m_config;///<ÅäÖÃÎÄ¼ş¶ÔÏó
+    CwxEchoEventHandler*         m_eventHandler;///<echoè¯·æ±‚å¤„ç†çš„commander handle
+    CwxThreadPool*               m_threadPool;///<çº¿ç¨‹æ± å¯¹è±¡
+    CwxEchoConfig               m_config;///<é…ç½®æ–‡ä»¶å¯¹è±¡
 };
 #endif
 

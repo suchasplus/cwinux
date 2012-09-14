@@ -1,8 +1,8 @@
-#include "CwxEchoChannelEventHandler.h"
+ï»¿#include "CwxEchoChannelEventHandler.h"
 
 /**
-@brief Á¬½Ó¿É¶ÁÊÂ¼þ£¬·µ»Ø-1£¬close()»á±»µ÷ÓÃ
-@return -1£º´¦ÀíÊ§°Ü£¬»áµ÷ÓÃclose()£» 0£º´¦Àí³É¹¦
+@brief è¿žæŽ¥å¯è¯»äº‹ä»¶ï¼Œè¿”å›ž-1ï¼Œclose()ä¼šè¢«è°ƒç”¨
+@return -1ï¼šå¤„ç†å¤±è´¥ï¼Œä¼šè°ƒç”¨close()ï¼› 0ï¼šå¤„ç†æˆåŠŸ
 */
 int CwxEchoChannelEventHandler::onInput()
 {
@@ -21,8 +21,8 @@ int CwxEchoChannelEventHandler::onInput()
     return 0;
 }
 /**
-@brief Í¨ÖªÁ¬½Ó¹Ø±Õ¡£
-@return ¶ÔÓÚÖ÷¶¯Á¬½Ó£¬1£º²»´ÓengineÖÐÒÆ³ý×¢²á£»0£º²»´ÓengineÖÐÒÆ³ý×¢²áµ«²»É¾³ýhandler£»-1£º´ÓengineÖÐ½«handleÒÆ³ý²¢É¾³ý¡£
+@brief é€šçŸ¥è¿žæŽ¥å…³é—­ã€‚
+@return å¯¹äºŽä¸»åŠ¨è¿žæŽ¥ï¼Œ1ï¼šä¸ä»Žengineä¸­ç§»é™¤æ³¨å†Œï¼›0ï¼šä¸ä»Žengineä¸­ç§»é™¤æ³¨å†Œä½†ä¸åˆ é™¤handlerï¼›-1ï¼šä»Žengineä¸­å°†handleç§»é™¤å¹¶åˆ é™¤ã€‚
 */
 int CwxEchoChannelEventHandler::onConnClosed()
 {
@@ -31,19 +31,19 @@ int CwxEchoChannelEventHandler::onConnClosed()
 
 void CwxEchoChannelEventHandler::replyMessage()
 {
-    ///ÉèÖÃecho»Ø¸´µÄÏûÏ¢ÀàÐÍ£¬ÎªÇëÇóµÄÏûÏ¢ÀàÐÍ+1
+    ///è®¾ç½®echoå›žå¤çš„æ¶ˆæ¯ç±»åž‹ï¼Œä¸ºè¯·æ±‚çš„æ¶ˆæ¯ç±»åž‹+1
     m_recvMsgData->event().getMsgHeader().setMsgType(m_recvMsgData->event().getMsgHeader().getMsgType() + 1);
-    ///ÉèÖÃecho»Ø¸´µÄÊý¾Ý°ü³¤¶È
+    ///è®¾ç½®echoå›žå¤çš„æ•°æ®åŒ…é•¿åº¦
     m_recvMsgData->event().getMsgHeader().setDataLen(m_recvMsgData->length());
-    ///´´½¨»Ø¸´µÄÊý¾Ý°ü
+    ///åˆ›å»ºå›žå¤çš„æ•°æ®åŒ…
     CwxMsgBlock* pBlock = CwxMsgBlockAlloc::malloc(m_recvMsgData->length() + CwxMsgHead::MSG_HEAD_LEN);
-    ///¿½±´Êý¾Ý°üµÄ°üÍ·
+    ///æ‹·è´æ•°æ®åŒ…çš„åŒ…å¤´
     memcpy(pBlock->wr_ptr(), m_recvMsgData->event().getMsgHeader().toNet(), CwxMsgHead::MSG_HEAD_LEN);
-    ///»¬¶¯blockµÄÐ´Ö¸Õë
+    ///æ»‘åŠ¨blockçš„å†™æŒ‡é’ˆ
     pBlock->wr_ptr(CwxMsgHead::MSG_HEAD_LEN);
-    ///¿½±´Êý¾Ý°üµÄÊý¾Ý
+    ///æ‹·è´æ•°æ®åŒ…çš„æ•°æ®
     memcpy(pBlock->wr_ptr(), m_recvMsgData->rd_ptr(), m_recvMsgData->length());
-    ///»¬¶¯blockµÄÐ´Ö¸Õë
+    ///æ»‘åŠ¨blockçš„å†™æŒ‡é’ˆ
     pBlock->wr_ptr(m_recvMsgData->length());
     if (!putMsg(pBlock))
     {

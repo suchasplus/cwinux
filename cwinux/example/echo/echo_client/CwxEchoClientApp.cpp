@@ -1,6 +1,6 @@
-#include "CwxEchoClientApp.h"
+ï»¿#include "CwxEchoClientApp.h"
 
-///¹¹Ôìº¯Êı£¬³õÊ¼»¯·¢ËÍµÄechoÊı¾İÄÚÈİ
+///æ„é€ å‡½æ•°ï¼Œåˆå§‹åŒ–å‘é€çš„echoæ•°æ®å†…å®¹
 CwxEchoClientApp::CwxEchoClientApp():m_uiSendNum(0){
     CWX_UINT32 i=0;
     for (i=0; i<sizeof(m_szBuf100K) - 1; i++){
@@ -10,41 +10,41 @@ CwxEchoClientApp::CwxEchoClientApp():m_uiSendNum(0){
     m_uiRecvNum = 0;
 
 }
-///Îö¹¹º¯Êı
+///ææ„å‡½æ•°
 CwxEchoClientApp::~CwxEchoClientApp(){
 
 }
 
-///³õÊ¼»¯APP£¬¼ÓÔØÅäÖÃÎÄ¼ş
+///åˆå§‹åŒ–APPï¼ŒåŠ è½½é…ç½®æ–‡ä»¶
 int CwxEchoClientApp::init(int argc, char** argv){
     string strErrMsg;
-    ///Ê×ÏÈµ÷ÓÃ¼Ü¹¹µÄinit
+    ///é¦–å…ˆè°ƒç”¨æ¶æ„çš„init
     if (CwxAppFramework::init(argc, argv) == -1) return -1;
-    ///ÈôÃ»ÓĞÍ¨¹ı-fÖ¸¶¨ÅäÖÃÎÄ¼ş£¬Ôò²ÉÓÃÄ¬ÈÏµÄÅäÖÃÎÄ¼ş
+    ///è‹¥æ²¡æœ‰é€šè¿‡-fæŒ‡å®šé…ç½®æ–‡ä»¶ï¼Œåˆ™é‡‡ç”¨é»˜è®¤çš„é…ç½®æ–‡ä»¶
     if ((NULL == this->getConfFile()) || (strlen(this->getConfFile()) == 0)){
         this->setConfFile("svr_conf.cnf");
     }
-    ///¼ÓÔØÅäÖÃÎÄ¼ş
+    ///åŠ è½½é…ç½®æ–‡ä»¶
     if (0 != m_config.loadConfig(getConfFile())){
         CWX_ERROR((m_config.getError()));
         return -1;
     }
     if (m_config.m_uiDataSize > sizeof(m_szBuf100K) -1) m_config.m_uiDataSize = sizeof(m_szBuf100K) -1;
-    ///ÉèÖÃÊä³öÔËĞĞÈÕÖ¾µÄlevel
+    ///è®¾ç½®è¾“å‡ºè¿è¡Œæ—¥å¿—çš„level
     setLogLevel(CwxLogger::LEVEL_ERROR|CwxLogger::LEVEL_INFO|CwxLogger::LEVEL_WARNING);
     return 0;
 }
 
 //init the Enviroment before run.0:success, -1:failure.
 int CwxEchoClientApp::initRunEnv(){
-    ///ÉèÖÃÊ±ÖÓµÄ¿Ì¶È£¬×îĞ¡Îª1ms£¬´ËÎª1s¡£
+    ///è®¾ç½®æ—¶é’Ÿçš„åˆ»åº¦ï¼Œæœ€å°ä¸º1msï¼Œæ­¤ä¸º1sã€‚
     this->setClick(1000);//1s
     //set work dir
     this->setWorkDir(this->m_config.m_strWorkDir.c_str());
     //Set log file
     this->setLogFileNum(LOG_FILE_NUM);
     this->setLogFileSize(LOG_FILE_SIZE*1024*1024);
-    ///µ÷ÓÃ¼Ü¹¹µÄinitRunEnv£¬Ê¹ÉèÖÃµÄ²ÎÊıÉúĞ§
+    ///è°ƒç”¨æ¶æ„çš„initRunEnvï¼Œä½¿è®¾ç½®çš„å‚æ•°ç”Ÿæ•ˆ
     if (CwxAppFramework::initRunEnv() == -1 ) return -1;
     //set version
     this->setAppVersion(ECHO_CLIENT_APP_VERSION);
@@ -60,7 +60,7 @@ int CwxEchoClientApp::initRunEnv(){
 
 
     CWX_UINT16 i=0;
-    //½¨Á¢ÅäÖÃÎÄ¼şÖĞÉèÖÃµÄ¡¢Óëecho·şÎñµÄÁ¬½Ó
+    //å»ºç«‹é…ç½®æ–‡ä»¶ä¸­è®¾ç½®çš„ã€ä¸echoæœåŠ¡çš„è¿æ¥
     for (i=0; i<m_config.m_unConnNum; i++){
         if (m_config.m_bTcp){
             //create  conn
@@ -95,12 +95,12 @@ int CwxEchoClientApp::initRunEnv(){
     return 0;
 }
 
-///Ê±ÖÓÏìÓ¦º¯Êı£¬Ê²Ã´Ò²Ã»ÓĞ×ö
+///æ—¶é’Ÿå“åº”å‡½æ•°ï¼Œä»€ä¹ˆä¹Ÿæ²¡æœ‰åš
 void CwxEchoClientApp::onTime(CwxTimeValue const& current){
     CwxAppFramework::onTime(current);
 }
 
-///ĞÅºÅ´¦Àíº¯Êı
+///ä¿¡å·å¤„ç†å‡½æ•°
 void CwxEchoClientApp::onSignal(int signum){
     switch(signum){
     case SIGQUIT: 
@@ -108,22 +108,22 @@ void CwxEchoClientApp::onSignal(int signum){
         this->stop();
         break;
     default:
-        ///ÆäËûĞÅºÅ£¬ºöÂÔ
+        ///å…¶ä»–ä¿¡å·ï¼Œå¿½ç•¥
         CWX_INFO(("Recv signal=%d, ignore it.", signum));
         break;
     }
 }
 
-///echo·şÎñµÄÁ¬½Ó½¨Á¢ÏìÓ¦º¯Êı
+///echoæœåŠ¡çš„è¿æ¥å»ºç«‹å“åº”å‡½æ•°
 int CwxEchoClientApp::onConnCreated(CwxAppHandler4Msg& conn, bool& , bool& ){
-    ///·¢ËÍÒ»¸öechoÊı¾İ°ü
+    ///å‘é€ä¸€ä¸ªechoæ•°æ®åŒ…
     sendNextMsg(conn.getConnInfo().getSvrId(),
         conn.getConnInfo().getHostId(),
         conn.getConnInfo().getConnId());
     return 0;
 }
 
-///echo»Ø¸´µÄÏûÏ¢ÏìÓ¦º¯Êı
+///echoå›å¤çš„æ¶ˆæ¯å“åº”å‡½æ•°
 int CwxEchoClientApp::onRecvMsg(CwxMsgBlock* msg, CwxAppHandler4Msg& conn, CwxMsgHead const& header, bool& bSuspendConn){
 
     msg->event().setSvrId(conn.getConnInfo().getSvrId());
@@ -135,58 +135,58 @@ int CwxEchoClientApp::onRecvMsg(CwxMsgBlock* msg, CwxAppHandler4Msg& conn, CwxMs
     msg->event().setMsgHeader(header);
     msg->event().setTimestamp(CwxDate::getTimestamp());
     bSuspendConn = false;
-    ///ÊÍ·ÅÊÕµ½µÄÊı¾İ°ü
+    ///é‡Šæ”¾æ”¶åˆ°çš„æ•°æ®åŒ…
     if (msg) CwxMsgBlockAlloc::free(msg);
-    if (m_config.m_bLasting){///Èç¹ûÊÇ³Ö¾ÃÁ¬½Ó£¬Ôò·¢ËÍÏÂÒ»¸öechoÇëÇóÊı¾İ°ü
+    if (m_config.m_bLasting){///å¦‚æœæ˜¯æŒä¹…è¿æ¥ï¼Œåˆ™å‘é€ä¸‹ä¸€ä¸ªechoè¯·æ±‚æ•°æ®åŒ…
         sendNextMsg(conn.getConnInfo().getSvrId(),
             conn.getConnInfo().getHostId(),
             conn.getConnInfo().getConnId());
     }else{
-        ///Èô²»ÊÇ³Ö¾ÃÁ¬½Ó£¬ÔòÖØÁ¬Á¬½Ó¡£
+        ///è‹¥ä¸æ˜¯æŒä¹…è¿æ¥ï¼Œåˆ™é‡è¿è¿æ¥ã€‚
         this->noticeReconnect(conn.getConnInfo().getConnId());
     }
-    ///ÊÕµ½µÄechoÊı¾İ¼Ó1
+    ///æ”¶åˆ°çš„echoæ•°æ®åŠ 1
     m_uiRecvNum++;
-    ///ÈôÊÕµ½10000¸öÊı¾İ°ü£¬ÔòÊä³öÒ»ÌõÈÕÖ¾
+    ///è‹¥æ”¶åˆ°10000ä¸ªæ•°æ®åŒ…ï¼Œåˆ™è¾“å‡ºä¸€æ¡æ—¥å¿—
     if (!(m_uiRecvNum%10000)){
         CWX_INFO(("Finish num=%u\n", m_uiRecvNum));
     }
     return 0;
 }
-///·¢ËÍecho²éÑ¯
+///å‘é€echoæŸ¥è¯¢
 void CwxEchoClientApp::sendNextMsg(CWX_UINT32 uiSvrId, CWX_UINT32 uiHostId, CWX_UINT32 uiConnId){
     CwxMsgHead header;
-    ///ÉèÖÃechoµÄÏûÏ¢ÀàĞÍ
+    ///è®¾ç½®echoçš„æ¶ˆæ¯ç±»å‹
     header.setMsgType(SEND_MSG_TYPE);
-    ///ÉèÖÃechoµÄÊı¾İ°ü³¤¶È
+    ///è®¾ç½®echoçš„æ•°æ®åŒ…é•¿åº¦
     header.setDataLen(m_config.m_uiDataSize);
-    ///ÉèÖÃechoÊı¾İ°üµÄtaskid£¬´ËÊ¹ÓÃ·¢ËÍµÄÊı¾İĞòÁĞºÅ£¬µ±Ç°Ã»ÓÃ
+    ///è®¾ç½®echoæ•°æ®åŒ…çš„taskidï¼Œæ­¤ä½¿ç”¨å‘é€çš„æ•°æ®åºåˆ—å·ï¼Œå½“å‰æ²¡ç”¨
     header.setTaskId(m_uiSendNum);
-    ///·ÖÅä·¢ËÍÏûÏ¢°üµÄblock
+    ///åˆ†é…å‘é€æ¶ˆæ¯åŒ…çš„block
     CwxMsgBlock* pBlock = CwxMsgBlockAlloc::malloc(m_config.m_uiDataSize + CwxMsgHead::MSG_HEAD_LEN);
-    ///¿½±´ÏûÏ¢Í·
+    ///æ‹·è´æ¶ˆæ¯å¤´
     memcpy(pBlock->wr_ptr(), header.toNet(), CwxMsgHead::MSG_HEAD_LEN);
     pBlock->wr_ptr(CwxMsgHead::MSG_HEAD_LEN);
-    ///¿½±´echoµÄÊı¾İ
+    ///æ‹·è´echoçš„æ•°æ®
     memcpy(pBlock->wr_ptr(), m_szBuf100K, m_config.m_uiDataSize);
     pBlock->wr_ptr(m_config.m_uiDataSize);
-    ///ÉèÖÃÏûÏ¢µÄ·¢ËÍ·½Ê½
-    ///ÉèÖÃÏûÏ¢µÄsvr-id
+    ///è®¾ç½®æ¶ˆæ¯çš„å‘é€æ–¹å¼
+    ///è®¾ç½®æ¶ˆæ¯çš„svr-id
     pBlock->send_ctrl().setSvrId(uiSvrId);
-    ///ÉèÖÃÏûÏ¢µÄhost-id
+    ///è®¾ç½®æ¶ˆæ¯çš„host-id
     pBlock->send_ctrl().setHostId(uiHostId);
-    ///ÉèÖÃÏûÏ¢·¢ËÍµÄÁ¬½Óid
+    ///è®¾ç½®æ¶ˆæ¯å‘é€çš„è¿æ¥id
     pBlock->send_ctrl().setConnId(uiConnId);
-    ///ÉèÖÃÏûÏ¢·¢ËÍµÄuser-data
+    ///è®¾ç½®æ¶ˆæ¯å‘é€çš„user-data
     pBlock->send_ctrl().setUserData(NULL);
-    ///ÉèÖÃÏûÏ¢·¢ËÍ½×¶ÎµÄĞĞÎª£¬°üÀ¨¿ªÊ¼·¢ËÍÊÇ·ñÍ¨Öª¡¢·¢ËÍÍê³ÉÊÇ·ñÍ¨Öª¡¢·¢ËÍÊ§°ÜÊÇ·ñÍ¨Öª
+    ///è®¾ç½®æ¶ˆæ¯å‘é€é˜¶æ®µçš„è¡Œä¸ºï¼ŒåŒ…æ‹¬å¼€å§‹å‘é€æ˜¯å¦é€šçŸ¥ã€å‘é€å®Œæˆæ˜¯å¦é€šçŸ¥ã€å‘é€å¤±è´¥æ˜¯å¦é€šçŸ¥
     pBlock->send_ctrl().setMsgAttr(CwxMsgSendCtrl::NONE);
-    ///·¢ËÍechoÇëÇó
+    ///å‘é€echoè¯·æ±‚
     if (0 != this->sendMsgByConn(pBlock)){
         CWX_ERROR(("Failure to send msg"));
         return ;
     }
-    ///·¢ËÍÊı¾İÊıÁ¿+1
+    ///å‘é€æ•°æ®æ•°é‡+1
     m_uiSendNum++;
 }
 

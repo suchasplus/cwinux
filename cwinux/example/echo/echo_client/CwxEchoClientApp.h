@@ -1,9 +1,9 @@
-#ifndef __CWX_ECHO_CLIENT_APP_H__
+ï»¿#ifndef __CWX_ECHO_CLIENT_APP_H__
 #define __CWX_ECHO_CLIENT_APP_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 #include "CwxAppFramework.h"
 #include "CwxEchoClientConfig.h"
@@ -13,48 +13,48 @@
 
 CWINUX_USING_NAMESPACE;
 
-///echoµÄÑ¹Á¦²âÊÔapp
+///echoçš„å‹åŠ›æµ‹è¯•app
 class CwxEchoClientApp : public CwxAppFramework{
 public:
     enum{
-        LOG_FILE_SIZE = 30, ///<Ã¿¸öÑ­»·ÔËĞĞÈÕÖ¾ÎÄ¼şµÄMBTYE
-        LOG_FILE_NUM = 7,///<Ñ­»·ÈÕÖ¾ÎÄ¼şµÄÊıÁ¿
-        SVR_TYPE_ECHO = CwxAppFramework::SVR_TYPE_USER_START ///<echo²éÑ¯µÄsvr-idÀàĞÍ
+        LOG_FILE_SIZE = 30, ///<æ¯ä¸ªå¾ªç¯è¿è¡Œæ—¥å¿—æ–‡ä»¶çš„MBTYE
+        LOG_FILE_NUM = 7,///<å¾ªç¯æ—¥å¿—æ–‡ä»¶çš„æ•°é‡
+        SVR_TYPE_ECHO = CwxAppFramework::SVR_TYPE_USER_START ///<echoæŸ¥è¯¢çš„svr-idç±»å‹
     };
     enum{
-        SEND_MSG_TYPE = 1, ///<echo·¢ËÍµÄÏûÏ¢ÀàĞÍ
-        RECV_MSG_TYPE =2 ///<echo»Ø¸´µÄÏûÏ¢ÀàĞÍ
+        SEND_MSG_TYPE = 1, ///<echoå‘é€çš„æ¶ˆæ¯ç±»å‹
+        RECV_MSG_TYPE =2 ///<echoå›å¤çš„æ¶ˆæ¯ç±»å‹
     };
 
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
 	CwxEchoClientApp();
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
 	virtual ~CwxEchoClientApp();
-    //³õÊ¼»¯app, -1:failure, 0 success;
+    //åˆå§‹åŒ–app, -1:failure, 0 success;
     virtual int init(int argc, char** argv);
 public:
-    //Ê±ÖÓÏìÓ¦º¯Êı
+    //æ—¶é’Ÿå“åº”å‡½æ•°
     virtual void onTime(CwxTimeValue const& current);
-    //ĞÅºÅÏìÓ¦º¯Êı
+    //ä¿¡å·å“åº”å‡½æ•°
     virtual void onSignal(int signum);
-    //echoÁ¬½Ó½¨Á¢º¯Êı
+    //echoè¿æ¥å»ºç«‹å‡½æ•°
     virtual int onConnCreated(CwxAppHandler4Msg& conn, bool& bSuspendConn, bool& bSuspendListen);
-    //echo·µ»ØµÄÏìÓ¦º¯Êı
+    //echoè¿”å›çš„å“åº”å‡½æ•°
     virtual int onRecvMsg(CwxMsgBlock* msg, CwxAppHandler4Msg& conn, CwxMsgHead const& header, bool& bSuspendConn);
     
 protected:
     //init the Enviroment before run.0:success, -1:failure.
 	virtual int initRunEnv();
 private:
-    ///ÉèÖÃsocketµÄÊôĞÔ
+    ///è®¾ç½®socketçš„å±æ€§
     static int setSockAttr(CWX_HANDLE handle, void* arg);
-    //·¢ËÍechoÇëÇó
+    //å‘é€echoè¯·æ±‚
     void sendNextMsg(CWX_UINT32 uiSvrId, CWX_UINT32 uiHostId, CWX_UINT32 uiConnId);
 private:
-    CwxEchoClientConfig               m_config; ///<ÅäÖÃÎÄ¼ş¶ÔÏó
-    char                           m_szBuf100K[64 * 1024*1024+1]; ///<·¢ËÍµÄechoÊı¾İbuf¼°ÄÚÈİ
-    CWX_UINT32                     m_uiSendNum;///<·¢ËÍechoÇëÇóµÄÊıÁ¿
-    CWX_UINT32                     m_uiRecvNum;///<½ÓÊÕµ½echo»Ø¸´µÄÊıÁ¿
+    CwxEchoClientConfig               m_config; ///<é…ç½®æ–‡ä»¶å¯¹è±¡
+    char                           m_szBuf100K[64 * 1024*1024+1]; ///<å‘é€çš„echoæ•°æ®bufåŠå†…å®¹
+    CWX_UINT32                     m_uiSendNum;///<å‘é€echoè¯·æ±‚çš„æ•°é‡
+    CWX_UINT32                     m_uiRecvNum;///<æ¥æ”¶åˆ°echoå›å¤çš„æ•°é‡
 };
 
 #endif
