@@ -1,14 +1,14 @@
-#ifndef __CWX_UNIX_CONNECTOR_H__
+ï»¿#ifndef __CWX_UNIX_CONNECTOR_H__
 #define __CWX_UNIX_CONNECTOR_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxUnixConnector.h
-@brief Unix domainÖ÷¶¯Á¬½ÓµÄÁ¬½ÓÆ÷¶ÔÏóµÄ¶¨Òå¡£
+@brief Unix domainä¸»åŠ¨è¿æ¥çš„è¿æ¥å™¨å¯¹è±¡çš„å®šä¹‰ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-12
@@ -25,26 +25,26 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxUnixConnector
-@brief TCPÖ÷¶¯Á¬½ÓµÄÁ¬½ÓÆ÷¶ÔÏó¡£
+@brief TCPä¸»åŠ¨è¿æ¥çš„è¿æ¥å™¨å¯¹è±¡ã€‚
 */
 class CWX_API CwxUnixConnector:CwxSockConnector
 {
 public:
-    ///Ä¬ÈÏ¹¹Ôìº¯Êı
+    ///é»˜è®¤æ„é€ å‡½æ•°
     CwxUnixConnector();
-    ///Îö¹¹º¯Êı.
+    ///ææ„å‡½æ•°.
     ~CwxUnixConnector(void);
 public:
     /**
-    @brief ½¨Á¢TCPÖ÷¶¯Á¬½Ó¡£
-    @param [out] stream Ö÷¶¯Á¬½Ó¡£
-    @param [in] remoteAddr Á¬½ÓµÄÔ¶³ÌµØÖ·¡£
-    @param [in] localAddr Á¬½ÓµÄ±¾µØµØÖ·£¬ÈôÎª¿Õ£¬ÔòÓĞconnect×Ô¼º·ÖÅä¡£
-    @param [in] timeout Á¬½ÓµÄ³¬Ê±Ê±¼ä£¬ÈôNULL£¬±íÊ¾Ã»ÓĞ³¬Ê±ÏŞÖÆ¡£ÈôÖµÎª0£¬Ôò±íÊ¾ÈôÃ»ÓĞÁ¬½ÓÉÏ£¬Á¢¼´·µ»Ø¡£
-    @param [in] protocol Á¬½ÓµÄĞ­Òé£¬¾ÍÊÇsocket()µÄprotocol²ÎÊı£¬ÓÉÓÚÒ»¸öĞ­Òé¼Ò×åµÄsocket ÀàĞÍ£¬ÆäprotocolÒ²ÊÇÎ¨Ò»µÄ£¬Îª0¾Í¿ÉÒÔÁË¡£
-    @param [in] reuse_addr ÊÇ·ñÖØÓÃ±¾µØµØÖ·¡£
-    @param [in] fn socketÊôĞÔÉèÖÃµÄfunction¡£
-    @return -1£º´íÎó£¬errno¼ÇÂ¼´íÎóµÄÔ­Òò£»0£º³É¹¦¡£
+    @brief å»ºç«‹TCPä¸»åŠ¨è¿æ¥ã€‚
+    @param [out] stream ä¸»åŠ¨è¿æ¥ã€‚
+    @param [in] remoteAddr è¿æ¥çš„è¿œç¨‹åœ°å€ã€‚
+    @param [in] localAddr è¿æ¥çš„æœ¬åœ°åœ°å€ï¼Œè‹¥ä¸ºç©ºï¼Œåˆ™æœ‰connectè‡ªå·±åˆ†é…ã€‚
+    @param [in] timeout è¿æ¥çš„è¶…æ—¶æ—¶é—´ï¼Œè‹¥NULLï¼Œè¡¨ç¤ºæ²¡æœ‰è¶…æ—¶é™åˆ¶ã€‚è‹¥å€¼ä¸º0ï¼Œåˆ™è¡¨ç¤ºè‹¥æ²¡æœ‰è¿æ¥ä¸Šï¼Œç«‹å³è¿”å›ã€‚
+    @param [in] protocol è¿æ¥çš„åè®®ï¼Œå°±æ˜¯socket()çš„protocolå‚æ•°ï¼Œç”±äºä¸€ä¸ªåè®®å®¶æ—çš„socket ç±»å‹ï¼Œå…¶protocolä¹Ÿæ˜¯å”¯ä¸€çš„ï¼Œä¸º0å°±å¯ä»¥äº†ã€‚
+    @param [in] reuse_addr æ˜¯å¦é‡ç”¨æœ¬åœ°åœ°å€ã€‚
+    @param [in] fn socketå±æ€§è®¾ç½®çš„functionã€‚
+    @return -1ï¼šé”™è¯¯ï¼Œerrnoè®°å½•é”™è¯¯çš„åŸå› ï¼›0ï¼šæˆåŠŸã€‚
     */
     int connect (CwxUnixStream& stream,
         CwxAddr const& remoteAddr,
@@ -52,7 +52,7 @@ public:
         CwxTimeouter* timeout=0,
         int protocol = 0,
         bool reuse_addr = false,
-        CWX_NET_SOCKET_ATTR_FUNC fn=NULL, ///<socketÉèÖÃµÄfunction
+        CWX_NET_SOCKET_ATTR_FUNC fn=NULL, ///<socketè®¾ç½®çš„function
         void* fnArg = NULL
         );
 private:

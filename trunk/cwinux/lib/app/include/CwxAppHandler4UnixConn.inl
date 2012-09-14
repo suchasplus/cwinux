@@ -1,11 +1,11 @@
-CWINUX_BEGIN_NAMESPACE
+ï»¿CWINUX_BEGIN_NAMESPACE
 
-///ÉèÖÃUNIX-DOMAINµÄÂ·¾¶ÎÄ¼ş
+///è®¾ç½®UNIX-DOMAINçš„è·¯å¾„æ–‡ä»¶
 inline void CwxAppHandler4UnixConn::setConnectPathFile(char const* szPathFile)
 {
     m_strConnectPathFile = szPathFile;
 }
-///»ñÈ¡UNIX-DOMAINµÄÂ·¾¶ÎÄ¼ş
+///è·å–UNIX-DOMAINçš„è·¯å¾„æ–‡ä»¶
 inline string const& CwxAppHandler4UnixConn::getConnectPathFile() const
 {
     return m_strConnectPathFile;

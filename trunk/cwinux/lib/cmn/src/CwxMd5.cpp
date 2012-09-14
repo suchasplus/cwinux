@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This code implements the MD5 message-digest algorithm.
  * The algorithm was written by Ron Rivest.  This code was
  * written by Colin Plumb in 1993, our understanding is 

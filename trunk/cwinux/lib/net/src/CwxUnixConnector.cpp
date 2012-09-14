@@ -1,11 +1,11 @@
-#include "CwxUnixConnector.h"
+﻿#include "CwxUnixConnector.h"
 CWINUX_BEGIN_NAMESPACE
-///Ĭ�Ϲ��캯��
+///默认构造函数
 CwxUnixConnector::CwxUnixConnector()
 {
 
 }
-///��������.
+///析构函数.
 CwxUnixConnector::~CwxUnixConnector(void)
 {
 

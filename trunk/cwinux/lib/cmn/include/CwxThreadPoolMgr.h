@@ -1,14 +1,14 @@
-#ifndef __CWX_THREAD_POOL_MGR_H__
+ï»¿#ifndef __CWX_THREAD_POOL_MGR_H__
 #define __CWX_THREAD_POOL_MGR_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxThreadPoolMgr.h
-@brief Ïß³Ì³Ø¼°ÆäÏß³ÌµÄTSSµÄ¹ÜÀí¶ÔÏóµÄÊµÏÖ
+@brief çº¿ç¨‹æ± åŠå…¶çº¿ç¨‹çš„TSSçš„ç®¡ç†å¯¹è±¡çš„å®ç°
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-07-20
@@ -27,66 +27,66 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxThreadPoolMgr
-@brief Ïß³Ì³Ø¼°ÆäÏß³ÌµÄTSSµÄ¹ÜÀí¶ÔÏó
+@brief çº¿ç¨‹æ± åŠå…¶çº¿ç¨‹çš„TSSçš„ç®¡ç†å¯¹è±¡
 */
 class CWX_API CwxThreadPoolMgr
 {
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxThreadPoolMgr();
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxThreadPoolMgr();
 public:
     /**
-    @brief Íù¹ÜÀíÆ÷Ìí¼ÓÒ»¸öÏß³Ì³Ø
-    @param [in] unGroupId Ïß³Ì³ØµÄÏß³Ì×éID
-    @param [in] pThreadPool Ïß³Ì³Ø¶ÔÏó
-    @return false£ºunGroupIdÖ¸¶¨µÄÏß³Ì³ØÒÑ¾­´æÔÚ£» true£º³É¹¦
+    @brief å¾€ç®¡ç†å™¨æ·»åŠ ä¸€ä¸ªçº¿ç¨‹æ± 
+    @param [in] unGroupId çº¿ç¨‹æ± çš„çº¿ç¨‹ç»„ID
+    @param [in] pThreadPool çº¿ç¨‹æ± å¯¹è±¡
+    @return falseï¼šunGroupIdæŒ‡å®šçš„çº¿ç¨‹æ± å·²ç»å­˜åœ¨ï¼› trueï¼šæˆåŠŸ
     */
     bool add(CWX_UINT16 unGroupId, CwxTpi* pThreadPool);
     /**
-    @brief ´Ó¹ÜÀíÆ÷ÖĞÉ¾³ıÒ»¸öÏß³Ì³Ø
-    @param [in] unGroupId É¾³ıÏß³Ì³ØµÄÏß³Ì×éID
-    @return false£º²»´æÔÚ£» true£º³É¹¦É¾³ı
+    @brief ä»ç®¡ç†å™¨ä¸­åˆ é™¤ä¸€ä¸ªçº¿ç¨‹æ± 
+    @param [in] unGroupId åˆ é™¤çº¿ç¨‹æ± çš„çº¿ç¨‹ç»„ID
+    @return falseï¼šä¸å­˜åœ¨ï¼› trueï¼šæˆåŠŸåˆ é™¤
     */
     bool remove(CWX_UINT16 unGroupId);
     /**
-    @brief ¼ì²éÖ¸¶¨µÄunGroupIdµÄÏß³Ì×éÔÚ¹ÜÀíÆ÷ÖĞÊÇ·ñ´æÔÚ
-    @return false£º²»´æÔÚ£» true£º³É¹¦É¾³ı
+    @brief æ£€æŸ¥æŒ‡å®šçš„unGroupIdçš„çº¿ç¨‹ç»„åœ¨ç®¡ç†å™¨ä¸­æ˜¯å¦å­˜åœ¨
+    @return falseï¼šä¸å­˜åœ¨ï¼› trueï¼šæˆåŠŸåˆ é™¤
     */
     bool isExist(CWX_UINT16 unGroupId);
-    ///»ñÈ¡¹ÜÀíµÄÏß³Ì³ØµÄÊıÁ¿
+    ///è·å–ç®¡ç†çš„çº¿ç¨‹æ± çš„æ•°é‡
     CWX_UINT16 getNum();
     /**
-    @brief ÍùÏß³Ì³Ø¹ÜÀíÆ÷ÖĞÌí¼ÓÒ»¸öÏß³ÌµÄTSS
-    @param [in] pTss Ïß³ÌµÄTSS
-    @return false£ºÓë´ËTSSµÄGroupIdÓëThreadIdÏàÍ¬µÄTssÒÑ¾­´æÔÚ£» true£º³É¹¦
+    @brief å¾€çº¿ç¨‹æ± ç®¡ç†å™¨ä¸­æ·»åŠ ä¸€ä¸ªçº¿ç¨‹çš„TSS
+    @param [in] pTss çº¿ç¨‹çš„TSS
+    @return falseï¼šä¸æ­¤TSSçš„GroupIdä¸ThreadIdç›¸åŒçš„Tsså·²ç»å­˜åœ¨ï¼› trueï¼šæˆåŠŸ
     */
     bool addTss(CwxTss* pTss);
     /**
-    @brief ·µ»ØËù¹ÜÀíµÄËùÓĞÏß³ÌµÄTSS
-    @param [in] arrTss ËùÓĞÏß³ÌµÄTSS¡£arrTss[i]ÎªÒ»¸öÏß³Ì×éµÄÏß³ÌµÄTSS¡£µÚÒ»¼¶Êı×éµÄÔªËØ°´GroupIdÉıĞò£¬µÚ¶ş¼¶°´ThreadIdÉıĞò¡£
+    @brief è¿”å›æ‰€ç®¡ç†çš„æ‰€æœ‰çº¿ç¨‹çš„TSS
+    @param [in] arrTss æ‰€æœ‰çº¿ç¨‹çš„TSSã€‚arrTss[i]ä¸ºä¸€ä¸ªçº¿ç¨‹ç»„çš„çº¿ç¨‹çš„TSSã€‚ç¬¬ä¸€çº§æ•°ç»„çš„å…ƒç´ æŒ‰GroupIdå‡åºï¼Œç¬¬äºŒçº§æŒ‰ThreadIdå‡åºã€‚
     @return void
     */
     void getTss(vector<vector<CwxTss*> >& arrTss);
     /**
-    @brief ·µ»ØÖ¸¶¨Thread GroupIdµÄTSS
-    @param [in] unGroup Ïß³ÌµÄGroupId
-    @param [in] arrTss ´ËÏß³Ì×éµÄÏß³ÌµÄTSS£¬Êı×é°´ÕÕÏß³ÌµÄThreadIdÉıĞò¡£
+    @brief è¿”å›æŒ‡å®šThread GroupIdçš„TSS
+    @param [in] unGroup çº¿ç¨‹çš„GroupId
+    @param [in] arrTss æ­¤çº¿ç¨‹ç»„çš„çº¿ç¨‹çš„TSSï¼Œæ•°ç»„æŒ‰ç…§çº¿ç¨‹çš„ThreadIdå‡åºã€‚
     @return void
     */
     void getTss(CWX_UINT16 unGroup, vector<CwxTss*>& arrTss);
     /**
-    @brief ·µ»ØÒ»¸öÏß³ÌµÄTss
-    @param [in] unGroup Ïß³ÌµÄGroupId
-    @param [in] unThreadId Ïß³ÌµÄThreadId¡£
-    @return NULL£º²»´æÔÚ£»·ñÔòÎªÏß³ÌµÄTSS
+    @brief è¿”å›ä¸€ä¸ªçº¿ç¨‹çš„Tss
+    @param [in] unGroup çº¿ç¨‹çš„GroupId
+    @param [in] unThreadId çº¿ç¨‹çš„ThreadIdã€‚
+    @return NULLï¼šä¸å­˜åœ¨ï¼›å¦åˆ™ä¸ºçº¿ç¨‹çš„TSS
     */
     CwxTss* getTss(CWX_UINT16 unGroup, CWX_UINT16 unThreadId);
 private:
     CwxMutexLock        m_lock;///<thread lock for sync.
-    map<CWX_UINT16, CwxTpi*>  m_threadPoolMap; ///<Ïß³Ì³ØµÄMAP
-    map<CWX_UINT16, map<CWX_UINT16, CwxTss*> >  m_threadPoolTss;///Ïß³ÌTssµÄmap
+    map<CWX_UINT16, CwxTpi*>  m_threadPoolMap; ///<çº¿ç¨‹æ± çš„MAP
+    map<CWX_UINT16, map<CWX_UINT16, CwxTss*> >  m_threadPoolTss;///çº¿ç¨‹Tssçš„map
 };
 
 CWINUX_END_NAMESPACE

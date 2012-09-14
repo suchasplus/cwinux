@@ -1,16 +1,16 @@
-#ifndef __CWX_APP_UNIX_ACCEPTOR_H__
+ï»¿#ifndef __CWX_APP_UNIX_ACCEPTOR_H__
 #define __CWX_APP_UNIX_ACCEPTOR_H__
 
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 
 /**
 @file CwxAppUnixAcceptor.h
-@brief Unix-domain¼àÌı¶ÔÏóµÄ¶¨Òå
+@brief Unix-domainç›‘å¬å¯¹è±¡çš„å®šä¹‰
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-07-20
@@ -35,7 +35,7 @@ CWINUX_BEGIN_NAMESPACE
 class CwxAppFramework;
 /**
 @class CwxAppUnixAcceptor
-@brief ¼Ü¹¹µÄUNIX-domain Á¬½ÓµÄ¼àÌı¹ÜÀí¶ÔÏó¡£Ã¿¸ö¶ÔÏóÊµÀı¸ºÔğÒ»¸öUNIX-DOMAINµÄ¼àÌı¡£
+@brief æ¶æ„çš„UNIX-domain è¿æ¥çš„ç›‘å¬ç®¡ç†å¯¹è±¡ã€‚æ¯ä¸ªå¯¹è±¡å®ä¾‹è´Ÿè´£ä¸€ä¸ªUNIX-DOMAINçš„ç›‘å¬ã€‚
 */
 class CWX_API CwxAppUnixAcceptor :public CwxAppHandler4Base
 {
@@ -43,7 +43,7 @@ class CWX_API CwxAppUnixAcceptor :public CwxAppHandler4Base
         MAX_PER_RECIEVE_CONNECT  = 128///<tcp listen's backlog value
     };
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxAppUnixAcceptor(CwxAppFramework* pApp,
         CwxAppReactor *reactor,
         char const* szPathFile, ///<listen file
@@ -54,13 +54,13 @@ public:
         CWX_NET_SOCKET_ATTR_FUNC fn=NULL,
         void* fnArg = NULL
         );
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxAppUnixAcceptor();
 public:
     int accept(CwxUnixAddr const& addr);
     ///handle open
     virtual int open (void * addr= 0);
-    /// ÊÂ¼şµÄ»Øµ÷º¯Êı¡£·µ»Ø-1£ºÊ§°Ü£¬×Ô¶¯ÊÍ·Åhandle£»0£º³É¹¦
+    /// äº‹ä»¶çš„å›è°ƒå‡½æ•°ã€‚è¿”å›-1ï¼šå¤±è´¥ï¼Œè‡ªåŠ¨é‡Šæ”¾handleï¼›0ï¼šæˆåŠŸ
     virtual int handle_event(int event, CWX_HANDLE handle=CWX_INVALID_HANDLE);
     ///handle close
     virtual int close(CWX_HANDLE handle=CWX_INVALID_HANDLE);
@@ -100,7 +100,7 @@ public:
     {
         m_bCloseAll = bCloseAll;
     }
-    ///»ñÈ¡app
+    ///è·å–app
     CwxAppFramework* getApp()
     {
         return m_pApp;
@@ -109,15 +109,15 @@ private:
     CwxAppHandler4UnixConn* makeHander();
 private:
     CwxAppFramework* m_pApp;
-    string         m_strPathFile;///<unix-domainµÄÂ·¾¶ÎÄ¼ş
-    CWX_UINT32	    m_uiSvrId;///<½¨Á¢Á¬½ÓµÄsvr-id
-    CWX_UINT32     m_uiListenId;///<unix-domain Á¬½Ó¼àÌıµÄ¼àÌıID
-    bool           m_bRawData;///<½¨Á¢µÄÁ¬½ÓÊÇ·ñ°´ÎŞ¸ñÊ½Êı¾İÁ÷µÄ·½Ê½½ÓÊÜ
-    CWX_UINT16     m_unMode;///<¼Ü¹¹¸ºÔğ½¨Á¢Á¬½ÓÊı¾İ½ÓÊÕ£¬»¹ÊÇÖ»¼ì²âÁ¬½ÓµÄÊÂ¼ş
-    bool           m_bCloseAll;///<listen¹Ø±ÕµÄÊ±ºò£¬ÊÇ·ñ¹Ø±ÕÆäËù½¨Á¢µÄÁ¬½Ó
-    CWX_NET_SOCKET_ATTR_FUNC m_fn; ///<socketÉèÖÃµÄfunciton
+    string         m_strPathFile;///<unix-domainçš„è·¯å¾„æ–‡ä»¶
+    CWX_UINT32	    m_uiSvrId;///<å»ºç«‹è¿æ¥çš„svr-id
+    CWX_UINT32     m_uiListenId;///<unix-domain è¿æ¥ç›‘å¬çš„ç›‘å¬ID
+    bool           m_bRawData;///<å»ºç«‹çš„è¿æ¥æ˜¯å¦æŒ‰æ— æ ¼å¼æ•°æ®æµçš„æ–¹å¼æ¥å—
+    CWX_UINT16     m_unMode;///<æ¶æ„è´Ÿè´£å»ºç«‹è¿æ¥æ•°æ®æ¥æ”¶ï¼Œè¿˜æ˜¯åªæ£€æµ‹è¿æ¥çš„äº‹ä»¶
+    bool           m_bCloseAll;///<listenå…³é—­çš„æ—¶å€™ï¼Œæ˜¯å¦å…³é—­å…¶æ‰€å»ºç«‹çš„è¿æ¥
+    CWX_NET_SOCKET_ATTR_FUNC m_fn; ///<socketè®¾ç½®çš„funciton
     void*          m_fnArg;
-    CwxUnixAcceptor m_acceptor; ///<¼àÌıÆ÷
+    CwxUnixAcceptor m_acceptor; ///<ç›‘å¬å™¨
     CwxUnixStream   m_stream;
 };
 CWINUX_END_NAMESPACE

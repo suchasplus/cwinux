@@ -1,15 +1,15 @@
-#ifndef __CWX_APP_HANDLER_4_UNIX_CONN_H__
+ï»¿#ifndef __CWX_APP_HANDLER_4_UNIX_CONN_H__
 #define __CWX_APP_HANDLER_4_UNIX_CONN_H__
 
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxAppHandler4UnixConn.h
-@brief ¶¨ÒåUNIX-DOMAINÁ¬½ÓÍ¨ĞÅµÄHandle¶ÔÏó£ºCwxAppHandler4UnixConn
+@brief å®šä¹‰UNIX-DOMAINè¿æ¥é€šä¿¡çš„Handleå¯¹è±¡ï¼šCwxAppHandler4UnixConn
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-07-20
@@ -34,42 +34,42 @@ class CwxAppFramework;
 class CwxAppHandlerCache;
 /**
 @class CwxAppHandler4UnixConn
-@brief UNIX-DOMAINÁ¬½ÓµÄHandle¶ÔÏó£¬¸ºÔğUNIX-DOMAINÁ¬½ÓµÄ¶ÔÏó
+@brief UNIX-DOMAINè¿æ¥çš„Handleå¯¹è±¡ï¼Œè´Ÿè´£UNIX-DOMAINè¿æ¥çš„å¯¹è±¡
 */
 class CWX_API CwxAppHandler4UnixConn:public CwxAppHandler4Msg
 {
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxAppHandler4UnixConn(CwxAppFramework* pApp, CwxAppReactor *reactor);
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxAppHandler4UnixConn();
 public:
     ///handle close
     virtual int close(CWX_HANDLE handle=CWX_INVALID_HANDLE);
-    ///³¬Ê±
+    ///è¶…æ—¶
     virtual void handle_timeout();
     /**
-    @brief »ñÈ¡Á¬½ÓµÄ¶Ô¶ËµØÖ·£¬Ö»¶ÔSTREAM_TYPE_TCPºÍSTREAM_TYPE_UNIXÓĞĞ§
-    @param [in,out] szBuf ·µ»ØµØÖ·µÄbuf,»ñÈ¡³É¹¦ºóÒÔ\\0½áÊø¡£
-    @param [in] unSize szBufµÄ´óĞ¡¡£
-    @return ·µ»ØszBuf
+    @brief è·å–è¿æ¥çš„å¯¹ç«¯åœ°å€ï¼Œåªå¯¹STREAM_TYPE_TCPå’ŒSTREAM_TYPE_UNIXæœ‰æ•ˆ
+    @param [in,out] szBuf è¿”å›åœ°å€çš„buf,è·å–æˆåŠŸåä»¥\\0ç»“æŸã€‚
+    @param [in] unSize szBufçš„å¤§å°ã€‚
+    @return è¿”å›szBuf
     */
     virtual char* getRemoteAddr(char* szBuf, CWX_UINT16 unSize);
     /**
-    @brief »ñÈ¡Á¬½ÓµÄ¶Ô¶Ëport£¬Ö»¶ÔSTREAM_TYPE_TCPÓĞĞ§
-    @return Á¬½Ó¶Ô¶ËµÄport
+    @brief è·å–è¿æ¥çš„å¯¹ç«¯portï¼Œåªå¯¹STREAM_TYPE_TCPæœ‰æ•ˆ
+    @return è¿æ¥å¯¹ç«¯çš„port
     */
     virtual CWX_UINT16 getRemotePort();
     /**
-    @brief »ñÈ¡Á¬½Ó±¾¶ËµÄµØÖ·£¬Ö»¶ÔSTREAM_TYPE_TCPºÍSTREAM_TYPE_UNIXÓĞĞ§
-    @param [in,out] szBuf ·µ»ØµØÖ·µÄbuf,»ñÈ¡³É¹¦ºóÒÔ\\0½áÊø¡£
-    @param [in] unSize szBufµÄ´óĞ¡¡£
-    @return ·µ»ØszBuf
+    @brief è·å–è¿æ¥æœ¬ç«¯çš„åœ°å€ï¼Œåªå¯¹STREAM_TYPE_TCPå’ŒSTREAM_TYPE_UNIXæœ‰æ•ˆ
+    @param [in,out] szBuf è¿”å›åœ°å€çš„buf,è·å–æˆåŠŸåä»¥\\0ç»“æŸã€‚
+    @param [in] unSize szBufçš„å¤§å°ã€‚
+    @return è¿”å›szBuf
     */
     virtual char* getLocalAddr(char* szBuf, CWX_UINT16 unSize);
     /**
-    @brief »ñÈ¡Á¬½ÓµÄ±¾¶Ëport£¬Ö»¶ÔSTREAM_TYPE_TCPÓĞĞ§
-    @return Á¬½Ó¶Ô¶ËµÄport
+    @brief è·å–è¿æ¥çš„æœ¬ç«¯portï¼Œåªå¯¹STREAM_TYPE_TCPæœ‰æ•ˆ
+    @return è¿æ¥å¯¹ç«¯çš„port
     */
     virtual inline CWX_UINT16 getLocalPort();
 public:

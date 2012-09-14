@@ -1,14 +1,14 @@
-#ifndef __CWX_MEM_LINE_READER_H__
+ï»¿#ifndef __CWX_MEM_LINE_READER_H__
 #define __CWX_MEM_LINE_READER_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxMemLineReader.h
-@brief »ùÓÚÄÚ´æµÄĞĞ¶ÁÈ¡Æ÷ÀàµÄ¶¨Òå
+@brief åŸºäºå†…å­˜çš„è¡Œè¯»å–å™¨ç±»çš„å®šä¹‰
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-10
@@ -22,12 +22,12 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxMemLineReader
-@brief ÄÚ´æµÄĞĞ¶ÁÈ¡·â×°¶ÔÏó¡£ĞĞµÄ·Ö¸îÊ±\\n
+@brief å†…å­˜çš„è¡Œè¯»å–å°è£…å¯¹è±¡ã€‚è¡Œçš„åˆ†å‰²æ—¶\\n
 */
 class CWX_API CwxMemLineReader
 {
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxMemLineReader()
     {
         m_uiCurLineNo = 0;
@@ -38,45 +38,45 @@ public:
         m_bDataOwn = false;
         m_first = true;
     }
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxMemLineReader()
     {
         clear();
     }
 public:
     /**
-    @brief ÉèÖÃÒªĞĞ¶ÁÈ¡µÄÄÚ´æ
-    @param [in] szData ĞĞ¸ñÊ½µÄÊı¾İBUFFER
-    @param [in] uiDataLen Êı¾İµÄ³¤¶È
-    @param [in] bDataOwn ÄÚ´æÊÇ·ñÓÉ´Ë¶ÔÏóÊµÀı½øĞĞÊÍ·Å
+    @brief è®¾ç½®è¦è¡Œè¯»å–çš„å†…å­˜
+    @param [in] szData è¡Œæ ¼å¼çš„æ•°æ®BUFFER
+    @param [in] uiDataLen æ•°æ®çš„é•¿åº¦
+    @param [in] bDataOwn å†…å­˜æ˜¯å¦ç”±æ­¤å¯¹è±¡å®ä¾‹è¿›è¡Œé‡Šæ”¾
     @return void
     */
     void setMem(char const* szData, CWX_UINT32 uiDataLen, bool bDataOwn=false);
     /**
-    @brief ½«ÄÚ´æÖ¸ÕëÒÆµ½ÏÂÒ»ĞĞµÄ¿ªÊ¼Î»ÖÃ£¬²¢·µ»Ø´ËÎ»ÖÃ,ÈôÎªNULL£¬±íÊ¾¶ÁÍêËùÓĞÄÚ´æ<br>
-           ¶ÔÓÚµÚÒ»´Îµ÷ÓÃ£¬ÔòÖ¸ÏòÄÚ´æµÄ¿ªÊ¼Î»ÖÃ£¬<br>
-           ÈôÄÚ´æ×Ü¹²ÓĞNĞĞ£¬ÔòÇ°N´ÎµÄµ÷ÓÃ£¬·µ»ØÖµ²»ÎªNULL£»µÚN+1´Î·µ»ØNULL¡£
-    @return NULL£ºÄÚ´æÒÑ¾­¶ÁÍê£»·ñÔò£¬ÎªÏÂÒ»ĞĞµÄ¿ªÊ¼Î»ÖÃ¡£
+    @brief å°†å†…å­˜æŒ‡é’ˆç§»åˆ°ä¸‹ä¸€è¡Œçš„å¼€å§‹ä½ç½®ï¼Œå¹¶è¿”å›æ­¤ä½ç½®,è‹¥ä¸ºNULLï¼Œè¡¨ç¤ºè¯»å®Œæ‰€æœ‰å†…å­˜<br>
+           å¯¹äºç¬¬ä¸€æ¬¡è°ƒç”¨ï¼Œåˆ™æŒ‡å‘å†…å­˜çš„å¼€å§‹ä½ç½®ï¼Œ<br>
+           è‹¥å†…å­˜æ€»å…±æœ‰Nè¡Œï¼Œåˆ™å‰Næ¬¡çš„è°ƒç”¨ï¼Œè¿”å›å€¼ä¸ä¸ºNULLï¼›ç¬¬N+1æ¬¡è¿”å›NULLã€‚
+    @return NULLï¼šå†…å­˜å·²ç»è¯»å®Œï¼›å¦åˆ™ï¼Œä¸ºä¸‹ä¸€è¡Œçš„å¼€å§‹ä½ç½®ã€‚
     */
     char const* nextLine();
-    ///»ñÈ¡µ±Ç°µÄĞĞºÅ£¬´Ó1¿ªÊ¼±àºÅ
+    ///è·å–å½“å‰çš„è¡Œå·ï¼Œä»1å¼€å§‹ç¼–å·
     CWX_UINT32 getCurLineNo() const;
-    ///½«¶ÁµÄÖ¸Õë£¬ÒÆµ½ÄÚ´æµÄÍ·£¬ÓësetMem()ºóµÄ×´Ì¬Ò»ÖÂ¡£
+    ///å°†è¯»çš„æŒ‡é’ˆï¼Œç§»åˆ°å†…å­˜çš„å¤´ï¼Œä¸setMem()åçš„çŠ¶æ€ä¸€è‡´ã€‚
     void seekHead();
-    ///»ñÈ¡µ±Ç°ĞĞµÄÍ·
+    ///è·å–å½“å‰è¡Œçš„å¤´
     char const* getCurLineBegin() const;
-    ///»ñÈ¡µ±Ç°ĞĞµÄÎ²£¬µ«²»°üº¬µ±Ç°µÄ×Ö·û£¬´ËÎªÏÂÒ»ĞĞµÄÍ·¡£
+    ///è·å–å½“å‰è¡Œçš„å°¾ï¼Œä½†ä¸åŒ…å«å½“å‰çš„å­—ç¬¦ï¼Œæ­¤ä¸ºä¸‹ä¸€è¡Œçš„å¤´ã€‚
     char const* getCurLineEnd() const;
-    ///Çå¿Õ¶ÔÏó
+    ///æ¸…ç©ºå¯¹è±¡
     void clear();
 private:
-    CWX_UINT32  m_uiCurLineNo;///<µ±Ç°ĞĞºÅ
-    CWX_UINT32  m_uiCurLinePos;///<µ±Ç°ĞĞÔÚBUFÖĞµÄÎ»ÖÃ
-    CWX_UINT32  m_uiNextLinePos;///<ÏÂÒ»ĞĞµÄ¿ªÊ¼ÔÚbufÖĞµÄÎ»ÖÃ
-    char const* m_szBuf;///<ÄÚ´æBUF
-    CWX_UINT32  m_uiMaxLen;///<ÄÚ´æBUFµÄ³¤¶È
-    bool        m_bDataOwn;///<ÊÇ·ñÓĞ¶ÔÏó¸ºÔğBUFµÄ¿Õ¼äÊÍ·Å
-    bool        m_first;///<ÊÇ·ñµÚÒ»´Îµ÷ÓÃnextLine() API
+    CWX_UINT32  m_uiCurLineNo;///<å½“å‰è¡Œå·
+    CWX_UINT32  m_uiCurLinePos;///<å½“å‰è¡Œåœ¨BUFä¸­çš„ä½ç½®
+    CWX_UINT32  m_uiNextLinePos;///<ä¸‹ä¸€è¡Œçš„å¼€å§‹åœ¨bufä¸­çš„ä½ç½®
+    char const* m_szBuf;///<å†…å­˜BUF
+    CWX_UINT32  m_uiMaxLen;///<å†…å­˜BUFçš„é•¿åº¦
+    bool        m_bDataOwn;///<æ˜¯å¦æœ‰å¯¹è±¡è´Ÿè´£BUFçš„ç©ºé—´é‡Šæ”¾
+    bool        m_first;///<æ˜¯å¦ç¬¬ä¸€æ¬¡è°ƒç”¨nextLine() API
 };
 
 CWINUX_END_NAMESPACE

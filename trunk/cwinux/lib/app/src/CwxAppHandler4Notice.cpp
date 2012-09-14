@@ -1,16 +1,16 @@
-#include "CwxDate.h"
+ï»¿#include "CwxDate.h"
 #include "CwxAppHandler4Notice.h"
 #include "CwxAppFramework.h"
 
 CWINUX_BEGIN_NAMESPACE
 
-///¹¹Ôìº¯Êı
+///æ„é€ å‡½æ•°
 CwxAppHandler4Notice::CwxAppHandler4Notice(CwxAppFramework* app, CwxAppReactor *reactor)
 :CwxAppHandler4Base(reactor)
 {
     m_pApp = app;
 }
-///Îö¹¹º¯Êı
+///ææ„å‡½æ•°
 CwxAppHandler4Notice::~CwxAppHandler4Notice()
 {
 }

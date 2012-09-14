@@ -1,14 +1,14 @@
-#ifndef __CWX_SINGLETON_H__
+ï»¿#ifndef __CWX_SINGLETON_H__
 #define __CWX_SINGLETON_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxSingleton.h
-@brief µ¥ÊµÀı¶ÔÏó½Ó¿ÚµÄ¶¨Òå¡£
+@brief å•å®ä¾‹å¯¹è±¡æ¥å£çš„å®šä¹‰ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-02
@@ -24,7 +24,7 @@ CWINUX_BEGIN_NAMESPACE
 class CwxSingletonMgr;
 /**
 @class CwxSingleton
-@brief µ¥ÊµÀı¶ÔÏó½Ó¿Ú¡£
+@brief å•å®ä¾‹å¯¹è±¡æ¥å£ã€‚
 */
 class CWX_API CwxSingleton
 {
@@ -34,9 +34,9 @@ public:
         return m_strName;
     }
 protected:
-    ///¹¹Ôìº¯Êı£¬½«ÍùCwxSingletonMgr½øĞĞ×¢²á, strNameÎª¶ÔÏóµÄÃû×Ö£¬ÒÔ±ãµ÷ÊÔ
+    ///æ„é€ å‡½æ•°ï¼Œå°†å¾€CwxSingletonMgrè¿›è¡Œæ³¨å†Œ, strNameä¸ºå¯¹è±¡çš„åå­—ï¼Œä»¥ä¾¿è°ƒè¯•
     CwxSingleton(string const& strName);
-    ///Îö¹¹º¯Êı£¬¶ÔÏóµÄÊµÀı½«ÓĞCwxSingletonMgrÊÍ·Å
+    ///ææ„å‡½æ•°ï¼Œå¯¹è±¡çš„å®ä¾‹å°†æœ‰CwxSingletonMgré‡Šæ”¾
     virtual ~CwxSingleton();
     friend class CwxSingletonMgr;
 private:

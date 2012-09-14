@@ -1,14 +1,14 @@
-#ifndef __CWX_UNIX_ADDR_H__
+ï»¿#ifndef __CWX_UNIX_ADDR_H__
 #define __CWX_UNIX_ADDR_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxUnixAddr.h
-@brief UNIX domainµÄµØÖ·¶ÔÏóµÄ¶¨ÒåÎÄ¼ş¡£
+@brief UNIX domainçš„åœ°å€å¯¹è±¡çš„å®šä¹‰æ–‡ä»¶ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-10
@@ -25,46 +25,46 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxUnixAddr
-@brief Unix domainµØÖ·¶ÔÏó¡£
+@brief Unix domainåœ°å€å¯¹è±¡ã€‚
 */
 class CWX_API CwxUnixAddr:public CwxAddr
 {
 public:
-    ///Ä¬ÈÏ¹¹Ôìº¯Êı
+    ///é»˜è®¤æ„é€ å‡½æ•°
     CwxUnixAddr();
     /**
-    @brief ½¨Á¢szPathFileµÄUnix domainµØÖ·¡£
-    @param [in] szPathFile Unix domain¶ÔÓ¦µÄÎÄ¼ş¡£
+    @brief å»ºç«‹szPathFileçš„Unix domainåœ°å€ã€‚
+    @param [in] szPathFile Unix domainå¯¹åº”çš„æ–‡ä»¶ã€‚
     */
     CwxUnixAddr(char const* szPathFile);
     /**
-    @brief ¸ù¾İsockaddr_unµÄ½á¹¹£¬´´½¨Unix domainµØÖ·¡£
-    @param [in] addr µØÖ·½á¹¹¡£
-    @param [in] len addrµÄ³¤¶È¡£
+    @brief æ ¹æ®sockaddr_unçš„ç»“æ„ï¼Œåˆ›å»ºUnix domainåœ°å€ã€‚
+    @param [in] addr åœ°å€ç»“æ„ã€‚
+    @param [in] len addrçš„é•¿åº¦ã€‚
     */
     CwxUnixAddr (sockaddr_un const* addr, int len);
-    ///¿½±´¹¹Ôì
+    ///æ‹·è´æ„é€ 
     CwxUnixAddr(CwxUnixAddr const& addr);
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxUnixAddr();
 public:
     /**
-    @brief ¶ÔÏó¸³Öµ¡£
-    @param [in] addr ¸³ÖµµÄ¶ÔÏó¡£
-    @return 0£º³É¹¦£»-1£ºÊ§°Ü¡£
+    @brief å¯¹è±¡èµ‹å€¼ã€‚
+    @param [in] addr èµ‹å€¼çš„å¯¹è±¡ã€‚
+    @return 0ï¼šæˆåŠŸï¼›-1ï¼šå¤±è´¥ã€‚
     */
     int set (CwxUnixAddr const& addr);
     /**
-    @brief ĞŞ¸ÄµØÖ·¶ÔÓ¦µÄPathFile¡£
-    @param [in] szPathFile Unix domain ¶ÔÓ¦µÄpath file¡£
-    @return 0£º³É¹¦£»-1£ºÊ§°Ü¡£
+    @brief ä¿®æ”¹åœ°å€å¯¹åº”çš„PathFileã€‚
+    @param [in] szPathFile Unix domain å¯¹åº”çš„path fileã€‚
+    @return 0ï¼šæˆåŠŸï¼›-1ï¼šå¤±è´¥ã€‚
     */
     int set(char const* szPathFile);
     /**
-    @brief ¸ù¾İsockaddr_unµÄ½á¹¹Êı¾İ£¬ĞŞ¸ÄµØÖ·¡£
-    @param [in] addr µØÖ·½á¹¹¡£
-    @param [in] len addrµÄ³¤¶È¡£
-    @return 0£º³É¹¦£»-1£ºÊ§°Ü¡£
+    @brief æ ¹æ®sockaddr_unçš„ç»“æ„æ•°æ®ï¼Œä¿®æ”¹åœ°å€ã€‚
+    @param [in] addr åœ°å€ç»“æ„ã€‚
+    @param [in] len addrçš„é•¿åº¦ã€‚
+    @return 0ï¼šæˆåŠŸï¼›-1ï¼šå¤±è´¥ã€‚
     */
     int set(sockaddr_un const* addr, int len);
     /// Return a pointer to the underlying network address.
@@ -73,8 +73,8 @@ public:
     virtual void setAddr (void *addr, int len);
 public:
     /**
-    @brief »ñÈ¡Unix domainµÄpath file¡£
-    @return NULL£ºÊ§°Ü£»NOT NULL£ºUnix domainµÄPath file¡£
+    @brief è·å–Unix domainçš„path fileã€‚
+    @return NULLï¼šå¤±è´¥ï¼›NOT NULLï¼šUnix domainçš„Path fileã€‚
     */
     char const* getPathFile() const;
     /// Compare two addresses for equality.

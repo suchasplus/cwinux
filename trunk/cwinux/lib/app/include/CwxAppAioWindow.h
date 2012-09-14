@@ -1,14 +1,14 @@
-#ifndef __CWX_APP_AIO_WINDOW_H__
+ï»¿#ifndef __CWX_APP_AIO_WINDOW_H__
 #define __CWX_APP_AIO_WINDOW_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxAppAioWindow.h
-@brief Òì²½Í¨ĞÅµÄÏûÏ¢·¢ËÍ¡¢½ÓÊÕ¿ØÖÆÀàµÄ¶¨Òå¡£ÀàËÆTCPµÄ»¬´°
+@brief å¼‚æ­¥é€šä¿¡çš„æ¶ˆæ¯å‘é€ã€æ¥æ”¶æ§åˆ¶ç±»çš„å®šä¹‰ã€‚ç±»ä¼¼TCPçš„æ»‘çª—
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-12
@@ -24,28 +24,28 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxAppAioWindow
-@brief Òì²½Í¨ĞÅµÄÏûÏ¢·¢ËÍ¡¢½ÓÊÕ¿ØÖÆÀà£¬ÀàËÆTCPµÄ»¬´°¡£
+@brief å¼‚æ­¥é€šä¿¡çš„æ¶ˆæ¯å‘é€ã€æ¥æ”¶æ§åˆ¶ç±»ï¼Œç±»ä¼¼TCPçš„æ»‘çª—ã€‚
 */
 class CWX_API CwxAppAioWindow
 {
 public:
-    ///Á¬½Ó×´Ì¬¶¨Òå
+    ///è¿æ¥çŠ¶æ€å®šä¹‰
     enum{
-        STATE_CLOSED = 0,///<¹Ø±Õ×´Ì¬
-        STATE_CONNECTED = 1,///<Á¬½Ó½¨Á¢×´Ì¬
-        STATE_SYNCING = 2///<Êı¾İ·¢ËÍ×´Ì¬
+        STATE_CLOSED = 0,///<å…³é—­çŠ¶æ€
+        STATE_CONNECTED = 1,///<è¿æ¥å»ºç«‹çŠ¶æ€
+        STATE_SYNCING = 2///<æ•°æ®å‘é€çŠ¶æ€
     };
-    ///Í¨ĞÅ´°¿Ú¿ØÖÆ²ÎÊı
+    ///é€šä¿¡çª—å£æ§åˆ¶å‚æ•°
     enum{
-        DEF_WINDOW_SIZE = 512,///<È±Ê¡µÄÍ¨ĞÅ´°¿ÚµÄ´óĞ¡
-        MAX_WINDOW_SIZE = 8192///<×î´óµÄÍ¨ĞÅ´°¿Ú´óĞ¡
+        DEF_WINDOW_SIZE = 512,///<ç¼ºçœçš„é€šä¿¡çª—å£çš„å¤§å°
+        MAX_WINDOW_SIZE = 8192///<æœ€å¤§çš„é€šä¿¡çª—å£å¤§å°
     };
     /**
-    @brief ¹¹Ôìº¯Êı
-    @param [in] uiSvrId Á¬½ÓµÄSVR-ID
-    @param [in] uiHostId Á¬½ÓµÄHOST-ID
-    @param [in] uiConnId Á¬½ÓµÄÁ¬½ÓID
-    @param [in] uiWindowSize Á¬½ÓµÄÒì²½Í¨ĞÅ»¬´°´óĞ¡
+    @brief æ„é€ å‡½æ•°
+    @param [in] uiSvrId è¿æ¥çš„SVR-ID
+    @param [in] uiHostId è¿æ¥çš„HOST-ID
+    @param [in] uiConnId è¿æ¥çš„è¿æ¥ID
+    @param [in] uiWindowSize è¿æ¥çš„å¼‚æ­¥é€šä¿¡æ»‘çª—å¤§å°
     */
     CwxAppAioWindow(CWX_UINT32 uiSvrId,
         CWX_UINT32 uiHostId,
@@ -64,7 +64,7 @@ public:
         m_uiState = STATE_CLOSED;
         m_ullStartSid = 0;
     };
-    ///¶ÔÏóµÄ¿½±´¹¹Ôì
+    ///å¯¹è±¡çš„æ‹·è´æ„é€ 
     CwxAppAioWindow& operator=(CwxAppAioWindow const& item)
     {
         if (&item != this)
@@ -82,80 +82,80 @@ public:
         return *this;
     }
 public:
-    ///»ñÈ¡´°¿ÚµÄÊı¾İÍ¬²½µÄ¾ä±ú
+    ///è·å–çª—å£çš„æ•°æ®åŒæ­¥çš„å¥æŸ„
     void*& getHandle()
     {
         return m_pHandle; 
     }
-    ///ÉèÖÃ´°¿ÚµÄÊı¾İÍ¬²½µÄ¾ä±ú
+    ///è®¾ç½®çª—å£çš„æ•°æ®åŒæ­¥çš„å¥æŸ„
     void setHandle(void* pHandle)
     {
         m_pHandle = pHandle;
     }
-    ///»ñÈ¡´°¿ÚÁ¬½ÓµÄSVR-ID
+    ///è·å–çª—å£è¿æ¥çš„SVR-ID
     CWX_UINT32 getSvrId() const
     {
         return m_uiSvrId;
     }
-    ///»ñÈ¡´°¿ÚÁ¬½ÓµÄHOST-ID
+    ///è·å–çª—å£è¿æ¥çš„HOST-ID
     CWX_UINT32 getHostId() const 
     {
         return m_uiHostId;
     }
-    ///»ñÈ¡´°¿ÚÁ¬½ÓµÄCONN-ID
+    ///è·å–çª—å£è¿æ¥çš„CONN-ID
     CWX_UINT32 getConnId() const 
     {
         return m_uiConnId;
     }
-    ///»ñÈ¡´°¿ÚÁ¬½ÓµÄ·Ö×éID
+    ///è·å–çª—å£è¿æ¥çš„åˆ†ç»„ID
     CWX_UINT32 getGroupId() const 
     {
         return m_uiGroupId;
     }
-    ///ÉèÖÃ´°¿ÚÁ¬½ÓµÄ·Ö×éID
+    ///è®¾ç½®çª—å£è¿æ¥çš„åˆ†ç»„ID
     void setGroupId(CWX_UINT32 uiGroup) 
     {
         m_uiGroupId = uiGroup;
     }
-    ///»ñÈ¡´°¿ÚÁ¬½ÓµÄ·Ö×éÊıÁ¿
+    ///è·å–çª—å£è¿æ¥çš„åˆ†ç»„æ•°é‡
     CWX_UINT32 getGroupNum() const 
     {
         return m_uiGroupNum;
     }
-    ///ÉèÖÃ´°¿ÚÁ¬½ÓµÄ·Ö×éÊıÁ¿
+    ///è®¾ç½®çª—å£è¿æ¥çš„åˆ†ç»„æ•°é‡
     void setGroupNum(CWX_UINT32 uiNum) 
     {
         m_uiGroupNum = uiNum;
     }
-    ///»ñÈ¡´°¿ÚÁ¬½ÓµÄÁ¬½ÓµÄ×´Ì¬
+    ///è·å–çª—å£è¿æ¥çš„è¿æ¥çš„çŠ¶æ€
     CWX_UINT32 getState() const 
     {
         return m_uiState;
     }
-    ///ÉèÖÃ´°¿ÚÁ¬½ÓµÄÁ¬½ÓµÄ×´Ì¬
+    ///è®¾ç½®çª—å£è¿æ¥çš„è¿æ¥çš„çŠ¶æ€
     void setState(CWX_UINT32 uiState) 
     {
         m_uiState = uiState;
     }
-    ///ÉèÖÃ´°¿ÚµÄ³õÊ¼Í¬²½µÄSID
+    ///è®¾ç½®çª—å£çš„åˆå§‹åŒæ­¥çš„SID
     void setStartSid(CWX_UINT64 const& sid)
     {
         setState(STATE_SYNCING);
         m_ullStartSid = sid;
         m_sendSidSet.clear();
     }
-    ///»ñÈ¡´°¿ÚµÄ³õÊ¼Í¬²½µÄSID
+    ///è·å–çª—å£çš„åˆå§‹åŒæ­¥çš„SID
     CWX_UINT64 const& getStartSid() const
     {
         return m_ullStartSid;
     }
-    ///ÉèÖÃ´°¿Ú·¢ËÍµÄSID¡£true£ºÕıÈ·£»false£ºÏûÏ¢ÒÑ¾­·¢ËÍ
+    ///è®¾ç½®çª—å£å‘é€çš„SIDã€‚trueï¼šæ­£ç¡®ï¼›falseï¼šæ¶ˆæ¯å·²ç»å‘é€
     bool sendOneMsg(CWX_UINT64 ullSid)
     {
         return m_sendSidSet.insert(ullSid).second?true:false;
     }
-    ///ÉèÖÃ´°¿ÚÊÕµ½µÄSID¡£true£ºÕıÈ·£»false£º´ËÏûÏ¢Ã»ÓĞ·¢ËÍ»ò´ÎĞò´íÎó
-    bool recvOneMsg(CWX_UINT64 ullSid, bool bOrder=true/*ÊÇ·ñÓ¦¸ÃÓĞĞò·µ»Ø*/) 
+    ///è®¾ç½®çª—å£æ”¶åˆ°çš„SIDã€‚trueï¼šæ­£ç¡®ï¼›falseï¼šæ­¤æ¶ˆæ¯æ²¡æœ‰å‘é€æˆ–æ¬¡åºé”™è¯¯
+    bool recvOneMsg(CWX_UINT64 ullSid, bool bOrder=true/*æ˜¯å¦åº”è¯¥æœ‰åºè¿”å›*/) 
     {
         if (bOrder)
         {
@@ -169,7 +169,7 @@ public:
         }
         return m_sendSidSet.erase(ullSid)?true:false;
     }
-    ///»ñÈ¡ÏÂÒ»¸öĞèÒª·µ»ØµÄÏûÏ¢¡£true£º´æÔÚ£»false£º²»´æÔÚ
+    ///è·å–ä¸‹ä¸€ä¸ªéœ€è¦è¿”å›çš„æ¶ˆæ¯ã€‚trueï¼šå­˜åœ¨ï¼›falseï¼šä¸å­˜åœ¨
     bool getNextRecvMsg(CWX_UINT64& ullSid)
     {
         set<CWX_UINT64>::iterator iter = m_sendSidSet.begin();
@@ -180,66 +180,66 @@ public:
         }
         return false;
     }
-    ///ÅĞ¶Ï´°¿ÚÁ¬½ÓµÄÁ¬½ÓÊÇ·ñ¹Ø±Õ
+    ///åˆ¤æ–­çª—å£è¿æ¥çš„è¿æ¥æ˜¯å¦å…³é—­
     bool isClosed() const 
     {
         return STATE_CLOSED == m_uiState;
     }
-    ///ÅĞ¶Ï´°¿ÚÁ¬½ÓµÄÁ¬½ÓÊÇ·ñ½¨Á¢
+    ///åˆ¤æ–­çª—å£è¿æ¥çš„è¿æ¥æ˜¯å¦å»ºç«‹
     bool isConnected() const 
     {
         return STATE_CONNECTED == m_uiState;
     }
-    ///ÅĞ¶Ï´°¿ÚÁ¬½ÓÊÇ·ñÔÚÊı¾İ·¢ËÍ×´Ì¬
+    ///åˆ¤æ–­çª—å£è¿æ¥æ˜¯å¦åœ¨æ•°æ®å‘é€çŠ¶æ€
     bool isSyncing() const
     {
         return STATE_SYNCING == m_uiState;
     }
-    ///ÅĞ¶ÏÊÇ·ñÓĞ¿ÕÏĞµÄÒì²½ÏûÏ¢·¢ËÍ´°¿Ú
+    ///åˆ¤æ–­æ˜¯å¦æœ‰ç©ºé—²çš„å¼‚æ­¥æ¶ˆæ¯å‘é€çª—å£
     bool isEnableSend() const 
     {
         return m_sendSidSet.size() < m_uiWindowSize;
     }
-    ///»ñÈ¡´°¿ÚµÄ´óĞ¡
+    ///è·å–çª—å£çš„å¤§å°
     CWX_UINT32 getWindowSize() const 
     {
         return m_uiWindowSize;
     }
-    ///»ñÈ¡´°¿Ú±»Ê¹ÓÃµÄ´óĞ¡
+    ///è·å–çª—å£è¢«ä½¿ç”¨çš„å¤§å°
     CWX_UINT32 getUsedSize() const 
     {
         return m_sendSidSet.size();
     }
-    ///»ñÈ¡ËùÓĞÎ´»Ø¸´µÄÏûÏ¢µÄSID
+    ///è·å–æ‰€æœ‰æœªå›å¤çš„æ¶ˆæ¯çš„SID
     set<CWX_UINT64> const& getWaitingSid() const
     {
         return m_sendSidSet;
     }
-    ///»ñÈ¡ÏûÏ¢½ÓÊÕ¶ËµÄ»úÆ÷Ãû×Ö
+    ///è·å–æ¶ˆæ¯æ¥æ”¶ç«¯çš„æœºå™¨åå­—
     string const& getHostName() const
     {
         return m_strHostName;
     }
-    ///ÉèÖÃÏûÏ¢½ÓÊÕ¶ËµÄ»úÆ÷Ãû×Ö
+    ///è®¾ç½®æ¶ˆæ¯æ¥æ”¶ç«¯çš„æœºå™¨åå­—
     void setHostName(string const& name)
     {
         m_strHostName = name;
     }
 private:
-    CWX_UINT32     m_uiWindowSize;///<´°¿Ú´óĞ¡
-    void*           m_pHandle;///<´°¿ÚÊı¾İÒì²½·¢ËÍµÄ¾ä±ú
-    CWX_UINT32      m_uiSvrId;///<´°¿ÚÁ¬½ÓµÄSVR-ID
-    CWX_UINT32      m_uiHostId;///<´°¿ÚÁ¬½ÓµÄHOST ID
-    CWX_UINT32      m_uiConnId;///<´°¿ÚÁ¬½ÓµÄCONN ID
-    CWX_UINT32      m_uiGroupId;///<´°¿ÚÁ¬½ÓµÄ·Ö×éID
-    CWX_UINT32      m_uiGroupNum;///<´°¿ÚÁ¬½ÓµÄ·Ö×éÊıÁ¿
-    CWX_UINT32      m_uiState;///<´°¿ÚÁ¬½ÓµÄ×´Ì¬
-    CWX_UINT64      m_ullStartSid;///<´°¿ÚÁ¬½ÓµÄÆğÊ¼Í¬²½SID
-    set<CWX_UINT64> m_sendSidSet;///<´ı»Ø¸´µÄÊı¾İÍ¬²½SID
-    string          m_strHostName;///<¶Ô¶ËµÄ»úÆ÷Ãû
+    CWX_UINT32     m_uiWindowSize;///<çª—å£å¤§å°
+    void*           m_pHandle;///<çª—å£æ•°æ®å¼‚æ­¥å‘é€çš„å¥æŸ„
+    CWX_UINT32      m_uiSvrId;///<çª—å£è¿æ¥çš„SVR-ID
+    CWX_UINT32      m_uiHostId;///<çª—å£è¿æ¥çš„HOST ID
+    CWX_UINT32      m_uiConnId;///<çª—å£è¿æ¥çš„CONN ID
+    CWX_UINT32      m_uiGroupId;///<çª—å£è¿æ¥çš„åˆ†ç»„ID
+    CWX_UINT32      m_uiGroupNum;///<çª—å£è¿æ¥çš„åˆ†ç»„æ•°é‡
+    CWX_UINT32      m_uiState;///<çª—å£è¿æ¥çš„çŠ¶æ€
+    CWX_UINT64      m_ullStartSid;///<çª—å£è¿æ¥çš„èµ·å§‹åŒæ­¥SID
+    set<CWX_UINT64> m_sendSidSet;///<å¾…å›å¤çš„æ•°æ®åŒæ­¥SID
+    string          m_strHostName;///<å¯¹ç«¯çš„æœºå™¨å
 };
 
-///´°¿ÚÁ¬½ÓµÄhash¶¨Òå
+///çª—å£è¿æ¥çš„hashå®šä¹‰
 typedef hash_map<CWX_UINT32/*conn_id*/, CwxAppAioWindow*, CwxNumHash<CWX_UINT32>, CwxNumHash<CWX_UINT32> > CwxAppAioWindowHash;
 
 CWINUX_END_NAMESPACE

@@ -1,18 +1,18 @@
-#ifndef __CWX_APP_MACRO_H__
+ï»¿#ifndef __CWX_APP_MACRO_H__
 #define __CWX_APP_MACRO_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 *@file  CwxAppMacro.h
-*@brief appµÄÈ«¾Öºê¶¨Òå
+*@brief appçš„å…¨å±€å®å®šä¹‰
 *@author cwinux@gmail.com
 *@version 0.1.0
 *@date  2009-06-28
-*@warning  ÎŞ.
+*@warning  æ— .
 */
 #include "CwxPre.h"
 #include <signal.h>
@@ -24,31 +24,31 @@
 
 #define CWX_APP_MAX_SIGNAL_ID _NSIG
 
-///Á¬½ÓÄ£Ê½¶¨Òå
-#define CWX_APP_MSG_MODE    1 ///<»ùÓÚmsgµÄÁ¬½ÓÄ£Ê½
-#define CWX_APP_EVENT_MODE  2 ///<»ùÓÚeventµÄÁ¬½ÓÄ£Ê½
+///è¿æ¥æ¨¡å¼å®šä¹‰
+#define CWX_APP_MSG_MODE    1 ///<åŸºäºmsgçš„è¿æ¥æ¨¡å¼
+#define CWX_APP_EVENT_MODE  2 ///<åŸºäºeventçš„è¿æ¥æ¨¡å¼
 
-///ÎŞĞ§Á´½ÓID¶¨Òå
-#define CWX_APP_INVALID_CONN_ID 0 ///<ÎŞĞ§µÄÁ¬½ÓID
-#define CWX_APP_MIN_CONN_ID     1 ///<×îĞ¡µÄÁ¬½ÓID
-#define CWX_APP_MAX_CONN_ID     0x7FFFFFFF ///<×î´óµÄÁ¬½ÓID
+///æ— æ•ˆé“¾æ¥IDå®šä¹‰
+#define CWX_APP_INVALID_CONN_ID 0 ///<æ— æ•ˆçš„è¿æ¥ID
+#define CWX_APP_MIN_CONN_ID     1 ///<æœ€å°çš„è¿æ¥ID
+#define CWX_APP_MAX_CONN_ID     0x7FFFFFFF ///<æœ€å¤§çš„è¿æ¥ID
 
-///¶¨ÒåHandle ÀàĞÍ
+///å®šä¹‰Handle ç±»å‹
 #define CWX_APP_HANDLE_UNKNOW  0
 #define CWX_APP_HANDLE_SIGNAL  1
 #define CWX_APP_HANDLE_TIMEOUT 2
 
 
-#define CWX_APP_MAX_TASK_NUM  4096 ///<TaskboardÖĞ×î´óµÄTaskÊıÁ¿
-#define CWX_APP_DEF_LOG_FILE_SIZE  1024 * 1024 * 20 ///<È±Ê¡µÄÈÕÖ¾ÎÄ¼ş´óĞ¡
-#define CWX_APP_DEF_LOG_FILE_NUM   7 ///<È±Ê¡µÄÈÕÖ¾ÎÄ¼şÊıÁ¿
+#define CWX_APP_MAX_TASK_NUM  4096 ///<Taskboardä¸­æœ€å¤§çš„Taskæ•°é‡
+#define CWX_APP_DEF_LOG_FILE_SIZE  1024 * 1024 * 20 ///<ç¼ºçœçš„æ—¥å¿—æ–‡ä»¶å¤§å°
+#define CWX_APP_DEF_LOG_FILE_NUM   7 ///<ç¼ºçœçš„æ—¥å¿—æ–‡ä»¶æ•°é‡
 
 #define CWX_APP_DEF_BACKLOG_NUM   8192
 
 
-#define CWX_APP_DEF_KEEPALIVE_IDLE 10//¿ªÊ¼Ê×´ÎKeepAliveÌ½²âÇ°µÄTCP¿Õ±ÕÊ±¼ä
-#define CWX_APP_DEF_KEEPALIVE_INTERNAL 5//Á½´ÎKeepAliveÌ½²â¼äµÄÊ±¼ä¼ä¸ô
-#define CWX_APP_DEF_KEEPALIVE_COUNT   2//ÅĞ¶¨¶Ï¿ªÇ°µÄKeepAliveÌ½²â´ÎÊı
+#define CWX_APP_DEF_KEEPALIVE_IDLE 10//å¼€å§‹é¦–æ¬¡KeepAliveæ¢æµ‹å‰çš„TCPç©ºé—­æ—¶é—´
+#define CWX_APP_DEF_KEEPALIVE_INTERNAL 5//ä¸¤æ¬¡KeepAliveæ¢æµ‹é—´çš„æ—¶é—´é—´éš”
+#define CWX_APP_DEF_KEEPALIVE_COUNT   2//åˆ¤å®šæ–­å¼€å‰çš„KeepAliveæ¢æµ‹æ¬¡æ•°
 
 #include "CwxPost.h"
 #endif

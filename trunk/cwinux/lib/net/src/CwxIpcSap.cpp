@@ -1,4 +1,4 @@
-#include "CwxIpcSap.h"
+﻿#include "CwxIpcSap.h"
 CWINUX_BEGIN_NAMESPACE
 CwxIpcSap::CwxIpcSap(void)
 {

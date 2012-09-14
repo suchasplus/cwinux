@@ -1,14 +1,14 @@
-#ifndef __CWX_MSG_BLOCK_H__
+ï»¿#ifndef __CWX_MSG_BLOCK_H__
 #define __CWX_MSG_BLOCK_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxMsgBlock.h
-@brief Í¨ĞÅÊı¾İÊÕ·¢µÄÊı¾İBlock¶ÔÏó¶¨Òå
+@brief é€šä¿¡æ•°æ®æ”¶å‘çš„æ•°æ®Blockå¯¹è±¡å®šä¹‰
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-07-20
@@ -33,7 +33,7 @@ class CwxMsgQueue;
 
 /**
 @class CwxMsgSendCtrl
-@brief Í¨ĞÅÊı¾İ·¢ËÍµÄĞĞÎª¿ØÖÆ¶ÔÏó
+@brief é€šä¿¡æ•°æ®å‘é€çš„è¡Œä¸ºæ§åˆ¶å¯¹è±¡
 */
 class CWX_API CwxMsgSendCtrl
 {
@@ -44,73 +44,73 @@ public:
         SUSPEND_CONN = 2
     };
     enum{
-        FAIL_NOTICE = (1<<0),///<·¢ËÍÊ§°ÜÍ¨Öª±êÖ¾
-        BEGIN_NOTICE = (1<<1),///<¿ªÊ¼·¢ËÍÍ¨Öª±ê¼Ç
-        FINISH_NOTICE = (1<<2),///<·¢ËÍ½áÊøÍ¨Öª±ê¼Ç
-        CLOSE_NOTICE = (1<<3), ///<·¢ËÍÍê±Ïºó£¬¹Ø±ÕÁ¬½Ó
-        RECONN_NOTICE= (1<<4), ///<ÖØĞÂÁ¬½Ó£¬¶ÔÓÚ±»¶¯Á¬½ÓÔòºöÂÔ
-        FAIL_FINISH_NOTICE = FAIL_NOTICE|FINISH_NOTICE,///<ÏûÏ¢·¢ËÍÍê³ÉÓëÊ§°ÜµÄÊ±ºòÍ¨Öª
-        ALL_NOTICE = FAIL_FINISH_NOTICE|BEGIN_NOTICE,///<ÉèÖÃÈ«²¿±ê¼Ç£¬³ıÁË¹Ø±Õ¡¢ÖØÁ¬Á¬½Ó
-        NONE = 0///<Ã»ÓĞÈÎºÎµÄ±ê¼Ç
+        FAIL_NOTICE = (1<<0),///<å‘é€å¤±è´¥é€šçŸ¥æ ‡å¿—
+        BEGIN_NOTICE = (1<<1),///<å¼€å§‹å‘é€é€šçŸ¥æ ‡è®°
+        FINISH_NOTICE = (1<<2),///<å‘é€ç»“æŸé€šçŸ¥æ ‡è®°
+        CLOSE_NOTICE = (1<<3), ///<å‘é€å®Œæ¯•åï¼Œå…³é—­è¿æ¥
+        RECONN_NOTICE= (1<<4), ///<é‡æ–°è¿æ¥ï¼Œå¯¹äºè¢«åŠ¨è¿æ¥åˆ™å¿½ç•¥
+        FAIL_FINISH_NOTICE = FAIL_NOTICE|FINISH_NOTICE,///<æ¶ˆæ¯å‘é€å®Œæˆä¸å¤±è´¥çš„æ—¶å€™é€šçŸ¥
+        ALL_NOTICE = FAIL_FINISH_NOTICE|BEGIN_NOTICE,///<è®¾ç½®å…¨éƒ¨æ ‡è®°ï¼Œé™¤äº†å…³é—­ã€é‡è¿è¿æ¥
+        NONE = 0///<æ²¡æœ‰ä»»ä½•çš„æ ‡è®°
     };
 public:
-    ///¼ì²éÊÇ·ñÏûÏ¢·¢ËÍÇ°Í¨Öª
+    ///æ£€æŸ¥æ˜¯å¦æ¶ˆæ¯å‘é€å‰é€šçŸ¥
     inline bool isBeginNotice() const;
-    ///¼ì²éÊÇ·ñÏûÏ¢Íê±ÏÍ¨Öª
+    ///æ£€æŸ¥æ˜¯å¦æ¶ˆæ¯å®Œæ¯•é€šçŸ¥
     inline bool isFinishNotice() const;
-    ///¼ì²éÊÇ·ñÏûÏ¢Ê§°ÜÍ¨Öª
+    ///æ£€æŸ¥æ˜¯å¦æ¶ˆæ¯å¤±è´¥é€šçŸ¥
     inline bool isFailNotice() const;
 public:
-    ///ÉèÖÃ»ùÓÚÁ¬½ÓµÄ·¢ËÍ¿ØÖÆ
+    ///è®¾ç½®åŸºäºè¿æ¥çš„å‘é€æ§åˆ¶
     inline void setConnCtrl(CWX_UINT32 uiSvrId,
         CWX_UINT32 uiHostId,
         CWX_UINT32 uiConnId,
         CWX_UINT32 uiMsgAttr=FAIL_FINISH_NOTICE,
         void* userData=NULL,
         CWX_UINT32 uiConnState=UNDO_CONN);
-    ///»ñÈ¡SVR ID
+    ///è·å–SVR ID
     inline CWX_UINT32 getSvrId() const;
-    ///ÉèÖÃSVR ID
+    ///è®¾ç½®SVR ID
     inline void setSvrId(CWX_UINT32 uiSvrId);
-    ///»ñÈ¡HOST ID
+    ///è·å–HOST ID
     inline CWX_UINT32 getHostId() const;
-    ///ÉèÖÃHOST ID
+    ///è®¾ç½®HOST ID
     inline void setHostId(CWX_UINT32 uiHostId);
-    ///»ñÈ¡CONN ID
+    ///è·å–CONN ID
     inline CWX_UINT32 getConnId() const ;
-    ///ÉèÖÃCONN ID
+    ///è®¾ç½®CONN ID
     inline void setConnId(CWX_UINT32 uiConnId) ;
-    ///»ñÈ¡SVRµÄÈ±Ê¡Host id
+    ///è·å–SVRçš„ç¼ºçœHost id
     inline CWX_UINT32 getDefHostId() const;
-    ///ÉèÖÃ·¢ËÍSVRµÄÈ±Ê¡HOST ID
+    ///è®¾ç½®å‘é€SVRçš„ç¼ºçœHOST ID
     inline void setDefHostId(CWX_UINT32 uiDefHostId);
-    ///»ñÈ¡·¢ËÍµÄÊôĞÔ
+    ///è·å–å‘é€çš„å±æ€§
     inline CWX_UINT32 getMsgAttr() const ;
-    ///ÉèÖÃ·¢ËÍµÄÊôĞÔ
+    ///è®¾ç½®å‘é€çš„å±æ€§
     inline void setMsgAttr(CWX_UINT32 uiAttr) ;
-    ///»ñÈ¡·¢ËÍµÄuser data
+    ///è·å–å‘é€çš„user data
     inline void* getUserData() ;
-    ///ÉèÖÃ·¢ËÍµÄuser data
+    ///è®¾ç½®å‘é€çš„user data
     inline void setUserData(void* userData) ;
-    ///»ñÈ¡Á¬½Óresume×´Ì¬
+    ///è·å–è¿æ¥resumeçŠ¶æ€
     inline CWX_UINT32 getConnResumeState() const ;
-    ///¼ì²éÊÇ·ñresumeÁ¬½Ó
+    ///æ£€æŸ¥æ˜¯å¦resumeè¿æ¥
     inline bool isResumeConn() const ;
-    ///¼ì²éÊÇ·ñsuspendÁ¬½Ó
+    ///æ£€æŸ¥æ˜¯å¦suspendè¿æ¥
     inline bool isSuspendConn() const ;
-    ///¼ì²éÊÇ·ñ²»Ö´ĞĞundoÁ¬½Ó
+    ///æ£€æŸ¥æ˜¯å¦ä¸æ‰§è¡Œundoè¿æ¥
     inline bool isUndoConn() const ;
-    ///ÉèÖÃÁ¬½Óresume×´Ì¬
+    ///è®¾ç½®è¿æ¥resumeçŠ¶æ€
     inline void setConnResumeState(CWX_UINT32 uiState) ;
-    ///ÉèÖÃÖØÁ¬µÄÑÓÊ±£¬µ¥Î»Îªms
+    ///è®¾ç½®é‡è¿çš„å»¶æ—¶ï¼Œå•ä½ä¸ºms
     inline void setReconnDelay(CWX_UINT32 uiMiliSecond);
-    ///»ñÈ¡ÖØÁ¬µÄÑÓÊ±£¬µ¥Î»Îªms
+    ///è·å–é‡è¿çš„å»¶æ—¶ï¼Œå•ä½ä¸ºms
     inline CWX_UINT32 getReconnDelay() const;
 public:
-    ///Çå¿Õ¿ØÖÆ¶ÔÏó
+    ///æ¸…ç©ºæ§åˆ¶å¯¹è±¡
     inline void reset();
 private:
-    ///½ûÖ¹´´½¨¶ÔÏóÊµÀı¡£Ö»ÄÜÓĞCwxMsgBlock¶ÔÏó´´½¨
+    ///ç¦æ­¢åˆ›å»ºå¯¹è±¡å®ä¾‹ã€‚åªèƒ½æœ‰CwxMsgBlockå¯¹è±¡åˆ›å»º
     CwxMsgSendCtrl();
     ~CwxMsgSendCtrl();
     friend class CwxMsgBlock;
@@ -119,202 +119,202 @@ private:
     CWX_UINT32             m_uiSvrId; ///<service id
     CWX_UINT32             m_uiHostId; ///<host id
     CWX_UINT32             m_uiConnId;///<connection id
-    CWX_UINT32             m_uiDefHostId; ///<È±Ê¡host id
+    CWX_UINT32             m_uiDefHostId; ///<ç¼ºçœhost id
     CWX_UINT32             m_uiMsgAttr; ///<msg's attribute for send
-    CWX_UINT32             m_uiConnResumeState; ///<Á¬½ÓµÄsuspend¡¢resume×´Ì¬
-    CWX_UINT32             m_uiReconnDelay; ///<ÖØĞÂÁ¬½ÓµÄÑÓÊ±£¬µ¥Î»ÎªºÁÃë
+    CWX_UINT32             m_uiConnResumeState; ///<è¿æ¥çš„suspendã€resumeçŠ¶æ€
+    CWX_UINT32             m_uiReconnDelay; ///<é‡æ–°è¿æ¥çš„å»¶æ—¶ï¼Œå•ä½ä¸ºæ¯«ç§’
 };
 
 
 /**
 @class CwxEventInfo
-@brief ¼Ü¹¹µÄÊÂ¼şÀà¶ÔÏó£¬¶¨ÒåÏµÍ³µÄ¸÷ÖÖÊÂ¼şÀàĞÍ¡£´ËÎªcommanderÏûÏ¢·Ö·¢µÄ»ù´¡
+@brief æ¶æ„çš„äº‹ä»¶ç±»å¯¹è±¡ï¼Œå®šä¹‰ç³»ç»Ÿçš„å„ç§äº‹ä»¶ç±»å‹ã€‚æ­¤ä¸ºcommanderæ¶ˆæ¯åˆ†å‘çš„åŸºç¡€
 */
 class CWX_API CwxEventInfo
 {
 public:
-    ///ÊÂ¼şÀàĞÍ¶¨Òå
+    ///äº‹ä»¶ç±»å‹å®šä¹‰
     enum {
-        DUMMY = 0,///<dummyÊÂ¼ş£¬´ËÎªÎŞĞ§ÊÂ¼şÀàĞÍ
-        CONN_CREATED = 1,///<Á¬½Ó½¨Á¢ÊÂ¼ş
-        CONN_CLOSED = 2,///<Á¬½Ó¹Ø±ÕÊÂ¼ş
-        RECV_MSG = 3,///<ÊÕµ½Í¨ĞÅÊı¾İÊÂ¼ş
-        END_SEND_MSG = 4,///<Í¨ĞÅÊı¾İ°ü·¢ËÍÍê±ÏÊÂ¼ş
-        FAIL_SEND_MSG = 5,///<Í¨ĞÅÊı¾İ°ü·¢ËÍÊ§°ÜÊÂ¼ş
-        TIMEOUT_CHECK = 6,///<³¬Ê±¼ì²éÊÂ¼ş
-        EVENT_4_HANDLE = 7,///<IOÉÏ×¢²áµÄÊÂ¼ş·¢ÉúµÄÊÂ¼ş
-        SYS_EVENT_NUM = 8,///<ÏµÍ³ÊÂ¼şµÄÊıÁ¿
+        DUMMY = 0,///<dummyäº‹ä»¶ï¼Œæ­¤ä¸ºæ— æ•ˆäº‹ä»¶ç±»å‹
+        CONN_CREATED = 1,///<è¿æ¥å»ºç«‹äº‹ä»¶
+        CONN_CLOSED = 2,///<è¿æ¥å…³é—­äº‹ä»¶
+        RECV_MSG = 3,///<æ”¶åˆ°é€šä¿¡æ•°æ®äº‹ä»¶
+        END_SEND_MSG = 4,///<é€šä¿¡æ•°æ®åŒ…å‘é€å®Œæ¯•äº‹ä»¶
+        FAIL_SEND_MSG = 5,///<é€šä¿¡æ•°æ®åŒ…å‘é€å¤±è´¥äº‹ä»¶
+        TIMEOUT_CHECK = 6,///<è¶…æ—¶æ£€æŸ¥äº‹ä»¶
+        EVENT_4_HANDLE = 7,///<IOä¸Šæ³¨å†Œçš„äº‹ä»¶å‘ç”Ÿçš„äº‹ä»¶
+        SYS_EVENT_NUM = 8,///<ç³»ç»Ÿäº‹ä»¶çš„æ•°é‡
     };
 public:
-    ///»ñÈ¡ÊÂ¼şÀàĞÍ
+    ///è·å–äº‹ä»¶ç±»å‹
     inline CWX_UINT16  getEvent() const ;
-    ///ÉèÖÃÊÂ¼şÀàĞÍ
+    ///è®¾ç½®äº‹ä»¶ç±»å‹
     inline void setEvent(CWX_UINT16 unEvent) ;
-    ///»ñÈ¡ÊÂ¼ş¶ÔÓ¦µÄSVR-ID
+    ///è·å–äº‹ä»¶å¯¹åº”çš„SVR-ID
     inline CWX_UINT32  getSvrId() const ;
-    ///ÉèÖÃÊÂ¼ş¶ÔÓ¦µÄSVR-ID
+    ///è®¾ç½®äº‹ä»¶å¯¹åº”çš„SVR-ID
     inline void setSvrId(CWX_UINT32 uiSvrId) ;
-    ///»ñÈ¡ÊÂ¼ş¶ÔÓ¦µÄHOST-ID
+    ///è·å–äº‹ä»¶å¯¹åº”çš„HOST-ID
     inline CWX_UINT32 getHostId() const ;
-    ///ÉèÖÃÊÂ¼ş¶ÔÓ¦µÄHOST-ID
+    ///è®¾ç½®äº‹ä»¶å¯¹åº”çš„HOST-ID
     inline void setHostId(CWX_UINT32 uiHostId) ;
-    ///»ñÈ¡ÊÂ¼ş¶ÔÓ¦µÄÁ¬½ÓID
+    ///è·å–äº‹ä»¶å¯¹åº”çš„è¿æ¥ID
     inline CWX_UINT32 getConnId() const;
-    ///ÉèÖÃÊÂ¼ş¶ÔÓ¦µÄÁ¬½ÓID
+    ///è®¾ç½®äº‹ä»¶å¯¹åº”çš„è¿æ¥ID
     inline void setConnId(CWX_UINT32 uiConnId) ;
-    ///»ñÈ¡ÊÂ¼ş¶ÔÓ¦µÄÁ¬½ÓµÄÓÃ»§Êı¾İ
+    ///è·å–äº‹ä»¶å¯¹åº”çš„è¿æ¥çš„ç”¨æˆ·æ•°æ®
     inline void* getConnUserData() ;
-    ///ÉèÖÃÊÂ¼ş¶ÔÓ¦µÄÁ¬½ÓµÄÓÃ»§Êı¾İ
+    ///è®¾ç½®äº‹ä»¶å¯¹åº”çš„è¿æ¥çš„ç”¨æˆ·æ•°æ®
     inline void setConnUserData(void* userData) ;
-    ///»ñÈ¡ÊÂ¼ş¶ÔÓ¦µÄTASK ID
+    ///è·å–äº‹ä»¶å¯¹åº”çš„TASK ID
     inline CWX_UINT32 getTaskId() const ;
-    ///ÉèÖÃÊÂ¼ş¶ÔÓ¦µÄTASK ID
+    ///è®¾ç½®äº‹ä»¶å¯¹åº”çš„TASK ID
     inline void setTaskId(CWX_UINT32 uiTaskId) ;
-    ///»ñÈ¡ÊÂ¼ş¶ÔÓ¦µÄÍ¨ĞÅÊı¾İ°üµÄ°üÍ·
+    ///è·å–äº‹ä»¶å¯¹åº”çš„é€šä¿¡æ•°æ®åŒ…çš„åŒ…å¤´
     inline CwxMsgHead& getMsgHeader();
-    ///ÉèÖÃÊÂ¼ş¶ÔÓ¦µÄÍ¨ĞÅÊı¾İ°üµÄ°üÍ·
+    ///è®¾ç½®äº‹ä»¶å¯¹åº”çš„é€šä¿¡æ•°æ®åŒ…çš„åŒ…å¤´
     inline void setMsgHeader(CwxMsgHead const& header) ;
-    ///»ñÈ¡ÊÂ¼ş¶ÔÓ¦Á¬½ÓµÄÁ¬½Óhandle
+    ///è·å–äº‹ä»¶å¯¹åº”è¿æ¥çš„è¿æ¥handle
     inline CWX_HANDLE getIoHandle() ;
-    ///ÉèÖÃÊÂ¼ş¶ÔÓ¦Á¬½ÓµÄÁ¬½Óhandle
+    ///è®¾ç½®äº‹ä»¶å¯¹åº”è¿æ¥çš„è¿æ¥handle
     inline void setIoHandle(CWX_HANDLE handle) ;
-    ///»ñÈ¡ÊÂ¼ş¶ÔÓ¦µÄIOÊÂ¼ş¼à²âµÄÑÚÂë
+    ///è·å–äº‹ä»¶å¯¹åº”çš„IOäº‹ä»¶ç›‘æµ‹çš„æ©ç 
     inline CWX_UINT16 getRegEventMask() const ;
-    ///ÉèÖÃÊÂ¼ş¶ÔÓ¦µÄIOÊÂ¼ş¼à²âµÄÑÚÂë
+    ///è®¾ç½®äº‹ä»¶å¯¹åº”çš„IOäº‹ä»¶ç›‘æµ‹çš„æ©ç 
     inline void setRegEventMask(CWX_UINT16 unMask) ;
-    ///»ñÈ¡ÊÂ¼ş¶ÔÓ¦µÄIOÊÂ¼ş¼à²âµÄIOÊÂ¼ş
+    ///è·å–äº‹ä»¶å¯¹åº”çš„IOäº‹ä»¶ç›‘æµ‹çš„IOäº‹ä»¶
     inline CWX_UINT16 getReadyEvent() const ;
-    ///ÉèÖÃÊÂ¼ş¶ÔÓ¦µÄIOÊÂ¼ş¼à²âµÄIOÊÂ¼ş
+    ///è®¾ç½®äº‹ä»¶å¯¹åº”çš„IOäº‹ä»¶ç›‘æµ‹çš„IOäº‹ä»¶
     inline void setReadyEvent(CWX_UINT16 unEvent) ;
-    ///»ñÈ¡ÊÂ¼şµÄÊ±¼ä´Á
+    ///è·å–äº‹ä»¶çš„æ—¶é—´æˆ³
     inline CWX_UINT64 getTimestamp() const ;
-    ///ÉèÖÃÊÂ¼şµÄÊ±¼ä´Á
+    ///è®¾ç½®äº‹ä»¶çš„æ—¶é—´æˆ³
     inline void setTimestamp(CWX_UINT64 ullTimestamp) ;
-    ///Çå¿ÕÊÂ¼ş¶ÔÏó
+    ///æ¸…ç©ºäº‹ä»¶å¯¹è±¡
     inline void reset();
 private:
-    ///½ûÖ¹´´½¨¶ÔÏó£¬ÆäÎªCwxMsgBlock¶ÔÏóµÄ¸½Êô¶ÔÏó
+    ///ç¦æ­¢åˆ›å»ºå¯¹è±¡ï¼Œå…¶ä¸ºCwxMsgBlockå¯¹è±¡çš„é™„å±å¯¹è±¡
     CwxEventInfo();
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxEventInfo();
-    ///½ûÖ¹×ö¸³Öµ²Ù×÷
+    ///ç¦æ­¢åšèµ‹å€¼æ“ä½œ
     CwxEventInfo& operator=(CwxEventInfo const& );
     friend class CwxMsgBlock;
 public:
-    CWX_UINT32     m_uiArg;///<ÓÃ»§µÄUINT32ÀàĞÍµÄ²ÎÊı
-    CWX_UINT64     m_ullArg;///<ÓÃ»§µÄUINT64ÀàĞÍµÄ²ÎÊı
-    void*          m_pArg;///<ÓÃ»§µÄÖ¸ÕëÀàĞÍµÄ²ÎÊı
+    CWX_UINT32     m_uiArg;///<ç”¨æˆ·çš„UINT32ç±»å‹çš„å‚æ•°
+    CWX_UINT64     m_ullArg;///<ç”¨æˆ·çš„UINT64ç±»å‹çš„å‚æ•°
+    void*          m_pArg;///<ç”¨æˆ·çš„æŒ‡é’ˆç±»å‹çš„å‚æ•°
 private:
-    CWX_UINT16     m_unEvent;///<ÊÂ¼şÀàĞÍ
-    CWX_UINT32     m_uiSvrId;///<ÊÂ¼ş¶ÔÓ¦µÄSVR ID
-    CWX_UINT32     m_uiHostId;///<ÊÂ¼ş¶ÔÓ¦µÄHOST ID
-    CWX_UINT32     m_uiConnId;///<ÊÂ¼ş¶ÔÓ¦µÄÁ¬½ÓID
-    void*          m_connUserData;///<Á¬½ÓÉÏµÄuserData
-    CWX_UINT32     m_uiTaskId;///<ÊÂ¼ş¶ÔÓ¦TASKµÄTask-ID
-    CwxMsgHead   m_msgHeader;///<ÊÂ¼ş¶ÔÓ¦Í¨ĞÅÊı¾İ°üµÄ°üÍ·
-    CWX_HANDLE     m_ioHandle;///<ÊÂ¼şµÄIO HANDLE
-    CWX_UINT16     m_unRegEventMask;///<ÊÂ¼şµÄIO ÊÂ¼şµÄÑÚÂë
-    CWX_UINT16     m_unReadyHandleEvent;///<ÊÂ¼şµÄIO ÊÂ¼şµÄÊÂ¼ş
-    CWX_UINT64     m_ullTimeStamp;///<ÊÂ¼şµÄÊ±¼ä´Á
+    CWX_UINT16     m_unEvent;///<äº‹ä»¶ç±»å‹
+    CWX_UINT32     m_uiSvrId;///<äº‹ä»¶å¯¹åº”çš„SVR ID
+    CWX_UINT32     m_uiHostId;///<äº‹ä»¶å¯¹åº”çš„HOST ID
+    CWX_UINT32     m_uiConnId;///<äº‹ä»¶å¯¹åº”çš„è¿æ¥ID
+    void*          m_connUserData;///<è¿æ¥ä¸Šçš„userData
+    CWX_UINT32     m_uiTaskId;///<äº‹ä»¶å¯¹åº”TASKçš„Task-ID
+    CwxMsgHead   m_msgHeader;///<äº‹ä»¶å¯¹åº”é€šä¿¡æ•°æ®åŒ…çš„åŒ…å¤´
+    CWX_HANDLE     m_ioHandle;///<äº‹ä»¶çš„IO HANDLE
+    CWX_UINT16     m_unRegEventMask;///<äº‹ä»¶çš„IO äº‹ä»¶çš„æ©ç 
+    CWX_UINT16     m_unReadyHandleEvent;///<äº‹ä»¶çš„IO äº‹ä»¶çš„äº‹ä»¶
+    CWX_UINT64     m_ullTimeStamp;///<äº‹ä»¶çš„æ—¶é—´æˆ³
 };
 
 /**
 @class CwxMsgBlock
-@brief Í¨ĞÅÊı¾İÊÕ·¢µÄÊı¾İBlock¶ÔÏó¡£¶ÔÏóÓĞÈı²¿·Ö×é³É£º
-µÚÒ»²¿·Ö£º½ÓÊÕ»ò·¢ËÍµÄÍøÂçÍ¨ĞÅÊı¾İ°ü£¬´ËÎªÊı¾İblock¡£
-µÚ¶ş²¿·Ö£º½ÓÊÕÊı¾İµÄEvent¶ÔÏó£¬ÓÃÀ´±£´æÊÕµ½Êı¾İ°üµÄÁ¬½ÓĞÅÏ¢µÈĞÅÏ¢£¬ÆäĞÅÏ¢ÓÃÓÚCommand¶ÔÏóEventÊÂ¼ş·Ö·¢¡£
-µÚÈı²¿·Ö£º·¢ËÍÊı¾İµÄMsgInfo¶ÔÏó£¬ÓÃÀ´°üº¬ÏûÏ¢·¢ËÍµÄsvr-id¡¢host-id¡¢conn-id¼°ÆäËû·¢ËÍĞĞÎªµÄ¿ØÖÆĞÅÏ¢¡£
-´ËÍâ£¬ÎªÁË·ÀÖ¹ÄÚ´æËéÆ¬£¬CwxMsgBlockÖ»ÄÜÓĞCwxMsgBlockAlloc¶ÔÏó·ÖÅä¡¢ÊÍ·Å¡£
+@brief é€šä¿¡æ•°æ®æ”¶å‘çš„æ•°æ®Blockå¯¹è±¡ã€‚å¯¹è±¡æœ‰ä¸‰éƒ¨åˆ†ç»„æˆï¼š
+ç¬¬ä¸€éƒ¨åˆ†ï¼šæ¥æ”¶æˆ–å‘é€çš„ç½‘ç»œé€šä¿¡æ•°æ®åŒ…ï¼Œæ­¤ä¸ºæ•°æ®blockã€‚
+ç¬¬äºŒéƒ¨åˆ†ï¼šæ¥æ”¶æ•°æ®çš„Eventå¯¹è±¡ï¼Œç”¨æ¥ä¿å­˜æ”¶åˆ°æ•°æ®åŒ…çš„è¿æ¥ä¿¡æ¯ç­‰ä¿¡æ¯ï¼Œå…¶ä¿¡æ¯ç”¨äºCommandå¯¹è±¡Eventäº‹ä»¶åˆ†å‘ã€‚
+ç¬¬ä¸‰éƒ¨åˆ†ï¼šå‘é€æ•°æ®çš„MsgInfoå¯¹è±¡ï¼Œç”¨æ¥åŒ…å«æ¶ˆæ¯å‘é€çš„svr-idã€host-idã€conn-idåŠå…¶ä»–å‘é€è¡Œä¸ºçš„æ§åˆ¶ä¿¡æ¯ã€‚
+æ­¤å¤–ï¼Œä¸ºäº†é˜²æ­¢å†…å­˜ç¢ç‰‡ï¼ŒCwxMsgBlockåªèƒ½æœ‰CwxMsgBlockAllocå¯¹è±¡åˆ†é…ã€é‡Šæ”¾ã€‚
 */
 class CWX_API CwxMsgBlock
 {
 public:
-    ///»ñÈ¡BlockÄÚ´æÊı¾İ¿éµÄµ±Ç°¶ÁÎ»ÖÃ
+    ///è·å–Blockå†…å­˜æ•°æ®å—çš„å½“å‰è¯»ä½ç½®
     inline char *rd_ptr (void) const;
-    ///½«BlockÄÚ´æÊı¾İ¿éµÄ¶ÁÎ»ÖÃÇ°ÒÆn¸ö×Ö½Ú
+    ///å°†Blockå†…å­˜æ•°æ®å—çš„è¯»ä½ç½®å‰ç§»nä¸ªå­—èŠ‚
     inline void rd_ptr (size_t n) ;
-    ///»ñÈ¡BlockÄÚ´æÊı¾İ¿âµÄµ±Ç°Ğ´Î»ÖÃ
+    ///è·å–Blockå†…å­˜æ•°æ®åº“çš„å½“å‰å†™ä½ç½®
     inline char *wr_ptr (void) const ;
-    ///½«BlockÄÚ´æÊı¾İ¿éµÄĞ´Î»ÖÃÇ°ÒÆn¸ö×Ö½Ú
+    ///å°†Blockå†…å­˜æ•°æ®å—çš„å†™ä½ç½®å‰ç§»nä¸ªå­—èŠ‚
     inline void wr_ptr(size_t n) ;
-    ///»ñÈ¡BlockÊı¾İ¿éÖĞÊı¾İµÄ´óĞ¡£¬ÎªĞ´Ö¸ÕëÓë¶ÁÖ¸ÕëµÄÄÚ´æÎ»ÖÃ²î¡£
+    ///è·å–Blockæ•°æ®å—ä¸­æ•°æ®çš„å¤§å°ï¼Œä¸ºå†™æŒ‡é’ˆä¸è¯»æŒ‡é’ˆçš„å†…å­˜ä½ç½®å·®ã€‚
     inline size_t length(void) const ;
-    ///»ñÈ¡BlockÊı¾İ¿âµÄ¿Õ¼ä´óĞ¡
+    ///è·å–Blockæ•°æ®åº“çš„ç©ºé—´å¤§å°
     inline size_t capacity(void) const ;
-    ///½«BlockµÄ¶ÁĞ´Ö¸ÕëÒÆµ½BlockµÄ¿ªÍ·Î»ÖÃ
+    ///å°†Blockçš„è¯»å†™æŒ‡é’ˆç§»åˆ°Blockçš„å¼€å¤´ä½ç½®
     inline void reset() ;
-    ///»ñÈ¡ÓëBlockÏà¹ØÁªµÄEventĞÅÏ¢£¬ÓÃ»§¿ÉÒÔÉèÖÃÆäÖĞµÄÄÚÈİ¡£ÔÚ·¢ËÍĞÅÏ¢µÄÊ±ºò£¬²»»áĞŞ¸Ä´ËÄÚÈİ¡£
+    ///è·å–ä¸Blockç›¸å…³è”çš„Eventä¿¡æ¯ï¼Œç”¨æˆ·å¯ä»¥è®¾ç½®å…¶ä¸­çš„å†…å®¹ã€‚åœ¨å‘é€ä¿¡æ¯çš„æ—¶å€™ï¼Œä¸ä¼šä¿®æ”¹æ­¤å†…å®¹ã€‚
     inline CwxEventInfo& event() ;
-    ///»ñÈ¡ÓëBlockÏà¹ØµÄ·¢ËÍMsginfoĞÅÏ¢¡£ÆäÉèÖÃÓĞ¼Ü¹¹¸ºÔğ£¬ÓÃ»§Ö»ÄÜÔÚÏûÏ¢·¢ËÍÊ§°Ü»òÍê³ÉµÄÊ±ºò£¬²é¿´´ËĞÅÏ¢
+    ///è·å–ä¸Blockç›¸å…³çš„å‘é€Msginfoä¿¡æ¯ã€‚å…¶è®¾ç½®æœ‰æ¶æ„è´Ÿè´£ï¼Œç”¨æˆ·åªèƒ½åœ¨æ¶ˆæ¯å‘é€å¤±è´¥æˆ–å®Œæˆçš„æ—¶å€™ï¼ŒæŸ¥çœ‹æ­¤ä¿¡æ¯
     inline CwxMsgSendCtrl& send_ctrl();
 public:
-    CwxMsgBlock*          m_next;///<ÏÂÒ»¸öBlock¶ÔÏó
+    CwxMsgBlock*          m_next;///<ä¸‹ä¸€ä¸ªBlockå¯¹è±¡
 private:
     friend class CwxMsgBlockAlloc;
     friend class CwxMsgQueue;
-    ///Îö¹¹º¯Êı£¬½ûÖ¹delete
+    ///ææ„å‡½æ•°ï¼Œç¦æ­¢delete
     ~CwxMsgBlock();
-    ///Ö¸¶¨Êı¾İ¿â´óĞ¡µÄ¹¹Ôìº¯Êı£¬½ûÖ¹new
+    ///æŒ‡å®šæ•°æ®åº“å¤§å°çš„æ„é€ å‡½æ•°ï¼Œç¦æ­¢new
     CwxMsgBlock(size_t size);
-    ///²»·ÖÅäBlockÊı¾İ¿éµÄ¹¹Ôìº¯Êı
+    ///ä¸åˆ†é…Blockæ•°æ®å—çš„æ„é€ å‡½æ•°
     CwxMsgBlock();
 private:
-    char*                   m_buf; ///<ÄÚ´æµÄbuf
-    size_t                  m_rdPos; ///<ÄÚ´æµÄ¶ÁÎ»ÖÃ
-    size_t                  m_wrPos; ///<ÄÚ´æµÄĞ´Î»ÖÃ
-    size_t                  m_len;   ///<ÄÚ´æµÄ´óĞ¡
-    CwxEventInfo          m_event;///<ÓëÊÕµ½Êı¾İ°üÏà¹ØµÄÁ¬½Ó¼°»·¾³ĞÅÏ¢¶ÔÏó
-    CwxMsgSendCtrl        m_sendCtrl;///<Êı¾İ°ü·¢ËÍÊ±µÄÁ¬½Ó¼°·¢ËÍ¿ØÖÆ¶ÔÏó
-    bool                    m_bFree; ///<ÊÇ·ñ±»CwxMsgBlockAllocÊÍ·Å
+    char*                   m_buf; ///<å†…å­˜çš„buf
+    size_t                  m_rdPos; ///<å†…å­˜çš„è¯»ä½ç½®
+    size_t                  m_wrPos; ///<å†…å­˜çš„å†™ä½ç½®
+    size_t                  m_len;   ///<å†…å­˜çš„å¤§å°
+    CwxEventInfo          m_event;///<ä¸æ”¶åˆ°æ•°æ®åŒ…ç›¸å…³çš„è¿æ¥åŠç¯å¢ƒä¿¡æ¯å¯¹è±¡
+    CwxMsgSendCtrl        m_sendCtrl;///<æ•°æ®åŒ…å‘é€æ—¶çš„è¿æ¥åŠå‘é€æ§åˆ¶å¯¹è±¡
+    bool                    m_bFree; ///<æ˜¯å¦è¢«CwxMsgBlockAllocé‡Šæ”¾
 
 };
 
 /**
 @class CwxMsgBlockAlloc
-@brief CwxMsgBlockµÄ·ÖÅä¡¢ÊÍ·Å¼°¿ÕÏĞblockµÄcache¶ÔÏó¡£
-µ±·ÖÅäÊı¾İ¿éµÄÊ±ºò£¬Èôblock´óĞ¡Ğ¡ÓÚ1M£¬ÔòCwxMsgBlockAlloc°´
-256¡¢512¡¢....1MµÄÀëÉ¢´óĞ¡½øĞĞ·ÖÅä£»Èô´óÓÚ1M£¬Ôò·ÖÅäµÄÄÚ´æ°´ÕÕ4KµÄ±ß½ç¶ÔÆë¡£
-µ±ÊÍ·ÅÊı¾İ¿éµÄÊ±ºò£¬ÈôBlock´óĞ¡Ğ¡ÓÚ1M¶øÇÒCacheµÄblockÃ»ÓĞ³¬¹ıÖ¸¶¨µÄÉÏÏß£¬Ôò°´ÕÕ256¡¢512¡¢....1M£¬
-cacheÊÍ·ÅµÄ¶ÔÏó£¬ÒÔ¹©ÔÙ´ÎÑ­»·Ê¹ÓÃ¡£Èô´óÓÚ1M£¬ÔòÖ±½ÓÊÇ·ñ¡£
+@brief CwxMsgBlockçš„åˆ†é…ã€é‡Šæ”¾åŠç©ºé—²blockçš„cacheå¯¹è±¡ã€‚
+å½“åˆ†é…æ•°æ®å—çš„æ—¶å€™ï¼Œè‹¥blockå¤§å°å°äº1Mï¼Œåˆ™CwxMsgBlockAllocæŒ‰
+256ã€512ã€....1Mçš„ç¦»æ•£å¤§å°è¿›è¡Œåˆ†é…ï¼›è‹¥å¤§äº1Mï¼Œåˆ™åˆ†é…çš„å†…å­˜æŒ‰ç…§4Kçš„è¾¹ç•Œå¯¹é½ã€‚
+å½“é‡Šæ”¾æ•°æ®å—çš„æ—¶å€™ï¼Œè‹¥Blockå¤§å°å°äº1Mè€Œä¸”Cacheçš„blockæ²¡æœ‰è¶…è¿‡æŒ‡å®šçš„ä¸Šçº¿ï¼Œåˆ™æŒ‰ç…§256ã€512ã€....1Mï¼Œ
+cacheé‡Šæ”¾çš„å¯¹è±¡ï¼Œä»¥ä¾›å†æ¬¡å¾ªç¯ä½¿ç”¨ã€‚è‹¥å¤§äº1Mï¼Œåˆ™ç›´æ¥æ˜¯å¦ã€‚
 */
 class CWX_API CwxMsgBlockAlloc:public CwxSingleton
 {
 public:
-    ///BLOCK ·ÖÅä¡¢cache¿ØÖÆ²ÎÊı¶¨Òå
+    ///BLOCK åˆ†é…ã€cacheæ§åˆ¶å‚æ•°å®šä¹‰
     enum{
-        CACHE_MIN_BLOCK_BITS = 8,///<×îĞ¡µÄblockµÄ´óĞ¡£¬Îª2^CACHE_MIN_BLOCK_BITS 
-        CACHE_MIN_BLOCK_SIZE = 1<<CACHE_MIN_BLOCK_BITS,///<×îĞ¡µÄblockµÄ´óĞ¡
-        CACHE_MAX_BLOCK_BITS = 20,///<CACHEµÄ×î´óµÄblockµÄ´óĞ¡£¬Îª2^CACHE_MIN_BLOCK_BITS
-        CACHE_MAX_BLOCK_SIZE = 1<<CACHE_MAX_BLOCK_BITS,///<CACHEµÄ×î´óµÄblockµÄ´óĞ¡
-        CACHE_BLOCK_SIZE_SCALE = CACHE_MAX_BLOCK_BITS - CACHE_MIN_BLOCK_BITS + 1, ///<cacheµÄblock´óĞ¡²»Í¬µÄÊıÁ¿
-        MAX_SCALE_FREE_MEM_MSIZE = 4,///<Ã¿ÖÖ´óĞ¡ÀàĞÍµÄblock£¬×î¶àcacheµÄ×ÜÄÚ´æÁ¿
-        MAX_SCALE_FREE_BLOCK_NUM = 1024, ///<Ã¿ÖÖ´óĞ¡ÀàĞÍµÄblock£¬×î¶àcacheµÄ¸öÊı
-        BLOCK_ALIGN_BIT = 12 ///<´óĞ¡³¬¹ı1MµÄblock£¬°´4K½øĞĞ±ß½ç¶ÔÆë¡£
+        CACHE_MIN_BLOCK_BITS = 8,///<æœ€å°çš„blockçš„å¤§å°ï¼Œä¸º2^CACHE_MIN_BLOCK_BITS 
+        CACHE_MIN_BLOCK_SIZE = 1<<CACHE_MIN_BLOCK_BITS,///<æœ€å°çš„blockçš„å¤§å°
+        CACHE_MAX_BLOCK_BITS = 20,///<CACHEçš„æœ€å¤§çš„blockçš„å¤§å°ï¼Œä¸º2^CACHE_MIN_BLOCK_BITS
+        CACHE_MAX_BLOCK_SIZE = 1<<CACHE_MAX_BLOCK_BITS,///<CACHEçš„æœ€å¤§çš„blockçš„å¤§å°
+        CACHE_BLOCK_SIZE_SCALE = CACHE_MAX_BLOCK_BITS - CACHE_MIN_BLOCK_BITS + 1, ///<cacheçš„blockå¤§å°ä¸åŒçš„æ•°é‡
+        MAX_SCALE_FREE_MEM_MSIZE = 4,///<æ¯ç§å¤§å°ç±»å‹çš„blockï¼Œæœ€å¤šcacheçš„æ€»å†…å­˜é‡
+        MAX_SCALE_FREE_BLOCK_NUM = 1024, ///<æ¯ç§å¤§å°ç±»å‹çš„blockï¼Œæœ€å¤šcacheçš„ä¸ªæ•°
+        BLOCK_ALIGN_BIT = 12 ///<å¤§å°è¶…è¿‡1Mçš„blockï¼ŒæŒ‰4Kè¿›è¡Œè¾¹ç•Œå¯¹é½ã€‚
     };
 public:
-    ///´´½¨signleton CwxEscapes ¶ÔÏó
+    ///åˆ›å»ºsignleton CwxEscapes å¯¹è±¡
     static CwxMsgBlockAlloc* instance();
-    ///<·ÖÅä´óĞ¡ÎªsizeµÄblock
+    ///<åˆ†é…å¤§å°ä¸ºsizeçš„block
     static CwxMsgBlock* malloc(size_t size);
-    ///<¿ËÂ¡msg±»copyÄÚÈİ
+    ///<å…‹éš†msgè¢«copyå†…å®¹
     static CwxMsgBlock* clone(CwxMsgBlock* block);
-    ///<ÊÍ·Åblock
+    ///<é‡Šæ”¾block
     static void free(CwxMsgBlock* block);
     static CwxMsgBlock* pack(CwxMsgHead& header,
         char const* szData,
         CWX_UINT32 uiDateLen);
-    ///ÊÍ·Å¿Õ¼ä
+    ///é‡Šæ”¾ç©ºé—´
     static void destroy();
 private:
-    ///½ûÖ¹´´½¨ÊµÀı
+    ///ç¦æ­¢åˆ›å»ºå®ä¾‹
     CwxMsgBlockAlloc();
-    ///½ûÖ¹ÊÍ·ÅÊµÀı
+    ///ç¦æ­¢é‡Šæ”¾å®ä¾‹
     ~CwxMsgBlockAlloc();
 private:
     static CwxMsgBlockAlloc*   m_pInstance;
     static CwxMutexLock    m_lock;///<thread lock for sync.
-    CWX_UINT16       m_arrCacheNum[CACHE_BLOCK_SIZE_SCALE];///<cacheµÄ¸÷ÖÖ³ß´ç´óĞ¡µÄblockµÄÊıÁ¿
-    CwxMsgBlock*   m_arrCacheBlock[CACHE_BLOCK_SIZE_SCALE];///<cacheµÄ¸÷ÖÖ³ß´ç´óĞ¡µÄblockµÄÁ´±í
+    CWX_UINT16       m_arrCacheNum[CACHE_BLOCK_SIZE_SCALE];///<cacheçš„å„ç§å°ºå¯¸å¤§å°çš„blockçš„æ•°é‡
+    CwxMsgBlock*   m_arrCacheBlock[CACHE_BLOCK_SIZE_SCALE];///<cacheçš„å„ç§å°ºå¯¸å¤§å°çš„blockçš„é“¾è¡¨
 };
 CWINUX_END_NAMESPACE
 

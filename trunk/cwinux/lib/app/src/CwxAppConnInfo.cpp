@@ -1,4 +1,4 @@
-#include "CwxAppConnInfo.h"
+﻿#include "CwxAppConnInfo.h"
 CWINUX_BEGIN_NAMESPACE
 CwxAppConnInfo::CwxAppConnInfo()
 {

@@ -1,4 +1,4 @@
-#include  "CwxRwIdLocker.h"
+﻿#include  "CwxRwIdLocker.h"
 
 CWINUX_BEGIN_NAMESPACE
 

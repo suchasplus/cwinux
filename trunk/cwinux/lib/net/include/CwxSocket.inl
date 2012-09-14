@@ -1,4 +1,4 @@
-CWINUX_BEGIN_NAMESPACE
+ï»¿CWINUX_BEGIN_NAMESPACE
 
 /// Wrapper around the @c setsockopt system call.
 inline int CwxSocket::setOption (CWX_HANDLE handle, int level,
@@ -75,7 +75,7 @@ inline ssize_t CwxSocket::recv (CWX_HANDLE handle,
     return ::recv (handle, buf, len, flags);
 }
 
-///¶Á×î¶à²»³¬¹ılen¸ö×Ö½Ú£¬·â×°µ×²ãµÄread½Ó¿Ú
+///è¯»æœ€å¤šä¸è¶…è¿‡lenä¸ªå­—èŠ‚ï¼Œå°è£…åº•å±‚çš„readæ¥å£
 inline ssize_t CwxSocket::recv (CWX_HANDLE handle,
                             void *buf,
                             size_t len,
@@ -227,7 +227,7 @@ inline bool CwxSocket::isEnableIpv6(void){
 
 
 #if (CWX_HAS_IPV6)
-//¼ì²éÊÇ·ñÖ§³ÖÖ¸¶¨µÄĞ­Òé×å
+//æ£€æŸ¥æ˜¯å¦æ”¯æŒæŒ‡å®šçš„åè®®æ—
 inline int CwxSocket::ipvn_check(int &ipvn_enabled, int pf){
     if (ipvn_enabled == -1)
     {

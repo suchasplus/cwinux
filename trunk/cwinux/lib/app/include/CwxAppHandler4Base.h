@@ -1,14 +1,14 @@
-#ifndef __CWX_APP_HANDLER_4_BASE_H__
+ï»¿#ifndef __CWX_APP_HANDLER_4_BASE_H__
 #define __CWX_APP_HANDLER_4_BASE_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxAppHandler4Base.h
-@brief Event handlerµÄ»ùÀà
+@brief Event handlerçš„åŸºç±»
 @author cwinux@gmail.com
 @version 0.1
 @date 2010-08-01
@@ -30,7 +30,7 @@ class CwxAppReactor;
 class CwxAppEpoll;
 class CWX_API CwxAppHandler4Base{
 public:
-    ///¶¨ÒåÊÂ¼şÀàĞÍ
+    ///å®šä¹‰äº‹ä»¶ç±»å‹
     enum{
         TIMEOUT_MASK = 0x01,
         READ_MASK = 0x02,
@@ -47,52 +47,52 @@ public:
                           PERSIST_MASK
     };
 public :
-    ///Îö¹¹º¯Êı.
+    ///ææ„å‡½æ•°.
     virtual ~CwxAppHandler4Base (void);
     /**
-    @brief handler open¡£×öhandlerµÄ³õÊ¼»¯¼°reactorµÄ×¢²á²Ù×÷¡£
-    @param [in] arg  HandlerµÄ³õÊ¼»¯²ÎÊı£¬¸÷¸ö×ÓÀà×Ô¼º¶¨Òå
-    @return -1£ºÊ§°Ü£» 0£º³É¹¦
+    @brief handler openã€‚åšhandlerçš„åˆå§‹åŒ–åŠreactorçš„æ³¨å†Œæ“ä½œã€‚
+    @param [in] arg  Handlerçš„åˆå§‹åŒ–å‚æ•°ï¼Œå„ä¸ªå­ç±»è‡ªå·±å®šä¹‰
+    @return -1ï¼šå¤±è´¥ï¼› 0ï¼šæˆåŠŸ
     */
     virtual int open (void * arg= 0)=0;
     /**
-    @brief HandlerµÄÊÂ¼şÍ¨Öª»Øµ÷¡£
-    @param [in] event  ·¢ÉúµÄÊÂ¼şÀàĞÍ£¬ÎªTIMEOUT_MASK¡¢READ_MASK¡¢WRITE_MASK¡¢<br>
-            SIGNAL_MASKµÄ×éºÏ¡£
-    @param [in] handle  ·¢ÉúµÄÊÂ¼şµÄhandle¡£
-    @return -1£ºÊ§°Ü£¬reactor»áÖ÷¶¯µ÷ÓÃclose£»
-            0£º³É¹¦£»
+    @brief Handlerçš„äº‹ä»¶é€šçŸ¥å›è°ƒã€‚
+    @param [in] event  å‘ç”Ÿçš„äº‹ä»¶ç±»å‹ï¼Œä¸ºTIMEOUT_MASKã€READ_MASKã€WRITE_MASKã€<br>
+            SIGNAL_MASKçš„ç»„åˆã€‚
+    @param [in] handle  å‘ç”Ÿçš„äº‹ä»¶çš„handleã€‚
+    @return -1ï¼šå¤±è´¥ï¼Œreactorä¼šä¸»åŠ¨è°ƒç”¨closeï¼›
+            0ï¼šæˆåŠŸï¼›
     */
     virtual int handle_event(int event, CWX_HANDLE handle=CWX_INVALID_HANDLE)=0;
     
     ///handle close
     virtual int close(CWX_HANDLE handle=CWX_INVALID_HANDLE)=0;
 public:
-    ///ÉèÖÃhandleµÄreactor
+    ///è®¾ç½®handleçš„reactor
     void reactor (CwxAppReactor *reactor);
-    ///»ñÈ¡handleµÄreactor.
+    ///è·å–handleçš„reactor.
     CwxAppReactor *reactor(void);
-    ///»ñÈ¡Io handle
+    ///è·å–Io handle
     CWX_HANDLE getHandle(void) const;
-    ///ÉèÖÃIO handle
+    ///è®¾ç½®IO handle
     void setHandle (CWX_HANDLE);
-    ///ÉèÖÃhandle type
+    ///è®¾ç½®handle type
     void setType(int type);
-    ///»ñÈ¡handle type
+    ///è·å–handle type
     int getType() const;
-    ///»ñÈ¡×¢²áÀàĞÍ
+    ///è·å–æ³¨å†Œç±»å‹
     int getRegType() const;
-    ///ÉèÖÃ×¢²áÀàĞÍ
+    ///è®¾ç½®æ³¨å†Œç±»å‹
     void setRegType(int type);
-    ///ÉèÖÃ³¬Ê±Ê±¼ä
+    ///è®¾ç½®è¶…æ—¶æ—¶é—´
     void setTimeout(CWX_UINT64 ullTimeout);
-    ///»ñÈ¡³¬Ê±Ê±¼ä
+    ///è·å–è¶…æ—¶æ—¶é—´
     CWX_UINT64 getTimeout() const;
-    ///»ñÈ¡heapÖĞµÄindex
+    ///è·å–heapä¸­çš„index
     int index() const;
-    ///ÉèÖÃheapÖĞµÄindex
+    ///è®¾ç½®heapä¸­çš„index
     void index(int index);
-    ///³¬Ê±±È½Ïº¯Êı
+    ///è¶…æ—¶æ¯”è¾ƒå‡½æ•°
     bool operator>(CwxAppHandler4Base const& base) const;
 protected:
     /// Force CwxAppHandler4Base to be an abstract base class.
@@ -100,11 +100,11 @@ protected:
     friend class CwxAppReactor;
     friend class CwxAppEpoll;
 private:
-    CwxAppReactor *        m_reactor; ///<reactor¶ÔÏóµÄÖ¸Õë
-    int                    m_regType; ///<handlerµÄreactor×¢²áÀàĞÍ
-    CWX_HANDLE             m_handler; ///<ÊÂ¼şµÄio handle
+    CwxAppReactor *        m_reactor; ///<reactorå¯¹è±¡çš„æŒ‡é’ˆ
+    int                    m_regType; ///<handlerçš„reactoræ³¨å†Œç±»å‹
+    CWX_HANDLE             m_handler; ///<äº‹ä»¶çš„io handle
     int                    m_type; ///<event handle type;
-    CWX_UINT64             m_ullTimeout; ///<³¬Ê±µÄÊ±¿Ì
+    CWX_UINT64             m_ullTimeout; ///<è¶…æ—¶çš„æ—¶åˆ»
     int                    m_index;
 };
 

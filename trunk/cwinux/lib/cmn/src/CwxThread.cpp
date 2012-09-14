@@ -1,16 +1,16 @@
-#include "CwxThread.h"
+ï»¿#include "CwxThread.h"
 #include "CwxLogger.h"
 
 CWINUX_BEGIN_NAMESPACE
 
-///¹¹Ôìº¯Êý
-CwxThread::CwxThread(CWX_UINT16 unGroupId,///<Ïß³ÌµÄgroup id
-             CWX_UINT16 unThreadId,///<Ïß³ÌÔÚÏß³ÌgroupÖÐµÄÐòºÅ
-             CwxThreadPoolMgr* mgr, ///<Ïß³ÌµÄ¹ÜÀí¶ÔÏó
-             CwxCommander* commander,///<¶ÓÁÐÏûÏ¢Ïû·ÑµÄÈ±Ê¡commander£¬ÈôÖ¸¶¨func¿ÉÒÔ²»Ö¸¶¨
-             CWX_TSS_THR_FUNC func, ///<ÓÃ»§µÄÏß³Ìmainº¯Êý
-             void*            arg, ///<funcµÄvoid*²ÎÊý
-             CwxMsgQueue* queue///<Ïß³Ì³ØµÄ¶ÓÁÐ£¬Èô²»Ö¸¶¨£¬ÔòÏµÍ³Ä¬ÈÏ´´½¨
+///æž„é€ å‡½æ•°
+CwxThread::CwxThread(CWX_UINT16 unGroupId,///<çº¿ç¨‹çš„group id
+             CWX_UINT16 unThreadId,///<çº¿ç¨‹åœ¨çº¿ç¨‹groupä¸­çš„åºå·
+             CwxThreadPoolMgr* mgr, ///<çº¿ç¨‹çš„ç®¡ç†å¯¹è±¡
+             CwxCommander* commander,///<é˜Ÿåˆ—æ¶ˆæ¯æ¶ˆè´¹çš„ç¼ºçœcommanderï¼Œè‹¥æŒ‡å®šfuncå¯ä»¥ä¸æŒ‡å®š
+             CWX_TSS_THR_FUNC func, ///<ç”¨æˆ·çš„çº¿ç¨‹mainå‡½æ•°
+             void*            arg, ///<funcçš„void*å‚æ•°
+             CwxMsgQueue* queue///<çº¿ç¨‹æ± çš„é˜Ÿåˆ—ï¼Œè‹¥ä¸æŒ‡å®šï¼Œåˆ™ç³»ç»Ÿé»˜è®¤åˆ›å»º
              )
 {
     m_pTssEnv = NULL;
@@ -81,7 +81,7 @@ void CwxThread::threadMain()
 {
     time_t ttTime = time(NULL);
 
-    {//×¢²átss
+    {//æ³¨å†Œtss
         if (!m_pTssEnv)
         {
             m_pTssEnv = new CwxTss;
@@ -164,12 +164,12 @@ CwxTss* CwxThread::getTss()
     return m_pTssEnv;
 }
 
-///Ëø×¡Ïß³Ì¡£·µ»ØÖµ0£º³É¹¦£»-1£ºÊ§°Ü
+///é”ä½çº¿ç¨‹ã€‚è¿”å›žå€¼0ï¼šæˆåŠŸï¼›-1ï¼šå¤±è´¥
 int CwxThread::lock()
 {
     return m_msgQueue->lock().acquire();
 }
-///½âËøÕâ¸öÏß³Ì¡£·µ»ØÖµ0£º³É¹¦£»-1£ºÊ§°Ü
+///è§£é”è¿™ä¸ªçº¿ç¨‹ã€‚è¿”å›žå€¼0ï¼šæˆåŠŸï¼›-1ï¼šå¤±è´¥
 int CwxThread::unlock()
 {
     return m_msgQueue->lock().release();

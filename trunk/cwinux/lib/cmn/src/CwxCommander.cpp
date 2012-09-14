@@ -1,4 +1,4 @@
-#include "CwxCommander.h"
+﻿#include "CwxCommander.h"
 
 CWINUX_BEGIN_NAMESPACE
 

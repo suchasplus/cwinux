@@ -1,18 +1,18 @@
-#ifndef __CWX_GLOBAL_MACRO_H__
+ï»¿#ifndef __CWX_GLOBAL_MACRO_H__
 #define __CWX_GLOBAL_MACRO_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 *@file  CwxGlobalMacro.h
-*@brief ÏµÍ³µÄÈ«¾Öºê¶¨Òå
+*@brief ç³»ç»Ÿçš„å…¨å±€å®å®šä¹‰
 *@author cwinux@gmail.com
 *@version 0.1.0
 *@date  2009-06-28
-*@warning  ÎŞ.
+*@warning  æ— .
 */
 #include "CwxPre.h"
 #include <assert.h>
@@ -39,25 +39,25 @@
 #define CWINUX_END_NAMESPACE }
 #define CWINUX_USING_NAMESPACE using namespace cwinux;
 
-///¶¨Òå¶ÏÑÔ
+///å®šä¹‰æ–­è¨€
 #define CWX_ASSERT(a)  assert(a)
 
-///ÊôĞÔµÄ¼ì²é
+///å±æ€§çš„æ£€æŸ¥
 # define CWX_CHECK_ATTR(WORD, ATTR) (((WORD) & (ATTR)) != 0)
-///ÊôĞÔµÄÉèÖÃ
+///å±æ€§çš„è®¾ç½®
 # define CWX_SET_ATTR(WORD, ATTR) (WORD |= (ATTR))
-///ÊôĞÔµÄÇå¿Õ
+///å±æ€§çš„æ¸…ç©º
 # define CWX_CLR_ATTR(WORD, ATTR) (WORD &= ~(ATTR))
 
-///Î»¼ì²é
+///ä½æ£€æŸ¥
 # define CWX_CHECK_BIT(WORD, BIT) (((WORD) & (1<<(BIT))) != 0)
-///Î»ÉèÖÃ
+///ä½è®¾ç½®
 # define CWX_SET_BIT(WORD, BIT) ((WORD) |= (1<<(BIT)))
-///Î»Çå¿Õ
+///ä½æ¸…ç©º
 # define CWX_CLR_BIT(WORD, BIT) ((WORD) &= ~((1<<(BIT))))
-///×îĞ¡
+///æœ€å°
 # define CWX_MIN(a, b) ((b) > (a) ? (a) : (b))
-///×î´ó
+///æœ€å¤§
 # define CWX_MAX(a, b) ((b) > (a) ? (b) : (a))
 
 #define CWX_UNUSED_ARG(a) (void)(a)

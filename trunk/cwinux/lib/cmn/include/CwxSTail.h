@@ -1,18 +1,18 @@
-#ifndef __CWX_STAIL_H__
+ï»¿#ifndef __CWX_STAIL_H__
 #define __CWX_STAIL_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 *@file  CwxSTail.h
-*@brief µ¥ÏòÁ´±íµÄÄ£°åÀà
+*@brief å•å‘é“¾è¡¨çš„æ¨¡æ¿ç±»
 *@author cwinux@gmail.com
 *@version 1.0
 *@date  2010-09-19
-*@warning  ÎŞ.
+*@warning  æ— .
 */
 
 #include "CwxPre.h"
@@ -23,32 +23,32 @@ CWINUX_BEGIN_NAMESPACE
 /**
 * @class CwxSTail
 *
-* @brief µ¥ÏòÁ´±íµÄÄ£°åÀà£¬¶ÔÏó±ØĞëÓĞm_nextµÄ¶ÔÏóÖ¸Õë£¬Ö¸ÏòÏÂÒ»¸öÁ´±íÔªËØ¡£
+* @brief å•å‘é“¾è¡¨çš„æ¨¡æ¿ç±»ï¼Œå¯¹è±¡å¿…é¡»æœ‰m_nextçš„å¯¹è±¡æŒ‡é’ˆï¼ŒæŒ‡å‘ä¸‹ä¸€ä¸ªé“¾è¡¨å…ƒç´ ã€‚
 */
 template <typename CELL>
 class CwxSTail
 {
 public:
-    ///¹¹Ôìº¯Êı£¬Èôlock²»Îª¿Õ£¬Ôò¼ÓËø
+    ///æ„é€ å‡½æ•°ï¼Œè‹¥lockä¸ä¸ºç©ºï¼Œåˆ™åŠ é”
     CwxSTail():m_count(0),m_head(NULL),m_tail(NULL)
     {
     }
-    ///Îö¹¹º¯Êı£¬ÈôËø¶ÔÏó²»Îª¿Õ£¬Ôò½âËø
+    ///ææ„å‡½æ•°ï¼Œè‹¥é”å¯¹è±¡ä¸ä¸ºç©ºï¼Œåˆ™è§£é”
     ~CwxSTail()
     {
     }
 public:
-    ///·µ»Ø¼ÇÂ¼µÄÊıÁ¿
+    ///è¿”å›è®°å½•çš„æ•°é‡
     inline CWX_UINT32 count() const
     {
         return m_count;
     }
-    ///»ñÈ¡Á´±íµÄÍ·£¬²¢²»´ÓÁ´±íÖĞÉ¾³ı¡£NULL±íÊ¾Ã»ÓĞ
+    ///è·å–é“¾è¡¨çš„å¤´ï¼Œå¹¶ä¸ä»é“¾è¡¨ä¸­åˆ é™¤ã€‚NULLè¡¨ç¤ºæ²¡æœ‰
     inline CELL const* head() const
     {
         return m_head;
     }
-    ///pushÒ»¸öÔªËØµ½Á´±íµÄÍ·
+    ///pushä¸€ä¸ªå…ƒç´ åˆ°é“¾è¡¨çš„å¤´
     inline void push_head(CELL* cell)
     {
         m_count++;
@@ -56,7 +56,7 @@ public:
         m_head = cell;
         if (!m_tail) m_tail = m_head;
     }
-    ///´ÓÁ´±íµÄÍ·£¬popÒ»¸öÔªËØ¡£
+    ///ä»é“¾è¡¨çš„å¤´ï¼Œpopä¸€ä¸ªå…ƒç´ ã€‚
     inline CELL* pop_head()
     {
         CELL* obj = NULL;
@@ -74,12 +74,12 @@ public:
         }
         return obj;
     }
-    ///»ñÈ¡Á´±íµÄÎ²£¬²¢²»´ÓÁ´±íÖĞÉ¾³ı¡£NULL±íÊ¾Ã»ÓĞ
+    ///è·å–é“¾è¡¨çš„å°¾ï¼Œå¹¶ä¸ä»é“¾è¡¨ä¸­åˆ é™¤ã€‚NULLè¡¨ç¤ºæ²¡æœ‰
     CELL const* tail() const
     {
         return m_tail;
     }
-    ///pushÒ»¸öÔªËØµ½Á´±íµÄÎ²
+    ///pushä¸€ä¸ªå…ƒç´ åˆ°é“¾è¡¨çš„å°¾
     void push_tail(CELL* cell)
     {
         count++;
@@ -95,9 +95,9 @@ public:
         m_tail = cell;
     }
 private:
-    CWX_UINT32   m_count; ///<¼ÇÂ¼µÄÊıÁ¿
-    CELL*       m_head; ///<Á´±íµÄÍ·
-    CELL*       m_tail; ///<Á´±íµÄÎ²
+    CWX_UINT32   m_count; ///<è®°å½•çš„æ•°é‡
+    CELL*       m_head; ///<é“¾è¡¨çš„å¤´
+    CELL*       m_tail; ///<é“¾è¡¨çš„å°¾
 };
 
 CWINUX_END_NAMESPACE

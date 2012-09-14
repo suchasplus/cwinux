@@ -1,4 +1,4 @@
-CWINUX_BEGIN_NAMESPACE
+﻿CWINUX_BEGIN_NAMESPACE
 
 template<typename CHARSET>
 inline bool CwxFilterMachine<CHARSET>::addStopWord(char const* szStopWord, CWX_UINT32 uiStopWordLen)

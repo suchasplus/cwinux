@@ -1,4 +1,4 @@
-#include "CwxAppUnixAcceptor.h"
+ï»¿#include "CwxAppUnixAcceptor.h"
 #include "CwxAppFramework.h"
 
 CWINUX_BEGIN_NAMESPACE
@@ -70,7 +70,7 @@ int CwxAppUnixAcceptor::open (void * )
     return 0;    
 
 }
-/// ÊÂ¼şµÄ»Øµ÷º¯Êı¡£·µ»Ø-1£ºÊ§°Ü£¬×Ô¶¯ÊÍ·Åhandle£»0£º³É¹¦
+/// äº‹ä»¶çš„å›è°ƒå‡½æ•°ã€‚è¿”å›-1ï¼šå¤±è´¥ï¼Œè‡ªåŠ¨é‡Šæ”¾handleï¼›0ï¼šæˆåŠŸ
 int CwxAppUnixAcceptor::handle_event(int , CWX_HANDLE)
 {
     fd_set conn_handle;

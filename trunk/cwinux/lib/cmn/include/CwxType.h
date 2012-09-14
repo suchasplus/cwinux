@@ -1,9 +1,9 @@
-#ifndef __CWX_TYPE_H__
+ï»¿#ifndef __CWX_TYPE_H__
 #define __CWX_TYPE_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 /**
 *@file  CwxType.h
@@ -32,7 +32,7 @@
 #include <arpa/inet.h>
 #include <stdarg.h>
 #include <sys/time.h>
-///»ù±¾Êı¾İÀàĞÍ¶¨Òå
+///åŸºæœ¬æ•°æ®ç±»å‹å®šä¹‰
 typedef int8_t             CWX_INT8;
 typedef uint8_t            CWX_UINT8;
 typedef int16_t            CWX_INT16;
@@ -42,15 +42,15 @@ typedef uint32_t           CWX_UINT32;
 typedef int64_t            CWX_INT64;
 typedef uint64_t           CWX_UINT64;
 
-///ÍøÂç×Ö½ÚĞò¡¢±¾»ú×Ö½ÚĞò±ä»»¶¨Òå
+///ç½‘ç»œå­—èŠ‚åºã€æœ¬æœºå­—èŠ‚åºå˜æ¢å®šä¹‰
 #define CWX_NTOHS(x)  ntohs(x)
 #define CWX_NTOHL(x)  ntohl(x)
 #define CWX_HTONS(x)  htons(x)
 #define CWX_HTONL(x)  htonl(x)
 
-///IO¾ä±úÀàĞÍ¶¨Òå
+///IOå¥æŸ„ç±»å‹å®šä¹‰
 typedef int CWX_HANDLE;
-///ÎŞĞ§IO¾ä±úÀàĞÍ¶¨Òå
+///æ— æ•ˆIOå¥æŸ„ç±»å‹å®šä¹‰
 #define CWX_INVALID_HANDLE  -1
 
 

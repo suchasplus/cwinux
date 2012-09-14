@@ -1,4 +1,4 @@
-#include "CwxLogger.h"
+﻿#include "CwxLogger.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -54,7 +54,7 @@ int CwxLogger::nextLog(bool bAppend, CWX_UINT16 unFileNo)
     return _nextLog(bAppend, unFileNo);
 }
 
-///��ȡmsg header
+///获取msg header
 int CwxLogger::_log_header(char const* szFile, int line, char* szBuf, CWX_UINT32 uiBufLen)
 {
     struct tm tmNow;

@@ -1,14 +1,14 @@
-#ifndef __CWX_TYPE_POOL_H__
+ï»¿#ifndef __CWX_TYPE_POOL_H__
 #define __CWX_TYPE_POOL_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxTypePool.h
-@brief ¶¨ÒåÖ»·ÖÅä£¬²»ÊÍ·ÅµÄÄÚ´æ³ØÄ£°å£ºCwxTypePool¡£
+@brief å®šä¹‰åªåˆ†é…ï¼Œä¸é‡Šæ”¾çš„å†…å­˜æ± æ¨¡æ¿ï¼šCwxTypePoolã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-10
@@ -24,24 +24,24 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxTypePool
-@brief Ö»·ÖÅä£¬×îºóÍ³Ò»ÊÍ·ÅµÄÄÚ´æ³ØÄ£°åÀà¡£
+@brief åªåˆ†é…ï¼Œæœ€åç»Ÿä¸€é‡Šæ”¾çš„å†…å­˜æ± æ¨¡æ¿ç±»ã€‚
 */
 template <typename T > 
 class CwxTypePool
 {
 public:
     enum{
-        MIN_POOL_OBJECT_NUM = 64///<Ã¿¸öÄÚ´æ¿éÖĞ×îĞ¡µÄ¶ÔÏóµÄÊıÁ¿
+        MIN_POOL_OBJECT_NUM = 64///<æ¯ä¸ªå†…å­˜å—ä¸­æœ€å°çš„å¯¹è±¡çš„æ•°é‡
     };
 private:
-    vector<char*>  m_vector;///<ÄÚ´æ¿éµÄvector
-    CWX_UINT32     m_uiSize;///<·ÖÅäµÄ¶ÔÏóµÄÊıÁ¿
-    CWX_UINT32     m_uiCapacity;///<·ÖÅäµÄÄÚ´æ¿éµÄ×Ü¶ÔÏóÊıÁ¿
-    CWX_UINT32     m_uiPoolSize;///<Ã¿¸öÄÚ´æ¿éµÄ´óĞ¡
-    CWX_UINT32     m_uiLeft;///<µ±Ç°ÄÚ´æ¿éÊ£ÓàµÄ¿ÕÏĞ¶ÔÏóÊıÁ¿
-    char*          m_curPool;///<µ±Ç°µÄÄÚ´æ¿é
+    vector<char*>  m_vector;///<å†…å­˜å—çš„vector
+    CWX_UINT32     m_uiSize;///<åˆ†é…çš„å¯¹è±¡çš„æ•°é‡
+    CWX_UINT32     m_uiCapacity;///<åˆ†é…çš„å†…å­˜å—çš„æ€»å¯¹è±¡æ•°é‡
+    CWX_UINT32     m_uiPoolSize;///<æ¯ä¸ªå†…å­˜å—çš„å¤§å°
+    CWX_UINT32     m_uiLeft;///<å½“å‰å†…å­˜å—å‰©ä½™çš„ç©ºé—²å¯¹è±¡æ•°é‡
+    char*          m_curPool;///<å½“å‰çš„å†…å­˜å—
 public:
-    ///¹¹Ôìº¯Êı²¢ÉèÖÃÃ¿¸öÄÚ´æ¿éµÄ¶ÔÏóÊıÁ¿
+    ///æ„é€ å‡½æ•°å¹¶è®¾ç½®æ¯ä¸ªå†…å­˜å—çš„å¯¹è±¡æ•°é‡
     CwxTypePool(CWX_UINT32 uiPoolSize=MIN_POOL_OBJECT_NUM)
     {
         m_uiSize = 0;
@@ -50,13 +50,13 @@ public:
         m_curPool = NULL;
         m_uiPoolSize = uiPoolSize>(CWX_UINT32)MIN_POOL_OBJECT_NUM?uiPoolSize:(CWX_UINT32)MIN_POOL_OBJECT_NUM;
     }
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxTypePool()
     {
         clear();
     }
 public:
-    ///´ÓÄÚ´æ³ØÖĞ·ÖÅäÒ»¸ö¶ÔÏó
+    ///ä»å†…å­˜æ± ä¸­åˆ†é…ä¸€ä¸ªå¯¹è±¡
     T* malloc()
     {
         if (!m_uiLeft)
@@ -73,7 +73,7 @@ public:
         m_uiSize ++;
         return obj;
     }
-    ///´ÓÄÚ´æ³ØÖĞ·ÖÅäÒ»¸ö¶ÔÏó£¬²¢ÉèÖÃÆä³õÊ¼Öµ¡£´ËÊ±µÄ¶ÔÏó±ØĞë¶¨Òå¿½±´¹¹Ôì
+    ///ä»å†…å­˜æ± ä¸­åˆ†é…ä¸€ä¸ªå¯¹è±¡ï¼Œå¹¶è®¾ç½®å…¶åˆå§‹å€¼ã€‚æ­¤æ—¶çš„å¯¹è±¡å¿…é¡»å®šä¹‰æ‹·è´æ„é€ 
     T* malloc(T const& item)
     {
         if (!m_uiLeft)
@@ -90,17 +90,17 @@ public:
         m_uiSize ++;
         return obj;
     }
-    ///»ñÈ¡µ±Ç°·ÖÅäµÄ×ÜµÄ¶ÔÏóµÄÊıÁ¿
+    ///è·å–å½“å‰åˆ†é…çš„æ€»çš„å¯¹è±¡çš„æ•°é‡
     CWX_UINT32 size() const
     {
         return m_uiSize;
     }
-    ///»ñÈ¡µ±Ç°·ÖÅäµÄÄÚ´æ¿é¿ÉÈİÄÉµÄ×ÜµÄ¶ÔÏóµÄÊıÁ¿
+    ///è·å–å½“å‰åˆ†é…çš„å†…å­˜å—å¯å®¹çº³çš„æ€»çš„å¯¹è±¡çš„æ•°é‡
     CWX_UINT32 capacity() const
     {
         return m_uiCapacity;
     }
-    ///»ñÈ¡µÚuiIndex¶ÔÏó£¬·µ»ØÖµ£ºNULL£º²»´æÔÚ£»·ñÔòÎªµÚuiIndex¸ö¶ÔÏóµØÖ·
+    ///è·å–ç¬¬uiIndexå¯¹è±¡ï¼Œè¿”å›å€¼ï¼šNULLï¼šä¸å­˜åœ¨ï¼›å¦åˆ™ä¸ºç¬¬uiIndexä¸ªå¯¹è±¡åœ°å€
     T* at(CWX_UINT32 uiIndex)
     {
         if (uiIndex >= m_uiSize) return NULL;
@@ -108,7 +108,7 @@ public:
         CWX_UINT32 uiPos = uiIndex%m_uiPoolSize;
         return ((T*)m_vector[uiPoolIndex]) + uiPos;
     }
-    ///ÊÍ·ÅÄÚ´æ³ØÖĞµÄ¶ÔÏó¼°·ÖÅäµÄÄÚ´æ¿é
+    ///é‡Šæ”¾å†…å­˜æ± ä¸­çš„å¯¹è±¡åŠåˆ†é…çš„å†…å­˜å—
     void clear()
     {
         T* pObj = NULL;

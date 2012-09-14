@@ -1,15 +1,15 @@
-#ifndef __CWX_APP_TCP_CONNECTOR_H__
+ï»¿#ifndef __CWX_APP_TCP_CONNECTOR_H__
 #define __CWX_APP_TCP_CONNECTOR_H__
 
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxAppTcpConnector.h
-@brief TcpµÄÁ¬½Ó¹ÜÀí¶ÔÏó£¬¸ºÔğÖ÷¶¯Á¬½ÓµÄ½¨Á¢Óë¹ÜÀí
+@brief Tcpçš„è¿æ¥ç®¡ç†å¯¹è±¡ï¼Œè´Ÿè´£ä¸»åŠ¨è¿æ¥çš„å»ºç«‹ä¸ç®¡ç†
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-07-20
@@ -28,22 +28,22 @@ CWINUX_BEGIN_NAMESPACE
 class CwxAppFramework;
 /**
 @class CwxAppTcpConnector
-@brief TcpµÄÁ¬½Ó¹ÜÀí¶ÔÏó£¬¸ºÔğÖ÷¶¯Á¬½ÓµÄ½¨Á¢Óë¹ÜÀí
+@brief Tcpçš„è¿æ¥ç®¡ç†å¯¹è±¡ï¼Œè´Ÿè´£ä¸»åŠ¨è¿æ¥çš„å»ºç«‹ä¸ç®¡ç†
 */
 class CWX_API CwxAppTcpConnector
 {
 public:
-	///¹¹Ôìº¯Êı
+	///æ„é€ å‡½æ•°
 	CwxAppTcpConnector (CwxAppFramework* pApp, CwxAppReactor *reactor);
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
 	~CwxAppTcpConnector ();
 public:
-    //½¨Á¢Á¬½Ó£¬ -1£ºÊ§°Ü£»0£ºµÈ´ıÁ¬½Ó£»1£º½¨Á¢Á¬½Ó
+    //å»ºç«‹è¿æ¥ï¼Œ -1ï¼šå¤±è´¥ï¼›0ï¼šç­‰å¾…è¿æ¥ï¼›1ï¼šå»ºç«‹è¿æ¥
     int connect (CwxAppHandler4TcpConn* pHandler, ///<conn handler
         char const* szAddr, ///<connect addr
         CWX_UINT16 unPort, ///<connect port
         int iFamily=AF_UNSPEC, ///<family
-        CWX_NET_SOCKET_ATTR_FUNC fn=NULL, ///<socketÉèÖÃµÄfunction
+        CWX_NET_SOCKET_ATTR_FUNC fn=NULL, ///<socketè®¾ç½®çš„function
         void* fnArg = NULL
         );
 private:

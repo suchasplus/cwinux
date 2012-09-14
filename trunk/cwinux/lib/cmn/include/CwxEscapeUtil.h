@@ -1,14 +1,14 @@
-#ifndef __CWX_ESCAPE_UTIL_H__
+ï»¿#ifndef __CWX_ESCAPE_UTIL_H__
 #define __CWX_ESCAPE_UTIL_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxEscapeUtil.h
-@brief ¼¯ºÏÁË¸÷ÖÖ³¡ºÏµÄescape·½·¨µÄ¶¨Òå£¬Ö»Õë¶Ô·ûºÏUTF8µÄ±àÂë×Ö·û¡£
+@brief é›†åˆäº†å„ç§åœºåˆçš„escapeæ–¹æ³•çš„å®šä¹‰ï¼Œåªé’ˆå¯¹ç¬¦åˆUTF8çš„ç¼–ç å­—ç¬¦ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-02
@@ -26,74 +26,74 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxEscapeUtil
-@brief ¹ÜÀíÒ»¸ö×Ö·ûÊÇ·ñĞèÒª½øĞĞencode£¬¼°½øĞĞ±àÂë´¦Àí£¬Ö»Õë¶Ô·ûºÏUTF8µÄ±àÂë×Ö·û¡£
+@brief ç®¡ç†ä¸€ä¸ªå­—ç¬¦æ˜¯å¦éœ€è¦è¿›è¡Œencodeï¼ŒåŠè¿›è¡Œç¼–ç å¤„ç†ï¼Œåªé’ˆå¯¹ç¬¦åˆUTF8çš„ç¼–ç å­—ç¬¦ã€‚
 */
 class CWX_API CwxEscapeUtil:public CwxSingleton
 {
 public:
     enum{
-        URL_ESCAPE = 0x01///<urlµÄescapeÀàĞÍ
+        URL_ESCAPE = 0x01///<urlçš„escapeç±»å‹
     };
 public:
-    ///´´½¨signleton CwxEscapes ¶ÔÏó
+    ///åˆ›å»ºsignleton CwxEscapes å¯¹è±¡
     static CwxEscapeUtil* instance();
 public:
     /**
-    @brief ÅĞ¶Ï×Ö·ûchrÔÚunEscapeTypeÀàĞÍµÄescapeÖĞ£¬ÊÇ·ñĞèÒª×öescape¡£
-    @param [in] chr ¼ì²éµÄ×Ö·û
-    @param [in] unEscapeType escapeµÄÀàĞÍ£¬escapeµÄÀàĞÍÎªenumµÄÖµ
-    @return true£ºĞèÒª×öescape±ä»»£»false£º²»ĞèÒª×öescape±ä»»
+    @brief åˆ¤æ–­å­—ç¬¦chråœ¨unEscapeTypeç±»å‹çš„escapeä¸­ï¼Œæ˜¯å¦éœ€è¦åšescapeã€‚
+    @param [in] chr æ£€æŸ¥çš„å­—ç¬¦
+    @param [in] unEscapeType escapeçš„ç±»å‹ï¼Œescapeçš„ç±»å‹ä¸ºenumçš„å€¼
+    @return trueï¼šéœ€è¦åšescapeå˜æ¢ï¼›falseï¼šä¸éœ€è¦åšescapeå˜æ¢
     */
     bool isEncode(CWX_UINT8 chr, CWX_UINT16 unEscapeType) const;
     /**
-    @brief ½«Ò»¸ö×Ö·ûwhatÓÃ2¸ö16½øÖÆµÄ×Ö·û±íÊ¾¡£
-    @param [in] what ĞèÒª±äÎª16½øÖÆ±íÊ¾µÄ×Ö·û
-    @param [in] prefix 16½øÖÆµÄÇ°×º×Ö·û£¬Èç%£¬0±íÊ¾Ã»ÓĞÇ°×º
-    @param [in] out ĞÎ³ÉµÄ´øÇ°×ºµÄ16½øÖÆ×Ö·û´®
-    @return out×Ö·û´®µÄÏÂÒ»¸öĞ´ÈëÎ»ÖÃ¡£
+    @brief å°†ä¸€ä¸ªå­—ç¬¦whatç”¨2ä¸ª16è¿›åˆ¶çš„å­—ç¬¦è¡¨ç¤ºã€‚
+    @param [in] what éœ€è¦å˜ä¸º16è¿›åˆ¶è¡¨ç¤ºçš„å­—ç¬¦
+    @param [in] prefix 16è¿›åˆ¶çš„å‰ç¼€å­—ç¬¦ï¼Œå¦‚%ï¼Œ0è¡¨ç¤ºæ²¡æœ‰å‰ç¼€
+    @param [in] out å½¢æˆçš„å¸¦å‰ç¼€çš„16è¿›åˆ¶å­—ç¬¦ä¸²
+    @return outå­—ç¬¦ä¸²çš„ä¸‹ä¸€ä¸ªå†™å…¥ä½ç½®ã€‚
     */
     char* c2x(CWX_UINT8 what, CWX_UINT8 prefix, char* out) const;
     /**
-    @brief ½«Á½¸ö16½øÖÆµÄ×Ö·û´®£¬×ª±äÎªÒ»¸ö×Ö·û¡£
-    @param [in] szStr ĞèÒª±äÎª16½øÖÆ±íÊ¾µÄ×Ö·û
-    @return ×ª»¯ºóµÄ×Ö·û¡£
+    @brief å°†ä¸¤ä¸ª16è¿›åˆ¶çš„å­—ç¬¦ä¸²ï¼Œè½¬å˜ä¸ºä¸€ä¸ªå­—ç¬¦ã€‚
+    @param [in] szStr éœ€è¦å˜ä¸º16è¿›åˆ¶è¡¨ç¤ºçš„å­—ç¬¦
+    @return è½¬åŒ–åçš„å­—ç¬¦ã€‚
     */
     CWX_UINT8 x2c(char const* szStr) const;
     /**
-    @brief °´ÕÕURLµÄ±àÂë¹æÔò£¬¶ÔurlµÄ×Ö·û´®½øĞĞ±àÂë´¦Àí¡£
-    @param [in] szUrl ĞèÒª½øĞĞurl±àÂëµÄ×Ö·û´®
-    @param [out] szOut ½øĞĞurl±àÂëºóµÄ×Ö·û´®£¬ĞÎ³É×Ö·û´®ÒÔ\\0½áÊø¡£
-    @param [in,out] uiOutLen ÊäÈëszOutµÄ¿Õ¼ä´óĞ¡£¬Êä³ö±àÂëºóµÄ³¤¶È
-    @return true£º³É¹¦£»false:szOutµÄ¿Õ¼ä²»×ã¡£
+    @brief æŒ‰ç…§URLçš„ç¼–ç è§„åˆ™ï¼Œå¯¹urlçš„å­—ç¬¦ä¸²è¿›è¡Œç¼–ç å¤„ç†ã€‚
+    @param [in] szUrl éœ€è¦è¿›è¡Œurlç¼–ç çš„å­—ç¬¦ä¸²
+    @param [out] szOut è¿›è¡Œurlç¼–ç åçš„å­—ç¬¦ä¸²ï¼Œå½¢æˆå­—ç¬¦ä¸²ä»¥\\0ç»“æŸã€‚
+    @param [in,out] uiOutLen è¾“å…¥szOutçš„ç©ºé—´å¤§å°ï¼Œè¾“å‡ºç¼–ç åçš„é•¿åº¦
+    @return trueï¼šæˆåŠŸï¼›false:szOutçš„ç©ºé—´ä¸è¶³ã€‚
     */
     bool urlEncode(char const* szUrl, char* szOut, CWX_UINT32& uiOutLen) const;
     /**
-    @brief °´ÕÕURLµÄ±àÂë¹æÔò£¬¶ÔurlµÄ±àÂëµÄ×Ö·û´®½øĞĞ½âÂë´¦Àí¡£
-    @param [in] szUrl ĞèÒª½øĞĞurl½âÂëµÄ×Ö·û´®
-    @param [out] szOut ½øĞĞurl½âÂëºóµÄ×Ö·û´®£¬ĞÎ³É×Ö·û´®ÒÔ\\0½áÊø¡£
-    @param [in,out] uiOutLen ÊäÈëszOutµÄ¿Õ¼ä´óĞ¡£¬Êä³ö½âÂëºóµÄ³¤¶È
-    @return true£º³É¹¦£»false:szOutµÄ¿Õ¼ä²»×ã¡£
+    @brief æŒ‰ç…§URLçš„ç¼–ç è§„åˆ™ï¼Œå¯¹urlçš„ç¼–ç çš„å­—ç¬¦ä¸²è¿›è¡Œè§£ç å¤„ç†ã€‚
+    @param [in] szUrl éœ€è¦è¿›è¡Œurlè§£ç çš„å­—ç¬¦ä¸²
+    @param [out] szOut è¿›è¡Œurlè§£ç åçš„å­—ç¬¦ä¸²ï¼Œå½¢æˆå­—ç¬¦ä¸²ä»¥\\0ç»“æŸã€‚
+    @param [in,out] uiOutLen è¾“å…¥szOutçš„ç©ºé—´å¤§å°ï¼Œè¾“å‡ºè§£ç åçš„é•¿åº¦
+    @return trueï¼šæˆåŠŸï¼›false:szOutçš„ç©ºé—´ä¸è¶³ã€‚
     */
     bool urlDecode(char const* szUrl, char* szOut, CWX_UINT32& uiOutLen) const;
     /**
-    @brief °´ÕÕURLµÄ±àÂë¹æÔò£¬¶ÔurlµÄ×Ö·û´®½øĞĞ±àÂë´¦Àí¡£
-    @param [in] szUrl ĞèÒª½øĞĞurl±àÂëµÄ×Ö·û´®
-    @param [out] strOut ½øĞĞurl±àÂëºóµÄ×Ö·û´®¡£
-    @return void¡£
+    @brief æŒ‰ç…§URLçš„ç¼–ç è§„åˆ™ï¼Œå¯¹urlçš„å­—ç¬¦ä¸²è¿›è¡Œç¼–ç å¤„ç†ã€‚
+    @param [in] szUrl éœ€è¦è¿›è¡Œurlç¼–ç çš„å­—ç¬¦ä¸²
+    @param [out] strOut è¿›è¡Œurlç¼–ç åçš„å­—ç¬¦ä¸²ã€‚
+    @return voidã€‚
     */
     void urlEncode(char const* szUrl, string& strOut) const;
     /**
-    @brief °´ÕÕURLµÄ±àÂë¹æÔò£¬¶ÔurlµÄ±àÂëµÄ×Ö·û´®½øĞĞ½âÂë´¦Àí¡£
-    @param [in] szUrl ĞèÒª½øĞĞurl½âÂëµÄ×Ö·û´®
-    @param [out] strOut ½øĞĞurl½âÂëºóµÄ×Ö·û´®¡£
-    @return void¡£
+    @brief æŒ‰ç…§URLçš„ç¼–ç è§„åˆ™ï¼Œå¯¹urlçš„ç¼–ç çš„å­—ç¬¦ä¸²è¿›è¡Œè§£ç å¤„ç†ã€‚
+    @param [in] szUrl éœ€è¦è¿›è¡Œurlè§£ç çš„å­—ç¬¦ä¸²
+    @param [out] strOut è¿›è¡Œurlè§£ç åçš„å­—ç¬¦ä¸²ã€‚
+    @return voidã€‚
     */
     void urlDecode(char const* szUrl, string & strOut) const;
 
 private:
-    ///³õÊ¼»¯ĞèÒª×ö×Ö·û±ä»»µÄmap¡£
+    ///åˆå§‹åŒ–éœ€è¦åšå­—ç¬¦å˜æ¢çš„mapã€‚
     void init();
-    ///½ûÖ¹´´½¨¶ÔÏó£¬±£Ö¤singleton
+    ///ç¦æ­¢åˆ›å»ºå¯¹è±¡ï¼Œä¿è¯singleton
     CwxEscapeUtil();
     ~CwxEscapeUtil();
 private:

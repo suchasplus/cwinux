@@ -1,14 +1,14 @@
-#ifndef __CWX_DATE_H__
+ï»¿#ifndef __CWX_DATE_H__
 #define __CWX_DATE_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxDate.h
-@brief ¶¨ÒåÈÕÆÚ¸ñÊ½×ª»»¹¤¾ßÀàCwxDate
+@brief å®šä¹‰æ—¥æœŸæ ¼å¼è½¬æ¢å·¥å…·ç±»CwxDate
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-10
@@ -26,103 +26,103 @@ CWINUX_BEGIN_NAMESPACE
 
 /**
 @class CwxDate
-@brief ÊµÏÖÁË¶Ô³£ÓÃÈÕÆÚ¸ñÊ½µÄ±ä»»£¬´ËÀàµÄ·½·¨È«²¿Îª¾²Ì¬·½·¨£¬²»ÄÜÊµÀı»¯¡£<br>
-       CwxDate»ñÈ¡µÄÊ±¼ä£¬È«²¿ÊÇ±¾µØÊ±ÇøµÄÊ±¼ä
+@brief å®ç°äº†å¯¹å¸¸ç”¨æ—¥æœŸæ ¼å¼çš„å˜æ¢ï¼Œæ­¤ç±»çš„æ–¹æ³•å…¨éƒ¨ä¸ºé™æ€æ–¹æ³•ï¼Œä¸èƒ½å®ä¾‹åŒ–ã€‚<br>
+       CwxDateè·å–çš„æ—¶é—´ï¼Œå…¨éƒ¨æ˜¯æœ¬åœ°æ—¶åŒºçš„æ—¶é—´
 */
 class CWX_API CwxDate
 {
 public:
     /**
-    @brief ½«tt±äÁ¿Ö¸¶¨µÄÊ±¼ä£¬×ª»¯Îªformat¶¨ÒåµÄ¸ñÊ½£¬²¢·µ»Ø¡£
-    @param [in] tt Ê±¼ä±äÁ¿
-    @param [in] format ·µ»ØÊ±¼ä¸ñÊ½µÄformat£¬¸ñÊ½Óëstrftime()Ò»ÖÂ
-    @param [out] datetime format¶¨ÒåµÄÊ±¼ä¸ñÊ½
-    @return ·µ»Ødatetime±äÁ¿
+    @brief å°†ttå˜é‡æŒ‡å®šçš„æ—¶é—´ï¼Œè½¬åŒ–ä¸ºformatå®šä¹‰çš„æ ¼å¼ï¼Œå¹¶è¿”å›ã€‚
+    @param [in] tt æ—¶é—´å˜é‡
+    @param [in] format è¿”å›æ—¶é—´æ ¼å¼çš„formatï¼Œæ ¼å¼ä¸strftime()ä¸€è‡´
+    @param [out] datetime formatå®šä¹‰çš„æ—¶é—´æ ¼å¼
+    @return è¿”å›datetimeå˜é‡
     */
     static string& format(time_t tt, char const* format, string& datetime);
     /**
-    @brief ½«µ±Ç°µÄ±ê×¼Ê±¼ä£¬×ª»¯ÎªYYYY-MM-DD H24:MM:SSµÄ¸ñÊ½£¬²¢·µ»Ø¡£
-    @param [out] datetime ´æ·ÅYYYY-MM-DD H24:MM:SS¸ñÊ½×Ö·û´®µÄstring ±äÁ¿
-    @return ·µ»Ødatetime±äÁ¿
+    @brief å°†å½“å‰çš„æ ‡å‡†æ—¶é—´ï¼Œè½¬åŒ–ä¸ºYYYY-MM-DD H24:MM:SSçš„æ ¼å¼ï¼Œå¹¶è¿”å›ã€‚
+    @param [out] datetime å­˜æ”¾YYYY-MM-DD H24:MM:SSæ ¼å¼å­—ç¬¦ä¸²çš„string å˜é‡
+    @return è¿”å›datetimeå˜é‡
     */
     static string& getDate(string& datetime);
     /**
-    @brief ½«tt±äÁ¿Ö¸¶¨µÄÊ±¼ä£¬×ª»¯ÎªYYYY-MM-DD H24:MM:SSµÄ¸ñÊ½£¬²¢·µ»Ø¡£
-    @param [in] tt Ê±¼ä±äÁ¿
-    @param [out] datetime ´æ·ÅYYYY-MM-DD H24:MM:SS¸ñÊ½×Ö·û´®µÄstring ±äÁ¿
-    @return ·µ»Ødatetime±äÁ¿
+    @brief å°†ttå˜é‡æŒ‡å®šçš„æ—¶é—´ï¼Œè½¬åŒ–ä¸ºYYYY-MM-DD H24:MM:SSçš„æ ¼å¼ï¼Œå¹¶è¿”å›ã€‚
+    @param [in] tt æ—¶é—´å˜é‡
+    @param [out] datetime å­˜æ”¾YYYY-MM-DD H24:MM:SSæ ¼å¼å­—ç¬¦ä¸²çš„string å˜é‡
+    @return è¿”å›datetimeå˜é‡
     */
     static string& getDate(time_t tt, string& datetime);
     /**
-    @brief ½«YYYY-MM-DD H24:MM:SSµÄ¸ñÊ½Ê±¼ä£¬×ª»¯Îªtime_tµÄÊ±¼ä²¢·µ»Ø¡£
-    @param [in] datetime ¸ñÊ½ÎªYYYY-MM-DD H24:MM:SS¸ñÊ½×Ö·û´®±äÁ¿
-    @return datetime¶ÔÓ¦µÄtime_tµÄÊ±¼ä
+    @brief å°†YYYY-MM-DD H24:MM:SSçš„æ ¼å¼æ—¶é—´ï¼Œè½¬åŒ–ä¸ºtime_tçš„æ—¶é—´å¹¶è¿”å›ã€‚
+    @param [in] datetime æ ¼å¼ä¸ºYYYY-MM-DD H24:MM:SSæ ¼å¼å­—ç¬¦ä¸²å˜é‡
+    @return datetimeå¯¹åº”çš„time_tçš„æ—¶é—´
     */
     static time_t getDate(string const& datetime);
     /**
-    @brief ½«tt±íÊ¾µÄÊ±¼ä£¬×ª»¯ÎªYYYYMMDDH24MMSS¸ñÊ½×Ö·û´®²¢·µ»Ø¡£
-    @param [in] tt Òª×ª»¯µÄÊ±¼ä
-    @param [out] datetime ·µ»ØµÄYYYYMMDDH24MMSS¸ñÊ½µÄ×Ö·û´®
-    @return ·µ»Ødatetime±äÁ¿
+    @brief å°†ttè¡¨ç¤ºçš„æ—¶é—´ï¼Œè½¬åŒ–ä¸ºYYYYMMDDH24MMSSæ ¼å¼å­—ç¬¦ä¸²å¹¶è¿”å›ã€‚
+    @param [in] tt è¦è½¬åŒ–çš„æ—¶é—´
+    @param [out] datetime è¿”å›çš„YYYYMMDDH24MMSSæ ¼å¼çš„å­—ç¬¦ä¸²
+    @return è¿”å›datetimeå˜é‡
     */
     static string& getDateY4MDHMS2(time_t tt, string& datetime);
     /**
-    @brief ½«YYYYMMDDH24MMSS¸ñÊ½×Ö·û´®£¬×ª»¯Îªtime_tµÄĞÎÊ½²¢·µ»Ø¡£
-    @param [in] datetime YYYYMMDDH24MMSS¸ñÊ½µÄ×Ö·û´®
-    @return datetime¶ÔÓ¦µÄÊ±¼ä
+    @brief å°†YYYYMMDDH24MMSSæ ¼å¼å­—ç¬¦ä¸²ï¼Œè½¬åŒ–ä¸ºtime_tçš„å½¢å¼å¹¶è¿”å›ã€‚
+    @param [in] datetime YYYYMMDDH24MMSSæ ¼å¼çš„å­—ç¬¦ä¸²
+    @return datetimeå¯¹åº”çš„æ—¶é—´
     */
     static time_t getDateY4MDHMS2(const string& datetime);
     /**
-    @brief ½«ttµÄÊ±¼äÖµ£¬°´Ğ¡Ê±¹éÒ»»¯£¬¼°È¥µô²»Âú1Ğ¡Ê±µÄ²¿·Ö
-    @param [in] tt Òª´¦ÀíµÄÊ±¼ä
-    @return ·µ»Ø°´Ğ¡Ê±¹éÒ»»¯µÄtime_t
+    @brief å°†ttçš„æ—¶é—´å€¼ï¼ŒæŒ‰å°æ—¶å½’ä¸€åŒ–ï¼ŒåŠå»æ‰ä¸æ»¡1å°æ—¶çš„éƒ¨åˆ†
+    @param [in] tt è¦å¤„ç†çš„æ—¶é—´
+    @return è¿”å›æŒ‰å°æ—¶å½’ä¸€åŒ–çš„time_t
     */
     static time_t trimToHour(time_t  tt);
     /**
-    @brief ½«ttµÄÊ±¼äÖµ£¬°´Ìì¹éÒ»»¯£¬¼°È¥µô²»Âú1ÌìµÄ²¿·Ö
-    @param [in] tt Òª´¦ÀíµÄÊ±¼ä
-    @return ·µ»Ø°´Ìì¹éÒ»»¯µÄtime_t
+    @brief å°†ttçš„æ—¶é—´å€¼ï¼ŒæŒ‰å¤©å½’ä¸€åŒ–ï¼ŒåŠå»æ‰ä¸æ»¡1å¤©çš„éƒ¨åˆ†
+    @param [in] tt è¦å¤„ç†çš„æ—¶é—´
+    @return è¿”å›æŒ‰å¤©å½’ä¸€åŒ–çš„time_t
     */
     static time_t trimToDay(time_t  tt);
     /**
-    @brief »ñÈ¡time_tÖĞµÄÄê·İ
-    @param [in] tt Òª»ñÈ¡Äê·İµÄtime_t
-    @return ·µ»ØttÊ±¼äËùÔÚµÄÄê·İ
+    @brief è·å–time_tä¸­çš„å¹´ä»½
+    @param [in] tt è¦è·å–å¹´ä»½çš„time_t
+    @return è¿”å›ttæ—¶é—´æ‰€åœ¨çš„å¹´ä»½
     */
     static int	getYear(time_t tt);
     /**
-    @brief »ñÈ¡time_tÖĞµÄÔÂ·İ
-    @param [in] tt Òª»ñÈ¡ÔÂ·İµÄtime_t
-    @return ·µ»ØttÊ±¼äËùÔÚµÄÔÂ·İ
+    @brief è·å–time_tä¸­çš„æœˆä»½
+    @param [in] tt è¦è·å–æœˆä»½çš„time_t
+    @return è¿”å›ttæ—¶é—´æ‰€åœ¨çš„æœˆä»½
     */
     static int	getMonth(time_t tt);
     /**
-    @brief »ñÈ¡time_tÖĞµÄËùÔÚÔÂ·İµÄÈÕÆÚ
-    @param [in] tt Òª»ñÈ¡ËùÔÚÔÂ·İµÄÈÕÆÚµÄtime_t
-    @return ·µ»ØttÊ±¼äËùÔÚÔÂ·İµÄÈÕÆÚ
+    @brief è·å–time_tä¸­çš„æ‰€åœ¨æœˆä»½çš„æ—¥æœŸ
+    @param [in] tt è¦è·å–æ‰€åœ¨æœˆä»½çš„æ—¥æœŸçš„time_t
+    @return è¿”å›ttæ—¶é—´æ‰€åœ¨æœˆä»½çš„æ—¥æœŸ
     */
     static int	getDay(time_t tt);
     /**
-    @brief »ñÈ¡time_t¶ÔÓ¦ÈÕÆÚµÄĞ¡Ê±
-    @param [in] tt Òª»ñÈ¡Ğ¡Ê±µÄtime_t
-    @return ·µ»ØttÊ±¼äµÄĞ¡Ê±
+    @brief è·å–time_tå¯¹åº”æ—¥æœŸçš„å°æ—¶
+    @param [in] tt è¦è·å–å°æ—¶çš„time_t
+    @return è¿”å›ttæ—¶é—´çš„å°æ—¶
     */
     static int	getHour(time_t tt);
     /**
-    @brief »ñÈ¡time_t¶ÔÓ¦ÈÕÆÚµÄ·ÖÖÓ
-    @param [in] tt Òª»ñÈ¡·ÖÖÓµÄtime_t
-    @return ·µ»Øtt¶ÔÓ¦ÈÕÆÚµÄ·ÖÖÓ
+    @brief è·å–time_tå¯¹åº”æ—¥æœŸçš„åˆ†é’Ÿ
+    @param [in] tt è¦è·å–åˆ†é’Ÿçš„time_t
+    @return è¿”å›ttå¯¹åº”æ—¥æœŸçš„åˆ†é’Ÿ
     */
     static int	getMinute(time_t tt);
     /**
-    @brief »ñÈ¡time_t¶ÔÓ¦ÈÕÆÚµÄÃë
-    @param [in] tt Òª»ñÈ¡ÃëµÄtime_t
-    @return ·µ»Øtt¶ÔÓ¦ÈÕÆÚµÄÃë
+    @brief è·å–time_tå¯¹åº”æ—¥æœŸçš„ç§’
+    @param [in] tt è¦è·å–ç§’çš„time_t
+    @return è¿”å›ttå¯¹åº”æ—¥æœŸçš„ç§’
     */
     static int	getSecond(time_t tt);
     /**
-    @brief »ñÈ¡¾«È·µ½Î¢ÃîµÄµ±Ç°Ê±¼ä£¬Îª64Î»µÄÎŞ·ûºÅÊı
-    @return ·µ»Ø¾«È·µ½Î¢ÃîµÄµ±Ç°Ê±¼ä
+    @brief è·å–ç²¾ç¡®åˆ°å¾®å¦™çš„å½“å‰æ—¶é—´ï¼Œä¸º64ä½çš„æ— ç¬¦å·æ•°
+    @return è¿”å›ç²¾ç¡®åˆ°å¾®å¦™çš„å½“å‰æ—¶é—´
     */
     static CWX_UINT64 getTimestamp();
 public:
@@ -130,7 +130,7 @@ public:
     static const string HTTP_FORMAT;
 
 private:
-    ///¶ÔÏó½ûÖ¹ÊµÀı»¯
+    ///å¯¹è±¡ç¦æ­¢å®ä¾‹åŒ–
     CwxDate(){}
 };
 

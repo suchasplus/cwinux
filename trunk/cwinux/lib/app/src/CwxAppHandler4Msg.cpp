@@ -1,4 +1,4 @@
-#include "CwxAppHandler4Msg.h"
+ï»¿#include "CwxAppHandler4Msg.h"
 #include "CwxAppFramework.h"
 
 CWINUX_BEGIN_NAMESPACE
@@ -21,7 +21,7 @@ CwxAppHandler4Msg::CwxAppHandler4Msg(CwxAppFramework* pApp, CwxAppReactor *react
     m_connErrNo = 0;
 }
 
-///Îö¹¹º¯Êı
+///ææ„å‡½æ•°
 CwxAppHandler4Msg::~CwxAppHandler4Msg()
 {
     clear();
@@ -53,7 +53,7 @@ int CwxAppHandler4Msg::open (void * )
     }
     else if (CwxAppConnInfo::ESTABLISHING == m_conn.getState())
     {
-        //Çå¿Õ¶ÔÏóµÄ±ä»¯Êı¾İ
+        //æ¸…ç©ºå¯¹è±¡çš„å˜åŒ–æ•°æ®
         this->clear();
         m_conn.setFailConnNum(0);
         // Turn on non-blocking I/O.
@@ -85,14 +85,14 @@ int CwxAppHandler4Msg::close(CWX_HANDLE)
 
 
 /**
-@brief ½ÓÊÜÁ¬½ÓÉÏµÄµ½´ïÊı¾İ
-@param [in] handle Á¬½ÓµÄhandle
-@return -1£º¹Ø±ÕµÄÁ¬½Ó£» 0£º½ÓÊÕÊı¾İ³É¹¦
+@brief æ¥å—è¿æ¥ä¸Šçš„åˆ°è¾¾æ•°æ®
+@param [in] handle è¿æ¥çš„handle
+@return -1ï¼šå…³é—­çš„è¿æ¥ï¼› 0ï¼šæ¥æ”¶æ•°æ®æˆåŠŸ
 */
 int CwxAppHandler4Msg::handle_event(int event, CWX_HANDLE)
 {
     if (CwxAppConnInfo::ESTABLISHED == m_conn.getState())
-    {///Í¨ĞÅ×´Ì¬
+    {///é€šä¿¡çŠ¶æ€
         CWX_ASSERT((event&~CwxAppHandler4Base::RW_MASK)==0);
         if (CWX_CHECK_ATTR(event, CwxAppHandler4Base::WRITE_MASK))
         {
@@ -104,9 +104,9 @@ int CwxAppHandler4Msg::handle_event(int event, CWX_HANDLE)
         }
     }
     else if (CwxAppConnInfo::CONNECTING == m_conn.getState())
-    {///µÈ´ıÁ¬½Ó×´Ì¬
+    {///ç­‰å¾…è¿æ¥çŠ¶æ€
 		if ((event&CwxAppHandler4Base::TIMEOUT_MASK)== CwxAppHandler4Base::TIMEOUT_MASK)
-		{//Á¬½Ó³¬Ê±
+		{//è¿æ¥è¶…æ—¶
 			return -1;
 		}
 
@@ -378,10 +378,10 @@ void CwxAppHandler4Msg::handle_timeout()
 
 
 /**
-@brief »ñÈ¡Á¬½ÓµÄ¶Ô¶ËµØÖ·
-@param [in,out] szBuf ·µ»ØµØÖ·µÄbuf,»ñÈ¡³É¹¦ºóÒÔ\\0½áÊø¡£
-@param [in] unSize szBufµÄ´óĞ¡¡£
-@return ·µ»ØszBuf
+@brief è·å–è¿æ¥çš„å¯¹ç«¯åœ°å€
+@param [in,out] szBuf è¿”å›åœ°å€çš„buf,è·å–æˆåŠŸåä»¥\\0ç»“æŸã€‚
+@param [in] unSize szBufçš„å¤§å°ã€‚
+@return è¿”å›szBuf
 */
 char* CwxAppHandler4Msg::getRemoteAddr(char* szBuf, CWX_UINT16 )
 {
@@ -389,18 +389,18 @@ char* CwxAppHandler4Msg::getRemoteAddr(char* szBuf, CWX_UINT16 )
     return szBuf;
 }
 /**
-@brief »ñÈ¡Á¬½ÓµÄ¶Ô¶Ëport
-@return Á¬½Ó¶Ô¶ËµÄport
+@brief è·å–è¿æ¥çš„å¯¹ç«¯port
+@return è¿æ¥å¯¹ç«¯çš„port
 */
 CWX_UINT16 CwxAppHandler4Msg::getRemotePort()
 {
     return 0;
 }
 /**
-@brief »ñÈ¡Á¬½Ó±¾¶ËµÄµØÖ·
-@param [in,out] szBuf ·µ»ØµØÖ·µÄbuf,»ñÈ¡³É¹¦ºóÒÔ\\0½áÊø¡£
-@param [in] unSize szBufµÄ´óĞ¡¡£
-@return ·µ»ØszBuf
+@brief è·å–è¿æ¥æœ¬ç«¯çš„åœ°å€
+@param [in,out] szBuf è¿”å›åœ°å€çš„buf,è·å–æˆåŠŸåä»¥\\0ç»“æŸã€‚
+@param [in] unSize szBufçš„å¤§å°ã€‚
+@return è¿”å›szBuf
 */
 char* CwxAppHandler4Msg::getLocalAddr(char* szBuf, CWX_UINT16 )
 {
@@ -408,8 +408,8 @@ char* CwxAppHandler4Msg::getLocalAddr(char* szBuf, CWX_UINT16 )
     return szBuf;
 }
 /**
-@brief »ñÈ¡Á¬½ÓµÄ±¾¶Ëport
-@return Á¬½Ó¶Ô¶ËµÄport
+@brief è·å–è¿æ¥çš„æœ¬ç«¯port
+@return è¿æ¥å¯¹ç«¯çš„port
 */
 CWX_UINT16 CwxAppHandler4Msg::getLocalPort()
 {

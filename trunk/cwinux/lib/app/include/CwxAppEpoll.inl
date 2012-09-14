@@ -1,4 +1,4 @@
-
+ï»¿
 CWINUX_BEGIN_NAMESPACE
 
 inline void CwxAppEpoll::timeout(CWX_UINT64& ullTime)
@@ -13,7 +13,7 @@ inline void CwxAppEpoll::timeout(CWX_UINT64& ullTime)
         ullTime = handler->getTimeout();
     }
 }
-///Ìí¼Ó epoll¼ì²â,maskÎªREAD_MASK¡¢WRITE_MASKµÄ×éºÏ¡£
+///æ·»åŠ  epollæ£€æµ‹,maskä¸ºREAD_MASKã€WRITE_MASKçš„ç»„åˆã€‚
 inline int CwxAppEpoll::addEvent(int fd, int mask)
 {
     if (mask & CwxAppHandler4Base::RW_MASK)
@@ -34,7 +34,7 @@ inline int CwxAppEpoll::addEvent(int fd, int mask)
     }
     return 0;
 }
-///É¾³ı´æÔÚµÄmask£¬maskÎªREAD_MASK¡¢WRITE_MASKµÄ×éºÏ¡£
+///åˆ é™¤å­˜åœ¨çš„maskï¼Œmaskä¸ºREAD_MASKã€WRITE_MASKçš„ç»„åˆã€‚
 inline int CwxAppEpoll::delEvent(int fd, int mask)
 {
     if (mask & m_eHandler[fd].m_mask)
@@ -68,7 +68,7 @@ inline void CwxAppEpoll::stop()
     m_bStop = true;
 }
 
-///»ñÈ¡µ±Ç°µÄÊ±¼ä
+///è·å–å½“å‰çš„æ—¶é—´
 inline CwxTimeValue const& CwxAppEpoll::getCurTime() const
 {
     return m_current;

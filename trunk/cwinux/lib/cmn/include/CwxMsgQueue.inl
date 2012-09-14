@@ -1,42 +1,42 @@
-CWINUX_BEGIN_NAMESPACE
+ï»¿CWINUX_BEGIN_NAMESPACE
 
-///¹Ø±Õ¶ÓÁĞ£¬Í¬Ê±ÊÍ·ÅËùÓĞÏûÏ¢¡£-1£ºÊ§°Ü£»>=0£º¶ÓÁĞÖĞµÄÏûÏ¢ÊıÁ¿
+///å…³é—­é˜Ÿåˆ—ï¼ŒåŒæ—¶é‡Šæ”¾æ‰€æœ‰æ¶ˆæ¯ã€‚-1ï¼šå¤±è´¥ï¼›>=0ï¼šé˜Ÿåˆ—ä¸­çš„æ¶ˆæ¯æ•°é‡
 inline int CwxMsgQueue::close()
 {
     CwxMutexGuard<CwxMutexLock> guard(&this->m_lock);
     _deactivate();
     return _flush();
 }
-///Ö»ÊÍ·Å¶ÓÁĞÖĞµÄËùÓĞÏûÏ¢¡£-1£ºÊ§°Ü£»>=0£º¶ÓÁĞÖĞµÄÏûÏ¢ÊıÁ¿
+///åªé‡Šæ”¾é˜Ÿåˆ—ä¸­çš„æ‰€æœ‰æ¶ˆæ¯ã€‚-1ï¼šå¤±è´¥ï¼›>=0ï¼šé˜Ÿåˆ—ä¸­çš„æ¶ˆæ¯æ•°é‡
 inline int CwxMsgQueue::flush (void)
 {
     CwxMutexGuard<CwxMutexLock> guard(&this->m_lock);
     return _flush();
 }
 
-///¼ì²é¶ÓÁĞÊÇ·ñfull
+///æ£€æŸ¥é˜Ÿåˆ—æ˜¯å¦full
 inline bool CwxMsgQueue::isFull (void)
 {
     CwxMutexGuard<CwxMutexLock> guard(&this->m_lock);
     return _isFull();
 }
-///¼ì²é¶ÓÁĞÊÇ·ñ¿Õ.
+///æ£€æŸ¥é˜Ÿåˆ—æ˜¯å¦ç©º.
 inline bool CwxMsgQueue::isEmpty(void)
 {
     CwxMutexGuard<CwxMutexLock> guard(&this->m_lock);
     return _isEmpty();
 }
-///»ñÈ¡ËùÓĞÏûÏ¢µÄ¿Õ¼ä´óĞ¡.
+///è·å–æ‰€æœ‰æ¶ˆæ¯çš„ç©ºé—´å¤§å°.
 inline size_t CwxMsgQueue::getMsgBytes(void)
 {
     return m_curMsgBytes;
 }
-///»ñÈ¡ËùÓĞMsgµÄlength.
+///è·å–æ‰€æœ‰Msgçš„length.
 inline size_t CwxMsgQueue::getMsgLength(void)
 {
     return m_curLength;
 }
-///»ñÈ¡ÏûÏ¢µÄÊıÁ¿.
+///è·å–æ¶ˆæ¯çš„æ•°é‡.
 inline size_t CwxMsgQueue::getMsgCount(void)
 {
     return m_curCount;
@@ -70,28 +70,28 @@ inline bool CwxMsgQueue::isActivate(void)
     return m_state == ACTIVATED;
 }
 
-///»ñÈ¡high water mark
+///è·å–high water mark
 inline size_t CwxMsgQueue::getHwm(void) const
 {
     return m_highWaterMark;
 }
-///ÉèÖÃhigh water mark
+///è®¾ç½®high water mark
 inline void CwxMsgQueue::setHwm(size_t hwm)
 {
     m_highWaterMark = hwm;
 }
-///»ñÈ¡low water mark
+///è·å–low water mark
 inline size_t CwxMsgQueue::getLwm(void) const
 {
     return m_lowWaterMark;
 }
-///ÉèÖÃlow water mark
+///è®¾ç½®low water mark
 inline void CwxMsgQueue::setLwm(size_t lwm)
 {
     m_lowWaterMark = lwm;
 }
 
-/// »ñÈ¡Ëø.
+/// è·å–é”.
 inline CwxMutexLock& CwxMsgQueue::lock()
 {
     return m_lock;
@@ -138,12 +138,12 @@ inline int CwxMsgQueue::_flush(void)
     return number_flushed;
 }
 
-///¼ì²é¶ÓÁĞÊÇ·ñfull
+///æ£€æŸ¥é˜Ÿåˆ—æ˜¯å¦full
 inline bool CwxMsgQueue::_isFull (void)
 {
     return m_curLength >= m_highWaterMark;
 }
-///¼ì²é¶ÓÁĞÊÇ·ñ¿Õ.
+///æ£€æŸ¥é˜Ÿåˆ—æ˜¯å¦ç©º.
 inline bool CwxMsgQueue::_isEmpty(void)
 {
     return !m_head;
@@ -167,7 +167,7 @@ inline int CwxMsgQueue::_waitNotFullCond(CwxTimeValue *timeout)
 
 }
 
-///µÈ´ı¶ÓÁĞÏûÏ¢
+///ç­‰å¾…é˜Ÿåˆ—æ¶ˆæ¯
 inline int CwxMsgQueue::_waitNotEmptyCond(CwxTimeValue *timeout)
 {
     // Wait while the queue is full.

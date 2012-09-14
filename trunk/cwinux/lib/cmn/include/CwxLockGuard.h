@@ -1,18 +1,18 @@
-#ifndef __CWX_LOCK_GUARD_H__
+ï»¿#ifndef __CWX_LOCK_GUARD_H__
 #define __CWX_LOCK_GUARD_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 *@file  CwxLockGuard.h
-*@brief CWINUXµÄÅÅËû¡¢¶ÁĞ´ËøµÄÄ£°å²ßÂÔËø¶ÔÏóCwxMutexGuard
+*@brief CWINUXçš„æ’ä»–ã€è¯»å†™é”çš„æ¨¡æ¿ç­–ç•¥é”å¯¹è±¡CwxMutexGuard
 *@author cwinux@gmail.com
 *@version 0.1
 *@date  2009-05-30
-*@warning  ÎŞ.
+*@warning  æ— .
 */
 
 #include "CwxPre.h"
@@ -23,26 +23,26 @@ CWINUX_BEGIN_NAMESPACE
 /**
 * @class CwxMutexGuard
 *
-* @brief ²ßÂÔËø¶ÔÏó£¬ÔÚ¹¹Ôìº¯ÊıÖĞ¼ÓËø£¬ÔÚÎö¹¹º¯ÊıÖĞ½âËø
+* @brief ç­–ç•¥é”å¯¹è±¡ï¼Œåœ¨æ„é€ å‡½æ•°ä¸­åŠ é”ï¼Œåœ¨ææ„å‡½æ•°ä¸­è§£é”
 */
 template <class LOCK>
 class CwxMutexGuard
 {
 public:
-    ///¹¹Ôìº¯Êı£¬Èôlock²»Îª¿Õ£¬Ôò¼ÓËø
+    ///æ„é€ å‡½æ•°ï¼Œè‹¥lockä¸ä¸ºç©ºï¼Œåˆ™åŠ é”
     CwxMutexGuard (LOCK * lock):m_pLock(lock)
     {
         if (m_pLock) m_pLock->acquire();
     }
-    ///Îö¹¹º¯Êı£¬ÈôËø¶ÔÏó²»Îª¿Õ£¬Ôò½âËø
+    ///ææ„å‡½æ•°ï¼Œè‹¥é”å¯¹è±¡ä¸ä¸ºç©ºï¼Œåˆ™è§£é”
     ~CwxMutexGuard ()
     {
         if (m_pLock) m_pLock->release();
     }
 private:
-    ///½ûÖ¹²»´øËø¶ÔÏóµÄÄ¬ÈÏ¹¹Ôìº¯Êı.
+    ///ç¦æ­¢ä¸å¸¦é”å¯¹è±¡çš„é»˜è®¤æ„é€ å‡½æ•°.
     CwxMutexGuard (): m_pLock (0) {}
-    ///Ëø¶ÔÏóµÄÖ¸Õë
+    ///é”å¯¹è±¡çš„æŒ‡é’ˆ
     LOCK*      m_pLock;
 
 };

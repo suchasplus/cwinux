@@ -1,14 +1,14 @@
-#ifndef  __CWX_TIME_VALUE_H__
+ï»¿#ifndef  __CWX_TIME_VALUE_H__
 #define  __CWX_TIME_VALUE_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 *@file CwxTimeValue.h
-*@brief CwxTimeValue¶¨Òå
+*@brief CwxTimeValueå®šä¹‰
 *@author cwinux@gmail.com
 *@version 1.0
 *@date  2019-06-05
@@ -116,30 +116,30 @@ private:
 /**
 * @class CwxTimeouter
 *
-* @brief ¶¨Ê±Æ÷¶ÔÏó£¬¼ì²éÊÇ·ñ³¬Ê±
+* @brief å®šæ—¶å™¨å¯¹è±¡ï¼Œæ£€æŸ¥æ˜¯å¦è¶…æ—¶
 *
 */
 class CWX_API CwxTimeouter
 {
 public:
-    ///¹¹Ôìº¯Êı£¬timeoutÎªNULL±íÊ¾Ã»ÓĞ³¬Ê±
+    ///æ„é€ å‡½æ•°ï¼Œtimeoutä¸ºNULLè¡¨ç¤ºæ²¡æœ‰è¶…æ—¶
     CwxTimeouter(CwxTimeValue const* timeout=NULL);
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxTimeouter();
 public:
-    ///¼ì²éÊÇ·ñÒÑ¾­³¬Ê±,Í¬Ê±»áÉèÖÃÊ£ÓàµÄÊ±¼ä£»
-    ///·µ»ØÖµ£ºtrue ³¬Ê±£»false Ã»ÓĞ³¬Ê±¡£
+    ///æ£€æŸ¥æ˜¯å¦å·²ç»è¶…æ—¶,åŒæ—¶ä¼šè®¾ç½®å‰©ä½™çš„æ—¶é—´ï¼›
+    ///è¿”å›å€¼ï¼štrue è¶…æ—¶ï¼›false æ²¡æœ‰è¶…æ—¶ã€‚
     bool timeout() ;
-    ///Ê£ÓàÊ±¼ä£¬NULL±íÊ¾Ã»ÓĞ³¬Ê±ÉèÖÃ
+    ///å‰©ä½™æ—¶é—´ï¼ŒNULLè¡¨ç¤ºæ²¡æœ‰è¶…æ—¶è®¾ç½®
     CwxTimeValue const* left() const;
-    ///ÊÇ·ñ½øĞĞ¶¨Ê±£¬·µ»ØÖµ£ºtrue ÊÇ£»false Ã»ÓĞ
+    ///æ˜¯å¦è¿›è¡Œå®šæ—¶ï¼Œè¿”å›å€¼ï¼štrue æ˜¯ï¼›false æ²¡æœ‰
     bool isTimer() const;
-    ///»ñÈ¡Ô­Ê¼³¬Ê±Ê±¼ä
+    ///è·å–åŸå§‹è¶…æ—¶æ—¶é—´
     CwxTimeValue const* getTimeout() const;
 private:
-    CwxTimeValue const*   timeout_; ///<³¬Ê±Ê±¼ä
-    CwxTimeValue    end_;  ///<½áÊøÊ±¼ä
-    CwxTimeValue    left_; ///<Ê£ÓàÊ±¼ä
+    CwxTimeValue const*   timeout_; ///<è¶…æ—¶æ—¶é—´
+    CwxTimeValue    end_;  ///<ç»“æŸæ—¶é—´
+    CwxTimeValue    left_; ///<å‰©ä½™æ—¶é—´
 };
 
 

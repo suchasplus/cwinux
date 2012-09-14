@@ -1,4 +1,4 @@
-CWINUX_BEGIN_NAMESPACE
+ï»¿CWINUX_BEGIN_NAMESPACE
 
 inline CwxAppConnInfo& CwxAppHandler4Msg::getConnInfo()
 {
@@ -12,7 +12,7 @@ inline CwxAppConnInfo const& CwxAppHandler4Msg::getConnInfo() const
 
 
 
-///»ñÈ¡ÏÂÒ»¸ö´ý·¢ËÍµÄÏûÏ¢£¬·µ»ØÖµ£º0£¬Ã»ÓÐ´ý·¢ËÍÐÅÏ¢£»1,»ñµÃÁËÒ»¸ö´ý·¢ËÍÏûÏ¢
+///èŽ·å–ä¸‹ä¸€ä¸ªå¾…å‘é€çš„æ¶ˆæ¯ï¼Œè¿”å›žå€¼ï¼š0ï¼Œæ²¡æœ‰å¾…å‘é€ä¿¡æ¯ï¼›1,èŽ·å¾—äº†ä¸€ä¸ªå¾…å‘é€æ¶ˆæ¯
 inline int CwxAppHandler4Msg::getNextMsg()
 {
     if (this->m_curSndingMsg) return 1;
@@ -24,7 +24,7 @@ inline int CwxAppHandler4Msg::getNextMsg()
     return 1;
 }
 
-///¶ÔÒª·¢ËÍµÄÏûÏ¢ÅÅ¶Ó
+///å¯¹è¦å‘é€çš„æ¶ˆæ¯æŽ’é˜Ÿ
 inline bool CwxAppHandler4Msg::putMsg(CwxMsgBlock* msg)
 {
     if (m_conn.isWaitingMsgQueueFull())
@@ -49,7 +49,7 @@ inline bool CwxAppHandler4Msg::putMsg(CwxMsgBlock* msg)
     return true;
 }
 
-///ÓÉÓÚÃ»ÓÐÏûÏ¢·¢ËÍ£¬Ê¹Á¬½ÓµÄ·¢ËÍ¼à²âÐÝÃß.·µ»ØÖµ£¬ -1: failure, 0: success
+///ç”±äºŽæ²¡æœ‰æ¶ˆæ¯å‘é€ï¼Œä½¿è¿žæŽ¥çš„å‘é€ç›‘æµ‹ä¼‘çœ .è¿”å›žå€¼ï¼Œ -1: failure, 0: success
 inline int CwxAppHandler4Msg::cancelWakeup()
 {
     if(-1 == this->reactor()->suspendHandler(this, CwxAppHandler4Base::WRITE_MASK)){
@@ -59,7 +59,7 @@ inline int CwxAppHandler4Msg::cancelWakeup()
     return 0;
 }
 
-///»½ÐÑÁ¬½ÓµÄ¿ÉÐ´¼à¿Ø£¬ÒÔ·¢ËÍÎ´·¢ËÍÍê±ÏµÄÊý¾Ý.·µ»ØÖµ£¬ -1:failure£» 0:success¡£
+///å”¤é†’è¿žæŽ¥çš„å¯å†™ç›‘æŽ§ï¼Œä»¥å‘é€æœªå‘é€å®Œæ¯•çš„æ•°æ®.è¿”å›žå€¼ï¼Œ -1:failureï¼› 0:successã€‚
 inline int CwxAppHandler4Msg::wakeUp()
 {
     if(-1 == this->reactor()->resumeHandler(this, CwxAppHandler4Base::WRITE_MASK)){
@@ -69,13 +69,13 @@ inline int CwxAppHandler4Msg::wakeUp()
     return 0;
 }
 
-///¼ì²éÊÇ·ñsuspendÁ¬½ÓµÄ¿É¶Á¡¢¿ÉÐ´¼à²â
+///æ£€æŸ¥æ˜¯å¦suspendè¿žæŽ¥çš„å¯è¯»ã€å¯å†™ç›‘æµ‹
 inline bool CwxAppHandler4Msg::isStopListen() const
 {
     return m_bStopListen;
 }
 
-///ÉèÖÃstop listen
+///è®¾ç½®stop listen
 inline void CwxAppHandler4Msg::setStopListen(bool bStop)
 {
     m_bStopListen = bStop;
@@ -87,14 +87,14 @@ inline bool CwxAppHandler4Msg::isEmpty() const
 
 }
 
-///»ñÈ¡Á¬½ÓÊ±µÄ´íÎó´úÂë
+///èŽ·å–è¿žæŽ¥æ—¶çš„é”™è¯¯ä»£ç 
 inline int CwxAppHandler4Msg::getConnErrNo() const
 {
     return m_connErrNo;
 }
 
 
-///ÒÔ·Ç×èÈûµÄ·½Ê½£¬·¢ËÍÏûÏ¢¡£·µ»ØÖµ,-1: failure; 0: not send all;1:send a msg
+///ä»¥éžé˜»å¡žçš„æ–¹å¼ï¼Œå‘é€æ¶ˆæ¯ã€‚è¿”å›žå€¼,-1: failure; 0: not send all;1:send a msg
 inline int CwxAppHandler4Msg::nonBlockSend()
 {
     CWX_ASSERT(NULL != this->m_curSndingMsg);

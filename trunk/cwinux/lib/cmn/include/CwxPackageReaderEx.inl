@@ -1,6 +1,6 @@
-/**
+ï»¿/**
 *@file CwxPackageReaderEx.inl
-*@brief CwxPackageReaderExÀàµÄInlineÊµÏÖ
+*@brief CwxPackageReaderExç±»çš„Inlineå®ç°
 *@author cwinux@gmail.com
 *@version 1.0
 *@date  2010-05-29
@@ -114,7 +114,7 @@ inline bool CwxPackageReaderEx::getKey(char const* szKey, CWX_UINT64& value, boo
     return false;
 }
 
-///»ñÈ¡µ±Ç°packageµÄKeyµÄÊıÁ¿¡£
+///è·å–å½“å‰packageçš„Keyçš„æ•°é‡ã€‚
 inline CWX_UINT32 CwxPackageReaderEx::getKeyNum() const
 {
     return m_uiKeyNum;

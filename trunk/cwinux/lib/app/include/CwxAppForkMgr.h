@@ -1,15 +1,15 @@
-#ifndef __CWX_APP_FORK_MGR_H__
+ï»¿#ifndef __CWX_APP_FORK_MGR_H__
 #define __CWX_APP_FORK_MGR_H__
 
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxAppForkMgr.h
-@brief Òì²½fork¹ÜÀí¶ÔÏóµÄ¶¨Òå
+@brief å¼‚æ­¥forkç®¡ç†å¯¹è±¡çš„å®šä¹‰
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-11-25
@@ -29,32 +29,32 @@ CWINUX_BEGIN_NAMESPACE
 class CwxAppFramework;
 /**
 @class CwxAppForkEnv
-@brief Òì²½forkµÄÏûÏ¢¶ÔÏó£¬²¢¶¨ÒåÁËchild½ø³ÌµÄ´¦Àí¹ı³Ì¡£ÔÚforkµÄÊ±ºò£¬
-       ÓÃ»§ĞèÒªÖØÔØ´ËÀà£¬Íê³ÉÊı¾İµÄ´«µİÓëchild ½øĞĞµÄ´¦Àí¿ØÖÆ
+@brief å¼‚æ­¥forkçš„æ¶ˆæ¯å¯¹è±¡ï¼Œå¹¶å®šä¹‰äº†childè¿›ç¨‹çš„å¤„ç†è¿‡ç¨‹ã€‚åœ¨forkçš„æ—¶å€™ï¼Œ
+       ç”¨æˆ·éœ€è¦é‡è½½æ­¤ç±»ï¼Œå®Œæˆæ•°æ®çš„ä¼ é€’ä¸child è¿›è¡Œçš„å¤„ç†æ§åˆ¶
 */
 class CWX_API CwxAppForkEnv
 {
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxAppForkEnv()
     {
     }
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     virtual ~CwxAppForkEnv()
     {
     }
 public:
     /**
-    @brief Í¨ÖªÉÏ²ãÓ¦ÓÃÔÚ´ËµãÖ´ĞĞfork²Ù×÷¡£
-           ÓÃ»§ÔÚ´ËAPIÄÚ£¬ÊµÏÖosµÄforkµÄ²Ù×÷£¬¿ØÖÆforkÏà¹ØµÄ²Ù×÷¡£
-    @return   ¶ÔÓÚ¸¸½ø³Ì£¬³É¹¦Ôò·µ»Ø×Ó½ø³ÌµÄpid£¬Ê§°ÜµÄÊ±ºò·µ»Ø-1£¬Ê§°ÜÊ±×Ó½ø³ÌÃ»ÓĞ´´½¨¡£
-    ¶ÔÓÚchild½ø³Ì£¬Ôò·µ»Ø0¡£
+    @brief é€šçŸ¥ä¸Šå±‚åº”ç”¨åœ¨æ­¤ç‚¹æ‰§è¡Œforkæ“ä½œã€‚
+           ç”¨æˆ·åœ¨æ­¤APIå†…ï¼Œå®ç°osçš„forkçš„æ“ä½œï¼Œæ§åˆ¶forkç›¸å…³çš„æ“ä½œã€‚
+    @return   å¯¹äºçˆ¶è¿›ç¨‹ï¼ŒæˆåŠŸåˆ™è¿”å›å­è¿›ç¨‹çš„pidï¼Œå¤±è´¥çš„æ—¶å€™è¿”å›-1ï¼Œå¤±è´¥æ—¶å­è¿›ç¨‹æ²¡æœ‰åˆ›å»ºã€‚
+    å¯¹äºchildè¿›ç¨‹ï¼Œåˆ™è¿”å›0ã€‚
     */
     virtual int onFork()=0;
     /**
-    @brief child½ø³ÌµÄÈë¿Ú£¬Íê³É´Ó¸¸½ø³ÌcloneµÄpApp¶ÔÏóÖĞÌáÈ¡ÏµÍ³×ÊÔ´£¬ÈçÁ¬½ÓµÈ¡£
-           ´ËAPIÄ¬ÈÏÊ²Ã´Ò²²»×ö
-    @param [in] pApp ´Ó¸¸½ø³Ìclone¹ıÀ´µÄapp¶ÔÏó£¬Àë¿ª´Ëapiºó£¬pApp½«±»ÊÍ·Å¡£
+    @brief childè¿›ç¨‹çš„å…¥å£ï¼Œå®Œæˆä»çˆ¶è¿›ç¨‹cloneçš„pAppå¯¹è±¡ä¸­æå–ç³»ç»Ÿèµ„æºï¼Œå¦‚è¿æ¥ç­‰ã€‚
+           æ­¤APIé»˜è®¤ä»€ä¹ˆä¹Ÿä¸åš
+    @param [in] pApp ä»çˆ¶è¿›ç¨‹cloneè¿‡æ¥çš„appå¯¹è±¡ï¼Œç¦»å¼€æ­¤apiåï¼ŒpAppå°†è¢«é‡Šæ”¾ã€‚
     @return void
     */
     virtual void onChildEntry(CwxAppFramework* pApp)
@@ -62,7 +62,7 @@ public:
         CWX_UNUSED_ARG(pApp);
     }
     /**
-    @brief child½ø³ÌµÄÖ÷Ìå£¬Íê³ÉchildµÄ¹¤×÷¡£´ËAPIÎª´¿Ğéº¯Êı£¬Ó¦ÓÃ±ØĞëÖØÔØÊµÏÖ¡£
+    @brief childè¿›ç¨‹çš„ä¸»ä½“ï¼Œå®Œæˆchildçš„å·¥ä½œã€‚æ­¤APIä¸ºçº¯è™šå‡½æ•°ï¼Œåº”ç”¨å¿…é¡»é‡è½½å®ç°ã€‚
     @return void
     */
     virtual void onChildMain()=0;
@@ -71,17 +71,17 @@ public:
 
 /**
 @class CwxAppForkMgr
-@brief Òì²½forkµÄÏûÏ¢¹ÜÀí¶ÔÏó¡£
+@brief å¼‚æ­¥forkçš„æ¶ˆæ¯ç®¡ç†å¯¹è±¡ã€‚
 */
 class CWX_API CwxAppForkMgr
 {
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxAppForkMgr()
     {
         m_bEvent = false;
     }
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxAppForkMgr()
     {
         list<CwxAppForkEnv*>::iterator iter = m_forks.begin();
@@ -93,7 +93,7 @@ public:
         m_forks.clear();
     }
 public:
-    ///Ìí¼ÓÒ»¸öforkµÄÊÂ¼ş
+    ///æ·»åŠ ä¸€ä¸ªforkçš„äº‹ä»¶
     inline void append(CwxAppForkEnv* pForkEnv)
     {
         CwxMutexGuard<CwxMutexLock> lock(&m_lock);
@@ -103,7 +103,7 @@ public:
             m_bEvent = true;
         }
     }
-    ///»ñÈ¡ËùÓĞµÄforkÊÂ¼ş
+    ///è·å–æ‰€æœ‰çš„forkäº‹ä»¶
     inline void getForkEnvs(list<CwxAppForkEnv*>& forks)
     {
         CwxMutexGuard<CwxMutexLock> lock(&m_lock);
@@ -111,15 +111,15 @@ public:
         m_bEvent = false;
         m_forks.clear();
     }
-    ///»ñÈ¡ÊÇ·ñ´æÔÚforkµÄÊÂ¼ş£¬ÓÉÓÚÖ»ÊÇÅĞ¶Ï±ê¼Ç£¬Òò´ËÎªÁËĞ§ÂÊ²»¼ÓËø
+    ///è·å–æ˜¯å¦å­˜åœ¨forkçš„äº‹ä»¶ï¼Œç”±äºåªæ˜¯åˆ¤æ–­æ ‡è®°ï¼Œå› æ­¤ä¸ºäº†æ•ˆç‡ä¸åŠ é”
     inline bool isForkEvent() const
     {
         return m_bEvent;
     }
 private:
-    CwxMutexLock        m_lock;///<¹ÜÀíÆ÷µÄËø
-    list<CwxAppForkEnv*> m_forks; ///<forkµÄÊÂ¼ş
-    bool                m_bEvent; ///<ÊÇ·ñÓĞforkÊÂ¼ş£¬Ö»ÊÇÒ»¸ö±êÖ¾£¬²»½øĞĞ±£»¤
+    CwxMutexLock        m_lock;///<ç®¡ç†å™¨çš„é”
+    list<CwxAppForkEnv*> m_forks; ///<forkçš„äº‹ä»¶
+    bool                m_bEvent; ///<æ˜¯å¦æœ‰forkäº‹ä»¶ï¼Œåªæ˜¯ä¸€ä¸ªæ ‡å¿—ï¼Œä¸è¿›è¡Œä¿æŠ¤
 };
 
 CWINUX_END_NAMESPACE

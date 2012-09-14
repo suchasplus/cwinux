@@ -1,4 +1,4 @@
-#include "CwxAppFramework.h"
+ï»¿#include "CwxAppFramework.h"
 #include "CwxFile.h"
 #include "CwxGetOpt.h"
 
@@ -31,8 +31,8 @@ CwxAppFramework::CwxAppFramework(CWX_UINT16 unAppMode,
     m_pListenMgr = NULL;
     m_pTss = NULL;
     m_pHandleCache = NULL;
-    m_pTcpConnector = NULL; ///<TCPµÄconnector
-    m_pUnixConnector = NULL; ///<unixµÄconnector
+    m_pTcpConnector = NULL; ///<TCPçš„connector
+    m_pUnixConnector = NULL; ///<unixçš„connector
     m_pThreadPoolMgr = NULL;
     m_bDebug = false;
 }
@@ -585,9 +585,9 @@ int CwxAppFramework::sendMsgByConn(CwxMsgBlock* msg)
 }
 
 /**
-@brief ÍùCWX_APP_MSG_MODEÄ£Ê½µÄSVR·Ö×é·¢ËÍÏûÏ¢£¬¾ßÌå·¢ËÍµÄÁ¬½ÓÔÚOnSendMsgBySvr()ÖĞÑ¡¶¨¡£
-@param [in] msg Òª·¢ËÍµÄÏûÏ¢£¬²»ÄÜÎª¿Õ£¬´ËÊı¾İ°üÓĞ¼Ü¹¹¸ºÔğÊÍ·Å¡£
-@return 0£º³É¹¦£» -1£ºÊ§°Ü¡£
+@brief å¾€CWX_APP_MSG_MODEæ¨¡å¼çš„SVRåˆ†ç»„å‘é€æ¶ˆæ¯ï¼Œå…·ä½“å‘é€çš„è¿æ¥åœ¨OnSendMsgBySvr()ä¸­é€‰å®šã€‚
+@param [in] msg è¦å‘é€çš„æ¶ˆæ¯ï¼Œä¸èƒ½ä¸ºç©ºï¼Œæ­¤æ•°æ®åŒ…æœ‰æ¶æ„è´Ÿè´£é‡Šæ”¾ã€‚
+@return 0ï¼šæˆåŠŸï¼› -1ï¼šå¤±è´¥ã€‚
 */
 int CwxAppFramework::sendMsgBySvr(CwxMsgBlock* msg)
 {
@@ -744,9 +744,9 @@ int CwxAppFramework::onRecvMsg(CwxAppHandler4Msg& conn,
     return ret;
 }
 /**
-@brief Í¨ÖªsendMsgByMsg()·¢ËÍÏûÏ¢£¬ĞèÒªÓĞÓÃ»§×Ô¼ºÑ¡Ôñ·¢ËÍµÄÁ¬½Ó²¢·¢ËÍ¡£<br>
-@param [in] msg Òª·¢ËÍµÄÏûÏ¢¡£
-@return -1£ºÎŞ·¨·¢ËÍ¡£ 0£º³É¹¦·¢ËÍÏûÏ¢¡£
+@brief é€šçŸ¥sendMsgByMsg()å‘é€æ¶ˆæ¯ï¼Œéœ€è¦æœ‰ç”¨æˆ·è‡ªå·±é€‰æ‹©å‘é€çš„è¿æ¥å¹¶å‘é€ã€‚<br>
+@param [in] msg è¦å‘é€çš„æ¶ˆæ¯ã€‚
+@return -1ï¼šæ— æ³•å‘é€ã€‚ 0ï¼šæˆåŠŸå‘é€æ¶ˆæ¯ã€‚
 */
 int CwxAppFramework::onSendMsgBySvr(CwxMsgBlock* )
 {
@@ -1023,7 +1023,7 @@ int CwxAppFramework::hook(void* arg)
 {
     CwxAppFramework* pApp = (CwxAppFramework*)arg;
     if (!pApp->isStopped()){
-        ///·Ö·¢ÊÂ¼ş
+        ///åˆ†å‘äº‹ä»¶
         pApp->noticeEvent();
         //invoke the hook
         if (pApp->m_bEnableHook) pApp->onHook();

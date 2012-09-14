@@ -1,15 +1,15 @@
-#include "CwxAppHandler4UnixConn.h"
+ï»¿#include "CwxAppHandler4UnixConn.h"
 #include "CwxAppFramework.h"
 
 CWINUX_BEGIN_NAMESPACE
 
-///¹¹Ôìº¯Êı
+///æ„é€ å‡½æ•°
 CwxAppHandler4UnixConn::CwxAppHandler4UnixConn(CwxAppFramework* pApp, CwxAppReactor *reactor)
 :CwxAppHandler4Msg(pApp, reactor)
 {
     m_next = NULL;
 }
-///Îö¹¹º¯Êı
+///ææ„å‡½æ•°
 CwxAppHandler4UnixConn::~CwxAppHandler4UnixConn()
 {
     if (getHandle() != CWX_INVALID_HANDLE)
@@ -37,31 +37,31 @@ int CwxAppHandler4UnixConn::close(CWX_HANDLE )
     switch(ucLocState)
     {
     case CwxAppConnInfo::IDLE:
-        szState = "IDLE"; ///Ò»¶¨Ã»ÓĞÔÚreactor×¢²á
+        szState = "IDLE"; ///ä¸€å®šæ²¡æœ‰åœ¨reactoræ³¨å†Œ
         break;
     case CwxAppConnInfo::CONNECTING:
-        szState = "CONNECTING";///¿ÉÄÜÔÚÖØÁ¬µÄÊ±ºòÔÙreactor×¢²á
+        szState = "CONNECTING";///å¯èƒ½åœ¨é‡è¿çš„æ—¶å€™å†reactoræ³¨å†Œ
         CWX_ERROR(("Failure to connect to unix-file:%s, errno=%d",
             m_strConnectPathFile.c_str(),
             getConnErrNo()));
         if (reactor()) reactor()->removeHandler(this);
         break;
     case CwxAppConnInfo::TIMEOUT:
-        szState = "TIMEOUT"; ///¿ÉÄÜ×¢²áÁËtimeout
+        szState = "TIMEOUT"; ///å¯èƒ½æ³¨å†Œäº†timeout
         if (-1 != this->index()) reactor()->cancelTimer(this);
         break;
     case CwxAppConnInfo::ESTABLISHING:
-        szState = "ESTABLISHING";///¿ÉÄÜ×¢²áÁËÏûÏ¢ÊÕ·¢
+        szState = "ESTABLISHING";///å¯èƒ½æ³¨å†Œäº†æ¶ˆæ¯æ”¶å‘
         if (CWX_INVALID_HANDLE != getHandle())
             if (reactor()) reactor()->removeHandler(this, false);
         break;
     case CwxAppConnInfo::ESTABLISHED:
-        szState = "ESTABLISHED";///Ò»¶¨×¢²áÁËÏûÏ¢ÊÕ·¢
+        szState = "ESTABLISHED";///ä¸€å®šæ³¨å†Œäº†æ¶ˆæ¯æ”¶å‘
         if (CWX_INVALID_HANDLE != getHandle())
             if (reactor()) reactor()->removeHandler(this, false);
         break;
     case CwxAppConnInfo::FAILED:
-        szState = "FAILED";///Ò»¶¨Ã»ÓĞ×¢²áÏûÏ¢ÊÕ·¢
+        szState = "FAILED";///ä¸€å®šæ²¡æœ‰æ³¨å†Œæ¶ˆæ¯æ”¶å‘
         break;
     default:
         szState = "Unknown";
@@ -165,7 +165,7 @@ int CwxAppHandler4UnixConn::close(CWX_HANDLE )
     return 0;
 }
 
-///³¬Ê±
+///è¶…æ—¶
 void CwxAppHandler4UnixConn::handle_timeout()
 {
     if (getApp()->isStopped()) return ;
@@ -177,10 +177,10 @@ void CwxAppHandler4UnixConn::handle_timeout()
 }
 
 /**
-@brief »ñÈ¡Á¬½ÓµÄ¶Ô¶ËµØÖ·£¬Ö»¶ÔSTREAM_TYPE_TCPºÍSTREAM_TYPE_UNIXÓĞĞ§
-@param [in,out] szBuf ·µ»ØµØÖ·µÄbuf,»ñÈ¡³É¹¦ºóÒÔ\0½áÊø¡£
-@param [in] unSize szBufµÄ´óĞ¡¡£
-@return ·µ»ØszBuf
+@brief è·å–è¿æ¥çš„å¯¹ç«¯åœ°å€ï¼Œåªå¯¹STREAM_TYPE_TCPå’ŒSTREAM_TYPE_UNIXæœ‰æ•ˆ
+@param [in,out] szBuf è¿”å›åœ°å€çš„buf,è·å–æˆåŠŸåä»¥\0ç»“æŸã€‚
+@param [in] unSize szBufçš„å¤§å°ã€‚
+@return è¿”å›szBuf
 */
 char* CwxAppHandler4UnixConn::getRemoteAddr(char* szBuf, CWX_UINT16 unSize)
 {
@@ -188,18 +188,18 @@ char* CwxAppHandler4UnixConn::getRemoteAddr(char* szBuf, CWX_UINT16 unSize)
     return szBuf;
 }
 /**
-@brief »ñÈ¡Á¬½ÓµÄ¶Ô¶Ëport£¬Ö»¶ÔSTREAM_TYPE_TCPÓĞĞ§
-@return Á¬½Ó¶Ô¶ËµÄport
+@brief è·å–è¿æ¥çš„å¯¹ç«¯portï¼Œåªå¯¹STREAM_TYPE_TCPæœ‰æ•ˆ
+@return è¿æ¥å¯¹ç«¯çš„port
 */
 CWX_UINT16 CwxAppHandler4UnixConn::getRemotePort()
 {
     return 0;
 }
 /**
-@brief »ñÈ¡Á¬½Ó±¾¶ËµÄµØÖ·£¬Ö»¶ÔSTREAM_TYPE_TCPºÍSTREAM_TYPE_UNIXÓĞĞ§
-@param [in,out] szBuf ·µ»ØµØÖ·µÄbuf,»ñÈ¡³É¹¦ºóÒÔ\0½áÊø¡£
-@param [in] unSize szBufµÄ´óĞ¡¡£
-@return ·µ»ØszBuf
+@brief è·å–è¿æ¥æœ¬ç«¯çš„åœ°å€ï¼Œåªå¯¹STREAM_TYPE_TCPå’ŒSTREAM_TYPE_UNIXæœ‰æ•ˆ
+@param [in,out] szBuf è¿”å›åœ°å€çš„buf,è·å–æˆåŠŸåä»¥\0ç»“æŸã€‚
+@param [in] unSize szBufçš„å¤§å°ã€‚
+@return è¿”å›szBuf
 */
 char* CwxAppHandler4UnixConn::getLocalAddr(char* szBuf, CWX_UINT16 unSize)
 {
@@ -207,8 +207,8 @@ char* CwxAppHandler4UnixConn::getLocalAddr(char* szBuf, CWX_UINT16 unSize)
     return szBuf;
 }
 /**
-@brief »ñÈ¡Á¬½ÓµÄ±¾¶Ëport£¬Ö»¶ÔSTREAM_TYPE_TCPÓĞĞ§
-@return Á¬½Ó¶Ô¶ËµÄport
+@brief è·å–è¿æ¥çš„æœ¬ç«¯portï¼Œåªå¯¹STREAM_TYPE_TCPæœ‰æ•ˆ
+@return è¿æ¥å¯¹ç«¯çš„port
 */
 CWX_UINT16 CwxAppHandler4UnixConn::getLocalPort()
 {

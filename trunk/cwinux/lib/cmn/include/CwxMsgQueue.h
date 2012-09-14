@@ -1,14 +1,14 @@
-#ifndef  __CWX_MSG_QUEUE_H__
+ï»¿#ifndef  __CWX_MSG_QUEUE_H__
 #define  __CWX_MSG_QUEUE_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 *@file CwxMsgQueue.h
-*@brief CwxMsgQueue¶¨Òå
+*@brief CwxMsgQueueå®šä¹‰
 *@author cwinux@gmail.com
 *@version 1.0
 *@date  2010-07-05
@@ -26,84 +26,84 @@ CWINUX_BEGIN_NAMESPACE
 
 /**
 *@class CwxMsgQueue
-*@brief Éú²úÕß¡¢Ïû·ÑÕß¶ÓÁĞ¡£
+*@brief ç”Ÿäº§è€…ã€æ¶ˆè´¹è€…é˜Ÿåˆ—ã€‚
 */
 class CWX_API CwxMsgQueue
 {
 public:
     enum
     {
-        ///È±Ê¡µÄ¶ÓÁĞ¿Õ¼äµÄÉÏÏŞ£¬³¬¹ıÉÏÏŞpushÏûÏ¢Ê±×èÈû.
+        ///ç¼ºçœçš„é˜Ÿåˆ—ç©ºé—´çš„ä¸Šé™ï¼Œè¶…è¿‡ä¸Šé™pushæ¶ˆæ¯æ—¶é˜»å¡.
         DEFAULT_HWM = 1024 * 1024,
-        ///È±Ê¡µÄ¶ÓÁĞ¿Õ¼äµÄÏÂÏŞ£¬³¬¹ıÉÏÏŞºó£¬Ö»ÓĞµÍÓÚÏÂÏŞ²ÅÄÜpushÏûÏ¢.
+        ///ç¼ºçœçš„é˜Ÿåˆ—ç©ºé—´çš„ä¸‹é™ï¼Œè¶…è¿‡ä¸Šé™åï¼Œåªæœ‰ä½äºä¸‹é™æ‰èƒ½pushæ¶ˆæ¯.
         DEFAULT_LWM = 1024 * 1024,
-        ///»î¶¯×´Ì¬
+        ///æ´»åŠ¨çŠ¶æ€
         ACTIVATED = 1,
-        ///deactivated×´Ì¬.
+        ///deactivatedçŠ¶æ€.
         DEACTIVATED = 2
     };
 public:
     CwxMsgQueue(size_t hwm=DEFAULT_HWM, size_t lwm=DEFAULT_LWM);
     ~CwxMsgQueue();
 public:
-    ///¹Ø±Õ¶ÓÁĞ£¬Í¬Ê±ÊÍ·ÅËùÓĞÏûÏ¢¡£-1£ºÊ§°Ü£»>=0£º¶ÓÁĞÖĞµÄÏûÏ¢ÊıÁ¿
+    ///å…³é—­é˜Ÿåˆ—ï¼ŒåŒæ—¶é‡Šæ”¾æ‰€æœ‰æ¶ˆæ¯ã€‚-1ï¼šå¤±è´¥ï¼›>=0ï¼šé˜Ÿåˆ—ä¸­çš„æ¶ˆæ¯æ•°é‡
     int close();
-    ///Ö»ÊÍ·Å¶ÓÁĞÖĞµÄËùÓĞÏûÏ¢¡£-1£ºÊ§°Ü£»>=0£º¶ÓÁĞÖĞµÄÏûÏ¢ÊıÁ¿
+    ///åªé‡Šæ”¾é˜Ÿåˆ—ä¸­çš„æ‰€æœ‰æ¶ˆæ¯ã€‚-1ï¼šå¤±è´¥ï¼›>=0ï¼šé˜Ÿåˆ—ä¸­çš„æ¶ˆæ¯æ•°é‡
     int flush (void);
-    ///½«Ò»¸öÏûÏ¢·Åµ½¶ÓÁĞµÄÍ·²¿¡£-1£ºÊ§°Ü£»>=0£º¶ÓÁĞÖĞµÄÏûÏ¢ÊıÁ¿
+    ///å°†ä¸€ä¸ªæ¶ˆæ¯æ”¾åˆ°é˜Ÿåˆ—çš„å¤´éƒ¨ã€‚-1ï¼šå¤±è´¥ï¼›>=0ï¼šé˜Ÿåˆ—ä¸­çš„æ¶ˆæ¯æ•°é‡
     int enqueue (CwxMsgBlock *msg,
         CwxTimeValue *timeout = 0);
-    ///½«Ò»¸öÏûÏ¢·Åµ½¶ÓÁĞµÄÎ²²¿¡£-1£ºÊ§°Ü£»>=0£º¶ÓÁĞÖĞµÄÏûÏ¢ÊıÁ¿
+    ///å°†ä¸€ä¸ªæ¶ˆæ¯æ”¾åˆ°é˜Ÿåˆ—çš„å°¾éƒ¨ã€‚-1ï¼šå¤±è´¥ï¼›>=0ï¼šé˜Ÿåˆ—ä¸­çš„æ¶ˆæ¯æ•°é‡
     int enqueue_tail (CwxMsgBlock * msg,
         CwxTimeValue *timeout = 0);
-    ///´Ó¶ÓÁĞµÄÍ·²¿»ñÈ¡Ò»¸öÏûÏ¢¡£-1£ºÊ§°Ü£»>=0£º¶ÓÁĞÖĞµÄÏûÏ¢ÊıÁ¿
+    ///ä»é˜Ÿåˆ—çš„å¤´éƒ¨è·å–ä¸€ä¸ªæ¶ˆæ¯ã€‚-1ï¼šå¤±è´¥ï¼›>=0ï¼šé˜Ÿåˆ—ä¸­çš„æ¶ˆæ¯æ•°é‡
     int dequeue (CwxMsgBlock *&msg,
         CwxTimeValue *timeout = 0);
-    ///¼ì²é¶ÓÁĞÊÇ·ñfull
+    ///æ£€æŸ¥é˜Ÿåˆ—æ˜¯å¦full
     bool isFull (void);
-    ///¼ì²é¶ÓÁĞÊÇ·ñ¿Õ.
+    ///æ£€æŸ¥é˜Ÿåˆ—æ˜¯å¦ç©º.
     bool isEmpty(void);
-    ///»ñÈ¡ËùÓĞÏûÏ¢µÄ¿Õ¼ä´óĞ¡.
+    ///è·å–æ‰€æœ‰æ¶ˆæ¯çš„ç©ºé—´å¤§å°.
     size_t getMsgBytes(void);
-    ///»ñÈ¡ËùÓĞMsgµÄlength.
+    ///è·å–æ‰€æœ‰Msgçš„length.
     size_t getMsgLength(void);
-    ///»ñÈ¡ÏûÏ¢µÄÊıÁ¿.
+    ///è·å–æ¶ˆæ¯çš„æ•°é‡.
     size_t getMsgCount(void);
-    ///deactive ÏûÏ¢¶ÓÁĞ£¬-1£ºÊ§°Ü£»·ñÔò·µ»ØÏÈÇ°µÄ×´Ì¬
+    ///deactive æ¶ˆæ¯é˜Ÿåˆ—ï¼Œ-1ï¼šå¤±è´¥ï¼›å¦åˆ™è¿”å›å…ˆå‰çš„çŠ¶æ€
     int deactivate (void);
-    ///activeÏûÏ¢¶ÓÁĞ£¬-1£ºÊ§°Ü£»·ñÔò·µ»ØÏÈÇ°µÄ×´Ì¬
+    ///activeæ¶ˆæ¯é˜Ÿåˆ—ï¼Œ-1ï¼šå¤±è´¥ï¼›å¦åˆ™è¿”å›å…ˆå‰çš„çŠ¶æ€
     int activate (void);
-    ///»ñÈ¡ÏûÏ¢¶ÓÁĞµÄ×´Ì¬.
+    ///è·å–æ¶ˆæ¯é˜Ÿåˆ—çš„çŠ¶æ€.
     int getState (void);
-    ///¼ì²é¶ÓÁĞÊÇ·ñdeactive×´Ì¬
+    ///æ£€æŸ¥é˜Ÿåˆ—æ˜¯å¦deactiveçŠ¶æ€
     bool isDeactived(void);
-    ///¼ì²é¶ÓÁĞÊÇ·ñactive×´Ì¬
+    ///æ£€æŸ¥é˜Ÿåˆ—æ˜¯å¦activeçŠ¶æ€
     bool isActivate(void);
-    ///»ñÈ¡high water mark
+    ///è·å–high water mark
     size_t getHwm(void) const;
-    ///ÉèÖÃhigh water mark
+    ///è®¾ç½®high water mark
     void setHwm(size_t hwm);
-    ///»ñÈ¡low water mark
+    ///è·å–low water mark
     size_t getLwm(void) const;
-    ///ÉèÖÃlow water mark
+    ///è®¾ç½®low water mark
     void setLwm(size_t lwm);
-    /// »ñÈ¡Ëø.
+    /// è·å–é”.
     CwxMutexLock& lock();
 
 private:
-    ///deactive ÏûÏ¢¶ÓÁĞ£¬-1£ºÊ§°Ü£»·ñÔò·µ»ØÏÈÇ°µÄ×´Ì¬
+    ///deactive æ¶ˆæ¯é˜Ÿåˆ—ï¼Œ-1ï¼šå¤±è´¥ï¼›å¦åˆ™è¿”å›å…ˆå‰çš„çŠ¶æ€
     int _deactivate(void);
-    ///activeÏûÏ¢¶ÓÁĞ£¬-1£ºÊ§°Ü£»·ñÔò·µ»ØÏÈÇ°µÄ×´Ì¬
+    ///activeæ¶ˆæ¯é˜Ÿåˆ—ï¼Œ-1ï¼šå¤±è´¥ï¼›å¦åˆ™è¿”å›å…ˆå‰çš„çŠ¶æ€
     int _activate(void);
-    ///Ö»ÊÍ·Å¶ÓÁĞÖĞµÄËùÓĞÏûÏ¢¡£-1£ºÊ§°Ü£»>=0£º¶ÓÁĞÖĞµÄÏûÏ¢ÊıÁ¿
+    ///åªé‡Šæ”¾é˜Ÿåˆ—ä¸­çš„æ‰€æœ‰æ¶ˆæ¯ã€‚-1ï¼šå¤±è´¥ï¼›>=0ï¼šé˜Ÿåˆ—ä¸­çš„æ¶ˆæ¯æ•°é‡
     int _flush(void);
-    ///¼ì²é¶ÓÁĞÊÇ·ñfull
+    ///æ£€æŸ¥é˜Ÿåˆ—æ˜¯å¦full
     bool _isFull (void);
-    ///¼ì²é¶ÓÁĞÊÇ·ñ¿Õ.
+    ///æ£€æŸ¥é˜Ÿåˆ—æ˜¯å¦ç©º.
     bool _isEmpty(void);
-    ///µÈ´ı¶ÓÁĞÓĞ¿ÕÎ»ÖÃ
+    ///ç­‰å¾…é˜Ÿåˆ—æœ‰ç©ºä½ç½®
     int _waitNotFullCond(CwxTimeValue *timeout = 0);
-    ///µÈ´ı¶ÓÁĞÏûÏ¢
+    ///ç­‰å¾…é˜Ÿåˆ—æ¶ˆæ¯
     int _waitNotEmptyCond(CwxTimeValue *timeout = 0);
 
     // = Disallow copying and assignment.
@@ -111,23 +111,23 @@ private:
     CwxMsgQueue& operator= (const CwxMsgQueue &);
 
 protected:
-    /// ¶ÓÁĞµÄ×´Ì¬.
+    /// é˜Ÿåˆ—çš„çŠ¶æ€.
     int m_state;
-    /// ÏûÏ¢¶ÓÁĞÁ´±íµÄÍ·.
+    /// æ¶ˆæ¯é˜Ÿåˆ—é“¾è¡¨çš„å¤´.
     CwxMsgBlock* m_head;
-    /// ÏûÏ¢¶ÓÁĞÁ´±íµÄÎ².
+    /// æ¶ˆæ¯é˜Ÿåˆ—é“¾è¡¨çš„å°¾.
     CwxMsgBlock* m_tail;
     /// low water mark.
     size_t m_lowWaterMark;
     /// High water mask.
     size_t m_highWaterMark;
-    /// µ±Ç°¶ÓÁĞÖĞµÄmsg blockµÄ¿Õ¼ä×Ö½Ú×ÜºÍ.
+    /// å½“å‰é˜Ÿåˆ—ä¸­çš„msg blockçš„ç©ºé—´å­—èŠ‚æ€»å’Œ.
     size_t m_curMsgBytes;
-    /// µ±Ç°¶ÓÁĞÖĞµÄmsgµÄ³¤¶È×ÜºÍ.
+    /// å½“å‰é˜Ÿåˆ—ä¸­çš„msgçš„é•¿åº¦æ€»å’Œ.
     size_t m_curLength;
-    /// ¶ÓÁĞÖĞmsgµÄÊıÁ¿.
+    /// é˜Ÿåˆ—ä¸­msgçš„æ•°é‡.
     size_t m_curCount;
-    /// Í¬²½±£»¤µÄËø.
+    /// åŒæ­¥ä¿æŠ¤çš„é”.
     CwxMutexLock m_lock;
     /// Used to make threads sleep until the queue is no longer empty.
     CwxCondition m_notEmptyCond;

@@ -1,14 +1,14 @@
-#ifndef __CWX_UNIX_ACCEPTOR_H__
+ï»¿#ifndef __CWX_UNIX_ACCEPTOR_H__
 #define __CWX_UNIX_ACCEPTOR_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxUnixAcceptor.h
-@brief UNIX Domain±»¶¯Á¬½Ó½ÓÊÕ¶ÔÏóµÄ¶¨Òå¡£
+@brief UNIX Domainè¢«åŠ¨è¿æ¥æ¥æ”¶å¯¹è±¡çš„å®šä¹‰ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-12
@@ -25,14 +25,14 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxUnixAcceptor
-@brief Unix domain±»¶¯Á¬½Ó½ÓÊÕ¶ÔÏó¡£
+@brief Unix domainè¢«åŠ¨è¿æ¥æ¥æ”¶å¯¹è±¡ã€‚
 */
 class CWX_API CwxUnixAcceptor:public CwxSockAcceptor
 {
 public:
-    ///Ä¬ÈÏ¹¹Ôìº¯Êı
+    ///é»˜è®¤æ„é€ å‡½æ•°
     CwxUnixAcceptor();
-    ///´ò¿ª¼àÌı¶Ë¿ÚµÄ¹¹Ôìº¯Êı
+    ///æ‰“å¼€ç›‘å¬ç«¯å£çš„æ„é€ å‡½æ•°
     CwxUnixAcceptor(CwxAddr const& addr,
         bool reuse= 0,
         int backlog = DEF_BACK_LOG,
@@ -41,18 +41,18 @@ public:
         CWX_NET_SOCKET_ATTR_FUNC fn=NULL,
         void* fnArg=NULL);
 
-    ///Îö¹¹º¯Êı.
+    ///ææ„å‡½æ•°.
     ~CwxUnixAcceptor(void);
 public:
     /**
-    @brief ½¨Á¢TCPÖ÷¶¯Á¬½Ó¡£
-    @param [in] addr AcceptµÄ±¾µØµØÖ·¡£
-    @param [in] reuse µ±¼àÌıµØÖ·Ã»±»ÊÍ·ÅµÄ»°£¬ÊÇ·ñre-use¡£true£ºÊÇ£»false£º²»ÊÇ¡£
-    @param [in] backlog listen×î´óÅÅ¶ÓµÄÊıÁ¿¡£
-    @param [in] domain Ğ­Òé×å£¬¾ÍÊÇsocket()ÖĞµÄdomain£¬¾ÍÊÇPF_UNIX¡£
-    @param [in] protocol Á¬½ÓµÄĞ­Òé£¬¾ÍÊÇsocket()µÄprotocol²ÎÊı£¬ÓÉÓÚÒ»¸öĞ­Òé¼Ò×åµÄsocket ÀàĞÍ£¬ÆäprotocolÒ²ÊÇÎ¨Ò»µÄ£¬Îª0¾Í¿ÉÒÔÁË¡£
-    @param [in] fn listen socketÊôĞÔÉèÖÃµÄfunction¡£
-    @return -1£º´íÎó£¬errno¼ÇÂ¼´íÎóµÄÔ­Òò£»0£º³É¹¦¡£
+    @brief å»ºç«‹TCPä¸»åŠ¨è¿æ¥ã€‚
+    @param [in] addr Acceptçš„æœ¬åœ°åœ°å€ã€‚
+    @param [in] reuse å½“ç›‘å¬åœ°å€æ²¡è¢«é‡Šæ”¾çš„è¯ï¼Œæ˜¯å¦re-useã€‚trueï¼šæ˜¯ï¼›falseï¼šä¸æ˜¯ã€‚
+    @param [in] backlog listenæœ€å¤§æ’é˜Ÿçš„æ•°é‡ã€‚
+    @param [in] domain åè®®æ—ï¼Œå°±æ˜¯socket()ä¸­çš„domainï¼Œå°±æ˜¯PF_UNIXã€‚
+    @param [in] protocol è¿æ¥çš„åè®®ï¼Œå°±æ˜¯socket()çš„protocolå‚æ•°ï¼Œç”±äºä¸€ä¸ªåè®®å®¶æ—çš„socket ç±»å‹ï¼Œå…¶protocolä¹Ÿæ˜¯å”¯ä¸€çš„ï¼Œä¸º0å°±å¯ä»¥äº†ã€‚
+    @param [in] fn listen socketå±æ€§è®¾ç½®çš„functionã€‚
+    @return -1ï¼šé”™è¯¯ï¼Œerrnoè®°å½•é”™è¯¯çš„åŸå› ï¼›0ï¼šæˆåŠŸã€‚
     */
     int listen(CwxAddr const& addr,
         bool reuse= 0,
@@ -62,12 +62,12 @@ public:
         CWX_NET_SOCKET_ATTR_FUNC fn=NULL,
         void* fnArg = NULL);
     /**
-    @brief ½ÓÊÕÒ»¸ö±»¶¯TCPÁ¬½Ó¡£
-    @param [in] stream ·µ»Ø½ÓÊÕµ½µÄ±»¶¯Á¬½Ó¡£
-    @param [in] remote_addr Èô²»Îª¿Õ£¬Ôò·µ»Ø½ÓÊÕµ½µÄ¶Ô¶ËhostµÄµØÖ·¡£
-    @param [in] timeout acceptµÄ³¬Ê±Ê±¼ä£¬ÈôÎªNULL£¬ÔòÎŞÏŞµÈ´ı¡£
-    @param [in] bRestart ÈôÔÚµÈ´ı¹ı³ÌÖĞ±»ĞÅºÅÖĞ¶Ï£¬ÊÇ·ñ¼ÌĞøµÈ´ı¡£1£º¼ÌĞøµÈ´ı£»0£º²»µÈ´ı¡£
-    @return -1£º´íÎó£¬errno¼ÇÂ¼´íÎóµÄÔ­Òò£»0£º³É¹¦¡£
+    @brief æ¥æ”¶ä¸€ä¸ªè¢«åŠ¨TCPè¿æ¥ã€‚
+    @param [in] stream è¿”å›æ¥æ”¶åˆ°çš„è¢«åŠ¨è¿æ¥ã€‚
+    @param [in] remote_addr è‹¥ä¸ä¸ºç©ºï¼Œåˆ™è¿”å›æ¥æ”¶åˆ°çš„å¯¹ç«¯hostçš„åœ°å€ã€‚
+    @param [in] timeout acceptçš„è¶…æ—¶æ—¶é—´ï¼Œè‹¥ä¸ºNULLï¼Œåˆ™æ— é™ç­‰å¾…ã€‚
+    @param [in] bRestart è‹¥åœ¨ç­‰å¾…è¿‡ç¨‹ä¸­è¢«ä¿¡å·ä¸­æ–­ï¼Œæ˜¯å¦ç»§ç»­ç­‰å¾…ã€‚1ï¼šç»§ç»­ç­‰å¾…ï¼›0ï¼šä¸ç­‰å¾…ã€‚
+    @return -1ï¼šé”™è¯¯ï¼Œerrnoè®°å½•é”™è¯¯çš„åŸå› ï¼›0ï¼šæˆåŠŸã€‚
     */
     int accept (CwxUnixStream &stream,
         CwxAddr* remote_addr = 0,

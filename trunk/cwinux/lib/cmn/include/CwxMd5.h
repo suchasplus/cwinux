@@ -1,9 +1,9 @@
-#ifndef __CWX_MD5_H__
+ï»¿#ifndef __CWX_MD5_H__
 #define __CWX_MD5_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 /* MD5DEEP - md5.h
  *
@@ -20,12 +20,12 @@
 
 /**
 *@file  CwxMd5.h
-*@brief  ±¾´úÂëÀ´Ô´ÓÚMD5DEEP£¬ÓÉCWINUX´ÓC·­ÒëÎªÁËC++£¬²¢²ÉÓÃCWINUXµÄ½Ó¿Ú
-         ´ËÎÄ¼ş¶¨ÒåÁËCwxMd5µÄÀà£¬ÊµÏÖMD5µÄÇ©Ãû
+*@brief  æœ¬ä»£ç æ¥æºäºMD5DEEPï¼Œç”±CWINUXä»Cç¿»è¯‘ä¸ºäº†C++ï¼Œå¹¶é‡‡ç”¨CWINUXçš„æ¥å£
+         æ­¤æ–‡ä»¶å®šä¹‰äº†CwxMd5çš„ç±»ï¼Œå®ç°MD5çš„ç­¾å
 *@author cwinux@gmail.com
 *@version 0.1
 *@date    2009-11-28
-*@warning ÎŞ
+*@warning æ— 
 *@bug   
 */
 
@@ -36,29 +36,29 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 *@class  CwxMd5
-*@brief  Md5µÄÇ©Ãû¶ÔÏó¡£´Ë¶ÔÏó¶àÏß³Ì²»°²È«£¬ÔÚ¶àÏß³Ì»·¾³ÏÂ£¬
-        Ã¿¸öÏß³ÌĞèÒª×Ô¼ºµÄÒ»¸ö¶ÔÏóÊµÀı¡£
+*@brief  Md5çš„ç­¾åå¯¹è±¡ã€‚æ­¤å¯¹è±¡å¤šçº¿ç¨‹ä¸å®‰å…¨ï¼Œåœ¨å¤šçº¿ç¨‹ç¯å¢ƒä¸‹ï¼Œ
+        æ¯ä¸ªçº¿ç¨‹éœ€è¦è‡ªå·±çš„ä¸€ä¸ªå¯¹è±¡å®ä¾‹ã€‚
 */
 class CwxMd5
 {
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxMd5();
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxMd5();
 public:
-    ///Çé¿ö¶ÔÏó£¬¿ÉÒÔÔÙ´ÎÇ©Ãû
+    ///æƒ…å†µå¯¹è±¡ï¼Œå¯ä»¥å†æ¬¡ç­¾å
     void reset();
     /**
-    *@brief  ¸ù¾İbufµÄÄÚÈİ£¬¶ÔMD5Ç©Ãû½øĞĞ¸üĞÂ
-    *@param [in] szBuf Ç©ÃûµÄÄÚÈİ.
-    *@param [in] uiLen ÄÚÈİµÄ³¤¶È.
+    *@brief  æ ¹æ®bufçš„å†…å®¹ï¼Œå¯¹MD5ç­¾åè¿›è¡Œæ›´æ–°
+    *@param [in] szBuf ç­¾åçš„å†…å®¹.
+    *@param [in] uiLen å†…å®¹çš„é•¿åº¦.
     *@return void.
     */
     void update(unsigned char const *szBuf, CWX_UINT32 uiLen);
     /**
-    *@brief  Êä³ö16×Ö½ÚµÄÇ©ÃûÄÚÈİ
-    *@param [out] digest Êä³öÄÚÈİµÄÇ©Ãû.
+    *@brief  è¾“å‡º16å­—èŠ‚çš„ç­¾åå†…å®¹
+    *@param [out] digest è¾“å‡ºå†…å®¹çš„ç­¾å.
     *@return void.
     */
     void final(unsigned char digest[16]);

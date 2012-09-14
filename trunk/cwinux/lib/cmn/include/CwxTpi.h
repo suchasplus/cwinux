@@ -1,14 +1,14 @@
-#ifndef __CWX_TPI_H__
+ï»¿#ifndef __CWX_TPI_H__
 #define __CWX_TPI_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxTpi.h
-@brief Ïß³Ì³Ø½Ó¿Ú¶¨Òå
+@brief çº¿ç¨‹æ± æ¥å£å®šä¹‰
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-07-20
@@ -25,54 +25,54 @@ CWINUX_BEGIN_NAMESPACE
 
 /**
 @class CwxTpi
-@brief Ïß³Ì³ØµÄ½Ó¿Ú¶ÔÏó¡£
+@brief çº¿ç¨‹æ± çš„æ¥å£å¯¹è±¡ã€‚
 */
 
 class CWX_API CwxTpi
 {
 public :
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxTpi(CWX_UINT16 unGroup, CWX_UINT16 unThreadNum)
         :m_unGroup(unGroup), m_unThreadNum(unThreadNum)
     {
     }
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     virtual ~CwxTpi()
     {
 
     }
 public:
     /**
-    @brief Æô¶¯Ïß³Ì³Ø£¬Îª´¿Ğé½Ó¿Ú
-    @param [in] pThrEnv Ïß³Ì³ØµÄÏß³ÌTssµÄÊı×é£¬Èô²»Ö¸¶¨£¬¿ÉÍ¨¹ıonThreadCreated´´½¨¡£
-    @param [in] stack_size Ïß³Ì¶ÑÕ»µÄ´óĞ¡£¬ÈôÎª0£¬Ôò²ÉÓÃÏµÍ³Ä¬ÈÏ´óĞ¡¡£
-    @return -1£ºÊ§°Ü£» 0£º³É¹¦
+    @brief å¯åŠ¨çº¿ç¨‹æ± ï¼Œä¸ºçº¯è™šæ¥å£
+    @param [in] pThrEnv çº¿ç¨‹æ± çš„çº¿ç¨‹Tssçš„æ•°ç»„ï¼Œè‹¥ä¸æŒ‡å®šï¼Œå¯é€šè¿‡onThreadCreatedåˆ›å»ºã€‚
+    @param [in] stack_size çº¿ç¨‹å †æ ˆçš„å¤§å°ï¼Œè‹¥ä¸º0ï¼Œåˆ™é‡‡ç”¨ç³»ç»Ÿé»˜è®¤å¤§å°ã€‚
+    @return -1ï¼šå¤±è´¥ï¼› 0ï¼šæˆåŠŸ
     */
     virtual int start(CwxTss** pThrEnv=NULL, size_t stack_size= 0) = 0;
-    ///Í£Ö¹Ïß³Ì³Ø
+    ///åœæ­¢çº¿ç¨‹æ± 
     virtual void stop() = 0;
-    ///check thread ÊÇ·ñÍ£Ö¹¡£ÈôĞèÒª¸Ä±ä¼ì²éµÄ¹æÔò£¬ÔòÖØÔØ´ËAPI
+    ///check thread æ˜¯å¦åœæ­¢ã€‚è‹¥éœ€è¦æ”¹å˜æ£€æŸ¥çš„è§„åˆ™ï¼Œåˆ™é‡è½½æ­¤API
     virtual bool isStop() = 0;
-    ///»ñÈ¡Ïß³ÌµÄTSS£¬¼°Thread env
+    ///è·å–çº¿ç¨‹çš„TSSï¼ŒåŠThread env
     virtual CwxTss* getTss(CWX_UINT16 unThreadIndex)=0;
-    ///Ëø×¡Õû¸öÏß³Ì³Ø¡£·µ»ØÖµ0£º³É¹¦£»-1£ºÊ§°Ü
+    ///é”ä½æ•´ä¸ªçº¿ç¨‹æ± ã€‚è¿”å›å€¼0ï¼šæˆåŠŸï¼›-1ï¼šå¤±è´¥
     virtual int lock()=0;
-    ///½âËøÕâ¸öÏß³Ì³Ø¡£·µ»ØÖµ0£º³É¹¦£»-1£ºÊ§°Ü
+    ///è§£é”è¿™ä¸ªçº¿ç¨‹æ± ã€‚è¿”å›å€¼0ï¼šæˆåŠŸï¼›-1ï¼šå¤±è´¥
     virtual int unlock()=0;
 public:
-    ///»ñÈ¡Ïß³Ì³ØÖĞÏß³ÌµÄÊıÁ¿
+    ///è·å–çº¿ç¨‹æ± ä¸­çº¿ç¨‹çš„æ•°é‡
     inline CWX_UINT16 getThreadNum() const
     {
         return m_unThreadNum;
     }
-    ///»ñÈ¡Ïß³Ì³ØµÄÏß³Ì×éID
+    ///è·å–çº¿ç¨‹æ± çš„çº¿ç¨‹ç»„ID
     inline CWX_UINT16 getGroupId() const 
     {
         return m_unGroup;
     }
 private:
-    CWX_UINT16             m_unGroup;///<Ïß³Ì×éid
-    CWX_UINT16             m_unThreadNum;///<Ïß³Ì³ØÖĞÏß³ÌµÄÊıÁ¿
+    CWX_UINT16             m_unGroup;///<çº¿ç¨‹ç»„id
+    CWX_UINT16             m_unThreadNum;///<çº¿ç¨‹æ± ä¸­çº¿ç¨‹çš„æ•°é‡
 };
 
 CWINUX_END_NAMESPACE

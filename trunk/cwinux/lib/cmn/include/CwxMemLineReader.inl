@@ -1,4 +1,4 @@
-CWINUX_BEGIN_NAMESPACE
+﻿CWINUX_BEGIN_NAMESPACE
 
 inline void CwxMemLineReader::setMem(char const* szData, CWX_UINT32 uiDataLen, bool bDataOwn)
 {

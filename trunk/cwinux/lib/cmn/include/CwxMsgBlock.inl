@@ -1,4 +1,4 @@
-
+Ôªø
 CWINUX_BEGIN_NAMESPACE
 inline bool CwxMsgSendCtrl::isBeginNotice() const 
 { 
@@ -30,23 +30,23 @@ inline void CwxMsgSendCtrl::setConnCtrl(CWX_UINT32 uiSvrId,
     m_uiConnResumeState = uiConnState;
 }
 
-///ªÒ»°SVR ID
+///Ëé∑ÂèñSVR ID
 inline CWX_UINT32 CwxMsgSendCtrl::getSvrId() const
 {
     return m_uiSvrId;
 }
-///…Ë÷√SVR ID
+///ËÆæÁΩÆSVR ID
 inline void CwxMsgSendCtrl::setSvrId(CWX_UINT32 uiSvrId)
 {
     m_uiSvrId = uiSvrId;
 }
 
-///ªÒ»°HOST ID
+///Ëé∑ÂèñHOST ID
 inline CWX_UINT32 CwxMsgSendCtrl::getHostId() const
 {
     return m_uiHostId;
 }
-///…Ë÷√HOST ID
+///ËÆæÁΩÆHOST ID
 inline void CwxMsgSendCtrl::setHostId(CWX_UINT32 uiHostId)
 {
     m_uiHostId = uiHostId;
@@ -367,7 +367,7 @@ inline CwxMsgBlock::CwxMsgBlock()
     m_next = NULL;
 }
 
-///¥¥Ω®signleton CwxEscapes ∂‘œÛ
+///ÂàõÂª∫signleton CwxEscapes ÂØπË±°
 inline CwxMsgBlockAlloc* CwxMsgBlockAlloc::instance()
 {
     if (!m_pInstance)

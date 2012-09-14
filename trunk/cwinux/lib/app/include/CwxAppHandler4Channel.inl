@@ -1,4 +1,4 @@
-CWINUX_BEGIN_NAMESPACE
+ï»¿CWINUX_BEGIN_NAMESPACE
 
 
 inline void CwxAppHandler4Channel::clear()
@@ -25,7 +25,7 @@ inline void CwxAppHandler4Channel::clear()
 	m_waitSendMsgTail = NULL;
 }
 
-///»ñÈ¡ÏÂÒ»¸ö´ý·¢ËÍµÄÏûÏ¢£¬·µ»ØÖµ£º0£¬Ã»ÓÐ´ý·¢ËÍÐÅÏ¢£»1,»ñµÃÁËÒ»¸ö´ý·¢ËÍÏûÏ¢
+///èŽ·å–ä¸‹ä¸€ä¸ªå¾…å‘é€çš„æ¶ˆæ¯ï¼Œè¿”å›žå€¼ï¼š0ï¼Œæ²¡æœ‰å¾…å‘é€ä¿¡æ¯ï¼›1,èŽ·å¾—äº†ä¸€ä¸ªå¾…å‘é€æ¶ˆæ¯
 inline int CwxAppHandler4Channel::getNextMsg()
 {
     if (this->m_curSndingMsg) return 1;
@@ -37,7 +37,7 @@ inline int CwxAppHandler4Channel::getNextMsg()
     return 1;
 }
 
-///¶ÔÒª·¢ËÍµÄÏûÏ¢ÅÅ¶Ó
+///å¯¹è¦å‘é€çš„æ¶ˆæ¯æŽ’é˜Ÿ
 inline bool CwxAppHandler4Channel::putMsg(CwxMsgBlock* msg)
 {
     msg->m_next = NULL;
@@ -62,13 +62,13 @@ inline bool CwxAppHandler4Channel::isEmpty() const
 
 }
 
-///»ñÈ¡channel
+///èŽ·å–channel
 inline CwxAppChannel* CwxAppHandler4Channel::channel()
 {
     return m_channel;
 }
 
-///ÒÔ·Ç×èÈûµÄ·½Ê½£¬·¢ËÍÏûÏ¢¡£·µ»ØÖµ,-1: failure; 0: not send all;1:send a msg
+///ä»¥éžé˜»å¡žçš„æ–¹å¼ï¼Œå‘é€æ¶ˆæ¯ã€‚è¿”å›žå€¼,-1: failure; 0: not send all;1:send a msg
 inline int CwxAppHandler4Channel::nonBlockSend()
 {
     CWX_ASSERT(NULL != this->m_curSndingMsg);

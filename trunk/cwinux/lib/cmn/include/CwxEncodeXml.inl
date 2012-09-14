@@ -1,11 +1,11 @@
-CWINUX_BEGIN_NAMESPACE
+ï»¿CWINUX_BEGIN_NAMESPACE
 
 inline CwxEncodeXml::CwxEncodeXml(bool bGbk, bool bCaseSensive)
 :m_bGbk(bGbk),m_bCaseSensive(bCaseSensive)
 {
     m_pRepl = NULL;
 }
-///Îö¹¹º¯Êı
+///ææ„å‡½æ•°
 inline CwxEncodeXml::~CwxEncodeXml()
 {
     if (m_pRepl) delete m_pRepl;
@@ -66,12 +66,12 @@ inline bool CwxEncodeXml::addStr(char const* src, char const* dst, map<string, s
     return m_pRepl->addCaseStr(src, strlen(src), dst, strlen(dst));
 }
 
-///·µ»ØÊÇ·ñGBK
+///è¿”å›æ˜¯å¦GBK
 inline bool CwxEncodeXml::isGbk() const
 {
     return m_bGbk;
 }
-///·µ»ØÊÇ·ñ´óĞ¡Ğ´Ãô¸Ğ
+///è¿”å›æ˜¯å¦å¤§å°å†™æ•æ„Ÿ
 inline bool CwxEncodeXml::isCaseSensive() const 
 { 
     return m_bCaseSensive;

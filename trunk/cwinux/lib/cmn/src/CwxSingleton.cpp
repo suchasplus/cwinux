@@ -1,4 +1,4 @@
-#include "CwxSingleton.h"
+﻿#include "CwxSingleton.h"
 #include "CwxSingletonMgr.h"
 
 CWINUX_BEGIN_NAMESPACE

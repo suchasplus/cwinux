@@ -1,18 +1,18 @@
-#ifndef __CWX_ENCODE_XML_H__
+ï»¿#ifndef __CWX_ENCODE_XML_H__
 #define __CWX_ENCODE_XML_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 *@file  CwxEncodeXml.h
-*@brief ½«XMLµÄÌØÊâ×Ö·û½øĞĞ×ªÒÆµÄCwxEncodeXml¶ÔÏóµÄ¶¨Òå
+*@brief å°†XMLçš„ç‰¹æ®Šå­—ç¬¦è¿›è¡Œè½¬ç§»çš„CwxEncodeXmlå¯¹è±¡çš„å®šä¹‰
 *@author cwinux@gmail.com
 *@version 0.1
 *@date  2009-10-18
-*@warning  ÎŞ.
+*@warning  æ— .
 */
 #include "CwxPre.h"
 #include "CwxGlobalMacro.h"
@@ -25,46 +25,46 @@ CWINUX_BEGIN_NAMESPACE
 /**
 * @class CwxEncodeXml
 *
-* @brief ½«XMLµÄÌØÊâ×Ö·û½øĞĞ×ªÒÆ£¬Ä¬ÈÏĞĞÎªÈçÏÂ£º
-  1¡¢¡¾<¡¿-->¡¾&lt;¡¿
-  2¡¢¡¾>¡¿-->¡¾&gt;¡¿
-  3¡¢¡¾&¡¿-->¡¾&amp;¡¿
-  4¡¢¡¾'¡¿-->¡¾&#39;¡¿
-  5¡¢¡¾1~31¡¿ÖĞ£¬³ıÁË\\t,\\r,\\nÍâ£¬È«²¿Ìæ»»Îª¿Õ£¬¼´É¾³ı¡£
+* @brief å°†XMLçš„ç‰¹æ®Šå­—ç¬¦è¿›è¡Œè½¬ç§»ï¼Œé»˜è®¤è¡Œä¸ºå¦‚ä¸‹ï¼š
+  1ã€ã€<ã€‘-->ã€&lt;ã€‘
+  2ã€ã€>ã€‘-->ã€&gt;ã€‘
+  3ã€ã€&ã€‘-->ã€&amp;ã€‘
+  4ã€ã€'ã€‘-->ã€&#39;ã€‘
+  5ã€ã€1~31ã€‘ä¸­ï¼Œé™¤äº†\\t,\\r,\\nå¤–ï¼Œå…¨éƒ¨æ›¿æ¢ä¸ºç©ºï¼Œå³åˆ é™¤ã€‚
 
  */
 
 class CWX_API CwxEncodeXml
 {
 public:
-    ///¹¹Ôìº¯Êı£¬Ä¬ÈÏÎª·ÇGBK£¨¼´ÎªUTF-8£©£¬½øĞĞ±àÂëÌæ»»µÄÊ±ºò£¬´óĞ¡Ğ´Ãô¸Ğ¡£
+    ///æ„é€ å‡½æ•°ï¼Œé»˜è®¤ä¸ºéGBKï¼ˆå³ä¸ºUTF-8ï¼‰ï¼Œè¿›è¡Œç¼–ç æ›¿æ¢çš„æ—¶å€™ï¼Œå¤§å°å†™æ•æ„Ÿã€‚
     CwxEncodeXml(bool bGbk=false, bool bCaseSensive=true);
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxEncodeXml();
 public:
     /**
-    @brief ³õÊ¼»¯xmlÌØÊâ×Ö·ûµÄÌæ»»¡£
-    @param [in] append ³ıÁËÄ¬ÈÏµÄ£¬ĞÂÔö¼ÓµÄÌæ»»×Ö·û¡£
-    @param [in] remove ÒÆ³ıÄ¬ÈÏÖĞµÄÌæ»»×Ö·û¡£
-    @return true:Ìí¼Ó³É¹¦£»false£º×Ö·û´®±àÂë´íÎó
+    @brief åˆå§‹åŒ–xmlç‰¹æ®Šå­—ç¬¦çš„æ›¿æ¢ã€‚
+    @param [in] append é™¤äº†é»˜è®¤çš„ï¼Œæ–°å¢åŠ çš„æ›¿æ¢å­—ç¬¦ã€‚
+    @param [in] remove ç§»é™¤é»˜è®¤ä¸­çš„æ›¿æ¢å­—ç¬¦ã€‚
+    @return true:æ·»åŠ æˆåŠŸï¼›falseï¼šå­—ç¬¦ä¸²ç¼–ç é”™è¯¯
     */
     bool init(map<string, string> const& append = emptyXml, map<string, string> const& remove = emptyXml);
     /**
-    @brief ¶ÔXMLÖĞµÄÌØÊâ×Ö·û½øĞĞÌæ»»£¬±àÂëºóµÄ×Ö·û´®ÒÔ0x00½áÊø¡£
-    @param [in] szIn ĞèÒª½øĞĞÌæ»»µÄÊäÈë×Ö·û´®¡£
-    @param [in,out] uiInLen ´«ÈëszInµÄ×Ö·û´®µÄ³¤¶È£¬·µ»Ø³É¹¦Ö´ĞĞ±àÂëµÄ×Ö·û´®³¤¶È£¬
-                            ¼´±ãÔÚ³É¹¦µÄÇé¿öÏÂ£¬ÓÉÓÚ¿Õ¼ä²»×ã¶øÖ»Íê³ÉÁË²¿·Ö×ªÂë¡£
-    @param [in] szOut Êä³öµÄÖÃ»»ºó×Ö·û´®µÄbuf¡£
-    @param [in,out] uiOutLen ´«ÈëszOutµÄ¿Õ¼ä´óĞ¡£¬·µ»ØXML±àÂëºóµÄ×Ö·û´®µÄ³¤¶È¡£
-    @return true£º³É¹¦£»false£ºÊ§°Ü¡£Ê§°ÜµÄÔ­Òò¾ÍÊÇÓÉÓÚ×Ö·û±àÂëµÄ´íÎó¡£
+    @brief å¯¹XMLä¸­çš„ç‰¹æ®Šå­—ç¬¦è¿›è¡Œæ›¿æ¢ï¼Œç¼–ç åçš„å­—ç¬¦ä¸²ä»¥0x00ç»“æŸã€‚
+    @param [in] szIn éœ€è¦è¿›è¡Œæ›¿æ¢çš„è¾“å…¥å­—ç¬¦ä¸²ã€‚
+    @param [in,out] uiInLen ä¼ å…¥szInçš„å­—ç¬¦ä¸²çš„é•¿åº¦ï¼Œè¿”å›æˆåŠŸæ‰§è¡Œç¼–ç çš„å­—ç¬¦ä¸²é•¿åº¦ï¼Œ
+                            å³ä¾¿åœ¨æˆåŠŸçš„æƒ…å†µä¸‹ï¼Œç”±äºç©ºé—´ä¸è¶³è€Œåªå®Œæˆäº†éƒ¨åˆ†è½¬ç ã€‚
+    @param [in] szOut è¾“å‡ºçš„ç½®æ¢åå­—ç¬¦ä¸²çš„bufã€‚
+    @param [in,out] uiOutLen ä¼ å…¥szOutçš„ç©ºé—´å¤§å°ï¼Œè¿”å›XMLç¼–ç åçš„å­—ç¬¦ä¸²çš„é•¿åº¦ã€‚
+    @return trueï¼šæˆåŠŸï¼›falseï¼šå¤±è´¥ã€‚å¤±è´¥çš„åŸå› å°±æ˜¯ç”±äºå­—ç¬¦ç¼–ç çš„é”™è¯¯ã€‚
     */
     bool encode(char const* szIn, CWX_UINT32& uiInLen, char* szOut, CWX_UINT32& uiOutLen) const;
-    ///·µ»ØÊÇ·ñGBK
+    ///è¿”å›æ˜¯å¦GBK
     bool isGbk() const;
-    ///·µ»ØÊÇ·ñ´óĞ¡Ğ´Ãô¸Ğ
+    ///è¿”å›æ˜¯å¦å¤§å°å†™æ•æ„Ÿ
     bool isCaseSensive() const;
 private:
-    ///Ìí¼Ó±àÂë×ªÒÆ×Ö·û´®£¬·µ»Øfalse±íÊ¾Ìí¼ÓµÄÔ´×Ö·û´®µÄ±àÂë´íÎó
+    ///æ·»åŠ ç¼–ç è½¬ç§»å­—ç¬¦ä¸²ï¼Œè¿”å›falseè¡¨ç¤ºæ·»åŠ çš„æºå­—ç¬¦ä¸²çš„ç¼–ç é”™è¯¯
     bool addStr(char const* src, char const* dst, map<string, string> const& append, map<string, string> const& remove);
 private:
     static  map<string, string> const emptyXml;

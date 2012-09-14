@@ -1,9 +1,9 @@
-
+ï»¿
 CWINUX_BEGIN_NAMESPACE
 inline void CwxGbkUnicodeMap::utf16ChrToUtf8(CWX_UINT16 unUtf16, char* szUtf8, CWX_UINT8& unUtf8Len)
 {
     /*
-    UCS-2±àÂë(16½øÖÆ) UTF-8 ×Ö½ÚÁ÷(¶þ½øÖÆ) 
+    UCS-2ç¼–ç (16è¿›åˆ¶) UTF-8 å­—èŠ‚æµ(äºŒè¿›åˆ¶) 
     0000 - 007F       0xxxxxxx 
     0080 - 07FF       110xxxxx 10xxxxxx 
     0800 - FFFF       1110xxxx 10xxxxxx 10xxxxxx 

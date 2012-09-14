@@ -1,40 +1,40 @@
-CWINUX_BEGIN_NAMESPACE
-///enable»òdisable asynchronous¡£·µ»ØÖµ£¬0³É¹¦£»-1£ºÊ§°Ü¡£
+ï»¿CWINUX_BEGIN_NAMESPACE
+///enableæˆ–disable asynchronousã€‚è¿”å›å€¼ï¼Œ0æˆåŠŸï¼›-1ï¼šå¤±è´¥ã€‚
 inline int CwxIpcSap::setSigio(bool enable) const
 {
     return setSigio(handle_, enable);
 }
-///enable»òdisable  non-blocking I/O¡£·µ»ØÖµ£¬0³É¹¦£»-1£ºÊ§°Ü¡£
+///enableæˆ–disable  non-blocking I/Oã€‚è¿”å›å€¼ï¼Œ0æˆåŠŸï¼›-1ï¼šå¤±è´¥ã€‚
 inline int CwxIpcSap::setNonblock(bool enable) const
 {
     return setNonblock(handle_, enable);
 }
-///enable»òdisable   close-on-exec¡£·µ»ØÖµ£¬0³É¹¦£»-1£ºÊ§°Ü¡£
+///enableæˆ–disable   close-on-execã€‚è¿”å›å€¼ï¼Œ0æˆåŠŸï¼›-1ï¼šå¤±è´¥ã€‚
 inline int CwxIpcSap::setCloexec (bool enable) const
 {
     return setCloexec(handle_, enable);
 }
-///enable»òdisable   sigurg¡£·µ»ØÖµ£¬0³É¹¦£»-1£ºÊ§°Ü¡£
+///enableæˆ–disable   sigurgã€‚è¿”å›å€¼ï¼Œ0æˆåŠŸï¼›-1ï¼šå¤±è´¥ã€‚
 inline int CwxIpcSap::setSigurg (bool enable) const
 {
     return setSigurg(handle_, enable);
 }
-///ÊÇ·ñÉèÖÃÁËsigio, -1£ºÊ§°Ü£¬0£ºÃ»ÓĞ£¬1£ºÉèÖÃ
+///æ˜¯å¦è®¾ç½®äº†sigio, -1ï¼šå¤±è´¥ï¼Œ0ï¼šæ²¡æœ‰ï¼Œ1ï¼šè®¾ç½®
 inline int  CwxIpcSap::isSigio() const
 {
     return isSigio(handle_);
 }
-///ÊÇ·ñÉèÖÃÁËnonblock, -1£ºÊ§°Ü£¬0£ºÃ»ÓĞ£¬1£ºÉèÖÃ
+///æ˜¯å¦è®¾ç½®äº†nonblock, -1ï¼šå¤±è´¥ï¼Œ0ï¼šæ²¡æœ‰ï¼Œ1ï¼šè®¾ç½®
 inline int CwxIpcSap::isNonBlock() const
 {
     return isNonBlock(handle_);
 }
-///ÊÇ·ñÉèÖÃÁËCloexec, -1£ºÊ§°Ü£¬0£ºÃ»ÓĞ£¬1£ºÉèÖÃ
+///æ˜¯å¦è®¾ç½®äº†Cloexec, -1ï¼šå¤±è´¥ï¼Œ0ï¼šæ²¡æœ‰ï¼Œ1ï¼šè®¾ç½®
 inline int  CwxIpcSap::isCloexec() const
 {
     return isCloexec(handle_);
 }
-///ÊÇ·ñÉèÖÃÁËSigurg, -1£ºÊ§°Ü£¬0£ºÃ»ÓĞ£¬1£ºÉèÖÃ
+///æ˜¯å¦è®¾ç½®äº†Sigurg, -1ï¼šå¤±è´¥ï¼Œ0ï¼šæ²¡æœ‰ï¼Œ1ï¼šè®¾ç½®
 inline int  CwxIpcSap::isSigurg() const
 {
     return isSigurg(handle_);
@@ -51,7 +51,7 @@ inline void CwxIpcSap::setHandle (CWX_HANDLE handle)
     handle_ = handle;
 }
 
-///Í¨¹ıfcntlÉèÖÃ×´Ì¬£¬·µ»ØÖµ£¬0³É¹¦£»-1£ºÊ§°Ü¡£
+///é€šè¿‡fcntlè®¾ç½®çŠ¶æ€ï¼Œè¿”å›å€¼ï¼Œ0æˆåŠŸï¼›-1ï¼šå¤±è´¥ã€‚
 inline int CwxIpcSap::setFlags (CWX_HANDLE handle, int flags)
 {
     int val = ::fcntl (handle, F_GETFL, 0);
@@ -86,7 +86,7 @@ inline int CwxIpcSap::isFlags(CWX_HANDLE handle, int flags)
     return CWX_CHECK_ATTR(val, flags)?true:false;
 }
 
-///enable»òdisable asynchronous¡£·µ»ØÖµ£¬0³É¹¦£»-1£ºÊ§°Ü¡£
+///enableæˆ–disable asynchronousã€‚è¿”å›å€¼ï¼Œ0æˆåŠŸï¼›-1ï¼šå¤±è´¥ã€‚
 inline int CwxIpcSap::setSigio(CWX_HANDLE handle, bool enable)
 {
     if (enable)
@@ -104,7 +104,7 @@ inline int CwxIpcSap::setSigio(CWX_HANDLE handle, bool enable)
     return 0;
 }
 
-///enable»òdisable  non-blocking I/O¡£·µ»ØÖµ£¬0³É¹¦£»-1£ºÊ§°Ü¡£
+///enableæˆ–disable  non-blocking I/Oã€‚è¿”å›å€¼ï¼Œ0æˆåŠŸï¼›-1ï¼šå¤±è´¥ã€‚
 inline int CwxIpcSap::setNonblock(CWX_HANDLE handle, bool enable)
 {
     if (enable)
@@ -117,7 +117,7 @@ inline int CwxIpcSap::setNonblock(CWX_HANDLE handle, bool enable)
     }
     return 0;
 }
-///enable»òdisable   close-on-exec¡£·µ»ØÖµ£¬0³É¹¦£»-1£ºÊ§°Ü¡£
+///enableæˆ–disable   close-on-execã€‚è¿”å›å€¼ï¼Œ0æˆåŠŸï¼›-1ï¼šå¤±è´¥ã€‚
 inline int CwxIpcSap::setCloexec (CWX_HANDLE handle, bool enable)
 {
     if (enable)
@@ -130,7 +130,7 @@ inline int CwxIpcSap::setCloexec (CWX_HANDLE handle, bool enable)
     }
     return 0;
 }
-///enable»òdisable   sigurg¡£·µ»ØÖµ£¬0³É¹¦£»-1£ºÊ§°Ü¡£
+///enableæˆ–disable   sigurgã€‚è¿”å›å€¼ï¼Œ0æˆåŠŸï¼›-1ï¼šå¤±è´¥ã€‚
 inline int CwxIpcSap::setSigurg (CWX_HANDLE handle, bool enable)
 {
     if (enable)
@@ -145,7 +145,7 @@ inline int CwxIpcSap::setSigurg (CWX_HANDLE handle, bool enable)
 }
 
 
-///ÊÇ·ñÉèÖÃÁËsigio, -1£ºÊ§°Ü£¬0£ºÃ»ÓĞ£¬1£ºÉèÖÃ
+///æ˜¯å¦è®¾ç½®äº†sigio, -1ï¼šå¤±è´¥ï¼Œ0ï¼šæ²¡æœ‰ï¼Œ1ï¼šè®¾ç½®
 inline int CwxIpcSap::isSigio(CWX_HANDLE handle) const
 {
     int ret = ::fcntl (handle, F_GETOWN);
@@ -154,19 +154,19 @@ inline int CwxIpcSap::isSigio(CWX_HANDLE handle) const
     return isFlags(handle, O_ASYNC);
 
 }
-///ÊÇ·ñÉèÖÃÁËnonblock, -1£ºÊ§°Ü£¬0£ºÃ»ÓĞ£¬1£ºÉèÖÃ
+///æ˜¯å¦è®¾ç½®äº†nonblock, -1ï¼šå¤±è´¥ï¼Œ0ï¼šæ²¡æœ‰ï¼Œ1ï¼šè®¾ç½®
 inline int CwxIpcSap::isNonBlock(CWX_HANDLE handle) const
 {
     return isFlags(handle, O_NONBLOCK);
 
 }
-///ÊÇ·ñÉèÖÃÁËCloexec, -1£ºÊ§°Ü£¬0£ºÃ»ÓĞ£¬1£ºÉèÖÃ
+///æ˜¯å¦è®¾ç½®äº†Cloexec, -1ï¼šå¤±è´¥ï¼Œ0ï¼šæ²¡æœ‰ï¼Œ1ï¼šè®¾ç½®
 inline int CwxIpcSap::isCloexec(CWX_HANDLE handle) const
 {
     int ret = ::fcntl(handle, F_GETFD);
     return 0==ret?0:((-1 == ret)?-1:1);
 }
-///ÊÇ·ñÉèÖÃÁËSigurg, -1£ºÊ§°Ü£¬0£ºÃ»ÓĞ£¬1£ºÉèÖÃ
+///æ˜¯å¦è®¾ç½®äº†Sigurg, -1ï¼šå¤±è´¥ï¼Œ0ï¼šæ²¡æœ‰ï¼Œ1ï¼šè®¾ç½®
 inline int CwxIpcSap::isSigurg(CWX_HANDLE handle) const
 {
     int pid = ::fcntl (handle, F_GETOWN);

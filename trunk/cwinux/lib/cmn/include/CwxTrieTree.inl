@@ -1,4 +1,4 @@
-CWINUX_BEGIN_NAMESPACE
+锘緾WINUX_BEGIN_NAMESPACE
 
 template<typename DATA>
 inline CwxTrieNode<DATA>* CwxTrieNode<DATA>::add(char const* szWord, CWX_UINT32 uiWordLen, CwxTypePoolEx<CwxTrieNode<DATA> >& pool)
@@ -171,7 +171,7 @@ inline bool CwxTrieTree<CHARSET, DATA>::eraseNode(CwxTrieNode<DATA>* pNode)
     if (!pNode || (&m_root == pNode)) return true;
     if (!pNode->isKeyEnd()) return false;
     pNode->clrKeyEnd();
-    //检查是否有孩子节点
+    //妫�鏌ユ槸鍚︽湁瀛╁瓙鑺傜偣
     CWX_UINT8 i=0;
     CWX_UINT8 ucChildNum = 0;
     for (i=0; i<16; i++)

@@ -1,4 +1,4 @@
-CWINUX_BEGIN_NAMESPACE
+ï»¿CWINUX_BEGIN_NAMESPACE
 
 inline size_t CwxCommon::copyStr(char* dest, char const* src, size_t len)
 {
@@ -168,14 +168,14 @@ inline char* CwxCommon::ipInt2Doc(CWX_UINT32 ip, char* szIp)
     return szIp;
 }
 
-///Êä³ölong long unsignedÊýÖµµÄ×Ö·û´®
+///è¾“å‡ºlong long unsignedæ•°å€¼çš„å­—ç¬¦ä¸²
 inline char const* CwxCommon::toString(CWX_UINT64 ullNum, char* szBuf, int base)
 {
     char const* szFormat=(16==base)?"%"PRIx64:"%"PRIu64;
     sprintf(szBuf, szFormat, ullNum);
     return szBuf;
 }
-///Êä³ölong longÊýÖµµÄ×Ö·û´®
+///è¾“å‡ºlong longæ•°å€¼çš„å­—ç¬¦ä¸²
 inline char const* CwxCommon::toString(CWX_INT64 llNum, char* szBuf, int base)
 {
     char const* szFormat=(16==base)?"%"PRIx64:"%"PRId64;

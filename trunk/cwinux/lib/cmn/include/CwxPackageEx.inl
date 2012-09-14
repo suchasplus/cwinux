@@ -1,6 +1,6 @@
-/**
+ï»¿/**
 *@file CwxPackageEx.inl
-*@brief CwxPackageExÀàµÄInlineÊµÏÖ
+*@brief CwxPackageExç±»çš„Inlineå®ç°
 *@author cwinux@gmail.com
 *@version 1.0
 *@date  2012-5-29
@@ -9,7 +9,7 @@
 */
 CWINUX_BEGIN_NAMESPACE
 
-//-1£º°üµÄ¸ñÊ½·Ç·¨£»0:²»´æÔÚ£»>0£ºKey/ValueµÄ³¤¶È¡£
+//-1ï¼šåŒ…çš„æ ¼å¼éæ³•ï¼›0:ä¸å­˜åœ¨ï¼›>0ï¼šKey/Valueçš„é•¿åº¦ã€‚
 inline int CwxPackageEx::getKeyByIndex(char const *szMsg, CWX_UINT32 uiMsgLen, CWX_UINT32 uiIndex, CwxKeyValueItemEx& item)
 {
     CWX_UINT32 uiPos = 0;
@@ -24,7 +24,7 @@ inline int CwxPackageEx::getKeyByIndex(char const *szMsg, CWX_UINT32 uiMsgLen, C
     return len;
 }
 
-//-1£º°üµÄ¸ñÊ½·Ç·¨£»0:²»´æÔÚ£»>0£ºKey/ValueµÄ³¤¶È¡£
+//-1ï¼šåŒ…çš„æ ¼å¼éæ³•ï¼›0:ä¸å­˜åœ¨ï¼›>0ï¼šKey/Valueçš„é•¿åº¦ã€‚
 inline int CwxPackageEx::getKeyByName(char const *szMsg, CWX_UINT32 uiMsgLen, char const* szKey, CwxKeyValueItemEx& item, bool bCaseSensive)
 {
     CWX_UINT32 uiPos = 0;
@@ -43,7 +43,7 @@ inline int CwxPackageEx::getKeyByName(char const *szMsg, CWX_UINT32 uiMsgLen, ch
     return 0;
 }
 
-//-1£ºÎŞĞ§µÄpackage£¬0£ºÃ»ÓĞ·¢ÏÖ£¬1£ºÉ¾³ıÁËÒ»¸öKEY
+//-1ï¼šæ— æ•ˆçš„packageï¼Œ0ï¼šæ²¡æœ‰å‘ç°ï¼Œ1ï¼šåˆ é™¤äº†ä¸€ä¸ªKEY
 inline int CwxPackageEx::removeKey(char *szMsg, CWX_UINT32& uiMsgLen, CWX_UINT16 unIndex)
 {
     CWX_UINT32 i;
@@ -69,7 +69,7 @@ inline int CwxPackageEx::dump(char const* szMsg, CWX_UINT32 uiMsgLen, char* szOu
     return len;
 }
 
-//true:ÓĞĞ§µÄ°ü£»false£ºÎŞĞ§µÄ°ü.
+//true:æœ‰æ•ˆçš„åŒ…ï¼›falseï¼šæ— æ•ˆçš„åŒ….
 inline bool CwxPackageEx::isValidPackage(char const *szMsg, CWX_UINT32 uiMsgLen)
 {
     CWX_UINT32 uiPos = 0;
@@ -84,7 +84,7 @@ inline bool CwxPackageEx::isValidPackage(char const *szMsg, CWX_UINT32 uiMsgLen)
     return true;
 }
 
-///»ñÈ¡packageµÄkeyµÄÊıÁ¿
+///è·å–packageçš„keyçš„æ•°é‡
 inline int CwxPackageEx::getKeyValueNum(char const* szMsg, CWX_UINT32 uiMsgLen)
 {
     int iKeyNum = 0;
@@ -103,28 +103,28 @@ inline int CwxPackageEx::getKeyValueNum(char const* szMsg, CWX_UINT32 uiMsgLen)
 
 
 
-///Í¨¹ıKeyµÄ³¤¶È¼°dataµÄ³¤¶È£¬»ñÈ¡´ò°üºóµÄKey/value³¤¶È¡£
+///é€šè¿‡Keyçš„é•¿åº¦åŠdataçš„é•¿åº¦ï¼Œè·å–æ‰“åŒ…åçš„Key/valueé•¿åº¦ã€‚
 inline CWX_UINT32 CwxPackageEx::getKvLen(CWX_UINT16 unKeyLen, CWX_UINT32 uiDataLen){
     ///data_len|key_len|key_value|key|\0|value\0
     return encodeUint32Size(uiDataLen) + encodeUint16Size(unKeyLen) + 1 + unKeyLen + 1 + uiDataLen + 1 ;
 }
 
-///»ñÈ¡keyµÄoffset
+///è·å–keyçš„offset
 inline CWX_UINT16 CwxPackageEx::getKeyOffset(CWX_UINT16 unKeyLen, CWX_UINT32 uiDataLen){
     return encodeUint16Size(unKeyLen) + encodeUint32Size(uiDataLen) + 1;
 }
 
-///»ñµÃ¶ÔUINT16µÄvalue½øĞĞencodeºóµÄ³¤¶È
+///è·å¾—å¯¹UINT16çš„valueè¿›è¡Œencodeåçš„é•¿åº¦
 inline CWX_UINT8 CwxPackageEx::encodeUint16Size(CWX_UINT16 value){
     if ((value>>14)&0x03) return 3;
     if ((value>>7)&0x7F) return 2;
     return 1;
 }
 
-///¶ÔUINT16ÕûÊı½øĞĞ½âÂë£¬·µ»Ø½âÂë½áÊøµÄÎ»ÖÃ£¬ÈôÎªNULL±íÊ¾½âÂëÊ§°Ü
+///å¯¹UINT16æ•´æ•°è¿›è¡Œè§£ç ï¼Œè¿”å›è§£ç ç»“æŸçš„ä½ç½®ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºè§£ç å¤±è´¥
 inline unsigned char const* CwxPackageEx::decodeUint16(unsigned char const* szBuf, ///<
-                                          CWX_UINT32& uiBufLen, ///<´«ÈëbufµÄ¿Õ¼ä´óĞ¡£¬·µ»ØÊ£ÓàµÄ´óĞ¡
-                                          CWX_UINT16& value ///<½âÂë³öµÄÊıÖµ
+                                          CWX_UINT32& uiBufLen, ///<ä¼ å…¥bufçš„ç©ºé—´å¤§å°ï¼Œè¿”å›å‰©ä½™çš„å¤§å°
+                                          CWX_UINT16& value ///<è§£ç å‡ºçš„æ•°å€¼
                                           )
 {
     CWX_UINT8 i=0, b=0;
@@ -142,10 +142,10 @@ inline unsigned char const* CwxPackageEx::decodeUint16(unsigned char const* szBu
     return szBuf;
 }
 
-///¶ÔÕûÊı½øĞĞ±àÂë£¬·µ»Ø±àÂëµÄÖµ¼°±àÂëºóµÄ³¤¶È
-inline unsigned char* CwxPackageEx::encodeUint16(CWX_UINT16 value, ///<ÒªencodeµÄÖµ
-                                          unsigned char* szBuf, ///<¿Õ¼ä
-                                          CWX_UINT32& uiLen ///<encodeºóµÄ³¤¶È
+///å¯¹æ•´æ•°è¿›è¡Œç¼–ç ï¼Œè¿”å›ç¼–ç çš„å€¼åŠç¼–ç åçš„é•¿åº¦
+inline unsigned char* CwxPackageEx::encodeUint16(CWX_UINT16 value, ///<è¦encodeçš„å€¼
+                                          unsigned char* szBuf, ///<ç©ºé—´
+                                          CWX_UINT32& uiLen ///<encodeåçš„é•¿åº¦
                                           )
 {
     szBuf[0] = static_cast<CWX_UINT8>(value|0x80);
@@ -164,7 +164,7 @@ inline unsigned char* CwxPackageEx::encodeUint16(CWX_UINT16 value, ///<Òªencodeµ
 }
 
 
-///»ñµÃ¶ÔUINT32µÄvalue½øĞĞencodeºóµÄ³¤¶È
+///è·å¾—å¯¹UINT32çš„valueè¿›è¡Œencodeåçš„é•¿åº¦
 inline CWX_UINT8 CwxPackageEx::encodeUint32Size(CWX_UINT32 value){
     if ((value>>28)&0x0F) return 5;
     if ((value>>21)&0x7F) return 4;
@@ -173,10 +173,10 @@ inline CWX_UINT8 CwxPackageEx::encodeUint32Size(CWX_UINT32 value){
     return 1;
 }
 
-///¶ÔUINT32ÕûÊı½øĞĞ½âÂë£¬·µ»Ø½âÂë½áÊøµÄÎ»ÖÃ£¬ÈôÎªNULL±íÊ¾½âÂëÊ§°Ü
+///å¯¹UINT32æ•´æ•°è¿›è¡Œè§£ç ï¼Œè¿”å›è§£ç ç»“æŸçš„ä½ç½®ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºè§£ç å¤±è´¥
 inline unsigned char const* CwxPackageEx::decodeUint32(unsigned char const* szBuf, ///<
-                                          CWX_UINT32& uiBufLen, ///<´«ÈëbufµÄ¿Õ¼ä´óĞ¡£¬·µ»ØÊ£ÓàµÄ´óĞ¡
-                                          CWX_UINT32& value ///<½âÂë³öµÄÊıÖµ
+                                          CWX_UINT32& uiBufLen, ///<ä¼ å…¥bufçš„ç©ºé—´å¤§å°ï¼Œè¿”å›å‰©ä½™çš„å¤§å°
+                                          CWX_UINT32& value ///<è§£ç å‡ºçš„æ•°å€¼
                                           )
 {
     CWX_UINT8 i=0, b=0;
@@ -194,10 +194,10 @@ inline unsigned char const* CwxPackageEx::decodeUint32(unsigned char const* szBu
     return szBuf;
 }
 
-///¶ÔÕûÊı½øĞĞ±àÂë£¬·µ»Ø±àÂëµÄÖµ¼°±àÂëºóµÄ³¤¶È
-inline unsigned char* CwxPackageEx::encodeUint32(CWX_UINT32 value, ///<ÒªencodeµÄÖµ
-                                          unsigned char* szBuf, ///<¿Õ¼ä
-                                          CWX_UINT32& uiLen ///<encodeºóµÄ³¤¶È
+///å¯¹æ•´æ•°è¿›è¡Œç¼–ç ï¼Œè¿”å›ç¼–ç çš„å€¼åŠç¼–ç åçš„é•¿åº¦
+inline unsigned char* CwxPackageEx::encodeUint32(CWX_UINT32 value, ///<è¦encodeçš„å€¼
+                                          unsigned char* szBuf, ///<ç©ºé—´
+                                          CWX_UINT32& uiLen ///<encodeåçš„é•¿åº¦
                                           )
 {
     szBuf[0] = static_cast<CWX_UINT8>(value|0x80);
@@ -224,7 +224,7 @@ inline unsigned char* CwxPackageEx::encodeUint32(CWX_UINT32 value, ///<Òªencodeµ
     return szBuf;
 }
 
-///»ñµÃ¶ÔUINT64µÄvalue½øĞĞencodeºóµÄ³¤¶È
+///è·å¾—å¯¹UINT64çš„valueè¿›è¡Œencodeåçš„é•¿åº¦
 inline CWX_UINT8 CwxPackageEx::encodeUint64Size(CWX_UINT64 value){
     if ((value>>63)&0x01) return 10;
     if ((value>>56)&0x7F) return 9;
@@ -239,10 +239,10 @@ inline CWX_UINT8 CwxPackageEx::encodeUint64Size(CWX_UINT64 value){
 
 }
 
-///¶ÔUINT64ÕûÊı½øĞĞ½âÂë£¬·µ»Ø½âÂë½áÊøµÄÎ»ÖÃ£¬ÈôÎªNULL±íÊ¾½âÂëÊ§°Ü
+///å¯¹UINT64æ•´æ•°è¿›è¡Œè§£ç ï¼Œè¿”å›è§£ç ç»“æŸçš„ä½ç½®ï¼Œè‹¥ä¸ºNULLè¡¨ç¤ºè§£ç å¤±è´¥
 inline unsigned char const* CwxPackageEx::decodeUint64(unsigned char const* szBuf, ///<
-                                          CWX_UINT32& uiBufLen, ///<´«ÈëbufµÄ¿Õ¼ä´óĞ¡£¬·µ»ØÊ£ÓàµÄ´óĞ¡
-                                          CWX_UINT64& value ///<½âÂë³öµÄÊıÖµ
+                                          CWX_UINT32& uiBufLen, ///<ä¼ å…¥bufçš„ç©ºé—´å¤§å°ï¼Œè¿”å›å‰©ä½™çš„å¤§å°
+                                          CWX_UINT64& value ///<è§£ç å‡ºçš„æ•°å€¼
                                           )
 {
     CWX_UINT8 i=0, b=0;
@@ -260,10 +260,10 @@ inline unsigned char const* CwxPackageEx::decodeUint64(unsigned char const* szBu
     return szBuf;
 }
 
-///¶ÔUINT64ÕûÊı½øĞĞ±àÂë£¬·µ»Ø±àÂëµÄÖµ¼°±àÂëºóµÄ³¤¶È
-inline unsigned char* CwxPackageEx::encodeUint64(CWX_UINT64 value, ///<ÒªencodeµÄÖµ
-                                          unsigned char* szBuf, ///<¿Õ¼ä
-                                          CWX_UINT32& uiLen ///<encodeºóµÄ³¤¶È
+///å¯¹UINT64æ•´æ•°è¿›è¡Œç¼–ç ï¼Œè¿”å›ç¼–ç çš„å€¼åŠç¼–ç åçš„é•¿åº¦
+inline unsigned char* CwxPackageEx::encodeUint64(CWX_UINT64 value, ///<è¦encodeçš„å€¼
+                                          unsigned char* szBuf, ///<ç©ºé—´
+                                          CWX_UINT32& uiLen ///<encodeåçš„é•¿åº¦
                                           )
 {
     CWX_UINT32 part0 = static_cast<CWX_UINT32>(value);

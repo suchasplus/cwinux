@@ -1,14 +1,14 @@
-#ifndef __CWX_COMMANDER_H__
+ï»¿#ifndef __CWX_COMMANDER_H__
 #define __CWX_COMMANDER_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxCommander.h
-@brief ¼Ü¹¹CommandÄ£Ê½¶ÔÏóµÄ¶¨Òå£¬Command»ùÓÚÊÂ¼şµÄEvent-type£¬½øĞĞÊÂ¼şµÄ·Ö·¢
+@brief æ¶æ„Commandæ¨¡å¼å¯¹è±¡çš„å®šä¹‰ï¼ŒCommandåŸºäºäº‹ä»¶çš„Event-typeï¼Œè¿›è¡Œäº‹ä»¶çš„åˆ†å‘
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-07-20
@@ -28,26 +28,26 @@ CWINUX_BEGIN_NAMESPACE
 class CWX_API CwxCommander;
 /**
 @class CwxCmdOp
-@brief »ùÓÚSVR-IDµÄÊÂ¼şµÄ´¦ÀíHANDLEµÄ½Ó¿Ú¶¨Òå¡£
+@brief åŸºäºSVR-IDçš„äº‹ä»¶çš„å¤„ç†HANDLEçš„æ¥å£å®šä¹‰ã€‚
 */
 class CWX_API CwxCmdOp
 {
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxCmdOp()
     {
     }
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     virtual ~CwxCmdOp()
     {
 
     }
 public:
     /**
-    @brief Á¬½Ó½¨Á¢ÊÂ¼şµÄ´¦Àíº¯Êı¡£
-    @param [in] msg Á¬½Ó½¨Á¢µÄÊÂ¼ş¶ÔÏó¡£
-    @param [in] pThrEnv Ïß³ÌµÄTSS¶ÔÏó¡£
-    @return -1£º´¦ÀíÊ§°Ü£¬0£º²»´¦Àí´ËÊÂ¼ş£¬1£º´¦Àí´ËÊÂ¼ş¡£
+    @brief è¿æ¥å»ºç«‹äº‹ä»¶çš„å¤„ç†å‡½æ•°ã€‚
+    @param [in] msg è¿æ¥å»ºç«‹çš„äº‹ä»¶å¯¹è±¡ã€‚
+    @param [in] pThrEnv çº¿ç¨‹çš„TSSå¯¹è±¡ã€‚
+    @return -1ï¼šå¤„ç†å¤±è´¥ï¼Œ0ï¼šä¸å¤„ç†æ­¤äº‹ä»¶ï¼Œ1ï¼šå¤„ç†æ­¤äº‹ä»¶ã€‚
     */
     virtual int onConnCreated(CwxMsgBlock*& msg, CwxTss* pThrEnv)
     {
@@ -56,10 +56,10 @@ public:
         return 0;
     }
     /**
-    @brief Á¬½Ó¹Ø±ÕÊÂ¼şµÄµÄº¯Êı¡£
-    @param [in] msg Á¬½Ó¹Ø±ÕµÄÊÂ¼ş¶ÔÏó¡£
-    @param [in] pThrEnv Ïß³ÌµÄTSS¶ÔÏó¡£
-    @return -1£º´¦ÀíÊ§°Ü£¬0£º²»´¦Àí´ËÊÂ¼ş£¬1£º´¦Àí´ËÊÂ¼ş¡£
+    @brief è¿æ¥å…³é—­äº‹ä»¶çš„çš„å‡½æ•°ã€‚
+    @param [in] msg è¿æ¥å…³é—­çš„äº‹ä»¶å¯¹è±¡ã€‚
+    @param [in] pThrEnv çº¿ç¨‹çš„TSSå¯¹è±¡ã€‚
+    @return -1ï¼šå¤„ç†å¤±è´¥ï¼Œ0ï¼šä¸å¤„ç†æ­¤äº‹ä»¶ï¼Œ1ï¼šå¤„ç†æ­¤äº‹ä»¶ã€‚
     */
     virtual int onConnClosed(CwxMsgBlock*& msg, CwxTss* pThrEnv)
     {
@@ -68,10 +68,10 @@ public:
         return 0;
     }
     /**
-    @brief ÊÕµ½Í¨ĞÅÊı¾İ°üÊÂ¼şµÄ´¦Àíº¯Êı¡£
-    @param [in] msg ÊÕµ½Í¨ĞÅÊı¾İ°üµÄÊÂ¼ş¶ÔÏó¡£
-    @param [in] pThrEnv Ïß³ÌµÄTSS¶ÔÏó¡£
-    @return -1£º´¦ÀíÊ§°Ü£¬0£º²»´¦Àí´ËÊÂ¼ş£¬1£º´¦Àí´ËÊÂ¼ş¡£
+    @brief æ”¶åˆ°é€šä¿¡æ•°æ®åŒ…äº‹ä»¶çš„å¤„ç†å‡½æ•°ã€‚
+    @param [in] msg æ”¶åˆ°é€šä¿¡æ•°æ®åŒ…çš„äº‹ä»¶å¯¹è±¡ã€‚
+    @param [in] pThrEnv çº¿ç¨‹çš„TSSå¯¹è±¡ã€‚
+    @return -1ï¼šå¤„ç†å¤±è´¥ï¼Œ0ï¼šä¸å¤„ç†æ­¤äº‹ä»¶ï¼Œ1ï¼šå¤„ç†æ­¤äº‹ä»¶ã€‚
     */
     virtual int onRecvMsg(CwxMsgBlock*& msg, CwxTss* pThrEnv)
     {
@@ -80,10 +80,10 @@ public:
         return 0;
     }
     /**
-    @brief ÏûÏ¢·¢ËÍÍê±ÏÊÂ¼şµÄ´¦Àíº¯Êı¡£
-    @param [in] msg ÏûÏ¢·¢ËÍÍê±ÏµÄÊÂ¼ş¶ÔÏó¡£
-    @param [in] pThrEnv Ïß³ÌµÄTSS¶ÔÏó¡£
-    @return -1£º´¦ÀíÊ§°Ü£¬0£º²»´¦Àí´ËÊÂ¼ş£¬1£º´¦Àí´ËÊÂ¼ş¡£
+    @brief æ¶ˆæ¯å‘é€å®Œæ¯•äº‹ä»¶çš„å¤„ç†å‡½æ•°ã€‚
+    @param [in] msg æ¶ˆæ¯å‘é€å®Œæ¯•çš„äº‹ä»¶å¯¹è±¡ã€‚
+    @param [in] pThrEnv çº¿ç¨‹çš„TSSå¯¹è±¡ã€‚
+    @return -1ï¼šå¤„ç†å¤±è´¥ï¼Œ0ï¼šä¸å¤„ç†æ­¤äº‹ä»¶ï¼Œ1ï¼šå¤„ç†æ­¤äº‹ä»¶ã€‚
     */
     virtual int onEndSendMsg(CwxMsgBlock*& msg, CwxTss* pThrEnv)
     {
@@ -92,10 +92,10 @@ public:
         return 0;
     }
     /**
-    @brief ÏûÏ¢·¢ËÍÊ§°ÜÊÂ¼şµÄ´¦Àíº¯Êı¡£
-    @param [in] msg ÏûÏ¢·¢ËÍÊ§°ÜµÄÊÂ¼ş¶ÔÏó¡£
-    @param [in] pThrEnv Ïß³ÌµÄTSS¶ÔÏó¡£
-    @return -1£º´¦ÀíÊ§°Ü£¬0£º²»´¦Àí´ËÊÂ¼ş£¬1£º´¦Àí´ËÊÂ¼ş¡£
+    @brief æ¶ˆæ¯å‘é€å¤±è´¥äº‹ä»¶çš„å¤„ç†å‡½æ•°ã€‚
+    @param [in] msg æ¶ˆæ¯å‘é€å¤±è´¥çš„äº‹ä»¶å¯¹è±¡ã€‚
+    @param [in] pThrEnv çº¿ç¨‹çš„TSSå¯¹è±¡ã€‚
+    @return -1ï¼šå¤„ç†å¤±è´¥ï¼Œ0ï¼šä¸å¤„ç†æ­¤äº‹ä»¶ï¼Œ1ï¼šå¤„ç†æ­¤äº‹ä»¶ã€‚
     */
     virtual int onFailSendMsg(CwxMsgBlock*& msg, CwxTss* pThrEnv)
     {
@@ -104,10 +104,10 @@ public:
         return 0;
     }
     /**
-    @brief ³¬Ê±¼ì²éÊÂ¼şµÄ´¦Àíº¯Êı¡£
-    @param [in] msg ³¬Ê±¼ì²éµÄÊÂ¼ş¶ÔÏó¡£
-    @param [in] pThrEnv Ïß³ÌµÄTSS¶ÔÏó¡£
-    @return -1£º´¦ÀíÊ§°Ü£¬0£º²»´¦Àí´ËÊÂ¼ş£¬1£º´¦Àí´ËÊÂ¼ş¡£
+    @brief è¶…æ—¶æ£€æŸ¥äº‹ä»¶çš„å¤„ç†å‡½æ•°ã€‚
+    @param [in] msg è¶…æ—¶æ£€æŸ¥çš„äº‹ä»¶å¯¹è±¡ã€‚
+    @param [in] pThrEnv çº¿ç¨‹çš„TSSå¯¹è±¡ã€‚
+    @return -1ï¼šå¤„ç†å¤±è´¥ï¼Œ0ï¼šä¸å¤„ç†æ­¤äº‹ä»¶ï¼Œ1ï¼šå¤„ç†æ­¤äº‹ä»¶ã€‚
     */
     virtual int onTimeoutCheck(CwxMsgBlock*& msg, CwxTss* pThrEnv)
     {
@@ -116,10 +116,10 @@ public:
         return 0;
     }
     /**
-    @brief HANDLEµÄREADYµÄÊÂ¼şµÄ´¦Àíº¯Êı¡£
-    @param [in] msg HANDLEµÄREADYµÄÊÂ¼şµÄÊÂ¼ş¶ÔÏó¡£
-    @param [in] pThrEnv Ïß³ÌµÄTSS¶ÔÏó¡£
-    @return -1£º´¦ÀíÊ§°Ü£¬0£º²»´¦Àí´ËÊÂ¼ş£¬1£º´¦Àí´ËÊÂ¼ş¡£
+    @brief HANDLEçš„READYçš„äº‹ä»¶çš„å¤„ç†å‡½æ•°ã€‚
+    @param [in] msg HANDLEçš„READYçš„äº‹ä»¶çš„äº‹ä»¶å¯¹è±¡ã€‚
+    @param [in] pThrEnv çº¿ç¨‹çš„TSSå¯¹è±¡ã€‚
+    @return -1ï¼šå¤„ç†å¤±è´¥ï¼Œ0ï¼šä¸å¤„ç†æ­¤äº‹ä»¶ï¼Œ1ï¼šå¤„ç†æ­¤äº‹ä»¶ã€‚
     */
     virtual int onEvent4Handle(CwxMsgBlock*& msg, CwxTss* pThrEnv)
     {
@@ -128,10 +128,10 @@ public:
         return 0;
     }
     /**
-    @brief ÓÃ»§×Ô¶¨ÒåÊÂ¼şµÄ´¦Àíº¯Êı¡£
-    @param [in] msg ÓÃ»§×Ô¶¨ÒåÊÂ¼şµÄÊÂ¼ş¶ÔÏó¡£
-    @param [in] pThrEnv Ïß³ÌµÄTSS¶ÔÏó¡£
-    @return -1£º´¦ÀíÊ§°Ü£¬0£º²»´¦Àí´ËÊÂ¼ş£¬1£º´¦Àí´ËÊÂ¼ş¡£
+    @brief ç”¨æˆ·è‡ªå®šä¹‰äº‹ä»¶çš„å¤„ç†å‡½æ•°ã€‚
+    @param [in] msg ç”¨æˆ·è‡ªå®šä¹‰äº‹ä»¶çš„äº‹ä»¶å¯¹è±¡ã€‚
+    @param [in] pThrEnv çº¿ç¨‹çš„TSSå¯¹è±¡ã€‚
+    @return -1ï¼šå¤„ç†å¤±è´¥ï¼Œ0ï¼šä¸å¤„ç†æ­¤äº‹ä»¶ï¼Œ1ï¼šå¤„ç†æ­¤äº‹ä»¶ã€‚
     */
     virtual int onUserEvent(CwxMsgBlock*& msg, CwxTss* pThrEnv)
     {
@@ -143,16 +143,16 @@ public:
 
 /**
 @class CwxCommander
-@brief CommandÀà£¬»ùÓÚÊÂ¼şµÄSVR-ID£¬ÊµÏÖÊÂ¼şÓëÆä´¦ÀíHandleµÄÓ³Éä¡£
+@brief Commandç±»ï¼ŒåŸºäºäº‹ä»¶çš„SVR-IDï¼Œå®ç°äº‹ä»¶ä¸å…¶å¤„ç†Handleçš„æ˜ å°„ã€‚
 */
 class  CWX_API CwxCommander
 {
-    ///ÏûÏ¢Ó³Éäº¯ÊıÀàĞÍ¶¨Òå
+    ///æ¶ˆæ¯æ˜ å°„å‡½æ•°ç±»å‹å®šä¹‰
     typedef int (*fnEventApi)(CwxCmdOp* pEventOp, CwxMsgBlock*& msg, CwxTss* pThrEnv);
-    ///SVR-IDÓëÆä´¦ÀíHandleµÄÓ³ÉäHash
+    ///SVR-IDä¸å…¶å¤„ç†Handleçš„æ˜ å°„Hash
     typedef hash_map<CWX_UINT32, CwxCmdOp*, CwxNumHash<CWX_UINT32> > CwxEventCommandHash;
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxCommander()
         :m_msgHash(1024)
     {
@@ -166,98 +166,98 @@ public:
         m_arrEvent[CwxEventInfo::EVENT_4_HANDLE] = &CwxCommander::onEvent4Handle;
         m_arrEvent[CwxEventInfo::SYS_EVENT_NUM] = &CwxCommander::onUserEvent;
     }
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxCommander()
     {
         m_msgHash.clear();
     }
 public:
-    ///×¢²áSVR-IDÎªuiSvrIDµÄÊÂ¼şµÄ´¦Àíº¯Êı¡£·µ»ØÖµ£¬0:success, -1: ´ËSVR-IDÒÑ¾­´æÔÚ
+    ///æ³¨å†ŒSVR-IDä¸ºuiSvrIDçš„äº‹ä»¶çš„å¤„ç†å‡½æ•°ã€‚è¿”å›å€¼ï¼Œ0:success, -1: æ­¤SVR-IDå·²ç»å­˜åœ¨
     int regHandle(CWX_UINT32 uiSvrID, CwxCmdOp* pHandle);
     /**
-    @brief ½«ÏûÏ¢·Ö·¢¸øÆä´¦ÀíHandle
-    @param [in] msg Òª·Ö·¢µÄÊÂ¼ş
-    @param [in] pThrEnv Ïß³ÌµÄTSS¶ÔÏó¡£
-    @param [in] iRet Handle¶ÔÏûÏ¢µÄ´¦Àí½á¹û£¬-1£º´¦ÀíÊ§°Ü£¬0£ºÖ¸¶¨µÄHandle²»´¦Àí´ËÊÂ¼ş£¬1£º´¦Àí³É¹¦¡£
-    @return true£º½«ÏûÏ¢·Ö·¢¸øÁËÖ¸¶¨µÄ´¦ÀíHandle£»false£ºÃ»ÓĞhandle´¦Àí´ËÏûÏ¢
+    @brief å°†æ¶ˆæ¯åˆ†å‘ç»™å…¶å¤„ç†Handle
+    @param [in] msg è¦åˆ†å‘çš„äº‹ä»¶
+    @param [in] pThrEnv çº¿ç¨‹çš„TSSå¯¹è±¡ã€‚
+    @param [in] iRet Handleå¯¹æ¶ˆæ¯çš„å¤„ç†ç»“æœï¼Œ-1ï¼šå¤„ç†å¤±è´¥ï¼Œ0ï¼šæŒ‡å®šçš„Handleä¸å¤„ç†æ­¤äº‹ä»¶ï¼Œ1ï¼šå¤„ç†æˆåŠŸã€‚
+    @return trueï¼šå°†æ¶ˆæ¯åˆ†å‘ç»™äº†æŒ‡å®šçš„å¤„ç†Handleï¼›falseï¼šæ²¡æœ‰handleå¤„ç†æ­¤æ¶ˆæ¯
     */
     bool dispatch(CwxMsgBlock*& msg, CwxTss* pThrEnv, int& iRet);
-    ///Çå¿ÕCommand×¢²áµÄSVR-ID
+    ///æ¸…ç©ºCommandæ³¨å†Œçš„SVR-ID
     void reset()
     {
         m_msgHash.clear(); 
     }
 private:
     /**
-    @brief ½«Á¬½Ó½¨Á¢ÊÂ¼ş·Ö·¢¸øÊÂ¼ş´¦ÀíHandle¡£
-    @param [in] pEventOp ÊÂ¼şµÄ´¦ÀíHandle¡£
-    @param [in] msg Á¬½Ó½¨Á¢µÄÊÂ¼ş¶ÔÏó¡£
-    @param [in] pThrEnv Ïß³ÌµÄTSS¶ÔÏó¡£
-    @return -1£ºHandle´¦ÀíÊ§°Ü£¬0£ºHandle²»´¦Àí´ËÊÂ¼ş£¬1£ºHandle³É¹¦´¦Àí´ËÊÂ¼ş¡£
+    @brief å°†è¿æ¥å»ºç«‹äº‹ä»¶åˆ†å‘ç»™äº‹ä»¶å¤„ç†Handleã€‚
+    @param [in] pEventOp äº‹ä»¶çš„å¤„ç†Handleã€‚
+    @param [in] msg è¿æ¥å»ºç«‹çš„äº‹ä»¶å¯¹è±¡ã€‚
+    @param [in] pThrEnv çº¿ç¨‹çš„TSSå¯¹è±¡ã€‚
+    @return -1ï¼šHandleå¤„ç†å¤±è´¥ï¼Œ0ï¼šHandleä¸å¤„ç†æ­¤äº‹ä»¶ï¼Œ1ï¼šHandleæˆåŠŸå¤„ç†æ­¤äº‹ä»¶ã€‚
     */
     static int onConnCreated(CwxCmdOp* pEventOp, CwxMsgBlock*& msg, CwxTss* pThrEnv);
     /**
-    @brief ½«Á¬½Ó¹Ø±ÕÊÂ¼ş·Ö·¢¸øÊÂ¼ş´¦ÀíHandle¡£
-    @param [in] pEventOp ÊÂ¼şµÄ´¦ÀíHandle¡£
-    @param [in] msg Á¬½Ó½¨Á¢µÄÊÂ¼ş¶ÔÏó¡£
-    @param [in] pThrEnv Ïß³ÌµÄTSS¶ÔÏó¡£
-    @return -1£ºHandle´¦ÀíÊ§°Ü£¬0£ºHandle²»´¦Àí´ËÊÂ¼ş£¬1£ºHandle³É¹¦´¦Àí´ËÊÂ¼ş¡£
+    @brief å°†è¿æ¥å…³é—­äº‹ä»¶åˆ†å‘ç»™äº‹ä»¶å¤„ç†Handleã€‚
+    @param [in] pEventOp äº‹ä»¶çš„å¤„ç†Handleã€‚
+    @param [in] msg è¿æ¥å»ºç«‹çš„äº‹ä»¶å¯¹è±¡ã€‚
+    @param [in] pThrEnv çº¿ç¨‹çš„TSSå¯¹è±¡ã€‚
+    @return -1ï¼šHandleå¤„ç†å¤±è´¥ï¼Œ0ï¼šHandleä¸å¤„ç†æ­¤äº‹ä»¶ï¼Œ1ï¼šHandleæˆåŠŸå¤„ç†æ­¤äº‹ä»¶ã€‚
     */
     static int onConnClosed(CwxCmdOp* pEventOp, CwxMsgBlock*& msg, CwxTss* pThrEnv);
     /**
-    @brief ½«ÊÕµ½Í¨ĞÅÊı¾İ°üÊÂ¼ş·Ö·¢¸øÊÂ¼ş´¦ÀíHandle¡£
-    @param [in] pEventOp ÊÂ¼şµÄ´¦ÀíHandle¡£
-    @param [in] msg Á¬½Ó½¨Á¢µÄÊÂ¼ş¶ÔÏó¡£
-    @param [in] pThrEnv Ïß³ÌµÄTSS¶ÔÏó¡£
-    @return -1£ºHandle´¦ÀíÊ§°Ü£¬0£ºHandle²»´¦Àí´ËÊÂ¼ş£¬1£ºHandle³É¹¦´¦Àí´ËÊÂ¼ş¡£
+    @brief å°†æ”¶åˆ°é€šä¿¡æ•°æ®åŒ…äº‹ä»¶åˆ†å‘ç»™äº‹ä»¶å¤„ç†Handleã€‚
+    @param [in] pEventOp äº‹ä»¶çš„å¤„ç†Handleã€‚
+    @param [in] msg è¿æ¥å»ºç«‹çš„äº‹ä»¶å¯¹è±¡ã€‚
+    @param [in] pThrEnv çº¿ç¨‹çš„TSSå¯¹è±¡ã€‚
+    @return -1ï¼šHandleå¤„ç†å¤±è´¥ï¼Œ0ï¼šHandleä¸å¤„ç†æ­¤äº‹ä»¶ï¼Œ1ï¼šHandleæˆåŠŸå¤„ç†æ­¤äº‹ä»¶ã€‚
     */
     static int onRecvMsg(CwxCmdOp* pEventOp, CwxMsgBlock*& msg, CwxTss* pThrEnv);
     /**
-    @brief ½«Í¨ĞÅÊı¾İ°ü·¢ËÍÍê±ÏÊÂ¼ş·Ö·¢¸øÊÂ¼ş´¦ÀíHandle¡£
-    @param [in] pEventOp ÊÂ¼şµÄ´¦ÀíHandle¡£
-    @param [in] msg Á¬½Ó½¨Á¢µÄÊÂ¼ş¶ÔÏó¡£
-    @param [in] pThrEnv Ïß³ÌµÄTSS¶ÔÏó¡£
-    @return -1£ºHandle´¦ÀíÊ§°Ü£¬0£ºHandle²»´¦Àí´ËÊÂ¼ş£¬1£ºHandle³É¹¦´¦Àí´ËÊÂ¼ş¡£
+    @brief å°†é€šä¿¡æ•°æ®åŒ…å‘é€å®Œæ¯•äº‹ä»¶åˆ†å‘ç»™äº‹ä»¶å¤„ç†Handleã€‚
+    @param [in] pEventOp äº‹ä»¶çš„å¤„ç†Handleã€‚
+    @param [in] msg è¿æ¥å»ºç«‹çš„äº‹ä»¶å¯¹è±¡ã€‚
+    @param [in] pThrEnv çº¿ç¨‹çš„TSSå¯¹è±¡ã€‚
+    @return -1ï¼šHandleå¤„ç†å¤±è´¥ï¼Œ0ï¼šHandleä¸å¤„ç†æ­¤äº‹ä»¶ï¼Œ1ï¼šHandleæˆåŠŸå¤„ç†æ­¤äº‹ä»¶ã€‚
     */
     static int onEndSendMsg(CwxCmdOp* pEventOp, CwxMsgBlock*& msg, CwxTss* pThrEnv);
     /**
-    @brief ½«Í¨ĞÅÊı¾İ°ü·¢ËÍÊ§°ÜÊÂ¼ş·Ö·¢¸øÊÂ¼ş´¦ÀíHandle¡£
-    @param [in] pEventOp ÊÂ¼şµÄ´¦ÀíHandle¡£
-    @param [in] msg Á¬½Ó½¨Á¢µÄÊÂ¼ş¶ÔÏó¡£
-    @param [in] pThrEnv Ïß³ÌµÄTSS¶ÔÏó¡£
-    @return -1£ºHandle´¦ÀíÊ§°Ü£¬0£ºHandle²»´¦Àí´ËÊÂ¼ş£¬1£ºHandle³É¹¦´¦Àí´ËÊÂ¼ş¡£
+    @brief å°†é€šä¿¡æ•°æ®åŒ…å‘é€å¤±è´¥äº‹ä»¶åˆ†å‘ç»™äº‹ä»¶å¤„ç†Handleã€‚
+    @param [in] pEventOp äº‹ä»¶çš„å¤„ç†Handleã€‚
+    @param [in] msg è¿æ¥å»ºç«‹çš„äº‹ä»¶å¯¹è±¡ã€‚
+    @param [in] pThrEnv çº¿ç¨‹çš„TSSå¯¹è±¡ã€‚
+    @return -1ï¼šHandleå¤„ç†å¤±è´¥ï¼Œ0ï¼šHandleä¸å¤„ç†æ­¤äº‹ä»¶ï¼Œ1ï¼šHandleæˆåŠŸå¤„ç†æ­¤äº‹ä»¶ã€‚
     */
     static int onFailSendMsg(CwxCmdOp* pEventOp, CwxMsgBlock*& msg, CwxTss* pThrEnv);
     /**
-    @brief ½«³¬Ê±¼ì²éÊÂ¼ş·Ö·¢¸øÊÂ¼ş´¦ÀíHandle¡£
-    @param [in] pEventOp ÊÂ¼şµÄ´¦ÀíHandle¡£
-    @param [in] msg Á¬½Ó½¨Á¢µÄÊÂ¼ş¶ÔÏó¡£
-    @param [in] pThrEnv Ïß³ÌµÄTSS¶ÔÏó¡£
-    @return -1£ºHandle´¦ÀíÊ§°Ü£¬0£ºHandle²»´¦Àí´ËÊÂ¼ş£¬1£ºHandle³É¹¦´¦Àí´ËÊÂ¼ş¡£
+    @brief å°†è¶…æ—¶æ£€æŸ¥äº‹ä»¶åˆ†å‘ç»™äº‹ä»¶å¤„ç†Handleã€‚
+    @param [in] pEventOp äº‹ä»¶çš„å¤„ç†Handleã€‚
+    @param [in] msg è¿æ¥å»ºç«‹çš„äº‹ä»¶å¯¹è±¡ã€‚
+    @param [in] pThrEnv çº¿ç¨‹çš„TSSå¯¹è±¡ã€‚
+    @return -1ï¼šHandleå¤„ç†å¤±è´¥ï¼Œ0ï¼šHandleä¸å¤„ç†æ­¤äº‹ä»¶ï¼Œ1ï¼šHandleæˆåŠŸå¤„ç†æ­¤äº‹ä»¶ã€‚
     */
     static int onTimeoutCheck(CwxCmdOp* pEventOp, CwxMsgBlock*& msg, CwxTss* pThrEnv);
     /**
-    @brief ½«IO Handle ReadyÊÂ¼ş·Ö·¢¸øÊÂ¼ş´¦ÀíHandle¡£
-    @param [in] pEventOp ÊÂ¼şµÄ´¦ÀíHandle¡£
-    @param [in] msg Á¬½Ó½¨Á¢µÄÊÂ¼ş¶ÔÏó¡£
-    @param [in] pThrEnv Ïß³ÌµÄTSS¶ÔÏó¡£
-    @return -1£ºHandle´¦ÀíÊ§°Ü£¬0£ºHandle²»´¦Àí´ËÊÂ¼ş£¬1£ºHandle³É¹¦´¦Àí´ËÊÂ¼ş¡£
+    @brief å°†IO Handle Readyäº‹ä»¶åˆ†å‘ç»™äº‹ä»¶å¤„ç†Handleã€‚
+    @param [in] pEventOp äº‹ä»¶çš„å¤„ç†Handleã€‚
+    @param [in] msg è¿æ¥å»ºç«‹çš„äº‹ä»¶å¯¹è±¡ã€‚
+    @param [in] pThrEnv çº¿ç¨‹çš„TSSå¯¹è±¡ã€‚
+    @return -1ï¼šHandleå¤„ç†å¤±è´¥ï¼Œ0ï¼šHandleä¸å¤„ç†æ­¤äº‹ä»¶ï¼Œ1ï¼šHandleæˆåŠŸå¤„ç†æ­¤äº‹ä»¶ã€‚
     */
     static int onEvent4Handle(CwxCmdOp* pEventOp, CwxMsgBlock*& msg, CwxTss* pThrEnv);
     /**
-    @brief ½«ÓÃ»§ÊÂ¼ş·Ö·¢¸øÊÂ¼ş´¦ÀíHandle¡£
-    @param [in] pEventOp ÊÂ¼şµÄ´¦ÀíHandle¡£
-    @param [in] msg Á¬½Ó½¨Á¢µÄÊÂ¼ş¶ÔÏó¡£
-    @param [in] pThrEnv Ïß³ÌµÄTSS¶ÔÏó¡£
-    @return -1£ºHandle´¦ÀíÊ§°Ü£¬0£ºHandle²»´¦Àí´ËÊÂ¼ş£¬1£ºHandle³É¹¦´¦Àí´ËÊÂ¼ş¡£
+    @brief å°†ç”¨æˆ·äº‹ä»¶åˆ†å‘ç»™äº‹ä»¶å¤„ç†Handleã€‚
+    @param [in] pEventOp äº‹ä»¶çš„å¤„ç†Handleã€‚
+    @param [in] msg è¿æ¥å»ºç«‹çš„äº‹ä»¶å¯¹è±¡ã€‚
+    @param [in] pThrEnv çº¿ç¨‹çš„TSSå¯¹è±¡ã€‚
+    @return -1ï¼šHandleå¤„ç†å¤±è´¥ï¼Œ0ï¼šHandleä¸å¤„ç†æ­¤äº‹ä»¶ï¼Œ1ï¼šHandleæˆåŠŸå¤„ç†æ­¤äº‹ä»¶ã€‚
     */
     static int onUserEvent(CwxCmdOp* pEventOp, CwxMsgBlock*& msg, CwxTss* pThrEnv);
 private:
-    ///»ñÈ¡SVR-IDµÄ´¦ÀíHandle
+    ///è·å–SVR-IDçš„å¤„ç†Handle
     CwxCmdOp* getEventOp(CWX_UINT32 uiSvrID);
 private:
-    fnEventApi          m_arrEvent[CwxEventInfo::SYS_EVENT_NUM + 1];///ÊÂ¼şÀàĞÍÓë´¦ÀíAPIµÄÓ³Éä
-    CwxEventCommandHash   m_msgHash;///<ÊÂ¼şSVR-IDÓëÊÂ¼ş´¦ÀíHanldeµÄÓ³Éä
+    fnEventApi          m_arrEvent[CwxEventInfo::SYS_EVENT_NUM + 1];///äº‹ä»¶ç±»å‹ä¸å¤„ç†APIçš„æ˜ å°„
+    CwxEventCommandHash   m_msgHash;///<äº‹ä»¶SVR-IDä¸äº‹ä»¶å¤„ç†Hanldeçš„æ˜ å°„
 };
 
 CWINUX_END_NAMESPACE

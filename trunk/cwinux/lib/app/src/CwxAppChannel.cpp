@@ -1,4 +1,4 @@
-#include "CwxAppChannel.h"
+ï»¿#include "CwxAppChannel.h"
 
 CWINUX_BEGIN_NAMESPACE
 
@@ -8,9 +8,9 @@ CwxAppChannel::CwxAppChannel()
     m_bStop = true;
     m_noticeFd[0] = CWX_INVALID_HANDLE;
     m_noticeFd[1] = CWX_INVALID_HANDLE;
-    ///´´½¨notice pipe¶ÔÏó
+    ///åˆ›å»ºnotice pipeå¯¹è±¡
     m_pNoticeHandler = NULL;
-    //ÊÂ¼şÇı¶¯
+    //äº‹ä»¶é©±åŠ¨
     m_engine= NULL;
     //
     m_pCurRedoSet = &m_redoHandlers_1;
@@ -22,7 +22,7 @@ CwxAppChannel::~CwxAppChannel()
     close();
 }
 
-///´ò¿ªreactor£¬return -1£ºÊ§°Ü£»0£º³É¹¦
+///æ‰“å¼€reactorï¼Œreturn -1ï¼šå¤±è´¥ï¼›0ï¼šæˆåŠŸ
 int CwxAppChannel::open()
 {
     if (!m_bStop)
@@ -31,11 +31,11 @@ int CwxAppChannel::open()
         return -1;
     }
     close();
-    ///ÉèÖÃreactorµÄowner
+    ///è®¾ç½®reactorçš„owner
     m_owner = CwxThread::self();
-    ///´´½¨notice pipe¶ÔÏó
+    ///åˆ›å»ºnotice pipeå¯¹è±¡
     m_pNoticeHandler = new NoticeHanlder();
-    ///´´½¨engine
+    ///åˆ›å»ºengine
     if (m_engine)
     {
         delete m_engine;
@@ -43,7 +43,7 @@ int CwxAppChannel::open()
     }
     m_engine = new CwxAppEpoll(false);
     if (0 != m_engine->init()) return -1;
-    //×¢²ánotice handler
+    //æ³¨å†Œnotice handler
     if (0 != pipe(m_noticeFd))
     {
         CWX_ERROR(("Failure to invokde pipe to create signal fd, errno=%d", errno));
@@ -70,7 +70,7 @@ int CwxAppChannel::open()
         return -1;
     }
     m_pNoticeHandler->setHandle(m_noticeFd[0]);
-    //×¢²áĞÅºÅfdµÄ¶Á
+    //æ³¨å†Œä¿¡å·fdçš„è¯»
     if (0 != m_engine->registerHandler(m_noticeFd[0], m_pNoticeHandler, CwxAppHandler4Base::PREAD_MASK))
     {
         CWX_ERROR(("Failure to register notice handle to engine"));
@@ -82,7 +82,7 @@ int CwxAppChannel::open()
     return 0;
 }
 
-///¹Ø±Õreactor£¬return -1£ºÊ§°Ü£»0£º³É¹¦
+///å…³é—­reactorï¼Œreturn -1ï¼šå¤±è´¥ï¼›0ï¼šæˆåŠŸ
 int CwxAppChannel::close()
 {
     if (!m_bStop)
@@ -103,8 +103,8 @@ int CwxAppChannel::close()
 }
 
 /**
-@brief ¼Ü¹¹ÊÂ¼şµÄÑ­»·´¦ÀíAPI£¬ÊµÏÖÏûÏ¢µÄ·Ö·¢¡£
-@return -1£ºÊ§°Ü£»0£ºÕı³£ÍË³ö
+@brief æ¶æ„äº‹ä»¶çš„å¾ªç¯å¤„ç†APIï¼Œå®ç°æ¶ˆæ¯çš„åˆ†å‘ã€‚
+@return -1ï¼šå¤±è´¥ï¼›0ï¼šæ­£å¸¸é€€å‡º
 */
 int CwxAppChannel::dispatch(CWX_UINT32 uiMiliTimeout)
 {
@@ -119,7 +119,7 @@ int CwxAppChannel::dispatch(CWX_UINT32 uiMiliTimeout)
         CWX_ERROR(("Channel is stopped."));
         return -1;
     }
-    ///¼ì²échannelµÄowner
+    ///æ£€æŸ¥channelçš„owner
     if (!CwxThread::equal(m_owner, CwxThread::self()))
     {
         CWX_ERROR(("CwxAppChannel::dispatch() must be invoked by CwxAppChannel::open()'s thread"));
@@ -127,7 +127,7 @@ int CwxAppChannel::dispatch(CWX_UINT32 uiMiliTimeout)
     }
     {
         {
-            ///´øËøÖ´ĞĞevent-loop
+            ///å¸¦é”æ‰§è¡Œevent-loop
             CwxMutexGuard<CwxMutexLock> lock(&m_lock);
             ret = m_engine->poll(CwxAppChannel::callback, this, uiMiliTimeout);
             if (m_pCurRedoSet->size())
@@ -180,8 +180,8 @@ int CwxAppChannel::dispatch(CWX_UINT32 uiMiliTimeout)
 }
 
 /**
-@brief Í£Ö¹¼Ü¹¹ÊÂ¼şµÄÑ­»·´¦Àí¡£
-@return -1£ºÊ§°Ü£»0£ºÕı³£ÍË³ö
+@brief åœæ­¢æ¶æ„äº‹ä»¶çš„å¾ªç¯å¤„ç†ã€‚
+@return -1ï¼šå¤±è´¥ï¼›0ï¼šæ­£å¸¸é€€å‡º
 */
 int CwxAppChannel::stop()
 {

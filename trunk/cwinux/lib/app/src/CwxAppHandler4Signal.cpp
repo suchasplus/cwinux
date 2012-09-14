@@ -1,8 +1,8 @@
-#include "CwxAppHandler4Signal.h"
+ï»¿#include "CwxAppHandler4Signal.h"
 #include "CwxAppFramework.h"
 
 CWINUX_BEGIN_NAMESPACE
-///¹¹Ôìº¯Êı
+///æ„é€ å‡½æ•°
 CwxAppHandler4Signal::CwxAppHandler4Signal(CwxAppFramework* pApp,
                                            CwxAppReactor* reactor,
                                            int sig)
@@ -16,9 +16,9 @@ CwxAppHandler4Signal::~CwxAppHandler4Signal()
 }
 
 /**
-@brief Á¬½Ó½¨Á¢µÄ´¦Àíº¯Êı£¬·ñÔòÁ¬½Ó½¨Á¢µÄ³õÊ¼»¯
-@param [in] parent ½¨Á¢Á¬½ÓµÄacceptor»òconnector
-@return -1£º·ÅÆú½¨Á¢µÄÁ¬½Ó£» 0£ºÁ¬½Ó½¨Á¢³É¹¦
+@brief è¿æ¥å»ºç«‹çš„å¤„ç†å‡½æ•°ï¼Œå¦åˆ™è¿æ¥å»ºç«‹çš„åˆå§‹åŒ–
+@param [in] parent å»ºç«‹è¿æ¥çš„acceptoræˆ–connector
+@return -1ï¼šæ”¾å¼ƒå»ºç«‹çš„è¿æ¥ï¼› 0ï¼šè¿æ¥å»ºç«‹æˆåŠŸ
 */
 int CwxAppHandler4Signal::open (void *)
 {
@@ -31,9 +31,9 @@ int CwxAppHandler4Signal::open (void *)
 
 }
 /**
-@brief ½ÓÊÜÁ¬½ÓÉÏµÄÊÂ¼ş
-@param [in] handle Á¬½ÓµÄhandle
-@return -1£º´¦ÀíÊ§°Ü£» 0£º´¦Àí³É¹¦
+@brief æ¥å—è¿æ¥ä¸Šçš„äº‹ä»¶
+@param [in] handle è¿æ¥çš„handle
+@return -1ï¼šå¤„ç†å¤±è´¥ï¼› 0ï¼šå¤„ç†æˆåŠŸ
 */
 int CwxAppHandler4Signal::handle_event(int, CWX_HANDLE )
 {

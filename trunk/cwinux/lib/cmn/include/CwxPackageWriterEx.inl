@@ -1,6 +1,6 @@
-/**
+ï»¿/**
 *@file CwxPackageWriterEx.inl
-*@brief CwxPackageWriterExÀàµÄInlineÊµÏÖ
+*@brief CwxPackageWriterExç±»çš„Inlineå®ç°
 *@author cwinux@gmail.com
 *@version 1.0
 *@date  2012-05-29
@@ -9,7 +9,7 @@
 */
 CWINUX_BEGIN_NAMESPACE
 
-///½¨Á¢Ò»¸öĞÂpackage
+///å»ºç«‹ä¸€ä¸ªæ–°package
 inline void CwxPackageWriterEx::beginPack()
 {
     reset();
@@ -130,7 +130,7 @@ inline bool CwxPackageWriterEx::addKeyValue(char const* szKey, CWX_UINT16 unKeyL
 inline bool CwxPackageWriterEx::pack(){
     return true;
 }
-///»ñÈ¡µ±Ç°packageµÄKeyµÄÊıÁ¿¡£
+///è·å–å½“å‰packageçš„Keyçš„æ•°é‡ã€‚
 inline CWX_UINT32 CwxPackageWriterEx::getKeyNum() const{
     return m_uiKeyNum;
 }

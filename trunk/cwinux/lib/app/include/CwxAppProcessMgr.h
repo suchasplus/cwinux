@@ -1,14 +1,14 @@
-#ifndef __CWX_APP_PROCESS_MGR_H__
+ï»¿#ifndef __CWX_APP_PROCESS_MGR_H__
 #define __CWX_APP_PROCESS_MGR_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxAppProcessMgr.h
-@brief Ë«½ø³ÌÄ£Ê½µÄ½ø³Ì¹ÜÀíÆ÷¶ÔÏó£¬Æä»á´´½¨Ë«½ø³Ì£¬Ò»¸öÊÇ¹¤×÷½ø³Ì£¬Ò»¸öÊÇ¹ÜÀí½ø³Ì
+@brief åŒè¿›ç¨‹æ¨¡å¼çš„è¿›ç¨‹ç®¡ç†å™¨å¯¹è±¡ï¼Œå…¶ä¼šåˆ›å»ºåŒè¿›ç¨‹ï¼Œä¸€ä¸ªæ˜¯å·¥ä½œè¿›ç¨‹ï¼Œä¸€ä¸ªæ˜¯ç®¡ç†è¿›ç¨‹
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-07-20
@@ -27,20 +27,20 @@ CWINUX_BEGIN_NAMESPACE
 
 /**
 @class CwxAppProcessInfo
-@brief ¹¤×÷½øĞĞĞÅÏ¢¶ÔÏó
+@brief å·¥ä½œè¿›è¡Œä¿¡æ¯å¯¹è±¡
 */
 class CWX_API CwxAppProcessInfo
 {
 public:
-    ///¹¤×÷½ø³Ì×´Ì¬
+    ///å·¥ä½œè¿›ç¨‹çŠ¶æ€
     enum{
-        PROC_STATE_RUNNING = 1,///<ÔËĞĞ×´Ì¬
-        PROC_STATE_RESTARTING = 2,///<ÕıÔÚÖØÆô
-        PROC_STATE_STOPPING = 3,///<ÕıÔÚÍ£Ö¹
-        PROC_STATE_STOPPED = 4///<Í£Ö¹
+        PROC_STATE_RUNNING = 1,///<è¿è¡ŒçŠ¶æ€
+        PROC_STATE_RESTARTING = 2,///<æ­£åœ¨é‡å¯
+        PROC_STATE_STOPPING = 3,///<æ­£åœ¨åœæ­¢
+        PROC_STATE_STOPPED = 4///<åœæ­¢
     };
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxAppProcessInfo()
     {
         m_pApp = NULL;
@@ -49,83 +49,83 @@ public:
         m_ttLastChildHeat = 0;
         m_unState = PROC_STATE_STOPPED;
     }
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxAppProcessInfo()
     {
         if (m_pApp) delete m_pApp;
     }
 public:
-    CwxAppFramework*   m_pApp;///<¹¤×÷½ø³ÌµÄ¶ÔÏó
-    CWX_UINT16         m_unProcId;///<¹¤×÷½ø³ÌµÄID
-    pid_t              m_pid;///<¹¤×÷½ø³ÌµÄpid
-    time_t             m_ttLastChildHeat;///<¹¤×÷½ø³ÌÉÏ´Î·¢ËÍĞÄÌøµÄÊÂ¼ş
-    CWX_UINT8          m_unState;///<¹¤×÷½ø³ÌµÄ×´Ì¬
+    CwxAppFramework*   m_pApp;///<å·¥ä½œè¿›ç¨‹çš„å¯¹è±¡
+    CWX_UINT16         m_unProcId;///<å·¥ä½œè¿›ç¨‹çš„ID
+    pid_t              m_pid;///<å·¥ä½œè¿›ç¨‹çš„pid
+    time_t             m_ttLastChildHeat;///<å·¥ä½œè¿›ç¨‹ä¸Šæ¬¡å‘é€å¿ƒè·³çš„äº‹ä»¶
+    CWX_UINT8          m_unState;///<å·¥ä½œè¿›ç¨‹çš„çŠ¶æ€
 };
 
 /**
 @class CwxAppProcessMgr
-@brief Ë«½ø³ÌÄ£Ê½µÄ½ø³Ì¹ÜÀíÆ÷¶ÔÏó£¬Æä»á´´½¨Ë«½ø³Ì£¬
-Ò»¸öÊÇ¹¤×÷½ø³Ì£¬Ò»¸öÊÇ¹ÜÀí½ø³Ì¡£¹¤×÷½ø³Ì»á¶¨ÆÚµÄ¸ø¼à¿Ø½ø³Ì·¢ËÍHUPµÄĞÄÌøĞÅºÅ
+@brief åŒè¿›ç¨‹æ¨¡å¼çš„è¿›ç¨‹ç®¡ç†å™¨å¯¹è±¡ï¼Œå…¶ä¼šåˆ›å»ºåŒè¿›ç¨‹ï¼Œ
+ä¸€ä¸ªæ˜¯å·¥ä½œè¿›ç¨‹ï¼Œä¸€ä¸ªæ˜¯ç®¡ç†è¿›ç¨‹ã€‚å·¥ä½œè¿›ç¨‹ä¼šå®šæœŸçš„ç»™ç›‘æ§è¿›ç¨‹å‘é€HUPçš„å¿ƒè·³ä¿¡å·
 */
 
 class CWX_API CwxAppProcessMgr
 {
 public:
     /**
-    @brief ³õÊ¼»¯½ø³Ì¹ÜÀíÆ÷
-    @param [in] pApp ¹¤×÷½ø³ÌµÄAPP
-    @return -1£ºÊ§°Ü¡£ 0£º³É¹¦
+    @brief åˆå§‹åŒ–è¿›ç¨‹ç®¡ç†å™¨
+    @param [in] pApp å·¥ä½œè¿›ç¨‹çš„APP
+    @return -1ï¼šå¤±è´¥ã€‚ 0ï¼šæˆåŠŸ
     */
     static int init(CwxAppFramework* pApp);
     /**
-    @brief Æô¶¯¹¤×÷½ø³Ì¼°¼à¿Ø½ø³Ì
-    @param [in] argc ·şÎñÆô¶¯Ê±µÄ²ÎÊı¸öÊı
-    @param [in] argv ·şÎñÆô¶¯Ê±µÄ²ÎÊı
-    @param [in] unMaxHeartbeatInternal ¹¤×÷½ø³Ì·¢ËÍĞÄÌøµÄ×î´ó¼ä¸ô£¨s£©
-    @param [in] unDelaySec Æô¶¯µÄ³õÆÚ£¬ÑÓÊ±·¢ËÍĞÄÌøµÄÊ±¼ä£¨s£©
-    @return -1£ºÆô¶¯Ê§°Ü¡£ 0£ºÆô¶¯³É¹¦¡£
+    @brief å¯åŠ¨å·¥ä½œè¿›ç¨‹åŠç›‘æ§è¿›ç¨‹
+    @param [in] argc æœåŠ¡å¯åŠ¨æ—¶çš„å‚æ•°ä¸ªæ•°
+    @param [in] argv æœåŠ¡å¯åŠ¨æ—¶çš„å‚æ•°
+    @param [in] unMaxHeartbeatInternal å·¥ä½œè¿›ç¨‹å‘é€å¿ƒè·³çš„æœ€å¤§é—´éš”ï¼ˆsï¼‰
+    @param [in] unDelaySec å¯åŠ¨çš„åˆæœŸï¼Œå»¶æ—¶å‘é€å¿ƒè·³çš„æ—¶é—´ï¼ˆsï¼‰
+    @return -1ï¼šå¯åŠ¨å¤±è´¥ã€‚ 0ï¼šå¯åŠ¨æˆåŠŸã€‚
     */
     static int start(int argc, char** argv, CWX_UINT16 unMaxHeartbeatInternal, CWX_UINT16 unDelaySec);
 private:
-    ///×¢²áĞÅºÅ´¦Àíhandle
+    ///æ³¨å†Œä¿¡å·å¤„ç†handle
     static int regSigHandle();
-    ///¼ì²é·şÎñÆô¶¯µÄÃüÁîĞĞ²ÎÊı
+    ///æ£€æŸ¥æœåŠ¡å¯åŠ¨çš„å‘½ä»¤è¡Œå‚æ•°
     static int checkRunCmd(int argc, char** argv);
-    ///Æô¶¯¹¤×÷½ø³Ì
+    ///å¯åŠ¨å·¥ä½œè¿›ç¨‹
     static int startProcess(int argc, char** argv, CWX_UINT16 unDelaySec);
-    ///SIGQUIT ĞÅºÅ¾ä±ú
+    ///SIGQUIT ä¿¡å·å¥æŸ„
     static void stopHandler(int , siginfo_t *info, void *);
-    ///SIGINT ĞÅºÅ¾ä±ú
+    ///SIGINT ä¿¡å·å¥æŸ„
     static void restartHandler(int , siginfo_t *info, void *);
-    ///SIGCHLD ĞÅºÅ¾ä±ú£¬´ËÎª¹¤×÷½ø³ÌÍË³öµÄĞÅºÅ
+    ///SIGCHLD ä¿¡å·å¥æŸ„ï¼Œæ­¤ä¸ºå·¥ä½œè¿›ç¨‹é€€å‡ºçš„ä¿¡å·
     static void childExitHandler(int , siginfo_t *info, void *);
-    ///SIGHUPµÄĞÄÌøĞÅºÅ¾ä±ú
+    ///SIGHUPçš„å¿ƒè·³ä¿¡å·å¥æŸ„
     static void childHeatHandler(int , siginfo_t *info, void *);
-    ///×èÈûÖ¸¶¨µÄĞÅºÅ
+    ///é˜»å¡æŒ‡å®šçš„ä¿¡å·
     static void blockSignal(int signal);
-    ///È¡Ïû×èÈûÖ¸¶¨µÄĞÅºÅ
+    ///å–æ¶ˆé˜»å¡æŒ‡å®šçš„ä¿¡å·
     static void unblockSignal(int signal);
-    ///Ëø×¡½ø³ÌÎÄ¼ş¡£·µ»Ø½ø³ÌÎÄ¼şµÄFILE
+    ///é”ä½è¿›ç¨‹æ–‡ä»¶ã€‚è¿”å›è¿›ç¨‹æ–‡ä»¶çš„FILE
     static FILE* lock();
-    ///½âËø½ø³ÌÎÄ¼ş¡£Í¬Ê±¹Ø±ÕÎÄ¼ş
+    ///è§£é”è¿›ç¨‹æ–‡ä»¶ã€‚åŒæ—¶å…³é—­æ–‡ä»¶
     static void unlock(FILE* fd);
-    ///ÅĞ¶Ï½ø³ÌÊÇ·ñ´æÔÚ,-1£ºÊ§°Ü£»0£º²»´æÔÚ£»1£º´æÔÚ
+    ///åˆ¤æ–­è¿›ç¨‹æ˜¯å¦å­˜åœ¨,-1ï¼šå¤±è´¥ï¼›0ï¼šä¸å­˜åœ¨ï¼›1ï¼šå­˜åœ¨
     static int isExistProc(char const* szProcName, int pid);
-    ///»ñÈ¡pidÎÄ¼şÖĞµÄ½ø³Ìid£¬-1£ºÊ§°Ü
+    ///è·å–pidæ–‡ä»¶ä¸­çš„è¿›ç¨‹idï¼Œ-1ï¼šå¤±è´¥
     static int getProcId(char const* szPidFile);
 
 private:
-    ///½ûÖ¹´´½¨¶ÔÏóÊµÀı
+    ///ç¦æ­¢åˆ›å»ºå¯¹è±¡å®ä¾‹
     CwxAppProcessMgr()
     {
 
     }
 private:
-    static CwxAppProcessInfo*  m_pProcess;///<¹¤×÷½ø³ÌÊµÀı
-    static string      m_strPorcfile;///<½ø³ÌÎÄ¼şÃû
-    static string      m_strAppName;///<·şÎñÃû
-    static string      m_strAppLockFile;///<½ø³ÌËøÎÄ¼şÃû
-    static bool        m_bExit;///<ÊÇ·ñÍ£Ö¹·şÎñ
+    static CwxAppProcessInfo*  m_pProcess;///<å·¥ä½œè¿›ç¨‹å®ä¾‹
+    static string      m_strPorcfile;///<è¿›ç¨‹æ–‡ä»¶å
+    static string      m_strAppName;///<æœåŠ¡å
+    static string      m_strAppLockFile;///<è¿›ç¨‹é”æ–‡ä»¶å
+    static bool        m_bExit;///<æ˜¯å¦åœæ­¢æœåŠ¡
 };
 
 

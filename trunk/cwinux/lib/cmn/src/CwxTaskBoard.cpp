@@ -1,15 +1,15 @@
-#include "CwxDate.h"
+ï»¿#include "CwxDate.h"
 #include "CwxTaskBoard.h"
 
 CWINUX_BEGIN_NAMESPACE
-///Îö¹¹º¯Êı
+///ææ„å‡½æ•°
 CwxTaskBoardConnInfo::~CwxTaskBoardConnInfo()
 {
     if (m_msg) CwxMsgBlockAlloc::free(m_msg);
 }
 
 
-///Îö¹¹º¯Êı
+///ææ„å‡½æ•°
 CwxTaskBoardTask::~CwxTaskBoardTask()
 {
     clearBase();

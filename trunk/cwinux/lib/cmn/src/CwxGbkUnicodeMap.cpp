@@ -1,4 +1,4 @@
-#include "CwxGbkUnicodeMap.h"
+﻿#include "CwxGbkUnicodeMap.h"
 #include "CwxCharset.h"
 
 CWINUX_BEGIN_NAMESPACE

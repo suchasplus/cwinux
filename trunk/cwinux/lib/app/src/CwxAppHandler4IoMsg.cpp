@@ -1,4 +1,4 @@
-#include "CwxAppHandler4IoMsg.h"
+ï»¿#include "CwxAppHandler4IoMsg.h"
 #include "CwxAppFramework.h"
 
 CWINUX_BEGIN_NAMESPACE
@@ -10,7 +10,7 @@ CwxAppHandler4IoMsg::CwxAppHandler4IoMsg(CwxAppFramework* pApp, CwxAppReactor *r
     m_next = NULL;
 }
 
-///Îö¹¹º¯Êý
+///æžæž„å‡½æ•°
 CwxAppHandler4IoMsg::~CwxAppHandler4IoMsg()
 {
 }
@@ -26,7 +26,7 @@ int CwxAppHandler4IoMsg::close(CWX_HANDLE )
         m_conn.getConnId(),
         (int)getHandle()
         ));
-    ///´ÓreactorÖÐÒÆ³ý
+    ///ä»Žreactorä¸­ç§»é™¤
     if (CWX_INVALID_HANDLE != getHandle())
         if (reactor()) reactor()->removeHandler(this);
 

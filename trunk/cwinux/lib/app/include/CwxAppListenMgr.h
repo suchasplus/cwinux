@@ -1,15 +1,15 @@
-#ifndef __CWX_APP_LISTEN_MGR_H__
+ï»¿#ifndef __CWX_APP_LISTEN_MGR_H__
 #define __CWX_APP_LISTEN_MGR_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 
 /**
 @file CwxAppListenMgr.h
-@brief ¼Ü¹¹µÄLISTENµÄ¹ÜÀí
+@brief æ¶æ„çš„LISTENçš„ç®¡ç†
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-07-20
@@ -29,65 +29,65 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxAppListenObj
-@brief ÊµÏÖTCP/UNIX-DOMAINµÄAccept¶ÔÏóµÄÍ³Ò»·â×°¡£
+@brief å®ç°TCP/UNIX-DOMAINçš„Acceptå¯¹è±¡çš„ç»Ÿä¸€å°è£…ã€‚
 */
 class CWX_API CwxAppListenObj
 {
 public:
     enum{
-        TCP_LISTEN = 1,///<TcpµÄListen
-        UNIX_LISTEN = 2///<Unix-domainµÄListen
+        TCP_LISTEN = 1,///<Tcpçš„Listen
+        UNIX_LISTEN = 2///<Unix-domainçš„Listen
     };
-    ///Ä¬ÈÏ¹¹Ôìº¯Êı
+    ///é»˜è®¤æ„é€ å‡½æ•°
     CwxAppListenObj()
     {
         m_unListenType = TCP_LISTEN;
         m_listenObject = NULL;
     }
 public:
-    CWX_UINT16  m_unListenType;///<listen¶ÔÏóµÄÀàĞÍ
-    void*      m_listenObject;///<listen¶ÔÏóµÄµØÖ·Ö¸Õë
+    CWX_UINT16  m_unListenType;///<listenå¯¹è±¡çš„ç±»å‹
+    void*      m_listenObject;///<listenå¯¹è±¡çš„åœ°å€æŒ‡é’ˆ
 };
 
-///¶¨ÒåListen¶ÔÏóµÄMAP
+///å®šä¹‰Listenå¯¹è±¡çš„MAP
 typedef map<CWX_UINT32, CwxAppListenObj> CwxAppIdListenMap;
 
 /**
 @class CwxAppListenMgr
-@brief Listen¶ÔÏóµÄ¹ÜÀíÆ÷¶ÔÏóµÄ¶¨Òå¡£
+@brief Listenå¯¹è±¡çš„ç®¡ç†å™¨å¯¹è±¡çš„å®šä¹‰ã€‚
 */
 class CWX_API CwxAppListenMgr
 {
 public:
-    ///listen id·¶Î§¶¨Òå
+    ///listen idèŒƒå›´å®šä¹‰
     enum{
-        MIN_LISTEN_ID = 1,///<×îĞ¡µÄListen ID
-        MAX_LISTEN_ID = 0x3FFFFFFF///<×î´óµÄListen id
+        MIN_LISTEN_ID = 1,///<æœ€å°çš„Listen ID
+        MAX_LISTEN_ID = 0x3FFFFFFF///<æœ€å¤§çš„Listen id
     };
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxAppListenMgr(CwxAppFramework* pApp);
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxAppListenMgr();
 public:
-    ///Íù¹ÜÀíÆ÷Ìí¼ÓÒ»¸öTCPµÄListen¶ÔÏó£¬·µ»ØÖµ£ºfalse£¬Listen-idµÄListen¶ÔÏóÒÑ¾­´æÔÚ
+    ///å¾€ç®¡ç†å™¨æ·»åŠ ä¸€ä¸ªTCPçš„Listenå¯¹è±¡ï¼Œè¿”å›å€¼ï¼šfalseï¼ŒListen-idçš„Listenå¯¹è±¡å·²ç»å­˜åœ¨
     bool add(CwxAppTcpAcceptor* acceptor);
-    ///Íù¹ÜÀíÆ÷Ìí¼ÓÒ»¸öUNIX-DOMAINµÄListen¶ÔÏó£¬·µ»ØÖµ£ºfalse£¬Listen-idµÄListen¶ÔÏóÒÑ¾­´æÔÚ
+    ///å¾€ç®¡ç†å™¨æ·»åŠ ä¸€ä¸ªUNIX-DOMAINçš„Listenå¯¹è±¡ï¼Œè¿”å›å€¼ï¼šfalseï¼ŒListen-idçš„Listenå¯¹è±¡å·²ç»å­˜åœ¨
     bool add(CwxAppUnixAcceptor* acceptor);
-    ///¸ù¾İlisten-id¹Ø±ÕÒ»¸öListen¶ÔÏó¡£·µ»ØÖµ£ºfalse,listen idµÄ¼àÌı¶ÔÏó²»´æÔÚ
+    ///æ ¹æ®listen-idå…³é—­ä¸€ä¸ªListenå¯¹è±¡ã€‚è¿”å›å€¼ï¼šfalse,listen idçš„ç›‘å¬å¯¹è±¡ä¸å­˜åœ¨
     bool close(CWX_UINT32 uiListenId);
-    ///resumeÒ»¸ölisten¶ÔÏóµÄ¼àÌı¡£·µ»ØÖµ£ºfalse,listen idµÄ¼àÌı¶ÔÏó²»´æÔÚ
+    ///resumeä¸€ä¸ªlistenå¯¹è±¡çš„ç›‘å¬ã€‚è¿”å›å€¼ï¼šfalse,listen idçš„ç›‘å¬å¯¹è±¡ä¸å­˜åœ¨
     bool resume(CWX_UINT32 uiListenId);
-    ///suspendÒ»¸ölisten¶ÔÏóµÄ¼àÌı¡£·µ»ØÖµ£ºfalse,listen idµÄ¼àÌı¶ÔÏó²»´æÔÚ
+    ///suspendä¸€ä¸ªlistenå¯¹è±¡çš„ç›‘å¬ã€‚è¿”å›å€¼ï¼šfalse,listen idçš„ç›‘å¬å¯¹è±¡ä¸å­˜åœ¨
     bool suspend(CWX_UINT32 uiListenId);
-    ///»ñÈ¡ÏÂÒ»¸ö¿ÉÓÃµÄListen-id
+    ///è·å–ä¸‹ä¸€ä¸ªå¯ç”¨çš„Listen-id
     CWX_UINT32 getNextListenId();
-    ///»ñÈ¡listenµÄid
+    ///è·å–listençš„id
     void getAllListens(vector<CWX_UINT32>& listens);
 private:
-    CwxMutexLock        m_lock;///<¹ÜÀíÆ÷µÄËø
-    CWX_UINT32          m_uiListenId;///<´Ó´Ëlisten-id¿ªÊ¼±éÀúÏÂÒ»¸ö¿ÉÓÃID
-    CwxAppIdListenMap*  m_pListenMap;///<listenµÄmap
+    CwxMutexLock        m_lock;///<ç®¡ç†å™¨çš„é”
+    CWX_UINT32          m_uiListenId;///<ä»æ­¤listen-idå¼€å§‹éå†ä¸‹ä¸€ä¸ªå¯ç”¨ID
+    CwxAppIdListenMap*  m_pListenMap;///<listençš„map
     CwxAppFramework*    m_pApp;
 };
 

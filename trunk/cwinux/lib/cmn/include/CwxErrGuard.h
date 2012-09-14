@@ -1,14 +1,14 @@
-#ifndef __CWX_ERR_GUARD_H__
+ï»¿#ifndef __CWX_ERR_GUARD_H__
 #define __CWX_ERR_GUARD_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxErrGuard.h
-@brief ¶¨ÒåÁËCwxErrGuardÀà£¬È·±£errno²»±»¸²¸Ç¡£
+@brief å®šä¹‰äº†CwxErrGuardç±»ï¼Œç¡®ä¿errnoä¸è¢«è¦†ç›–ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2010-07-10
@@ -22,7 +22,7 @@ CWINUX_BEGIN_NAMESPACE
 
 /**
 @class CwxErrGuard
-@brief È·±£errno²»±»¸²¸Ç¡£
+@brief ç¡®ä¿errnoä¸è¢«è¦†ç›–ã€‚
 */
 class CWX_API CwxErrGuard
 {

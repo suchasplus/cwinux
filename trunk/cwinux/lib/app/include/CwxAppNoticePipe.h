@@ -1,18 +1,18 @@
-#ifndef __CWX_APP_NOTICE_PIPE_H__
+ï»¿#ifndef __CWX_APP_NOTICE_PIPE_H__
 #define __CWX_APP_NOTICE_PIPE_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 *@file  CwxAppNoticePipe.h
-*@brief FrameworkµÄNoticeÏûÏ¢µÄ¹ÜµÀ
+*@brief Frameworkçš„Noticeæ¶ˆæ¯çš„ç®¡é“
 *@author cwinux@gmail.com
 *@version 0.1
 *@date  2009-05-30
-*@warning  ÎŞ.
+*@warning  æ— .
 */
 #include "CwxPre.h"
 #include "CwxGlobalMacro.h"
@@ -27,75 +27,75 @@ CWINUX_BEGIN_NAMESPACE
 
 /**
 @class CwxAppNotice
-@brief FrameworkµÄNotice¶ÔÏó£¬ÓÃÓÚ±ğµÄÏß³ÌÓëÍ¨ĞÅÏß³ÌµÄÍ¨ĞÅ
+@brief Frameworkçš„Noticeå¯¹è±¡ï¼Œç”¨äºåˆ«çš„çº¿ç¨‹ä¸é€šä¿¡çº¿ç¨‹çš„é€šä¿¡
 */
 class CWX_API CwxAppNotice
 {
 public:
-    ///noticeÀàĞÍ¶¨Òå
+    ///noticeç±»å‹å®šä¹‰
     enum{
-        DUMMY = 0,///<dummyÀàĞÍ
-        SEND_MSG_BY_CONN = 1,///<ÍùÁ¬½Ó·¢ËÍÏûÏ¢
-        SEND_MSG_BY_SVR = 2, ///<ÍùÖ¸¶¨µÄSVR·Ö×é·¢ËÍÏûÏ¢
-        TCP_CONNECT = 3,///<½¨Á¢TCPÁ¬½Ó
-        UNIX_CONNECT = 4,///<½¨Á¢UNIX DOMAINÁ¬½Ó
-        ADD_IO_HANDLE = 5,///<IO HANDLEÊı¾İ½ÓÊÕ
+        DUMMY = 0,///<dummyç±»å‹
+        SEND_MSG_BY_CONN = 1,///<å¾€è¿æ¥å‘é€æ¶ˆæ¯
+        SEND_MSG_BY_SVR = 2, ///<å¾€æŒ‡å®šçš„SVRåˆ†ç»„å‘é€æ¶ˆæ¯
+        TCP_CONNECT = 3,///<å»ºç«‹TCPè¿æ¥
+        UNIX_CONNECT = 4,///<å»ºç«‹UNIX DOMAINè¿æ¥
+        ADD_IO_HANDLE = 5,///<IO HANDLEæ•°æ®æ¥æ”¶
         TCP_LISTEN = 6,///<TCP listen
         UNIX_LISTEN = 7,///<unix-domain listen
-        CLOSE_LISTEN = 8,///<¹Ø±Õ¼àÌı
-        CLOSE_CONNECT = 9,///<¹Ø±ÕÁ¬½Ó
-        RECONNECTION = 10,///<ÖØĞÂÁ¬½Ó
-        ALL_NOTICE_NUM = 11///<NoticeÀàĞÍµÄÊıÁ¿
+        CLOSE_LISTEN = 8,///<å…³é—­ç›‘å¬
+        CLOSE_CONNECT = 9,///<å…³é—­è¿æ¥
+        RECONNECTION = 10,///<é‡æ–°è¿æ¥
+        ALL_NOTICE_NUM = 11///<Noticeç±»å‹çš„æ•°é‡
     };
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxAppNotice();
-    ///Çå¿Õ¶ÔÏó
+    ///æ¸…ç©ºå¯¹è±¡
     void reset();
 public:
     CWX_UINT16              m_unNoticeType;///<notice msg type
     void*                  m_noticeArg; ///<notice's arguement
     void*                  m_noticeArg1;///<notice's arguement2
-    CwxAppNotice*           m_next;///<½¨Á¢noticeÁ´±íµÄÖ¸Õë
+    CwxAppNotice*           m_next;///<å»ºç«‹noticeé“¾è¡¨çš„æŒ‡é’ˆ
 };
 
 
 /**
 *@class  CwxAppNoticePipe
-*@brief  FrameworkµÄNoticeÏûÏ¢µÄ¹ÜµÀ£¬½¨Á¢Í¨ĞÅÏß³ÌÓëÆäËûÏß³Ì¼äµÄÍ¨ĞÅ¡£
+*@brief  Frameworkçš„Noticeæ¶ˆæ¯çš„ç®¡é“ï¼Œå»ºç«‹é€šä¿¡çº¿ç¨‹ä¸å…¶ä»–çº¿ç¨‹é—´çš„é€šä¿¡ã€‚
 */
 class CWX_API CwxAppNoticePipe
 {
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxAppNoticePipe();
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxAppNoticePipe();
 public:
-    ///¹ÜµÀ³õÊ¼»¯¡£·µ»ØÖµ£º-1£ºÊ§°Ü£»0£º³É¹¦¡£
+    ///ç®¡é“åˆå§‹åŒ–ã€‚è¿”å›å€¼ï¼š-1ï¼šå¤±è´¥ï¼›0ï¼šæˆåŠŸã€‚
     int init();
     /**
-    @brief Íù¹ÜµÀ¶ÔÏópushÒ»¸önoticeÏûÏ¢
-    @param [in] pItem Í¨ÖªµÄÏûÏ¢
-    @return -1£ºĞ´¹ÜµÀÊ§°Ü£» 0£º³É¹¦
+    @brief å¾€ç®¡é“å¯¹è±¡pushä¸€ä¸ªnoticeæ¶ˆæ¯
+    @param [in] pItem é€šçŸ¥çš„æ¶ˆæ¯
+    @return -1ï¼šå†™ç®¡é“å¤±è´¥ï¼› 0ï¼šæˆåŠŸ
     */
     int notice(CwxAppNotice* pItem);
     /**
-    @brief Íù¹ÜµÀ¶ÔÏópushÒ»¸ödummy noticeÏûÏ¢£¬ÆäÄ¿µÄÊÇ£ºÈôÍ¨ĞÅÏß³Ì×èÈû£¬Ôò±£Ö¤»½ĞÑÍ¨ĞÅÏß³Ì¡£
-    @return -1£ºĞ´¹ÜµÀÊ§°Ü£» 0£º³É¹¦
+    @brief å¾€ç®¡é“å¯¹è±¡pushä¸€ä¸ªdummy noticeæ¶ˆæ¯ï¼Œå…¶ç›®çš„æ˜¯ï¼šè‹¥é€šä¿¡çº¿ç¨‹é˜»å¡ï¼Œåˆ™ä¿è¯å”¤é†’é€šä¿¡çº¿ç¨‹ã€‚
+    @return -1ï¼šå†™ç®¡é“å¤±è´¥ï¼› 0ï¼šæˆåŠŸ
     */
     int noticeDummy();
     /**
-    @brief Í¨ĞÅÏß³Ì»ñÈ¡»ıÑ¹µÄNoticeÏûÏ¢¡£
+    @brief é€šä¿¡çº¿ç¨‹è·å–ç§¯å‹çš„Noticeæ¶ˆæ¯ã€‚
     @return void
     */
     void noticed(CwxAppNotice*& head);
-    ///»ñÈ¡¹ÜµÀµÄ¶Á¾ä±ú
+    ///è·å–ç®¡é“çš„è¯»å¥æŸ„
     CWX_HANDLE getPipeReader();
-    ///»ñÈ¡¹ÜµÀµÄĞ´¾ä±ú
+    ///è·å–ç®¡é“çš„å†™å¥æŸ„
     CWX_HANDLE getPipeWriter();
 private:
-    ///ÊÍ·Å¶ÔÏóµÄ×ÊÔ´
+    ///é‡Šæ”¾å¯¹è±¡çš„èµ„æº
     void clear();
 private:
     CwxMutexLock   m_lock;///<thread lock for sync.

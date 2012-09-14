@@ -1,14 +1,14 @@
-#ifndef __CWX_REPL_MACHINE_H__
+ï»¿#ifndef __CWX_REPL_MACHINE_H__
 #define __CWX_REPL_MACHINE_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxReplMachine.h
-@brief Í¨¹ıTrieÊ÷ÊµÏÖµÄ×Ö·ûÌæ»»ÀàCwxReplBase
+@brief é€šè¿‡Trieæ ‘å®ç°çš„å­—ç¬¦æ›¿æ¢ç±»CwxReplBase
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-10
@@ -26,75 +26,75 @@
 CWINUX_BEGIN_NAMESPACE
 /**
 @class CwxReplBase
-@brief ×Ö·ûÌæ»»ÀàµÄ»ùÀà£¬¶¨ÒåÁËÀàµÄAPI¡£ÈôÌæ»»ÊÇ´óĞ¡Ğ´Ãô¸ĞµÄ£¬ÔòÊ¹ÓÃ²»´ø¡®Case¡¯µÄAPI£¬<br>
-       ·ñÔò£¬Ê¹ÓÃ´øCaseµÄAPI¡£
+@brief å­—ç¬¦æ›¿æ¢ç±»çš„åŸºç±»ï¼Œå®šä¹‰äº†ç±»çš„APIã€‚è‹¥æ›¿æ¢æ˜¯å¤§å°å†™æ•æ„Ÿçš„ï¼Œåˆ™ä½¿ç”¨ä¸å¸¦â€˜Caseâ€™çš„APIï¼Œ<br>
+       å¦åˆ™ï¼Œä½¿ç”¨å¸¦Caseçš„APIã€‚
 */
 class CWX_API CwxReplBase
 {
 public:
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxReplBase():m_uiReplNum(0)
     {
 
     }
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     virtual ~CwxReplBase()
     {
 
     }
 public:
     /**
-    @brief ÍùÌæ»»Æ÷ÖĞÌí¼Ó´óĞ¡Ğ´Ãô¸ĞµÄÌæ»»×Ö·û¶Ô£¬Ö»ÓĞ´óĞ¡Ğ´Ãô¸ĞµÄÌæ»»²ÅÊ¹ÓÃ´Ë½Ó¿Ú
-    @param [in] szSrc Ô´×Ö·û´®
-    @param [in] uiSrcLen Ô´×Ö·û´®µÄ³¤¶È
-    @param [in] szRepl Ìæ»»×Ö·û´®
-    @param [in] uiReplLen Ìæ»»×Ö·û´®µÄ³¤¶È
-    @return true£ºÌí¼Ó³É¹¦£»false£ºÌí¼ÓÊ§°Ü
+    @brief å¾€æ›¿æ¢å™¨ä¸­æ·»åŠ å¤§å°å†™æ•æ„Ÿçš„æ›¿æ¢å­—ç¬¦å¯¹ï¼Œåªæœ‰å¤§å°å†™æ•æ„Ÿçš„æ›¿æ¢æ‰ä½¿ç”¨æ­¤æ¥å£
+    @param [in] szSrc æºå­—ç¬¦ä¸²
+    @param [in] uiSrcLen æºå­—ç¬¦ä¸²çš„é•¿åº¦
+    @param [in] szRepl æ›¿æ¢å­—ç¬¦ä¸²
+    @param [in] uiReplLen æ›¿æ¢å­—ç¬¦ä¸²çš„é•¿åº¦
+    @return trueï¼šæ·»åŠ æˆåŠŸï¼›falseï¼šæ·»åŠ å¤±è´¥
     */
     virtual bool addStr(char const* szSrc, CWX_UINT32 uiSrcLen, char const* szRepl, CWX_UINT32 uiReplLen)=0;
     /**
-    @brief ÍùÌæ»»Æ÷ÖĞÌí¼Ó´óĞ¡Ğ´²»Ãô¸ĞµÄÌæ»»×Ö·û¶Ô£¬Ö»ÓĞ´óĞ¡Ğ´²»Ãô¸ĞµÄÌæ»»²ÅÊ¹ÓÃ´Ë½Ó¿Ú
-    @param [in] szSrc Ô´×Ö·û´®
-    @param [in] uiSrcLen Ô´×Ö·û´®µÄ³¤¶È
-    @param [in] szRepl Ìæ»»×Ö·û´®
-    @param [in] uiReplLen Ìæ»»×Ö·û´®µÄ³¤¶È
-    @return true£ºÌí¼Ó³É¹¦£»false£ºÌí¼ÓÊ§°Ü
+    @brief å¾€æ›¿æ¢å™¨ä¸­æ·»åŠ å¤§å°å†™ä¸æ•æ„Ÿçš„æ›¿æ¢å­—ç¬¦å¯¹ï¼Œåªæœ‰å¤§å°å†™ä¸æ•æ„Ÿçš„æ›¿æ¢æ‰ä½¿ç”¨æ­¤æ¥å£
+    @param [in] szSrc æºå­—ç¬¦ä¸²
+    @param [in] uiSrcLen æºå­—ç¬¦ä¸²çš„é•¿åº¦
+    @param [in] szRepl æ›¿æ¢å­—ç¬¦ä¸²
+    @param [in] uiReplLen æ›¿æ¢å­—ç¬¦ä¸²çš„é•¿åº¦
+    @return trueï¼šæ·»åŠ æˆåŠŸï¼›falseï¼šæ·»åŠ å¤±è´¥
     */
     virtual bool addCaseStr(char const* szSrc, CWX_UINT32 uiSrcLen, char const* szRepl, CWX_UINT32 uiReplLen)=0;
     /**
-    @brief Ö´ĞĞ´óĞ¡Ğ´Ãô¸ĞµÄ×Ö·ûÌæ»»
-    @param [in] szSrc ±»Ìæ»»µÄÔ´×Ö·û´®
-    @param [in,out] uiSrcLen ´«Èë±»Ìæ»»µÄÔ´×Ö·û´®µÄ³¤¶È£¬Ö´ĞĞÌæ»»µÄ³¤¶È
-    @param [in] szOut Ìæ»»ºóµÄ×Ö·û´®µÄbuffer£¬ÒÔ\\0½áÊø
-    @param [in,out] uiOutLen ´«ÈëszOutµÄbuffer´óĞ¡£¬Êä³öÌæ»»ºóµÄ×Ö·û´®µÄ³¤¶È£¬
-    @return true£ºÌæ»»³É¹¦£»false£ºÌæ»»Ê§°Ü
+    @brief æ‰§è¡Œå¤§å°å†™æ•æ„Ÿçš„å­—ç¬¦æ›¿æ¢
+    @param [in] szSrc è¢«æ›¿æ¢çš„æºå­—ç¬¦ä¸²
+    @param [in,out] uiSrcLen ä¼ å…¥è¢«æ›¿æ¢çš„æºå­—ç¬¦ä¸²çš„é•¿åº¦ï¼Œæ‰§è¡Œæ›¿æ¢çš„é•¿åº¦
+    @param [in] szOut æ›¿æ¢åçš„å­—ç¬¦ä¸²çš„bufferï¼Œä»¥\\0ç»“æŸ
+    @param [in,out] uiOutLen ä¼ å…¥szOutçš„bufferå¤§å°ï¼Œè¾“å‡ºæ›¿æ¢åçš„å­—ç¬¦ä¸²çš„é•¿åº¦ï¼Œ
+    @return trueï¼šæ›¿æ¢æˆåŠŸï¼›falseï¼šæ›¿æ¢å¤±è´¥
     */
     virtual bool replace(char const* szSrc, CWX_UINT32& uiSrcLen, char* szOut, unsigned int &uiOutLen) const=0;
     /**
-    @brief Ö´ĞĞ´óĞ¡Ğ´²»Ãô¸ĞµÄ×Ö·ûÌæ»»
-    @param [in] szSrc ±»Ìæ»»µÄÔ´×Ö·û´®
-    @param [in,out] uiSrcLen ´«Èë±»Ìæ»»µÄÔ´×Ö·û´®µÄ³¤¶È£¬Ö´ĞĞÌæ»»µÄ³¤¶È
-    @param [in] szOut Ìæ»»ºóµÄ×Ö·û´®µÄbuffer£¬ÒÔ\\0½áÊø
-    @param [in,out] uiOutLen ´«ÈëszOutµÄbuffer´óĞ¡£¬Êä³öÌæ»»ºóµÄ×Ö·û´®µÄ³¤¶È£¬
-    @return true£ºÌæ»»³É¹¦£»false£ºÌæ»»Ê§°Ü
+    @brief æ‰§è¡Œå¤§å°å†™ä¸æ•æ„Ÿçš„å­—ç¬¦æ›¿æ¢
+    @param [in] szSrc è¢«æ›¿æ¢çš„æºå­—ç¬¦ä¸²
+    @param [in,out] uiSrcLen ä¼ å…¥è¢«æ›¿æ¢çš„æºå­—ç¬¦ä¸²çš„é•¿åº¦ï¼Œæ‰§è¡Œæ›¿æ¢çš„é•¿åº¦
+    @param [in] szOut æ›¿æ¢åçš„å­—ç¬¦ä¸²çš„bufferï¼Œä»¥\\0ç»“æŸ
+    @param [in,out] uiOutLen ä¼ å…¥szOutçš„bufferå¤§å°ï¼Œè¾“å‡ºæ›¿æ¢åçš„å­—ç¬¦ä¸²çš„é•¿åº¦ï¼Œ
+    @return trueï¼šæ›¿æ¢æˆåŠŸï¼›falseï¼šæ›¿æ¢å¤±è´¥
     */
     virtual bool caseReplace(char const* szSrc, CWX_UINT32& uiSrcLen, char* szOut, unsigned int &uiOutLen) const=0;
-    ///»ñÈ¡Ìæ»»Æ÷µÄ×Ö·û¼¯
+    ///è·å–æ›¿æ¢å™¨çš„å­—ç¬¦é›†
     virtual char const* charset() const = 0;
-    ///Çå¿ÕÌæ»»Æ÷ÖĞÌí¼ÓµÄÌæ»»×Ö·û¶Ô
+    ///æ¸…ç©ºæ›¿æ¢å™¨ä¸­æ·»åŠ çš„æ›¿æ¢å­—ç¬¦å¯¹
     virtual void clear() = 0;
 public:
-    ///»ñÈ¡ÉèÖÃµÄÌæ»»×Ö·û¶ÔµÄÊıÁ¿
+    ///è·å–è®¾ç½®çš„æ›¿æ¢å­—ç¬¦å¯¹çš„æ•°é‡
     inline CWX_UINT32 getReplNum() const 
     {
         return m_uiReplNum;
     }
-    ///ÉèÖÃÌæ»»×Ö·û¶ÔµÄÊıÁ¿
+    ///è®¾ç½®æ›¿æ¢å­—ç¬¦å¯¹çš„æ•°é‡
     inline void setReplNum(CWX_UINT32 uiReplNum)
     {
         m_uiReplNum = uiReplNum;
     }
-    ///½«Ìæ»»×Ö·û¶ÔµÄÊıÁ¿¼ÓÒ»
+    ///å°†æ›¿æ¢å­—ç¬¦å¯¹çš„æ•°é‡åŠ ä¸€
     inline void incReplNum() 
     {
         m_uiReplNum++;
@@ -105,15 +105,15 @@ private:
 
 /**
 @class CwxReplMachine
-@brief Ö§³Ö¶à×Ö·û¼¯µÄ×Ö·ûÌæ»»ÀàÄ£°åÀà
+@brief æ”¯æŒå¤šå­—ç¬¦é›†çš„å­—ç¬¦æ›¿æ¢ç±»æ¨¡æ¿ç±»
 */
 template<typename CHARSET>
 class CwxReplMachine:public CwxReplBase
 {
 public:
     /**
-    @brief ¹¹Ôìº¯Êı
-    @param [in] uiMaxKeyNum ×î´óµÄÌæ»»KeyµÄÊıÁ¿
+    @brief æ„é€ å‡½æ•°
+    @param [in] uiMaxKeyNum æœ€å¤§çš„æ›¿æ¢Keyçš„æ•°é‡
     */
     CwxReplMachine(CWX_UINT32 uiMaxKeyNum)
         :m_charPool(1024, 2048), m_trieTree(uiMaxKeyNum/4)
@@ -122,48 +122,48 @@ public:
     }
 public:
     /**
-    @brief ÍùÌæ»»Æ÷ÖĞÌí¼Ó´óĞ¡Ğ´Ãô¸ĞµÄÌæ»»×Ö·û¶Ô£¬Ö»ÓĞ´óĞ¡Ğ´Ãô¸ĞµÄÌæ»»²ÅÊ¹ÓÃ´Ë½Ó¿Ú
-    @param [in] szSrc Ô´×Ö·û´®
-    @param [in] uiSrcLen Ô´×Ö·û´®µÄ³¤¶È
-    @param [in] szRepl Ìæ»»×Ö·û´®
-    @param [in] uiReplLen Ìæ»»×Ö·û´®µÄ³¤¶È
-    @return true£ºÌí¼Ó³É¹¦£»false£ºÌí¼ÓÊ§°Ü
+    @brief å¾€æ›¿æ¢å™¨ä¸­æ·»åŠ å¤§å°å†™æ•æ„Ÿçš„æ›¿æ¢å­—ç¬¦å¯¹ï¼Œåªæœ‰å¤§å°å†™æ•æ„Ÿçš„æ›¿æ¢æ‰ä½¿ç”¨æ­¤æ¥å£
+    @param [in] szSrc æºå­—ç¬¦ä¸²
+    @param [in] uiSrcLen æºå­—ç¬¦ä¸²çš„é•¿åº¦
+    @param [in] szRepl æ›¿æ¢å­—ç¬¦ä¸²
+    @param [in] uiReplLen æ›¿æ¢å­—ç¬¦ä¸²çš„é•¿åº¦
+    @return trueï¼šæ·»åŠ æˆåŠŸï¼›falseï¼šæ·»åŠ å¤±è´¥
     */
     virtual bool addStr(char const* szSrc, CWX_UINT32 uiSrcLen, char const* szRepl, CWX_UINT32 uiReplLen);
     /**
-    @brief ÍùÌæ»»Æ÷ÖĞÌí¼Ó´óĞ¡Ğ´²»Ãô¸ĞµÄÌæ»»×Ö·û¶Ô£¬Ö»ÓĞ´óĞ¡Ğ´²»Ãô¸ĞµÄÌæ»»²ÅÊ¹ÓÃ´Ë½Ó¿Ú
-    @param [in] szSrc Ô´×Ö·û´®
-    @param [in] uiSrcLen Ô´×Ö·û´®µÄ³¤¶È
-    @param [in] szRepl Ìæ»»×Ö·û´®
-    @param [in] uiReplLen Ìæ»»×Ö·û´®µÄ³¤¶È
-    @return true£ºÌí¼Ó³É¹¦£»false£ºÌí¼ÓÊ§°Ü
+    @brief å¾€æ›¿æ¢å™¨ä¸­æ·»åŠ å¤§å°å†™ä¸æ•æ„Ÿçš„æ›¿æ¢å­—ç¬¦å¯¹ï¼Œåªæœ‰å¤§å°å†™ä¸æ•æ„Ÿçš„æ›¿æ¢æ‰ä½¿ç”¨æ­¤æ¥å£
+    @param [in] szSrc æºå­—ç¬¦ä¸²
+    @param [in] uiSrcLen æºå­—ç¬¦ä¸²çš„é•¿åº¦
+    @param [in] szRepl æ›¿æ¢å­—ç¬¦ä¸²
+    @param [in] uiReplLen æ›¿æ¢å­—ç¬¦ä¸²çš„é•¿åº¦
+    @return trueï¼šæ·»åŠ æˆåŠŸï¼›falseï¼šæ·»åŠ å¤±è´¥
     */
     virtual bool addCaseStr(char const* szSrc, CWX_UINT32 uiSrcLen, char const* szRepl, CWX_UINT32 uiReplLen);
     /**
-    @brief Ö´ĞĞ´óĞ¡Ğ´Ãô¸ĞµÄ×Ö·ûÌæ»»
-    @param [in] szSrc ±»Ìæ»»µÄÔ´×Ö·û´®
-    @param [in] uiSrcLen ±»Ìæ»»µÄÔ´×Ö·û´®µÄ³¤¶È
-    @param [in] szOut Ìæ»»ºóµÄ×Ö·û´®µÄbuffer£¬ÒÔ\\0½áÊø
-    @param [in,out] uiOutLen ´«ÈëszOutµÄbuffer´óĞ¡£¬Êä³öÌæ»»ºóµÄ×Ö·û´®µÄ³¤¶È£¬
-    @return true£ºÌæ»»³É¹¦£»false£ºÌæ»»Ê§°Ü
+    @brief æ‰§è¡Œå¤§å°å†™æ•æ„Ÿçš„å­—ç¬¦æ›¿æ¢
+    @param [in] szSrc è¢«æ›¿æ¢çš„æºå­—ç¬¦ä¸²
+    @param [in] uiSrcLen è¢«æ›¿æ¢çš„æºå­—ç¬¦ä¸²çš„é•¿åº¦
+    @param [in] szOut æ›¿æ¢åçš„å­—ç¬¦ä¸²çš„bufferï¼Œä»¥\\0ç»“æŸ
+    @param [in,out] uiOutLen ä¼ å…¥szOutçš„bufferå¤§å°ï¼Œè¾“å‡ºæ›¿æ¢åçš„å­—ç¬¦ä¸²çš„é•¿åº¦ï¼Œ
+    @return trueï¼šæ›¿æ¢æˆåŠŸï¼›falseï¼šæ›¿æ¢å¤±è´¥
     */
     virtual bool replace(char const* szSrc, CWX_UINT32& uiSrcLen, char* szOut, unsigned int &uiOutLen) const;
     /**
-    @brief Ö´ĞĞ´óĞ¡Ğ´²»Ãô¸ĞµÄ×Ö·ûÌæ»»
-    @param [in] szSrc ±»Ìæ»»µÄÔ´×Ö·û´®
-    @param [in] uiSrcLen ±»Ìæ»»µÄÔ´×Ö·û´®µÄ³¤¶È
-    @param [in] szOut Ìæ»»ºóµÄ×Ö·û´®µÄbuffer£¬ÒÔ\\0½áÊø
-    @param [in,out] uiOutLen ´«ÈëszOutµÄbuffer´óĞ¡£¬Êä³öÌæ»»ºóµÄ×Ö·û´®µÄ³¤¶È£¬
-    @return true£ºÌæ»»³É¹¦£»false£ºÌæ»»Ê§°Ü
+    @brief æ‰§è¡Œå¤§å°å†™ä¸æ•æ„Ÿçš„å­—ç¬¦æ›¿æ¢
+    @param [in] szSrc è¢«æ›¿æ¢çš„æºå­—ç¬¦ä¸²
+    @param [in] uiSrcLen è¢«æ›¿æ¢çš„æºå­—ç¬¦ä¸²çš„é•¿åº¦
+    @param [in] szOut æ›¿æ¢åçš„å­—ç¬¦ä¸²çš„bufferï¼Œä»¥\\0ç»“æŸ
+    @param [in,out] uiOutLen ä¼ å…¥szOutçš„bufferå¤§å°ï¼Œè¾“å‡ºæ›¿æ¢åçš„å­—ç¬¦ä¸²çš„é•¿åº¦ï¼Œ
+    @return trueï¼šæ›¿æ¢æˆåŠŸï¼›falseï¼šæ›¿æ¢å¤±è´¥
     */
     virtual bool caseReplace(char const* szSrc, CWX_UINT32& uiSrcLen, char* szOut, unsigned int &uiOutLen) const;
-    ///»ñÈ¡CHARSETµÄ×Ö·û¼¯µÄÃû³Æ
+    ///è·å–CHARSETçš„å­—ç¬¦é›†çš„åç§°
     virtual char const* charset() const;
-    ///Çå¿ÕÉèÖÃµÄ×Ö·ûÌæ»»¶Ô
+    ///æ¸…ç©ºè®¾ç½®çš„å­—ç¬¦æ›¿æ¢å¯¹
     virtual void clear();
 private:
-    CwxCharPool        m_charPool;///<×Ö·ûMEM POOL
-    CwxTrieTree<CHARSET, CwxMultiString> m_trieTree;///<×Ö·ûÌæ»»µÄtrie tree
+    CwxCharPool        m_charPool;///<å­—ç¬¦MEM POOL
+    CwxTrieTree<CHARSET, CwxMultiString> m_trieTree;///<å­—ç¬¦æ›¿æ¢çš„trie tree
 };
 
 CWINUX_END_NAMESPACE

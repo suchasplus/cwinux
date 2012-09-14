@@ -1,14 +1,14 @@
-#ifndef __CWX_THREAD_POOL_EX_H__
+ï»¿#ifndef __CWX_THREAD_POOL_EX_H__
 #define __CWX_THREAD_POOL_EX_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxThreadPoolEx.h
-@brief ¿ÉÒÔ¿ØÖÆµ¥¸öÏß³ÌµÄÏß³Ì³Ø¶ÔÏóÊµÏÖ
+@brief å¯ä»¥æ§åˆ¶å•ä¸ªçº¿ç¨‹çš„çº¿ç¨‹æ± å¯¹è±¡å®ç°
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-07-20
@@ -29,65 +29,65 @@ CWINUX_BEGIN_NAMESPACE
 
 /**
 @class CwxThreadPoolEx
-@brief ¿ÉÒÔ¿ØÖÆÏß³Ì³ØÃ¿¸öÏß³ÌµÄÏß³Ì³Ø¡£
-       ´ËÏß³Ì³Ø±¾Éí¾ÍÊÇÒ»¸öÉú²ú¡¢Ïû·ÑÕß¶ÓÁĞ¡£
+@brief å¯ä»¥æ§åˆ¶çº¿ç¨‹æ± æ¯ä¸ªçº¿ç¨‹çš„çº¿ç¨‹æ± ã€‚
+       æ­¤çº¿ç¨‹æ± æœ¬èº«å°±æ˜¯ä¸€ä¸ªç”Ÿäº§ã€æ¶ˆè´¹è€…é˜Ÿåˆ—ã€‚
 */
 class CWX_API CwxThreadPoolEx:public CwxTpi
 {
 public :
-    ///¹¹Ôìº¯Êı
-    CwxThreadPoolEx(CWX_UINT16 unGroupId,///<Ïß³Ì³ØµÄthread-group
-        CWX_UINT16 unThreadNum,///<Ïß³Ì³ØÖĞÏß³ÌµÄÊıÁ¿
-        CwxThreadPoolMgr* mgr, ///<Ïß³ÌµÄ¹ÜÀí¶ÔÏó
-        CwxCommander* commander,///<¶ÓÁĞÏûÏ¢Ïû·ÑµÄÈ±Ê¡commander£¬ÈôÖ¸¶¨func¿ÉÒÔ²»Ö¸¶¨
-        CWX_TSS_THR_FUNC func=NULL, ///<ÓÃ»§µÄÏß³Ìmainº¯Êı
+    ///æ„é€ å‡½æ•°
+    CwxThreadPoolEx(CWX_UINT16 unGroupId,///<çº¿ç¨‹æ± çš„thread-group
+        CWX_UINT16 unThreadNum,///<çº¿ç¨‹æ± ä¸­çº¿ç¨‹çš„æ•°é‡
+        CwxThreadPoolMgr* mgr, ///<çº¿ç¨‹çš„ç®¡ç†å¯¹è±¡
+        CwxCommander* commander,///<é˜Ÿåˆ—æ¶ˆæ¯æ¶ˆè´¹çš„ç¼ºçœcommanderï¼Œè‹¥æŒ‡å®šfuncå¯ä»¥ä¸æŒ‡å®š
+        CWX_TSS_THR_FUNC func=NULL, ///<ç”¨æˆ·çš„çº¿ç¨‹mainå‡½æ•°
         void*            arg=NULL
         );
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxThreadPoolEx();
 public:
     /**
-    @brief Æô¶¯Ïß³Ì³Ø
-    @param [in] pThrEnv Ïß³Ì³ØµÄÏß³ÌTssµÄÊı×é£¬Èô²»Ö¸¶¨£¬¿ÉÍ¨¹ıÏß³ÌµÄonThreadCreated´´½¨¡£
-    @param [in] stack_size Ïß³Ì¶ÑÕ»µÄ´óĞ¡£¬ÈôÎª0£¬Ôò²ÉÓÃÏµÍ³Ä¬ÈÏ´óĞ¡¡£
-    @return -1£ºÊ§°Ü£» 0£º³É¹¦
+    @brief å¯åŠ¨çº¿ç¨‹æ± 
+    @param [in] pThrEnv çº¿ç¨‹æ± çš„çº¿ç¨‹Tssçš„æ•°ç»„ï¼Œè‹¥ä¸æŒ‡å®šï¼Œå¯é€šè¿‡çº¿ç¨‹çš„onThreadCreatedåˆ›å»ºã€‚
+    @param [in] stack_size çº¿ç¨‹å †æ ˆçš„å¤§å°ï¼Œè‹¥ä¸º0ï¼Œåˆ™é‡‡ç”¨ç³»ç»Ÿé»˜è®¤å¤§å°ã€‚
+    @return -1ï¼šå¤±è´¥ï¼› 0ï¼šæˆåŠŸ
     */
     virtual int start(CwxTss** pThrEnv=NULL, size_t stack_size = 0);
-    ///Í£Ö¹Ïß³Ì³Ø
+    ///åœæ­¢çº¿ç¨‹æ± 
     virtual void stop();
-    ///check thread ÊÇ·ñÍ£Ö¹¡£ÈôĞèÒª¸Ä±ä¼ì²éµÄ¹æÔò£¬ÔòÖØÔØ´ËAPI
+    ///check thread æ˜¯å¦åœæ­¢ã€‚è‹¥éœ€è¦æ”¹å˜æ£€æŸ¥çš„è§„åˆ™ï¼Œåˆ™é‡è½½æ­¤API
     virtual bool isStop();
-    ///»ñÈ¡Ïß³ÌµÄTSS£¬¼°Thread env
+    ///è·å–çº¿ç¨‹çš„TSSï¼ŒåŠThread env
     virtual CwxTss* getTss(CWX_UINT16 unThreadIndex);
-    ///Ëø×¡Õû¸öÏß³Ì³Ø¡£·µ»ØÖµ0£º³É¹¦£»-1£ºÊ§°Ü
+    ///é”ä½æ•´ä¸ªçº¿ç¨‹æ± ã€‚è¿”å›å€¼0ï¼šæˆåŠŸï¼›-1ï¼šå¤±è´¥
     virtual int lock();
-    ///½âËøÕâ¸öÏß³Ì³Ø¡£·µ»ØÖµ0£º³É¹¦£»-1£ºÊ§°Ü
+    ///è§£é”è¿™ä¸ªçº¿ç¨‹æ± ã€‚è¿”å›å€¼0ï¼šæˆåŠŸï¼›-1ï¼šå¤±è´¥
     virtual int unlock();
 public:
-    ///»ñÈ¡Ïß³ÌµÄÏûÏ¢¶ÓÁĞÅÅ¶ÓÏûÏ¢Êı
+    ///è·å–çº¿ç¨‹çš„æ¶ˆæ¯é˜Ÿåˆ—æ’é˜Ÿæ¶ˆæ¯æ•°
     inline size_t getQueuedMsgNum();
-    ///»ñÈ¡Ïß³ÌµÄÏûÏ¢¶ÓÁĞÅÅ¶ÓÏûÏ¢Êı
+    ///è·å–çº¿ç¨‹çš„æ¶ˆæ¯é˜Ÿåˆ—æ’é˜Ÿæ¶ˆæ¯æ•°
     inline size_t getQueuedMsgNum(CWX_UINT16 unThreadIndex);
     /**
-    @brief ÍùÏß³ÌµÄÏûÏ¢¶ÓÁĞÌí¼ÓÒ»¸öĞÂÏûÏ¢¡£
-    @param [in] pMsg appendµÄÏûÏ¢
-    @param [in] uiThread ÏûÏ¢µÄÏß³Ì¶ÓÁĞ£¬ÄÚ²¿»á¸ù¾İThreadµÄÊıÁ¿£¬¼ÆËã³öËùÊôµÄÏß³Ì¡£
-    @return -1£ºÊ§°Ü£»>=0Îª¶ÔÓ¦Ïß³ÌµÄ¶ÓÁĞÖĞÅÅ¶ÓµÄÏûÏ¢ÊıÁ¿
+    @brief å¾€çº¿ç¨‹çš„æ¶ˆæ¯é˜Ÿåˆ—æ·»åŠ ä¸€ä¸ªæ–°æ¶ˆæ¯ã€‚
+    @param [in] pMsg appendçš„æ¶ˆæ¯
+    @param [in] uiThread æ¶ˆæ¯çš„çº¿ç¨‹é˜Ÿåˆ—ï¼Œå†…éƒ¨ä¼šæ ¹æ®Threadçš„æ•°é‡ï¼Œè®¡ç®—å‡ºæ‰€å±çš„çº¿ç¨‹ã€‚
+    @return -1ï¼šå¤±è´¥ï¼›>=0ä¸ºå¯¹åº”çº¿ç¨‹çš„é˜Ÿåˆ—ä¸­æ’é˜Ÿçš„æ¶ˆæ¯æ•°é‡
     */
     inline int append(CwxMsgBlock* pMsg, CWX_UINT32 uiThread);
     /**
-    @brief ÍùÏß³ÌµÄÏûÏ¢¶ÓÁĞÍ·Ìí¼ÓÒ»¸öĞÂÏûÏ¢£¬ÒÔ±ã¼°Ê±Ïû·Ñ¡£
-    @param [in] pMsg appendµÄÏûÏ¢
-    @return -1£ºÊ§°Ü£»>=0¶ÓÁĞÖĞÅÅ¶ÓµÄÏûÏ¢ÊıÁ¿
+    @brief å¾€çº¿ç¨‹çš„æ¶ˆæ¯é˜Ÿåˆ—å¤´æ·»åŠ ä¸€ä¸ªæ–°æ¶ˆæ¯ï¼Œä»¥ä¾¿åŠæ—¶æ¶ˆè´¹ã€‚
+    @param [in] pMsg appendçš„æ¶ˆæ¯
+    @return -1ï¼šå¤±è´¥ï¼›>=0é˜Ÿåˆ—ä¸­æ’é˜Ÿçš„æ¶ˆæ¯æ•°é‡
     */
     int  appendHead(CwxMsgBlock* pMsg, CWX_UINT32 uiThread);
 
 protected:
     CwxCommander*          m_commander; ///<commander
-    CWX_TSS_THR_FUNC       m_func; ///<ÓÃ»§Ö¸¶¨µÄthread main function
-    CwxThreadPoolMgr*      m_mgr; ///<Ïß³ÌµÄ¹ÜÀí¶ÔÏó
-    void*                  m_arg; ///<Ïß³ÌµÄ²ÎÊı
-    CwxThread**            m_threadArr;  ///<theadµÄÊı×é
+    CWX_TSS_THR_FUNC       m_func; ///<ç”¨æˆ·æŒ‡å®šçš„thread main function
+    CwxThreadPoolMgr*      m_mgr; ///<çº¿ç¨‹çš„ç®¡ç†å¯¹è±¡
+    void*                  m_arg; ///<çº¿ç¨‹çš„å‚æ•°
+    CwxThread**            m_threadArr;  ///<theadçš„æ•°ç»„
 };
 
 

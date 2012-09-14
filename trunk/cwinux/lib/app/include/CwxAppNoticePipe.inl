@@ -1,11 +1,11 @@
-CWINUX_BEGIN_NAMESPACE
-///¹¹Ôìº¯Êı
+ï»¿CWINUX_BEGIN_NAMESPACE
+///æ„é€ å‡½æ•°
 inline CwxAppNotice::CwxAppNotice()
 :m_unNoticeType(DUMMY),m_noticeArg(NULL),m_noticeArg1(NULL),m_next(NULL)
 {
 }
 
-///Çå¿Õ¶ÔÏó
+///æ¸…ç©ºå¯¹è±¡
 inline void CwxAppNotice::reset()
 {
     m_unNoticeType =  0;
@@ -16,7 +16,7 @@ inline void CwxAppNotice::reset()
 
 
 
-///¹ÜµÀ³õÊ¼»¯¡£·µ»ØÖµ£º-1£ºÊ§°Ü£»0£º³É¹¦¡£
+///ç®¡é“åˆå§‹åŒ–ã€‚è¿”å›å€¼ï¼š-1ï¼šå¤±è´¥ï¼›0ï¼šæˆåŠŸã€‚
 inline int CwxAppNoticePipe::init()
 {
     clear();
@@ -32,9 +32,9 @@ inline int CwxAppNoticePipe::init()
 }
 
 /**
-@brief Íù¹ÜµÀ¶ÔÏópushÒ»¸önoticeÏûÏ¢
-@param [in] pItem Í¨ÖªµÄÏûÏ¢
-@return -1£ºĞ´¹ÜµÀÊ§°Ü£» 0£º³É¹¦
+@brief å¾€ç®¡é“å¯¹è±¡pushä¸€ä¸ªnoticeæ¶ˆæ¯
+@param [in] pItem é€šçŸ¥çš„æ¶ˆæ¯
+@return -1ï¼šå†™ç®¡é“å¤±è´¥ï¼› 0ï¼šæˆåŠŸ
 */
 inline int CwxAppNoticePipe::notice(CwxAppNotice* pItem)
 {
@@ -68,8 +68,8 @@ inline int CwxAppNoticePipe::notice(CwxAppNotice* pItem)
     return 0;
 }
 /**
-@brief Íù¹ÜµÀ¶ÔÏópushÒ»¸ödummy noticeÏûÏ¢£¬ÆäÄ¿µÄÊÇ£ºÈôÍ¨ĞÅÏß³Ì×èÈû£¬Ôò±£Ö¤»½ĞÑÍ¨ĞÅÏß³Ì¡£
-@return -1£ºĞ´¹ÜµÀÊ§°Ü£» 0£º³É¹¦
+@brief å¾€ç®¡é“å¯¹è±¡pushä¸€ä¸ªdummy noticeæ¶ˆæ¯ï¼Œå…¶ç›®çš„æ˜¯ï¼šè‹¥é€šä¿¡çº¿ç¨‹é˜»å¡ï¼Œåˆ™ä¿è¯å”¤é†’é€šä¿¡çº¿ç¨‹ã€‚
+@return -1ï¼šå†™ç®¡é“å¤±è´¥ï¼› 0ï¼šæˆåŠŸ
 */
 inline int CwxAppNoticePipe::noticeDummy()
 {
@@ -86,7 +86,7 @@ inline int CwxAppNoticePipe::noticeDummy()
     return 0;
 }
 /**
-@brief Í¨ĞÅÏß³Ì»ñÈ¡»ıÑ¹µÄNoticeÏûÏ¢¡£
+@brief é€šä¿¡çº¿ç¨‹è·å–ç§¯å‹çš„Noticeæ¶ˆæ¯ã€‚
 @return void
 */
 inline void CwxAppNoticePipe::noticed(CwxAppNotice*& head)
@@ -96,17 +96,17 @@ inline void CwxAppNoticePipe::noticed(CwxAppNotice*& head)
     m_noticeHead = m_noticeTail = NULL;
     m_bPipeEmpty = true;
 }
-///»ñÈ¡¹ÜµÀµÄ¶Á¾ä±ú
+///è·å–ç®¡é“çš„è¯»å¥æŸ„
 inline CWX_HANDLE CwxAppNoticePipe::getPipeReader()
 {
     return m_pipeReader;
 }
-///»ñÈ¡¹ÜµÀµÄĞ´¾ä±ú
+///è·å–ç®¡é“çš„å†™å¥æŸ„
 inline CWX_HANDLE CwxAppNoticePipe::getPipeWriter()
 {
     return m_pipeWriter;
 }
-///ÊÍ·Å¶ÔÏóµÄ×ÊÔ´
+///é‡Šæ”¾å¯¹è±¡çš„èµ„æº
 inline void CwxAppNoticePipe::clear()
 {
     if (CWX_INVALID_HANDLE != m_pipeReader)

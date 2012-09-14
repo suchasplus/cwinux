@@ -1,7 +1,7 @@
-#include "CwxAppNoticePipe.h"
+ï»¿#include "CwxAppNoticePipe.h"
 CWINUX_BEGIN_NAMESPACE
 
-///¹¹Ôìº¯Êı
+///æ„é€ å‡½æ•°
 CwxAppNoticePipe::CwxAppNoticePipe()
 {
     m_bPipeEmpty = true;
@@ -10,7 +10,7 @@ CwxAppNoticePipe::CwxAppNoticePipe()
     m_pipeReader = CWX_INVALID_HANDLE;
     m_pipeWriter = CWX_INVALID_HANDLE;
 }
-///Îö¹¹º¯Êı
+///ææ„å‡½æ•°
 CwxAppNoticePipe::~CwxAppNoticePipe()
 {
     clear();

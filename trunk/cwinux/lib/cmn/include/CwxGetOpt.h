@@ -1,14 +1,14 @@
-#ifndef  __CWX_GET_OPT_H__
+ï»¿#ifndef  __CWX_GET_OPT_H__
 #define  __CWX_GET_OPT_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 *@file CwxGetOpt.h
-*@brief CwxGetOpt¶¨Òå
+*@brief CwxGetOptå®šä¹‰
 *@author cwinux@gmail.com
 *@version 1.0
 *@date  2009-06-05
@@ -27,7 +27,7 @@ CWINUX_BEGIN_NAMESPACE
 /**
 * @class CwxGetOpt
 *
-* @brief ¶ÔosµÄgetopt_longµÄ·â×°.
+* @brief å¯¹osçš„getopt_longçš„å°è£….
 */
 class CWX_API CwxGetOpt
 {
@@ -42,27 +42,27 @@ public:
         /// option character in optstring.
         ARG_OPTIONAL = 2
     };
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxGetOpt (int argc,
         char **argv,
         char const* optstring = "");
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxGetOpt (void);
 public:
-    ///ÉèÖÃlong option¶ÔÓ¦µÄshort option
+    ///è®¾ç½®long optionå¯¹åº”çš„short option
     int long_option (char const *name, int short_option, int has_arg = NO_ARG);
     /**
-    @brief »ñÈ¡ÏÂÒ»¸ö²ÎÊı
-    @return Óëgetopt_long()ÏàÍ¬
+    @brief è·å–ä¸‹ä¸€ä¸ªå‚æ•°
+    @return ä¸getopt_long()ç›¸åŒ
     */
     int next();
-    ///»ñÈ¡optionµÄ²ÎÊı
+    ///è·å–optionçš„å‚æ•°
     char *opt_arg (void) const;
-    ///·µ»Øµ±Ç°µÄoption
+    ///è¿”å›å½“å‰çš„option
     int opt_opt (void) const;
-    ///·µ»Øµ±Ç°²ÎÊıµÄindex
+    ///è¿”å›å½“å‰å‚æ•°çš„index
     int opt_ind (void) const;
-    ///·µ»Øµ±Ç°µÄlong optionÃû
+    ///è¿”å›å½“å‰çš„long optionå
     char const* long_option() const;
 private:
     int             m_argc;

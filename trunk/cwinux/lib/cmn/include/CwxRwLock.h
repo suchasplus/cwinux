@@ -1,14 +1,14 @@
-#ifndef __CWX_RW_LOCK_H__
+ï»¿#ifndef __CWX_RW_LOCK_H__
 #define __CWX_RW_LOCK_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxRwLock.h
-@brief ÊµÏÖÁË¶ÁĞ´ËøµÄ½Ó¿Ú¡£
+@brief å®ç°äº†è¯»å†™é”çš„æ¥å£ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-10
@@ -25,36 +25,36 @@ CWINUX_BEGIN_NAMESPACE
 
 /**
 @class CwxRwLock
-@brief ¶ÁĞ´Ëø¶ÔÏó£¬Ö§³ÖÏß³Ì¶ÁĞ´ËøÓë½ø³Ì¶ÁĞ´Ëø¡£
+@brief è¯»å†™é”å¯¹è±¡ï¼Œæ”¯æŒçº¿ç¨‹è¯»å†™é”ä¸è¿›ç¨‹è¯»å†™é”ã€‚
 */
 class CWX_API CwxRwLock
 {
 public:
-    ///¹¹Ôìº¯Êı£¬´´½¨Ò»¸öÏß³Ì¶ÁĞ´Ëø
+    ///æ„é€ å‡½æ•°ï¼Œåˆ›å»ºä¸€ä¸ªçº¿ç¨‹è¯»å†™é”
     CwxRwLock(pthread_rwlockattr_t *arg = NULL);
-    ///¹¹Ôìº¯Êı£¬´´½¨Ò»¸ö½ø³Ì¼¶µÄ¶ÁĞ´Ëø
+    ///æ„é€ å‡½æ•°ï¼Œåˆ›å»ºä¸€ä¸ªè¿›ç¨‹çº§çš„è¯»å†™é”
 ///    CwxRwLock(char* path, void *arg = NULL);
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxRwLock();
 public:
-    ///»ñÈ¡Ğ´Ëø£¬0£º³É¹¦£¬-1£ºÊ§°Ü
+    ///è·å–å†™é”ï¼Œ0ï¼šæˆåŠŸï¼Œ-1ï¼šå¤±è´¥
     int acquire();
-    ///¼ì²éÊÇ·ñ¿É¼ÓĞ´Ëø£¬0£º¿É£¬-1£º·ñ
+    ///æ£€æŸ¥æ˜¯å¦å¯åŠ å†™é”ï¼Œ0ï¼šå¯ï¼Œ-1ï¼šå¦
     int tryacquire();
-    ///ÊÇ·ñËø£¬0£º³É¹¦£¬-1£ºÊ§°Ü
+    ///æ˜¯å¦é”ï¼Œ0ï¼šæˆåŠŸï¼Œ-1ï¼šå¤±è´¥
     int release();
-    ///»ñÈ¡¶ÁËø£¬0£º³É¹¦£¬-1£ºÊ§°Ü
+    ///è·å–è¯»é”ï¼Œ0ï¼šæˆåŠŸï¼Œ-1ï¼šå¤±è´¥
     int acquire_read();
-    ///»ñÈ¡Ğ´Ëø£¬0£º³É¹¦£¬-1£ºÊ§°Ü
+    ///è·å–å†™é”ï¼Œ0ï¼šæˆåŠŸï¼Œ-1ï¼šå¤±è´¥
     int acquire_write();
-    ///¼ì²éÊÇ·ñ¿É¼Ó¶ÁËø£¬0£º¿É£¬-1£º·ñ
+    ///æ£€æŸ¥æ˜¯å¦å¯åŠ è¯»é”ï¼Œ0ï¼šå¯ï¼Œ-1ï¼šå¦
     int tryacquire_read();
-    ///¼ì²éÊÇ·ñ¿É¼ÓĞ´Ëø£¬0£º¿É£¬-1£º·ñ
+    ///æ£€æŸ¥æ˜¯å¦å¯åŠ å†™é”ï¼Œ0ï¼šå¯ï¼Œ-1ï¼šå¦
     int tryacquire_write();
-    ///»ñÈ¡ÄÚ²¿µÄËø¾ä±ú£¬´ËÎªOSµÄËø¾ä±ú
+    ///è·å–å†…éƒ¨çš„é”å¥æŸ„ï¼Œæ­¤ä¸ºOSçš„é”å¥æŸ„
     pthread_rwlock_t const &lock() const;
 private:
-    pthread_rwlock_t*  m_rwLock;///<¶ÁĞ´Ëø¾ä±ú
+    pthread_rwlock_t*  m_rwLock;///<è¯»å†™é”å¥æŸ„
 };
 
 

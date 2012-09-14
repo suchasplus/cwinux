@@ -1,13 +1,13 @@
-#ifndef __CWX_NET_MACRO_H__
+ï»¿#ifndef __CWX_NET_MACRO_H__
 #define __CWX_NET_MACRO_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 /**
 @file CwxNetMacro.h
-@brief NetÄ£¿éµÄ¹«¹²ºê¶¨ÒåÎÄ¼ş¡£
+@brief Netæ¨¡å—çš„å…¬å…±å®å®šä¹‰æ–‡ä»¶ã€‚
 @author cwinux@gmail.com
 @version 0.1
 @date 2009-10-10
@@ -45,7 +45,7 @@
 #define CWX_MAX_HOST_NAME_LEN  256
 
 
-///ÏûÏ¢socket handleµÄÉèÖÃº¯Êı£¬0£º³É¹¦£»-1£ºÊ§°Ü
+///æ¶ˆæ¯socket handleçš„è®¾ç½®å‡½æ•°ï¼Œ0ï¼šæˆåŠŸï¼›-1ï¼šå¤±è´¥
 typedef int (*CWX_NET_SOCKET_ATTR_FUNC)(CWX_HANDLE handle, void* arg);
 
 #include "CwxPost.h"

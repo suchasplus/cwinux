@@ -1,9 +1,9 @@
-#ifndef  __CWX_STL_FUNC_H__
+ï»¿#ifndef  __CWX_STL_FUNC_H__
 #define  __CWX_STL_FUNC_H__
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
@@ -22,9 +22,9 @@
 CWINUX_BEGIN_NAMESPACE
 
 /**
-*@brief  ºöÂÔ´óĞ¡Ğ´µÄ×Ö·û´®µÄhash-codeµÄĞÎ³Éº¯Êı.
-*@param [in] __s ×Ö·û´®.
-*@return ×Ö·û´®µÄhash-code
+*@brief  å¿½ç•¥å¤§å°å†™çš„å­—ç¬¦ä¸²çš„hash-codeçš„å½¢æˆå‡½æ•°.
+*@param [in] __s å­—ç¬¦ä¸².
+*@return å­—ç¬¦ä¸²çš„hash-code
 */
 inline size_t __stl_hash_case_string(const char* __s)
 {
@@ -36,16 +36,16 @@ inline size_t __stl_hash_case_string(const char* __s)
 
 /**
 *@class  CwxHash
-*@brief  ´ËÊ±Ò»¸öº¯Êı¶ÔÏóÀà£¬¸ù¾İÒ»¸ö¶ÔÏóµÄAPI£¬hash()£¬¼ÆËãÆähash-code£¬<br>
-*        ´Ë¶ÔÏó±ØĞëÌá¹©hash()µÄapi.
+*@brief  æ­¤æ—¶ä¸€ä¸ªå‡½æ•°å¯¹è±¡ç±»ï¼Œæ ¹æ®ä¸€ä¸ªå¯¹è±¡çš„APIï¼Œhash()ï¼Œè®¡ç®—å…¶hash-codeï¼Œ<br>
+*        æ­¤å¯¹è±¡å¿…é¡»æä¾›hash()çš„api.
 */
 template<typename T> class CwxHash
 {
 public:
     /**
-    *@brief  ¸ù¾İTµÄÖ¸Õë£¬»ñÈ¡TµÄhash-code¡£<br>
-    *        T ±ØĞëÌá¹© [size_t hash() const]µÄ·½·¨¡£<br>
-    *@return TµÄÖ¸Õë¶ÔÏóµÄhash-code
+    *@brief  æ ¹æ®Tçš„æŒ‡é’ˆï¼Œè·å–Tçš„hash-codeã€‚<br>
+    *        T å¿…é¡»æä¾› [size_t hash() const]çš„æ–¹æ³•ã€‚<br>
+    *@return Tçš„æŒ‡é’ˆå¯¹è±¡çš„hash-code
     */
     inline size_t operator()(T const &key)const
     {
@@ -55,16 +55,16 @@ public:
 
 /**
 *@class  CwxPointHash
-*@brief  ´ËÊ±Ò»¸öº¯Êı¶ÔÏóÀà£¬¸ù¾İÒ»¸ö¶ÔÏóµÄÖ¸Õë£¬¼ÆËãÆähash-code£¬<br>
-*        ´Ë¶ÔÏó±ØĞëÌá¹©hash()µÄapi.
+*@brief  æ­¤æ—¶ä¸€ä¸ªå‡½æ•°å¯¹è±¡ç±»ï¼Œæ ¹æ®ä¸€ä¸ªå¯¹è±¡çš„æŒ‡é’ˆï¼Œè®¡ç®—å…¶hash-codeï¼Œ<br>
+*        æ­¤å¯¹è±¡å¿…é¡»æä¾›hash()çš„api.
 */
 template<typename T> class CwxPointHash
 {
 public:
     /**
-    *@brief  ¸ù¾İTµÄÖ¸Õë£¬»ñÈ¡TµÄhash-code¡£<br>
-    *        T ±ØĞëÌá¹© [size_t hash() const]µÄ·½·¨¡£<br>
-    *@return TµÄÖ¸Õë¶ÔÏóµÄhash-code
+    *@brief  æ ¹æ®Tçš„æŒ‡é’ˆï¼Œè·å–Tçš„hash-codeã€‚<br>
+    *        T å¿…é¡»æä¾› [size_t hash() const]çš„æ–¹æ³•ã€‚<br>
+    *@return Tçš„æŒ‡é’ˆå¯¹è±¡çš„hash-code
     */
     inline size_t operator()(T const *key)const 
     {
@@ -74,16 +74,16 @@ public:
 
 /**
 *@class  CwxPointEqual
-*@brief  ±È½ÏÀàĞÍTµÄÖ¸Õë¶ÔÏóµÄÄÚÈİÊÇ·ñÏàµÈ£¬´ËÊÇÒ»¸öº¯Êı¶ÔÏóÀà¡£
+*@brief  æ¯”è¾ƒç±»å‹Tçš„æŒ‡é’ˆå¯¹è±¡çš„å†…å®¹æ˜¯å¦ç›¸ç­‰ï¼Œæ­¤æ˜¯ä¸€ä¸ªå‡½æ•°å¯¹è±¡ç±»ã€‚
 */
 template<typename T> class CwxPointEqual
 {
 public:
     /**
-    *@brief  ±È½ÏTµÄÖ¸Õëkey1Óëkey2µÄÄÚÈİ¶ø²»ÊÇÖ¸Õë±¾ÉíÊÇ·ñÏàµÈ¡£<br>
-    *        ´ËÊÇ¶Ô¶ÔÏóµÄoperator()½øĞĞÁËÖØÔØ¡£<br>
-    *        ÀàĞÍT±ØĞëÖ§³Ö¡¾==¡¿²Ù×÷À´±È½ÏÆäÊµÀıÊÇ·ñÏàµÈ¡£
-    *@return true: ÏàµÈ; false: ²»ÏàµÈ
+    *@brief  æ¯”è¾ƒTçš„æŒ‡é’ˆkey1ä¸key2çš„å†…å®¹è€Œä¸æ˜¯æŒ‡é’ˆæœ¬èº«æ˜¯å¦ç›¸ç­‰ã€‚<br>
+    *        æ­¤æ˜¯å¯¹å¯¹è±¡çš„operator()è¿›è¡Œäº†é‡è½½ã€‚<br>
+    *        ç±»å‹Tå¿…é¡»æ”¯æŒã€==ã€‘æ“ä½œæ¥æ¯”è¾ƒå…¶å®ä¾‹æ˜¯å¦ç›¸ç­‰ã€‚
+    *@return true: ç›¸ç­‰; false: ä¸ç›¸ç­‰
     */
     inline bool operator()(T const *key1, T const *key2) const 
     {
@@ -93,15 +93,15 @@ public:
 
 /**
 *@class  CwxPointLess
-*@brief  ½øĞĞ¶ÔÏóÖ¸ÕëÄÚÈİ¶ø²»ÊÇµØÖ·±¾ÉíµÄless±È½Ï¡£´ËÊ±Ò»¸öº¯Êı¶ÔÏóÀà
+*@brief  è¿›è¡Œå¯¹è±¡æŒ‡é’ˆå†…å®¹è€Œä¸æ˜¯åœ°å€æœ¬èº«çš„lessæ¯”è¾ƒã€‚æ­¤æ—¶ä¸€ä¸ªå‡½æ•°å¯¹è±¡ç±»
 */
 template<typename T> class CwxPointLess
 {
 public:
     /**
-    *@brief  ±È½Ï*key1<*key2ÊÇ·ñ³ÉÁ¢
-    *        ÖØÔØÁËCwxPointLessµÄoperator()(T const *key1, T const *key2).
-    *@return true:*key1<*key2£»false£º*key1²»Ğ¡ÓÚ*key2
+    *@brief  æ¯”è¾ƒ*key1<*key2æ˜¯å¦æˆç«‹
+    *        é‡è½½äº†CwxPointLessçš„operator()(T const *key1, T const *key2).
+    *@return true:*key1<*key2ï¼›falseï¼š*key1ä¸å°äº*key2
     */
     inline bool operator()(T const *key1, T const *key2) const 
     {
@@ -112,13 +112,13 @@ public:
 
 /**
 /@class  CwxCharHash
-*@brief  »ñÈ¡char*µÄhash-code£¬Í¬CwxPointHash.
+*@brief  è·å–char*çš„hash-codeï¼ŒåŒCwxPointHash.
 **/
 class CwxCharHash{
 public:
     /**
-    *@brief  »ñÈ¡×Ö·û´®strµÄhash-code,
-    *@return strµÄhash-key
+    *@brief  è·å–å­—ç¬¦ä¸²strçš„hash-code,
+    *@return strçš„hash-key
     */
     inline size_t operator()(const char* str) const 
     {
@@ -128,14 +128,14 @@ public:
 
 /**
 /@class  CwxCharEqual
-*@brief  ±È½ÏÁ½¸ö×Ö·û´®ÊÇ·ñÏàµÈ£¬Í¬CwxPointLess.
+*@brief  æ¯”è¾ƒä¸¤ä¸ªå­—ç¬¦ä¸²æ˜¯å¦ç›¸ç­‰ï¼ŒåŒCwxPointLess.
 **/
 class CwxCharEqual
 {
 public:
     /**
-    *@brief  ±È½Ïstr1µÄÄÚÈİÊÇ·ñµÈÓÚstr2µÄÄÚÈİ¡£
-    *@return true: µÈÓÚ; false: ²»µÈÓÚ.
+    *@brief  æ¯”è¾ƒstr1çš„å†…å®¹æ˜¯å¦ç­‰äºstr2çš„å†…å®¹ã€‚
+    *@return true: ç­‰äº; false: ä¸ç­‰äº.
     */
     inline bool operator()(const char* str1, const char* str2) const
     {
@@ -145,14 +145,14 @@ public:
 
 /**
 *@class  CwxCharLess
-*@brief  ×Ö·û´®less±È½Ï£¬Í¬CwxPointLess  
+*@brief  å­—ç¬¦ä¸²lessæ¯”è¾ƒï¼ŒåŒCwxPointLess  
 */
 class CwxCharLess
 {
 public:
     /**
-    *@brief  ±È½Ïstr1µÄ×Ö·û´®ÊÇ·ñĞ¡ÓÚstr2µÄ×Ö·û´®.
-    *@return true:Ğ¡ÓÚ£»false£º²»Ğ¡ÓÚ¡£
+    *@brief  æ¯”è¾ƒstr1çš„å­—ç¬¦ä¸²æ˜¯å¦å°äºstr2çš„å­—ç¬¦ä¸².
+    *@return true:å°äºï¼›falseï¼šä¸å°äºã€‚
     */
     inline bool operator()(const char* str1, const char* str2) const
     {
@@ -163,14 +163,14 @@ public:
 
 /**
 /@class  CwxCharCaseHash
-*@brief  »ñÈ¡char*µÄ´óĞ¡Ğ´²»Ãô¸Ğhash-code£¬Í¬CwxCharHash.
+*@brief  è·å–char*çš„å¤§å°å†™ä¸æ•æ„Ÿhash-codeï¼ŒåŒCwxCharHash.
 **/
 class CwxCharCaseHash
 {
 public:
     /**
-    *@brief  »ñÈ¡×Ö·û´®strµÄ´óĞ¡Ğ´²»Ãô¸Ğhash-code
-    *@return strµÄhash-code
+    *@brief  è·å–å­—ç¬¦ä¸²strçš„å¤§å°å†™ä¸æ•æ„Ÿhash-code
+    *@return strçš„hash-code
     */
     inline size_t operator()(const char* str) const 
     {
@@ -180,14 +180,14 @@ public:
 
 /**
 *@class  CwxCharCaseEqual
-*@brief  ±È½ÏÁ½¸ö´óĞ¡Ğ´²»Ãô¸ĞµÄ×Ö·û´®ÊÇ·ñÏàµÈ£¬Í¬CwxCharEqual.
+*@brief  æ¯”è¾ƒä¸¤ä¸ªå¤§å°å†™ä¸æ•æ„Ÿçš„å­—ç¬¦ä¸²æ˜¯å¦ç›¸ç­‰ï¼ŒåŒCwxCharEqual.
 */
 class CwxCharCaseEqual
 {
 public:
     /**
-    *@brief  ±È½ÏÁ½¸ö´óĞ¡Ğ´²»Ãô¸ĞµÄ×Ö·û´®ÊÇ·ñÏàµÈ.
-    *@return true: ÏàµÈ; false: ²»ÏàµÈ.
+    *@brief  æ¯”è¾ƒä¸¤ä¸ªå¤§å°å†™ä¸æ•æ„Ÿçš„å­—ç¬¦ä¸²æ˜¯å¦ç›¸ç­‰.
+    *@return true: ç›¸ç­‰; false: ä¸ç›¸ç­‰.
     */
     inline bool operator()(const char* str1, const char* str2) const 
     {
@@ -197,14 +197,14 @@ public:
 
 /**
 *@class  CwxCharCaseLess
-*@brief  ±È½Ï´óĞ¡Ğ´²»Ãô¸ĞµÄ×Ö·û´®str1ÊÇ·ñĞ¡ÓÚstr2.Í¬CwxCharLess.
+*@brief  æ¯”è¾ƒå¤§å°å†™ä¸æ•æ„Ÿçš„å­—ç¬¦ä¸²str1æ˜¯å¦å°äºstr2.åŒCwxCharLess.
 */
 class CwxCharCaseLess
 {
 public:
     /**
-    *@brief  ±È½Ï´óĞ¡Ğ´²»Ãô¸ĞµÄ×Ö·û´®str1ÊÇ·ñĞ¡ÓÚstr2¡£
-    *@return true£ºĞ¡ÓÚ£»false£º²»Ğ¡ÓÚ
+    *@brief  æ¯”è¾ƒå¤§å°å†™ä¸æ•æ„Ÿçš„å­—ç¬¦ä¸²str1æ˜¯å¦å°äºstr2ã€‚
+    *@return trueï¼šå°äºï¼›falseï¼šä¸å°äº
     */
     inline bool operator()(const char* str1, const char* str2) const 
     {
@@ -216,29 +216,29 @@ public:
 
 /**
 /@class  CwxCharCaseHash2
-*@brief  Í¨¹ı²ÎÊı¿ØÖÆ»ñÈ¡»ñÈ¡´óĞ¡Ğ´Ãô¸Ğ»¹ÊÇ²»Ãô¸ĞµÄhash-code£¬Í¬CwxCharHash.
+*@brief  é€šè¿‡å‚æ•°æ§åˆ¶è·å–è·å–å¤§å°å†™æ•æ„Ÿè¿˜æ˜¯ä¸æ•æ„Ÿçš„hash-codeï¼ŒåŒCwxCharHash.
 **/
 class CwxCharCaseHash2
 {
 public:
-    ///È±Ê¡¹¹Ôìº¯Êı£¬Ä¬ÈÏ´óĞ¡Ğ´Ãô¸Ğ
+    ///ç¼ºçœæ„é€ å‡½æ•°ï¼Œé»˜è®¤å¤§å°å†™æ•æ„Ÿ
     CwxCharCaseHash2():m_bCaseSensive(true)
     {
 
     }
-    ///¹¹Ôìº¯Êı£¬ÉèÖÃÊÇ·ñ´óĞ¡Ğ´Ãô¸Ğ¡£bCaseSensive£ºtrue£¬´óĞ¡Ğ´Ãô¸Ğ£»false£¬´óĞ¡Ğ´²»Ãô¸Ğ
+    ///æ„é€ å‡½æ•°ï¼Œè®¾ç½®æ˜¯å¦å¤§å°å†™æ•æ„Ÿã€‚bCaseSensiveï¼štrueï¼Œå¤§å°å†™æ•æ„Ÿï¼›falseï¼Œå¤§å°å†™ä¸æ•æ„Ÿ
     CwxCharCaseHash2(bool bCaseSensive):m_bCaseSensive(bCaseSensive)
     {
     }
-    ///¿½±´¹¹Ôì
+    ///æ‹·è´æ„é€ 
     CwxCharCaseHash2(CwxCharCaseHash2 const& obj)
     {
         m_bCaseSensive = obj.m_bCaseSensive;
     }
 public:
     /**
-    *@brief  »ñÈ¡×Ö·û´®strµÄ´óĞ¡Ğ´²»Ãô¸Ğ»ò²»Ãô¸ĞµÄhash-code
-    *@return strµÄhash-code
+    *@brief  è·å–å­—ç¬¦ä¸²strçš„å¤§å°å†™ä¸æ•æ„Ÿæˆ–ä¸æ•æ„Ÿçš„hash-code
+    *@return strçš„hash-code
     */
     inline size_t operator()(const char* str) const 
     {
@@ -250,29 +250,29 @@ private:
 
 /**
 *@class  CwxCharCaseEqual2
-*@brief  Í¨¹ı²ÎÊı£¬¿ØÖÆÁ½¸ö×Ö·û´®µÄÊÇ´óĞ¡Ğ´Ãô¸ĞµÄÏàµÈ»¹ÊÇ²»Ãô¸ĞµÄÏàµÈ±È½Ï.
+*@brief  é€šè¿‡å‚æ•°ï¼Œæ§åˆ¶ä¸¤ä¸ªå­—ç¬¦ä¸²çš„æ˜¯å¤§å°å†™æ•æ„Ÿçš„ç›¸ç­‰è¿˜æ˜¯ä¸æ•æ„Ÿçš„ç›¸ç­‰æ¯”è¾ƒ.
 */
 class CwxCharCaseEqual2
 {
 public:
-    ///È±Ê¡¹¹Ôìº¯Êı,È±Ê¡´óĞ¡Ğ´Ãô¸Ğ
+    ///ç¼ºçœæ„é€ å‡½æ•°,ç¼ºçœå¤§å°å†™æ•æ„Ÿ
     CwxCharCaseEqual2():m_bCaseSensive(true)
     {
 
     }
-    ///Ã÷È·Ö¸¶¨´óĞ¡Ğ´Ãô¸Ğ²ÎÊıµÄ¹¹Ôìº¯Êı.bCaseSensive£ºtrue£¬´óĞ¡Ğ´Ãô¸Ğ£»false£º´óĞ¡Ğ´²»Ãô¸Ğ
+    ///æ˜ç¡®æŒ‡å®šå¤§å°å†™æ•æ„Ÿå‚æ•°çš„æ„é€ å‡½æ•°.bCaseSensiveï¼štrueï¼Œå¤§å°å†™æ•æ„Ÿï¼›falseï¼šå¤§å°å†™ä¸æ•æ„Ÿ
     CwxCharCaseEqual2(bool bCaseSensive):m_bCaseSensive(bCaseSensive)
     {
     }
-    ///¿½±´¹¹Ôì
+    ///æ‹·è´æ„é€ 
     CwxCharCaseEqual2(CwxCharCaseEqual2 const& obj)
     {
         m_bCaseSensive = obj.m_bCaseSensive;
     }
 public:
     /**
-    *@brief  ±È½ÏÁ½¸ö´óĞ¡Ğ´Ãô¸Ğ»ò²»Ãô¸ĞµÄ×Ö·û´®ÊÇ·ñÏàµÈ.
-    *@return true: ÏàµÈ; false: ²»ÏàµÈ.
+    *@brief  æ¯”è¾ƒä¸¤ä¸ªå¤§å°å†™æ•æ„Ÿæˆ–ä¸æ•æ„Ÿçš„å­—ç¬¦ä¸²æ˜¯å¦ç›¸ç­‰.
+    *@return true: ç›¸ç­‰; false: ä¸ç›¸ç­‰.
     */
     inline bool operator()(const char* str1, const char* str2) const
     {
@@ -284,28 +284,28 @@ private:
 
 /**
 *@class  CwxCharCaseLess2
-*@brief  ±È½Ï´óĞ¡Ğ´Ãô¸Ğ»ò²»Ãô¸ĞµÄ×Ö·û´®str1ÊÇ·ñĞ¡ÓÚstr2.Í¬CwxCharLess.
+*@brief  æ¯”è¾ƒå¤§å°å†™æ•æ„Ÿæˆ–ä¸æ•æ„Ÿçš„å­—ç¬¦ä¸²str1æ˜¯å¦å°äºstr2.åŒCwxCharLess.
 */
 class CwxCharCaseLess2
 {
 public:
-    ///È±Ê¡¹¹Ôìº¯Êı£¬´ËÊ±µÄ×Ö·û´óĞ¡Ğ´Ãô¸Ğ
+    ///ç¼ºçœæ„é€ å‡½æ•°ï¼Œæ­¤æ—¶çš„å­—ç¬¦å¤§å°å†™æ•æ„Ÿ
     CwxCharCaseLess2():m_bCaseSensive(true)
     {
     }
-    ///Ö¸¶¨´óĞ¡Ğ´Ãô¸Ğ»ò²»Ãô¸Ğ²ÎÊıµÄ¹¹Ôìº¯Êı
+    ///æŒ‡å®šå¤§å°å†™æ•æ„Ÿæˆ–ä¸æ•æ„Ÿå‚æ•°çš„æ„é€ å‡½æ•°
     CwxCharCaseLess2(bool bCaseSensive):m_bCaseSensive(bCaseSensive)
     {
     }
-    ///¿½±´¹¹Ôì
+    ///æ‹·è´æ„é€ 
     CwxCharCaseLess2(CwxCharCaseLess2 const& obj)
     {
         m_bCaseSensive = obj.m_bCaseSensive;
     }
 public:
     /**
-    *@brief  ±È½Ï´óĞ¡Ğ´Ãô¸Ğ»ò²»Ãô¸ĞµÄ×Ö·û´®str1ÊÇ·ñĞ¡ÓÚstr2¡£
-    *@return true£ºĞ¡ÓÚ£»false£º²»Ğ¡ÓÚ
+    *@brief  æ¯”è¾ƒå¤§å°å†™æ•æ„Ÿæˆ–ä¸æ•æ„Ÿçš„å­—ç¬¦ä¸²str1æ˜¯å¦å°äºstr2ã€‚
+    *@return trueï¼šå°äºï¼›falseï¼šä¸å°äº
     */
     inline bool operator()(const char* str1, const char* str2) const
     {
@@ -318,14 +318,14 @@ private:
 
 /**
 *@class  CwxStringHash
-*@brief  »ñÈ¡stringÀàĞÍ×Ö·û´®µÄhash-code£¬Í¬CwxCharHash
+*@brief  è·å–stringç±»å‹å­—ç¬¦ä¸²çš„hash-codeï¼ŒåŒCwxCharHash
 */
 class CwxStringHash
 {
 public:
     /**
-    *@brief  »ñÈ¡stringÀàĞÍ×Ö·û´®µÄhash-code.
-    *@return strµÄ hash-key
+    *@brief  è·å–stringç±»å‹å­—ç¬¦ä¸²çš„hash-code.
+    *@return strçš„ hash-key
     */
     inline size_t operator()(string const& str) const
     {
@@ -335,14 +335,14 @@ public:
 
 /**
 *@class  CwxCaseStringHash
-*@brief  »ñÈ¡stringÀàĞÍ×Ö·û´®µÄ´óĞ¡Ğ´²»Ãô¸ĞµÄhash-code.
+*@brief  è·å–stringç±»å‹å­—ç¬¦ä¸²çš„å¤§å°å†™ä¸æ•æ„Ÿçš„hash-code.
 */
 class CwxCaseStringHash
 {
 public:
     /**
-    *@brief  »ñÈ¡stringÀàĞÍ×Ö·û´®µÄ´óĞ¡Ğ´²»Ãô¸ĞµÄhash-code.
-    *@return strµÄ hash-key
+    *@brief  è·å–stringç±»å‹å­—ç¬¦ä¸²çš„å¤§å°å†™ä¸æ•æ„Ÿçš„hash-code.
+    *@return strçš„ hash-key
     */
     inline size_t operator()(string const & str) const 
     {
@@ -352,14 +352,14 @@ public:
 
 /**
 *@class  CwxCaseStringEqual
-*@brief  ±È½Ï´óĞ¡Ğ´²»Ãô¸ĞµÄÁ½¸östringÀàĞÍ×Ö·û´®ÊÇ·ñÏàµÈ¡£
+*@brief  æ¯”è¾ƒå¤§å°å†™ä¸æ•æ„Ÿçš„ä¸¤ä¸ªstringç±»å‹å­—ç¬¦ä¸²æ˜¯å¦ç›¸ç­‰ã€‚
 */
 class CwxCaseStringEqual
 {
 public:
     /**
-    *@brief  ±È½Ï´óĞ¡Ğ´²»Ãô¸ĞµÄÁ½¸östringÀàĞÍ×Ö·û´®ÊÇ·ñÏàµÈ¡£
-    *@return true£ºÏàµÈ£»false£º²»ÏàµÈ
+    *@brief  æ¯”è¾ƒå¤§å°å†™ä¸æ•æ„Ÿçš„ä¸¤ä¸ªstringç±»å‹å­—ç¬¦ä¸²æ˜¯å¦ç›¸ç­‰ã€‚
+    *@return trueï¼šç›¸ç­‰ï¼›falseï¼šä¸ç›¸ç­‰
     */
     inline bool operator()(string const & str1, string const& str2) const 
     {
@@ -368,14 +368,14 @@ public:
 };
 /**
 *@class  CwxCaseStringLess
-*@brief  ±È½Ï´óĞ¡Ğ´²»Ãô¸ĞµÄstringÀàĞÍµÄstr1ÊÇ·ñĞ¡ÓÚstr2¡£
+*@brief  æ¯”è¾ƒå¤§å°å†™ä¸æ•æ„Ÿçš„stringç±»å‹çš„str1æ˜¯å¦å°äºstr2ã€‚
 */
 class CwxCaseStringLess
 {
 public:
     /**
-    *@brief  ±È½Ï´óĞ¡Ğ´²»Ãô¸ĞµÄstringÀàĞÍµÄstr1ÊÇ·ñĞ¡ÓÚstr2¡£
-    *@return true£ºĞ¡ÓÚ£»false£º²»Ğ¡ÓÚ
+    *@brief  æ¯”è¾ƒå¤§å°å†™ä¸æ•æ„Ÿçš„stringç±»å‹çš„str1æ˜¯å¦å°äºstr2ã€‚
+    *@return trueï¼šå°äºï¼›falseï¼šä¸å°äº
     */
     inline bool operator()(string const & str1, string const& str2) const
     {
@@ -385,30 +385,30 @@ public:
 
 /**
 *@class  CwxCaseStringHash2
-*@brief  »ñÈ¡stringÀàĞÍ×Ö·û´®µÄ´óĞ¡Ğ´Ãô¸Ğ»ò²»Ãô¸ĞµÄhash-code.
+*@brief  è·å–stringç±»å‹å­—ç¬¦ä¸²çš„å¤§å°å†™æ•æ„Ÿæˆ–ä¸æ•æ„Ÿçš„hash-code.
 */
 class CwxCaseStringHash2
 {
 public:
-    ///Ä¬ÈÏ¹¹Ôìº¯Êı£¬Îª´óĞ¡Ğ´Ãô¸ĞµÄhash-code
+    ///é»˜è®¤æ„é€ å‡½æ•°ï¼Œä¸ºå¤§å°å†™æ•æ„Ÿçš„hash-code
     CwxCaseStringHash2():m_bCaseSensive(true)
     {
     }
-    ///¿ÉÖ¸¶¨´óĞ¡Ğ´Ãô¸Ğ¿ª¹ØµÄ¹¹Ôìº¯Êı¡£bCaseSensive£ºtrue£¬´óĞ¡Ğ´Ãô¸Ğ£»false£¬´óĞ¡Ğ´²»Ãô¸Ğ
+    ///å¯æŒ‡å®šå¤§å°å†™æ•æ„Ÿå¼€å…³çš„æ„é€ å‡½æ•°ã€‚bCaseSensiveï¼štrueï¼Œå¤§å°å†™æ•æ„Ÿï¼›falseï¼Œå¤§å°å†™ä¸æ•æ„Ÿ
     CwxCaseStringHash2(bool bCaseSensive)
         :m_bCaseSensive(bCaseSensive)
     {
 
     }
-    ///¿½±´¹¹Ôì
+    ///æ‹·è´æ„é€ 
     CwxCaseStringHash2(CwxCaseStringHash2 const& obj)
     {
         m_bCaseSensive = obj.m_bCaseSensive;
     }
 public:
     /**
-    *@brief  »ñÈ¡stringÀàĞÍ×Ö·û´®µÄ´óĞ¡Ğ´Ãô¸Ğ»ò²»Ãô¸ĞµÄhash-code.
-    *@return strµÄ hash-key
+    *@brief  è·å–stringç±»å‹å­—ç¬¦ä¸²çš„å¤§å°å†™æ•æ„Ÿæˆ–ä¸æ•æ„Ÿçš„hash-code.
+    *@return strçš„ hash-key
     */
     inline size_t operator()(string const & str) const 
     {
@@ -420,31 +420,31 @@ private:
 
 /**
 *@class  CwxCaseStringEqual2
-*@brief  ±È½Ï´óĞ¡Ğ´Ãô¸Ğ»ò²»Ãô¸ĞµÄÁ½¸östringÀàĞÍ×Ö·û´®ÊÇ·ñÏàµÈ¡£
+*@brief  æ¯”è¾ƒå¤§å°å†™æ•æ„Ÿæˆ–ä¸æ•æ„Ÿçš„ä¸¤ä¸ªstringç±»å‹å­—ç¬¦ä¸²æ˜¯å¦ç›¸ç­‰ã€‚
 */
 class CwxCaseStringEqual2
 {
 public:
-    ///Ä¬ÈÏ¹¹Ôìº¯Êı£¬È±Ê¡Îª´óĞ¡Ğ´Ãô¸Ğ
+    ///é»˜è®¤æ„é€ å‡½æ•°ï¼Œç¼ºçœä¸ºå¤§å°å†™æ•æ„Ÿ
     CwxCaseStringEqual2():m_bCaseSensive(true)
     {
 
     }
-    ///¿ÉÒÔÖ¸¶¨´óĞ¡Ğ´Ãô¸Ğ»ò²»Ã÷¸Ğ¿ª¹ØµÄ¹¹Ôìº¯Êı
+    ///å¯ä»¥æŒ‡å®šå¤§å°å†™æ•æ„Ÿæˆ–ä¸æ˜æ„Ÿå¼€å…³çš„æ„é€ å‡½æ•°
     CwxCaseStringEqual2(bool bCaseSensive)
         :m_bCaseSensive(bCaseSensive)
     {
 
     }
-    ///¿½±´¹¹Ôì
+    ///æ‹·è´æ„é€ 
     CwxCaseStringEqual2(CwxCaseStringEqual2 const& obj)
     {
         m_bCaseSensive=obj.m_bCaseSensive;
     }
 public:
     /**
-    *@brief  ±È½Ï´óĞ¡Ğ´Ãô¸Ğ»ò²»Ãô¸ĞµÄÁ½¸östringÀàĞÍ×Ö·û´®ÊÇ·ñÏàµÈ¡£
-    *@return true£ºÏàµÈ£»false£º²»ÏàµÈ
+    *@brief  æ¯”è¾ƒå¤§å°å†™æ•æ„Ÿæˆ–ä¸æ•æ„Ÿçš„ä¸¤ä¸ªstringç±»å‹å­—ç¬¦ä¸²æ˜¯å¦ç›¸ç­‰ã€‚
+    *@return trueï¼šç›¸ç­‰ï¼›falseï¼šä¸ç›¸ç­‰
     */
     inline bool operator()(string const & str1, string const& str2) const
     {
@@ -456,31 +456,31 @@ private:
 
 /**
 *@class  CwxCaseStringLess2
-*@brief  ±È½Ï´óĞ¡Ğ´Ãô¸Ğ»ò²»Ãô¸ĞµÄstringÀàĞÍµÄstr1ÊÇ·ñĞ¡ÓÚstr2¡£
+*@brief  æ¯”è¾ƒå¤§å°å†™æ•æ„Ÿæˆ–ä¸æ•æ„Ÿçš„stringç±»å‹çš„str1æ˜¯å¦å°äºstr2ã€‚
 */
 class CwxCaseStringLess2
 {
 public:
-    ///Ä¬ÈÏ¹¹Ôìº¯Êı
+    ///é»˜è®¤æ„é€ å‡½æ•°
     CwxCaseStringLess2():m_bCaseSensive(true)
     {
 
     }
-    ///¿ÉÒÔÖ¸¶¨Ãô¸Ğ»ò²»Ãô¸Ğ¿ª¹ØµÄ¹¹Ôìº¯Êı
+    ///å¯ä»¥æŒ‡å®šæ•æ„Ÿæˆ–ä¸æ•æ„Ÿå¼€å…³çš„æ„é€ å‡½æ•°
     CwxCaseStringLess2(bool bCaseSensive)
         :m_bCaseSensive(bCaseSensive)
     {
 
     }
-    ///¿½±´¹¹Ôì
+    ///æ‹·è´æ„é€ 
     CwxCaseStringLess2(CwxCaseStringLess2 const& obj)
     {
         m_bCaseSensive=obj.m_bCaseSensive;
     }
 public:
     /**
-    *@brief  ±È½Ï´óĞ¡Ğ´Ãô¸Ğ»ò²»Ãô¸ĞµÄstringÀàĞÍµÄstr1ÊÇ·ñĞ¡ÓÚstr2¡£
-    *@return true£ºĞ¡ÓÚ£»false£º²»Ğ¡ÓÚ
+    *@brief  æ¯”è¾ƒå¤§å°å†™æ•æ„Ÿæˆ–ä¸æ•æ„Ÿçš„stringç±»å‹çš„str1æ˜¯å¦å°äºstr2ã€‚
+    *@return trueï¼šå°äºï¼›falseï¼šä¸å°äº
     */
     inline bool operator()(string const & str1, string const& str2) const
     {
@@ -494,14 +494,14 @@ private:
 
 /**
 *@class  CwxNumHash
-*@brief  ½â¾öÒòÀàĞÍtypedef¶¨Òå»òhash¶¨Òå²»´æÔÚµÄÊı×ÖÀàĞÍµÄhash.
+*@brief  è§£å†³å› ç±»å‹typedefå®šä¹‰æˆ–hashå®šä¹‰ä¸å­˜åœ¨çš„æ•°å­—ç±»å‹çš„hash.
 */
 template <typename T>
 class CwxNumHash
 {
 public:
     /**
-    *@brief  »ñµÃ·¶Êı×ÖÀàĞÍµÄhash-code
+    *@brief  è·å¾—èŒƒæ•°å­—ç±»å‹çš„hash-code
     *@return hash-code
     */
     inline size_t operator()(T const key)const
@@ -512,15 +512,15 @@ public:
 
 /**
 *@class  CwxSize
-*@brief  ¼ÆËãÒ»¸ö¶ÔÏóµÄsizeofµÄ´óĞ¡Ä£°åº¯Êı¶ÔÏó.
+*@brief  è®¡ç®—ä¸€ä¸ªå¯¹è±¡çš„sizeofçš„å¤§å°æ¨¡æ¿å‡½æ•°å¯¹è±¡.
 */
 template<typename T>
 class CwxSize
 {
 public:
     /**
-    *@brief  ·µ»Ø¶ÔÏóTµÄsizeof()
-    *@return ¶ÔÏóµÄsizeof
+    *@brief  è¿”å›å¯¹è±¡Tçš„sizeof()
+    *@return å¯¹è±¡çš„sizeof
     */
     inline size_t operator()(T const key) const
     {

@@ -1,8 +1,8 @@
-#include "CwxAppHandler4Time.h"
+ï»¿#include "CwxAppHandler4Time.h"
 #include "CwxAppFramework.h"
 
 CWINUX_BEGIN_NAMESPACE
-///¹¹Ôìº¯Êý
+///æž„é€ å‡½æ•°
 CwxAppHandler4Time::CwxAppHandler4Time(CwxAppFramework* pApp,
                                        CwxAppReactor* reactor,
                                        CwxTimeValue const& internal)

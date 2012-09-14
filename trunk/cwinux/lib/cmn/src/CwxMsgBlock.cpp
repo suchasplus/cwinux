@@ -1,10 +1,10 @@
-#include "CwxMsgBlock.h"
+ï»¿#include "CwxMsgBlock.h"
 
 CWINUX_BEGIN_NAMESPACE
 CwxMutexLock CwxMsgBlockAlloc::m_lock;
 CwxMsgBlockAlloc* CwxMsgBlockAlloc::m_pInstance = NULL;
 
-///½ûÖ¹´´½¨ÊµÀı
+///ç¦æ­¢åˆ›å»ºå®ä¾‹
 CwxMsgBlockAlloc::CwxMsgBlockAlloc():CwxSingleton("CwxMsgBlockAlloc")
 {
     CWX_UINT16 i=0;
@@ -14,7 +14,7 @@ CwxMsgBlockAlloc::CwxMsgBlockAlloc():CwxSingleton("CwxMsgBlockAlloc")
         m_arrCacheBlock[i] = NULL;
     }
 }
-///½ûÖ¹ÊÍ·ÅÊµÀı
+///ç¦æ­¢é‡Šæ”¾å®ä¾‹
 CwxMsgBlockAlloc::~CwxMsgBlockAlloc()
 {
     CWX_UINT16 i;
@@ -89,7 +89,7 @@ CwxMsgBlock* CwxMsgBlockAlloc::malloc(size_t size)
     return pMsg;
 }
 
-///<¿ËÂ¡msg±»copyÄÚÈİ
+///<å…‹éš†msgè¢«copyå†…å®¹
 CwxMsgBlock* CwxMsgBlockAlloc::clone(CwxMsgBlock* block){
     CwxMsgBlock* msg = CwxMsgBlockAlloc::malloc(block->capacity());
     msg->m_rdPos = block->m_rdPos;
@@ -168,7 +168,7 @@ CwxMsgBlock* CwxMsgBlockAlloc::pack(CwxMsgHead& header,
     return pBlock;
 }
 
-///ÊÍ·Å¿Õ¼ä
+///é‡Šæ”¾ç©ºé—´
 void CwxMsgBlockAlloc::destroy()
 {
     if (m_pInstance) delete m_pInstance;

@@ -1,15 +1,15 @@
-#ifndef __CWX_APP_CHANNEL_H__
+ï»¿#ifndef __CWX_APP_CHANNEL_H__
 #define __CWX_APP_CHANNEL_H__
 
 /*
-°æÈ¨ÉùÃ÷£º
-    ±¾Èí¼ş×ñÑ­GNU GPL V3£¨http://www.gnu.org/licenses/gpl.html£©£¬
-    ÁªÏµ·½Ê½£ºemail:cwinux@gmail.com£»Î¢²©:http://t.sina.com.cn/cwinux
+ç‰ˆæƒå£°æ˜ï¼š
+    æœ¬è½¯ä»¶éµå¾ªGNU GPL V3ï¼ˆhttp://www.gnu.org/licenses/gpl.htmlï¼‰ï¼Œ
+    è”ç³»æ–¹å¼ï¼šemail:cwinux@gmail.comï¼›å¾®åš:http://t.sina.com.cn/cwinux
 */
 
 /**
 @file CwxAppChannel.h
-@brief ÊÂ¼şchannel¶ÔÏó
+@brief äº‹ä»¶channelå¯¹è±¡
 @author cwinux@gmail.com
 @version 1.0
 @date 2011-04-15
@@ -37,128 +37,128 @@ CWINUX_BEGIN_NAMESPACE
 
 /**
 @class CwxAppChannel
-@brief ¼Ü¹¹µÄChannel¶ÔÏó£¬ÊµÏÖIOÊÂ¼şµÄÑ­»·
+@brief æ¶æ„çš„Channelå¯¹è±¡ï¼Œå®ç°IOäº‹ä»¶çš„å¾ªç¯
 */
 
 class CWX_API CwxAppChannel
 {
 public:
     typedef int (*CHANNEL_EVENT_HOOK)(void *);
-    ///¹¹Ôìº¯Êı
+    ///æ„é€ å‡½æ•°
     CwxAppChannel();
-    ///Îö¹¹º¯Êı
+    ///ææ„å‡½æ•°
     ~CwxAppChannel();
 public:
     /**
-    @brief ´ò¿ªreactor£¬µ÷ÓÃÏß³ÌÎªreactorµÄowner¡£
+    @brief æ‰“å¼€reactorï¼Œè°ƒç”¨çº¿ç¨‹ä¸ºreactorçš„ownerã€‚
     @param [in] noticeHandler notice handler
-    @return -1£ºÊ§°Ü£»0£ºÕı³£ÍË³ö
+    @return -1ï¼šå¤±è´¥ï¼›0ï¼šæ­£å¸¸é€€å‡º
     */
     int open();
     /**
-    @brief ¹Ø±Õreactor£¬±ØĞëÎªowner thread¡£»áÊÍ·ÅËùÓĞµÄhandler
-    @return -1£ºÊ§°Ü£»0£ºÕı³£ÍË³ö
+    @brief å…³é—­reactorï¼Œå¿…é¡»ä¸ºowner threadã€‚ä¼šé‡Šæ”¾æ‰€æœ‰çš„handler
+    @return -1ï¼šå¤±è´¥ï¼›0ï¼šæ­£å¸¸é€€å‡º
     */
     int close();
     /**
-    @brief ¼Ü¹¹ÊÂ¼şµÄÑ­»·´¦ÀíAPI£¬ÊµÏÖÏûÏ¢µÄ·Ö·¢£¬µ÷ÓÃÏß³ÌÎªchannelµÄowner¡£
-    @param [in] uiMiliTimeout ³¬Ê±µÄºÁÃëÊı£¬0±íÊ¾Ò»Ö±×èÈûµ½ÊÂ¼ş·¢Éú¡£
-    @return -1£ºÊ§°Ü£»0£ºÕı³£ÍË³ö
+    @brief æ¶æ„äº‹ä»¶çš„å¾ªç¯å¤„ç†APIï¼Œå®ç°æ¶ˆæ¯çš„åˆ†å‘ï¼Œè°ƒç”¨çº¿ç¨‹ä¸ºchannelçš„ownerã€‚
+    @param [in] uiMiliTimeout è¶…æ—¶çš„æ¯«ç§’æ•°ï¼Œ0è¡¨ç¤ºä¸€ç›´é˜»å¡åˆ°äº‹ä»¶å‘ç”Ÿã€‚
+    @return -1ï¼šå¤±è´¥ï¼›0ï¼šæ­£å¸¸é€€å‡º
     */
     int dispatch(CWX_UINT32 uiMiliTimeout=0);
     /**
-    @brief Í£Ö¹¼Ü¹¹ÊÂ¼şµÄÑ­»·´¦Àí£¬¶àÏß³Ì°²È«£¬ÈÎÒâÏß³Ì¶¼¿ÉÒÔµ÷ÓÃ¡£
-    @return -1£ºÊ§°Ü£»0£ºÕı³£ÍË³ö
+    @brief åœæ­¢æ¶æ„äº‹ä»¶çš„å¾ªç¯å¤„ç†ï¼Œå¤šçº¿ç¨‹å®‰å…¨ï¼Œä»»æ„çº¿ç¨‹éƒ½å¯ä»¥è°ƒç”¨ã€‚
+    @return -1ï¼šå¤±è´¥ï¼›0ï¼šæ­£å¸¸é€€å‡º
     */
     int stop();
     /**
-    @brief ×¢²áIOÊÂ¼ş´¦Àíhandle£¬¶àÏß³Ì°²È«£¬ÈÎÒâÏß³Ì¶¼¿ÉÒÔµ÷ÓÃ¡£
-    @param [in] io_handle ¼à²âµÄIO handle
-    @param [in] event_handler io handle¶ÔÓ¦µÄevent handler¡£
-    @param [in] mask ×¢²áµÄÊÂ¼şÑÚÂë£¬ÎªREAD_MASK¡¢WRITE_MASK¡¢PERSIST_MASK×éºÏ
-    @param [in] uiMillSecond ³¬Ê±ºÁÃëÊı£¬0±íÊ¾²»½øĞĞ³¬Ê±¼ì²â¡£
-    @return -1£ºÊ§°Ü£»
-    0£º³É¹¦£»
+    @brief æ³¨å†ŒIOäº‹ä»¶å¤„ç†handleï¼Œå¤šçº¿ç¨‹å®‰å…¨ï¼Œä»»æ„çº¿ç¨‹éƒ½å¯ä»¥è°ƒç”¨ã€‚
+    @param [in] io_handle ç›‘æµ‹çš„IO handle
+    @param [in] event_handler io handleå¯¹åº”çš„event handlerã€‚
+    @param [in] mask æ³¨å†Œçš„äº‹ä»¶æ©ç ï¼Œä¸ºREAD_MASKã€WRITE_MASKã€PERSIST_MASKç»„åˆ
+    @param [in] uiMillSecond è¶…æ—¶æ¯«ç§’æ•°ï¼Œ0è¡¨ç¤ºä¸è¿›è¡Œè¶…æ—¶æ£€æµ‹ã€‚
+    @return -1ï¼šå¤±è´¥ï¼›
+    0ï¼šæˆåŠŸï¼›
     */
     int registerHandler (CWX_HANDLE io_handle,
         CwxAppHandler4Channel *CwxAppHandler4Channel,
         int mask,
         CWX_UINT32 uiMillSecond = 0);
     /**
-    @brief É¾³ıioÊÂ¼ş´¦Àíhandle¡£¶àÏß³Ì°²È«£¬ÈÎÒâÏß³Ì¶¼¿ÉÒÔµ÷ÓÃ¡£
-    @param [in] event_handler ÒÆ³ıµÄevent-handler
-    @return -1£ºÊ§°Ü£»
-    0£º³É¹¦£»
+    @brief åˆ é™¤ioäº‹ä»¶å¤„ç†handleã€‚å¤šçº¿ç¨‹å®‰å…¨ï¼Œä»»æ„çº¿ç¨‹éƒ½å¯ä»¥è°ƒç”¨ã€‚
+    @param [in] event_handler ç§»é™¤çš„event-handler
+    @return -1ï¼šå¤±è´¥ï¼›
+    0ï¼šæˆåŠŸï¼›
     */
     int removeHandler (CwxAppHandler4Channel *event_handler);
     /**
-    @brief suspend ioÊÂ¼ş´¦Àíhandle¡£¶àÏß³Ì°²È«£¬ÈÎÒâÏß³Ì¶¼¿ÉÒÔµ÷ÓÃ¡£
-    @param [in] event_handler suspendµÄevent-handler
-    @param [in] suspend_mask suspendµÄÊÂ¼ş,ÎªREAD_MASK¡¢WRITE_MASK×éºÏ
-    @return -1£ºÊ§°Ü£»
-    0£º³É¹¦£»
+    @brief suspend ioäº‹ä»¶å¤„ç†handleã€‚å¤šçº¿ç¨‹å®‰å…¨ï¼Œä»»æ„çº¿ç¨‹éƒ½å¯ä»¥è°ƒç”¨ã€‚
+    @param [in] event_handler suspendçš„event-handler
+    @param [in] suspend_mask suspendçš„äº‹ä»¶,ä¸ºREAD_MASKã€WRITE_MASKç»„åˆ
+    @return -1ï¼šå¤±è´¥ï¼›
+    0ï¼šæˆåŠŸï¼›
     */
     int suspendHandler (CwxAppHandler4Channel *event_handler,
         int suspend_mask);
     /**
-    @brief resume ioÊÂ¼ş´¦Àíhandle¡£¶àÏß³Ì°²È«£¬ÈÎÒâÏß³Ì¶¼¿ÉÒÔµ÷ÓÃ¡£
-    @param [in] event_handler resumeµÄevent-handler
-    @param [in] resume_mask resumeµÄÊÂ¼ş,ÎªREAD_MASK¡¢WRITE_MASK×éºÏ
-    @return -1£ºÊ§°Ü£»
-    0£º³É¹¦£»
+    @brief resume ioäº‹ä»¶å¤„ç†handleã€‚å¤šçº¿ç¨‹å®‰å…¨ï¼Œä»»æ„çº¿ç¨‹éƒ½å¯ä»¥è°ƒç”¨ã€‚
+    @param [in] event_handler resumeçš„event-handler
+    @param [in] resume_mask resumeçš„äº‹ä»¶,ä¸ºREAD_MASKã€WRITE_MASKç»„åˆ
+    @return -1ï¼šå¤±è´¥ï¼›
+    0ï¼šæˆåŠŸï¼›
     */
     int resumeHandler (CwxAppHandler4Channel *event_handler,
         int resume_mask);
 
     /**
-    @brief É¾³ıioÊÂ¼ş´¦Àíhandle¡£¶àÏß³Ì°²È«£¬ÈÎÒâÏß³Ì¶¼¿ÉÒÔµ÷ÓÃ¡£
-    @param [in] handle ÒÆ³ıµÄ io handle
-    @return NULL£º²»´æÔÚ£»·ñÔò£º³É¹¦£»
+    @brief åˆ é™¤ioäº‹ä»¶å¤„ç†handleã€‚å¤šçº¿ç¨‹å®‰å…¨ï¼Œä»»æ„çº¿ç¨‹éƒ½å¯ä»¥è°ƒç”¨ã€‚
+    @param [in] handle ç§»é™¤çš„ io handle
+    @return NULLï¼šä¸å­˜åœ¨ï¼›å¦åˆ™ï¼šæˆåŠŸï¼›
     */
     CwxAppHandler4Channel* removeHandler (CWX_HANDLE handle);
     /**
-    @brief suspend ioÊÂ¼ş´¦Àíhandle¡£¶àÏß³Ì°²È«£¬ÈÎÒâÏß³Ì¶¼¿ÉÒÔµ÷ÓÃ¡£
+    @brief suspend ioäº‹ä»¶å¤„ç†handleã€‚å¤šçº¿ç¨‹å®‰å…¨ï¼Œä»»æ„çº¿ç¨‹éƒ½å¯ä»¥è°ƒç”¨ã€‚
     @param [in] handle suspend io handle
-    @param [in] suspend_mask suspendµÄÊÂ¼ş,ÎªREAD_MASK¡¢WRITE_MASK×éºÏ
-    @return -1£ºÊ§°Ü£»0£º³É¹¦
+    @param [in] suspend_mask suspendçš„äº‹ä»¶,ä¸ºREAD_MASKã€WRITE_MASKç»„åˆ
+    @return -1ï¼šå¤±è´¥ï¼›0ï¼šæˆåŠŸ
     */
     int suspendHandler (CWX_HANDLE handle,
         int suspend_mask);
     /**
-    @brief resume ioÊÂ¼ş´¦Àíhandle¡£¶àÏß³Ì°²È«£¬ÈÎÒâÏß³Ì¶¼¿ÉÒÔµ÷ÓÃ¡£
+    @brief resume ioäº‹ä»¶å¤„ç†handleã€‚å¤šçº¿ç¨‹å®‰å…¨ï¼Œä»»æ„çº¿ç¨‹éƒ½å¯ä»¥è°ƒç”¨ã€‚
     @param [in] handle resume io handle
-    @param [in] resume_mask resumeµÄÊÂ¼ş,ÎªREAD_MASK¡¢WRITE_MASK×éºÏ
-    @return -1£ºÊ§°Ü£»
-    0£º³É¹¦£»
+    @param [in] resume_mask resumeçš„äº‹ä»¶,ä¸ºREAD_MASKã€WRITE_MASKç»„åˆ
+    @return -1ï¼šå¤±è´¥ï¼›
+    0ï¼šæˆåŠŸï¼›
     */
     int resumeHandler (CWX_HANDLE handle,
         int resume_mask);
     /**
-    @brief ÉèÖÃ¶¨Ê±´¦Àíhandle£¬timeout²»¾ßÓĞpersistÌØĞÔ¡£¶àÏß³Ì°²È«£¬ÈÎÒâÏß³Ì¶¼¿ÉÒÔµ÷ÓÃ¡£
-    @param [in] event_handler timerµÄevent handler
-    @param [in] interval ¶¨Ê±µÄ¼ä¸ô
-    @return -1£ºÊ§°Ü£»
-    0£º³É¹¦£»
+    @brief è®¾ç½®å®šæ—¶å¤„ç†handleï¼Œtimeoutä¸å…·æœ‰persistç‰¹æ€§ã€‚å¤šçº¿ç¨‹å®‰å…¨ï¼Œä»»æ„çº¿ç¨‹éƒ½å¯ä»¥è°ƒç”¨ã€‚
+    @param [in] event_handler timerçš„event handler
+    @param [in] interval å®šæ—¶çš„é—´éš”
+    @return -1ï¼šå¤±è´¥ï¼›
+    0ï¼šæˆåŠŸï¼›
     */
     int scheduleTimer (CwxAppHandler4Channel *event_handler,
         CwxTimeValue const &interval);
-    ///È¡Ïû¶¨Ê±´¦Àíhandle¡£¶àÏß³Ì°²È«£¬ÈÎÒâÏß³Ì¶¼¿ÉÒÔµ÷ÓÃ¡£
+    ///å–æ¶ˆå®šæ—¶å¤„ç†handleã€‚å¤šçº¿ç¨‹å®‰å…¨ï¼Œä»»æ„çº¿ç¨‹éƒ½å¯ä»¥è°ƒç”¨ã€‚
     int cancelTimer (CwxAppHandler4Channel *event_handler);
     /**
-    @brief ×¢²áredo handler£¬redoµÄhandlerÔÚdispatch»á±»Ö´ĞĞÒ»´Î²¢ÒÆ³ı¡£¶àÏß³Ì°²È«£¬ÈÎÒâÏß³Ì¶¼¿ÉÒÔµ÷ÓÃ¡£
-    @param [in] event_handler redoµÄevent handler
-    @return true£º³É¹¦£»false£º´æÔÚ£»
+    @brief æ³¨å†Œredo handlerï¼Œredoçš„handleråœ¨dispatchä¼šè¢«æ‰§è¡Œä¸€æ¬¡å¹¶ç§»é™¤ã€‚å¤šçº¿ç¨‹å®‰å…¨ï¼Œä»»æ„çº¿ç¨‹éƒ½å¯ä»¥è°ƒç”¨ã€‚
+    @param [in] event_handler redoçš„event handler
+    @return trueï¼šæˆåŠŸï¼›falseï¼šå­˜åœ¨ï¼›
     */
     bool regRedoHander(CwxAppHandler4Channel* event_handler);
     /**
-    @brief É¾³ıredo handler¡£¶àÏß³Ì°²È«£¬ÈÎÒâÏß³Ì¶¼¿ÉÒÔµ÷ÓÃ¡£
-    @param [in] event_handler redoeµÄevent handler
-    @return true£º³É¹¦£»false£º²»´æÔÚ£»
+    @brief åˆ é™¤redo handlerã€‚å¤šçº¿ç¨‹å®‰å…¨ï¼Œä»»æ„çº¿ç¨‹éƒ½å¯ä»¥è°ƒç”¨ã€‚
+    @param [in] event_handler redoeçš„event handler
+    @return trueï¼šæˆåŠŸï¼›falseï¼šä¸å­˜åœ¨ï¼›
     */
     bool eraseRedoHander(CwxAppHandler4Channel* event_handler);
     /**
-    @brief notice reactor¡£¶àÏß³Ì°²È«£¬ÈÎÒâÏß³Ì¶¼¿ÉÒÔµ÷ÓÃ¡£
-    @return -1£ºÊ§°Ü£»  0£º³É¹¦£»
+    @brief notice reactorã€‚å¤šçº¿ç¨‹å®‰å…¨ï¼Œä»»æ„çº¿ç¨‹éƒ½å¯ä»¥è°ƒç”¨ã€‚
+    @return -1ï¼šå¤±è´¥ï¼›  0ï¼šæˆåŠŸï¼›
     */
     int notice();
 public:
@@ -166,69 +166,69 @@ public:
     */
 public:
     /**
-    @brief ¼ì²éÖ¸¶¨IOµÄhandleÊÇ·ñÒÑ¾­×¢²á¡£¶àÏß³Ì°²È«£¬ÈÎÒâÏß³Ì¶¼¿ÉÒÔµ÷ÓÃ¡£
-    @return true£º×¢²á£»false£ºÃ»ÓĞ×¢²á
+    @brief æ£€æŸ¥æŒ‡å®šIOçš„handleæ˜¯å¦å·²ç»æ³¨å†Œã€‚å¤šçº¿ç¨‹å®‰å…¨ï¼Œä»»æ„çº¿ç¨‹éƒ½å¯ä»¥è°ƒç”¨ã€‚
+    @return trueï¼šæ³¨å†Œï¼›falseï¼šæ²¡æœ‰æ³¨å†Œ
     */
     bool isRegIoHandle(CWX_HANDLE handle);
     ///Return the ID of the "owner" thread.
     pthread_t getOwner() const;
-    ///ÊÇ·ñstop
+    ///æ˜¯å¦stop
     bool isStop();
-    ///»ñÈ¡µ±Ç°µÄÊ±¼ä
+    ///è·å–å½“å‰çš„æ—¶é—´
     CwxTimeValue const& getCurTime() const;
-    ///»ñÈ¡µ±Ç°µÄcacheÊ±¼ä
-    ///io handleÊÇ·ñÉèÖÃÖ¸¶¨µÄmask
+    ///è·å–å½“å‰çš„cacheæ—¶é—´
+    ///io handleæ˜¯å¦è®¾ç½®æŒ‡å®šçš„mask
     bool isMask(CWX_HANDLE handle, int mask);
 private:
-    ///×¢²áIOÊÂ¼ş´¦Àíhandle
+    ///æ³¨å†ŒIOäº‹ä»¶å¤„ç†handle
     int _registerHandler (CWX_HANDLE io_handle,
         CwxAppHandler4Channel *event_handler,
         int mask,
         CWX_UINT32 uiMillSecond = 0);
-    ///É¾³ıioÊÂ¼ş´¦Àíhandle
+    ///åˆ é™¤ioäº‹ä»¶å¤„ç†handle
     int _removeHandler (CwxAppHandler4Channel *event_handler);
-    ///×¢²áIOÊÂ¼ş´¦Àíhandle
+    ///æ³¨å†ŒIOäº‹ä»¶å¤„ç†handle
     int _suspendHandler (CwxAppHandler4Channel *event_handler,
         int suspend_mask);
-    ///É¾³ıioÊÂ¼ş´¦Àíhandle
+    ///åˆ é™¤ioäº‹ä»¶å¤„ç†handle
     int _resumeHandler (CwxAppHandler4Channel *event_handler,
         int resume_mask);
-    ///É¾³ıioÊÂ¼ş´¦Àíhandle¡£
+    ///åˆ é™¤ioäº‹ä»¶å¤„ç†handleã€‚
     CwxAppHandler4Channel* _removeHandler (CWX_HANDLE handle);
-    ///suspend ioÊÂ¼ş´¦Àíhandle¡£
+    ///suspend ioäº‹ä»¶å¤„ç†handleã€‚
     int _suspendHandler (CWX_HANDLE handle,
         int suspend_mask);
-    ///resume ioÊÂ¼ş´¦Àíhandle¡£
+    ///resume ioäº‹ä»¶å¤„ç†handleã€‚
     int _resumeHandler (CWX_HANDLE handle,
         int resume_mask);
-    ///ÉèÖÃ¶¨Ê±´¦Àíhandle
+    ///è®¾ç½®å®šæ—¶å¤„ç†handle
     int _scheduleTimer (CwxAppHandler4Channel *event_handler,
         CwxTimeValue const &interval );
-    ///È¡Ïû¶¨Ê±´¦Àíhandle
+    ///å–æ¶ˆå®šæ—¶å¤„ç†handle
     int _cancelTimer (CwxAppHandler4Channel *event_handler);
-    ///Ìí¼Óredo handler
+    ///æ·»åŠ redo handler
     bool _regRedoHander(CwxAppHandler4Channel* event_handler);
-    ///É¾³ıredo handler¡£
+    ///åˆ é™¤redo handlerã€‚
     bool _eraseRedoHander(CwxAppHandler4Channel* event_handler);
 
     /**
-    @brief Í£Ö¹¼Ü¹¹ÊÂ¼şµÄÑ­»·´¦Àí¡£
-    @return -1£ºÊ§°Ü£»0£ºÕı³£ÍË³ö
+    @brief åœæ­¢æ¶æ„äº‹ä»¶çš„å¾ªç¯å¤„ç†ã€‚
+    @return -1ï¼šå¤±è´¥ï¼›0ï¼šæ­£å¸¸é€€å‡º
     */
     int _stop();
     /**
-    @brief ¼ì²éÖ¸¶¨IOµÄhandleÊÇ·ñÒÑ¾­×¢²á¡£
-    @return true£º×¢²á£»false£ºÃ»ÓĞ×¢²á
+    @brief æ£€æŸ¥æŒ‡å®šIOçš„handleæ˜¯å¦å·²ç»æ³¨å†Œã€‚
+    @return trueï¼šæ³¨å†Œï¼›falseï¼šæ²¡æœ‰æ³¨å†Œ
     */
     bool _isRegIoHandle(CWX_HANDLE handle);
     /**
-    @brief ¼ì²éÖ¸¶¨IOµÄhandleÊÇ·ñÒÑ¾­×¢²á¡£
-    @return true£º×¢²á£»false£ºÃ»ÓĞ×¢²á
+    @brief æ£€æŸ¥æŒ‡å®šIOçš„handleæ˜¯å¦å·²ç»æ³¨å†Œã€‚
+    @return trueï¼šæ³¨å†Œï¼›falseï¼šæ²¡æœ‰æ³¨å†Œ
     */
     bool _isRegIoHandle(CwxAppHandler4Channel* handler);
     /**
-    @brief »ñÈ¡Ö¸¶¨handle¶ÔÓ¦µÄevent handler¡£
-    @return ·µ»Øhandle¶ÔÓ¦µÄevent handler£»NULL±íÊ¾²»´æÔÚ
+    @brief è·å–æŒ‡å®šhandleå¯¹åº”çš„event handlerã€‚
+    @return è¿”å›handleå¯¹åº”çš„event handlerï¼›NULLè¡¨ç¤ºä¸å­˜åœ¨
     */
     CwxAppHandler4Channel* _getIoHandler(CWX_HANDLE handle);
     static void callback(CwxAppHandler4Base* handler, int mask, bool bPersist, void *arg);
@@ -252,16 +252,16 @@ private:
     };
 
 private:
-    CwxMutexLock            m_lock; ///<È«¾ÖËø
-    CwxRwLock               m_rwLock; ///<¶ÁĞ´Ëø
-    pthread_t               m_owner; ///<reactorµÄowner Ïß³Ì
+    CwxMutexLock            m_lock; ///<å…¨å±€é”
+    CwxRwLock               m_rwLock; ///<è¯»å†™é”
+    pthread_t               m_owner; ///<reactorçš„owner çº¿ç¨‹
     set<CwxAppHandler4Channel*>* m_pCurRedoSet;
-    set<CwxAppHandler4Channel*>  m_redoHandlers_1; ///<´ËsetÖĞµÄhandler£¬Ã¿´Îdispatch»áÖ´ĞĞÒ»´Î,²¢ÒÆ³ı¡£
-    set<CwxAppHandler4Channel*>  m_redoHandlers_2; ///<´ËsetÖĞµÄhandler£¬Ã¿´Îdispatch»áÖ´ĞĞÒ»´Î,²¢ÒÆ³ı¡£
-    bool                    m_bStop; ///<reactorÊÇ·ñÒÑ¾­Í£Ö¹
-    int                     m_noticeFd[2]; ///<noticeµÄ¶ÁĞ´handle
-    CwxAppEpoll*            m_engine; ///<epollµÄengine
-    NoticeHanlder*          m_pNoticeHandler; ///<noticeµÄhandler
+    set<CwxAppHandler4Channel*>  m_redoHandlers_1; ///<æ­¤setä¸­çš„handlerï¼Œæ¯æ¬¡dispatchä¼šæ‰§è¡Œä¸€æ¬¡,å¹¶ç§»é™¤ã€‚
+    set<CwxAppHandler4Channel*>  m_redoHandlers_2; ///<æ­¤setä¸­çš„handlerï¼Œæ¯æ¬¡dispatchä¼šæ‰§è¡Œä¸€æ¬¡,å¹¶ç§»é™¤ã€‚
+    bool                    m_bStop; ///<reactoræ˜¯å¦å·²ç»åœæ­¢
+    int                     m_noticeFd[2]; ///<noticeçš„è¯»å†™handle
+    CwxAppEpoll*            m_engine; ///<epollçš„engine
+    NoticeHanlder*          m_pNoticeHandler; ///<noticeçš„handler
 };
 
 

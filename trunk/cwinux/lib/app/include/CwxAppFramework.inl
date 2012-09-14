@@ -1,4 +1,4 @@
-
+ï»¿
 CWINUX_BEGIN_NAMESPACE
 
 inline bool CwxAppFramework::isAppRunValid() const
@@ -216,12 +216,12 @@ inline CwxAppHandlerCache* CwxAppFramework::getHandlerCache()
     return m_pHandleCache;
 }
 
-///»ñÈ¡TCP connector
+///è·å–TCP connector
 inline CwxAppTcpConnector* CwxAppFramework::getTcpConnector()
 {
     return m_pTcpConnector;
 }
-///»ñÈ¡UNIX connector
+///è·å–UNIX connector
 inline CwxAppUnixConnector* CwxAppFramework::getUnixConnector()
 {
     return m_pUnixConnector;
@@ -258,7 +258,7 @@ inline int CwxAppFramework::openConn(CwxAppHandler4Msg& conn, bool& bStopListen)
     return 0;
 }
 
-//return -1£ºÏûÏ¢ÎŞĞ§£¬¹Ø±ÕÁ¬½Ó¡£ 0£º²»Á¬Ğø½ÓÊÜÏûÏ¢£» >0£ºÁ¬Ğø´Ó´ËÁ¬½ÓÉÏ½ÓÊÜÏûÏ¢¡£
+//return -1ï¼šæ¶ˆæ¯æ— æ•ˆï¼Œå…³é—­è¿æ¥ã€‚ 0ï¼šä¸è¿ç»­æ¥å—æ¶ˆæ¯ï¼› >0ï¼šè¿ç»­ä»æ­¤è¿æ¥ä¸Šæ¥å—æ¶ˆæ¯ã€‚
 inline int CwxAppFramework::recvMessage(CwxMsgHead& header,
                                         CwxMsgBlock* msg,
                                         CwxAppHandler4Msg& conn,

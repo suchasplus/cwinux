@@ -1,4 +1,4 @@
-#include "CwxUnixAddr.h"
+﻿#include "CwxUnixAddr.h"
 
 CWINUX_BEGIN_NAMESPACE
 CwxUnixAddr::CwxUnixAddr()

@@ -1,7 +1,7 @@
-#include "CwxSockAcceptor.h"
+ï»¿#include "CwxSockAcceptor.h"
 
 CWINUX_BEGIN_NAMESPACE
-///Ä¬ÈÏ¹¹Ôìº¯Êı
+///é»˜è®¤æ„é€ å‡½æ•°
 CwxSockAcceptor::CwxSockAcceptor()
 {
 
@@ -18,7 +18,7 @@ CwxSockAcceptor::CwxSockAcceptor(CwxAddr const& addr,
     this->listen(addr, reuse, backlog, domain, protocol, fn, fnArg);
 }
 
-///Îö¹¹º¯Êı.
+///ææ„å‡½æ•°.
 CwxSockAcceptor::~CwxSockAcceptor(void)
 {
 

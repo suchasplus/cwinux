@@ -1,8 +1,8 @@
-#include "CwxPackageEx.h"
+ï»¿#include "CwxPackageEx.h"
 
 CWINUX_BEGIN_NAMESPACE
 
-//-1£º°üµÄ¸ñÊ½·Ç·¨£»0:²»´æÔÚ£»>0£ºKey/ValueµÄ³¤¶È¡£
+//-1ï¼šåŒ…çš„æ ¼å¼éæ³•ï¼›0:ä¸å­˜åœ¨ï¼›>0ï¼šKey/Valueçš„é•¿åº¦ã€‚
 int CwxPackageEx::getNextKey(char const* szMsg,
                              CWX_UINT32 uiMsgLen,
                              CwxKeyValueItemEx& item)
@@ -34,7 +34,7 @@ int CwxPackageEx::getNextKey(char const* szMsg,
     return getKvLen(byte2, byte4);
 }
 
-//-1£º°üµÄ¿Õ¼äÌ«Ğ¡£»>0 ´òÈëµÄ°üµÄ³¤¶È¡£
+//-1ï¼šåŒ…çš„ç©ºé—´å¤ªå°ï¼›>0 æ‰“å…¥çš„åŒ…çš„é•¿åº¦ã€‚
 int CwxPackageEx::appendKey(char *szMsg, CWX_UINT32 uiMsgLen, char const* szKey, CWX_UINT16 unKeyLen, char const* szValue, CWX_UINT32 uiDatalen, bool bKeyValue){
     CWX_UINT32 byte4;
     CWX_UINT32 pos=0;
@@ -62,7 +62,7 @@ int CwxPackageEx::appendKey(char *szMsg, CWX_UINT32 uiMsgLen, char const* szKey,
     return (int)pos;
 }
 
-//-1£ºÎŞĞ§µÄpackage£¬0£ºÃ»ÓĞ·¢ÏÖ£¬>0£ºÉ¾³ıµÄÊıÁ¿¡£
+//-1ï¼šæ— æ•ˆçš„packageï¼Œ0ï¼šæ²¡æœ‰å‘ç°ï¼Œ>0ï¼šåˆ é™¤çš„æ•°é‡ã€‚
 int CwxPackageEx::removeKey(char *szMsg, CWX_UINT32& uiMsgLen, char const* szKey, bool bAll, bool bCaseSensive)
 {
     CWX_UINT32 uiPos = 0;
@@ -92,7 +92,7 @@ int CwxPackageEx::removeKey(char *szMsg, CWX_UINT32& uiMsgLen, char const* szKey
 }
 
 
-//-2¿Õ¼ä²»¹»£¬-1£ºÎŞĞ§µÄpackage£¬0£ºÃ»ÓĞ·¢ÏÖ£¬1£ºĞŞ¸ÄÁËÒ»¸öKEY¡£
+//-2ç©ºé—´ä¸å¤Ÿï¼Œ-1ï¼šæ— æ•ˆçš„packageï¼Œ0ï¼šæ²¡æœ‰å‘ç°ï¼Œ1ï¼šä¿®æ”¹äº†ä¸€ä¸ªKEYã€‚
 int CwxPackageEx::modifyKey(char *szMsg, CWX_UINT32& uiMsgLen, CWX_UINT32 uiMaxMsgLen, char const* szKey, CWX_UINT16 unKeyLen, char const* szData, CWX_UINT32 uiDataLen, bool bKeyValue, bool bCaseSensive)
 {
     CWX_UINT32 uiNewKeyLen = getKvLen(strlen(szKey), uiDataLen);
@@ -123,7 +123,7 @@ int CwxPackageEx::modifyKey(char *szMsg, CWX_UINT32& uiMsgLen, CWX_UINT32 uiMaxM
     }
     return 0;
 }
-//-2¿Õ¼ä²»¹»£¬-1£ºÎŞĞ§µÄpackage£¬0£ºÃ»ÓĞ·¢ÏÖ£¬1£ºĞŞ¸ÄÁËÒ»¸öKEY¡£
+//-2ç©ºé—´ä¸å¤Ÿï¼Œ-1ï¼šæ— æ•ˆçš„packageï¼Œ0ï¼šæ²¡æœ‰å‘ç°ï¼Œ1ï¼šä¿®æ”¹äº†ä¸€ä¸ªKEYã€‚
 int CwxPackageEx::modifyKey(char *szMsg, CWX_UINT32& uiMsgLen, CWX_UINT32 uiMaxMsgLen, CWX_UINT16 unIndex,char const* szData, CWX_UINT32 uiDataLen, bool bKeyValue)
 {
     CWX_UINT32 uiNewKeyLen = 0;

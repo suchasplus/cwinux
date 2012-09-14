@@ -1,5 +1,5 @@
-CWINUX_BEGIN_NAMESPACE
-///创建signleton CwxRwIdLockMgr 对象
+锘緾WINUX_BEGIN_NAMESPACE
+///鍒涘缓signleton CwxRwIdLockMgr 瀵硅薄
 inline CwxMutexIdLockMgr* CwxMutexIdLockMgr::instance()
 {
     if (!m_pInstance)
