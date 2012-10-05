@@ -33,14 +33,16 @@ bool CwxThreadPoolMgr::add(CWX_UINT16 unGroupId, CwxTpi* pThreadPool)
 bool CwxThreadPoolMgr::remove(CWX_UINT16 unGroupId)
 {
     CwxMutexGuard<CwxMutexLock> lock(&m_lock);
+    if (m_threadPoolMap.find(unGroupId) == m_threadPoolMap.end()) return false;
+    m_threadPoolMap.erase(unGroupId);
     map<CWX_UINT16, map<CWX_UINT16, CwxTss*> >::iterator iter =m_threadPoolTss.find(unGroupId);
-    if (iter == m_threadPoolTss.end()) return false;
+    if (iter == m_threadPoolTss.end()) return true;
     map<CWX_UINT16, CwxTss*>::iterator iter_tss = iter->second.begin();
     while(iter_tss != iter->second.end()){
       delete iter_tss->second;
       ++iter_tss;
     }
-    m_threadPoolMap.erase(iter);
+    m_threadPoolTss.erase(iter);
     return true;
 }
 
