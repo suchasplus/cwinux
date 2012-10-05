@@ -64,6 +64,7 @@ void CwxThreadPoolEx::stop()
     {
         if (m_threadArr && m_threadArr[i]) m_threadArr[i]->stop();
     }
+    m_mgr->remove(getGroupId());
 }
 
 bool CwxThreadPoolEx::isStop()
