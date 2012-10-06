@@ -73,12 +73,11 @@ am_libcwxcmn_la_OBJECTS = libcwxcmn_la-CwxCharPool.lo \
 	libcwxcmn_la-CwxRwLock.lo libcwxcmn_la-CwxThreadPoolEx.lo \
 	libcwxcmn_la-CwxEncodeXml.lo libcwxcmn_la-CwxLogger.lo \
 	libcwxcmn_la-CwxMutexLock.lo libcwxcmn_la-CwxSingleton.lo \
-	libcwxcmn_la-CwxThreadPoolMgr.lo libcwxcmn_la-CwxEscapeUtil.lo \
-	libcwxcmn_la-CwxMemLineReader.lo libcwxcmn_la-CwxPackage.lo \
-	libcwxcmn_la-CwxPackageEx.lo libcwxcmn_la-CwxSingletonMgr.lo \
-	libcwxcmn_la-CwxTimeValue.lo libcwxcmn_la-CwxCrc32.lo \
-	libcwxcmn_la-CwxIniParse.lo libcwxcmn_la-CwxMd5.lo \
-	libcwxcmn_la-CwxFbHash.lo
+	libcwxcmn_la-CwxEscapeUtil.lo libcwxcmn_la-CwxMemLineReader.lo \
+	libcwxcmn_la-CwxPackage.lo libcwxcmn_la-CwxPackageEx.lo \
+	libcwxcmn_la-CwxSingletonMgr.lo libcwxcmn_la-CwxTimeValue.lo \
+	libcwxcmn_la-CwxCrc32.lo libcwxcmn_la-CwxIniParse.lo \
+	libcwxcmn_la-CwxMd5.lo libcwxcmn_la-CwxFbHash.lo
 libcwxcmn_la_OBJECTS = $(am_libcwxcmn_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -226,7 +225,6 @@ libcwxcmn_la_SOURCES = \
 	CwxLogger.cpp\
 	CwxMutexLock.cpp\
 	CwxSingleton.cpp\
-	CwxThreadPoolMgr.cpp\
 	CwxEscapeUtil.cpp\
 	CwxMemLineReader.cpp\
 	CwxPackage.cpp\
@@ -332,7 +330,6 @@ cwxcmninclude_HEADERS = \
     ../include/CwxThreadPoolEx.inl\
     ../include/CwxThreadPool.h\
     ../include/CwxThreadPool.inl\
-    ../include/CwxThreadPoolMgr.h\
     ../include/CwxTpi.h\
     ../include/CwxTss.h\
     ../include/CwxLogger.h\
@@ -446,7 +443,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxThread.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxThreadPool.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxThreadPoolEx.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxThreadPoolMgr.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxTimeValue.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxTss.Plo@am__quote@
 
@@ -659,13 +655,6 @@ libcwxcmn_la-CwxSingleton.lo: CwxSingleton.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxSingleton.cpp' object='libcwxcmn_la-CwxSingleton.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxcmn_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxcmn_la-CwxSingleton.lo `test -f 'CwxSingleton.cpp' || echo '$(srcdir)/'`CwxSingleton.cpp
-
-libcwxcmn_la-CwxThreadPoolMgr.lo: CwxThreadPoolMgr.cpp
-@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxcmn_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwxcmn_la-CwxThreadPoolMgr.lo -MD -MP -MF "$(DEPDIR)/libcwxcmn_la-CwxThreadPoolMgr.Tpo" -c -o libcwxcmn_la-CwxThreadPoolMgr.lo `test -f 'CwxThreadPoolMgr.cpp' || echo '$(srcdir)/'`CwxThreadPoolMgr.cpp; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/libcwxcmn_la-CwxThreadPoolMgr.Tpo" "$(DEPDIR)/libcwxcmn_la-CwxThreadPoolMgr.Plo"; else rm -f "$(DEPDIR)/libcwxcmn_la-CwxThreadPoolMgr.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxThreadPoolMgr.cpp' object='libcwxcmn_la-CwxThreadPoolMgr.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxcmn_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxcmn_la-CwxThreadPoolMgr.lo `test -f 'CwxThreadPoolMgr.cpp' || echo '$(srcdir)/'`CwxThreadPoolMgr.cpp
 
 libcwxcmn_la-CwxEscapeUtil.lo: CwxEscapeUtil.cpp
 @am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxcmn_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwxcmn_la-CwxEscapeUtil.lo -MD -MP -MF "$(DEPDIR)/libcwxcmn_la-CwxEscapeUtil.Tpo" -c -o libcwxcmn_la-CwxEscapeUtil.lo `test -f 'CwxEscapeUtil.cpp' || echo '$(srcdir)/'`CwxEscapeUtil.cpp; \

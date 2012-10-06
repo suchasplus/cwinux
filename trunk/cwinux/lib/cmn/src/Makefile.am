@@ -34,7 +34,6 @@ libcwxcmn_la_SOURCES = \
 	CwxLogger.cpp\
 	CwxMutexLock.cpp\
 	CwxSingleton.cpp\
-	CwxThreadPoolMgr.cpp\
 	CwxEscapeUtil.cpp\
 	CwxMemLineReader.cpp\
 	CwxPackage.cpp\
@@ -141,7 +140,6 @@ cwxcmninclude_HEADERS=\
     ../include/CwxThreadPoolEx.inl\
     ../include/CwxThreadPool.h\
     ../include/CwxThreadPool.inl\
-    ../include/CwxThreadPoolMgr.h\
     ../include/CwxTpi.h\
     ../include/CwxTss.h\
     ../include/CwxLogger.h\
