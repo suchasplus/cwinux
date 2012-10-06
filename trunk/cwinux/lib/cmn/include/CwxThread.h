@@ -22,7 +22,6 @@
 #include "CwxMutexLock.h"
 #include "CwxMsgQueue.h"
 #include "CwxMsgBlock.h"
-#include "CwxThreadPoolMgr.h"
 #include "CwxCommander.h"
 #include "CwxLogger.h"
 #include "CwxTss.h"
@@ -52,10 +51,7 @@ class CWX_API CwxThread
 {
 public :
     ///构造函数
-    CwxThread(
-        CWX_UINT16 unGroupId,///<线程的group id
-        CWX_UINT16 unThreadId,///<线程在线程group中的序号
-        CwxThreadPoolMgr* mgr, ///<线程的管理对象
+    CwxThread(CWX_UINT16 unThreadId,///<线程在线程group中的序号
         CwxCommander* commander,///<队列消息消费的缺省commander，若指定func可以不指定
         CWX_TSS_THR_FUNC func=NULL, ///<用户的线程main函数
         void*            arg=NULL, ///<func的void*参数
@@ -110,8 +106,6 @@ public:
     int  pop(CwxMsgBlock*& pMsg);
     ///获取线程的group id
     CWX_UINT16 getThreadId() const;
-    ///获取现在在线程组中的序号
-    CWX_UINT16 getGroupId() const;
 public:
     /**
     @brief 创建一个线程。
@@ -146,16 +140,14 @@ public:
 private:
     static void* threadFunc(void *);
 protected:
-    CwxTss*                m_pTssEnv;///<线程的tss
-    CWX_UINT16             m_unGroupId;///<线程的线程组id
-    CWX_UINT16             m_unThreadId;///<线程在线程组中的序号
-    CwxMsgQueue*           m_msgQueue; ///<队列
-    bool                   m_bOwnQueue; ///<是否拥有队列
-    CwxCommander*          m_commander; ///<commander
-    CWX_TSS_THR_FUNC       m_func; ///<用户指定的thread main function
-    CwxThreadPoolMgr*      m_mgr; ///<线程的管理对象
-    void*                  m_arg; ///<线程的参数
-    pthread_t              m_tid;
+    CwxTss*                 m_pTssEnv;///<线程的tss
+    CWX_UINT16              m_unThreadId;///<线程在线程组中的序号
+    CwxMsgQueue*            m_msgQueue; ///<队列
+    bool                    m_bOwnQueue; ///<是否拥有队列
+    CwxCommander*           m_commander; ///<commander
+    CWX_TSS_THR_FUNC         m_func; ///<用户指定的thread main function
+    void*                   m_arg; ///<线程的参数
+    pthread_t                m_tid;
 };
 
 CWINUX_END_NAMESPACE

@@ -201,11 +201,6 @@ inline CwxTaskBoard& CwxAppFramework::getTaskBoard()
     return  m_taskBoard;
 }
 
-inline CwxThreadPoolMgr* CwxAppFramework::getThreadPoolMgr()
-{
-    return m_pThreadPoolMgr;
-}
-
 inline CwxTss* CwxAppFramework::getAppTss()
 {
     return m_pTss;

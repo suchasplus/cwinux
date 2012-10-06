@@ -40,7 +40,6 @@
 #include "CwxThreadPool.h"
 #include "CwxCommander.h"
 #include "CwxTaskBoard.h"
-#include "CwxThreadPoolMgr.h"
 #include "CwxAppListenMgr.h"
 #include "CwxAppForkMgr.h"
 #include "CwxAppReactor.h"
@@ -99,9 +98,7 @@ public:
     };
     ///服务类型与线程组定义
     enum{
-        SVR_TYPE_USER_START  = 2,///用户服务类型的最小值
-        THREAD_GROUP_SYS = 1,///<系统线程组ID，也就是通信的线程组ID
-        THREAD_GROUP_USER_START = 2///<用户线程组ID的最小值
+        SVR_TYPE_USER_START  = 2///用户服务类型的最小值
     };
     /**
     @brief 构造函数
@@ -549,8 +546,6 @@ public:
     CwxCommander& getCommander();
     ///获取架构的taskboard对象
     CwxTaskBoard& getTaskBoard();
-    ///获取架构的线程池管理器对象
-    CwxThreadPoolMgr* getThreadPoolMgr();
     ///获取通信线程的tss信息
     CwxTss*  getAppTss();
     ///获取handle cache
@@ -657,7 +652,6 @@ private:
     CwxAppUnixConnector*        m_pUnixConnector; ///<unix的connector
     //not lock for communite thread only access
     fnNoticeApi                m_arrNoticeApi[CwxAppNotice::ALL_NOTICE_NUM + 1];///<notcie的消息映射
-    CwxThreadPoolMgr*        m_pThreadPoolMgr;///<线程池管理对象
     //调试控制
     bool                      m_bDebug; ///<是否在调试中
     //following is fork's info

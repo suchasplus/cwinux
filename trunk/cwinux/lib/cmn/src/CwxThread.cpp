@@ -4,9 +4,7 @@
 CWINUX_BEGIN_NAMESPACE
 
 ///构造函数
-CwxThread::CwxThread(CWX_UINT16 unGroupId,///<线程的group id
-             CWX_UINT16 unThreadId,///<线程在线程group中的序号
-             CwxThreadPoolMgr* mgr, ///<线程的管理对象
+CwxThread::CwxThread(CWX_UINT16 unThreadId,///<线程在线程group中的序号
              CwxCommander* commander,///<队列消息消费的缺省commander，若指定func可以不指定
              CWX_TSS_THR_FUNC func, ///<用户的线程main函数
              void*            arg, ///<func的void*参数
@@ -15,38 +13,32 @@ CwxThread::CwxThread(CWX_UINT16 unGroupId,///<线程的group id
 {
     m_pTssEnv = NULL;
     m_unThreadId = unThreadId;
-    m_unGroupId = unGroupId;
-    if (!queue)
-    {
+    if (!queue){
         m_msgQueue = new CwxMsgQueue(1024*1024*200, 1024*1024*200);
         m_bOwnQueue = true;
-    }
-    else
-    {
+    }else{
         m_msgQueue = queue;
         m_bOwnQueue = false;
     }
     m_commander = commander;
     m_func = func;
     m_arg = arg;
-    m_mgr = mgr;
 }
 
-CwxThread::~CwxThread()
-{
-    if (m_bOwnQueue && m_msgQueue) delete m_msgQueue;
+CwxThread::~CwxThread(){
+  if (m_bOwnQueue && m_msgQueue){
+    delete m_msgQueue;
     m_msgQueue = NULL;
+  }
+  if (m_pTssEnv){
+    delete m_pTssEnv;
+    m_pTssEnv = NULL;
+  }
 }
 
 
 
-int CwxThread::start(CwxTss* pThrEnv, size_t stack_size)
-{
-    if (m_mgr->getTss(m_unGroupId, m_unThreadId))
-    {
-        CWX_ERROR(("Thread[group:%u, id=%u] exists, exit.", m_unGroupId, m_unThreadId));
-        return -1;
-    }
+int CwxThread::start(CwxTss* pThrEnv, size_t stack_size){
     m_pTssEnv = pThrEnv;
     if (-1 ==  CwxThread::spawn(
         threadFunc,
@@ -58,7 +50,7 @@ int CwxThread::start(CwxTss* pThrEnv, size_t stack_size)
         stack_size        
         ))
     {
-        CWX_ERROR(("Failure to spawn thread[group:%u, id=%u], errno=%d", m_unGroupId, m_unThreadId, errno));
+        CWX_ERROR(("Failure to spawn thread[id=%u], errno=%d", m_unThreadId, errno));
         return -1;
     }
     return 0;
@@ -77,22 +69,14 @@ void CwxThread::stop()
 
 
 
-void CwxThread::threadMain()
-{
+void CwxThread::threadMain() {
     time_t ttTime = time(NULL);
 
     {//注册tss
-        if (!m_pTssEnv)
-        {
+        if (!m_pTssEnv){
             m_pTssEnv = new CwxTss;
         }
-        m_pTssEnv->getThreadInfo().setThreadGroup(m_unGroupId);
         m_pTssEnv->getThreadInfo().setThreadNo(m_unThreadId);
-        if (!m_mgr->addTss(m_pTssEnv))
-        {
-            CWX_ERROR(("Failure to add thread[group:%u, id=%u] to thread mgr, it exists, exit.", m_unGroupId, m_unThreadId));
-            return;
-        }
     }
     m_pTssEnv->getThreadInfo().setStopped(false);
     CwxTss::regTss(m_pTssEnv);
@@ -101,22 +85,17 @@ void CwxThread::threadMain()
     m_pTssEnv->getThreadInfo().setUpdateTime(ttTime);
     m_pTssEnv->getThreadInfo().setRecvMsgNum(0);
     m_pTssEnv->getThreadInfo().setQueuedMsgNum(0);
-    do
-    {
-        if (m_func)
-        {
+    do {
+        if (m_func) {
             m_func(m_pTssEnv, m_msgQueue, m_arg);
-        }
-        else if (m_commander)
-        {
+        } else if (m_commander) {
             int iRet;
             time_t ttTime = time(NULL);
             CwxMsgBlock* block;
             CWX_UINT32 uiEventType = 0;
             CWX_UINT32 uiSvrId = 0;
             m_pTssEnv->getThreadInfo().setBlocked(true);
-            while( (iRet = this->pop(block)) != -1)
-            {//block until has query message
+            while( (iRet = this->pop(block)) != -1) {//block until has query message
                 m_pTssEnv->getThreadInfo().setBlocked(false);
                 ttTime = time(NULL);
                 m_pTssEnv->getThreadInfo().setUpdateTime(ttTime);
@@ -125,28 +104,21 @@ void CwxThread::threadMain()
                 iRet = 0;
                 uiEventType = block->event().getEvent();
                 uiSvrId = block->event().getSvrId();
-                if (!m_commander->dispatch(block, m_pTssEnv, iRet))
-                {
+                if (!m_commander->dispatch(block, m_pTssEnv, iRet)) {
                     CWX_DEBUG(("No handle to deal with event: event_type=%u, svr_id=%u", uiEventType, uiSvrId));
                 }
-                if (1 != iRet)
-                {
-                    if (0 == iRet)
-                    {
+                if (1 != iRet) {
+                    if (0 == iRet) {
                         CWX_DEBUG(("No care the event for  event_type=%u, svr_id=%u", uiEventType, uiSvrId));
-                    }
-                    else
-                    {
+                    } else {
                         CWX_DEBUG(("Failure to act the event for  event_type=%u, svr_id=%u", uiEventType, uiSvrId));
                     }
                 }
                 if (block) CwxMsgBlockAlloc::free(block);
                 m_pTssEnv->getThreadInfo().setBlocked(true);
             }
-        }
-        else
-        {
-            CWX_ERROR(("Thread[group:%u, id:%u] has neither commander nor own func, exit.", m_unGroupId, m_unThreadId));
+        } else {
+            CWX_ERROR(("Thread[id:%u] has neither commander nor own func, exit.", m_unThreadId));
         }
 
     }while(0);
@@ -154,24 +126,20 @@ void CwxThread::threadMain()
 }
 
 
-bool CwxThread::isStop() 
-{
+bool CwxThread::isStop() {
     return m_msgQueue->getState() == CwxMsgQueue::DEACTIVATED;
 }
 
-CwxTss* CwxThread::getTss()
-{
+CwxTss* CwxThread::getTss() {
     return m_pTssEnv;
 }
 
 ///锁住线程。返回值0：成功；-1：失败
-int CwxThread::lock()
-{
+int CwxThread::lock() {
     return m_msgQueue->lock().acquire();
 }
 ///解锁这个线程。返回值0：成功；-1：失败
-int CwxThread::unlock()
-{
+int CwxThread::unlock() {
     return m_msgQueue->lock().release();
 }
 
