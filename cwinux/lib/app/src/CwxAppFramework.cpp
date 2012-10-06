@@ -33,7 +33,6 @@ CwxAppFramework::CwxAppFramework(CWX_UINT16 unAppMode,
     m_pHandleCache = NULL;
     m_pTcpConnector = NULL; ///<TCP的connector
     m_pUnixConnector = NULL; ///<unix的connector
-    m_pThreadPoolMgr = NULL;
     m_bDebug = false;
 }
 
@@ -137,17 +136,14 @@ int CwxAppFramework::init(int argc, char** argv)
         CWX_ERROR(("Failure to init tss"));
         return -1;
     }
-    m_pThreadPoolMgr = new CwxThreadPoolMgr();
     //get app name
     CwxFile::getLastDirName(argv[0], m_strAppName);
     m_pTss = this->onTssEnv();
     CWX_ASSERT(m_pTss);
     m_pTss->getThreadInfo().setStartTime(time(NULL));
     m_pTss->getThreadInfo().setUpdateTime(time(NULL));
-    m_pTss->getThreadInfo().setThreadGroup(THREAD_GROUP_SYS);
     m_pTss->getThreadInfo().setThreadNo(0);
     CwxTss::regTss(m_pTss);
-    m_pThreadPoolMgr->addTss(m_pTss);
  	return 0;
 }
 
@@ -550,11 +546,6 @@ int CwxAppFramework::noticeReconnect(CWX_UINT32 uiConnId, CWX_UINT32 uiDelay){
 
 int CwxAppFramework::noticeFork(CwxAppForkEnv* pForkEnv){
     CWX_ASSERT(pForkEnv);
-    if (m_pThreadPoolMgr && m_pThreadPoolMgr->getNum())
-    {
-        CWX_ERROR(("No support fork in multi-thread enviroment"));
-        return -1;
-    }
     m_forkMgr.append(pForkEnv);
     return 0;
 }
@@ -1113,14 +1104,10 @@ void CwxAppFramework::destroy()
         delete m_pHandleCache;
         m_pHandleCache = NULL;
     }
-   
-
-    if (m_pThreadPoolMgr)
-    {
-        delete m_pThreadPoolMgr;
-        m_pThreadPoolMgr = NULL;
+    if (m_pTss){
+      delete m_pTss;
+      m_pTss = NULL;
     }
-    m_pTss = NULL;
     m_bStopped = false;
     m_bEnableHook = false;
     m_bDebug = false;

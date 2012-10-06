@@ -28,13 +28,10 @@ CWINUX_BEGIN_NAMESPACE
 @class CwxTssInfo
 @brief 线程的基本信息，若需要更多的信息，则需要重载这个对象，此对象只应包含基本数据成员。
 */
-class CWX_API CwxTssInfo
-{
+class CWX_API CwxTssInfo{
 public:
     ///构造函数
-    CwxTssInfo()
-    {
-        m_unThreadGroup = 0;
+    CwxTssInfo(){
         m_unThreadNo = 0;
         m_threadId = (pthread_t)0;
         m_bStopped = false;
@@ -45,103 +42,75 @@ public:
         m_llRecvMsgNum = 0;
     }
 public:
-    ///设置线程的group id
-    inline void setThreadGroup(CWX_UINT16 unGroup)
-    {
-        m_unThreadGroup = unGroup;
-    }
-    ///获取线程的group id
-    inline CWX_UINT16 getThreadGroup() const 
-    {
-        return m_unThreadGroup;
-    }
     ///设置线程的thread id
-    inline void setThreadNo(CWX_UINT16 unThreadNo)
-    {
+    inline void setThreadNo(CWX_UINT16 unThreadNo){
         m_unThreadNo = unThreadNo;
     }
     ///获取线程的thread id
-    inline CWX_UINT16 getThreadNo() const 
-    {
+    inline CWX_UINT16 getThreadNo() const {
         return m_unThreadNo;
     }
     ///设置线程的OS thread id
-    inline void setThreadId(pthread_t const& id)
-    {
+    inline void setThreadId(pthread_t const& id) {
         m_threadId = id;
     }
     ///获取线程的OS thread id
-    inline pthread_t const& getThreadId() const 
-    {
+    inline pthread_t const& getThreadId() const {
         return m_threadId;
     }
     ///检查线程是否停止
-    inline bool isStopped() const 
-    {
+    inline bool isStopped() const {
         return m_bStopped;
     }
     ///设置线程停止
-    inline void setStopped(bool bStopped) 
-    {
+    inline void setStopped(bool bStopped) {
         m_bStopped = bStopped;
     }
     ///获取线程是否在等待锁
-    inline bool isBlocked() const 
-    {
+    inline bool isBlocked() const {
         return m_bBlocked;
     }
     ///设置线程在等待锁
-    inline void setBlocked(bool bBlocked) 
-    {
+    inline void setBlocked(bool bBlocked) {
         m_bBlocked = bBlocked;
     }
     ///获取队列中消息数量
-    inline CWX_UINT32 getQueuedMsgNum() const
-    {
+    inline CWX_UINT32 getQueuedMsgNum() const {
         return m_uiQueuedMsg;
     }
     ///设置队列中消息数量
-    inline void setQueuedMsgNum(CWX_UINT32 uiNum)
-    {
+    inline void setQueuedMsgNum(CWX_UINT32 uiNum) {
         m_uiQueuedMsg = uiNum;
     }
     ///设置线程的启动时间
-    inline void setStartTime(time_t ttTime)
-    {
+    inline void setStartTime(time_t ttTime) {
         m_ttStartTime = ttTime;
     }
     ///获取线程的启动时间
-    inline time_t getStartTime() const
-    {
+    inline time_t getStartTime() const {
         return m_ttStartTime;
     }
     ///更新线程的罪行时间
-    inline void setUpdateTime(time_t ttTime)
-    {
+    inline void setUpdateTime(time_t ttTime) {
         m_ttUpdateTime = ttTime;
     }
     ///获取线程的最新更新时间
-    inline time_t getUpdateTime() const
-    {
+    inline time_t getUpdateTime() const {
         return m_ttUpdateTime;
     }
     ///设置线程处理的消息任务的数量
-    inline void setRecvMsgNum(CWX_UINT64 ullMsgNum)
-    {
+    inline void setRecvMsgNum(CWX_UINT64 ullMsgNum) {
         m_llRecvMsgNum = ullMsgNum;
     }
     ///获取线程处理的消息任务的数量
-    inline CWX_UINT64 getRecvMsgNum() const
-    {
+    inline CWX_UINT64 getRecvMsgNum() const {
         return m_llRecvMsgNum;
     }
     ///递增线程处理的消息任务的数量
-    inline void incRecvMsgNum()
-    {
+    inline void incRecvMsgNum() {
         m_llRecvMsgNum++;
     }
 private:
-    CWX_UINT16      m_unThreadGroup;///<线程的group
     CWX_UINT16      m_unThreadNo;///<线程的id
     pthread_t       m_threadId;///<线程的OS id
     bool           m_bStopped;///<线程是否停止

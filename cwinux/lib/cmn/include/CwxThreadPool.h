@@ -36,9 +36,7 @@ class CWX_API CwxThreadPool:public CwxTpi
 {
 public :
     ///构造函数
-    CwxThreadPool(CWX_UINT16 unGroupId,///<线程池的thread-group
-        CWX_UINT16 unThreadNum,///<线程池中线程的数量
-        CwxThreadPoolMgr* mgr, ///<线程的管理对象
+    CwxThreadPool(CWX_UINT16 unThreadNum,///<线程池中线程的数量
         CwxCommander* commander,///<队列消息消费的缺省commander，若指定func可以不指定
         CWX_TSS_THR_FUNC func=NULL, ///<用户的线程main函数
         void*            arg=NULL
@@ -94,7 +92,6 @@ protected:
     CwxMsgQueue*           m_msgQueue; ///<队列
     CwxCommander*          m_commander; ///<commander
     CWX_TSS_THR_FUNC       m_func; ///<用户指定的thread main function
-    CwxThreadPoolMgr*      m_mgr; ///<线程的管理对象
     void*                  m_arg; ///<线程的参数
     CwxThread**            m_threadArr;  ///<thead的数组
 };

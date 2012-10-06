@@ -32,14 +32,10 @@ class CWX_API CwxTpi
 {
 public :
     ///构造函数
-    CwxTpi(CWX_UINT16 unGroup, CWX_UINT16 unThreadNum)
-        :m_unGroup(unGroup), m_unThreadNum(unThreadNum)
-    {
+    CwxTpi(CWX_UINT16 unThreadNum):m_unThreadNum(unThreadNum){
     }
     ///析构函数
-    virtual ~CwxTpi()
-    {
-
+    virtual ~CwxTpi(){
     }
 public:
     /**
@@ -61,17 +57,10 @@ public:
     virtual int unlock()=0;
 public:
     ///获取线程池中线程的数量
-    inline CWX_UINT16 getThreadNum() const
-    {
+    inline CWX_UINT16 getThreadNum() const{
         return m_unThreadNum;
     }
-    ///获取线程池的线程组ID
-    inline CWX_UINT16 getGroupId() const 
-    {
-        return m_unGroup;
-    }
 private:
-    CWX_UINT16             m_unGroup;///<线程组id
     CWX_UINT16             m_unThreadNum;///<线程池中线程的数量
 };
 
