@@ -37,12 +37,6 @@ inline CWX_UINT16 CwxThread::getThreadId() const
 {
     return m_unThreadId;
 }
-///获取现在在线程组中的序号
-inline CWX_UINT16 CwxThread::getGroupId() const 
-{ 
-    return m_unGroupId;
-}
-
 
 inline int CwxThread::join(pthread_t thread, void **value_ptr)
 {
