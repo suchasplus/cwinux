@@ -94,9 +94,7 @@ int CwxEchoChannelApp::initRunEnv(){
     for (CWX_UINT32 i=0; i<m_config.m_unThreadNum; i++)
     {
         m_channel[i] = new CwxAppChannel();
-        m_threadPool[i] = new CwxThreadPool( 2 + i,
-            1,
-            getThreadPoolMgr(),
+        m_threadPool[i] = new CwxThreadPool(1,
             &getCommander(),
             CwxEchoChannelApp::ThreadMain,
             m_channel[i]);
