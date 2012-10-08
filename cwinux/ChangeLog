@@ -52,4 +52,8 @@ CwxLruCache对象的定义错误。
 2012-05-08    cwinux@gmail.com   v2.3.2
 1、修改CwxPackage CwxPackageWrite，在addKeyValue的时候，支持指定key的length，新增加了一批api。与旧版本兼容
 *********************************************************************
+2012-10-08    cwinux@gmail.com   v2.3.7
+1、去掉了CwxThreadPoolMgr的类，CwxThreadPool及CwxThreadPoolEx的构造函数无需再知道Thread group id及ThreadPoolMgr
+   此造成了与先前版本的不兼容。
+*********************************************************************
 
