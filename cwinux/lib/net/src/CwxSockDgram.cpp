@@ -1,4 +1,4 @@
-﻿#include "CwxSockDgram.h"
+#include "CwxSockDgram.h"
 
 CWINUX_BEGIN_NAMESPACE
 

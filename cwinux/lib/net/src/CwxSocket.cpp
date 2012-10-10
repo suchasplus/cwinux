@@ -1,4 +1,4 @@
-﻿#include "CwxSocket.h"
+#include "CwxSocket.h"
 #include <stdlib.h>
 #include <netdb.h>
 CWINUX_BEGIN_NAMESPACE

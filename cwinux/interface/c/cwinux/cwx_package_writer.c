@@ -1,4 +1,4 @@
-﻿#include "cwx_package_writer.h"
+#include "cwx_package_writer.h"
 
 #ifdef __cplusplus
 extern "C" {

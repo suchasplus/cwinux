@@ -1,4 +1,4 @@
-﻿#include  "CwxFbHash.h"
+#include  "CwxFbHash.h"
 
 CWINUX_BEGIN_NAMESPACE
 

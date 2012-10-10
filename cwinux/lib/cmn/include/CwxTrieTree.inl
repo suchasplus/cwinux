@@ -1,4 +1,4 @@
-﻿CWINUX_BEGIN_NAMESPACE
+CWINUX_BEGIN_NAMESPACE
 
 template<typename DATA>
 inline CwxTrieNode<DATA>* CwxTrieNode<DATA>::add(char const* szWord, CWX_UINT32 uiWordLen, CwxTypePoolEx<CwxTrieNode<DATA> >& pool)

@@ -1,4 +1,4 @@
-﻿#include "CwxCrc32.h"
+#include "CwxCrc32.h"
 
 CWINUX_BEGIN_NAMESPACE
 

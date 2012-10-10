@@ -1,4 +1,4 @@
-﻿#ifndef  __CWX_STL_H__
+#ifndef  __CWX_STL_H__
 #define  __CWX_STL_H__
 /*
 版权声明：

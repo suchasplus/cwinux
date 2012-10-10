@@ -1,4 +1,4 @@
-﻿#include "CwxThreadPool.h"
+#include "CwxThreadPool.h"
 #include "CwxLogger.h"
 
 CWINUX_BEGIN_NAMESPACE

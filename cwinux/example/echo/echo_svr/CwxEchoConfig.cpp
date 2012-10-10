@@ -1,4 +1,4 @@
-﻿#include "CwxEchoConfig.h"
+#include "CwxEchoConfig.h"
 
 int CwxEchoConfig::loadConfig(string const & strConfFile){
 	CwxIniParse parser;

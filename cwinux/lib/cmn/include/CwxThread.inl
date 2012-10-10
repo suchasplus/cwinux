@@ -1,4 +1,4 @@
-﻿
+
 CWINUX_BEGIN_NAMESPACE
 
 ///获取线程的消息队列排队消息数

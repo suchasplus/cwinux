@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_CONDITION_H__
+#ifndef __CWX_CONDITION_H__
 #define __CWX_CONDITION_H__
 /*
 版权声明：

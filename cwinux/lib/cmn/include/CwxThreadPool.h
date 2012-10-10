@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_THREAD_POOL_H__
+#ifndef __CWX_THREAD_POOL_H__
 #define __CWX_THREAD_POOL_H__
 /*
 版权声明：

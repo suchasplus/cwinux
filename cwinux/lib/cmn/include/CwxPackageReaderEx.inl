@@ -1,4 +1,4 @@
-﻿/**
+/**
 *@file CwxPackageReaderEx.inl
 *@brief CwxPackageReaderEx类的Inline实现
 *@author cwinux@gmail.com

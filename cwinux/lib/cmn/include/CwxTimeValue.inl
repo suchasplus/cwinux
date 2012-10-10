@@ -1,4 +1,4 @@
-﻿CWINUX_BEGIN_NAMESPACE
+CWINUX_BEGIN_NAMESPACE
 
 /// Initializes the CwxTimeValue from seconds and useconds.
 inline void CwxTimeValue::set (time_t sec, suseconds_t usecs)

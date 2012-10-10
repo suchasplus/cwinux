@@ -1,4 +1,4 @@
-﻿#include "CwxPackageReader.h"
+#include "CwxPackageReader.h"
 
 CWINUX_BEGIN_NAMESPACE
 

@@ -1,4 +1,4 @@
-﻿CWINUX_BEGIN_NAMESPACE
+CWINUX_BEGIN_NAMESPACE
 
 inline ssize_t CwxSockIo::recv (void *buf,
               size_t n,

@@ -1,4 +1,4 @@
-﻿#include "CwxEscapeUtil.h"
+#include "CwxEscapeUtil.h"
 
 CWINUX_BEGIN_NAMESPACE
 CwxEscapeUtil* CwxEscapeUtil::m_pInstance=NULL;

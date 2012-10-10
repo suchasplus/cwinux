@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_TASK_BOARD_H__
+#ifndef __CWX_TASK_BOARD_H__
 #define __CWX_TASK_BOARD_H__
 /*
 版权声明：

@@ -1,4 +1,4 @@
-﻿#include "CwxTss.h"
+#include "CwxTss.h"
 #include "CwxDate.h"
 
 CWINUX_BEGIN_NAMESPACE

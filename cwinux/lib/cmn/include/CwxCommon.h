@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_COMMON_H__
+#ifndef __CWX_COMMON_H__
 #define __CWX_COMMON_H__
 /*
 版权声明：

@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_IPC_SAP_H__
+#ifndef __CWX_IPC_SAP_H__
 #define __CWX_IPC_SAP_H__
 /*
 版权声明：

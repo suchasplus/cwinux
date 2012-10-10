@@ -1,4 +1,4 @@
-﻿CWINUX_BEGIN_NAMESPACE
+CWINUX_BEGIN_NAMESPACE
 
 inline CwxEncodeXml::CwxEncodeXml(bool bGbk, bool bCaseSensive)
 :m_bGbk(bGbk),m_bCaseSensive(bCaseSensive)

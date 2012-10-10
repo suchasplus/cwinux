@@ -1,4 +1,4 @@
-﻿
+
 CWINUX_BEGIN_NAMESPACE
 inline char const* CwxMsgHead::toNet()
 {

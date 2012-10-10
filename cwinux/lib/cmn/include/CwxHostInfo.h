@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_HOST_INFO_H__
+#ifndef __CWX_HOST_INFO_H__
 #define __CWX_HOST_INFO_H__
 /*
 版权声明：

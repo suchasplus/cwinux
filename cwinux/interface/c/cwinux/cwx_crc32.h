@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_CRC32_H__
+#ifndef __CWX_CRC32_H__
 #define __CWX_CRC32_H__
 
 

@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_SINGLETON_H__
+#ifndef __CWX_SINGLETON_H__
 #define __CWX_SINGLETON_H__
 /*
 版权声明：

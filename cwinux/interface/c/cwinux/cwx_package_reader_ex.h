@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_PACKAGE_READER_EX_H__
+#ifndef __CWX_PACKAGE_READER_EX_H__
 #define __CWX_PACKAGE_READER_EX_H__
 /*
 版权声明：

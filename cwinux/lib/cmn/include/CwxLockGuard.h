@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_LOCK_GUARD_H__
+#ifndef __CWX_LOCK_GUARD_H__
 #define __CWX_LOCK_GUARD_H__
 /*
 版权声明：

@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_CHAR_POOL_H__
+#ifndef __CWX_CHAR_POOL_H__
 #define __CWX_CHAR_POOL_H__
 
 /*

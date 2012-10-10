@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_MD5_H__
+#ifndef __CWX_MD5_H__
 #define __CWX_MD5_H__
 /*
 版权声明：

@@ -1,4 +1,4 @@
-﻿#include "CwxUnixAcceptor.h"
+#include "CwxUnixAcceptor.h"
 
 CWINUX_BEGIN_NAMESPACE
 ///默认构造函数

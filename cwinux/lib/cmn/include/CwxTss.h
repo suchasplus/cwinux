@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_TSS_H__
+#ifndef __CWX_TSS_H__
 #define __CWX_TSS_H__
 
 /*

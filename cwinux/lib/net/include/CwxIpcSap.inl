@@ -1,4 +1,4 @@
-﻿CWINUX_BEGIN_NAMESPACE
+CWINUX_BEGIN_NAMESPACE
 ///enable或disable asynchronous。返回值，0成功；-1：失败。
 inline int CwxIpcSap::setSigio(bool enable) const
 {

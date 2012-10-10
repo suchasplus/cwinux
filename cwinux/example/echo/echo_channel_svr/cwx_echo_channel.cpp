@@ -1,4 +1,4 @@
-﻿#include "CwxAppProcessMgr.h"
+#include "CwxAppProcessMgr.h"
 #include "CwxEchoChannelApp.h"
 
 int main(int argc, char** argv){

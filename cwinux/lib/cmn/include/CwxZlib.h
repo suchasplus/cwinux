@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_ZLIB_H__
+#ifndef __CWX_ZLIB_H__
 #define __CWX_ZLIB_H__
 /*
 版权声明：

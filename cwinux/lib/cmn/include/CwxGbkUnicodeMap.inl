@@ -1,4 +1,4 @@
-﻿
+
 CWINUX_BEGIN_NAMESPACE
 inline void CwxGbkUnicodeMap::utf16ChrToUtf8(CWX_UINT16 unUtf16, char* szUtf8, CWX_UINT8& unUtf8Len)
 {

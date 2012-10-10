@@ -1,4 +1,4 @@
-﻿#include "CwxMsgBlock.h"
+#include "CwxMsgBlock.h"
 
 CWINUX_BEGIN_NAMESPACE
 CwxMutexLock CwxMsgBlockAlloc::m_lock;

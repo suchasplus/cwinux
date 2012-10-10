@@ -1,4 +1,4 @@
-﻿#include "CwxGetOpt.h"
+#include "CwxGetOpt.h"
 CWINUX_BEGIN_NAMESPACE
 ///构造函数
 CwxGetOpt::CwxGetOpt (int argc,

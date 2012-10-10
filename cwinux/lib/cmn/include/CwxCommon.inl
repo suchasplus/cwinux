@@ -1,4 +1,4 @@
-﻿CWINUX_BEGIN_NAMESPACE
+CWINUX_BEGIN_NAMESPACE
 
 inline size_t CwxCommon::copyStr(char* dest, char const* src, size_t len)
 {

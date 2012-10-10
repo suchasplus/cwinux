@@ -1,4 +1,4 @@
-﻿#include "CwxSockAcceptor.h"
+#include "CwxSockAcceptor.h"
 
 CWINUX_BEGIN_NAMESPACE
 ///默认构造函数

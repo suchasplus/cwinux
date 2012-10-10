@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_STAIL_H__
+#ifndef __CWX_STAIL_H__
 #define __CWX_STAIL_H__
 /*
 版权声明：

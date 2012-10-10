@@ -1,4 +1,4 @@
-﻿#include "CwxMsgQueue.h"
+#include "CwxMsgQueue.h"
 
 CWINUX_BEGIN_NAMESPACE
 

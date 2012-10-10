@@ -1,4 +1,4 @@
-﻿#include "cwx_msg_header.h"
+#include "cwx_msg_header.h"
 #ifdef __cplusplus
 extern "C" {
 #endif
