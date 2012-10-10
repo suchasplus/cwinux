@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_SOCK_IO_H__
+#ifndef __CWX_SOCK_IO_H__
 #define __CWX_SOCK_IO_H__
 /*
 版权声明：

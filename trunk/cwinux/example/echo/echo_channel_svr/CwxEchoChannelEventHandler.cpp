@@ -1,4 +1,4 @@
-﻿#include "CwxEchoChannelEventHandler.h"
+#include "CwxEchoChannelEventHandler.h"
 
 /**
 @brief 连接可读事件，返回-1，close()会被调用

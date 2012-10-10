@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_TRIE_TREE_H__
+#ifndef __CWX_TRIE_TREE_H__
 #define __CWX_TRIE_TREE_H__
 /*
 版权声明：

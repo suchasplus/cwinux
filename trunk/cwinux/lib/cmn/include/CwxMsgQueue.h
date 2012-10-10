@@ -1,4 +1,4 @@
-﻿#ifndef  __CWX_MSG_QUEUE_H__
+#ifndef  __CWX_MSG_QUEUE_H__
 #define  __CWX_MSG_QUEUE_H__
 /*
 版权声明：

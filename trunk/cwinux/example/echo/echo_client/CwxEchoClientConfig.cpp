@@ -1,4 +1,4 @@
-﻿#include "CwxEchoClientConfig.h"
+#include "CwxEchoClientConfig.h"
 
 int CwxEchoClientConfig::loadConfig(string const & strConfFile){
     CwxIniParse parser;

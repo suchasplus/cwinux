@@ -1,4 +1,4 @@
-﻿#include "CwxEchoChannelConfig.h"
+#include "CwxEchoChannelConfig.h"
 
 int CwxEchoChannelConfig::loadConfig(string const & strConfFile){
     CwxIniParse parser;

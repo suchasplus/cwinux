@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_ECHO_EVENT_HANDLER_H__
+#ifndef __CWX_ECHO_EVENT_HANDLER_H__
 #define __CWX_ECHO_EVENT_HANDLER_H__
 /*
 版权声明：

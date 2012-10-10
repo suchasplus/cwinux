@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_FILTER_MACHINE_H__
+#ifndef __CWX_FILTER_MACHINE_H__
 #define __CWX_FILTER_MACHINE_H__
 /*
 版权声明：

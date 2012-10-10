@@ -1,4 +1,4 @@
-﻿CWINUX_BEGIN_NAMESPACE
+CWINUX_BEGIN_NAMESPACE
 
 
 inline ssize_t CwxSockStream::recv_n(void *buf, size_t len, int flags, CwxTimeouter  *timeout, size_t* bytes_transferred) const

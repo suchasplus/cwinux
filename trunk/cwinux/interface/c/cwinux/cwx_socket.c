@@ -1,4 +1,4 @@
-﻿#include "cwx_socket.h"
+#include "cwx_socket.h"
 #include <stdarg.h>
 
 static int cwx_snprintf(char *buf, size_t size, const char *format, ...)

@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_CHARSET_H__
+#ifndef __CWX_CHARSET_H__
 #define __CWX_CHARSET_H__
 /*
 版权声明：

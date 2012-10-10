@@ -1,4 +1,4 @@
-﻿#include "cwx_msg_header.h"
+#include "cwx_msg_header.h"
 char const* cwx_pack_head(CWX_MSG_HEADER_S const*  header, char* szHead){
     CWX_UINT32 byte4;
     CWX_UINT16 byte2;

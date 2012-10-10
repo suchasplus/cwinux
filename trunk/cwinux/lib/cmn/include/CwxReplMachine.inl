@@ -1,4 +1,4 @@
-﻿CWINUX_BEGIN_NAMESPACE
+CWINUX_BEGIN_NAMESPACE
 
 template<typename CHARSET>
 bool CwxReplMachine<CHARSET>::addStr(char const* szSrc, CWX_UINT32 uiSrcLen, char const* szRepl, CWX_UINT32 uiReplLen)

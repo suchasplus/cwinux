@@ -1,4 +1,4 @@
-﻿#include "cwx_package_ex.h"
+#include "cwx_package_ex.h"
 
 #ifdef __cplusplus
 extern "C" {

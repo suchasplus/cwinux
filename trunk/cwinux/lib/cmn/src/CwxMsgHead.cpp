@@ -1,4 +1,4 @@
-﻿#include "CwxMsgHead.h"
+#include "CwxMsgHead.h"
 #include "CwxMsgBlock.h"
 
 CWINUX_BEGIN_NAMESPACE

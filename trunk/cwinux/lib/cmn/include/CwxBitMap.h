@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_BIT_MAP_H__
+#ifndef __CWX_BIT_MAP_H__
 #define __CWX_BIT_MAP_H__
 
 /*

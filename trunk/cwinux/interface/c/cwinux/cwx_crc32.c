@@ -1,4 +1,4 @@
-﻿#include "cwx_crc32.h"
+#include "cwx_crc32.h"
 
 
 

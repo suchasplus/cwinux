@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_MUTEX_LOCK_H__
+#ifndef __CWX_MUTEX_LOCK_H__
 #define __CWX_MUTEX_LOCK_H__
 /*
 版权声明：

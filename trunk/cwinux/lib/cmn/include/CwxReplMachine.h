@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_REPL_MACHINE_H__
+#ifndef __CWX_REPL_MACHINE_H__
 #define __CWX_REPL_MACHINE_H__
 /*
 版权声明：

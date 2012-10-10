@@ -1,4 +1,4 @@
-﻿#include "CwxIniParse.h"
+#include "CwxIniParse.h"
 
 CWINUX_BEGIN_NAMESPACE
 /**

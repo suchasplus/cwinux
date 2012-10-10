@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_MSG_HEADER_H__
+#ifndef __CWX_MSG_HEADER_H__
 #define __CWX_MSG_HEADER_H__
 /*
 版权声明：

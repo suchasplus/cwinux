@@ -1,4 +1,4 @@
-﻿#include  "CwxMutexIdLocker.h"
+#include  "CwxMutexIdLocker.h"
 
 CWINUX_BEGIN_NAMESPACE
 

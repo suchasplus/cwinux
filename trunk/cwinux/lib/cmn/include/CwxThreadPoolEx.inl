@@ -1,4 +1,4 @@
-﻿
+
 CWINUX_BEGIN_NAMESPACE
 
 inline size_t CwxThreadPoolEx::getQueuedMsgNum()

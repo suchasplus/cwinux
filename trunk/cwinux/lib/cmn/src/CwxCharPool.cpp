@@ -1,4 +1,4 @@
-﻿#include "CwxCharPool.h"
+#include "CwxCharPool.h"
 
 CWINUX_BEGIN_NAMESPACE
 

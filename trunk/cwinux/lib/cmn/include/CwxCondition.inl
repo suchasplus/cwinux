@@ -1,4 +1,4 @@
-﻿CWINUX_BEGIN_NAMESPACE
+CWINUX_BEGIN_NAMESPACE
 
 ///构造函数，创建一个线程排他锁
 inline CwxCondition::CwxCondition(CwxMutexLock &lock, pthread_condattr_t * attr):m_lock(lock)

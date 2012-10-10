@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_LRU_CACHE_H__
+#ifndef __CWX_LRU_CACHE_H__
 #define __CWX_LRU_CACHE_H__
 /*
 版权声明：

@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_INI_PARSE_H__
+#ifndef __CWX_INI_PARSE_H__
 #define __CWX_INI_PARSE_H__
 /*
 版权声明：

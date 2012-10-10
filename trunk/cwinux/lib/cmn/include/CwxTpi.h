@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_TPI_H__
+#ifndef __CWX_TPI_H__
 #define __CWX_TPI_H__
 /*
 版权声明：

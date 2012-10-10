@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_ECHO_CLIENT_APP_H__
+#ifndef __CWX_ECHO_CLIENT_APP_H__
 #define __CWX_ECHO_CLIENT_APP_H__
 /*
 版权声明：

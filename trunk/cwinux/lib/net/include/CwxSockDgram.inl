@@ -1,4 +1,4 @@
-﻿CWINUX_BEGIN_NAMESPACE
+CWINUX_BEGIN_NAMESPACE
 
 inline ssize_t CwxSockDgram::send(const void *buf,  size_t len,  const CwxAddr &addr, int flags, CwxTimeouter  *timeout) const
 {

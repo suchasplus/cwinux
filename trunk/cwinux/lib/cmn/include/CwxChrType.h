@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_CHR_TYPE_H__
+#ifndef __CWX_CHR_TYPE_H__
 #define __CWX_CHR_TYPE_H__
 
 /*

@@ -1,4 +1,4 @@
-﻿#include "CwxINetAddr.h"
+#include "CwxINetAddr.h"
 #include <stdlib.h>
 CWINUX_BEGIN_NAMESPACE
 /// Default constructor.

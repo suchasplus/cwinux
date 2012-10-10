@@ -1,4 +1,4 @@
-﻿#include "cwx_config.h"
+#include "cwx_config.h"
 #include "cwx_stream.h"
 #include "cwx_msg_header.h"
 #include "cwx_package.h"

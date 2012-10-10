@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_SOCK_BASE_H__
+#ifndef __CWX_SOCK_BASE_H__
 #define __CWX_SOCK_BASE_H__
 /*
 版权声明：

@@ -1,4 +1,4 @@
-﻿CWINUX_BEGIN_NAMESPACE
+CWINUX_BEGIN_NAMESPACE
 
 inline CwxTaskBoardConnInfo::CwxTaskBoardConnInfo(CWX_UINT32 uiSvrId,
                                                         CWX_UINT32 uiHostId,

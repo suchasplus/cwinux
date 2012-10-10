@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_FB_HASH_H__
+#ifndef __CWX_FB_HASH_H__
 #define __CWX_FB_HASH_H__
 
 /*

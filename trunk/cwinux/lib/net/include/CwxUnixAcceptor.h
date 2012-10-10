@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_UNIX_ACCEPTOR_H__
+#ifndef __CWX_UNIX_ACCEPTOR_H__
 #define __CWX_UNIX_ACCEPTOR_H__
 /*
 版权声明：

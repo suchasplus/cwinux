@@ -1,4 +1,4 @@
-﻿#include "CwxSockStream.h"
+#include "CwxSockStream.h"
 
 CWINUX_BEGIN_NAMESPACE
 

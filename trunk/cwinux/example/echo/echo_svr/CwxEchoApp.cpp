@@ -1,4 +1,4 @@
-﻿#include "CwxEchoApp.h"
+#include "CwxEchoApp.h"
 #include "CwxDate.h"
 
 ///构造函数

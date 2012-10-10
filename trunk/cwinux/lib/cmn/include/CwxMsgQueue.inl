@@ -1,4 +1,4 @@
-﻿CWINUX_BEGIN_NAMESPACE
+CWINUX_BEGIN_NAMESPACE
 
 ///关闭队列，同时释放所有消息。-1：失败；>=0：队列中的消息数量
 inline int CwxMsgQueue::close()

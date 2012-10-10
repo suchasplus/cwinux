@@ -1,4 +1,4 @@
-﻿CWINUX_BEGIN_NAMESPACE
+CWINUX_BEGIN_NAMESPACE
 
 /// Wrapper around the @c setsockopt system call.
 inline int CwxSocket::setOption (CWX_HANDLE handle, int level,

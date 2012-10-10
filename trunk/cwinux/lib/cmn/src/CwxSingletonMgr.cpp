@@ -1,4 +1,4 @@
-﻿#include <stdlib.h>
+#include <stdlib.h>
 #include "CwxSingletonMgr.h"
 CWINUX_BEGIN_NAMESPACE
 CwxSingletonMgr* CwxSingletonMgr::m_pInstance = NULL;

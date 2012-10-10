@@ -1,4 +1,4 @@
-﻿#include "CwxEchoEventHandler.h"
+#include "CwxEchoEventHandler.h"
 #include "CwxEchoApp.h"
 
 ///echo请求的处理函数

@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_GBK_UNICODE_MAP_H__
+#ifndef __CWX_GBK_UNICODE_MAP_H__
 #define __CWX_GBK_UNICODE_MAP_H__
 /*
 版权声明：

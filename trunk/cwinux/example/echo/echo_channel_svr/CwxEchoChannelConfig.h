@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_ECHO_CHANNEL_CONFIG_H__
+#ifndef __CWX_ECHO_CHANNEL_CONFIG_H__
 #define __CWX_ECHO_CHANNEL_CONFIG_H__
 
 /*

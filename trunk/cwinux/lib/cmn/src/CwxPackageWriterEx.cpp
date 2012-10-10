@@ -1,4 +1,4 @@
-﻿#include "CwxPackageWriterEx.h"
+#include "CwxPackageWriterEx.h"
 
 CWINUX_BEGIN_NAMESPACE
 

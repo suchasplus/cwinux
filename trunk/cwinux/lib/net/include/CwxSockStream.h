@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_SOCK_STREAM_H__
+#ifndef __CWX_SOCK_STREAM_H__
 #define __CWX_SOCK_STREAM_H__
 /*
 版权声明：

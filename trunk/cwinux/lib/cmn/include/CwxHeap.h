@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_HEAP_H__
+#ifndef __CWX_HEAP_H__
 #define __CWX_HEAP_H__
 /*
 版权声明：

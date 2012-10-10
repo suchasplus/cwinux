@@ -1,4 +1,4 @@
-﻿#include "CwxDate.h"
+#include "CwxDate.h"
 #include "CwxTaskBoard.h"
 
 CWINUX_BEGIN_NAMESPACE

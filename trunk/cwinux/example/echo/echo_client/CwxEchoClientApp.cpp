@@ -1,4 +1,4 @@
-﻿#include "CwxEchoClientApp.h"
+#include "CwxEchoClientApp.h"
 
 ///构造函数，初始化发送的echo数据内容
 CwxEchoClientApp::CwxEchoClientApp():m_uiSendNum(0){

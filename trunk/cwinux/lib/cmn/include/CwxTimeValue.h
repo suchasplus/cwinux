@@ -1,4 +1,4 @@
-﻿#ifndef  __CWX_TIME_VALUE_H__
+#ifndef  __CWX_TIME_VALUE_H__
 #define  __CWX_TIME_VALUE_H__
 /*
 版权声明：
