@@ -1,4 +1,4 @@
-﻿#include "CwxAppProcessMgr.h"
+#include "CwxAppProcessMgr.h"
 #include "CwxFile.h"
 #include <unistd.h>
 #include <signal.h>

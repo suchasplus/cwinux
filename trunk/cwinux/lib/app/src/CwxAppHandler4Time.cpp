@@ -1,4 +1,4 @@
-﻿#include "CwxAppHandler4Time.h"
+#include "CwxAppHandler4Time.h"
 #include "CwxAppFramework.h"
 
 CWINUX_BEGIN_NAMESPACE

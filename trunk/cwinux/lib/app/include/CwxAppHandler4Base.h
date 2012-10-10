@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_APP_HANDLER_4_BASE_H__
+#ifndef __CWX_APP_HANDLER_4_BASE_H__
 #define __CWX_APP_HANDLER_4_BASE_H__
 /*
 版权声明：

@@ -1,4 +1,4 @@
-﻿#include "CwxAppHandler4Channel.h"
+#include "CwxAppHandler4Channel.h"
 #include "CwxAppChannel.h"
 #include "CwxSockIo.h"
 

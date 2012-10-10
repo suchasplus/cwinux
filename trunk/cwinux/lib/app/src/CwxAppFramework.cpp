@@ -1,4 +1,4 @@
-﻿#include "CwxAppFramework.h"
+#include "CwxAppFramework.h"
 #include "CwxFile.h"
 #include "CwxGetOpt.h"
 

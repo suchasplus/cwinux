@@ -1,4 +1,4 @@
-﻿#include "CwxAppChannel.h"
+#include "CwxAppChannel.h"
 
 CWINUX_BEGIN_NAMESPACE
 

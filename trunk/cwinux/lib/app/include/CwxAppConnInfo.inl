@@ -1,4 +1,4 @@
-﻿
+
 CWINUX_BEGIN_NAMESPACE
 
 inline CWX_UINT32 CwxAppConnInfo::getSvrId() const 

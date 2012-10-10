@@ -1,4 +1,4 @@
-﻿#include "CwxDate.h"
+#include "CwxDate.h"
 #include "CwxAppHandler4Notice.h"
 #include "CwxAppFramework.h"
 

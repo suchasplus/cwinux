@@ -1,4 +1,4 @@
-﻿#include "CwxAppReactor.h"
+#include "CwxAppReactor.h"
 
 CWINUX_BEGIN_NAMESPACE
 

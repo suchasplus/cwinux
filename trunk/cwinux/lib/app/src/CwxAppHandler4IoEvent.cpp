@@ -1,4 +1,4 @@
-﻿#include "CwxAppHandler4IoEvent.h"
+#include "CwxAppHandler4IoEvent.h"
 #include "CwxAppFramework.h"
 
 CWINUX_BEGIN_NAMESPACE

@@ -1,4 +1,4 @@
-﻿#include "CwxAppNoticePipe.h"
+#include "CwxAppNoticePipe.h"
 CWINUX_BEGIN_NAMESPACE
 
 ///构造函数

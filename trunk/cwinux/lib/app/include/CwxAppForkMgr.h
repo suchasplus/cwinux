@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_APP_FORK_MGR_H__
+#ifndef __CWX_APP_FORK_MGR_H__
 #define __CWX_APP_FORK_MGR_H__
 
 /*

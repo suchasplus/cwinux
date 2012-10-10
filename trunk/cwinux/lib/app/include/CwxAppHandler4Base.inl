@@ -1,4 +1,4 @@
-﻿CWINUX_BEGIN_NAMESPACE
+CWINUX_BEGIN_NAMESPACE
 
 ///获取app
 ///设置handle的reactor
