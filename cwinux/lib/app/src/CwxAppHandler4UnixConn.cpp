@@ -1,4 +1,4 @@
-﻿#include "CwxAppHandler4UnixConn.h"
+#include "CwxAppHandler4UnixConn.h"
 #include "CwxAppFramework.h"
 
 CWINUX_BEGIN_NAMESPACE

@@ -1,4 +1,4 @@
-﻿#include "CwxAppHandlerCache.h"
+#include "CwxAppHandlerCache.h"
 
 CWINUX_BEGIN_NAMESPACE
 CwxAppHandlerCache::CwxAppHandlerCache()

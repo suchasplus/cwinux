@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_APP_UNIX_CONNECTOR_H__
+#ifndef __CWX_APP_UNIX_CONNECTOR_H__
 #define __CWX_APP_UNIX_CONNECTOR_H__
 
 /*

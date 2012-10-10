@@ -1,4 +1,4 @@
-﻿CWINUX_BEGIN_NAMESPACE
+CWINUX_BEGIN_NAMESPACE
 ///构造函数
 inline CwxAppNotice::CwxAppNotice()
 :m_unNoticeType(DUMMY),m_noticeArg(NULL),m_noticeArg1(NULL),m_next(NULL)

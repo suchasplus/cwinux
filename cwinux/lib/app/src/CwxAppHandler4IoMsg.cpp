@@ -1,4 +1,4 @@
-﻿#include "CwxAppHandler4IoMsg.h"
+#include "CwxAppHandler4IoMsg.h"
 #include "CwxAppFramework.h"
 
 CWINUX_BEGIN_NAMESPACE

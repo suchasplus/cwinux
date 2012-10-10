@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_APP_MACRO_H__
+#ifndef __CWX_APP_MACRO_H__
 #define __CWX_APP_MACRO_H__
 /*
 版权声明：

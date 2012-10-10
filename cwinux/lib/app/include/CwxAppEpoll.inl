@@ -1,4 +1,4 @@
-﻿
+
 CWINUX_BEGIN_NAMESPACE
 
 inline void CwxAppEpoll::timeout(CWX_UINT64& ullTime)

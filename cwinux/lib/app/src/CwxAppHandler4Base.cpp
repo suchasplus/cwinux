@@ -1,4 +1,4 @@
-﻿#include "CwxAppHandler4Base.h"
+#include "CwxAppHandler4Base.h"
 #include "CwxAppReactor.h"
 #include "CwxAppFramework.h"
 

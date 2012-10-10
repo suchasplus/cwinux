@@ -1,4 +1,4 @@
-﻿CWINUX_BEGIN_NAMESPACE
+CWINUX_BEGIN_NAMESPACE
 
 ///设置UNIX-DOMAIN的路径文件
 inline void CwxAppHandler4UnixConn::setConnectPathFile(char const* szPathFile)

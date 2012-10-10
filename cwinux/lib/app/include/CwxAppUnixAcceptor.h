@@ -1,4 +1,4 @@
-﻿#ifndef __CWX_APP_UNIX_ACCEPTOR_H__
+#ifndef __CWX_APP_UNIX_ACCEPTOR_H__
 #define __CWX_APP_UNIX_ACCEPTOR_H__
 
 /*
