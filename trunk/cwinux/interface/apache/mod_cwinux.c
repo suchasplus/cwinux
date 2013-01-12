@@ -1002,18 +1002,6 @@ static int cwx_request(CWX_CONNECT* conn){
         CWX_ERR(("%s:%d:cwx_request(): Failure to invoke cwx_unpack_head().\n", __FILE__, __LINE__));
         return HTTP_INTERNAL_SERVER_ERROR;
     }
-    if (msg_head.m_unMsgType != atoi(conn->m_msg_type) + 1){
-        cwx_stream_close(conn->m_socket->m_fd);
-        conn->m_socket->m_fd = -1;
-        CWX_ERR(("%s:%d:cwx_request(): Reply msg type error. should be %d, but:%d. handle=%s, arg=%s\n",
-            __FILE__,
-            __LINE__,
-            atoi(conn->m_msg_type) + 1,
-            msg_head.m_unMsgType,
-            conn->m_request->handler,
-            conn->m_args?conn->m_args:""));
-        return HTTP_INTERNAL_SERVER_ERROR;
-    }
     //recv data
     char* recv_buf = (char*)apr_pcalloc(conn->m_request->pool, msg_head.m_uiDataLen);
     now = cwx_time_of_day()/1000;
@@ -1082,19 +1070,18 @@ static int cwx_request(CWX_CONNECT* conn){
         return http_code;
     }
 
-    char* out_buf = (char*)apr_pcalloc(conn->m_request->pool, msg_head.m_uiDataLen * 2);
+    char* out_buf = (char*)apr_pcalloc(conn->m_request->pool, msg_head.m_uiDataLen + 2048);
     CWX_UINT32 data_size = 0;
     len = 0;
     while(len < msg_head.m_uiDataLen){
         if (0>= cwx_get_key_by_index(recv_buf + len, msg_head.m_uiDataLen - len, 0, &item)) break;
         memcpy(out_buf +data_size, item.m_szKey, item.m_unKeyLen);
         data_size+=item.m_unKeyLen;
-        memcpy(out_buf +data_size, "=", 1);
-        data_size+=1;
+        out_buf[data_size++] = '\n';
+        data_size += sprintf(out_buf+data_size, "%u\n", item.m_uiDataLen);
         memcpy(out_buf +data_size, item.m_szData, item.m_uiDataLen);
         data_size+=item.m_uiDataLen;
-        memcpy(out_buf +data_size, "\n", 1);
-        data_size+=1;
+        out_buf[data_size++] = '\n';
         len += cwx_get_kv_len(item.m_unKeyLen, item.m_uiDataLen);
     }
     out_buf[data_size]=0x00;
