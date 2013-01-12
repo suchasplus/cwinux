@@ -705,12 +705,11 @@ static ngx_int_t ngx_http_cwinux_process_header(ngx_http_request_t *r)
                 if (0>= cwx_get_key_by_index(ctx->data + len, ctx->msg_head.m_uiDataLen - len, 0, &item)) break;
                 memcpy(ctx->out_buf + ctx->out_buf_len, item.m_szKey, item.m_unKeyLen);
                 ctx->out_buf_len+=item.m_unKeyLen;
-                memcpy(ctx->out_buf +ctx->out_buf_len, "=", 1);
-                ctx->out_buf_len+=1;
+                ctx->out_buf[ctx->out_buf_len++] = '\n';
+                ctx->out_buf_len += sprintf(ctx->out_buf+ctx->out_buf_len, "%u\n", item.m_uiDataLen);
                 memcpy(ctx->out_buf + ctx->out_buf_len, item.m_szData, item.m_uiDataLen);
                 ctx->out_buf_len+=item.m_uiDataLen;
-                memcpy(ctx->out_buf +ctx->out_buf_len, "\n", 1);
-                ctx->out_buf_len+=1;
+                ctx->out_buf[ctx->out_buf_len++] = '\n';
                 len += cwx_get_kv_len(item.m_unKeyLen, item.m_uiDataLen);
             }
             ctx->out_buf[ctx->out_buf_len]=0x00;
