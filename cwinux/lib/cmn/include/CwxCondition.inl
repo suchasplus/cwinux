@@ -74,7 +74,7 @@ inline void CwxCondition::data(void* data) {
   m_data = data;
 }
 ///获取data
-void* CwxCondition::data() {
+inline void* CwxCondition::data() {
   return m_data;
 }
 
