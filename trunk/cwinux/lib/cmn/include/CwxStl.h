@@ -24,11 +24,14 @@
 #include <list>
 #include <set>
 #include <map>
+#include "CwxGlobalMacro.h"
 #ifdef __GNUC__
 #define GCC_VERSION (__GNUC__ * 10000  + __GNUC_MINOR__ * 100)
 #if GCC_VERSION >= 40300
 #include <unordered_set>
 #include <unordered_map>
+
+CWINUX_BEGIN_NAMESPACE
 
 inline size_t __stl_hash_string(const char* __s)
 {
@@ -37,6 +40,7 @@ inline size_t __stl_hash_string(const char* __s)
         __h = 5*__h + *__s;
     return size_t(__h);
 }
+CWINUX_END_NAMESPACE
 #define hash_map  unordered_map
 #define hash_set  unordered_set
 #else
