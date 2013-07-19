@@ -167,7 +167,7 @@ void CwxEchoClientApp::sendNextMsg(CWX_UINT32 uiSvrId, CWX_UINT32 uiHostId, CWX_
   ///分配发送消息包的block
   CwxMsgBlock* block = CwxMsgBlockAlloc::pack(head, m_sendString.c_str(), m_sendString.length());
   if (!block) {
-    CWX_ERROR(("Failure to pack subtask result package for no memory"));
+    CWX_ERROR(("Failure to pack package for no memory"));
     exit(0);
   }
   ///设置消息的发送方式
