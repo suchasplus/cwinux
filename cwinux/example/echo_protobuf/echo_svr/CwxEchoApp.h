@@ -25,8 +25,8 @@ public:
 	CwxEchoApp();
     ///析构函数
 	virtual ~CwxEchoApp();
-    ///重载初始化函数
-    virtual int init(int argc, char** argv);
+  ///重载初始化函数
+  virtual int init(int argc, char** argv);
 public:
     ///时钟响应函数
     virtual void onTime(CwxTimeValue const& current);
