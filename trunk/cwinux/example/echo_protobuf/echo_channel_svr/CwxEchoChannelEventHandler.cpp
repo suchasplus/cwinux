@@ -1,4 +1,5 @@
 #include "CwxEchoChannelEventHandler.h"
+#include "../protobuf/echo.pb.h"
 
 /**
 @brief 连接可读事件，返回-1，close()会被调用
@@ -31,32 +32,35 @@ int CwxEchoChannelEventHandler::onConnClosed()
 
 void CwxEchoChannelEventHandler::replyMessage()
 {
-    ///设置echo回复的消息类型，为请求的消息类型+1
-    m_recvMsgData->event().getMsgHeader().setMsgType(m_recvMsgData->event().getMsgHeader().getMsgType() + 1);
-    ///设置echo回复的数据包长度
-    m_recvMsgData->event().getMsgHeader().setDataLen(m_recvMsgData->length());
-    ///创建回复的数据包
-    CwxMsgBlock* pBlock = CwxMsgBlockAlloc::malloc(m_recvMsgData->length() + CwxMsgHead::MSG_HEAD_LEN);
-    ///拷贝数据包的包头
-    memcpy(pBlock->wr_ptr(), m_recvMsgData->event().getMsgHeader().toNet(), CwxMsgHead::MSG_HEAD_LEN);
-    ///滑动block的写指针
-    pBlock->wr_ptr(CwxMsgHead::MSG_HEAD_LEN);
-    ///拷贝数据包的数据
-    memcpy(pBlock->wr_ptr(), m_recvMsgData->rd_ptr(), m_recvMsgData->length());
-    ///滑动block的写指针
-    pBlock->wr_ptr(m_recvMsgData->length());
-    if (!putMsg(pBlock))
-    {
-        CWX_ERROR(("Failure to put message"));
-        CwxMsgBlockAlloc::free(pBlock);
-    }
-    m_ullMsgNum ++;
-    if (m_ullMsgNum && !(m_ullMsgNum%10000))
-    {
-        char szBuf[64];
-        CwxCommon::toString(m_ullMsgNum, szBuf, 10);
-        CWX_INFO(("Recv echo message num:%s", szBuf));
-    }
-
-
+  string recv_str(msg->rd_ptr(), msg->length());
+  cwinux_echo::echo echo;
+  if (!echo.ParseFromString(recv_str)) {
+    // 解析失败认为是通信错误，关闭连接
+    CWX_ERROR((err_2k_, 2047, "Failure to unpack echo msg"));
+    m_pApp->noticeCloseConn(msg->event().getConnId());
+    return 1;
+  }
+  echo.SerializeToString(&recv_str);
+  CwxMsgHead head(0,
+    0,
+    msg->event().getMsgHeader().getMsgType() + 1,
+    SEND_MSG_TYPE,
+    msg->event().getMsgHeader().getTaskId(),
+    recv_str.length());
+  ///分配发送消息包的block
+  CwxMsgBlock* block = CwxMsgBlockAlloc::pack(head, recv_str.c_str(), recv_str.length());
+  if (!block) {
+    CWX_ERROR(("Failure to pack package for no memory"));
+    exit(0);
+  }
+  if (!putMsg(block)) {
+    CWX_ERROR(("Failure to put message"));
+    CwxMsgBlockAlloc::free(block);
+  }
+  m_ullMsgNum ++;
+  if (m_ullMsgNum && !(m_ullMsgNum%10000)){
+    char szBuf[64];
+    CwxCommon::toString(m_ullMsgNum, szBuf, 10);
+    CWX_INFO(("Recv echo message num:%s", szBuf));
+  }
 }
