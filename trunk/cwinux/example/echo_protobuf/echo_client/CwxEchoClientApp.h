@@ -51,8 +51,9 @@ private:
     //发送echo请求
     void sendNextMsg(CWX_UINT32 uiSvrId, CWX_UINT32 uiHostId, CWX_UINT32 uiConnId);
 private:
-    CwxEchoClientConfig               m_config; ///<配置文件对象
+    CwxEchoClientConfig            m_config; ///<配置文件对象
     char                           m_szBuf100K[64 * 1024*1024+1]; ///<发送的echo数据buf及内容
+    string                         m_sendString;
     CWX_UINT32                     m_uiSendNum;///<发送echo请求的数量
     CWX_UINT32                     m_uiRecvNum;///<接收到echo回复的数量
 };
