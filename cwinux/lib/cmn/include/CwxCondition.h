@@ -54,12 +54,7 @@ public:
     CwxMutexLock  &lock();
     ///获取底层的condition
     pthread_cond_t* cond();
-    ///设置data
-    void data(void* data);
-    ///获取data
-    void* data();
 private:
-    void*            m_data;
     pthread_cond_t*  m_cond;///<condition对象
     CwxMutexLock&    m_lock;
 };
