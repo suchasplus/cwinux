@@ -14,8 +14,34 @@ if test "x$ax_cv_cxx_compile_cxx0x_cxx" = "xyes" ; then
     CXXFLAGS="$CXXFLAGS -std=c++0x"
 fi
 
+AC_DEFUN([THRIFT_DIR],[
+
+    AC_ARG_WITH(
+        thrift,
+        [  --with-thrift[=DIR]        thrift directory],
+        ,
+        [with_thrift="no"]
+    )
+
+    AC_MSG_CHECKING(for thrift directory)
+
+    if test "$with_thrift" != "no"; then
+        # make sure that a well known include file exists
+        if test -e $with_thrift/Thrift.h; then
+            thrift_dir=$with_thrift
+            AC_MSG_RESULT(thrift found!)
+        else
+            AC_MSG_ERROR( $with_thrift not found.  Check the value you specified with --with-thrift)
+        fi
+    fi
+])
+
+THRIFT_DIR
 
 
+if test "$with_thrift" != "no"; then
+AC_DEFINE(WITH_CWINUX_THRIFT)
+fi
 AC_DEFINE(_LARGEFILE64_SOURCE)
 AC_DEFINE(_FILE_OFFSET_BITS,64)
 AC_DEFINE(_LARGEFILE64_SOURCE)
