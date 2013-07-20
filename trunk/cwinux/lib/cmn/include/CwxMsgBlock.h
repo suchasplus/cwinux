@@ -247,10 +247,6 @@ public:
     inline CwxEventInfo& event() ;
     ///获取与Block相关的发送Msginfo信息。其设置有架构负责，用户只能在消息发送失败或完成的时候，查看此信息
     inline CwxMsgSendCtrl& send_ctrl();
-    ///获取msg的condition
-    inline CwxCondition* condition();
-    ///设置msg的condition
-    inline void condition(CwxCondition* condition);
 public:
     CwxMsgBlock*          m_next;///<下一个Block对象
 private:
@@ -270,7 +266,6 @@ private:
     CwxEventInfo            m_event;///<与收到数据包相关的连接及环境信息对象
     CwxMsgSendCtrl          m_sendCtrl;///<数据包发送时的连接及发送控制对象
     bool                    m_bFree; ///<是否被CwxMsgBlockAlloc释放
-    CwxCondition*           m_condition; ///<消息的condition对象
 };
 
 /**

@@ -5,7 +5,6 @@ inline CwxCondition::CwxCondition(CwxMutexLock &lock, pthread_condattr_t * attr)
 {
     m_cond = (pthread_cond_t*)malloc(sizeof (pthread_cond_t));
     pthread_cond_init(this->m_cond, attr);
-    m_data = NULL;
 }
 ///析构函数
 inline CwxCondition::~CwxCondition()
@@ -68,16 +67,6 @@ inline pthread_cond_t* CwxCondition::cond()
 {
     return m_cond;
 }
-
-///设置data
-inline void CwxCondition::data(void* data) {
-  m_data = data;
-}
-///获取data
-inline void* CwxCondition::data() {
-  return m_data;
-}
-
 
 CWINUX_END_NAMESPACE
 

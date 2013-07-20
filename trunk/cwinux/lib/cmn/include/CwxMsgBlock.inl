@@ -326,7 +326,6 @@ inline void CwxMsgBlock::reset()
     m_wrPos = 0;
     m_event.reset();
     m_sendCtrl.reset();
-    m_condition = NULL;
 }
 
 inline CwxEventInfo& CwxMsgBlock::event() 
@@ -337,14 +336,6 @@ inline CwxEventInfo& CwxMsgBlock::event()
 inline CwxMsgSendCtrl& CwxMsgBlock::send_ctrl()
 { 
     return m_sendCtrl;
-}
-///获取msg的condition
-inline CwxCondition* CwxMsgBlock::condition() {
-  return m_condition;
-}
-///设置msg的condition
-inline void CwxMsgBlock::condition(CwxCondition* condition) {
-  m_condition = condition;
 }
 
 inline CwxMsgBlock::~CwxMsgBlock()
@@ -364,7 +355,6 @@ inline CwxMsgBlock::CwxMsgBlock(size_t size)
     m_rdPos = 0;
     m_bFree = true;
     m_next = NULL;
-    m_condition = NULL;
 }
 
 inline CwxMsgBlock::CwxMsgBlock()
@@ -375,7 +365,6 @@ inline CwxMsgBlock::CwxMsgBlock()
     m_rdPos = 0;
     m_bFree = true;
     m_next = NULL;
-    m_condition = NULL;
 }
 
 ///创建signleton CwxEscapes 对象
