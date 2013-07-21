@@ -48,7 +48,7 @@ libcwxcmn_la_SOURCES = \
 
 libcwxcmn_la_LDFLAGS = 
 
-cwxcmnincludedir=$(prefix)/include/cmn 
+cwxcmnincludedir=$(prefix)/include/cmn
 cwxcmninclude_HEADERS=\
     ../include/CwxBitMap.h\
     ../include/CwxCharPool.h\
