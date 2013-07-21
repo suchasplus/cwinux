@@ -169,7 +169,8 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-SUBDIRS = echo_client echo_svr echo_channel_svr
+thrift_dir = @thrift_dir@
+SUBDIRS = echo_svr
 all: all-recursive
 
 .SUFFIXES:

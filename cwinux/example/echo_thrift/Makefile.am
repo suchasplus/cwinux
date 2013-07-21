@@ -1,2 +1,2 @@
 
-SUBDIRS = echo_client echo_svr echo_channel_svr
+SUBDIRS = echo_svr

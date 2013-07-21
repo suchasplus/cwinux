@@ -168,6 +168,7 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
+thrift_dir = @thrift_dir@
 pkgconfigdir = 
 BUILD_DATE = $(shell date +%F)
 cwx_echo_client_CPPFLAGS = -D_BUILD_DATE="$(BUILD_DATE)" -W -Wall
