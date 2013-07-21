@@ -34,6 +34,24 @@ AC_DEFUN([LIBEVENT_DIR],[
             AC_MSG_ERROR( $with_cwinux not found.  Check the value you specified with --with-cwinux)
         fi
     fi
+    AC_ARG_WITH(
+        thrift,
+        [  --with-thrift[=DIR]        thrift directory],
+        ,
+        [with_thrift="no"]
+    )
+
+    if test "$with_thrift" = "no"; then
+        AC_MSG_ERROR( You need to specify the thrift directory using --with-thrift)
+    else
+        # make sure that a well known include file exists
+        if test -e $with_thrift/Thrift.h; then
+            thrift_dir=$with_thrift
+            AC_MSG_RESULT(thrift found!)
+        else
+            AC_MSG_ERROR( $with_thrift not found.  Check the value you specified with --with-thrift)
+        fi
+    fi
 
 ])
 
@@ -44,13 +62,13 @@ AC_DEFINE(_FILE_OFFSET_BITS,64)
 AC_DEFINE(_LARGEFILE64_SOURCE)
 AC_DEFINE(_REENTRANT)
 AC_DEFINE(_GNU_SOURC)
+AC_DEFINE(WITH_CWINUX_THRIFT)
 
 
 # The AC_SUBST macro causes the variable to be saved in config.status
 AC_SUBST(cwinux_dir)
+AC_SUBST(thrift_dir)
 
 # Write config.status and the Makefile
 AC_OUTPUT(Makefile)
-AC_OUTPUT(echo_client/Makefile)
 AC_OUTPUT(echo_svr/Makefile)
-AC_OUTPUT(echo_channel_svr/Makefile)
