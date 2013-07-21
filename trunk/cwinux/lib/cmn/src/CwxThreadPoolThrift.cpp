@@ -219,7 +219,7 @@ CwxThreadPoolThrift::~CwxThreadPoolThrift(){
   if (m_msgQueue) delete m_msgQueue;
 }
 
-int CwxThreadPoolThrift::start() {
+void CwxThreadPoolThrift::start() {
   CwxMutexGuard<CwxMutexLock> lock(&m_lock);
   if (!m_arrTssEnv) {
     m_arrTssEnv = new CwxTss*[getThreadNum()];
@@ -232,10 +232,9 @@ int CwxThreadPoolThrift::start() {
     m_threadArr[index] = new CwxThreadThrift(index, m_msgQueue);
     if (0 != m_threadArr[index]->start(m_arrTssEnv[index], stack_size)){
       _stop();
-      return -1;
+      return;
     }
   }
-  return 0;
 }
 
 void CwxThreadPoolThrift::stop() {

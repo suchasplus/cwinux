@@ -184,10 +184,10 @@ public :
         size_t stack_size= 0 ///<线程的栈大小
         );
     ///析构函数
-    ~CwxThreadPool();
+    ~CwxThreadPoolThrift();
 public:
   //启动线程池
-  virtual int start();
+  virtual void start();
   ///停止线程池
   virtual void stop();
   /// join 线程
