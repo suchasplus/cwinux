@@ -69,6 +69,11 @@ int CwxEchoApp::initRunEnv(){
         return -1;
     }
     ///
+    CwxTss** pTss = new CwxTss*[m_config.m_unThreadNum];
+    for (uint16_t i=0; i<m_config.m_unThreadNum; i++) {
+      pTss[0] = new EchoTss();
+      ((EchoTss*) pTss[0])->Init();
+    }
     CwxThreadPoolThrift* threadPool = new CwxThreadPoolThrift(m_config.m_unThreadNum,
       pTss);
     m_threadManager = boost::shared_ptr<CwxThreadPoolThrift>(threadPool);
@@ -78,11 +83,6 @@ int CwxEchoApp::initRunEnv(){
     if ( 0 != m_thriftServerThread->start(NULL)){
       CWX_ERROR(("Failure to start thrift server pool"));
       return -1;
-    }
-    CwxTss** pTss = new CwxTss*[m_config.m_unThreadNum];
-    for (uint16_t i=0; i<m_config.m_unThreadNum; i++) {
-      pTss[0] = new EchoTss();
-      ((EchoTss*) pTss[0])->Init();
     }
     return 0;
 }
