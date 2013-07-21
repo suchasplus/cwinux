@@ -72,3 +72,4 @@ AC_SUBST(thrift_dir)
 # Write config.status and the Makefile
 AC_OUTPUT(Makefile)
 AC_OUTPUT(echo_svr/Makefile)
+AC_OUTPUT(echo_client/Makefile)
