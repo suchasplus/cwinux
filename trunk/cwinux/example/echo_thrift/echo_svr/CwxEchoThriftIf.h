@@ -54,6 +54,7 @@ typedef apache::thrift::transport::TTransportFactory TTransportFactory;
 CWINUX_USING_NAMESPACE
 
 class CwxEchoApp;
+
 class CwxEchoThriftIf :public echo_thrift::EchoIf {
 public:
   CwxEchoThriftIf(CwxEchoApp* app) {

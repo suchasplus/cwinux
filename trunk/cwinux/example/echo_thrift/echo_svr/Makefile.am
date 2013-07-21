@@ -15,7 +15,6 @@ cwx_echo_SOURCES = \
 	CwxEchoThriftIf.cpp\
 	../thrift/echo_constants.cpp\
 	../thrift/Echo.cpp\
-	../thrift/Echo_server.skeleton.cpp\
 	../thrift/echo_types.cpp\
 	CwxEchoEventHandler.cpp
 cwx_echo_LDADD=
