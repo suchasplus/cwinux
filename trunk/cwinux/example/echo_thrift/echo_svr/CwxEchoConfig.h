@@ -22,7 +22,7 @@ public:
   ~EchoTss() {}
 public:
   // tss的初始化，0：成功；-1：失败
-  int Init(){}
+  int Init(){return 0;}
 public:
   CwxMsgQueue         queue;
 };
