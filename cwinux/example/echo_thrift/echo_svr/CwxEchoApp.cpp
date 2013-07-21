@@ -2,10 +2,11 @@
 #include "CwxDate.h"
 
 ///构造函数
-CwxEchoApp::CwxEchoApp()
-{
+CwxEchoApp::CwxEchoApp() {
     m_eventHandler = NULL;
     m_threadPool = NULL;
+    m_thriftThreadPool = NULL;
+    m_thriftServerThread = NULL; 
 }
 
 ///析构函数
@@ -59,31 +60,6 @@ int CwxEchoApp::initRunEnv(){
     ///注册echo请求的处理handle，echo请求的svr-id为SVR_TYPE_ECHO
     m_eventHandler = new CwxEchoEventHandler(this);         
     this->getCommander().regHandle(SVR_TYPE_ECHO, m_eventHandler);
-
-    ///监听TCP连接，其建立的连接的svr-id都为SVR_TYPE_ECHO，接收的消息的svr-id都为SVR_TYPE_ECHO。
-    ///全部由m_eventHandler对象来处理
-    if (0 > this->noticeTcpListen(SVR_TYPE_ECHO, 
-        this->m_config.m_listen.getHostName().c_str(),
-        this->m_config.m_listen.getPort(),
-        false,
-        CWX_APP_MSG_MODE,
-        CwxEchoApp::setSockAttr,
-        this))
-    {
-        CWX_ERROR(("Can't register the echo acceptor port: addr=%s, port=%d",
-            this->m_config.m_listen.getHostName().c_str(),
-            this->m_config.m_listen.getPort()));
-        return -1;
-    }
-    ///监听UNIX DOMAIN连接，其建立的连接的svr-id都为SVR_TYPE_ECHO，接收的消息的svr-id都为SVR_TYPE_ECHO。
-    ///全部由m_eventHandler对象来处理
-    if (0 > this->noticeLsockListen(SVR_TYPE_ECHO, 
-        this->m_config.m_strUnixPathFile.c_str()))
-    {
-        CWX_ERROR(("Can't register the echo unix acceptor port: path=%s",
-            m_config.m_strUnixPathFile.c_str()));
-        return -1;
-    }
     ///创建线程池对象，此线程池中线程的group-id为2，线程池的线程数量为m_config.m_unThreadNum。
     m_threadPool = new CwxThreadPool(m_config.m_unThreadNum,
         &getCommander());
@@ -92,8 +68,39 @@ int CwxEchoApp::initRunEnv(){
         CWX_ERROR(("Failure to start thread pool"));
         return -1;
     }
+    ///启动server线程
+    m_thriftServerThread = new CwxThreadPool(1, &getCommander(), ThreadMain, this);
+    if ( 0 != m_thriftServerThread->start(NULL)){
+      CWX_ERROR(("Failure to start thrift server pool"));
+      return -1;
+    }
+    CwxTss** pTss = new CwxTss*[m_config.m_unThreadNum];
+    for (uint16_t i=0; i<m_config.m_unThreadNum; i++) {
+      pTss[0] = new EchoTss();
+      ((EchoTss*) pTss[0])->init();
+    }
+    CwxThreadPoolThrift* threadPool = new CwxThreadPoolThrift(m_config.m_unThreadNum,
+      pTss);
+    m_threadManager = boost::shared_ptr<CwxThreadPoolThrift>(threadPool);
     return 0;
+}
 
+void* CwxEchoApp::ThreadMain(CwxTss* tss, CwxMsgQueue* queue, void* arg) {
+  CwxEchoApp* app = (CwxEchoApp*) arg;
+  shared_ptr<CwxEchoThriftIf> rpc_handler=shared_ptr<CwxEchoThriftIf>(new CwxEchoThriftIf(app));
+  /// 创建thrift的server
+  boost::shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
+  boost::shared_ptr<TProcessor> server_processor(new echo_thrift::EchoProcessor(rpc_handler));
+  boost::shared_ptr<TServerTransport> serverTransport(
+    new TServerSocket(app->m_config.m_listen.getPort()));
+  boost::shared_ptr<TTransportFactory> transportFactory(
+    new TBufferedTransportFactory());
+  app->m_threadManager->start();
+  app->m_server = new TThreadPoolServer(server_processor, serverTransport,
+    transportFactory, protocolFactory, app->m_threadManager);
+  app->m_server.serve();
+  app->stop();
+  return 0;
 }
 
 ///时钟函数，什么也没有做
@@ -117,92 +124,20 @@ void CwxEchoApp::onSignal(int signum){
 
 }
 
-///echo请求的请求消息
-int CwxEchoApp::onRecvMsg(CwxMsgBlock* msg, CwxAppHandler4Msg& conn, CwxMsgHead const& header, bool& bSuspendConn){
-
-    msg->event().setSvrId(conn.getConnInfo().getSvrId());
-    msg->event().setHostId(conn.getConnInfo().getHostId());
-    msg->event().setConnId(conn.getConnInfo().getConnId());
-    msg->event().setIoHandle(conn.getHandle());
-    msg->event().setConnUserData(NULL);
-    msg->event().setMsgHeader(header);
-    msg->event().setEvent(CwxEventInfo::RECV_MSG);
-    msg->event().setTimestamp(CwxDate::getTimestamp());
-    ///不停止继续接受
-    bSuspendConn = false;
-    CWX_ASSERT (msg);
-    ///将消息放到线程池队列中，有内部的线程调用其处理handle来处理
-    m_threadPool->append(msg);
-    return 0;
-
-}
-
-int CwxEchoApp::setSockAttr(CWX_HANDLE handle, void* arg)
-{
-    CwxEchoApp* app=(CwxEchoApp*)arg;
-    int iSockBuf = 1024 * 1024;
-    while (setsockopt(handle, SOL_SOCKET, SO_SNDBUF, (void*)&iSockBuf, sizeof(iSockBuf)) < 0)
-    {
-        iSockBuf -= 1024;
-        if (iSockBuf <= 1024) break;
-    }
-    iSockBuf = 1024 * 1024;
-    while(setsockopt(handle, SOL_SOCKET, SO_RCVBUF, (void *)&iSockBuf, sizeof(iSockBuf)) < 0)
-    {
-        iSockBuf -= 1024;
-        if (iSockBuf <= 1024) break;
-    }
-
-    if (app->m_config.m_listen.isKeepAlive())
-    {
-        if (0 != CwxSocket::setKeepalive(handle,
-            true,
-            CWX_APP_DEF_KEEPALIVE_IDLE,
-            CWX_APP_DEF_KEEPALIVE_INTERNAL,
-            CWX_APP_DEF_KEEPALIVE_COUNT))
-        {
-            CWX_ERROR(("Failure to set listen addr:%s, port:%u to keep-alive, errno=%d",
-                app->m_config.m_listen.getHostName().c_str(),
-                app->m_config.m_listen.getPort(),
-                errno));
-            return -1;
-        }
-    }
-
-    int flags= 1;
-    if (setsockopt(handle, IPPROTO_TCP, TCP_NODELAY, (void *)&flags, sizeof(flags)) != 0)
-    {
-        CWX_ERROR(("Failure to set listen addr:%s, port:%u NODELAY, errno=%d",
-            app->m_config.m_listen.getHostName().c_str(),
-            app->m_config.m_listen.getPort(),
-            errno));
-        return -1;
-    }
-    struct linger ling= {0, 0};
-    if (setsockopt(handle, SOL_SOCKET, SO_LINGER, (void *)&ling, sizeof(ling)) != 0)
-    {
-        CWX_ERROR(("Failure to set listen addr:%s, port:%u LINGER, errno=%d",
-            app->m_config.m_listen.getHostName().c_str(),
-            app->m_config.m_listen.getPort(),
-            errno));
-        return -1;
-    }
-    return 0;
-}
-
-void CwxEchoApp::destroy()
-{
-    if (m_threadPool){
-        m_threadPool->stop();
-        delete m_threadPool;
-        m_threadPool = NULL;
-    }
-    if (m_eventHandler)
-    {
-        delete m_eventHandler;
-        m_eventHandler = NULL;
-    }
-    CwxAppFramework::destroy();
+void CwxEchoApp::destroy() {
+  if (m_threadPool){
+    m_threadPool->stop();
+    delete m_threadPool;
+    m_threadPool = NULL;
+  }
+  if (m_server) m_server->stop();
+  m_threadManager->stop();
+  if (m_eventHandler){
+    delete m_eventHandler;
+    m_eventHandler = NULL;
+  }
+  if (m_server) delete m_server;
+  CwxAppFramework::destroy();
 }
 
 

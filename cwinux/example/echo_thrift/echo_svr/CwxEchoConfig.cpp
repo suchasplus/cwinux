@@ -15,14 +15,6 @@ int CwxEchoConfig::loadConfig(string const & strConfFile){
 	}
 	if ('/' != value[value.length()-1]) value +="/";
 	m_strWorkDir = value;
-
-	//load unix
-	if (!parser.getAttr("svr", "unix", value) || !value.length()){
-		snprintf(m_szError, 2047, "Must set [svr:unix].");
-		return -1;
-	}
-	m_strUnixPathFile = value;
-
 	// load query thread num
 	if (!parser.getAttr("svr", "thread_num", value) || !value.length()){
 		snprintf(m_szError, 2047, "Must set [svr:thread_num].");
@@ -54,7 +46,7 @@ void CwxEchoConfig::outputConfig(string & strConfig){
     strConfig += "\nthread_num=";
     sprintf(szBuf, "%u", m_unThreadNum);
     strConfig += szBuf;
-	strConfig += "\nlisten: ip=";
+    strConfig += "\nlisten: ip=";
     strConfig += m_listen.getHostName();
     strConfig += " port=";
     sprintf(szBuf, "%u", m_listen.getPort());
