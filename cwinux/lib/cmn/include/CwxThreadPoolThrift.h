@@ -258,7 +258,7 @@ protected:
 
 CWINUX_END_NAMESPACE
 
-#include "CwxThreadPool.inl"
+#include "CwxThreadPoolThrift.inl"
 #include "CwxPost.h"
 #endif
 #endif
