@@ -98,7 +98,7 @@ void* CwxEchoApp::ThreadMain(CwxTss* , CwxMsgQueue* , void* arg) {
   app->m_threadManager->start();
   app->m_server = new TThreadPoolServer(server_processor, serverTransport,
     transportFactory, protocolFactory, app->m_threadManager);
-  app->m_server.serve();
+  app->m_server->serve();
   app->stop();
   return 0;
 }
