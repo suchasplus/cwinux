@@ -68,6 +68,11 @@ int CwxEchoApp::initRunEnv(){
         CWX_ERROR(("Failure to start thread pool"));
         return -1;
     }
+    ///
+    CwxThreadPoolThrift* threadPool = new CwxThreadPoolThrift(m_config.m_unThreadNum,
+      pTss);
+    m_threadManager = boost::shared_ptr<CwxThreadPoolThrift>(threadPool);
+
     ///启动server线程
     m_thriftServerThread = new CwxThreadPool(1, &getCommander(), ThreadMain, this);
     if ( 0 != m_thriftServerThread->start(NULL)){
@@ -79,9 +84,6 @@ int CwxEchoApp::initRunEnv(){
       pTss[0] = new EchoTss();
       ((EchoTss*) pTss[0])->Init();
     }
-    CwxThreadPoolThrift* threadPool = new CwxThreadPoolThrift(m_config.m_unThreadNum,
-      pTss);
-    m_threadManager = boost::shared_ptr<CwxThreadPoolThrift>(threadPool);
     return 0;
 }
 
