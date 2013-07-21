@@ -193,7 +193,7 @@ public:
   /// join 线程
   virtual void join();
   /// 线程池状态
-  virtual STATE state() const;
+  virtual ThreadManager::STATE state() const;
   virtual boost::shared_ptr<ThreadFactory> threadFactory() const;
   virtual void threadFactory(boost::shared_ptr<ThreadFactory> value);
   virtual void addWorker(size_t value=1);

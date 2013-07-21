@@ -147,16 +147,15 @@ void CwxThreadThrift::threadMain() {
   }
   m_pTssEnv->getThreadInfo().setStopped(false);
   CwxTss::regTss(m_pTssEnv);
-  m_pTssEnv->getThreadInfo().setThreadId(self());
+  m_pTssEnv->getThreadInfo().setThreadId(CwxThread::self());
   m_pTssEnv->getThreadInfo().setStartTime(ttTime);
   m_pTssEnv->getThreadInfo().setUpdateTime(ttTime);
   m_pTssEnv->getThreadInfo().setRecvMsgNum(0);
   m_pTssEnv->getThreadInfo().setQueuedMsgNum(0);
   int iRet = 0;
-  time_t ttTime = time(NULL);
+  boost::shared_ptr<Runnable> task;
   while((iRet = this->pop(task)) != -1) {//block until has query message
     m_pTssEnv->getThreadInfo().setBlocked(true);
-    boost::shared_ptr<Runnable> task;
     m_pTssEnv->getThreadInfo().setBlocked(false);
     ttTime = time(NULL);
     m_pTssEnv->getThreadInfo().setUpdateTime(ttTime);
@@ -194,12 +193,12 @@ void* CwxThreadThrift::threadFunc(void * thread)
 
 ///构造函数
 CwxThreadPoolThrift::CwxThreadPoolThrift(CWX_UINT16 unThreadNum,///<线程池中线程的数量
-  CwxTss** pThrEnv=NULL, ///<tss
-  size_t stack_size= 0 ///<线程的栈大小
+  CwxTss** pThrEnv, ///<tss
+  size_t stack_size ///<线程的栈大小
   )
 {
   m_arrTssEnv = pThrEnv;
-  m_msgQueue = new CwxMsgQueue(1024*1024);
+  m_msgQueue = new CwxMsgQueueThrift(1024*1024);
   m_stackSize = stack_size;
   m_threadArr =  NULL;
   m_threadNum = unThreadNum;
@@ -230,7 +229,7 @@ void CwxThreadPoolThrift::start() {
   m_threadArr = new CwxThreadThrift*[getThreadNum()];
   for (index=0; index<getThreadNum(); index++){
     m_threadArr[index] = new CwxThreadThrift(index, m_msgQueue);
-    if (0 != m_threadArr[index]->start(m_arrTssEnv[index], stack_size)){
+    if (0 != m_threadArr[index]->start(m_arrTssEnv[index], m_stackSize)){
       _stop();
       return;
     }
@@ -248,8 +247,8 @@ void CwxThreadPoolThrift::join() {
 }
 
 /// 线程池状态
-STATE CwxThreadPoolThrift::state() const {
-  return isStop()?STOPPED:STARTED;
+ThreadManager::STATE CwxThreadPoolThrift::state() const {
+  return isStop()?ThreadManager::STOPPED:ThreadManager::STARTED;
 }
 
 boost::shared_ptr<ThreadFactory> CwxThreadPoolThrift::threadFactory() const {
