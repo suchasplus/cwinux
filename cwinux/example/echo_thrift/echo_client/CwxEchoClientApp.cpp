@@ -3,12 +3,10 @@
 ///构造函数，初始化发送的echo数据内容
 CwxEchoClientApp::CwxEchoClientApp():m_uiSendNum(0){
     CWX_UINT32 i=0;
-    for (i=0; i<sizeof(m_szBuf100K) - 1; i++){
-        m_szBuf100K[i] = 'a' + i % 26;
+    for (i=0; i<MAX_MSG_SIZE; i++){
+        m_szBuf[i] = 'a' + i % 26;
     }
-    m_szBuf100K[i] = 0x00;
-    m_uiRecvNum = 0;
-
+    m_szBuf[i] = 0x00;
 }
 ///析构函数
 CwxEchoClientApp::~CwxEchoClientApp(){
@@ -29,7 +27,7 @@ int CwxEchoClientApp::init(int argc, char** argv){
         CWX_ERROR((m_config.getError()));
         return -1;
     }
-    if (m_config.m_uiDataSize > sizeof(m_szBuf100K) -1) m_config.m_uiDataSize = sizeof(m_szBuf100K) -1;
+    if (m_config.m_uiDataSize > MAX_MSG_SIZE) m_config.m_uiDataSize = MAX_MSG_SIZE;
     ///设置输出运行日志的level
     setLogLevel(CwxLogger::LEVEL_ERROR|CwxLogger::LEVEL_INFO|CwxLogger::LEVEL_WARNING);
     return 0;
@@ -112,134 +110,5 @@ void CwxEchoClientApp::onSignal(int signum){
         CWX_INFO(("Recv signal=%d, ignore it.", signum));
         break;
     }
-}
-
-///echo服务的连接建立响应函数
-int CwxEchoClientApp::onConnCreated(CwxAppHandler4Msg& conn, bool& , bool& ){
-    ///发送一个echo数据包
-    sendNextMsg(conn.getConnInfo().getSvrId(),
-        conn.getConnInfo().getHostId(),
-        conn.getConnInfo().getConnId());
-    return 0;
-}
-
-///echo回复的消息响应函数
-int CwxEchoClientApp::onRecvMsg(CwxMsgBlock* msg, CwxAppHandler4Msg& conn, CwxMsgHead const& header, bool& bSuspendConn){
-
-    msg->event().setSvrId(conn.getConnInfo().getSvrId());
-    msg->event().setHostId(conn.getConnInfo().getHostId());
-    msg->event().setConnId(conn.getConnInfo().getConnId());
-    msg->event().setIoHandle(conn.getHandle());
-    msg->event().setConnUserData(NULL);
-    msg->event().setEvent(CwxEventInfo::RECV_MSG);
-    msg->event().setMsgHeader(header);
-    msg->event().setTimestamp(CwxDate::getTimestamp());
-    bSuspendConn = false;
-    ///释放收到的数据包
-    if (msg) CwxMsgBlockAlloc::free(msg);
-    if (m_config.m_bLasting){///如果是持久连接，则发送下一个echo请求数据包
-        sendNextMsg(conn.getConnInfo().getSvrId(),
-            conn.getConnInfo().getHostId(),
-            conn.getConnInfo().getConnId());
-    }else{
-        ///若不是持久连接，则重连连接。
-        this->noticeReconnect(conn.getConnInfo().getConnId());
-    }
-    ///收到的echo数据加1
-    m_uiRecvNum++;
-    ///若收到10000个数据包，则输出一条日志
-    if (!(m_uiRecvNum%10000)){
-        CWX_INFO(("Finish num=%u\n", m_uiRecvNum));
-    }
-    return 0;
-}
-///发送echo查询
-void CwxEchoClientApp::sendNextMsg(CWX_UINT32 uiSvrId, CWX_UINT32 uiHostId, CWX_UINT32 uiConnId){
-    CwxMsgHead header;
-    ///设置echo的消息类型
-    header.setMsgType(SEND_MSG_TYPE);
-    ///设置echo的数据包长度
-    header.setDataLen(m_config.m_uiDataSize);
-    ///设置echo数据包的taskid，此使用发送的数据序列号，当前没用
-    header.setTaskId(m_uiSendNum);
-    ///分配发送消息包的block
-    CwxMsgBlock* pBlock = CwxMsgBlockAlloc::malloc(m_config.m_uiDataSize + CwxMsgHead::MSG_HEAD_LEN);
-    ///拷贝消息头
-    memcpy(pBlock->wr_ptr(), header.toNet(), CwxMsgHead::MSG_HEAD_LEN);
-    pBlock->wr_ptr(CwxMsgHead::MSG_HEAD_LEN);
-    ///拷贝echo的数据
-    memcpy(pBlock->wr_ptr(), m_szBuf100K, m_config.m_uiDataSize);
-    pBlock->wr_ptr(m_config.m_uiDataSize);
-    ///设置消息的发送方式
-    ///设置消息的svr-id
-    pBlock->send_ctrl().setSvrId(uiSvrId);
-    ///设置消息的host-id
-    pBlock->send_ctrl().setHostId(uiHostId);
-    ///设置消息发送的连接id
-    pBlock->send_ctrl().setConnId(uiConnId);
-    ///设置消息发送的user-data
-    pBlock->send_ctrl().setUserData(NULL);
-    ///设置消息发送阶段的行为，包括开始发送是否通知、发送完成是否通知、发送失败是否通知
-    pBlock->send_ctrl().setMsgAttr(CwxMsgSendCtrl::NONE);
-    ///发送echo请求
-    if (0 != this->sendMsgByConn(pBlock)){
-        CWX_ERROR(("Failure to send msg"));
-        return ;
-    }
-    ///发送数据数量+1
-    m_uiSendNum++;
-}
-
-int CwxEchoClientApp::setSockAttr(CWX_HANDLE handle, void* arg)
-{
-    CwxEchoClientApp* app = (CwxEchoClientApp*) arg;
-    int iSockBuf = 1024 * 1024;
-    while (setsockopt(handle, SOL_SOCKET, SO_SNDBUF, (void*)&iSockBuf, sizeof(iSockBuf)) < 0)
-    {
-        iSockBuf -= 1024;
-        if (iSockBuf <= 1024) break;
-    }
-    iSockBuf = 1024 * 1024;
-    while(setsockopt(handle, SOL_SOCKET, SO_RCVBUF, (void *)&iSockBuf, sizeof(iSockBuf)) < 0)
-    {
-        iSockBuf -= 1024;
-        if (iSockBuf <= 1024) break;
-    }
-
-    if (app->m_config.m_listen.isKeepAlive())
-    {
-        if (0 != CwxSocket::setKeepalive(handle,
-            true,
-            CWX_APP_DEF_KEEPALIVE_IDLE,
-            CWX_APP_DEF_KEEPALIVE_INTERNAL,
-            CWX_APP_DEF_KEEPALIVE_COUNT))
-        {
-            CWX_ERROR(("Failure to set listen addr:%s, port:%u to keep-alive, errno=%d",
-                app->m_config.m_listen.getHostName().c_str(),
-                app->m_config.m_listen.getPort(),
-                errno));
-            return -1;
-        }
-    }
-
-    int flags= 1;
-    if (setsockopt(handle, IPPROTO_TCP, TCP_NODELAY, (void *)&flags, sizeof(flags)) != 0)
-    {
-        CWX_ERROR(("Failure to set listen addr:%s, port:%u NODELAY, errno=%d",
-            app->m_config.m_listen.getHostName().c_str(),
-            app->m_config.m_listen.getPort(),
-            errno));
-        return -1;
-    }
-    struct linger ling= {0, 0};
-    if (setsockopt(handle, SOL_SOCKET, SO_LINGER, (void *)&ling, sizeof(ling)) != 0)
-    {
-        CWX_ERROR(("Failure to set listen addr:%s, port:%u LINGER, errno=%d",
-            app->m_config.m_listen.getHostName().c_str(),
-            app->m_config.m_listen.getPort(),
-            errno));
-        return -1;
-    }
-    return 0;
 }
 

@@ -19,6 +19,7 @@ public:
     enum{
         LOG_FILE_SIZE = 30, ///<每个循环运行日志文件的MBTYE
         LOG_FILE_NUM = 7,///<循环日志文件的数量
+        MAX_MSG_SIZE = 64 * 1024*1024,
         SVR_TYPE_ECHO = CwxAppFramework::SVR_TYPE_USER_START ///<echo查询的svr-id类型
     };
     enum{
@@ -30,31 +31,33 @@ public:
 	CwxEchoClientApp();
     ///析构函数
 	virtual ~CwxEchoClientApp();
-    //初始化app, -1:failure, 0 success;
-    virtual int init(int argc, char** argv);
+  //初始化app, -1:failure, 0 success;
+  virtual int init(int argc, char** argv);
 public:
-    //时钟响应函数
-    virtual void onTime(CwxTimeValue const& current);
-    //信号响应函数
-    virtual void onSignal(int signum);
-    //echo连接建立函数
-    virtual int onConnCreated(CwxAppHandler4Msg& conn, bool& bSuspendConn, bool& bSuspendListen);
-    //echo返回的响应函数
-    virtual int onRecvMsg(CwxMsgBlock* msg, CwxAppHandler4Msg& conn, CwxMsgHead const& header, bool& bSuspendConn);
-    
+  //时钟响应函数
+  virtual void onTime(CwxTimeValue const& current);
+  //信号响应函数
+  virtual void onSignal(int signum);
+  char const* buf() const { return m_szBuf;}
+  void IncSendNum() {
+    CwxMutexGuard<CwxMutexLock> lock(&m_lock);
+    m_uiSendNum ++;
+    if (m_uiSendNum%10000 == 0) {
+      CWX_INFO(("Finish num=%u\n", m_uiSendNum));
+    }
+  }
+
+  CwxEchoClientConfig const& conf() const { return m_config;}
+
 protected:
     //init the Enviroment before run.0:success, -1:failure.
 	virtual int initRunEnv();
 private:
-    ///设置socket的属性
-    static int setSockAttr(CWX_HANDLE handle, void* arg);
-    //发送echo请求
-    void sendNextMsg(CWX_UINT32 uiSvrId, CWX_UINT32 uiHostId, CWX_UINT32 uiConnId);
-private:
-    CwxEchoClientConfig               m_config; ///<配置文件对象
-    char                           m_szBuf100K[64 * 1024*1024+1]; ///<发送的echo数据buf及内容
+    CwxEchoClientConfig            m_config; ///<配置文件对象
+    char                           m_szBuf[MAX_MSG_SIZE+1]; ///<发送的echo数据buf及内容
+    CwxThreadPool**                m_threadPools;
+    CwxMutexLock                   m_lock;
     CWX_UINT32                     m_uiSendNum;///<发送echo请求的数量
-    CWX_UINT32                     m_uiRecvNum;///<接收到echo回复的数量
 };
 
 #endif
