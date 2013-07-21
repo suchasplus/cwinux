@@ -5,6 +5,9 @@
     本软件遵循GNU GPL V3（http://www.gnu.org/licenses/gpl.html），
     联系方式：email:cwinux@gmail.com；微博:http://t.sina.com.cn/cwinux
 */
+#include "CwxGlobalMacro.h"
+#include "CwxCommon.h"
+
 #include "Echo.h"
 #include <concurrency/ThreadManager.h>
 #include <concurrency/PosixThreadFactory.h>
@@ -48,7 +51,6 @@ typedef apache::thrift::transport::TServerTransport ThriftTServerTransport;
 typedef apache::thrift::transport::TSocket TSocket;
 typedef apache::thrift::transport::TTransport TTransport;
 typedef apache::thrift::transport::TTransportFactory TTransportFactory;
-#include "CwxGlobalMacro.h"
 CWINUX_USING_NAMESPACE
 
 class CwxEchoApp;
