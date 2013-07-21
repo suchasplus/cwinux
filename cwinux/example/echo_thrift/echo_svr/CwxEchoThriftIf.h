@@ -53,7 +53,7 @@ CWINUX_USING_NAMESPACE
 
 
 class CwxEchoApp;
-class CwxEchoThriftIf :public EchoIf {
+class CwxEchoThriftIf :public echo_thrift::EchoIf {
 public:
   CwxEchoThriftIf(CwxEchoApp* app) {
     m_app = app;
@@ -61,7 +61,7 @@ public:
   ~CwxEchoThriftIf() {
   }
 public:
-  virtual void Echo(EchoData& _return, const std::string& echo_data);
+  virtual void Echo(echo_thrift::EchoData& _return, const std::string& echo_data);
 private:
   CwxEchoApp*    m_app;
 };

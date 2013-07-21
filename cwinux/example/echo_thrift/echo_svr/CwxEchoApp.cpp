@@ -77,7 +77,7 @@ int CwxEchoApp::initRunEnv(){
     CwxTss** pTss = new CwxTss*[m_config.m_unThreadNum];
     for (uint16_t i=0; i<m_config.m_unThreadNum; i++) {
       pTss[0] = new EchoTss();
-      ((EchoTss*) pTss[0])->init();
+      ((EchoTss*) pTss[0])->Init();
     }
     CwxThreadPoolThrift* threadPool = new CwxThreadPoolThrift(m_config.m_unThreadNum,
       pTss);
@@ -85,9 +85,9 @@ int CwxEchoApp::initRunEnv(){
     return 0;
 }
 
-void* CwxEchoApp::ThreadMain(CwxTss* tss, CwxMsgQueue* queue, void* arg) {
+void* CwxEchoApp::ThreadMain(CwxTss* , CwxMsgQueue* , void* arg) {
   CwxEchoApp* app = (CwxEchoApp*) arg;
-  shared_ptr<CwxEchoThriftIf> rpc_handler=shared_ptr<CwxEchoThriftIf>(new CwxEchoThriftIf(app));
+  boost::shared_ptr<CwxEchoThriftIf> rpc_handler=shared_ptr<CwxEchoThriftIf>(new CwxEchoThriftIf(app));
   /// 创建thrift的server
   boost::shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
   boost::shared_ptr<TProcessor> server_processor(new echo_thrift::EchoProcessor(rpc_handler));
