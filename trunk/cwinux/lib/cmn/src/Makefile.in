@@ -68,7 +68,8 @@ am_libcwxcmn_la_OBJECTS = libcwxcmn_la-CwxCharPool.lo \
 	libcwxcmn_la-CwxPackageWriterEx.lo libcwxcmn_la-CwxThread.lo \
 	libcwxcmn_la-CwxCommon.lo libcwxcmn_la-CwxGbkUnicodeMapDat.lo \
 	libcwxcmn_la-CwxMsgQueue.lo libcwxcmn_la-CwxRwIdLocker.lo \
-	libcwxcmn_la-CwxThreadPool.lo libcwxcmn_la-CwxDate.lo \
+	libcwxcmn_la-CwxThreadPool.lo \
+	libcwxcmn_la-CwxThreadPoolThrift.lo libcwxcmn_la-CwxDate.lo \
 	libcwxcmn_la-CwxGetOpt.lo libcwxcmn_la-CwxMutexIdLocker.lo \
 	libcwxcmn_la-CwxRwLock.lo libcwxcmn_la-CwxThreadPoolEx.lo \
 	libcwxcmn_la-CwxEncodeXml.lo libcwxcmn_la-CwxLogger.lo \
@@ -194,6 +195,7 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
+thrift_dir = @thrift_dir@
 pkgconfigdir = 
 lib_LTLIBRARIES = libcwxcmn.la
 libcwxcmn_la_CPPFLAGS = -W -Wall
@@ -216,6 +218,7 @@ libcwxcmn_la_SOURCES = \
 	CwxMsgQueue.cpp\
 	CwxRwIdLocker.cpp\
 	CwxThreadPool.cpp\
+	CwxThreadPoolThrift.cpp\
 	CwxDate.cpp\
 	CwxGetOpt.cpp\
 	CwxMutexIdLocker.cpp\
@@ -237,7 +240,7 @@ libcwxcmn_la_SOURCES = \
 	CwxFbHash.cpp
 
 libcwxcmn_la_LDFLAGS = 
-cwxcmnincludedir = $(prefix)/include/cmn
+cwxcmnincludedir = $(prefix)/include/cmn 
 cwxcmninclude_HEADERS = \
     ../include/CwxBitMap.h\
     ../include/CwxCharPool.h\
@@ -330,6 +333,8 @@ cwxcmninclude_HEADERS = \
     ../include/CwxThreadPoolEx.inl\
     ../include/CwxThreadPool.h\
     ../include/CwxThreadPool.inl\
+    ../include/CwxThreadPoolThrift.h\
+    ../include/CwxThreadPoolThrift.inl\
     ../include/CwxTpi.h\
     ../include/CwxTss.h\
     ../include/CwxLogger.h\
@@ -338,7 +343,7 @@ cwxcmninclude_HEADERS = \
     ../include/CwxMd5.h\
     ../include/CwxFbHash.h
 
-INCLUDES = -I$(srcdir)/../include
+INCLUDES = -I$(srcdir)/../include -I$(thrift_dir)
 all: all-am
 
 .SUFFIXES:
@@ -443,6 +448,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxThread.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxThreadPool.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxThreadPoolEx.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxThreadPoolThrift.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxTimeValue.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcwxcmn_la-CwxTss.Plo@am__quote@
 
@@ -592,6 +598,13 @@ libcwxcmn_la-CwxThreadPool.lo: CwxThreadPool.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxThreadPool.cpp' object='libcwxcmn_la-CwxThreadPool.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxcmn_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxcmn_la-CwxThreadPool.lo `test -f 'CwxThreadPool.cpp' || echo '$(srcdir)/'`CwxThreadPool.cpp
+
+libcwxcmn_la-CwxThreadPoolThrift.lo: CwxThreadPoolThrift.cpp
+@am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxcmn_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwxcmn_la-CwxThreadPoolThrift.lo -MD -MP -MF "$(DEPDIR)/libcwxcmn_la-CwxThreadPoolThrift.Tpo" -c -o libcwxcmn_la-CwxThreadPoolThrift.lo `test -f 'CwxThreadPoolThrift.cpp' || echo '$(srcdir)/'`CwxThreadPoolThrift.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/libcwxcmn_la-CwxThreadPoolThrift.Tpo" "$(DEPDIR)/libcwxcmn_la-CwxThreadPoolThrift.Plo"; else rm -f "$(DEPDIR)/libcwxcmn_la-CwxThreadPoolThrift.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxThreadPoolThrift.cpp' object='libcwxcmn_la-CwxThreadPoolThrift.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxcmn_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libcwxcmn_la-CwxThreadPoolThrift.lo `test -f 'CwxThreadPoolThrift.cpp' || echo '$(srcdir)/'`CwxThreadPoolThrift.cpp
 
 libcwxcmn_la-CwxDate.lo: CwxDate.cpp
 @am__fastdepCXX_TRUE@	if $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcwxcmn_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libcwxcmn_la-CwxDate.lo -MD -MP -MF "$(DEPDIR)/libcwxcmn_la-CwxDate.Tpo" -c -o libcwxcmn_la-CwxDate.lo `test -f 'CwxDate.cpp' || echo '$(srcdir)/'`CwxDate.cpp; \

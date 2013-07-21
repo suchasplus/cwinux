@@ -168,6 +168,7 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
+thrift_dir = @thrift_dir@
 SUBDIRS = lib/cmn/src lib/net/src lib/app/src 
 all: all-recursive
 
