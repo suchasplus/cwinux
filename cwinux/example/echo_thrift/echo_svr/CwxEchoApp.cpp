@@ -131,7 +131,7 @@ void CwxEchoApp::destroy() {
     m_threadPool = NULL;
   }
   if (m_server) m_server->stop();
-  m_threadManager->stop();
+  if (m_threadManager->()) m_threadManager->stop();
   if (m_eventHandler){
     delete m_eventHandler;
     m_eventHandler = NULL;
