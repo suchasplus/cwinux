@@ -87,7 +87,7 @@ int CwxEchoApp::initRunEnv(){
 
 void* CwxEchoApp::ThreadMain(CwxTss* , CwxMsgQueue* , void* arg) {
   CwxEchoApp* app = (CwxEchoApp*) arg;
-  boost::shared_ptr<CwxEchoThriftIf> rpc_handler=shared_ptr<CwxEchoThriftIf>(new CwxEchoThriftIf(app));
+  boost::shared_ptr<CwxEchoThriftIf> rpc_handler=boost::shared_ptr<CwxEchoThriftIf>(new CwxEchoThriftIf(app));
   /// 创建thrift的server
   boost::shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
   boost::shared_ptr<TProcessor> server_processor(new echo_thrift::EchoProcessor(rpc_handler));
