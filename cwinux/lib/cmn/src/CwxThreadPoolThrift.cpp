@@ -248,7 +248,7 @@ void CwxThreadPoolThrift::join() {
 
 /// 线程池状态
 ThreadManager::STATE CwxThreadPoolThrift::state() const {
-  return isStop()?ThreadManager::STOPPED:ThreadManager::STARTED;
+  return ThreadManager::STARTED;
 }
 
 boost::shared_ptr<ThreadFactory> CwxThreadPoolThrift::threadFactory() const {
@@ -299,7 +299,7 @@ void CwxThreadPoolThrift::setExpireCallback(ExpireCallback) {
 
 }
 
-bool CwxThreadPoolThrift::isStop() {
+bool CwxThreadPoolThrift::isStop(){
   return m_msgQueue->getState() == CwxMsgQueue::DEACTIVATED;
 }
 
