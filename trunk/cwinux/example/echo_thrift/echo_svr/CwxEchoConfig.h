@@ -10,6 +10,8 @@
 #include "CwxHostInfo.h"
 #include "CwxCommon.h"
 #include "CwxIniParse.h"
+#include "CwxMsgQueue.h"
+#include "CwxTss.h"
 
 CWINUX_USING_NAMESPACE
 
