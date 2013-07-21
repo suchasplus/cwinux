@@ -48,9 +48,8 @@ typedef apache::thrift::transport::TServerTransport ThriftTServerTransport;
 typedef apache::thrift::transport::TSocket TSocket;
 typedef apache::thrift::transport::TTransport TTransport;
 typedef apache::thrift::transport::TTransportFactory TTransportFactory;
-
+#include "CwxGlobalMacro.h"
 CWINUX_USING_NAMESPACE
-
 
 class CwxEchoApp;
 class CwxEchoThriftIf :public echo_thrift::EchoIf {
