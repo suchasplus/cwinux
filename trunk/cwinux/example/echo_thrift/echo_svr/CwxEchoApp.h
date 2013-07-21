@@ -8,6 +8,8 @@
 #include "CwxAppFramework.h"
 #include "CwxEchoConfig.h"
 #include "CwxEchoEventHandler.h"
+#include "CwxThreadPoolThrift.h"
+#include "CwxEchoThriftIf.h"
 
 #define ECHO_APP_VERSION "1.0"
 #define ECHO_MODIFY_DATE "2010-08-29"
@@ -32,22 +34,19 @@ public:
     virtual void onTime(CwxTimeValue const& current);
     ///signal响应函数
     virtual void onSignal(int signum);
-    ///收到echo消息的响应函数
-    virtual int onRecvMsg(CwxMsgBlock* msg,///<收到的echo请求数据包
-                        CwxAppHandler4Msg& conn,///<收到echo请求的连接对象
-                        CwxMsgHead const& header, ///<收到echo请求的消息头
-                        bool& bSuspendConn///<true：停止此连接继续接受稍息，false：此连接可以继续接受消息
-                        );
 protected:
-    static int setSockAttr(CWX_HANDLE handle, void* arg);
-
     ///重载运行环境设置API
-	virtual int initRunEnv();
+    virtual int initRunEnv();
     virtual void destroy();
+    static void* ThreadMain(CwxTss* tss, CwxMsgQueue* queue, void* arg);
 private:
     CwxEchoEventHandler*         m_eventHandler;///<echo请求处理的commander handle
     CwxThreadPool*               m_threadPool;///<线程池对象
-    CwxEchoConfig               m_config;///<配置文件对象
+    CwxThreadPoolThrift*         m_thriftThreadPool;
+    CwxThreadPool*               m_thriftServerThread; ///
+    CwxEchoConfig                m_config;///<配置文件对象
+    boost::shared_ptr<CwxThreadPoolThrift> m_threadManager;
+    TThreadPoolServer*           m_server;
 };
 #endif
 

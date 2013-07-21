@@ -13,14 +13,27 @@
 
 CWINUX_USING_NAMESPACE
 
+  // echho的tss
+class EchoTss:public CwxTss {
+public:
+  EchoTss():CwxTss(){
+  }
+  // 析构函数
+  ~EchoTss() {}
+public:
+  // tss的初始化，0：成功；-1：失败
+  int Init(){}
+public:
+  CwxMsgQueue         queue;
+};
+
 ///配置文件加载对象
 class CwxEchoConfig
 {
 public:
     CwxEchoConfig(){
         m_unThreadNum = 0;
-    }
-    
+    }    
     ~CwxEchoConfig(){}
 public:
     //加载配置文件.-1:failure, 0:success
@@ -31,9 +44,8 @@ public:
     char const* getError() { return m_szError; };
 public:
     string              m_strWorkDir;///<工作目录
-    string              m_strUnixPathFile;///<unix domain的监听 path file
-    CWX_UINT16           m_unThreadNum;///<echo服务的echo线程数量
-    CwxHostInfo       m_listen;///<tcp的监听ip/port
+    CWX_UINT16          m_unThreadNum;///<echo服务的echo线程数量
+    CwxHostInfo         m_listen;///<tcp的监听ip/port
     char                m_szError[2048];///<错误消息的buf
 };
 
