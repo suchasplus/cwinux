@@ -47,24 +47,25 @@ int main(int argc, char** argv) {
     printf("using %s  ip  port", argv[0]);
     return 1;
   }
-  shared_ptr<TTransport> socket( new TSocket(argv[2], atoi(argv[2])));
-  shared_ptr<TTransport> transport(new TBufferedTransport(socket));
-  shared_ptr <TProtocol> protocol(new TBinaryProtocol(transport));
+  boost::shared_ptr<TTransport> socket( new TSocket(argv[1], atoi(argv[2])));
+  boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
+  boost::shared_ptr <TProtocol> protocol(new TBinaryProtocol(transport));
   echo_thrift::EchoClient client(protocol);
   int i = 0;
   echo_thrift::EchoData ret;
+  char buf[128];
   while(true) {
     try {
       transport->open();
-      client.Echo(ret, "aaaaaaaaaaaaaaaaaaaaaaaaaa");
+      sprintf(buf, "aaaaaaaaaaaaaaaaaaaaaaaaaaa,no=%d", i);
+      client.Echo(ret, buf);
       transport->close();
     } catch (apache::thrift::TException &tx) {
-      LOG(ERROR) << "Failure to delete svr_pool[" << FLAGS_pool.c_str() <<
-        "], error:" << tx.what() << endl;
+      printf("Failure to echo, err=%s\n", tx.what());
       ::exit(1);
     }
     i++;
-    if (i%10000==0) printf("msg=%d\n", i);
+    if (i%10000==0) printf("msg=%s, num=%d\n", ret.data.c_str(), i);
   }
   return 0;
 

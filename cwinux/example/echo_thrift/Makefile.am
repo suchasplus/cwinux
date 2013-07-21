@@ -1,2 +1,2 @@
 
-SUBDIRS = echo_svr
+SUBDIRS = echo_svr echo_client
