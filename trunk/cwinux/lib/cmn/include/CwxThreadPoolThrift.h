@@ -227,20 +227,20 @@ public:
     @param [in] pMsg append的消息
     @return -1：失败；>=0队列中排队的消息数量
     */
-    inline int  append(CwxMsgBlock* pMsg);
+    inline int  append(boost::shared_ptr<Runnable> task);
     /**
     @brief 往线程的消息队列头添加一个新消息，以便及时消费。
     @param [in] pMsg append的消息
     @return -1：失败；>=0队列中排队的消息数量
     */
-    int  appendHead(CwxMsgBlock* pMsg);
+    int  appendHead(boost::shared_ptr<Runnable> task);
 
     /**
     @brief 从线程的消息队列获取一个排队消息，若队列为空，则阻塞。
     @param [out] pMsg pop的消息。
     @return -1：失败；>=0队列中排队的消息数量
     */
-    inline int  pop(CwxMsgBlock*& pMsg);
+    inline int  pop(boost::shared_ptr<Runnable>& task);
 
     inline CWX_UINT16 getThreadNum() { return m_threadNum;}
 private:
