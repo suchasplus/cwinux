@@ -282,11 +282,11 @@ size_t CwxThreadPoolThrift::expiredTaskCount() {
   return 0;
 }
 void CwxThreadPoolThrift::add(boost::shared_ptr<Runnable>task,
-  int64_t timeout=0LL,
-  int64_t expiration=0LL) {
+  int64_t ,
+  int64_t ) {
     m_msgQueue->enqueue(task);
 }
-void CwxThreadPoolThrift::remove(boost::shared_ptr<Runnable> task) {
+void CwxThreadPoolThrift::remove(boost::shared_ptr<Runnable> ) {
   return;
 }
 boost::shared_ptr<Runnable> CwxThreadPoolThrift::removeNextPending() {

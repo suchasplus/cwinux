@@ -242,7 +242,7 @@ public:
     */
     inline int  pop(boost::shared_ptr<Runnable>& task);
 
-    inline CWX_UINT16 getThreadNum() { return m_threadNum;}
+    inline CWX_UINT16 getThreadNum() const { return m_threadNum;}
 private:
     ///停止线程池
     void _stop();
