@@ -41,6 +41,7 @@ THRIFT_DIR
 
 if test "$with_thrift" != "no"; then
 AC_DEFINE(WITH_CWINUX_THRIFT)
+AC_SUBST(thrift_dir)
 fi
 AC_DEFINE(_LARGEFILE64_SOURCE)
 AC_DEFINE(_FILE_OFFSET_BITS,64)

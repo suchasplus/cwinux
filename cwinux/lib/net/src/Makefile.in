@@ -182,6 +182,7 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
+thrift_dir = @thrift_dir@
 pkgconfigdir = 
 lib_LTLIBRARIES = libcwxnet.la
 libcwxnet_la_CPPFLAGS = -W -Wall

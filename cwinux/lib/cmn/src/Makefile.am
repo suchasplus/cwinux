@@ -25,6 +25,7 @@ libcwxcmn_la_SOURCES = \
 	CwxMsgQueue.cpp\
 	CwxRwIdLocker.cpp\
 	CwxThreadPool.cpp\
+	CwxThreadPoolThrift.cpp\
 	CwxDate.cpp\
 	CwxGetOpt.cpp\
 	CwxMutexIdLocker.cpp\
@@ -47,7 +48,7 @@ libcwxcmn_la_SOURCES = \
 
 libcwxcmn_la_LDFLAGS = 
 
-cwxcmnincludedir=$(prefix)/include/cmn
+cwxcmnincludedir=$(prefix)/include/cmn 
 cwxcmninclude_HEADERS=\
     ../include/CwxBitMap.h\
     ../include/CwxCharPool.h\
@@ -140,6 +141,8 @@ cwxcmninclude_HEADERS=\
     ../include/CwxThreadPoolEx.inl\
     ../include/CwxThreadPool.h\
     ../include/CwxThreadPool.inl\
+    ../include/CwxThreadPoolThrift.h\
+    ../include/CwxThreadPoolThrift.inl\
     ../include/CwxTpi.h\
     ../include/CwxTss.h\
     ../include/CwxLogger.h\
@@ -149,7 +152,7 @@ cwxcmninclude_HEADERS=\
     ../include/CwxFbHash.h
 
 	
-INCLUDES=-I$(srcdir)/../include
+INCLUDES=-I$(srcdir)/../include -I$(thrift_dir)
 
 doc:
 	doxygen ../doc/cmn.dxyg
