@@ -7,6 +7,7 @@ void CwxEchoThriftIf::Echo(echo_thrift::EchoData& _return, const std::string& ec
   memcpy(msg->wr_ptr(), &echo_data, sizeof(string*));
   msg->wr_ptr(sizeof(string*));
   msg->event().setSvrId(CwxEchoApp::SVR_TYPE_ECHO);
+  msg->event().setEvent(CwxEventInfo::RECV_MSG);
   msg->event().setConnUserData(&tss->m_queue);
   tss->m_curId++;
   msg->event().m_ullArg = tss->m_curId;
