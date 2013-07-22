@@ -1,8 +1,8 @@
 [client]
-workdir=/usr/home/wenbo/cwinux/cwinux/trunk/cwinux/example/echo/echo_client
-listen=172.16.42.63
+workdir=/home/dwb/cwinux/cwinux/trunk/cwinux/example/echo_protobuf/echo_client
+listen=127.0.0.1
 port=9300
-unix=/usr/home/wenbo/cwinux/cwinux/trunk/cwinux/example/echo/echo_channel_svr/echo.unix
+unix=/home/dwb/cwinux/cwinux/trunk/cwinux/example/echo_protobuf/echo_svr/echo.unix
 conn_num=50
 conn_type=tcp
 conn_lasting=1
