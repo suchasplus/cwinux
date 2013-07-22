@@ -12,7 +12,7 @@
 #include "CwxEchoThriftIf.h"
 
 #define ECHO_APP_VERSION "1.0"
-#define ECHO_MODIFY_DATE "2010-08-29"
+#define ECHO_MODIFY_DATE "2013-07-20"
 
 
 ///多线程的echo服务，支持TCP与UNIX-DOMAIN两种协议
@@ -37,16 +37,19 @@ public:
 protected:
     ///重载运行环境设置API
     virtual int initRunEnv();
+    ///释放资源
     virtual void destroy();
+    ///thrift主线程的main函数
     static void* ThreadMain(CwxTss* tss, CwxMsgQueue* queue, void* arg);
+    ///获取线程池
+    CwxThreadPool*  GetThreadPool() { return  m_threadPool;}
 private:
     CwxEchoEventHandler*         m_eventHandler;///<echo请求处理的commander handle
     CwxThreadPool*               m_threadPool;///<线程池对象
-    CwxThreadPoolThrift*         m_thriftThreadPool;
-    CwxThreadPool*               m_thriftServerThread; ///
+    CwxThreadPool*               m_thriftServerThread; ///thrift的main线程
     CwxEchoConfig                m_config;///<配置文件对象
-    boost::shared_ptr<CwxThreadPoolThrift> m_threadManager;
-    TThreadPoolServer*           m_server;
+    boost::shared_ptr<CwxThreadPoolThrift> m_threadManager; ///thrift的线程管理对象
+    TThreadPoolServer*           m_server; ///<thrift的thread pool server
 };
 #endif
 

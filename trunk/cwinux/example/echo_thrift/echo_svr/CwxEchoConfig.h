@@ -19,6 +19,7 @@ CWINUX_USING_NAMESPACE
 class EchoTss:public CwxTss {
 public:
   EchoTss():CwxTss(){
+    m_curId = 0;
   }
   // 析构函数
   ~EchoTss() {}
@@ -26,7 +27,8 @@ public:
   // tss的初始化，0：成功；-1：失败
   int Init(){return 0;}
 public:
-  CwxMsgQueue         queue;
+  CwxMsgQueue         m_queue;
+  CWX_UINT64          m_curId;
 };
 
 ///配置文件加载对象

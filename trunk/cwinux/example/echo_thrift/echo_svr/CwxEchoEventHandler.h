@@ -22,7 +22,6 @@ public:
     ///析构函数
     virtual ~CwxEchoEventHandler()
     {
-
     }
 public:
     ///收到echo请求的处理函数
@@ -31,7 +30,6 @@ public:
                             );
 private:
     CwxEchoApp*     m_pApp;  ///<app对象
-    CWX_UINT64      m_ullMsgNum;
 };
 
 #endif 
