@@ -5,11 +5,9 @@
 int CwxEchoEventHandler::onRecvMsg(CwxMsgBlock*& msg, CwxTss* )
 {
     CwxMsgQueue* queue = (CwxMsgQueue*)msg->event().getConnUserData();
-    string const* data;
-    memcpy(&data, msg->rd_ptr(), sizeof(string*));
-    CwxMsgBlock* block = CwxMsgBlockAlloc::malloc(data->length());
-    memcpy(block->wr_ptr(), data->c_str(), data->length());
-    block->wr_ptr(data->length());
+    CwxMsgBlock* block = CwxMsgBlockAlloc::malloc(msg->length());
+    memcpy(block->wr_ptr(), msg->rd_ptr(), msg->length());
+    block->wr_ptr(msg->length());
     block->event().m_ullArg = msg->event().m_ullArg;
     queue->enqueue(block);
     return 1;

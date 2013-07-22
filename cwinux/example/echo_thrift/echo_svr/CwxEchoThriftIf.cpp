@@ -3,9 +3,9 @@
 
 void CwxEchoThriftIf::Echo(echo_thrift::EchoData& _return, const std::string& echo_data) {
   EchoTss* tss = (EchoTss*)CwxTss::instance();
-  CwxMsgBlock* msg = CwxMsgBlockAlloc::malloc(sizeof(string*));
-  memcpy(msg->wr_ptr(), &echo_data, sizeof(string*));
-  msg->wr_ptr(sizeof(string*));
+  CwxMsgBlock* msg = CwxMsgBlockAlloc::malloc(echo_data.length());
+  memcpy(msg->wr_ptr(), echo_data.c_str(), echo_data.length());
+  msg->wr_ptr(echo_data.length());
   msg->event().setSvrId(CwxEchoApp::SVR_TYPE_ECHO);
   msg->event().setEvent(CwxEventInfo::RECV_MSG);
   msg->event().setConnUserData(&tss->m_queue);
