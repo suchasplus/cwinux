@@ -70,8 +70,8 @@ int CwxEchoApp::initRunEnv(){
     /// 创建thrift thread manager线程的tss对象
     CwxTss** pTss = new CwxTss*[m_config.m_unThreadNum];
     for (uint16_t i=0; i<m_config.m_unThreadNum; i++) {
-      pTss[0] = new EchoTss();
-      ((EchoTss*) pTss[0])->Init();
+      pTss[i] = new EchoTss();
+      ((EchoTss*) pTss[i])->Init();
     }
     CwxThreadPoolThrift* threadPool = new CwxThreadPoolThrift(m_config.m_unThreadNum,
       pTss);

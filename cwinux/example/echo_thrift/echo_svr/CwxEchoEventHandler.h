@@ -17,7 +17,6 @@ public:
     ///构造函数
     CwxEchoEventHandler(CwxEchoApp* pApp):m_pApp(pApp)
     {
-        m_ullMsgNum = 0;
     }
     ///析构函数
     virtual ~CwxEchoEventHandler()

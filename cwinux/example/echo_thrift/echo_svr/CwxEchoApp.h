@@ -34,6 +34,8 @@ public:
     virtual void onTime(CwxTimeValue const& current);
     ///signal响应函数
     virtual void onSignal(int signum);
+    ///获取线程池
+    CwxThreadPool*  GetThreadPool() { return  m_threadPool;}
 protected:
     ///重载运行环境设置API
     virtual int initRunEnv();
@@ -41,8 +43,6 @@ protected:
     virtual void destroy();
     ///thrift主线程的main函数
     static void* ThreadMain(CwxTss* tss, CwxMsgQueue* queue, void* arg);
-    ///获取线程池
-    CwxThreadPool*  GetThreadPool() { return  m_threadPool;}
 private:
     CwxEchoEventHandler*         m_eventHandler;///<echo请求处理的commander handle
     CwxThreadPool*               m_threadPool;///<线程池对象
