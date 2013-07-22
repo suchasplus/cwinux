@@ -34,6 +34,24 @@ AC_DEFUN([LIBEVENT_DIR],[
             AC_MSG_ERROR( $with_cwinux not found.  Check the value you specified with --with-cwinux)
         fi
     fi
+    AC_ARG_WITH(
+        protobuf,
+        [  --with-protobuf[=DIR]       protobuf  directory],
+        ,
+        [with_protobuf="no"]
+    )
+
+    if test "$with_protobuf" = "no"; then
+        AC_MSG_ERROR( You need to specify the protobuf directory using --with-protobuf)
+    else
+        # make sure that a well known include file exists
+        if test -e $with_protobuf/message.h; then
+            protobuf_dir=$with_protobuf
+            AC_MSG_RESULT(protobuf found!)
+        else
+            AC_MSG_ERROR( $with_protobuf not found.  Check the value you specified with --with-protobuf)
+        fi
+    fi
 
 ])
 
@@ -48,6 +66,7 @@ AC_DEFINE(_GNU_SOURC)
 
 # The AC_SUBST macro causes the variable to be saved in config.status
 AC_SUBST(cwinux_dir)
+AC_SUBST(protobuf_dir)
 
 # Write config.status and the Makefile
 AC_OUTPUT(Makefile)
