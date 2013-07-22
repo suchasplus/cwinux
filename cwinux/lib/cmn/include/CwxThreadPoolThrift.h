@@ -169,7 +169,7 @@ protected:
     CWX_UINT16              m_unThreadId;///<线程在线程组中的序号
     CwxMsgQueueThrift*      m_msgQueue; ///<队列
     bool                    m_bOwnQueue; ///<是否拥有队列
-    pthread_t               m_tid;
+    pthread_t               m_tid; ///<线程的id
 };
 
 /**
@@ -194,22 +194,37 @@ public:
   virtual void join();
   /// 线程池状态
   virtual ThreadManager::STATE state() const;
+  /// 获取线程的创建类工场，当前忽视
   virtual boost::shared_ptr<ThreadFactory> threadFactory() const;
+  /// 设置线程的创建类工场，当前忽视
   virtual void threadFactory(boost::shared_ptr<ThreadFactory> value);
+  /// 增加一个线程，当前忽视
   virtual void addWorker(size_t value=1);
+  /// 去掉一个线程，当前忽视
   virtual void removeWorker(size_t value=1);
+  /// 空闲的线程数量，当前忽视
   virtual size_t idleWorkerCount() const;
+  /// 工作的线程数量，当前忽视
   virtual size_t workerCount() const;
+  /// 等待处理的task数量
   virtual size_t pendingTaskCount() const;
+  /// 总共的任务数量
   virtual size_t totalTaskCount() const;
+  /// 任务的最大值
   virtual size_t pendingTaskCountMax() const;
+  /// 超时任务的数量，当前忽视
   virtual size_t expiredTaskCount();
+  /// 添加任务
   virtual void add(boost::shared_ptr<Runnable>task,
                    int64_t timeout=0LL,
                    int64_t expiration=0LL);
+  /// 删除任务
   virtual void remove(boost::shared_ptr<Runnable> task);
+  /// 删除下一个任务
   virtual boost::shared_ptr<Runnable> removeNextPending();
+  /// 删除超时的任务
   virtual void removeExpiredTasks();
+  /// 设置任务超时的回调函数
   virtual void setExpireCallback(ExpireCallback expireCallback);
   ///check thread 是否停止。若需要改变检查的规则，则重载此API
   virtual bool isStop();

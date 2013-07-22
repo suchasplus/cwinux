@@ -116,7 +116,11 @@ public:
     @param [in] argv main的argv，为输入参数的列表
     @return -1：失败； 0：成功； 1：help
     */
+#ifndef WITH_CWINUX_GFLAGS
     virtual int init(int argc, char** argv);
+#else
+    virtual int init(char const* app_name);
+#endif
 public:
     /**
     @brief 注册接受标准输入的信息。若注册成功，则标准输入的输入将通过OnStdinInput通知。
@@ -460,7 +464,11 @@ public:
     @param [in] argv main的argv，为输入参数的列表
     @return -1：失败； 0：成功； 1：help
     */
+#ifndef WITH_CWINUX_GFLAGS
     int parse(int argc, char** argv);
+#else
+    int parse();
+#endif
     ///output help information
     void help();
     ///屏蔽指定的信号
