@@ -2,6 +2,14 @@
 #include "CwxFile.h"
 #include "CwxGetOpt.h"
 
+#ifdef WITH_CWINUX_GFLAGS
+#include "gflags.h"
+
+DEFINE_bool(stop, false, "Stop the daemon service.");
+DEFINE_bool(restart, false, "Restart the daemon service.");
+DEFINE_string(conf, "", "The config file.");
+#endif
+
 CWINUX_BEGIN_NAMESPACE
 
 CwxAppFramework::CwxAppFramework(CWX_UINT16 unAppMode,
@@ -54,6 +62,7 @@ return:
     0 : success.
     1 : exit
 */
+#ifndef WITH_CWINUX_GFLAGS
 int CwxAppFramework::parse(int argc, char** argv)
 {
     if (argc > 1) 
@@ -109,7 +118,15 @@ int CwxAppFramework::parse(int argc, char** argv)
     }
     return 0;
 }
+#else
+int CwxAppFramework::parse() {
+  this->m_strConfFile = FLAGS_conf;
+  this->m_bCmdStop = FLAGS_stop;
+  this->m_bCmdRestart = FLAGS_restart;
+  return 0;
+}
 
+#endif
 void CwxAppFramework::help()
 {
     printf("commond option....\n");
@@ -119,6 +136,7 @@ void CwxAppFramework::help()
     printf("-h:--help     : help\n");
 }
 
+#ifndef WITH_CWINUX_GFLAGS
 int CwxAppFramework::init(int argc, char** argv)
 {
     int iRet = parse(argc, argv);
@@ -146,6 +164,28 @@ int CwxAppFramework::init(int argc, char** argv)
     CwxTss::regTss(m_pTss);
  	return 0;
 }
+#else
+int CwxAppFramework::init(char const* app_name)
+{
+  parse();
+  if ( this->m_bCmdStop || this->m_bCmdRestart) return 0;
+  this->destroy();
+  if (0 != CwxTss::initTss())
+  {
+    CWX_ERROR(("Failure to init tss"));
+    return -1;
+  }
+  //get app name
+  CwxFile::getLastDirName(app_name, m_strAppName);
+  m_pTss = this->onTssEnv();
+  CWX_ASSERT(m_pTss);
+  m_pTss->getThreadInfo().setStartTime(time(NULL));
+  m_pTss->getThreadInfo().setUpdateTime(time(NULL));
+  m_pTss->getThreadInfo().setThreadNo(0);
+  CwxTss::regTss(m_pTss);
+  return 0;
+}
+#endif
 
 //register the stdin
 int CwxAppFramework::noticeStdinListen()

@@ -85,14 +85,25 @@ public:
     @param [in] unDelaySec 启动的初期，延时发送心跳的时间（s）
     @return -1：启动失败。 0：启动成功。
     */
+#ifndef WITH_CWINUX_GFLAGS
     static int start(int argc, char** argv, CWX_UINT16 unMaxHeartbeatInternal, CWX_UINT16 unDelaySec);
+#else
+    static int start(char const* app_name, CWX_UINT16 unMaxHeartbeatInternal, CWX_UINT16 unDelaySec);
+#endif
 private:
     ///注册信号处理handle
     static int regSigHandle();
+#ifndef WITH_CWINUX_GFLAGS
     ///检查服务启动的命令行参数
     static int checkRunCmd(int argc, char** argv);
     ///启动工作进程
     static int startProcess(int argc, char** argv, CWX_UINT16 unDelaySec);
+#else
+    ///检查服务启动的命令行参数
+    static int checkRunCmd(char const* app_name);
+    ///启动工作进程
+    static int startProcess(char const* app_name, CWX_UINT16 unDelaySec);
+#endif
     ///SIGQUIT 信号句柄
     static void stopHandler(int , siginfo_t *info, void *);
     ///SIGINT 信号句柄

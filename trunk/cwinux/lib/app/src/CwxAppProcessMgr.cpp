@@ -27,10 +27,19 @@ int CwxAppProcessMgr::init(CwxAppFramework* pApp)
     return 0;
 }
 
+#ifndef WITH_CWINUX_GFLAGS
 int CwxAppProcessMgr::start(int argc, char** argv, CWX_UINT16 unMaxHeartbeatInternal, CWX_UINT16 unDelaySec)
+#else
+int CwxAppProcessMgr::start(char const* app_name, CWX_UINT16 unMaxHeartbeatInternal, CWX_UINT16 unDelaySec)
+#endif
 {
     //chech the your command
-    int ret = checkRunCmd(argc, argv);
+    int ret = 0;
+#ifndef WITH_CWINUX_GFLAGS
+    ret = checkRunCmd(argc, argv);
+#else
+    ret = checkRunCmd(app_name)
+#endif
     if (0 != ret) return 0;
 
     pid_t	pid1, pid2;
@@ -74,7 +83,11 @@ int CwxAppProcessMgr::start(int argc, char** argv, CWX_UINT16 unMaxHeartbeatInte
                     {
                         exit(0);
                     }
+#ifndef WITH_CWINUX_GFLAGS
                     startProcess(argc, argv, unDelaySec);
+#else
+                    startProcess(app_name, unDelaySec);
+#endif
                     sleep(1);
                     unlock(fd);//child can run now.
                     sleep(1);
@@ -146,18 +159,30 @@ int CwxAppProcessMgr::regSigHandle()
     return 0;
 }
 
+#ifndef WITH_CWINUX_GFLAGS
 int CwxAppProcessMgr::checkRunCmd(int argc, char** argv)
+#else
+int CwxAppProcessMgr::checkRunCmd(char const* app_name)
+#endif
 {
     pid_t pid;
     char szProcFile[256];
 
+#ifndef WITH_CWINUX_GFLAGS
     CwxFile::getLastDirName(argv[0], m_strAppName);
-
+#else
+    CwxFile::getLastDirName(app_name, m_strAppName);
+#endif
     m_strAppLockFile =".";
     m_strAppLockFile += m_strAppName + ".lock";
 
     CwxAppFramework app;
-    int iRet = app.parse(argc, argv);
+    int iRet = 0;
+#ifndef WITH_CWINUX_GFLAGS
+    iRet = app.parse(argc, argv);
+#else
+    iRet = app.parse();
+#endif
     if (0 != iRet)
     {
         app.help();
@@ -187,7 +212,11 @@ int CwxAppProcessMgr::checkRunCmd(int argc, char** argv)
 }
 
 //return new process's pid, -1: failure
+#ifndef WITH_CWINUX_GFLAGS
 int CwxAppProcessMgr::startProcess(int argc, char** argv, CWX_UINT16 unDelaySec)
+#else
+int CwxAppProcessMgr::startProcess(char const* app_name, CWX_UINT16 unDelaySec)
+#endif
 {
     pid_t	pid;
     if ( (pid = fork()) < 0)
@@ -209,7 +238,12 @@ int CwxAppProcessMgr::startProcess(int argc, char** argv, CWX_UINT16 unDelaySec)
     m_pProcess->m_ttLastChildHeat = time(NULL) + unDelaySec;
     m_pProcess->m_pid = getpid();
     m_pProcess->m_unState = CwxAppProcessInfo::PROC_STATE_RUNNING;
-    if (-1 == m_pProcess->m_pApp->init(argc, argv))
+#ifndef WITH_CWINUX_GFLAGS
+    int ret = m_pProcess->m_pApp->init(argc, argv);
+#else
+    int ret = m_pProcess->m_pApp->init(app_name);
+#endif
+    if (-1 == ret)
     {
 		pid_t ppid = getppid();
 		if (1 != ppid) kill(ppid, SIGKILL);
