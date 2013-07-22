@@ -38,7 +38,7 @@ int CwxAppProcessMgr::start(char const* app_name, CWX_UINT16 unMaxHeartbeatInter
 #ifndef WITH_CWINUX_GFLAGS
     ret = checkRunCmd(argc, argv);
 #else
-    ret = checkRunCmd(app_name)
+    ret = checkRunCmd(app_name);
 #endif
     if (0 != ret) return 0;
 
