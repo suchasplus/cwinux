@@ -148,6 +148,7 @@ build_os = @build_os@
 build_vendor = @build_vendor@
 datadir = @datadir@
 exec_prefix = @exec_prefix@
+gflags_dir = @gflags_dir@
 host = @host@
 host_alias = @host_alias@
 host_cpu = @host_cpu@

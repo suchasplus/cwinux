@@ -79,7 +79,7 @@ cwxappinclude_HEADERS=\
 	../include/CwxAppHandler4Channel.inl
 
 	
-INCLUDES=-I$(srcdir)/../include -I$(srcdir)/../../cmn/include -I$(srcdir)/../../net/include -I$(thrift_dir)
+INCLUDES=-I$(srcdir)/../include -I$(srcdir)/../../cmn/include -I$(srcdir)/../../net/include -I$(thrift_dir) -I$(gflags_dir)
 
 doc:
 	doxygen ../doc/app.dxyg
