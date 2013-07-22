@@ -34,6 +34,24 @@ AC_DEFUN([THRIFT_DIR],[
             AC_MSG_ERROR( $with_thrift not found.  Check the value you specified with --with-thrift)
         fi
     fi
+    AC_ARG_WITH(
+        gflags,
+        [  --with-gflags[=DIR]        gflags directory],
+        ,
+        [with_gflags="no"]
+    )
+
+    AC_MSG_CHECKING(for gflags directory)
+
+    if test "$with_gflags" != "no"; then
+        # make sure that a well known include file exists
+        if test -e $with_gflags/gflags.h; then
+            gflags_dir=$with_gflags
+            AC_MSG_RESULT(gflags found!)
+        else
+            AC_MSG_ERROR( $with_gflags not found.  Check the value you specified with --with-gflags)
+        fi
+    fi
 ])
 
 THRIFT_DIR
@@ -42,6 +60,10 @@ THRIFT_DIR
 if test "$with_thrift" != "no"; then
 AC_DEFINE(WITH_CWINUX_THRIFT)
 AC_SUBST(thrift_dir)
+fi
+if test "$with_gflags" != "no"; then
+AC_DEFINE(WITH_CWINUX_GFLAGS)
+AC_SUBST(gflags_dir)
 fi
 AC_DEFINE(_LARGEFILE64_SOURCE)
 AC_DEFINE(_FILE_OFFSET_BITS,64)
@@ -57,4 +79,3 @@ AC_OUTPUT(Makefile)
 AC_OUTPUT(lib/cmn/src/Makefile)
 AC_OUTPUT(lib/net/src/Makefile)
 AC_OUTPUT(lib/app/src/Makefile)
-

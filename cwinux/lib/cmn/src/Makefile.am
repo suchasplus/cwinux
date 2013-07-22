@@ -152,7 +152,7 @@ cwxcmninclude_HEADERS=\
     ../include/CwxFbHash.h
 
 	
-INCLUDES=-I$(srcdir)/../include -I$(thrift_dir)
+INCLUDES=-I$(srcdir)/../include -I$(thrift_dir) -I$(gflags_dir)
 
 doc:
 	doxygen ../doc/cmn.dxyg

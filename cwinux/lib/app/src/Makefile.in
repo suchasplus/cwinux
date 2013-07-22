@@ -178,6 +178,7 @@ build_os = @build_os@
 build_vendor = @build_vendor@
 datadir = @datadir@
 exec_prefix = @exec_prefix@
+gflags_dir = @gflags_dir@
 host = @host@
 host_alias = @host_alias@
 host_cpu = @host_cpu@
@@ -273,7 +274,7 @@ cwxappinclude_HEADERS = \
 	../include/CwxAppHandler4Channel.h\
 	../include/CwxAppHandler4Channel.inl
 
-INCLUDES = -I$(srcdir)/../include -I$(srcdir)/../../cmn/include -I$(srcdir)/../../net/include -I$(thrift_dir)
+INCLUDES = -I$(srcdir)/../include -I$(srcdir)/../../cmn/include -I$(srcdir)/../../net/include -I$(thrift_dir) -I$(gflags_dir)
 all: all-am
 
 .SUFFIXES:
