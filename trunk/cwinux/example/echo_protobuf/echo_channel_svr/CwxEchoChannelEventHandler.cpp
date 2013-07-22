@@ -32,20 +32,17 @@ int CwxEchoChannelEventHandler::onConnClosed()
 
 void CwxEchoChannelEventHandler::replyMessage()
 {
-  string recv_str(msg->rd_ptr(), msg->length());
+  string recv_str(m_recvMsgData->rd_ptr(), m_recvMsgData->length());
   cwinux_echo::echo echo;
   if (!echo.ParseFromString(recv_str)) {
     // 解析失败认为是通信错误，关闭连接
-    CWX_ERROR((err_2k_, 2047, "Failure to unpack echo msg"));
-    m_pApp->noticeCloseConn(msg->event().getConnId());
-    return 1;
+    CWX_ERROR(("Failure to unpack echo msg"));
   }
   echo.SerializeToString(&recv_str);
   CwxMsgHead head(0,
     0,
-    msg->event().getMsgHeader().getMsgType() + 1,
-    SEND_MSG_TYPE,
-    msg->event().getMsgHeader().getTaskId(),
+    m_header.getMsgType() + 1,
+    m_header.getTaskId(),
     recv_str.length());
   ///分配发送消息包的block
   CwxMsgBlock* block = CwxMsgBlockAlloc::pack(head, recv_str.c_str(), recv_str.length());

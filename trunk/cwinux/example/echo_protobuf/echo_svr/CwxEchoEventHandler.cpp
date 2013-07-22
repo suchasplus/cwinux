@@ -8,7 +8,7 @@ int CwxEchoEventHandler::onRecvMsg(CwxMsgBlock*& msg, CwxTss* )
   cwinux_echo::echo echo;
   if (!echo.ParseFromString(recv_str)) {
     // 解析失败认为是通信错误，关闭连接
-    CWX_ERROR((err_2k_, 2047, "Failure to unpack echo msg"));
+    CWX_ERROR(("Failure to unpack echo msg"));
     m_pApp->noticeCloseConn(msg->event().getConnId());
     return 1;
   }
@@ -16,7 +16,6 @@ int CwxEchoEventHandler::onRecvMsg(CwxMsgBlock*& msg, CwxTss* )
   CwxMsgHead head(0,
     0,
     msg->event().getMsgHeader().getMsgType() + 1,
-    SEND_MSG_TYPE,
     msg->event().getMsgHeader().getTaskId(),
     recv_str.length());
   ///分配发送消息包的block
