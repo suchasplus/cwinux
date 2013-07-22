@@ -5,7 +5,6 @@
 CwxEchoApp::CwxEchoApp() {
     m_eventHandler = NULL;
     m_threadPool = NULL;
-    m_thriftThreadPool = NULL;
     m_thriftServerThread = NULL; 
 }
 
@@ -68,7 +67,7 @@ int CwxEchoApp::initRunEnv(){
         CWX_ERROR(("Failure to start thread pool"));
         return -1;
     }
-    ///
+    /// 创建thrift thread manager线程的tss对象
     CwxTss** pTss = new CwxTss*[m_config.m_unThreadNum];
     for (uint16_t i=0; i<m_config.m_unThreadNum; i++) {
       pTss[0] = new EchoTss();
@@ -77,8 +76,7 @@ int CwxEchoApp::initRunEnv(){
     CwxThreadPoolThrift* threadPool = new CwxThreadPoolThrift(m_config.m_unThreadNum,
       pTss);
     m_threadManager = boost::shared_ptr<CwxThreadPoolThrift>(threadPool);
-
-    ///启动server线程
+    ///启动server的主线程
     m_thriftServerThread = new CwxThreadPool(1, &getCommander(), ThreadMain, this);
     if ( 0 != m_thriftServerThread->start(NULL)){
       CWX_ERROR(("Failure to start thrift server pool"));
