@@ -51,6 +51,7 @@ binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
 am_cwx_echo_client_OBJECTS = cwx_echo_client-cwx_echo_c.$(OBJEXT) \
 	cwx_echo_client-CwxEchoClientApp.$(OBJEXT) \
+	cwx_echo_client-echo.pb.$(OBJEXT) \
 	cwx_echo_client-CwxEchoClientConfig.$(OBJEXT)
 cwx_echo_client_OBJECTS = $(am_cwx_echo_client_OBJECTS)
 cwx_echo_client_DEPENDENCIES =
@@ -105,7 +106,7 @@ INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
-LIBS = -lcwxapp -lcwxnet -lcwxcmn -lpthread -lz -ldl -lrt
+LIBS = -lcwxapp -lcwxnet -lcwxcmn -lprotobuf -lpthread -lz -ldl -lrt
 LIBTOOL = @LIBTOOL@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
@@ -164,6 +165,7 @@ mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
+protobuf_dir = @protobuf_dir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
@@ -174,15 +176,16 @@ cwx_echo_client_CPPFLAGS = -D_BUILD_DATE="$(BUILD_DATE)" -W -Wall
 cwx_echo_client_SOURCES = \
 	cwx_echo_c.cpp\
 	CwxEchoClientApp.cpp\
+	../protobuf/echo.pb.cc\
 	CwxEchoClientConfig.cpp
 
 cwx_echo_client_LDADD = 
 cwx_echo_client_LDFLAGS = -L@cwinux_dir@/lib 
-INCLUDES = -I@cwinux_dir@/include/app -I@cwinux_dir@/include/cmn -I@cwinux_dir@/include/net 
+INCLUDES = -I@cwinux_dir@/include/app -I@cwinux_dir@/include/cmn -I@cwinux_dir@/include/net  -I@protobuf_dir@
 all: all-am
 
 .SUFFIXES:
-.SUFFIXES: .cpp .lo .o .obj
+.SUFFIXES: .cc .cpp .lo .o .obj
 $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -253,22 +256,23 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cwx_echo_client-CwxEchoClientApp.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cwx_echo_client-CwxEchoClientConfig.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cwx_echo_client-cwx_echo_c.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cwx_echo_client-echo.pb.Po@am__quote@
 
-.cpp.o:
+.cc.o:
 @am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
 @am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/$*.Tpo" "$(DEPDIR)/$*.Po"; else rm -f "$(DEPDIR)/$*.Tpo"; exit 1; fi
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ $<
 
-.cpp.obj:
+.cc.obj:
 @am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ `$(CYGPATH_W) '$<'`; \
 @am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/$*.Tpo" "$(DEPDIR)/$*.Po"; else rm -f "$(DEPDIR)/$*.Tpo"; exit 1; fi
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
-.cpp.lo:
+.cc.lo:
 @am__fastdepCXX_TRUE@	if $(LTCXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
 @am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/$*.Tpo" "$(DEPDIR)/$*.Plo"; else rm -f "$(DEPDIR)/$*.Tpo"; exit 1; fi
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
@@ -303,6 +307,20 @@ cwx_echo_client-CwxEchoClientApp.obj: CwxEchoClientApp.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cwx_echo_client-CwxEchoClientApp.obj `if test -f 'CwxEchoClientApp.cpp'; then $(CYGPATH_W) 'CwxEchoClientApp.cpp'; else $(CYGPATH_W) '$(srcdir)/CwxEchoClientApp.cpp'; fi`
 
+cwx_echo_client-echo.pb.o: ../protobuf/echo.pb.cc
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cwx_echo_client-echo.pb.o -MD -MP -MF "$(DEPDIR)/cwx_echo_client-echo.pb.Tpo" -c -o cwx_echo_client-echo.pb.o `test -f '../protobuf/echo.pb.cc' || echo '$(srcdir)/'`../protobuf/echo.pb.cc; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/cwx_echo_client-echo.pb.Tpo" "$(DEPDIR)/cwx_echo_client-echo.pb.Po"; else rm -f "$(DEPDIR)/cwx_echo_client-echo.pb.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../protobuf/echo.pb.cc' object='cwx_echo_client-echo.pb.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cwx_echo_client-echo.pb.o `test -f '../protobuf/echo.pb.cc' || echo '$(srcdir)/'`../protobuf/echo.pb.cc
+
+cwx_echo_client-echo.pb.obj: ../protobuf/echo.pb.cc
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cwx_echo_client-echo.pb.obj -MD -MP -MF "$(DEPDIR)/cwx_echo_client-echo.pb.Tpo" -c -o cwx_echo_client-echo.pb.obj `if test -f '../protobuf/echo.pb.cc'; then $(CYGPATH_W) '../protobuf/echo.pb.cc'; else $(CYGPATH_W) '$(srcdir)/../protobuf/echo.pb.cc'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/cwx_echo_client-echo.pb.Tpo" "$(DEPDIR)/cwx_echo_client-echo.pb.Po"; else rm -f "$(DEPDIR)/cwx_echo_client-echo.pb.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../protobuf/echo.pb.cc' object='cwx_echo_client-echo.pb.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cwx_echo_client-echo.pb.obj `if test -f '../protobuf/echo.pb.cc'; then $(CYGPATH_W) '../protobuf/echo.pb.cc'; else $(CYGPATH_W) '$(srcdir)/../protobuf/echo.pb.cc'; fi`
+
 cwx_echo_client-CwxEchoClientConfig.o: CwxEchoClientConfig.cpp
 @am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cwx_echo_client-CwxEchoClientConfig.o -MD -MP -MF "$(DEPDIR)/cwx_echo_client-CwxEchoClientConfig.Tpo" -c -o cwx_echo_client-CwxEchoClientConfig.o `test -f 'CwxEchoClientConfig.cpp' || echo '$(srcdir)/'`CwxEchoClientConfig.cpp; \
 @am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/cwx_echo_client-CwxEchoClientConfig.Tpo" "$(DEPDIR)/cwx_echo_client-CwxEchoClientConfig.Po"; else rm -f "$(DEPDIR)/cwx_echo_client-CwxEchoClientConfig.Tpo"; exit 1; fi
@@ -316,6 +334,27 @@ cwx_echo_client-CwxEchoClientConfig.obj: CwxEchoClientConfig.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CwxEchoClientConfig.cpp' object='cwx_echo_client-CwxEchoClientConfig.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cwx_echo_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cwx_echo_client-CwxEchoClientConfig.obj `if test -f 'CwxEchoClientConfig.cpp'; then $(CYGPATH_W) 'CwxEchoClientConfig.cpp'; else $(CYGPATH_W) '$(srcdir)/CwxEchoClientConfig.cpp'; fi`
+
+.cpp.o:
+@am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/$*.Tpo" "$(DEPDIR)/$*.Po"; else rm -f "$(DEPDIR)/$*.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ $<
+
+.cpp.obj:
+@am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ `$(CYGPATH_W) '$<'`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/$*.Tpo" "$(DEPDIR)/$*.Po"; else rm -f "$(DEPDIR)/$*.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+
+.cpp.lo:
+@am__fastdepCXX_TRUE@	if $(LTCXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/$*.Tpo" "$(DEPDIR)/$*.Plo"; else rm -f "$(DEPDIR)/$*.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LTCXXCOMPILE) -c -o $@ $<
 
 mostlyclean-libtool:
 	-rm -f *.lo
