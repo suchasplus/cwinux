@@ -125,13 +125,13 @@ void CwxEchoApp::onSignal(int signum){
 }
 
 void CwxEchoApp::destroy() {
+  if (m_server) m_server->stop();
+  if (m_threadManager.get()) m_threadManager->stop();
   if (m_threadPool){
     m_threadPool->stop();
     delete m_threadPool;
     m_threadPool = NULL;
   }
-  if (m_server) m_server->stop();
-  if (m_threadManager.get()) m_threadManager->stop();
   if (m_eventHandler){
     delete m_eventHandler;
     m_eventHandler = NULL;
