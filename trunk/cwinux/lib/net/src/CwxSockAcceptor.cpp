@@ -45,9 +45,7 @@ int CwxSockAcceptor::listen(CwxAddr const& addr,
     {
         if (0 != fn(getHandle(), fnArg)) return -1;
     }
-
-#if (CWX_HAS_IPV6)
-    if (domain == PF_INET6)
+    if (domain == AF_INET6)
     {
         sockaddr_in6 local_inet6_addr;
         memset (reinterpret_cast<void *> (&local_inet6_addr),
@@ -66,10 +64,7 @@ int CwxSockAcceptor::listen(CwxAddr const& addr,
             reinterpret_cast<sockaddr *> (&local_inet6_addr),
             sizeof local_inet6_addr) == -1)
             error = 1;
-    }
-#endif
-    if (domain == PF_INET)
-    {
+    } else if (domain == AF_INET) {
         sockaddr_in local_inet_addr;
         memset (reinterpret_cast<void *> (&local_inet_addr),
             0,

@@ -207,32 +207,22 @@ inline ssize_t CwxSocket::sendv (CWX_HANDLE handle,
 
 
 inline bool CwxSocket::isEnableIpv4(void){
-#if (CWX_HAS_IPV6)
-    if (-1 == m_enableIpv4) ipvn_check(m_enableIpv4, AF_INET);
-    return 1 == m_enableIpv4?true:false;
-#else
-    // Assume it's always enabled since assume TCP/IP to exist.
-    return true;
-#endif  /* CWX_HAS_IPV6*/
+  if (-1 == m_enableIpv4) ipvn_check(m_enableIpv4, AF_INET);
+  return 1 == m_enableIpv4?true:false;
 }
 
 inline bool CwxSocket::isEnableIpv6(void){
-#if (CWX_HAS_IPV6)
-    if (-1 == m_enableIpv6) ipvn_check (m_enableIpv6, AF_INET6);
-    return 1==m_enableIpv6?true:false;
-#else /* CWX_HAS_IPV6 */
-    return false;
-#endif /* !CWX_HAS_IPV6 */
+  if (-1 == m_enableIpv6) ipvn_check (m_enableIpv6, AF_INET6);
+  return 1==m_enableIpv6?true:false;
 }
 
 
-#if (CWX_HAS_IPV6)
 //检查是否支持指定的协议族
 inline int CwxSocket::ipvn_check(int &ipvn_enabled, int pf){
     if (ipvn_enabled == -1)
     {
         // Determine if the kernel has IPv6 support by attempting to
-        // create a PF_INET socket and see if it fails.
+        // create a AF_INET socket and see if it fails.
         CWX_HANDLE const s = socket (pf, SOCK_DGRAM, 0);
         if (s == CWX_INVALID_HANDLE)
         {
@@ -246,7 +236,6 @@ inline int CwxSocket::ipvn_check(int &ipvn_enabled, int pf){
     }
     return ipvn_enabled;
 }
-#endif
 
 
 CWINUX_END_NAMESPACE

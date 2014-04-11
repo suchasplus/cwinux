@@ -20,8 +20,9 @@ void * CwxAddr::getAddr (void) const
     return 0;
 }
 
-void CwxAddr::setAddr (void *, CWX_INT32 )
+int CwxAddr::setAddr (void *, CWX_INT32 )
 {
+  return 0;
 }
 
 

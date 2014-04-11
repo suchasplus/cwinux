@@ -39,7 +39,7 @@ public:
     CwxSockAcceptor(CwxAddr const& addr,
         bool reuse= 0,
         int backlog = DEF_BACK_LOG,
-        int domain = PF_INET,
+        int domain = AF_INET,
         int protocol = 0,
         CWX_NET_SOCKET_ATTR_FUNC fn=NULL,
         void* fnArg = NULL);
@@ -59,7 +59,7 @@ public:
     int listen(CwxAddr const& addr,
         bool reuse= 0,
         int backlog = DEF_BACK_LOG,
-        int domain = PF_INET,
+        int domain = AF_INET,
         int protocol = 0,
         CWX_NET_SOCKET_ATTR_FUNC fn=NULL,
         void* fnArg=NULL);

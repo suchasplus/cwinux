@@ -46,7 +46,7 @@ public:
     ///返回地址对象.
     virtual void * getAddr (void) const;
     ///设置地址对象.
-    virtual void setAddr (void *, CWX_INT32 iLen);
+    virtual int setAddr (void *, CWX_INT32 iLen);
     ///检查地址是否相等.
     bool operator == (const CwxAddr &sap) const;
     ///检查地址是否不相等.

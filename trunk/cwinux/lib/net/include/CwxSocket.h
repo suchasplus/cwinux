@@ -405,10 +405,8 @@ public:
 private:
     //forbiden new instance
     CwxSocket();
-#if (CWX_HAS_IPV6)
     //检查是否支持指定的协议族
     static int ipvn_check(int &ipvn_enabled, int pf);
-#endif
 private:
     static int  m_enableIpv6; ///<ipv6支持的标志, -1:未检查；0：不支持；1:支持
     static int  m_enableIpv4; ///<ipv4支持的标志, -1:未检查；0：不支持；1：支持

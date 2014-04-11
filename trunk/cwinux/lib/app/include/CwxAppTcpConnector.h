@@ -42,7 +42,7 @@ public:
     int connect (CwxAppHandler4TcpConn* pHandler, ///<conn handler
         char const* szAddr, ///<connect addr
         CWX_UINT16 unPort, ///<connect port
-        int iFamily=AF_UNSPEC, ///<family
+        int iFamily=AF_INET, ///<family
         CWX_NET_SOCKET_ATTR_FUNC fn=NULL, ///<socket设置的function
         void* fnArg = NULL
         );

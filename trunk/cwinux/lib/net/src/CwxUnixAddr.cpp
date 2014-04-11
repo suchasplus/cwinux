@@ -38,12 +38,13 @@ void * CwxUnixAddr::getAddr (void) const
     return (void *) &this->unix_addr_;
 }
 /// Set a pointer to the underlying network address.
-void CwxUnixAddr::setAddr (void *addr, int len)
+int CwxUnixAddr::setAddr (void *addr, int len)
 {
     this->baseSet (AF_UNIX, len);
     memcpy ((void *) &this->unix_addr_,
         (void *) addr,
         len);
+    return 0;
 }
 
 
