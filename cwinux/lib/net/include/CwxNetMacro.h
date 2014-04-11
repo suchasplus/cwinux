@@ -33,13 +33,6 @@
 #  define AF_ANY (-1)
 #endif /* AF_ANY */
 
-#define  CWX_HAS_IPV6  0
-#define  CWX_IPV4_IPV6_MIGRATION 0
-
-#define CWX_HAS_SOCKADDR_IN6_SIN6_LEN 0
-#define CWX_HAS_SOCKADDR_IN_SIN_LEN 0
-
-
 #define CWX_MAX_DEFAULT_PORT 65535
 
 #define CWX_MAX_HOST_NAME_LEN  256

@@ -212,7 +212,8 @@ int CwxAppFramework::noticeTcpListen(CWX_UINT32 uiSvrId,
                                   bool bRawData,
                                   CWX_UINT16 unMode,
                                   CWX_NET_SOCKET_ATTR_FUNC fn,
-                                  void* fnArg)
+                                  void* fnArg,
+                                  CWX_INT32  iFamily)
 {
     if (uiSvrId < SVR_TYPE_USER_START)
     {
@@ -234,13 +235,10 @@ int CwxAppFramework::noticeTcpListen(CWX_UINT32 uiSvrId,
         unMode,
         fn,
         fnArg);
-    if (strcmp(szAddr, "*") == 0)
-    {
-        inetAddr.set(unPort);
-    }
-    else
-    {
-        inetAddr.set(unPort, szAddr);
+    if (strcmp(szAddr, "*") == 0){
+        inetAddr.set(unPort, iFamily);
+    } else {
+        inetAddr.set(unPort, szAddr, iFamily);
     }
     //register the acceptor
     if (acceptor->accept(inetAddr) != 0)
@@ -340,7 +338,8 @@ int CwxAppFramework::noticeTcpConnect(CWX_UINT32 uiSvrId,
                   CWX_UINT16 unMaxRetryInternal,
                   CWX_NET_SOCKET_ATTR_FUNC fn,
                   void* fnArg,
-				  CWX_UINT32 uiMiliTimeout)
+                  CWX_UINT32 uiMiliTimeout,
+                  CWX_INT32  iFamily)
 {
     if (uiSvrId < SVR_TYPE_USER_START)
     {
@@ -362,7 +361,8 @@ int CwxAppFramework::noticeTcpConnect(CWX_UINT32 uiSvrId,
     handle->getConnInfo().setActiveConn(true);
     handle->getConnInfo().setSockFunc(fn);
     handle->getConnInfo().setSockFuncArg(fnArg);
-	handle->getConnInfo().setConnectTimeout(uiMiliTimeout);
+    handle->getConnInfo().setConnectTimeout(uiMiliTimeout);
+    handle->getConnInfo().setFamily(iFamily);
 
     CwxAppNotice* notice = new CwxAppNotice();
     notice->m_unNoticeType = CwxAppNotice::TCP_CONNECT;
@@ -1242,7 +1242,7 @@ void CwxAppFramework::innerNoticeTcpConnect(CwxAppFramework* pApp,
     if (-1 == pApp->m_pTcpConnector->connect(handle,
         handle->getConnectAddr().c_str(),
         handle->getConnectPort(),
-        AF_UNSPEC,
+        handle->getConnInfo().getFamily(),
         handle->getConnInfo().getSockFunc(),
         handle->getConnInfo().getSockFuncArg()))
     {

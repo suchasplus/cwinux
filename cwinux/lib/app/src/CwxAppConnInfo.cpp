@@ -6,7 +6,7 @@ CwxAppConnInfo::CwxAppConnInfo()
     m_uiHostId = 0;
     m_uiConnId = 0;
     m_uiListenId = 0;
-	m_uiConnectTimeout = 0;
+    m_uiConnectTimeout = 0;
     m_unState = IDLE;
     m_ttCreateTime = time(NULL);
     m_uiFailConnNum = 0;
@@ -25,6 +25,7 @@ CwxAppConnInfo::CwxAppConnInfo()
     m_bInvokeCreate = true;
     m_bReconn = false;
     m_uiReconnDelay = 0;
+    m_iFamily = AF_INET;
     m_pHandler = NULL;
 }
 

@@ -70,7 +70,7 @@ public:
     /// Return a pointer to the underlying network address.
     virtual void *getAddr (void) const;
     /// Set a pointer to the underlying network address.
-    virtual void setAddr (void *addr, int len);
+    virtual int setAddr (void *addr, int len);
 public:
     /**
     @brief 获取Unix domain的path file。

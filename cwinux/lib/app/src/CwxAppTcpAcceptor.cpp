@@ -42,7 +42,7 @@ int CwxAppTcpAcceptor::accept(CwxINetAddr const& addr)
     if (0 != m_acceptor.listen(addr,
         true,
         CWX_APP_DEF_BACKLOG_NUM,
-        addr.getAddrType(),
+        addr.getType(),
         0,
         m_fn,
         m_fnArg))

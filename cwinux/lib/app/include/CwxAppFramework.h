@@ -147,7 +147,9 @@ public:
         bool bRawData = false,
         CWX_UINT16 unMode=CWX_APP_MSG_MODE,
         CWX_NET_SOCKET_ATTR_FUNC fn=NULL,
-        void* fnArg = NULL);
+        void* fnArg = NULL,
+        CWX_INT32  iFamily = AF_INET
+        );
     /**
     @brief 往架构注册一个local ipc监听，并设置各种属性
     @param [in] uiSvrId 由此监听所建立的连接的SVR ID。
@@ -190,7 +192,8 @@ public:
         CWX_UINT16 unMaxRetryInternal = 60,
         CWX_NET_SOCKET_ATTR_FUNC fn=NULL,
         void* fnArg=NULL,
-		CWX_UINT32 uiMiliTimeout=0);
+        CWX_UINT32 uiMiliTimeout=0,
+        CWX_INT32  iFamily = AF_INET);
     /**
     @brief 往架构注册一个主动的Local IPC连接
     @param [in] uiSvrId 设定连接的SVR ID。

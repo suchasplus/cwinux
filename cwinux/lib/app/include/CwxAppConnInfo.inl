@@ -297,8 +297,14 @@ inline void CwxAppConnInfo::setSockFuncArg(void* arg)
     m_fnArg = arg;
 }
 
-
-
+///获取连接的family
+inline CWX_INT32 CwxAppConnInfo::getFamily() const {
+  return m_iFamily;
+}
+///设置连接的family
+inline void CwxAppConnInfo::setFamily(CWX_INT32 family) {
+  m_iFamily = family;
+}
 
 ///获取连接对应的handler
 inline CwxAppHandler4Msg* CwxAppConnInfo::getHandler()

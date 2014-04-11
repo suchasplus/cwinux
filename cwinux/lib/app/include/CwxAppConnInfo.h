@@ -69,15 +69,14 @@ public:
     CWX_UINT32 getListenId() const;
     ///设置被动连接的Listen ID
     void setListenId(CWX_UINT32 uiListenId);
-	///获取连接超时时间
-	CWX_UINT32 getConnectTimeout() const;
-	///设置连接超时时间
-	void setConnectTimeout(CWX_UINT32 uiTimeout);
+    ///获取连接超时时间
+    CWX_UINT32 getConnectTimeout() const;
+    ///设置连接超时时间
+    void setConnectTimeout(CWX_UINT32 uiTimeout);
     ///获取连接的状态
     CWX_UINT16 getState() const;
     ///设置连接的状态
     void setState(CWX_UINT16 unState);
-
     ///获取连接的创建时间
     time_t getCreateTime() const;
     ///设置连接的创建时间
@@ -164,6 +163,10 @@ public:
     void* getSockFuncArg() const;
     ///设置socket设置function的arg
     void setSockFuncArg(void* arg);
+    ///获取连接的family
+    CWX_INT32 getFamily() const;
+    ///设置连接的family
+    void setFamily(CWX_INT32 family);
     ///获取连接对应的handler
     CwxAppHandler4Msg* getHandler();
     ///设置连接对应的handler
@@ -175,7 +178,7 @@ private:
     CWX_UINT32         m_uiSvrId;  ///<svr id
     CWX_UINT32         m_uiHostId; ///<host id
     CWX_UINT32         m_uiConnId;  ///<connection id
-	CWX_UINT32         m_uiConnectTimeout; ///<连接超时时间单位为ms
+    CWX_UINT32         m_uiConnectTimeout; ///<连接超时时间单位为ms
     CWX_UINT32         m_uiListenId; ///<accept connection's  acceptor ID. for passive conn.
     CWX_UINT16         m_unState; ///<connection state.
     time_t             m_ttCreateTime;///<connection's create time
@@ -195,6 +198,7 @@ private:
     bool               m_bInvokeCreate; ///<是否在open的时候，调用CwxAppFramework::onCreate，默认调用
     bool               m_bReconn; ///<是否是重连
     CWX_UINT32         m_uiReconnDelay; ///<重连延时的毫秒数
+    CWX_INT32          m_iFamily;  ///<AF_INET或AF_INET6
     CWX_NET_SOCKET_ATTR_FUNC m_fn; ///<socket 设置的function
     void*              m_fnArg; ////<socket 设置的function的arg 参数
     CwxAppHandler4Msg*  m_pHandler; ///<连接对应的Handler
