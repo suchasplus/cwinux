@@ -24,7 +24,16 @@ int CwxAppTcpConnector::connect(CwxAppHandler4TcpConn* pHandler,
     CwxTimeouter timer(&timeout);
     CwxSockConnector connector;
     CwxSockStream stream;
-    CwxINetAddr addr(unPort, szAddr, iFamily);
+    CwxINetAddr addr;
+    if (0 != addr.set(unPort, szAddr, iFamily)) {
+      CWX_ERROR(("Failure to set connect addr to:ip=%s port=%u family=%d errno=%d",
+        szAddr,
+        unPort,
+        iFamily,
+        errno));
+      pHandler->setHandle(CWX_INVALID_HANDLE);
+      return -1;
+    }
     int ret = connector.connect (stream,
         addr,
         CwxAddr::sap_any,
