@@ -35,12 +35,12 @@ public:
     /// Copy constructor.
     CwxINetAddr (const CwxINetAddr &);
     /// Creates an CwxINetAddr from a sockaddr_in structure.
-    CwxINetAddr (const sockaddr_in *addr, int len, CWX_INT32 iFamily = AF_INET);
+    CwxINetAddr (const sockaddr_in *addr, int len, CWX_INT32 iFamily = AF_UNSPEC);
     /// Creates an CwxINetAddr from a @a unPort and the remote
     /// @a szHost. The port number is assumed to be in host byte order.
     /// To set a port already in network byte order, please @see set().
     /// Use iFamily to select IPv6 (AF_INET6) vs. IPv4 (AF_INET).
-    CwxINetAddr (CWX_UINT16 unPort, char const* szHost, CWX_INT32 iFamily = AF_INET);
+    CwxINetAddr (CWX_UINT16 unPort, char const* szHost, CWX_INT32 iFamily = AF_UNSPEC);
     /**
     * Creates an CwxINetAddr from a @a unPort and an Internet
     * @a uiIpAddr.  This method assumes that @a unPort and @a uiIpAddr
@@ -65,7 +65,7 @@ public:
     * IPv6 capability . To specify IPv6, use
     * the value AF_INET6. To specify IPv4, use AF_INET.
     */
-    int set (CWX_UINT16 unPort, char const* szHost, CWX_INT32 iFamily = AF_INET);
+    int set (CWX_UINT16 unPort, char const* szHost, CWX_INT32 iFamily = AF_UNSPEC);
     /**
     * Initializes an CwxINetAddr from a @a unPort and an Internet
     * @a uiIpAddr.  If @a bEncode is true then the port number and IP address

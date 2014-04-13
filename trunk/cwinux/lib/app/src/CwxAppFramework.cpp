@@ -235,10 +235,19 @@ int CwxAppFramework::noticeTcpListen(CWX_UINT32 uiSvrId,
         unMode,
         fn,
         fnArg);
+    int ret = 0;
     if (strcmp(szAddr, "*") == 0){
-        inetAddr.set(unPort, iFamily);
+        if (AF_UNSPEC == iFamily) iFamily = AF_INET；
+        ret = inetAddr.set(unPort, iFamily);
     } else {
-        inetAddr.set(unPort, szAddr, iFamily);
+        ret = inetAddr.set(unPort, szAddr, iFamily);
+    }
+    if (0 != ret) {
+      CWX_ERROR(("Address is invalid, tcp listen for ip=%s, port=%u, errno=%d",
+        szAddr,
+        unPort,
+        errno));
+      return -1;
     }
     //register the acceptor
     if (acceptor->accept(inetAddr) != 0)

@@ -60,6 +60,14 @@ int CwxINetAddr::set(CWX_UINT16 unPort, char const* szHost, CWX_INT32 iFamily)
   struct addrinfo *res = 0;
   int error = 0;
   memset (&hints, 0, sizeof (hints));
+  if (AF_UNSPEC == iFamily) { // 优先使用AF_INET6
+    hints.ai_family = AF_INET6;
+    error = ::getaddrinfo (szHost, 0, &hints, &res);
+    if (error) {
+      if (res) ::freeaddrinfo(res);
+      iFamily = AF_INET;
+    }
+  }
   if (iFamily == AF_INET6) {
     hints.ai_family = AF_INET6;
     error = ::getaddrinfo (szHost, 0, &hints, &res);
@@ -93,7 +101,7 @@ int CwxINetAddr::set (CWX_UINT16 unPort, CWX_INT32 iFamily) {
     memcpy (&this->inet_addr_.in4_.sin_addr, &ip4, sizeof(ip4));
     setPort(unPort);
     return 0;
-  } else {
+  } else if (iFamily == AF_INET6){
     this->baseSet (AF_INET6, sizeof (this->inet_addr_.in6_));
     this->inet_addr_.in6_.sin6_family = AF_INET6;
     in6_addr const ip6 = in6addr_any;
