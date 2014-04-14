@@ -237,7 +237,7 @@ int CwxAppFramework::noticeTcpListen(CWX_UINT32 uiSvrId,
         fnArg);
     int ret = 0;
     if (strcmp(szAddr, "*") == 0){
-        if (AF_UNSPEC == iFamily) iFamily = AF_INET；
+        if (AF_UNSPEC == iFamily) iFamily = AF_INET;
         ret = inetAddr.set(unPort, iFamily);
     } else {
         ret = inetAddr.set(unPort, szAddr, iFamily);
