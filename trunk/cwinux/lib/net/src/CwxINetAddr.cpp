@@ -150,20 +150,14 @@ void * CwxINetAddr::getAddr (void) const
 int CwxINetAddr::setAddr (void* addr, CWX_INT32 ) {
   struct sockaddr_in *getfamily = static_cast<struct sockaddr_in *> (addr);
   if (getfamily->sin_family == AF_INET) {
-    this->setPort(getfamily->sin_port);
-    CWX_UINT32 ip4 = *reinterpret_cast<const CWX_UINT32 *> (&getfamily->sin_addr);
-    this->baseSet(AF_INET, sizeof (this->inet_addr_.in4_));
-    this->inet_addr_.in4_.sin_family = AF_INET;
-    memcpy (&this->inet_addr_.in4_.sin_addr, &ip4, sizeof(ip4));
+    this->baseSet (AF_INET, sizeof (this->inet_addr_.in4_));
+    memcpy (&this->inet_addr_.in4_, getfamily, sizeof(sockaddr_in));
     return 0;
   } else if (getfamily->sin_family == AF_INET6) {
     struct sockaddr_in6 *in6 = static_cast<struct sockaddr_in6*> (addr);
-    this->setPort(in6->sin6_port);
     // We protect ourselves up above so IPv6 must be possible here.
     this->baseSet (AF_INET6, sizeof (this->inet_addr_.in6_));
-    this->inet_addr_.in6_.sin6_family = AF_INET6;
-    memcpy (&this->inet_addr_.in6_.sin6_addr, &in6->sin6_addr, sizeof (in6->sin6_addr));
-    this->inet_addr_.in6_.sin6_scope_id = in6->sin6_scope_id;
+    memcpy(&this->inet_addr_.in6_, &in6, sizeof (sockaddr_in6));
     return 0;
   }
   // Here with an unrecognized length.
