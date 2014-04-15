@@ -85,8 +85,8 @@ int CwxINetAddr::set(CWX_UINT16 unPort, char const* szHost, CWX_INT32 iFamily)
       return -1;
     }
   }
-  this->setType(res->ai_family);
   this->setAddr(res->ai_addr, res->ai_addrlen);
+  this->setType(res->ai_family);
   this->setPort(unPort);
   ::freeaddrinfo (res);
   return 0;
@@ -150,14 +150,14 @@ void * CwxINetAddr::getAddr (void) const
 int CwxINetAddr::setAddr (void* addr, CWX_INT32 ) {
   struct sockaddr_in *getfamily = static_cast<struct sockaddr_in *> (addr);
   if (getfamily->sin_family == AF_INET) {
-    this->baseSet (AF_INET, sizeof (this->inet_addr_.in4_));
+    this->baseSet (AF_INET, sizeof (sockaddr_in));
     memcpy (&this->inet_addr_.in4_, getfamily, sizeof(sockaddr_in));
     return 0;
   } else if (getfamily->sin_family == AF_INET6) {
     struct sockaddr_in6 *in6 = static_cast<struct sockaddr_in6*> (addr);
     // We protect ourselves up above so IPv6 must be possible here.
-    this->baseSet (AF_INET6, sizeof (this->inet_addr_.in6_));
-    memcpy(&this->inet_addr_.in6_, &in6, sizeof (sockaddr_in6));
+    this->baseSet (AF_INET6, sizeof (sockaddr_in6));
+    memcpy(&this->inet_addr_.in6_, in6, sizeof (sockaddr_in6));
     return 0;
   }
   // Here with an unrecognized length.
