@@ -1,4 +1,0 @@
-package cwinux_echo;
-message echo {
-  required string     msg = 1;
-}
